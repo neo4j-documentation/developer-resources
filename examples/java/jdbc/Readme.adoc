@@ -3,10 +3,10 @@
 === Stack
 
 * Java-Web Application
-* [Spark-Java](http://www.sparkjava.com/) (Micro-Webframework)
+* http://www.sparkjava.com/[Spark-Java] (Micro-Webframework)
 * Neo4j-JDBC w/ Cypher
 * Neo4j-Server
-* Frontend: jquery, bootstrap, [d3.js](http://d3js.org/)
+* Frontend: jquery, bootstrap, http://d3js.org/[d3.js]
 
 === Endpoints:
 
@@ -25,7 +25,7 @@ curl http://neo4j-movies.herokuapp.com/graph
 
 === Run locally:
 
-Start your local Neo4j Server ([Download & Install](http://neo4j.com/download)), open the [Neo4j Browser](http://localhost:7474).
+Start your local Neo4j Server (http://neo4j.com/download[Download & Install]), open the http://localhost:7474[Neo4j Browser].
 Then install the Movies data-set with `:play movies`, click the statement, and hit the triangular "Run" button.
 
 Start this application with:
@@ -41,20 +41,37 @@ You can search for movies by title or and click on any entry .
 
 === Deploy to Heroku
 
-Install the [Heroku Toolbelt](https://toolbelt.heroku.com/).
+We want to install our application to the cloud, for instance the http://heroku.com[Heroku] PaaS.
+We will also use the http://graphenedb.com[GraphenDB] Neo4j Database Hosting Add-On.
+
+Install the https://toolbelt.heroku.com/[Heroku Toolbelt] and git.
+
+Then run these commands
 
 [source,shell]
 ----
-# change the app-name
-export app=my-neo4j-movies-app
+# initialize git repository and add files
 git init
 git add .
 git commit -m"my neo4j movies app"
+
+# create heroku application, please change the app-name
+export app=my-neo4j-movies-app
 heroku apps:create $app
+
+# add free graphenedb hosting
 heroku addons:add graphenedb:chalk --app $app
+
+# configure your app to use the add-on
 heroku config:set NEO4J_REST_URL=GRAPHENEDB_URL --app $app
+
+# deploy to heroku
 git push heroku master
+
+# open application
 heroku open --app $app
+
+# open addon admin page
 heroku addons:open graphenedb
 ----
 
