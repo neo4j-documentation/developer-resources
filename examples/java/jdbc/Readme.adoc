@@ -1,0 +1,67 @@
+== Neo4j Movies Example Application
+
+=== Stack
+
+* Java-Web Application
+* [Spark-Java](http://www.sparkjava.com/) (Micro-Webframework)
+* Neo4j-JDBC w/ Cypher
+* Neo4j-Server
+* Frontend: jquery, bootstrap, [d3.js](http://d3js.org/)
+
+=== Endpoints:
+
+Get Movie
+
+----
+// JSON object for single movie with cast
+curl http://neo4j-movies.herokuapp.com/movie/The%20Matrix
+
+// list of JSON objects for movie search results
+curl http://neo4j-movies.herokuapp.com/search?q=matrix
+
+// JSON object for whole graph viz (nodes, links - arrays)
+curl http://neo4j-movies.herokuapp.com/graph
+----
+
+=== Run locally:
+
+Start your local Neo4j Server ([Download & Install](http://neo4j.com/download)), open the [Neo4j Browser](http://localhost:7474).
+Then install the Movies data-set with `:play movies`, click the statement, and hit the triangular "Run" button.
+
+Start this application with:
+
+[source,shell]
+----
+mvn compile exec:java
+----
+
+Go to http://localhost:8080
+
+You can search for movies by title or and click on any entry .
+
+=== Deploy to Heroku
+
+Install the [Heroku Toolbelt](https://toolbelt.heroku.com/).
+
+[source,shell]
+----
+# change the app-name
+export app=my-neo4j-movies-app
+git init
+git add .
+git commit -m"my neo4j movies app"
+heroku apps:create $app
+heroku addons:add graphenedb:chalk --app $app
+heroku config:set NEO4J_REST_URL=GRAPHENEDB_URL --app $app
+git push heroku master
+heroku open --app $app
+heroku addons:open graphenedb
+----
+
+In the Graphenedb-UI use "Launch Neo4j Admin UI".
+In the Neo4j-Browser run the `:play movies` as of the install instructions above.
+
+Then your app is ready to roll.
+
+
+
