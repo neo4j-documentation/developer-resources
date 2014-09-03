@@ -1,9 +1,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">-->
-    <!--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">-->
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="http://neo4j-contrib.github.io/developer-resources/examples/assets/css/main.css">
     <title>Neo4j Movies</title>
 </head>
 
@@ -12,17 +10,10 @@
 </div>
 <div role="navigation" class="navbar navbar-default navbar-static-top">
     <div class="container">
-
         <div class="row">
             <div class="navbar-header col-sm-6 col-md-6">
-                <!--<button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">-->
-                <!--<span class="sr-only">Toggle navigation</span>-->
-                <!--<span class="icon-bar"></span>-->
-                <!--<span class="icon-bar"></span>-->
-                <!--<span class="icon-bar"></span>-->
-                <!--</button>-->
                 <div class="logo-well">
-                    <img src="/assets/img/logo-white.svg" alt="Neo4j World's Leading Graph Database" id="logo">
+                    <img src="http://neo4j-contrib.github.io/developer-resources/examples/assets/img/logo-white.svg" alt="Neo4j World's Leading Graph Database" id="logo">
                 </div>
                 <a href="#" class="navbar-brand">
                     <div class="brand">Neo4j Movies</div>
@@ -35,7 +26,7 @@
                             <div class="form-group">
                                 <input type="text" value="Matrix" placeholder="Search for Movie Title" class="form-control" name="search">
                             </div>
-                            <button class="btn btn-default" type="submit">Submit</button>
+                            <button class="btn btn-default" type="submit">Search</button>
                         </form>
                     </li>
                 </ul>
@@ -106,18 +97,19 @@
             $.get("/search?q=" + encodeURIComponent(query),
                     function (data) {
                         var t = $("table#results tbody").empty();
+                        if (!data || data.length == 0) return;
                         data.forEach(function (row) {
                             var movie = row.movie;
                             t.append($("<tr><td class='movie'>" + movie.title + "</td><td>" + movie.released + "</td><td>" + movie.tagline + "</td></tr>"))
                         });
                         $("td.movie").click(function() { showMovie($(this).text());})
+                        showMovie(data[0].movie.title);
                     }, "json");
             return false;
         }
 
         $("#search").submit(search);
         search();
-        showMovie("The Matrix");
     })
 </script>
 
@@ -150,9 +142,6 @@
         // html title attribute
         node.append("title")
                 .text(function (d) { return d.title; })
-
-//        var text = svg.append("svg:g").selectAll("g").data(force.nodes()).enter().append("svg:g");
-//        text.append("svg:text").attr("x", 8).attr("y", "-.31em").attr("class", "text shadow").text(function (d) { return d.title; })
 
         // force feed algo ticks
         force.on("tick", function() {
