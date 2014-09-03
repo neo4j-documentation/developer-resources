@@ -8,7 +8,7 @@ import static spark.Spark.setPort;
 /**
  * @author Michael Hunger @since 22.10.13
  */
-public class MoviesServer {
+public class MovieServer {
 
     public static void main(String[] args) {
         setPort(Util.getWebPort());

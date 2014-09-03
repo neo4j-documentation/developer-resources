@@ -4,7 +4,7 @@
 
 * Java-Web Application
 * http://www.sparkjava.com/[Spark-Java] (Micro-Webframework)
-* Neo4j-JDBC w/ Cypher
+* https://github.com/neo4j-contrib/neo4j-jdbc#minimum-viable-snippet[Neo4j-JDBC] with Cypher
 * Neo4j-Server
 * Frontend: jquery, bootstrap, http://d3js.org/[d3.js]
 
@@ -21,6 +21,45 @@ curl http://neo4j-movies.herokuapp.com/search?q=matrix
 
 // JSON object for whole graph viz (nodes, links - arrays)
 curl http://neo4j-movies.herokuapp.com/graph
+----
+
+=== Setup
+
+Spark is a micro-webframework to easily define routes for endpoints and provide their implementation.
+In our case the implementation calls the `MovieService` which has one method per endpoint that returns Java collections
+which are turned into JSON using Gson.
+
+The `MovieService` uses the Neo4j-JDBC driver to execute queries against the transactional endpoint of Neo4j-Server.
+You add the dependency to the JDBC driver in your `pom.xml`:
+
+[source,xml]
+----
+include::pom.xml[tags=jdbc-dependency]
+----
+
+To use the JDBC driver you provide a connection URL, e.g. `jdbc:neo4j:localhost:7474`, get a `Connection`
+which then can be used to create `PreparedStatement`s with your Cypher query.
+
+You would then set parameters on your statement, please note that only numeric parameter-names are possible, _starting from 1_.
+
+To access the `ResultSet` you call the cursor method `rs.next()` in a while loop, within which you can access the result-data by `rs.getString("columnName")` where the column name is the `RETURN` clause alias for each column.
+
+[source,java]
+----
+Connection con = DriverManager.getConnection("jdbc:neo4j://localhost:7474/");
+
+String query = "MATCH (:User {name:{1}})-[:FRIEND]->(f:User) RETURN f.name as friend";
+
+try (PreparedStatement stmt = con.prepareStatement(query)) {
+
+    stmt.setString(1,"John");
+
+    try (ResultSet rs = stmt.executeQuery()) {
+        while(rs.next()) {
+             System.out.println(rs.getString("friend"));
+        }
+    }
+}
 ----
 
 === Run locally:
