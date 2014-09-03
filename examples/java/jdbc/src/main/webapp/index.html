@@ -11,18 +11,10 @@
 <div role="navigation" class="navbar navbar-default navbar-static-top">
     <div class="container">
         <div class="row">
-            <div class="navbar-header col-sm-6 col-md-6">
-                <div class="logo-well">
-                    <img src="http://neo4j-contrib.github.io/developer-resources/examples/assets/img/logo-white.svg" alt="Neo4j World's Leading Graph Database" id="logo">
-                </div>
-                <a href="#" class="navbar-brand">
-                    <div class="brand">Neo4j Movies</div>
-                </a>
-            </div>
             <div class="col-sm-6 col-md-6">
                 <ul class="nav navbar-nav">
                     <li>
-                        <form role="search" class="navbar-form navbar-right" id="search">
+                        <form role="search" class="navbar-form" id="search">
                             <div class="form-group">
                                 <input type="text" value="Matrix" placeholder="Search for Movie Title" class="form-control" name="search">
                             </div>
@@ -30,6 +22,16 @@
                         </form>
                     </li>
                 </ul>
+            </div>
+            <div class="navbar-header col-sm-6 col-md-6">
+                <div class="logo-well">
+                    <a href="http://neo4j.com/developer-resources">
+                    <img src="http://neo4j-contrib.github.io/developer-resources/examples/assets/img/logo-white.svg" alt="Neo4j World's Leading Graph Database" id="logo">
+                    </a>
+                </div>
+                <div class="navbar-brand">
+                    <div class="brand">Neo4j Movies</div>
+                </div>
             </div>
         </div>
     </div>
@@ -100,9 +102,9 @@
                         if (!data || data.length == 0) return;
                         data.forEach(function (row) {
                             var movie = row.movie;
-                            t.append($("<tr><td class='movie'>" + movie.title + "</td><td>" + movie.released + "</td><td>" + movie.tagline + "</td></tr>"))
+                            $("<tr><td class='movie'>" + movie.title + "</td><td>" + movie.released + "</td><td>" + movie.tagline + "</td></tr>").appendTo(t)
+                                    .click(function() { showMovie($(this).find("td.movie").text());})
                         });
-                        $("td.movie").click(function() { showMovie($(this).text());})
                         showMovie(data[0].movie.title);
                     }, "json");
             return false;
