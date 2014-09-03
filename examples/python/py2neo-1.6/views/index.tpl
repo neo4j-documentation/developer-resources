@@ -74,7 +74,7 @@
                     function (data) {
                         if (!data) return;
                         $("#title").text(data.title);
-                        $("#poster").attr("src","http://neo4j-contrib.github.io/developer-resources/examples/assets/"+encodeURIComponent(data.title)+".jpg");
+                        $("#poster").attr("src","http://neo4j-contrib.github.io/developer-resources/examples/assets/posters/"+encodeURIComponent(data.title)+".jpg");
                         var $list = $("#crew").empty();
                         data.cast.forEach(function (cast) {
                             $list.append($("<li>" + cast.name + " " +cast.job + (cast.job == "acted"?" as " + cast.role : "") + "</li>"));
