@@ -48,15 +48,15 @@ To access the `ResultSet` you call the cursor method `rs.next()` in a while loop
 ----
 Connection con = DriverManager.getConnection("jdbc:neo4j://localhost:7474/");
 
-String query = "MATCH (:User {name:{1}})-[:FRIEND]->(f:User) RETURN f.name as friend";
+String query = "MATCH (:Movie {title:{1}})<-[:ACTED_IN]-(a:Person) RETURN a.name as actor";
 
 try (PreparedStatement stmt = con.prepareStatement(query)) {
 
-    stmt.setString(1,"John");
+    stmt.setString(1,"The Matrix");
 
     try (ResultSet rs = stmt.executeQuery()) {
         while(rs.next()) {
-             System.out.println(rs.getString("friend"));
+             System.out.println(rs.getString("actor"));
         }
     }
 }
@@ -80,44 +80,4 @@ You can search for movies by title or and click on any entry .
 
 === Deploy to Heroku
 
-We want to install our application to the cloud, for instance the http://heroku.com[Heroku] PaaS.
-We will also use the http://graphenedb.com[GraphenDB] Neo4j Database Hosting Add-On.
-
-Install the https://toolbelt.heroku.com/[Heroku Toolbelt] and git.
-
-Then run these commands
-
-[source,shell]
-----
-# initialize git repository and add files
-git init
-git add .
-git commit -m"my neo4j movies app"
-
-# create heroku application, please change the app-name
-export app=my-neo4j-movies-app
-heroku apps:create $app
-
-# add free graphenedb hosting
-heroku addons:add graphenedb:chalk --app $app
-
-# configure your app to use the add-on
-heroku config:set NEO4J_REST_URL=GRAPHENEDB_URL --app $app
-
-# deploy to heroku
-git push heroku master
-
-# open application
-heroku open --app $app
-
-# open addon admin page
-heroku addons:open graphenedb
-----
-
-In the Graphenedb-UI use "Launch Neo4j Admin UI".
-In the Neo4j-Browser run the `:play movies` as of the install instructions above.
-
-Then your app is ready to roll.
-
-
-
+include::../Readme.adoc[tags=heroku]
