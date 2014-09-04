@@ -256,7 +256,7 @@ It will just go ahead and directly create the patterns that you specify.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">CREATE (:Movie {title:"The Matrix",released:1997})</code></pre>
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (:Movie {title:"The Matrix",released:1997})</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -267,7 +267,7 @@ It will just go ahead and directly create the patterns that you specify.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">CREATE (p:Person {name:"Keanu Reeves", born:1964})
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (p:Person {name:"Keanu Reeves", born:1964})
 RETURN p</code></pre>
 </div>
 </div>
@@ -279,7 +279,7 @@ RETURN p</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">CREATE (a:Person {name:"Tom Hanks", born:1956})-[r:ACTED_IN {roles:["Forrest"]}]-&gt;(m:Movie {title:"Forrest Gump",released:1994})
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (a:Person {name:"Tom Hanks", born:1956})-[r:ACTED_IN {roles:["Forrest"]}]-&gt;(m:Movie {title:"Forrest Gump",released:1994})
 CREATE (d:Person {name:"Robert Zemeckis", born:1951})-[:DIRECTED]-&gt;(m)
 RETURN a,d,r,m</code></pre>
 </div>
@@ -318,7 +318,7 @@ A MATCH statement will search for the patterns we specify and return <strong>one
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (m:Movie)
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (m:Movie)
 RETURN m</code></pre>
 </div>
 </div>
@@ -330,7 +330,7 @@ RETURN m</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (p:Person {name:"Keanu Reeves"})
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Person {name:"Keanu Reeves"})
 RETURN p</code></pre>
 </div>
 </div>
@@ -343,7 +343,7 @@ In most cases you have key-properties like SSN, ISBN, emails, logins, geolocatio
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (p:Person {name:"Tom Hanks"})-[r:ACTED_IN]-&gt;(m:Movie)
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Person {name:"Tom Hanks"})-[r:ACTED_IN]-&gt;(m:Movie)
 RETURN m.title, r.roles</code></pre>
 </div>
 </div>
@@ -368,7 +368,7 @@ Adding <em>Cloud Atlas</em> as new movie for <em>Tom Hanks</em> could be achieve
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (p:Person {name:"Tom Hanks"})
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Person {name:"Tom Hanks"})
 CREATE (m:Movie {title:"Cloud Atlas",released:2012})
 CREATE (p)-[r:ACTED_IN {roles:['Zachry']} ]-&gt;(m)
 RETURN p,r,m</code></pre>
@@ -403,7 +403,7 @@ MERGE allows you to provide additional properties you want to set ON CREATE.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MERGE (m:Movie {title:"Cloud Atlas"}) ON CREATE SET m.released = 2012
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MERGE (m:Movie {title:"Cloud Atlas"}) ON CREATE SET m.released = 2012
 RETURN m</code></pre>
 </div>
 </div>
@@ -422,7 +422,7 @@ For that to work you <strong>have to pass in</strong> both nodes from a previous
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (m:Movie {title:"Cloud Atlas"})
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (m:Movie {title:"Cloud Atlas"})
 MATCH (p:Person {name:"Tom Hanks"})
 MERGE (p)-[r:ACTED_IN]-&gt;(m) ON CREATE SET r.roles = ['Zachry']
 RETURN p,r,m</code></pre>
@@ -439,7 +439,7 @@ This can come in very handy for creating tree structures.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">CREATE (y:Year {year:2014})
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (y:Year {year:2014})
 MERGE (y)&lt;-[:IN_YEAR]-(m10:Month {month:10})
 MERGE (y)&lt;-[:IN_YEAR]-(m11:Month {month:11})
 RETURN y,m10,m11</code></pre>
@@ -462,7 +462,7 @@ The simplest predicates are comparisons, especially equality.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (m:Movie)
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (m:Movie)
 WHERE m.title = "The Matrix"
 RETURN m</code></pre>
 </div>
@@ -472,7 +472,7 @@ RETURN m</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (p:Person)-[r:ACTED_IN]-&gt;(m:Movie)
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Person)-[r:ACTED_IN]-&gt;(m:Movie)
 WHERE p.name =~ "K.+"
    OR m.released &gt; 2000
    OR "Neo" IN r.roles
@@ -485,7 +485,7 @@ Where MATCH expands the number and shape of patterns matched, a pattern predicat
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (p:Person)-[:ACTED_IN]-&gt;(m)
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Person)-[:ACTED_IN]-&gt;(m)
 WHERE NOT (p)-[:DIRECTED]-&gt;()
 RETURN p,m</code></pre>
 </div>
@@ -524,7 +524,7 @@ You can later on refer to that column using its alias.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (p:Person)
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Person)
 RETURN p, p.name AS name, upper(p.name), coalesce(p.nickname,"n/a") AS nickname, {name: p.name, label:head(labels(p))} AS person</code></pre>
 </div>
 </div>
@@ -546,7 +546,7 @@ Many common aggregation functions are supported, e.g. count, sum, avg, min, and 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (:Person)
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (:Person)
 RETURN count(*) as people</code></pre>
 </div>
 </div>
@@ -566,7 +566,7 @@ You specify which result columns you want to aggregate and <em>Cypher will use a
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (actor:Person)-[:ACTED_IN]-&gt;(movie:Movie)&lt;-[:DIRECTED]-(director:Person)
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (actor:Person)-[:ACTED_IN]-&gt;(movie:Movie)&lt;-[:DIRECTED]-(director:Person)
 RETURN actor,director,count(*) as collaborations</code></pre>
 </div>
 </div>
@@ -598,7 +598,7 @@ This is especially important with aggregation and DISTINCT return values as both
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (a:Person)-[:ACTED_IN]-&gt;(m:Movie)
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (a:Person)-[:ACTED_IN]-&gt;(m:Movie)
 RETURN a,count(*) as appearances
 ORDER BY appearances DESC
 LIMIT 10;</code></pre>
@@ -622,7 +622,7 @@ This means there&#8217;s no need to repeat the parent information per each child
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (m:Movie)&lt;-[:ACTED_IN]-(a:Person)
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (m:Movie)&lt;-[:ACTED_IN]-(a:Person)
 RETURN m.title as movie, collect(a.name) as cast, count(*) as actors</code></pre>
 </div>
 </div>
@@ -648,7 +648,7 @@ Expressing references between nodes as visual patterns makes them easy to unders
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (p:Person)-[r:ACTED_IN]-&gt;(m:Movie)
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Person)-[r:ACTED_IN]-&gt;(m:Movie)
 RETURN p,type(r) as rel,m
 UNION
 MATCH (p:Person)-[r:DIRECTED]-&gt;(m:Movie)
@@ -686,7 +686,7 @@ As already mentioned you can create literal lists ([1,2,3]) and maps ({name: val
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (m:Movie)&lt;-[:ACTED_IN]-(a:Person)
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (m:Movie)&lt;-[:ACTED_IN]-(a:Person)
 RETURN m.title as movie, collect(a.name)[0..5] as five_of_cast</code></pre>
 </div>
 </div>
@@ -702,7 +702,7 @@ There are list predicates to satisfy conditions for all, any, none and single el
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH path = (:Person)--&gt;(:Movie)&lt;--(:Person)
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH path = (:Person)--&gt;(:Movie)&lt;--(:Person)
 WHERE all(r in rels(path) WHERE type(r) = 'ACTED_IN')
 AND any(n in nodes(path) WHERE n.name = 'Clint Eastwood')
 RETURN path</code></pre>
@@ -721,7 +721,7 @@ This kind of list-processing can reduce the amount of data handled and returned,
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">WITH range(1,10) as numbers
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>WITH range(1,10) as numbers
 WITH extract(n in numbers | n*n) as squares
 WITH filter(n in squares WHERE n &gt; 25) as large_squares
 RETURN reduce( a = 0, n in large_squares | a + n ) as sum_large_squares</code></pre>
@@ -732,7 +732,7 @@ RETURN reduce( a = 0, n in large_squares | a + n ) as sum_large_squares</code></
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (m:Movie)&lt;-[r:ACTED_IN]-(a:Person)
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (m:Movie)&lt;-[r:ACTED_IN]-(a:Person)
 WITH m.title as movie, collect({name: a.name, roles: r.roles}) as cast
 RETURN movie, extract(c2 IN filter(c1 IN cast WHERE c1.name =~ "A.*") | c2.roles )</code></pre>
 </div>
@@ -746,7 +746,7 @@ As already mentioned you can create literal lists ([1,2,3]) and maps ({name: val
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (m:Movie)&lt;-[:ACTED_IN]-(a:Person)
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (m:Movie)&lt;-[:ACTED_IN]-(a:Person)
 RETURN m.title as movie, collect(a.name)[0..5] as five_of_cast</code></pre>
 </div>
 </div>
@@ -768,7 +768,7 @@ Then you can use the UNWIND clause to unroll a list into a sequence of rows agai
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (a:Person)-[:ACTED_IN]-&gt;(m:Movie)&lt;-[:ACTED_IN]-(colleague:Person)
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (a:Person)-[:ACTED_IN]-&gt;(m:Movie)&lt;-[:ACTED_IN]-(colleague:Person)
 WITH colleague, count(*) as frequency, collect(distinct m) as movies
 ORDER BY frequency DESC
 LIMIT 5
@@ -851,7 +851,7 @@ Those can be scalar values, maps, lists or even lists of maps.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">UNWIND {movies} as movie
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>UNWIND {movies} as movie
 MERGE (m:Movie {title:movie.title}) ON CREATE SET m.released = movie.released
 FOREACH (role IN movie.cast |
    MERGE (a:Person {name:role.actor.name}) ON CREATE SET a.born = role.actor.born
@@ -877,7 +877,7 @@ Then you can use whatever Cypher operations you want to apply to either create n
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">LOAD CSV WITH HEADERS FROM "http://docs.neo4j.org/chunked/stable/csv/import/movies.csv" AS line
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>LOAD CSV WITH HEADERS FROM "http://docs.neo4j.org/chunked/stable/csv/import/movies.csv" AS line
 CREATE (m:Movie {id:line.id,title:line.title, released:toInt(line.year)});
 
 LOAD CSV WITH HEADERS FROM "http://docs.neo4j.org/chunked/stable/csv/import/persons.csv" AS line
@@ -897,7 +897,7 @@ CREATE (a)-[:ACTED_IN {roles:[line.role]}]-&gt;(m);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-csv" data-lang="csv">title;released;actor;born;characters
+<pre class="code programlisting cm-s-neo" data-lang="csv"><code>title;released;actor;born;characters
 Back to the Future;1985;Michael J. Fox;1961;Marty McFly
 Back to the Future;1985;Christopher Lloyd;1938;Dr. Emmet Brown
 ...</code></pre>
@@ -905,7 +905,7 @@ Back to the Future;1985;Christopher Lloyd;1938;Dr. Emmet Brown
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">LOAD CSV WITH HEADERS FROM "http://server/movie_actor_roles.csv" AS line FIELDTERMINATOR ";"
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>LOAD CSV WITH HEADERS FROM "http://server/movie_actor_roles.csv" AS line FIELDTERMINATOR ";"
 MERGE (m:Movie {title:line.title}) ON CREATE SET m.released = toInt(line.released)
 MERGE (a:Person {name:line.actor}) ON CREATE SET a.born = toInt(line.born)
 MERGE (a)-[:ACTED_IN {roles:split(line.characters,",") }]-&gt;(m)</code></pre>

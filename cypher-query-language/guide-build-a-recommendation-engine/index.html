@@ -145,7 +145,7 @@ Go to the second slide, click the query and run it.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">LOAD CSV WITH HEADERS FROM "https://neo4j-contrib.github.io/developer-resources/cypher-query-language/movies_actors.csv" AS line
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>LOAD CSV WITH HEADERS FROM "https://neo4j-contrib.github.io/developer-resources/cypher-query-language/movies_actors.csv" AS line
 WHERE line.job = "ACTED_IN"
 MERGE (m:Movie {title:line.title}) ON CREATE SET m.released = toInt(line.released), m.tagline = line.tagline
 MERGE (p:Person {name:line.name}) ON CREATE SET p.born = toInt(line.born)
@@ -161,7 +161,7 @@ RETURN count(*);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (tom:Person {name:"Tom Hanks"})
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name:"Tom Hanks"})
 RETURN tom</code></pre>
 </div>
 </div>
@@ -170,7 +170,7 @@ RETURN tom</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]-&gt;(movie:Movie)
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]-&gt;(movie:Movie)
 RETURN tom, movie</code></pre>
 </div>
 </div>
@@ -179,7 +179,7 @@ RETURN tom, movie</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]-&gt;(:Movie)&lt;-[:ACTED_IN]-(coActor:Person)
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]-&gt;(:Movie)&lt;-[:ACTED_IN]-(coActor:Person)
 RETURN coActor.name</code></pre>
 </div>
 </div>
@@ -191,7 +191,7 @@ RETURN coActor.name</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
          (coActor)-[:ACTED_IN]-&gt;(movie2)&lt;-[:ACTED_IN]-(coCoActor:Person)
 WHERE tom.name = "Tom Hanks"
 AND   NOT    (tom)-[:ACTED_IN]-&gt;(movie2)
@@ -204,7 +204,7 @@ Also you&#8217;d probably want to state that <em>Tom Hanks</em> <strong>never</s
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
          (coActor)-[:ACTED_IN]-&gt;(movie2)&lt;-[:ACTED_IN]-(coCoActor:Person)
 WHERE tom.name = "Tom Hanks"
 AND   NOT    (tom)-[:ACTED_IN]-&gt;()&lt;-[:ACTED_IN]-(coCoActor)
@@ -222,7 +222,7 @@ Now let&#8217;s see which movies and actors are between the two Toms.</p>
 <h3 id="_connection_paths">Connection Paths</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
          (coActor)-[:ACTED_IN]-&gt;(movie2)&lt;-[:ACTED_IN]-(cruise:Person)
 WHERE tom.name = "Tom Hanks" and cruise.name = "Tom Cruise"
 AND   NOT    (tom)-[:ACTED_IN]-&gt;(movie2)

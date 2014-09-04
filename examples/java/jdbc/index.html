@@ -182,7 +182,7 @@ You add the dependency to the JDBC driver in your <code>pom.xml</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml"></code></pre>
+<pre class="code programlisting cm-s-neo" data-lang="xml"><code></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -197,7 +197,7 @@ which then can be used to create `PreparedStatement`s with your Cypher query.</p
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">Connection con = DriverManager.getConnection("jdbc:neo4j://localhost:7474/");
+<pre class="code programlisting cm-s-neo" data-lang="java"><code>Connection con = DriverManager.getConnection("jdbc:neo4j://localhost:7474/");
 
 String query = "MATCH (:Movie {title:{1}})&lt;-[:ACTED_IN]-(a:Person) RETURN a.name as actor";
 
@@ -225,7 +225,7 @@ Then install the Movies data-set with <code>:play movies</code>, click the state
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-shell" data-lang="shell">mvn compile exec:java</code></pre>
+<pre class="code programlisting cm-s-neo" data-lang="shell"><code>mvn compile exec:java</code></pre>
 </div>
 </div>
 <div class="paragraph">

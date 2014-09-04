@@ -1,6 +1,6 @@
 for file in `find . -name "*.adoc" -not -name README.adoc`; do
    echo "Rendering $file"
-   asciidoctor -T asciidoc $file -o ${file%/*}/index.html
+   asciidoctor -a source-highlighter=codemirror -T asciidoc $file -o ${file%/*}/index.html
 done
 
 git add .

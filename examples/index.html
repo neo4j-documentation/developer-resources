@@ -199,7 +199,7 @@ curl http://localhost:8080/movie/The%20Matrix
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (movie:Movie {title:{title}})
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (movie:Movie {title:{title}})
  OPTIONAL MATCH (movie)&lt;-[r]-(person:Person)
  RETURN movie.title as title,
        collect({name:person.name,
@@ -229,7 +229,7 @@ So the result of this query is a list of maps with the title, released and tagli
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (movie:Movie)
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (movie:Movie)
  WHERE movie.title =~ {query}
  RETURN movie</code></pre>
 </div>
@@ -260,7 +260,7 @@ A separate function then takes this result and converts it into the node- and li
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cypher" data-lang="cypher">MATCH (m:Movie)&lt;-[:ACTED_IN]-(a:Person)
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (m:Movie)&lt;-[:ACTED_IN]-(a:Person)
  RETURN m.title as movie, collect(a.name) as cast
  LIMIT {limit}</code></pre>
 </div>
@@ -300,7 +300,7 @@ We will also use the <a href="http://graphenedb.com">GraphenDB</a> Neo4j Databas
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-shell" data-lang="shell"># initialize git repository and add files
+<pre class="code programlisting cm-s-neo" data-lang="shell"><code># initialize git repository and add files
 git init
 git add .
 git commit -m"my neo4j movies app"
