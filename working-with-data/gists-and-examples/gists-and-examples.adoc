@@ -1,0 +1,76 @@
+= What is the Neo4j GraphGist Project? =
+
+:neo4j-version: 2.1.0
+:author: Anders Nawroth
+:twitter: @nawroth
+:tags: domain:example
+
+http://neo4j.com[Neo4j] GraphGists are an easy way to create and share documents containing not just prose, structure 
+and pictures but most importantly **example graph models and use-cases** expressed in Neo4j's query language http://docs.neo4j.org/refcard/2.1/[Cypher].
+
+These documents are written in AsciiDoc -- the simple, textual markup language -- and rendered in your browser as rich and interactive web pages that you 
+can quickly evolve from describing simple howtos or questions to providing an extensive use-case specification.
+
+To see the expressive power of this approach, here are some winners of our past community competitions:
+
+== Examples
+[none]
+* **Finance** link:./?github-neo4j-contrib%2Fgists%2F%2Fother%2FBankFraudDetection.adoc[Bank Fraud Detection] by https://twitter.com/kennybastani[@kennybastani]
+* **Sports** link:./?8019511[Alpine Skiing seasons] by https://twitter.com/pac_19[@pac_19] 
+* **Life Science** link:./?7968633[Pharmaceutical Drugs and their Targets] by https://twitter.com/joshkunken[@joshkunken]
+* **Resources** link:./?8141937[Piping Water] by https://twitter.com/shaundaley1[@shaundaley1]
+* **Retail** link:./?8139605[Single Malt Scotch Whisky] by https://twitter.com/patbaumgartner[@patbaumgartner]
+* **Telecommunications** link:./?8526106[Amazon Web Services Global Infrastructure Graph] by https://twitter.com/aidanjcasey[@aidanjcasey]
+* **Infrastructure** link:./?8635758[Roads, Nodes and Automobiles] by http://www.jacqui.tk[@tekiegirl]
+* **Recommendation** link:./?8173017[Movie Recommendations with k-NN and Cosine Similarity] by http://twitter.com/_nicolemargaret[@_nicolemargaret]
+* **Fun** link:./?6506717[Chess Games and Positions] by https://twitter.com/wefreema[@wefreema]
+* **One hundred more** examples can be found in the https://github.com/neo4j-contrib/graphgist/wiki[GraphGist Collection]
+
+== Getting Started
+
+=== Follow these easy steps
+
+. **Log into** your GitHub account
+. **Choose** one of the examples listed above, click the green **page source** button.
+. **Fork** the original GraphGist into your own account and **start to edit** the prose, images, setup and use-case Cypher queries.
+. **Paste** the Github Gist URL into the top right URL box of any GraphGist page and hit enter; your Gist will be loaded and rendered immediately.
+. **Reload** your GraphGist page whenever you made an update to your document.
+. **Share** your GraphGist with your colleagues, friends or us.
+  Hit the submit link in the footer, when you are ready to get your t-shirt reward.
+
+++++
+<iframe src="//player.vimeo.com/video/74279113" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+++++
+
+
+=== Setup a Graph to show you and your Likes
+
+//setup
+[source,cypher]
+----
+CREATE (you:Person {name:"You"})-[like:LIKE]->(us:Database:NoSql:Graph {name:"Neo4j" })
+RETURN you, like, us
+----
+
+And render as a graph.
+
+//graph
+
+=== Now query the graph to show all the things you like
+
+[source,cypher]
+----
+MATCH (you:Person {name:"You"})-[like:LIKE]->(liked)
+RETURN you.name AS who, type(like) AS how, liked.name AS what
+----
+
+And render as a table.
+
+//table
+
+NOTE: This document is a GraphGist itself, so you can use the green https://github.com/neo4j-contrib/gists/blob/master/meta/Home.adoc[Page Source] button on top of the page to see the original AsciiDoc document.
+
+We'd love to get your feedback, so feel free to write us at *docs at neo4j.org* or comment in the section below.
+
+// * link:./?github-neo4j-contrib%2Fgists%2F%2Fmeta%2FSimple.adoc[A simple GraphGist]
+// * link:./?github-neo4j-contrib%2Fgists%2F%2Fmeta%2FHowTo.adoc[How to create a GraphGist]

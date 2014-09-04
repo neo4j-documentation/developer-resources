@@ -1,0 +1,111 @@
+== Building a Recommendation Engine with Cypher in 2 minutes
+
+This demo explains how to use a basic dataset of _Actors_ acting in _Movies_ to create recommendations with a graph database.
+By following the relationships between the people and movies in am meaningful manner you can determine co-occurences, frequencies and relevant nodes in the graph.
+This is the basis for many recommendation engines.
+
+You can follow along by link:/download[installing and starting] Neo4j server, opening it on http://localhost:7474  and then inserting the movie dataset via the `:play movie graph` command. 
+Go to the second slide, click the query and run it.
+
+Here in this guide we just load the dataset using LOAD CSV
+
+//hide
+//setup
+[source,cypher]
+----
+LOAD CSV WITH HEADERS FROM "https://neo4j-contrib.github.io/developer-resources/cypher-query-language/movies_actors.csv" AS line
+WHERE line.job = "ACTED_IN"
+MERGE (m:Movie {title:line.title}) ON CREATE SET m.released = toInt(line.released), m.tagline = line.tagline
+MERGE (p:Person {name:line.name}) ON CREATE SET p.born = toInt(line.born)
+MERGE (p)-[:ACTED_IN {roles:split(line.roles,";")}]->(m);
+RETURN count(*);
+----
+
+//table
+
+You should be able to run a query like this to find a single actor like _Tom Hanks_.
+
+[source,cypher]
+----
+MATCH (tom:Person {name:"Tom Hanks"})
+RETURN tom
+----
+
+//table
+
+Similarly you should be able to retrieve all his movies with a single query. Your results should already look like a graph.
+
+[source,cypher]
+----
+MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]->(movie:Movie)
+RETURN tom, movie
+----
+
+//graph_result
+
+Of course Tom has colleagues that acted with him in his movies, this "co-actor" statement looks like this.
+
+[source,cypher]
+----
+MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]->(:Movie)<-[:ACTED_IN]-(coActor:Person)
+RETURN coActor.name
+----
+
+//table
+
+=== Collaborative Filtering
+
+We can now turn this "co-actor" query into a recommendation query by following those relationships another step out to find the "co-co-actors", i.e. the second degree actors in Toms network that, he has not acted with.
+
+[source,cypher]
+----
+MATCH (tom:Person)-[:ACTED_IN]->(movie1)<-[:ACTED_IN]-(coActor:Person),
+         (coActor)-[:ACTED_IN]->(movie2)<-[:ACTED_IN]-(coCoActor:Person)
+WHERE tom.name = "Tom Hanks"
+AND   NOT    (tom)-[:ACTED_IN]->(movie2)
+RETURN coCoActor.name
+----
+
+//table
+For a collaborative filtering, you often take frequencies of occurrences into account to find the people or things that appear most frequently in your network.
+Also you'd probably want to state that _Tom Hanks_ *never* worked with the recommended people, not just not in movies that his co-actors worked in.
+
+[source,cypher]
+----
+MATCH (tom:Person)-[:ACTED_IN]->(movie1)<-[:ACTED_IN]-(coActor:Person),
+         (coActor)-[:ACTED_IN]->(movie2)<-[:ACTED_IN]-(coCoActor:Person)
+WHERE tom.name = "Tom Hanks"
+AND   NOT    (tom)-[:ACTED_IN]->()<-[:ACTED_IN]-(coCoActor)
+RETURN coCoActor.name, count(distinct coCoActor) as frequency
+ORDER BY frequency DESC
+LIMIT 5
+----
+
+//table
+
+One of those "co-co-actors" is _Tom Cruise_.
+Now let's see which movies and actors are between the two Toms.
+
+=== Connection Paths
+
+[source,cypher]
+----
+MATCH (tom:Person)-[:ACTED_IN]->(movie1)<-[:ACTED_IN]-(coActor:Person),
+         (coActor)-[:ACTED_IN]->(movie2)<-[:ACTED_IN]-(cruise:Person)
+WHERE tom.name = "Tom Hanks" and cruise.name = "Tom Cruise"
+AND   NOT    (tom)-[:ACTED_IN]->(movie2)
+RETURN tom, movie1, coActor, movie2, cruise
+----
+
+//graph_result
+
+This returns multiple _Bacon-Paths_, even with _Kevin Bacon_ himself. :)
+
+So with two simple Cypher statements we created already two recommendation algorithms: *Who you show know* and *How you get to know them*.
+
+
+You can also watch the video of Andreas running these queries live on our main example movie dataset.
+
+++++
+<iframe width="420" height="315" src="//www.youtube.com/embed/qbZ_Q-YnHYo" frameborder="0" allowfullscreen></iframe>
+++++
