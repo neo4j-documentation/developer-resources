@@ -1,0 +1,713 @@
+= Introduction to Cypher
+
+This friendly guide will introduce you to the Cypher query language, which is used by Neo4j.
+It was developed at Neo Technology for creating and querying graph data.
+
+If you want to keep a reference on your side while reading, please see the http://docs.neo4j.org/refcard/{neo4j-version}[Cypher Refcard].
+
+== It's all about Patterns
+
+Graphs thrive on patterns, each graph is a connected structure which consists of many different patterns.
+
+Patterns capture semantic information by describing how things relate.
+They tell you if _I KNOW you_, _an_Author WROTE a Book_, _a Person LIVES at a Place_ or _an Actor ACTED_IN a Movie_.
+
+This kind of simple pattern typically describes how two entities are related.
+Combined with other patterns, this can represent complex domains and interesting use-cases.
+
+Small pattern structures are also easy for the human brain to handle.
+We are well versed in detecting patterns not only in our daily lives but also in data, when the data is presented visually.
+
+Cypher is all about patterns.
+They are used to describe graph structures you want to create or information you want to find.
+
+// we need to describe the distinction between pattern nodes vs database nodes, same with rels.
+// maybe start with that here?
+// it's important to understand that a pattern node can be zero to any number of db nodes when the pattern is used.
+
+== Cypher Concepts
+
+Cypher is a textual, declarative query language, much like SQL for relational databases, but for graphs.
+It doesn't instruct the database to run certain operations but instead describes the things you want to create or find.
+Neo4j then figures out what's the best way to do that.
+
+With Cypher, you describe graph patterns (circles and arrows for nodes and relationships) that you would usually draw on a whiteboard as symbolic, textual patterns.
+
+It uses ASCII-art to visualize the typical circles for nodes with parentheses surrounding a piece of information.
+
+To describe a node for a  "Movie" entity with a "title" and a "released"-year we would use a textual pattern like this:
+
+----
+(matrix:Movie {title:"The Matrix", released:1997})
+----
+
+The +Movie+ label tags the otherwise untyped node as a movie and is prefixed by a colon to become a symbol: +:Movie+.
+The +matrix+ identifier is just a name that we use to refer to this node within the statement later on. 
+It is optional and only relevant in the scope of the statement; it's not persisted.
+
+The freely chosen properties of that node, +title+ and +released+ are represented as a map (you might want to call it a dictionary or javascript-object like structure).
+They are listed as keys/value pairs within curly braces.
+
+// +--+ would be even simpler, right?
+To ``draw'' the arrow of your pattern, you would just use the appropriate symbols, which, in the simplest case is +-->+.
+If you have more information about that relationship, like a relationship type or properties on it, you can include them in square brackets.
+
+For the movies domain, this could be the _ACTED_IN_ relationship. 
+So a basic fact or pattern in this domain would be:
+
+----
+(keanu:Person:Actor {name:"Keanu Reeves"}) -[role:ACTED_IN {roles : ["Neo"]}]-> (matrix:Movie {title:"The Matrix"})
+----
+
+Like with node labels, the relationship-type +ACTED_IN+ is added as a symbol, prefixed with a colon: +:ACTED_IN+.
+As with nodes you can use identifiers, in this case +role+, to refer to the relationship in later parts of the statement.
+You use the same notation for relationship properties as for node properties.
+In this case we went with an array property.
+
+You can also assign the whole pattern to an identifier which then allows you to access each of the matched paths in the graph.
+This way you can for instance inspect them or use them in other expressions.
+
+----
+path = (:Person)-[:ACTED_IN]->(:Movie)
+----
+
+This path variable would contain 2 nodes and the connecting relationship for each such pattern found or created.
+There are a number of functions to access details of a path, including +nodes(path)+, +rels(path)+, and +length(path)+.
+
+== Clauses
+
+Cypher statements consist of individual _clauses_ which are their building blocks.
+There are clauses that can create and match patterns in the graph but also filter, project, sort or paginate results or connect/compose partial statements.
+We will use Cypher clauses to compose more complex statements that express what we want to know or create. 
+Neo4j then figures out how to achieve that in an efficient manner.
+
+== Creating Data
+
+We'll start by looking into the clause(s) that allow us to create data.
+
+To add data, we just use the patterns we already know. 
+By providing patterns we can specify what graph structures, labels and attributes we would like to make part of our graph. 
+
+Obviously the simplest clause is called +CREATE+. 
+It will just go ahead and directly create the patterns that you specify.
+
+For the patterns we've looked at so far this could look like this:
+
+[source,cypher]
+----
+CREATE (:Movie {title:"The Matrix",released:1997})
+----
+
+//graph
+
+If we execute this statement, Cypher returns the number of changes, in this case adding 1 node, 1 label and 2 properties.
+
+If case we also want to return the created data we can add a +RETURN+ clause, which refers to the identifier we've assigned to our pattern elements.
+
+[source,cypher]
+----
+CREATE (p:Person {name:"Keanu Reeves", born:1964})
+RETURN p
+----
+
+//graph_result
+
+If we want to create more than one element, we can separate them with commas or use multiple +CREATE+ statements.
+
+We can of course also create more complex structures, like an +ACTED_IN+ relationship with information about the character, or +DIRECTED+ ones for the director.
+
+[source,cypher]
+----
+CREATE (a:Person {name:"Tom Hanks", born:1956})-[r:ACTED_IN {roles:["Forrest"]}]->(m:Movie {title:"Forrest Gump",released:1994})
+CREATE (d:Person {name:"Robert Zemeckis", born:1951})-[:DIRECTED]->(m)
+RETURN a,d,r,m
+----
+
+//graph_result
+
+The movie graph sample in the Neo4j Browser is one example of a large set of +CREATE+ statements that create a complete graph.
+
+In most cases, we want to connect new data to existing structures.
+This requires that we know how to find existing patterns in our graph data, which we will look at next.
+
+== Matching Patterns
+
+Matching patterns is a task for the +MATCH+ statement. 
+We pass the same patterns we've used so far to +MATCH+ to describe what we're looking for. 
+It is a similar to _by example_ queries, only that our examples also include the structures.
+
+NOTE: A +MATCH+ statement will search for the patterns we specify and return *one row per successful pattern match*.
+
+To find the data we've created so far, we can start looking for all nodes labeled with the +Movie+ label.
+
+[source,cypher]
+----
+MATCH (m:Movie)
+RETURN m
+----
+
+// graph_result
+// table
+
+This should show both _The Matrix_ and _Forrest Gump_.
+
+We can also look for a specific person, like _Keanu Reeves_.
+
+[source,cypher]
+----
+MATCH (p:Person {name:"Keanu Reeves"})
+RETURN p
+----
+
+// table
+
+Note that we only provide enough information to find the nodes, not all properties are required. 
+In most cases you have key-properties like SSN, ISBN, emails, logins, geolocation or product codes to look for.
+
+We can also find more interesting connections, like for instance the movies titles that _Tom Hanks_ acted in and the roles he played.
+
+[source,cypher]
+----
+MATCH (p:Person {name:"Tom Hanks"})-[r:ACTED_IN]->(m:Movie)
+RETURN m.title, r.roles
+----
+
+// table
+
+In this case we only returned the properties of the nodes and relationships that we were interested in. 
+You can access them everywhere via a dot notation +identifer.property+. 
+
+Of course this only lists his role as _Forrest_ in _Forrest Gump_ because that's all data that we've added.
+
+But now we know enough to connect new nodes to existing ones and can combine +MATCH+ and +CREATE+ to attach structures to the graph.
+
+== Attaching Structures
+
+To extend the graph with new information, we first have to match the existing connection points and then attach the newly created nodes with relationships.
+Adding _Cloud Atlas_ as new movie for _Tom Hanks_ could be achieved like this:
+
+[source,cypher]
+----
+MATCH (p:Person {name:"Tom Hanks"})
+CREATE (m:Movie {title:"Cloud Atlas",released:2012})
+CREATE (p)-[r:ACTED_IN {roles:['Zachry']} ]->(m)
+RETURN p,r,m
+----
+
+It is important to remember that we can assign identifiers to both nodes and relationships and use them later on, no matter if they were created or matched.
+It is possible to attach both node and relationship in a single +CREATE+ clause.
+For readability it helps to split them up though.
+
+A tricky aspect of the combination of +MATCH+ and +CREATE+ is that we get one row per matched pattern.
+This causes subsequent create statements to be executed for each row.
+In many cases that is what you want.
+If that's not intended, please move the create statement before the +MATCH+, change the cardinality of the query with means discussed later or use the _get or create_ semantics of the next clause: +MERGE+.
+
+// not sure about the last sentence above
+
+== Completing Patterns
+
+Whenever we get data from external systems or are not sure if certain information already exists in the graph, we want to be able to express a repeatable (idempotent) update operation.
+In Cypher +MERGE+ has this function. 
+It acts like a combination of +MATCH+ _or_ +CREATE+, that checks for the existence of data first before creating it.
+Again: you specify a pattern with +MERGE+ to be found or created. 
+Usually, as with +MATCH+ you only want to include the key property to look for in your core pattern.
++MERGE+ allows you to provide additional properties you want to set +ON CREATE+.
+
+If we wouldn't know if our graph already contained _Cloud Atlas_ we could merge it in again.
+
+[source,cypher]
+----
+MERGE (m:Movie {title:"Cloud Atlas"}) ON CREATE SET m.released = 2012
+RETURN m
+----
+
+//table
+
+In any case we get a result, either the data (potentially more than one row) that was already in the graph or a single, newly created +Movie+ node.
+
+So foremost +MERGE+ makes sure that you can't create duplicate information or structures, but it comes with the cost of needing to check first for existing matches.
+Especially on large graphs it can be costly to scan a large set of labeled nodes for a certain property.
+You can alleviate some of that by creating supporting indexes or constraints, which we'll discuss later.
+But it's not for free, so whenever you're sure to not create duplicate data use +CREATE+ over +MERGE+
+
++MERGE+ can also assert that a relationship is only created once. 
+For that to work you *have to pass in* both nodes from a previous pattern match.
+
+[source,cypher]
+----
+MATCH (m:Movie {title:"Cloud Atlas"})
+MATCH (p:Person {name:"Tom Hanks"})
+MERGE (p)-[r:ACTED_IN]->(m) ON CREATE SET r.roles = ['Zachry']
+RETURN p,r,m
+----
+
+//graph_result
+//table
+
+In case the direction of your relationship is arbitrary, you can leave off the arrow tip.
++MERGE+ will then check for the relationship in either direction, and if not found create a new, directed relationship.
+
+If you choose to pass in only one node externally, +MERGE+ offers an interesting functionality.
+It will then only match within the direct neighborhood of the provided node for the given pattern, and, if not found create it.
+This can come in very handy for creating tree structures.
+
+[source,cypher]
+----
+CREATE (y:Year {year:2014})
+MERGE (y)<-[:IN_YEAR]-(m10:Month {month:10})
+MERGE (y)<-[:IN_YEAR]-(m11:Month {month:11})
+RETURN y,m10,m11
+----
+
+//graph_result
+
+Here the two months are not checked against globally but only in the context of the year _2014_.
+
+== Filtering Results
+
+So far we've matched patterns in the graph and always returned all results we found.
+Quite often there are conditions in play for what we want to see.
+Similarly to _SQL_ those filter conditions are expressed in a +WHERE+ clause.
+This clause allows to use any number of boolean expressions (predicates) combined with +AND+, +OR+ and +NOT+.
+The simplest predicates are comparisons, especially equality.
+
+[source,cypher]
+----
+MATCH (m:Movie)
+WHERE m.title = "The Matrix"
+RETURN m
+----
+
+//table
+
+More interesting are numeric comparisons, matching regular expressions and checking the existence of values within a collection.
+
+[source,cypher]
+----
+MATCH (p:Person)-[r:ACTED_IN]->(m:Movie)
+WHERE p.name =~ "K.+" 
+   OR m.released > 2000
+   OR "Neo" IN r.roles
+RETURN p,r,m
+----
+
+//table
+
+One aspect that might be little surprising is that you can even use patterns as predicates.
+Where +MATCH+ expands the number and shape of patterns matched, a pattern predicate restricts the current result set again, only allowing the paths to pass that satisfy these additional patterns as well (or +NOT+).
+
+[source,cypher]
+----
+MATCH (p:Person)-[:ACTED_IN]->(m)
+WHERE NOT (p)-[:DIRECTED]->()
+RETURN p,m
+----
+
+//table
+
+Here we find actors, because they sport an +ACTED_IN+ relationship but then skip those that ever +DIRECTED+ any movie.
+
+There are also more advanced ways of filtering like collection-predicates which we will look at later on.
+
+== Returning Results
+
+So far we've returned only nodes, relationships, or paths directly via their identifiers.
+But the +RETURN+ clause can actually return any number of expressions.
+But what are actually expressions in Cypher?
+
+The simplest expressions are literal values like numbers, strings and arrays as +[1,2,3]+, and maps like +{name:"Tom Hanks",born:1964, movies:["Forrest Gump", ...], count:13}+.
+You can access individual properties of any node, relationship, or map with a dot-syntax like +n.name+.
+Individual elements or slices of arrays can be retrieved with subscripts like +names[0]+ or +movies[1..-1]+.
+Each function evaluation like +length(array)+, +toInt("12")+, +substring("2014-07-01",0,4)+, or +coalesce(p.nickname,"n/a")+ is also an expression.
+
+Predicates that you'd use in +WHERE+ count as boolean expressions.
+
+Of course simpler expressions can be composed and concatenated to form more complex expressions.
+
+By default the expression itself will be used as label for the column, in many cases you want to alias that with a more understandable name using +expression AS alias+.
+You can later on refer to that column using its alias.
+
+[source,cypher]
+----
+MATCH (p:Person)
+RETURN p, p.name AS name, upper(p.name), coalesce(p.nickname,"n/a") AS nickname, {name: p.name, label:head(labels(p))} AS person
+----
+
+//table
+
+If you're interested in unique results you can use the +DISTINCT+ keyword after +RETURN+ to indicate that.
+
+== Aggregating Information
+
+In many cases you want to aggregate or group the data that you encounter while traversing patterns in your graph.
+In Cypher aggregation happens in the +RETURN+ clause while computing your final results.
+Many common aggregation functions are supported, e.g. +count+, +sum+, +avg+, +min+, and +max+, but there are several more.
+
+Counting the number of people in your database could be achieved by this:
+
+[source,cypher]
+----
+MATCH (:Person)
+RETURN count(*) as people
+----
+
+//table
+
+Please note that +NULL+ values are skipped during aggregation.
+For aggregating only unique values use +DISTINCT+, like in +count(DISTINCT role)+.
+
+Aggregation in Cypher just works.
+You specify which result columns you want to aggregate and _Cypher will use all non-aggregated columns as grouping keys_.
+
+Aggregation affects which data is still visible in ordering or later query parts.
+
+To find out how often an actor and director worked together, you'd run this statement:
+
+[source,cypher]
+----
+MATCH (actor:Person)-[:ACTED_IN]->(movie:Movie)<-[:DIRECTED]-(director:Person)
+RETURN actor,director,count(*) as collaborations
+----
+
+//table
+
+Frequently you want to sort and paginate after aggregating a +count(x)+.
+
+== Ordering and Pagination
+
+Ordering works like in other query languages, with an +ORDER BY expression [ASC|DESC]+ clause.
+The expression can be any expression discussed before as long as it is computable from the returned information.
+
+So for instance if you return +person.name+ you can still +ORDER BY person.age+ as both are accessible from the +person+ reference.
+You cannot order by things that you can't infer from the information you return.
+This is especially important with aggregation and +DISTINCT+ return values as both remove the visibility of data that is aggregated.
+
+Pagination is a straightforward use of +SKIP {offset} LIMIT {count}+.
+
+A common pattern is to aggregate for a count (score or frequency), order by it and only return the top-n entries.
+
+For instance to find the most prolific actors you could do:
+
+[source,cypher]
+----
+MATCH (a:Person)-[:ACTED_IN]->(m:Movie)
+RETURN a,count(*) as appearances
+ORDER BY appearances DESC
+LIMIT 10;
+----
+
+//table
+
+// also that you can order by things you return or which are computable from what you return
+
+== Collecting Aggregation
+
+The most helpful aggregation function is +collect+, which, as the name says, collects all aggregated values into a _real_ array or list.
+This comes very handy in many situations as you don't loose the detail information while aggregating.
+
+Collect is well suited for retrieving the typical parent-child structures, where one core entity (parent, root or head) is returned per row with all it's dependent information in associated collections created with +collect+.
+This means there's no need to repeat the parent information per each child-row or even running 1+n statements to retrieve the parent and its children individually.
+
+To retrieve the cast of each movie in our database you could use this statement:
+
+[source,cypher]
+----
+MATCH (m:Movie)<-[:ACTED_IN]-(a:Person)
+RETURN m.title as movie, collect(a.name) as cast, count(*) as actors
+----
+
+//table
+
+The lists created by collect can either be used from the client consuming the Cypher results or directly within a statement with any of the collection functions or predicates.
+
+== Building Larger Statements
+
+=== Combining statements with UNION
+
+A Cypher statement is usually quite compact.
+Expressing references between nodes as visual patterns makes them easy to understand.
+
+If you want to combine the results of two statements that have the same result structure, you can use +UNION [ALL]+.
+
+For instance if you want to list both actors and directors without using the alternative relationship-type syntax +()-[:ACTED_IN|:DIRECTED]->()+ you can do this:
+
+[source,cypher]
+----
+MATCH (p:Person)-[r:ACTED_IN]->(m:Movie)
+RETURN p,type(r) as rel,m
+UNION
+MATCH (p:Person)-[r:DIRECTED]->(m:Movie)
+RETURN p,type(r) as rel,m
+----
+
+//table
+
+=== Use WITH to chain statements
+
+In Cypher it's possible to chain fragments of statements together, much like you would do within a data-flow pipeline.
+Each fragment works on the output from the previous one and its results can feed into the next one.
+
+You use the +WITH+ clause to combine the individual parts and declare which data flows from one to the other.
++WITH+ is very much like +RETURN+ with the difference that it doesn't finish a query but prepares the input for the next part.
+You can use the same expressions, aggregations, ordering and pagination as in the +RETURN+ clause.
+
+The only difference is that you _have to_ alias all columns as they would otherwise not be accessible with an identifier.
+Every column that you don't declare in your +WITH+ clause is not available in subsequent query parts.
+
+// Maybe use this in the SQL -> Cypher chapter instead? I here, I think it just disturbs the flow.
+//If you want to filter by an aggregated value you would have to use +HAVING+ in other query languages.
+//That's a single purpose clause for filtering aggregated information.
+//But as we already have +WHERE+ as a filtering clause, why are we not able to use that?!
+
+// example to go here
+
+== Utilizing data structures
+
+Cypher can create and consume more complex data structures out of the box.
+As already mentioned you can create literal lists (+[1,2,3]+) and maps (+{name: value}+) within a statement.
+
+There is a number of functions that work with lists, from simple ones like +length(list)+ that returns the size of a list to 
+
+// missing content here
+
+[source,cypher]
+----
+MATCH (m:Movie)<-[:ACTED_IN]-(a:Person)
+RETURN m.title as movie, collect(a.name)[0..5] as five_of_cast
+----
+
+//table
+
+You can also access individual elements or slices of a list quickly with +list[1]+ or +list[5..-5]+.
+Other functions to access parts of a list are +head(list)+, +tail(list)+ and +last(list)+.
+
+=== List predicates
+
+When using lists and arrays in comparisons you can use predicates like +value IN list+ or +any(x IN list WHERE x = value)+.
+There are list predicates to satisfy conditions for +all+, +any+, +none+ and +single+ elements.
+
+[source,cypher]
+----
+MATCH path = (:Person)-->(:Movie)<--(:Person)
+WHERE all(r in rels(path) WHERE type(r) = 'ACTED_IN')
+AND any(n in nodes(path) WHERE n.name = 'Clint Eastwood')
+RETURN path
+----
+
+//table
+
+=== List processing
+
+Oftentimes you want to process lists to +filter+, aggregate (+reduce+) or transform (+extract+) their values.
+Those transformations can be done within Cypher or in the calling code.
+This kind of list-processing can reduce the amount of data handled and returned, so it might make sense to do it within the Cypher statement.
+
+A simple, non-graph example would be:
+
+[source,cypher]
+----
+WITH range(1,10) as numbers
+WITH extract(n in numbers | n*n) as squares
+WITH filter(n in squares WHERE n > 25) as large_squares
+RETURN reduce( a = 0, n in large_squares | a + n ) as sum_large_squares
+----
+
+//table
+
+In a graph-query you can filter or aggregate collected values instead or work on array properties.
+// need to be rephrased somehow
+
+[source,cypher]
+----
+MATCH (m:Movie)<-[r:ACTED_IN]-(a:Person)
+WITH m.title as movie, collect({name: a.name, roles: r.roles}) as cast
+RETURN movie, extract(c2 IN filter(c1 IN cast WHERE c1.name =~ "A.*") | c2.roles )
+----
+
+//table
+
+Cypher offers to create and consume more complex data structures out of the box. 
+As already mentioned you can create literal lists (+[1,2,3]+) and maps (+{name: value}+) within your statement.
+
+There is a number of functions to work with lists, from simple ones like +length(list)+ that returns the size of a list to 
+
+[source,cypher]
+----
+MATCH (m:Movie)<-[:ACTED_IN]-(a:Person)
+RETURN m.title as movie, collect(a.name)[0..5] as five_of_cast
+----
+
+//table
+
+You can also access individual elements or slices of a list quickly with +list[1]+ or +list[5..-5]+.
+Other functions to access parts of a list are +head(list)+, +tail(list)+ and +last(list)+.
+
+=== UNWIND
+
+Sometimes you have collected information into a list, but want to use each element individually as a row.
+For instance, you might want to further match patterns in the graph.
+Or you passed in a collection of values but now want to create or match a node or relationship for each element.
+Then you can use the +UNWIND+ clause to unroll a list into a sequence of rows again.
+
+For instance, a query to find the top 5-co-actors and then follow their movies and again list the cast for each of those movies:
+
+[source,cypher]
+----
+MATCH (a:Person)-[:ACTED_IN]->(m:Movie)<-[:ACTED_IN]-(colleague:Person)
+WITH colleague, count(*) as frequency, collect(distinct m) as movies
+ORDER BY frequency DESC
+LIMIT 5
+UNWIND movies as m
+MATCH (m)<-[:ACTED_IN]-(a)
+RETURN m.title as movie, collect(a.name) as cast
+----
+
+//table
+
+== Indexes and Constraints
+
+Labels allow you to group nodes, and add indexes or constraints to them.
+Adding an index gives fast lookups for starting nodes in the graph.
+
+=== Lookup Indexes
+
+In general, for a graph query to run fast, you don't need indexes, you only need them to find your starting points.
+After that initial lookups you rely on the in-graph structures and first class citizenship of relationships in the graph database to achieve high performance.
+
+You would create an index like this: +CREATE INDEX ON :Movie(title)+
+
+=== Unique Constraints
+
+You can also specify unique constraints that guarantee uniqueness of a certain property on nodes with a specific label.
+
+These constraints are also used by the +MERGE+ clause to make certain that a node only exists once.
+
+A constraint definition would look like this: +CREATE CONSTRAINT ON (p:Person) ASSERT p.name IS UNIQUE+.
+
+== Loading Data
+
+As you've seen you can not only query data expressively but also create data with Cypher statements.
+
+Naturally in most cases you wouldn't want to write or generate huge statements to generate your data but instead use an existing data source that you pass into your statement and which is used to drive the graph generation process.
+
+That process not only includes creating completely new data but also integrating with existing structures and updating your graph.
+
+=== Parameters
+
+In general we recommend passing in varying literal values from the outside as named parameters.
+
+This allows Cypher to reuse existing execution plans for the statements.
+
+Of course you can also pass in parameters for data to be imported. 
+Those can be scalar values, maps, lists or even lists of maps.
+
+In your Cypher statement you can then iterate over those values (e.g. with +UNWIND+) to create your graph structures.
+
+For instance to create a movie graph from JSON data structures pulled from an API you could use:
+
+----
+[{title:"Stardust", released:2007, cast: [{actor:{name:"Robert de Niro",born:1943},characters:["Captain Shakespeare"]},
+                                          {actor:{name:"Michelle Pfeiffer",born:1958},characters:["Lamia"]}]}
+,...
+]
+----
+
+[source,cypher]
+----
+UNWIND {movies} as movie
+MERGE (m:Movie {title:movie.title}) ON CREATE SET m.released = movie.released
+FOREACH (role IN movie.cast |
+   MERGE (a:Person {name:role.actor.name}) ON CREATE SET a.born = role.actor.born
+   MERGE (a)-[:ACTED_IN {roles:role.characters}]->(m)
+)
+----
+
+== Importing CSV
+
+Cypher provides an elegant built-in way to import tabular CSV data into more complex graph structures.
+
+The +LOAD CSV+ clause parses a local or remote file into a stream of rows which represent maps (with headers) or lists.
+Then you can use whatever Cypher operations you want to apply to either create nodes or relationships or to merge with existing graph structures.
+
+As CSV files usually represent either node- or relationship-lists, you run multiple passes to create nodes and relationships separately.
+
+[source,cypher]
+----
+LOAD CSV WITH HEADERS FROM "http://docs.neo4j.org/chunked/stable/csv/import/movies.csv" AS line 
+CREATE (m:Movie {id:line.id,title:line.title, released:toInt(line.year)});
+
+LOAD CSV WITH HEADERS FROM "http://docs.neo4j.org/chunked/stable/csv/import/persons.csv" AS line 
+MERGE (a:Person {id:line.id}) ON CREATE SET a.name=line.name;
+
+LOAD CSV WITH HEADERS FROM "http://docs.neo4j.org/chunked/stable/csv/import/roles.csv" AS line 
+MATCH (m:Movie {id:line.movieId})
+MATCH (a:Person {id:line.personId})
+CREATE (a)-[:ACTED_IN {roles:[line.role]}]->(m);
+----
+
+//graph
+
+If your file contains denormalized data, you can either run the same file with multiple passes and simple operations as shown above or you might have to use MERGE to create entities uniquely.
+
+For our use-case we can import the data using a CSV structure like this:
+
+[source,csv]
+----
+title;released;actor;born;characters
+Back to the Future;1985;Michael J. Fox;1961;Marty McFly
+Back to the Future;1985;Christopher Lloyd;1938;Dr. Emmet Brown
+...
+----
+
+[source,cypher]
+----
+LOAD CSV WITH HEADERS FROM "http://server/movie_actor_roles.csv" AS line FIELDTERMINATOR ";"
+MERGE (m:Movie {title:line.title}) ON CREATE SET m.released = toInt(line.released)
+MERGE (a:Person {name:line.actor}) ON CREATE SET a.born = toInt(line.born)
+MERGE (a)-[:ACTED_IN {roles:split(line.characters,",") }]->(m)
+----
+
+//graph
+
+If you import a large amount of data (more than 10000 rows), it is recommended to prefix your +LOAD CSV+ clause with a +PERIODIC COMMIT+ hint, 
+which allows Cypher to regularly commit the import transactions to avoid memory churn for large transaction-states.
+
+== Programmatic Use
+
+The most direct way to use Cypher programmatically is to execute a HTTP-POST operation against the transactional Cypher endpoint.
+With each request you can send a large number of statements with parameters to the server.
+For immediate execution you can use the `/db/data/transaction/commit` endpoint with a JSON payload like this:
+
+----
+curl -i -H accept:application/json -H content-type:application/json -XPOST http://localhost:7474/db/data/transaction/commit \
+  -d '{"statements":[{"statement":"CREATE (p:Person {name:{name},born:{born}}) RETURN p","parameters":{"name":"Keanu Reeves","born":1964}}]}'
+
+# results
+{"results":[{"columns":["p"],"data":[{"row":[{"name":"Keanu Reeves","born":1964}]}]}],"errors":[]}
+----
+
+In the payload you can add as many "statement" objects in the "statements" list.
+
+For larger use-cases that span multiple requests but whose read-write-read-write operations should be executed within the same transactional scope you'd use the
+endpoint `/db/data/transaction` and would get a transaction URL as the `Location`-Header that you can continue to write to and read from.
+At the end you either commit the whole transaction by POSTing to the (also returned) commit URL or by issuing a DELETE request against your transactional endpoint.
+
+
+----
+curl -i -H accept:application/json -H content-type:application/json -XPOST http://localhost:7474/db/data/transaction \
+  -d '{"statements":[{"statement":"CREATE (p:Person {name:{name},born:{born}}) RETURN p","parameters":{"name":"Clint Eastwood","born":1930}}]}'
+
+# results
+HTTP/1.1 201 Created
+Location: http://localhost:7474/db/data/transaction/261
+
+{"commit":"http://localhost:7474/db/data/transaction/261/commit","transaction":{"expires":"Wed, 03 Sep 2014 23:26:51 +0000"},"errors":[],
+ "results":[{"columns":["p"],"data":[{"row":[{"name":"Clint Eastwood","born":1930}]}]}]}
+----
+
+
+
+
+
+

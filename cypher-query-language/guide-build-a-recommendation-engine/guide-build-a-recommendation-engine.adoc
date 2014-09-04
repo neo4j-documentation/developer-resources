@@ -4,6 +4,8 @@ This demo explains how to use a basic dataset of _Actors_ acting in _Movies_ to 
 By following the relationships between the people and movies in am meaningful manner you can determine co-occurences, frequencies and relevant nodes in the graph.
 This is the basis for many recommendation engines.
 
+=== Setup
+
 You can follow along by link:/download[installing and starting] Neo4j server, opening it on http://localhost:7474  and then inserting the movie dataset via the `:play movie graph` command. 
 Go to the second slide, click the query and run it.
 
@@ -20,6 +22,8 @@ MERGE (p:Person {name:line.name}) ON CREATE SET p.born = toInt(line.born)
 MERGE (p)-[:ACTED_IN {roles:split(line.roles,";")}]->(m);
 RETURN count(*);
 ----
+
+=== Basic Queries
 
 //table
 
@@ -107,5 +111,5 @@ So with two simple Cypher statements we created already two recommendation algor
 You can also watch the video of Andreas running these queries live on our main example movie dataset.
 
 ++++
-<iframe width="420" height="315" src="//www.youtube.com/embed/qbZ_Q-YnHYo" frameborder="0" allowfullscreen></iframe>
+<iframe width="640" height="480" src="//www.youtube.com/embed/qbZ_Q-YnHYo" frameborder="0" allowfullscreen></iframe>
 ++++

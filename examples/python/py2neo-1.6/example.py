@@ -3,7 +3,7 @@
 
 from json import dumps
 
-from bottle import get, template, run, request, response
+from bottle import get, template, run, request, response, static_file
 from py2neo.neo4j import GraphDatabaseService, CypherQuery
 
 
@@ -12,7 +12,7 @@ graph = GraphDatabaseService()
 
 @get("/")
 def get_index():
-    return template("index")
+    return static_file("index.html",root="views")
 
 
 @get("/graph")
