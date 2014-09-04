@@ -25,7 +25,7 @@ mkdir working-with-data
 cd working-with-data
 dir_and_adoc guide-create-your-dataset
 dir_and_adoc guide-importing-data-and-etl
-dir_and_adoc guide-neo4j-browser-
+dir_and_adoc guide-neo4j-browser
 dir_and_adoc guide-neo4j-browser-data-visualization
 dir_and_adoc gists-and-examples
 cd ..
