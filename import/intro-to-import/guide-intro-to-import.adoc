@@ -1,0 +1,58 @@
+= Guide to importing data into Neo4j
+
+This guide will help get your data into Neo4j wherever it happens to come from and regardless of how much of it there is.
+
+Existing data can come in many shapes and sizes:
+
+* Databases (relational, NoSQL)
+* Files (CSV, GraphML, Gephi, Geoff, Spreadsheet)
+* Services (web service, REST API, .NET)
+
+But regardless of the source we typically won't be lucky enough to have our data already structured as a graph so we'll first need to design a graph model - you can learn how to do that in our link:build-a-graph-data-model/guide-intro-to-graph-modeling/guide-intro-to-graph-modeling[modelling guide]
+
+Now that we've got the first version of our model it's time to import some data in and see how well we're able to run queries against it.
+
+The appropriate tool to use depends on a few factors:
+
+* The source of the data
+* The amount of data to import
+* Whether the import needs to happen online or offline
+
+=== What's the source for the data?
+
+==== Relational Database
+
+A relational database is one of the most common data sources from which people export data into Neo4j. The easiest way to do this is to export the appropriate tables in CSV format.
+
+Depending on the amount of data we'll either want to use Cypher's LOAD CSV command or the batch importer command line tool.
+
+LOAD CSV has a smaller learning curve - only basic knowledge of cypher is required - and should therefore be your default tool of choice for small to medium data sets (CSV files of up to 1 million rows).
+
+If you need raw performance or are working with much larger CSV files then the batch importer is a more appropriate choice.
+
+Export it as a CSV and use LOAD CSV (up to 1m rows) or batch import (> 1 m rows)
+
+=== What type of import is it?
+
+
+* Initial one off import (Batch)
+* Ongoing updates (Transactional)
+
+=== What tools can I use?
+
+* Cypher
+* Java - batch importer, unmanaged extension
+* ETL
+* Custom e.g. load2neo
+
+=== Issues
+
+* 'expensive' index reads
+* duplicate checking
+* huge transaction sizes
+* high volumes via Cypher
+* Transactional mode
+
+Existing Database / Existing Service -> Intermediate Format -> Neo4j
+
+Generating cypher statements - works well for smaller data sets but not so well for larger ones
