@@ -156,7 +156,6 @@ The application runs as a single page, that uses Javascript to access 3 HTTP end
 <pre>(:Movie {title,released,tagline})&lt;-[:ACTED_IN {roles}]-(actor:Person)</pre>
 </div>
 </div>
-
 </div>
 <div class="sect2">
 <h3 id="_webpage">Webpage</h3>
@@ -192,7 +191,6 @@ curl http://localhost:8080/movie/The%20Matrix
           {"job": "directed", "role": null, "name": "Andy Wachowski"}, {"job": "produced", "role": null, "name": "Joel Silver"}]}</pre>
 </div>
 </div>
-
 <div class="paragraph">
 <p>The Cypher query used, with the parameters <code>{title:"The Matrix"}</code></p>
 </div>
@@ -209,7 +207,6 @@ curl http://localhost:8080/movie/The%20Matrix
                 role:r.roles}) as cast LIMIT 1</code></pre>
 </div>
 </div>
-
 </div>
 <div class="sect3">
 <h4 id="_search_movies">Search Movies</h4>
@@ -223,7 +220,6 @@ curl http://localhost:8080/search?q=matrix
  {"movie": {"released": 2003, "tagline": "Everything that has a beginning has an end", "title": "The Matrix Revolutions"}}]</pre>
 </div>
 </div>
-
 <div class="paragraph">
 <p>The Cypher query used, with the parameters <code>{query:"(?i).\*matrix.*"}</code>, a case-insensitive regular expression partial match.</p>
 </div>
@@ -238,7 +234,6 @@ So the result of this query is a list of maps with the title, released and tagli
  RETURN movie</code></pre>
 </div>
 </div>
-
 </div>
 <div class="sect3">
 <h4 id="_graph_visualization_2">Graph Visualization</h4>
@@ -256,7 +251,6 @@ curl http://localhost:8080/graph[?limit=50]
    {"source":4,"target":0},{"source":5,"target":0}]}</pre>
 </div>
 </div>
-
 <div class="paragraph">
 <p>The Cypher query used finds all pairs of movies and actors and returns the movie title and a collection of all actor names as cast.
 A separate function then takes this result and converts it into the node- and link-list that d3 expects.</p>
@@ -271,7 +265,6 @@ A separate function then takes this result and converts it into the node- and li
  LIMIT {limit}</code></pre>
 </div>
 </div>
-
 </div>
 </div>
 <div class="sect2">
@@ -332,7 +325,6 @@ heroku open --app $app
 heroku addons:open graphenedb</code></pre>
 </div>
 </div>
-
 <div class="paragraph">
 <p>In the Graphenedb-UI use "Launch Neo4j Admin UI".
 In the Neo4j-Browser import the <code>:play movies</code> dataset as of the install instructions above.</p>
@@ -342,7 +334,8 @@ In the Neo4j-Browser import the <code>:play movies</code> dataset as of the inst
 </div>
 </div>
 </div>
-</div></div>
+</div>
+</div>
 
 </div>
 </section>
