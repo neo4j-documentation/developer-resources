@@ -1,4 +1,4 @@
-for file in `find . -name "*.adoc" -not -name README.adoc`; do
+for file in `find . -mindepth 2 -name "*.adoc"`; do
    echo "Rendering $file"
    asciidoctor -a source-highlighter=codemirror -T asciidoc $file -o ${file%/*}/index.html
 done

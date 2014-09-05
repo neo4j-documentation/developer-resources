@@ -126,152 +126,112 @@
 
 
 <div id="content">
-<div class="sect1">
-<h2 id="_what_is_a_graph_database">What is a graph database?</h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>A graph database stores records in the shape of a mathematical graph.</p>
+<p>This guide will show you how to design a graph model and you can then apply the lessons to your own data set. We&#8217;ll be following Ian Robinson&#8217;s <strong>Design for Queryability</strong> modeling approach.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_core_concepts">Core concepts</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>A graph database can store any kind of data using a few simple concepts</p>
+<p>The creation of a graph model should be treated as an iterative process - we don&#8217;t need to come up with the perfect model on our first try.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_application_end_user_goals">Application/End User Goals</h3>
+<div class="paragraph">
+<p>Designing a graph model fits easily into an agile development approach and we&#8217;d typically start with <a href="http://en.wikipedia.org/wiki/User_story">agile stories</a>.</p>
+</div>
+<div class="paragraph">
+<p>For example if we&#8217;re building an application that will recommend colleagues we should work with then we might start out with the following story:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>As an employee<br>
+I want to know who in the company has similar skills to me<br>
+So that we can exchange knowledge</p>
+</div>
+</blockquote>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_questions_to_ask_of_the_domain">Questions to ask of the domain</h3>
+<div class="paragraph">
+<p>We can restructure that into the following question:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Which people, who work for the same company as me, have similar skills to me?</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>Now that we&#8217;ve got our first question we can come up with a model based on that.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_identity_entities">Identity entities</h3>
+<div class="paragraph">
+<p>The first thing we need to do is identify entities or nouns. These will become the nodes in our model. e.g.</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Which <strong>people</strong>, who work for the same <strong>company</strong> as me, have similar <strong>skills</strong> to me?<br>
+<br>
+person<br>
+company<br>
+skill</p>
+</div>
+</blockquote>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_identity_relationships">Identity relationships</h3>
+<div class="paragraph">
+<p>The next step is to pull out the relationships between those entities which we can do by pulling out the verbs:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Which people, who <strong>work for</strong> the same company as me, <strong>have</strong> similar skills to me?<br>
+<br>
+person WORKS_FOR company<br>
+person HAS_SKILL skill<br></p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>During this process it&#8217;s helpful to have a whiteboard handy where you can easily collaborate with colleagues on the model. Using actual data rather than the type names tends to make things easier to grasp.</p>
+</div>
+<div class="paragraph">
+<p>e.g. our model with actual data would look like this</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./domain-model.png" alt="domain-model"></span></p>
+</div>
+<div class="paragraph">
+<p>As we come up with new questions and associated queries we can repeat this process keeping in mind that we only need to create a model to answer our questions - we don&#8217;t need to model everything.</p>
+</div>
+<div class="paragraph">
+<p>This is a very simple example of a graph model which is merely intended to explain the process of coming up with one.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_further_resources">Further resources</h3>
+<div class="paragraph">
+<p>The following resources contain examples of models that others have come up with to answer the questions they had of their data:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Nodes – graph data records</p>
+<p><a href="http://docs.neo4j.org/chunked/stable/data-modeling-examples.html">Data Modelling Examples in the Neo4j Manual</a></p>
 </li>
 <li>
-<p>Relationships – connect nodes</p>
-</li>
-<li>
-<p>Properties – named data values</p>
-</li>
-<li>
-<p>Labels - associate sets of nodes</p>
+<p><a href="https://github.com/neo4j-contrib/graphgist/wiki">Graph Gists</a></p>
 </li>
 </ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_a_graph_database">A Graph Database</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Neo4j stores data in a Graph, with records called Nodes.</p>
-</div>
-<div class="paragraph">
-<p>The simplest graph has just a single node with some named values called Properties. Let’s draw a social graph of our friends on the Neo4j team:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Start by drawing a circle for the node</p>
-</li>
-<li>
-<p>Add the name Emil</p>
-</li>
-<li>
-<p>Note that he is from Sweden</p>
-</li>
-</ol>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="img/one_node.png" alt="one node">
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>Nodes are the name for data records in a graph</p>
-</li>
-<li>
-<p>Data is stored as Properties</p>
-</li>
-<li>
-<p>Properties are simple name/value pairs</p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_labels">Labels</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Labels associate a set of nodes.</p>
-</div>
-<div class="paragraph">
-<p>Nodes can be grouped together by applying a Label to each member. In our social graph, we’ll label each node that represents a Person.</p>
-</div>
-<div class="paragraph">
-<p>Apply the label “Person” to the node we created for Emil
-Color “Person” nodes red
-A node can have zero or more labels
-Labels do not have any properties
-Labeled Node
-More Nodes
-Schema-free, nodes can have a mix of common and unique properties.</p>
-</div>
-<div class="paragraph">
-<p>Like any database, storing data in Neo4j can be as simple as adding more records. We’ll add a few more nodes:</p>
-</div>
-<div class="paragraph">
-<p>Emil has a klout score of 99
-Johan, from Sweden, who is learning to surf
-Ian, from England, who is an author
-Rik, from Belgium, has a cat named Orval
-Allison, from California, who surfs
-Similar nodes can have different properties
-Properties can be strings, numbers, or booleans
-Neo4j can store billions of nodes
-More Nodes
-Consider Relationships
-Relationships connect nodes in the graph.</p>
-</div>
-<div class="paragraph">
-<p>The real power of Neo4j is in connected data. To associate any two nodes, add a Relationship which describes how the records are related.</p>
-</div>
-<div class="paragraph">
-<p>In our social graph, we simply say who KNOWS whom:</p>
-</div>
-<div class="paragraph">
-<p>Emil KNOWS Johan and Ian
-Johan KNOWS Ian and Rik
-Rik and Ian KNOWS Allison
-Relationships always have direction
-Relationships always have a type
-Relationships form patterns of data
-relationships
-Relationship properties
-Relationship properties store information shared by two nodes.</p>
-</div>
-<div class="paragraph">
-<p>In a property graph, relationships are data records that can also contain properties. Looking more closely at Emil’s relationships, note that:</p>
-</div>
-<div class="paragraph">
-<p>Emil has known Johan since 2001
-Emil rates Ian 5 (out of 5)
-Everyone else can have similar relationship properties
-Relationship Properties
-Want more details? Please refer to the Neo4j Manual</p>
-</div>
 </div>
 </div>
 </div>

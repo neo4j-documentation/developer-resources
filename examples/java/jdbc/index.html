@@ -168,7 +168,6 @@ curl http://neo4j-movies.herokuapp.com/search?q=matrix
 curl http://neo4j-movies.herokuapp.com/graph</pre>
 </div>
 </div>
-
 </div>
 <div class="sect2">
 <h3 id="_setup">Setup</h3>
@@ -183,14 +182,9 @@ You add the dependency to the JDBC driver in your <code>pom.xml</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="xml"><code>        &lt;dependency&gt;
-            &lt;groupId&gt;org.neo4j&lt;/groupId&gt;
-            &lt;artifactId&gt;neo4j-jdbc&lt;/artifactId&gt;
-            &lt;version&gt;2.0.0-M06&lt;/version&gt;
-        &lt;/dependency&gt;</code></pre>
+<pre class="code programlisting cm-s-neo" data-lang="xml"><code></code></pre>
 </div>
 </div>
-
 <div class="paragraph">
 <p>To use the JDBC driver you provide a connection URL, e.g. <code>jdbc:neo4j:localhost:7474</code>, get a <code>Connection</code>
 which then can be used to create `PreparedStatement`s with your Cypher query.</p>
@@ -219,7 +213,6 @@ try (PreparedStatement stmt = con.prepareStatement(query)) {
 }</code></pre>
 </div>
 </div>
-
 </div>
 <div class="sect2">
 <h3 id="_run_locally">Run locally:</h3>
@@ -235,9 +228,8 @@ Then install the Movies data-set with <code>:play movies</code>, click the state
 <pre class="code programlisting cm-s-neo" data-lang="shell"><code>mvn compile exec:java</code></pre>
 </div>
 </div>
-
 <div class="paragraph">
-<p>Go to <a href="http://localhost:8080">http://localhost:8080</a></p>
+<p>Go to <a href="http://localhost:8080" class="bare">http://localhost:8080</a></p>
 </div>
 <div class="paragraph">
 <p>You can search for movies by title or and click on any entry .</p>
@@ -248,7 +240,8 @@ Then install the Movies data-set with <code>:play movies</code>, click the state
 
 </div>
 </div>
-</div></div>
+</div>
+</div>
 
 </div>
 </section>

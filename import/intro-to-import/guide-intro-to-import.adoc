@@ -18,9 +18,9 @@ The appropriate tool to use depends on a few factors:
 * The amount of data to import
 * Whether the import needs to happen online or offline
 
-=== What's the source for the data?
+== What's the source for the data?
 
-==== Relational Database
+=== Relational Database
 
 A relational database is one of the most common data sources from which people export data into Neo4j. The easiest way to do this is to export the appropriate tables in CSV format.
 
@@ -32,20 +32,20 @@ If you need raw performance or are working with much larger CSV files then the b
 
 Export it as a CSV and use LOAD CSV (up to 1m rows) or batch import (> 1 m rows)
 
-=== What type of import is it?
+== What type of import is it?
 
 
 * Initial one off import (Batch)
 * Ongoing updates (Transactional)
 
-=== What tools can I use?
+== What tools can I use?
 
 * Cypher
 * Java - batch importer, unmanaged extension
 * ETL
 * Custom e.g. load2neo
 
-=== Issues
+== Issues
 
 * 'expensive' index reads
 * duplicate checking

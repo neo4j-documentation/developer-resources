@@ -1,10 +1,14 @@
 function dir_and_adoc {
-  mkdir $1
-  echo "## $1" > $1/$1.adoc
+  mkdir -p $1
+  if [ ! -f "$1/$1.adoc" ]; then
+     echo "== $1" > $1/$1.adoc
+  else 
+	 echo  "$1/$1.adoc already exists"
+  fi
 }
 
 
-mkdir what-is-neo4j
+mkdir -p what-is-neo4j
 cd what-is-neo4j
 dir_and_adoc graph-database
 dir_and_adoc property-graph
@@ -12,16 +16,14 @@ dir_and_adoc graph-db-vs-rdbms
 dir_and_adoc graph-db-vs-nosql
 cd ..
 
-exit 
-
-mkdir cypher-query-language
+mkdir -p cypher-query-language
 cd cypher-query-language
 dir_and_adoc guide-cypher-basics
 dir_and_adoc guide-build-a-recommendation-engine
 dir_and_adoc cypher-ref-card
 cd ..
 
-mkdir working-with-data
+mkdir -p working-with-data
 cd working-with-data
 dir_and_adoc guide-create-your-dataset
 dir_and_adoc guide-importing-data-and-etl
@@ -30,12 +32,12 @@ dir_and_adoc guide-neo4j-browser-data-visualization
 dir_and_adoc gists-and-examples
 cd ..
 
-mkdir build-a-graph-data-model
+mkdir -p build-a-graph-data-model
 cd build-a-graph-data-model
 dir_and_adoc guide-intro-to-graph-modeling
 cd ..
 
-mkdir choosing-your-language
+mkdir -p choosing-your-language
 cd choosing-your-language
 dir_and_adoc guide-neo4j-with-java
 dir_and_adoc guide-neo4j-with-javascript
@@ -50,7 +52,7 @@ dir_and_adoc guide-neo4j-with-scala
 dir_and_adoc guide-neo4j-with-groovy
 cd ..
 
-mkdir neo4j-ecosystem
+mkdir -p neo4j-ecosystem
 cd neo4j-ecosystem
 dir_and_adoc documentation
 dir_and_adoc language-drivers
@@ -58,7 +60,7 @@ dir_and_adoc libraries
 dir_and_adoc visualization-tools
 cd ..
 
-mkdir neo4j-in-production
+mkdir -p neo4j-in-production
 cd neo4j-in-production
 dir_and_adoc guide-cloud-deployment
 dir_and_adoc guide-sizing-and-hardware-calculator
