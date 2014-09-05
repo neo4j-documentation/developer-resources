@@ -1,6 +1,77 @@
-## graph-database
-
 == What is a graph database?
 
+A graph database stores records in the shape of a mathematical graph.
 
-A graph database is a database that handles mathematical graphs as its core data structure.
+== Core concepts
+
+A graph database can store any kind of data using a few simple concepts
+
+* Nodes – graph data records
+* Relationships – connect nodes
+* Properties – named data values
+* Labels - associate sets of nodes
+
+== A Graph Database
+
+Neo4j stores data in a Graph, with records called Nodes.
+
+The simplest graph has just a single node with some named values called Properties. Let’s draw a social graph of our friends on the Neo4j team:
+
+.Start by drawing a circle for the node
+.Add the name Emil
+.Note that he is from Sweden
+
+
+* Nodes are the name for data records in a graph
+* Data is stored as Properties
+* Properties are simple name/value pairs
+
+image::img/one_node.png[]
+== Labels
+Labels associate a set of nodes.
+
+Nodes can be grouped together by applying a Label to each member. In our social graph, we’ll label each node that represents a Person.
+
+Apply the label “Person” to the node we created for Emil
+Color “Person” nodes red
+A node can have zero or more labels
+Labels do not have any properties
+Labeled Node
+More Nodes
+Schema-free, nodes can have a mix of common and unique properties.
+
+Like any database, storing data in Neo4j can be as simple as adding more records. We’ll add a few more nodes:
+
+Emil has a klout score of 99
+Johan, from Sweden, who is learning to surf
+Ian, from England, who is an author
+Rik, from Belgium, has a cat named Orval
+Allison, from California, who surfs
+Similar nodes can have different properties
+Properties can be strings, numbers, or booleans
+Neo4j can store billions of nodes
+More Nodes
+Consider Relationships
+Relationships connect nodes in the graph.
+
+The real power of Neo4j is in connected data. To associate any two nodes, add a Relationship which describes how the records are related.
+
+In our social graph, we simply say who KNOWS whom:
+
+Emil KNOWS Johan and Ian
+Johan KNOWS Ian and Rik
+Rik and Ian KNOWS Allison
+Relationships always have direction
+Relationships always have a type
+Relationships form patterns of data
+relationships
+Relationship properties
+Relationship properties store information shared by two nodes.
+
+In a property graph, relationships are data records that can also contain properties. Looking more closely at Emil’s relationships, note that:
+
+Emil has known Johan since 2001
+Emil rates Ian 5 (out of 5)
+Everyone else can have similar relationship properties
+Relationship Properties
+Want more details? Please refer to the Neo4j Manual

@@ -127,16 +127,127 @@
 
 <div id="content">
 <div class="sect1">
-<h2 id="_graph_database">graph-database</h2>
-<div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
 <h2 id="_what_is_a_graph_database">What is a graph database?</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A graph database is a database that handles mathematical graphs as its core data structure.</p>
+<p>A graph database stores records in the shape of a mathematical graph.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_core_concepts">Core concepts</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A graph database can store any kind of data using a few simple concepts</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Nodes – graph data records</p>
+</li>
+<li>
+<p>Relationships – connect nodes</p>
+</li>
+<li>
+<p>Properties – named data values</p>
+</li>
+<li>
+<p>Labels - associate sets of nodes</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_a_graph_database">A Graph Database</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Neo4j stores data in a Graph, with records called Nodes.</p>
+</div>
+<div class="paragraph">
+<p>The simplest graph has just a single node with some named values called Properties. Let’s draw a social graph of our friends on the Neo4j team:</p>
+</div>
+<div class="ulist">
+<div class="title">Note that he is from Sweden</div>
+<ul>
+<li>
+<p>Nodes are the name for data records in a graph</p>
+</li>
+<li>
+<p>Data is stored as Properties</p>
+</li>
+<li>
+<p>Properties are simple name/value pairs</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/one_node.png" alt="one node">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_labels">Labels</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Labels associate a set of nodes.</p>
+</div>
+<div class="paragraph">
+<p>Nodes can be grouped together by applying a Label to each member. In our social graph, we’ll label each node that represents a Person.</p>
+</div>
+<div class="paragraph">
+<p>Apply the label “Person” to the node we created for Emil
+Color “Person” nodes red
+A node can have zero or more labels
+Labels do not have any properties
+Labeled Node
+More Nodes
+Schema-free, nodes can have a mix of common and unique properties.</p>
+</div>
+<div class="paragraph">
+<p>Like any database, storing data in Neo4j can be as simple as adding more records. We’ll add a few more nodes:</p>
+</div>
+<div class="paragraph">
+<p>Emil has a klout score of 99
+Johan, from Sweden, who is learning to surf
+Ian, from England, who is an author
+Rik, from Belgium, has a cat named Orval
+Allison, from California, who surfs
+Similar nodes can have different properties
+Properties can be strings, numbers, or booleans
+Neo4j can store billions of nodes
+More Nodes
+Consider Relationships
+Relationships connect nodes in the graph.</p>
+</div>
+<div class="paragraph">
+<p>The real power of Neo4j is in connected data. To associate any two nodes, add a Relationship which describes how the records are related.</p>
+</div>
+<div class="paragraph">
+<p>In our social graph, we simply say who KNOWS whom:</p>
+</div>
+<div class="paragraph">
+<p>Emil KNOWS Johan and Ian
+Johan KNOWS Ian and Rik
+Rik and Ian KNOWS Allison
+Relationships always have direction
+Relationships always have a type
+Relationships form patterns of data
+relationships
+Relationship properties
+Relationship properties store information shared by two nodes.</p>
+</div>
+<div class="paragraph">
+<p>In a property graph, relationships are data records that can also contain properties. Looking more closely at Emil’s relationships, note that:</p>
+</div>
+<div class="paragraph">
+<p>Emil has known Johan since 2001
+Emil rates Ian 5 (out of 5)
+Everyone else can have similar relationship properties
+Relationship Properties
+Want more details? Please refer to the Neo4j Manual</p>
 </div>
 </div>
 </div>
