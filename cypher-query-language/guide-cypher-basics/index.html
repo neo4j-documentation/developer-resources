@@ -184,16 +184,16 @@ Neo4j then figures out what&#8217;s the best way to do that.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>Movie</code> label tags the otherwise untyped node as a movie and is prefixed by a colon to become a symbol: <code>:Movie</code>.
-The <code>matrix</code> identifier is just a name that we use to refer to this node within the statement later on.
+<p>The Movie label tags the otherwise untyped node as a movie and is prefixed by a colon to become a symbol: :Movie.
+The matrix identifier is just a name that we use to refer to this node within the statement later on.
 It is optional and only relevant in the scope of the statement; it&#8217;s not persisted.</p>
 </div>
 <div class="paragraph">
-<p>The freely chosen properties of that node, <code>title</code> and <code>released</code> are represented as a map (you might want to call it a dictionary or javascript-object like structure).
+<p>The freely chosen properties of that node, title and released are represented as a map (you might want to call it a dictionary or javascript-object like structure).
 They are listed as keys/value pairs within curly braces.</p>
 </div>
 <div class="paragraph">
-<p>To &#8220;draw&#8221; the arrow of your pattern, you would just use the appropriate symbols, which, in the simplest case is <code>-&#8594;</code>.
+<p>To ``draw'' the arrow of your pattern, you would just use the appropriate symbols, which, in the simplest case is --&gt;.
 If you have more information about that relationship, like a relationship type or properties on it, you can include them in square brackets.</p>
 </div>
 <div class="paragraph">
@@ -206,8 +206,8 @@ So a basic fact or pattern in this domain would be:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Like with node labels, the relationship-type <code>ACTED_IN</code> is added as a symbol, prefixed with a colon: <code>:ACTED_IN</code>.
-As with nodes you can use identifiers, in this case <code>role</code>, to refer to the relationship in later parts of the statement.
+<p>Like with node labels, the relationship-type ACTED_IN is added as a symbol, prefixed with a colon: :ACTED_IN.
+As with nodes you can use identifiers, in this case role, to refer to the relationship in later parts of the statement.
 You use the same notation for relationship properties as for node properties.
 In this case we went with an array property.</p>
 </div>
@@ -222,7 +222,7 @@ This way you can for instance inspect them or use them in other expressions.</p>
 </div>
 <div class="paragraph">
 <p>This path variable would contain 2 nodes and the connecting relationship for each such pattern found or created.
-There are a number of functions to access details of a path, including <code>nodes(path)</code>, <code>rels(path)</code>, and <code>length(path)</code>.</p>
+There are a number of functions to access details of a path, including nodes(path), rels(path), and length(path).</p>
 </div>
 </div>
 </div>
@@ -248,7 +248,7 @@ Neo4j then figures out how to achieve that in an efficient manner.</p>
 By providing patterns we can specify what graph structures, labels and attributes we would like to make part of our graph.</p>
 </div>
 <div class="paragraph">
-<p>Obviously the simplest clause is called <code>CREATE</code>.
+<p>Obviously the simplest clause is called CREATE.
 It will just go ahead and directly create the patterns that you specify.</p>
 </div>
 <div class="paragraph">
@@ -263,7 +263,7 @@ It will just go ahead and directly create the patterns that you specify.</p>
 <p>If we execute this statement, Cypher returns the number of changes, in this case adding 1 node, 1 label and 2 properties.</p>
 </div>
 <div class="paragraph">
-<p>If case we also want to return the created data we can add a <code>RETURN</code> clause, which refers to the identifier we&#8217;ve assigned to our pattern elements.</p>
+<p>If case we also want to return the created data we can add a RETURN clause, which refers to the identifier we&#8217;ve assigned to our pattern elements.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -272,10 +272,10 @@ RETURN p</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>If we want to create more than one element, we can separate them with commas or use multiple <code>CREATE</code> statements.</p>
+<p>If we want to create more than one element, we can separate them with commas or use multiple CREATE statements.</p>
 </div>
 <div class="paragraph">
-<p>We can of course also create more complex structures, like an <code>ACTED_IN</code> relationship with information about the character, or <code>DIRECTED</code> ones for the director.</p>
+<p>We can of course also create more complex structures, like an ACTED_IN relationship with information about the character, or DIRECTED ones for the director.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -285,7 +285,7 @@ RETURN a,d,r,m</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The movie graph sample in the Neo4j Browser is one example of a large set of <code>CREATE</code> statements that create a complete graph.</p>
+<p>The movie graph sample in the Neo4j Browser is one example of a large set of CREATE statements that create a complete graph.</p>
 </div>
 <div class="paragraph">
 <p>In most cases, we want to connect new data to existing structures.
@@ -297,8 +297,8 @@ This requires that we know how to find existing patterns in our graph data, whic
 <h2 id="_matching_patterns">Matching Patterns</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Matching patterns is a task for the <code>MATCH</code> statement.
-We pass the same patterns we&#8217;ve used so far to <code>MATCH</code> to describe what we&#8217;re looking for.
+<p>Matching patterns is a task for the MATCH statement.
+We pass the same patterns we&#8217;ve used so far to MATCH to describe what we&#8217;re looking for.
 It is a similar to <em>by example</em> queries, only that our examples also include the structures.</p>
 </div>
 <div class="admonitionblock note">
@@ -308,13 +308,13 @@ It is a similar to <em>by example</em> queries, only that our examples also incl
 <div class="title">Note</div>
 </td>
 <td class="content">
-A <code>MATCH</code> statement will search for the patterns we specify and return <strong>one row per successful pattern match</strong>.
+A MATCH statement will search for the patterns we specify and return <strong>one row per successful pattern match</strong>.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>To find the data we&#8217;ve created so far, we can start looking for all nodes labeled with the <code>Movie</code> label.</p>
+<p>To find the data we&#8217;ve created so far, we can start looking for all nodes labeled with the Movie label.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -349,13 +349,13 @@ RETURN m.title, r.roles</code></pre>
 </div>
 <div class="paragraph">
 <p>In this case we only returned the properties of the nodes and relationships that we were interested in.
-You can access them everywhere via a dot notation <code>identifer.property</code>.</p>
+You can access them everywhere via a dot notation identifer.property.</p>
 </div>
 <div class="paragraph">
 <p>Of course this only lists his role as <em>Forrest</em> in <em>Forrest Gump</em> because that&#8217;s all data that we&#8217;ve added.</p>
 </div>
 <div class="paragraph">
-<p>But now we know enough to connect new nodes to existing ones and can combine <code>MATCH</code> and <code>CREATE</code> to attach structures to the graph.</p>
+<p>But now we know enough to connect new nodes to existing ones and can combine MATCH and CREATE to attach structures to the graph.</p>
 </div>
 </div>
 </div>
@@ -376,14 +376,14 @@ RETURN p,r,m</code></pre>
 </div>
 <div class="paragraph">
 <p>It is important to remember that we can assign identifiers to both nodes and relationships and use them later on, no matter if they were created or matched.
-It is possible to attach both node and relationship in a single <code>CREATE</code> clause.
+It is possible to attach both node and relationship in a single CREATE clause.
 For readability it helps to split them up though.</p>
 </div>
 <div class="paragraph">
-<p>A tricky aspect of the combination of <code>MATCH</code> and <code>CREATE</code> is that we get one row per matched pattern.
+<p>A tricky aspect of the combination of MATCH and CREATE is that we get one row per matched pattern.
 This causes subsequent create statements to be executed for each row.
 In many cases that is what you want.
-If that&#8217;s not intended, please move the create statement before the <code>MATCH</code>, change the cardinality of the query with means discussed later or use the <em>get or create</em> semantics of the next clause: <code>MERGE</code>.</p>
+If that&#8217;s not intended, please move the create statement before the MATCH, change the cardinality of the query with means discussed later or use the <em>get or create</em> semantics of the next clause: MERGE.</p>
 </div>
 </div>
 </div>
@@ -392,11 +392,11 @@ If that&#8217;s not intended, please move the create statement before the <code>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Whenever we get data from external systems or are not sure if certain information already exists in the graph, we want to be able to express a repeatable (idempotent) update operation.
-In Cypher <code>MERGE</code> has this function.
-It acts like a combination of <code>MATCH</code> <em>or</em> <code>CREATE</code>, that checks for the existence of data first before creating it.
-Again: you specify a pattern with <code>MERGE</code> to be found or created.
-Usually, as with <code>MATCH</code> you only want to include the key property to look for in your core pattern.
-<code>MERGE</code> allows you to provide additional properties you want to set <code>ON CREATE</code>.</p>
+In Cypher MERGE has this function.
+It acts like a combination of MATCH <em>or</em> CREATE, that checks for the existence of data first before creating it.
+Again: you specify a pattern with MERGE to be found or created.
+Usually, as with MATCH you only want to include the key property to look for in your core pattern.
+MERGE allows you to provide additional properties you want to set ON CREATE.</p>
 </div>
 <div class="paragraph">
 <p>If we wouldn&#8217;t know if our graph already contained <em>Cloud Atlas</em> we could merge it in again.</p>
@@ -408,16 +408,16 @@ RETURN m</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In any case we get a result, either the data (potentially more than one row) that was already in the graph or a single, newly created <code>Movie</code> node.</p>
+<p>In any case we get a result, either the data (potentially more than one row) that was already in the graph or a single, newly created Movie node.</p>
 </div>
 <div class="paragraph">
-<p>So foremost <code>MERGE</code> makes sure that you can&#8217;t create duplicate information or structures, but it comes with the cost of needing to check first for existing matches.
+<p>So foremost MERGE makes sure that you can&#8217;t create duplicate information or structures, but it comes with the cost of needing to check first for existing matches.
 Especially on large graphs it can be costly to scan a large set of labeled nodes for a certain property.
 You can alleviate some of that by creating supporting indexes or constraints, which we&#8217;ll discuss later.
-But it&#8217;s not for free, so whenever you&#8217;re sure to not create duplicate data use <code>CREATE</code> over <code>MERGE</code></p>
+But it&#8217;s not for free, so whenever you&#8217;re sure to not create duplicate data use CREATE over MERGE</p>
 </div>
 <div class="paragraph">
-<p><code>MERGE</code> can also assert that a relationship is only created once.
+<p>MERGE can also assert that a relationship is only created once.
 For that to work you <strong>have to pass in</strong> both nodes from a previous pattern match.</p>
 </div>
 <div class="listingblock">
@@ -430,10 +430,10 @@ RETURN p,r,m</code></pre>
 </div>
 <div class="paragraph">
 <p>In case the direction of your relationship is arbitrary, you can leave off the arrow tip.
-<code>MERGE</code> will then check for the relationship in either direction, and if not found create a new, directed relationship.</p>
+MERGE will then check for the relationship in either direction, and if not found create a new, directed relationship.</p>
 </div>
 <div class="paragraph">
-<p>If you choose to pass in only one node externally, <code>MERGE</code> offers an interesting functionality.
+<p>If you choose to pass in only one node externally, MERGE offers an interesting functionality.
 It will then only match within the direct neighborhood of the provided node for the given pattern, and, if not found create it.
 This can come in very handy for creating tree structures.</p>
 </div>
@@ -456,8 +456,8 @@ RETURN y,m10,m11</code></pre>
 <div class="paragraph">
 <p>So far we&#8217;ve matched patterns in the graph and always returned all results we found.
 Quite often there are conditions in play for what we want to see.
-Similarly to <em>SQL</em> those filter conditions are expressed in a <code>WHERE</code> clause.
-This clause allows to use any number of boolean expressions (predicates) combined with <code>AND</code>, <code>OR</code> and <code>NOT</code>.
+Similarly to <em>SQL</em> those filter conditions are expressed in a WHERE clause.
+This clause allows to use any number of boolean expressions (predicates) combined with AND, OR and NOT.
 The simplest predicates are comparisons, especially equality.</p>
 </div>
 <div class="listingblock">
@@ -481,7 +481,7 @@ RETURN p,r,m</code></pre>
 </div>
 <div class="paragraph">
 <p>One aspect that might be little surprising is that you can even use patterns as predicates.
-Where <code>MATCH</code> expands the number and shape of patterns matched, a pattern predicate restricts the current result set again, only allowing the paths to pass that satisfy these additional patterns as well (or <code>NOT</code>).</p>
+Where MATCH expands the number and shape of patterns matched, a pattern predicate restricts the current result set again, only allowing the paths to pass that satisfy these additional patterns as well (or NOT).</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -491,7 +491,7 @@ RETURN p,m</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Here we find actors, because they sport an <code>ACTED_IN</code> relationship but then skip those that ever <code>DIRECTED</code> any movie.</p>
+<p>Here we find actors, because they sport an ACTED_IN relationship but then skip those that ever DIRECTED any movie.</p>
 </div>
 <div class="paragraph">
 <p>There are also more advanced ways of filtering like collection-predicates which we will look at later on.</p>
@@ -503,23 +503,23 @@ RETURN p,m</code></pre>
 <div class="sectionbody">
 <div class="paragraph">
 <p>So far we&#8217;ve returned only nodes, relationships, or paths directly via their identifiers.
-But the <code>RETURN</code> clause can actually return any number of expressions.
+But the RETURN clause can actually return any number of expressions.
 But what are actually expressions in Cypher?</p>
 </div>
 <div class="paragraph">
-<p>The simplest expressions are literal values like numbers, strings and arrays as <code>[1,2,3]</code>, and maps like <code>{name:"Tom Hanks",born:1964, movies:["Forrest Gump", &#8230;], count:13}</code>.
-You can access individual properties of any node, relationship, or map with a dot-syntax like <code>n.name</code>.
-Individual elements or slices of arrays can be retrieved with subscripts like <code>names[0]</code> or <code>movies[1..-1]</code>.
-Each function evaluation like <code>length(array)</code>, <code>toInt("12")</code>, <code>substring("2014-07-01",0,4)</code>, or <code>coalesce(p.nickname,"n/a")</code> is also an expression.</p>
+<p>The simplest expressions are literal values like numbers, strings and arrays as [1,2,3], and maps like {name:"Tom Hanks",born:1964, movies:["Forrest Gump", ...], count:13}.
+You can access individual properties of any node, relationship, or map with a dot-syntax like n.name.
+Individual elements or slices of arrays can be retrieved with subscripts like names[0] or movies[1..-1].
+Each function evaluation like length(array), toInt("12"), substring("2014-07-01",0,4), or coalesce(p.nickname,"n/a") is also an expression.</p>
 </div>
 <div class="paragraph">
-<p>Predicates that you&#8217;d use in <code>WHERE</code> count as boolean expressions.</p>
+<p>Predicates that you&#8217;d use in WHERE count as boolean expressions.</p>
 </div>
 <div class="paragraph">
 <p>Of course simpler expressions can be composed and concatenated to form more complex expressions.</p>
 </div>
 <div class="paragraph">
-<p>By default the expression itself will be used as label for the column, in many cases you want to alias that with a more understandable name using <code>expression AS alias</code>.
+<p>By default the expression itself will be used as label for the column, in many cases you want to alias that with a more understandable name using expression AS alias.
 You can later on refer to that column using its alias.</p>
 </div>
 <div class="listingblock">
@@ -529,7 +529,7 @@ RETURN p, p.name AS name, upper(p.name), coalesce(p.nickname,"n/a") AS nickname,
 </div>
 </div>
 <div class="paragraph">
-<p>If you&#8217;re interested in unique results you can use the <code>DISTINCT</code> keyword after <code>RETURN</code> to indicate that.</p>
+<p>If you&#8217;re interested in unique results you can use the DISTINCT keyword after RETURN to indicate that.</p>
 </div>
 </div>
 </div>
@@ -538,8 +538,8 @@ RETURN p, p.name AS name, upper(p.name), coalesce(p.nickname,"n/a") AS nickname,
 <div class="sectionbody">
 <div class="paragraph">
 <p>In many cases you want to aggregate or group the data that you encounter while traversing patterns in your graph.
-In Cypher aggregation happens in the <code>RETURN</code> clause while computing your final results.
-Many common aggregation functions are supported, e.g. <code>count</code>, <code>sum</code>, <code>avg</code>, <code>min</code>, and <code>max</code>, but there are several more.</p>
+In Cypher aggregation happens in the RETURN clause while computing your final results.
+Many common aggregation functions are supported, e.g. count, sum, avg, min, and max, but there are several more.</p>
 </div>
 <div class="paragraph">
 <p>Counting the number of people in your database could be achieved by this:</p>
@@ -551,8 +551,8 @@ RETURN count(*) as people</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Please note that <code>NULL</code> values are skipped during aggregation.
-For aggregating only unique values use <code>DISTINCT</code>, like in <code>count(DISTINCT role)</code>.</p>
+<p>Please note that NULL values are skipped during aggregation.
+For aggregating only unique values use DISTINCT, like in count(DISTINCT role).</p>
 </div>
 <div class="paragraph">
 <p>Aggregation in Cypher just works.
@@ -571,7 +571,7 @@ RETURN actor,director,count(*) as collaborations</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Frequently you want to sort and paginate after aggregating a <code>count(x)</code>.</p>
+<p>Frequently you want to sort and paginate after aggregating a count(x).</p>
 </div>
 </div>
 </div>
@@ -579,16 +579,16 @@ RETURN actor,director,count(*) as collaborations</code></pre>
 <h2 id="_ordering_and_pagination">Ordering and Pagination</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Ordering works like in other query languages, with an <code>ORDER BY expression [ASC|DESC]</code> clause.
+<p>Ordering works like in other query languages, with an ORDER BY expression [ASC|DESC] clause.
 The expression can be any expression discussed before as long as it is computable from the returned information.</p>
 </div>
 <div class="paragraph">
-<p>So for instance if you return <code>person.name</code> you can still <code>ORDER BY person.age</code> as both are accessible from the <code>person</code> reference.
+<p>So for instance if you return person.name you can still ORDER BY person.age as both are accessible from the person reference.
 You cannot order by things that you can&#8217;t infer from the information you return.
-This is especially important with aggregation and <code>DISTINCT</code> return values as both remove the visibility of data that is aggregated.</p>
+This is especially important with aggregation and DISTINCT return values as both remove the visibility of data that is aggregated.</p>
 </div>
 <div class="paragraph">
-<p>Pagination is a straightforward use of <code>SKIP {offset} LIMIT {count}</code>.</p>
+<p>Pagination is a straightforward use of SKIP {offset} LIMIT {count}.</p>
 </div>
 <div class="paragraph">
 <p>A common pattern is to aggregate for a count (score or frequency), order by it and only return the top-n entries.</p>
@@ -610,11 +610,11 @@ LIMIT 10;</code></pre>
 <h2 id="_collecting_aggregation">Collecting Aggregation</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The most helpful aggregation function is <code>collect</code>, which, as the name says, collects all aggregated values into a <em>real</em> array or list.
+<p>The most helpful aggregation function is collect, which, as the name says, collects all aggregated values into a <em>real</em> array or list.
 This comes very handy in many situations as you don&#8217;t loose the detail information while aggregating.</p>
 </div>
 <div class="paragraph">
-<p>Collect is well suited for retrieving the typical parent-child structures, where one core entity (parent, root or head) is returned per row with all it&#8217;s dependent information in associated collections created with <code>collect</code>.
+<p>Collect is well suited for retrieving the typical parent-child structures, where one core entity (parent, root or head) is returned per row with all it&#8217;s dependent information in associated collections created with collect.
 This means there&#8217;s no need to repeat the parent information per each child-row or even running 1+n statements to retrieve the parent and its children individually.</p>
 </div>
 <div class="paragraph">
@@ -641,10 +641,10 @@ RETURN m.title as movie, collect(a.name) as cast, count(*) as actors</code></pre
 Expressing references between nodes as visual patterns makes them easy to understand.</p>
 </div>
 <div class="paragraph">
-<p>If you want to combine the results of two statements that have the same result structure, you can use <code>UNION [ALL]</code>.</p>
+<p>If you want to combine the results of two statements that have the same result structure, you can use UNION [ALL].</p>
 </div>
 <div class="paragraph">
-<p>For instance if you want to list both actors and directors without using the alternative relationship-type syntax <code>()-[:ACTED_IN|:DIRECTED]&#8594;()</code> you can do this:</p>
+<p>For instance if you want to list both actors and directors without using the alternative relationship-type syntax ()-[:ACTED_IN|:DIRECTED]-&gt;() you can do this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -663,13 +663,13 @@ RETURN p,type(r) as rel,m</code></pre>
 Each fragment works on the output from the previous one and its results can feed into the next one.</p>
 </div>
 <div class="paragraph">
-<p>You use the <code>WITH</code> clause to combine the individual parts and declare which data flows from one to the other.
-<code>WITH</code> is very much like <code>RETURN</code> with the difference that it doesn&#8217;t finish a query but prepares the input for the next part.
-You can use the same expressions, aggregations, ordering and pagination as in the <code>RETURN</code> clause.</p>
+<p>You use the WITH clause to combine the individual parts and declare which data flows from one to the other.
+WITH is very much like RETURN with the difference that it doesn&#8217;t finish a query but prepares the input for the next part.
+You can use the same expressions, aggregations, ordering and pagination as in the RETURN clause.</p>
 </div>
 <div class="paragraph">
 <p>The only difference is that you <em>have to</em> alias all columns as they would otherwise not be accessible with an identifier.
-Every column that you don&#8217;t declare in your <code>WITH</code> clause is not available in subsequent query parts.</p>
+Every column that you don&#8217;t declare in your WITH clause is not available in subsequent query parts.</p>
 </div>
 </div>
 </div>
@@ -679,10 +679,10 @@ Every column that you don&#8217;t declare in your <code>WITH</code> clause is no
 <div class="sectionbody">
 <div class="paragraph">
 <p>Cypher can create and consume more complex data structures out of the box.
-As already mentioned you can create literal lists (<code>[1,2,3]</code>) and maps (<code>{name: value}</code>) within a statement.</p>
+As already mentioned you can create literal lists ([1,2,3]) and maps ({name: value}) within a statement.</p>
 </div>
 <div class="paragraph">
-<p>There is a number of functions that work with lists, from simple ones like <code>length(list)</code> that returns the size of a list to</p>
+<p>There is a number of functions that work with lists, from simple ones like length(list) that returns the size of a list to</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -691,14 +691,14 @@ RETURN m.title as movie, collect(a.name)[0..5] as five_of_cast</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You can also access individual elements or slices of a list quickly with <code>list[1]</code> or <code>list[5..-5]</code>.
-Other functions to access parts of a list are <code>head(list)</code>, <code>tail(list)</code> and <code>last(list)</code>.</p>
+<p>You can also access individual elements or slices of a list quickly with list[1] or list[5..-5].
+Other functions to access parts of a list are head(list), tail(list) and last(list).</p>
 </div>
 <div class="sect2">
 <h3 id="_list_predicates">List predicates</h3>
 <div class="paragraph">
-<p>When using lists and arrays in comparisons you can use predicates like <code>value IN list</code> or <code>any(x IN list WHERE x = value)</code>.
-There are list predicates to satisfy conditions for <code>all</code>, <code>any</code>, <code>none</code> and <code>single</code> elements.</p>
+<p>When using lists and arrays in comparisons you can use predicates like value IN list or any(x IN list WHERE x = value).
+There are list predicates to satisfy conditions for all, any, none and single elements.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -712,7 +712,7 @@ RETURN path</code></pre>
 <div class="sect2">
 <h3 id="_list_processing">List processing</h3>
 <div class="paragraph">
-<p>Oftentimes you want to process lists to <code>filter</code>, aggregate (<code>reduce</code>) or transform (<code>extract</code>) their values.
+<p>Oftentimes you want to process lists to filter, aggregate (reduce) or transform (extract) their values.
 Those transformations can be done within Cypher or in the calling code.
 This kind of list-processing can reduce the amount of data handled and returned, so it might make sense to do it within the Cypher statement.</p>
 </div>
@@ -739,10 +739,10 @@ RETURN movie, extract(c2 IN filter(c1 IN cast WHERE c1.name =~ "A.*") | c2.roles
 </div>
 <div class="paragraph">
 <p>Cypher offers to create and consume more complex data structures out of the box.
-As already mentioned you can create literal lists (<code>[1,2,3]</code>) and maps (<code>{name: value}</code>) within your statement.</p>
+As already mentioned you can create literal lists ([1,2,3]) and maps ({name: value}) within your statement.</p>
 </div>
 <div class="paragraph">
-<p>There is a number of functions to work with lists, from simple ones like <code>length(list)</code> that returns the size of a list to</p>
+<p>There is a number of functions to work with lists, from simple ones like length(list) that returns the size of a list to</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -751,8 +751,8 @@ RETURN m.title as movie, collect(a.name)[0..5] as five_of_cast</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You can also access individual elements or slices of a list quickly with <code>list[1]</code> or <code>list[5..-5]</code>.
-Other functions to access parts of a list are <code>head(list)</code>, <code>tail(list)</code> and <code>last(list)</code>.</p>
+<p>You can also access individual elements or slices of a list quickly with list[1] or list[5..-5].
+Other functions to access parts of a list are head(list), tail(list) and last(list).</p>
 </div>
 </div>
 <div class="sect2">
@@ -761,7 +761,7 @@ Other functions to access parts of a list are <code>head(list)</code>, <code>tai
 <p>Sometimes you have collected information into a list, but want to use each element individually as a row.
 For instance, you might want to further match patterns in the graph.
 Or you passed in a collection of values but now want to create or match a node or relationship for each element.
-Then you can use the <code>UNWIND</code> clause to unroll a list into a sequence of rows again.</p>
+Then you can use the UNWIND clause to unroll a list into a sequence of rows again.</p>
 </div>
 <div class="paragraph">
 <p>For instance, a query to find the top 5-co-actors and then follow their movies and again list the cast for each of those movies:</p>
@@ -794,7 +794,7 @@ Adding an index gives fast lookups for starting nodes in the graph.</p>
 After that initial lookups you rely on the in-graph structures and first class citizenship of relationships in the graph database to achieve high performance.</p>
 </div>
 <div class="paragraph">
-<p>You would create an index like this: <code>CREATE INDEX ON :Movie(title)</code></p>
+<p>You would create an index like this: CREATE INDEX ON :Movie(title)</p>
 </div>
 </div>
 <div class="sect2">
@@ -803,10 +803,10 @@ After that initial lookups you rely on the in-graph structures and first class c
 <p>You can also specify unique constraints that guarantee uniqueness of a certain property on nodes with a specific label.</p>
 </div>
 <div class="paragraph">
-<p>These constraints are also used by the <code>MERGE</code> clause to make certain that a node only exists once.</p>
+<p>These constraints are also used by the MERGE clause to make certain that a node only exists once.</p>
 </div>
 <div class="paragraph">
-<p>A constraint definition would look like this: <code>CREATE CONSTRAINT ON (p:Person) ASSERT p.name IS UNIQUE</code>.</p>
+<p>A constraint definition would look like this: CREATE CONSTRAINT ON (p:Person) ASSERT p.name IS UNIQUE.</p>
 </div>
 </div>
 </div>
@@ -836,7 +836,7 @@ After that initial lookups you rely on the in-graph structures and first class c
 Those can be scalar values, maps, lists or even lists of maps.</p>
 </div>
 <div class="paragraph">
-<p>In your Cypher statement you can then iterate over those values (e.g. with <code>UNWIND</code>) to create your graph structures.</p>
+<p>In your Cypher statement you can then iterate over those values (e.g. with UNWIND) to create your graph structures.</p>
 </div>
 <div class="paragraph">
 <p>For instance to create a movie graph from JSON data structures pulled from an API you could use:</p>
@@ -869,7 +869,7 @@ FOREACH (role IN movie.cast |
 <p>Cypher provides an elegant built-in way to import tabular CSV data into more complex graph structures.</p>
 </div>
 <div class="paragraph">
-<p>The <code>LOAD CSV</code> clause parses a local or remote file into a stream of rows which represent maps (with headers) or lists.
+<p>The LOAD CSV clause parses a local or remote file into a stream of rows which represent maps (with headers) or lists.
 Then you can use whatever Cypher operations you want to apply to either create nodes or relationships or to merge with existing graph structures.</p>
 </div>
 <div class="paragraph">
@@ -912,7 +912,7 @@ MERGE (a)-[:ACTED_IN {roles:split(line.characters,",") }]-&gt;(m)</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>If you import a large amount of data (more than 10000 rows), it is recommended to prefix your <code>LOAD CSV</code> clause with a <code>PERIODIC COMMIT</code> hint,
+<p>If you import a large amount of data (more than 10000 rows), it is recommended to prefix your LOAD CSV clause with a PERIODIC COMMIT hint,
 which allows Cypher to regularly commit the import transactions to avoid memory churn for large transaction-states.</p>
 </div>
 </div>

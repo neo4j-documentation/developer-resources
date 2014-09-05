@@ -129,126 +129,109 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="http://neo4j.com">Neo4j</a> GraphGists are an easy way to create and share documents containing not just prose, structure
-and pictures but most importantly <strong>example graph models and use-cases</strong> expressed in Neo4j&#8217;s query language <a href="http://docs.neo4j.org/refcard/2.1/">Cypher</a>.</p>
+<p>This guide will show you how to design a graph model and you can then apply the lessons to your own data set. We&#8217;ll be following Ian Robinson&#8217;s <strong>Design for Queryability</strong> modeling approach.</p>
 </div>
 <div class="paragraph">
-<p>These documents are written in AsciiDoc&#8201;&#8212;&#8201;the simple, textual markup language&#8201;&#8212;&#8201;and rendered in your browser as rich and interactive web pages that you
-can quickly evolve from describing simple howtos or questions to providing an extensive use-case specification.</p>
+<p>The creation of a graph model should be treated as an iterative process - we don&#8217;t need to come up with the perfect model on our first try.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_application_end_user_goals">Application/End User Goals</h3>
+<div class="paragraph">
+<p>Designing a graph model fits easily into an agile development approach and we&#8217;d typically start with <a href="http://en.wikipedia.org/wiki/User_story">agile stories</a>.</p>
 </div>
 <div class="paragraph">
-<p>To see the expressive power of this approach, here are some winners of our past community competitions:</p>
+<p>For example if we&#8217;re building an application that will recommend colleagues we should work with then we might start out with the following story:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>As an employee<br>
+I want to know who in the company has similar skills to me<br>
+So that we can exchange knowledge</p>
+</div>
+</blockquote>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_questions_to_ask_of_the_domain">Questions to ask of the domain</h3>
+<div class="paragraph">
+<p>We can restructure that into the following question:</p>
 </div>
-<div class="sect1">
-<h2 id="_examples">Examples</h2>
-<div class="sectionbody">
-<div class="ulist none">
-<ul class="none">
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Which people, who work for the same company as me, have similar skills to me?</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>Now that we&#8217;ve got our first question we can come up with a model based on that.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_identity_entities">Identity entities</h3>
+<div class="paragraph">
+<p>The first thing we need to do is identify entities or nouns. These will become the nodes in our model. e.g.</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Which <strong>people</strong>, who work for the same <strong>company</strong> as me, have similar <strong>skills</strong> to me?<br>
+<br>
+person<br>
+company<br>
+skill</p>
+</div>
+</blockquote>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_identity_relationships">Identity relationships</h3>
+<div class="paragraph">
+<p>The next step is to pull out the relationships between those entities which we can do by pulling out the verbs:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Which people, who <strong>work for</strong> the same company as me, <strong>have</strong> similar skills to me?<br>
+<br>
+person WORKS_FOR company<br>
+person HAS_SKILL skill<br></p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>During this process it&#8217;s helpful to have a whiteboard handy where you can easily collaborate with colleagues on the model. Using actual data rather than the type names tends to make things easier to grasp.</p>
+</div>
+<div class="paragraph">
+<p>e.g. our model with actual data would look like this</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./domain-model.png" alt="domain-model"></span></p>
+</div>
+<div class="paragraph">
+<p>As we come up with new questions and associated queries we can repeat this process keeping in mind that we only need to create a model to answer our questions - we don&#8217;t need to model everything.</p>
+</div>
+<div class="paragraph">
+<p>This is a very simple example of a graph model which is merely intended to explain the process of coming up with one.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_further_resources">Further resources</h3>
+<div class="paragraph">
+<p>The following resources contain examples of models that others have come up with to answer the questions they had of their data:</p>
+</div>
+<div class="ulist">
+<ul>
 <li>
-<p><strong>Finance</strong> <a href="./?github-neo4j-contrib%2Fgists%2F%2Fother%2FBankFraudDetection.adoc">Bank Fraud Detection</a> by <a href="https://twitter.com/kennybastani">@kennybastani</a></p>
+<p><a href="http://docs.neo4j.org/chunked/stable/data-modeling-examples.html">Data Modelling Examples in the Neo4j Manual</a></p>
 </li>
 <li>
-<p><strong>Sports</strong> <a href="./?8019511">Alpine Skiing seasons</a> by <a href="https://twitter.com/pac_19">@pac_19</a></p>
-</li>
-<li>
-<p><strong>Life Science</strong> <a href="./?7968633">Pharmaceutical Drugs and their Targets</a> by <a href="https://twitter.com/joshkunken">@joshkunken</a></p>
-</li>
-<li>
-<p><strong>Resources</strong> <a href="./?8141937">Piping Water</a> by <a href="https://twitter.com/shaundaley1">@shaundaley1</a></p>
-</li>
-<li>
-<p><strong>Retail</strong> <a href="./?8139605">Single Malt Scotch Whisky</a> by <a href="https://twitter.com/patbaumgartner">@patbaumgartner</a></p>
-</li>
-<li>
-<p><strong>Telecommunications</strong> <a href="./?8526106">Amazon Web Services Global Infrastructure Graph</a> by <a href="https://twitter.com/aidanjcasey">@aidanjcasey</a></p>
-</li>
-<li>
-<p><strong>Infrastructure</strong> <a href="./?8635758">Roads, Nodes and Automobiles</a> by <a href="http://www.jacqui.tk">@tekiegirl</a></p>
-</li>
-<li>
-<p><strong>Recommendation</strong> <a href="./?8173017">Movie Recommendations with k-NN and Cosine Similarity</a> by <a href="http://twitter.com/_nicolemargaret">@_nicolemargaret</a></p>
-</li>
-<li>
-<p><strong>Fun</strong> <a href="./?6506717">Chess Games and Positions</a> by <a href="https://twitter.com/wefreema">@wefreema</a></p>
-</li>
-<li>
-<p><strong>One hundred more</strong> examples can be found in the <a href="https://github.com/neo4j-contrib/graphgist/wiki">GraphGist Collection</a></p>
+<p><a href="https://github.com/neo4j-contrib/graphgist/wiki">Graph Gists</a></p>
 </li>
 </ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_getting_started">Getting Started</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_follow_these_easy_steps">Follow these easy steps</h3>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Log into</strong> your GitHub account</p>
-</li>
-<li>
-<p><strong>Choose</strong> one of the examples listed above, click the green <strong>page source</strong> button.</p>
-</li>
-<li>
-<p><strong>Fork</strong> the original GraphGist into your own account and <strong>start to edit</strong> the prose, images, setup and use-case Cypher queries.</p>
-</li>
-<li>
-<p><strong>Paste</strong> the Github Gist URL into the top right URL box of any GraphGist page and hit enter; your Gist will be loaded and rendered immediately.</p>
-</li>
-<li>
-<p><strong>Reload</strong> your GraphGist page whenever you made an update to your document.</p>
-</li>
-<li>
-<p><strong>Share</strong> your GraphGist with your colleagues, friends or us.
-Hit the submit link in the footer, when you are ready to get your t-shirt reward.</p>
-</li>
-</ol>
-</div>
-<iframe src="//player.vimeo.com/video/74279113" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-</div>
-<div class="sect2">
-<h3 id="_setup_a_graph_to_show_you_and_your_likes">Setup a Graph to show you and your Likes</h3>
-<div class="listingblock">
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (you:Person {name:"You"})-[like:LIKE]-&gt;(us:Database:NoSql:Graph {name:"Neo4j" })
-RETURN you, like, us</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>And render as a graph.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_now_query_the_graph_to_show_all_the_things_you_like">Now query the graph to show all the things you like</h3>
-<div class="listingblock">
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you:Person {name:"You"})-[like:LIKE]-&gt;(liked)
-RETURN you.name AS who, type(like) AS how, liked.name AS what</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>And render as a table.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-This document is a GraphGist itself, so you can use the green <a href="https://github.com/neo4j-contrib/gists/blob/master/meta/Home.adoc">Page Source</a> button on top of the page to see the original AsciiDoc document.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>We&#8217;d love to get your feedback, so feel free to write us at <strong>docs at neo4j.org</strong> or comment in the section below.</p>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -333,11 +316,9 @@ This document is a GraphGist itself, so you can use the green <a href="https://g
                         <li><a href="http://neo4j.com/docs/">Docs</a></li>
                         <li><a href="../">Neo4j Guides</a></li>
                         <li><a href="../data-import/">Import Data</a></li>
-                        <li><a href="import/intro-to-import/">Import Data (2)</a></li>
                         <li><a href="http://neo4j.com/contrib/">Select a Driver</a></li>
                         <li><a href="../basic-cypher/">Cypher Query Language</a></li>
-                        <li><a href="cypher-query-language/guide-build-a-recommendation-engine">Cypher Query Language (2)</a></li>
-                        <li><a href="build-a-graph-data-model/guide-intro-to-graph-modeling">Data Modeling</a></li>
+                        <li><a href="./">Data Modeling</a></li>
                      </ul>
                   </div>
                   <div class="small-6 medium-3 columns">
