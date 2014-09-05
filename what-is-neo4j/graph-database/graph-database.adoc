@@ -15,8 +15,10 @@ A graph database can store any kind of data using a few simple concepts
 
 Neo4j stores data in a Graph, with records called Nodes.
 
-The simplest graph has just a single node with some named values called Properties. Let’s draw a social graph of our friends on the Neo4j team:
 
+== Create a node
+
+The simplest graph has just a single node with some named values called Properties. Let’s draw a social graph of our friends on the Neo4j team:
 
 . Start by drawing a circle for the node
 . Add the name Emil
@@ -31,7 +33,7 @@ image::img/one_node.png[]
 * Properties are simple name/value pairs
 ====
 
-== Labels
+== Add a Label
 
 Labels associate a set of nodes.
 
@@ -50,38 +52,59 @@ image::img/labeled_node.png[]
 * More Nodes
 * Schema-free, nodes can have a mix of common and unique properties.
 ====
-Like any database, storing data in Neo4j can be as simple as adding more records. We’ll add a few more nodes:
 
-Emil has a klout score of 99
-Johan, from Sweden, who is learning to surf
-Ian, from England, who is an author
-Rik, from Belgium, has a cat named Orval
-Allison, from California, who surfs
-Similar nodes can have different properties
-Properties can be strings, numbers, or booleans
-Neo4j can store billions of nodes
-More Nodes
-Consider Relationships
+== More Nodes
+
+Like any database, storing data in Neo4j can be as simple as adding more records. We’ll add a few more nodes, representing the following facts:
+
+. Emil has a klout score of 99
+. Johan, from Sweden, who is learning to surf
+. Ian, from England, who is an author
+. Rik, from Belgium, has a cat named Orval
+. Allison, from California, who surfs
+
+image::img/more_nodes.png[]
+
+[TIP]
+====
+* Similar nodes can have different properties
+* Properties can be strings, numbers, or booleans
+* Neo4j can store billions of nodes
+====
+
+== Consider Relationships
+
 Relationships connect nodes in the graph.
 
 The real power of Neo4j is in connected data. To associate any two nodes, add a Relationship which describes how the records are related.
 
 In our social graph, we simply say who KNOWS whom:
 
-Emil KNOWS Johan and Ian
-Johan KNOWS Ian and Rik
-Rik and Ian KNOWS Allison
-Relationships always have direction
-Relationships always have a type
-Relationships form patterns of data
-relationships
-Relationship properties
-Relationship properties store information shared by two nodes.
+. Emil KNOWS Johan and Ian
+. Johan KNOWS Ian and Rik
+. Rik and Ian KNOWS Allison
+
+image::img/relationships.png[]
+
+[TIP]
+====
+* Relationships always have direction
+* Relationships always have a type
+* Relationships form patterns of data relationships
+* Relationship properties
+* Relationship properties store information shared by two nodes.
+====
+
+== Relationship properties
+
+Relationships properties store information describing the relationship between two nodes.
 
 In a property graph, relationships are data records that can also contain properties. Looking more closely at Emil’s relationships, note that:
 
 Emil has known Johan since 2001
 Emil rates Ian 5 (out of 5)
 Everyone else can have similar relationship properties
-Relationship Properties
-Want more details? Please refer to the Neo4j Manual
+
+image::img/rel-props.png[]
+
+Want more details? Please refer to the http://docs.neo4j.org/chunked/stable/what-is-a-graphdb.html#_neo4j_is_a_graph_database[Neo4j Manual].

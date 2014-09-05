@@ -164,6 +164,11 @@
 <div class="paragraph">
 <p>Neo4j stores data in a Graph, with records called Nodes.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_a_node">Create a node</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The simplest graph has just a single node with some named values called Properties. Let’s draw a social graph of our friends on the Neo4j team:</p>
 </div>
@@ -212,7 +217,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_labels">Labels</h2>
+<h2 id="_add_a_label">Add a Label</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Labels associate a set of nodes.</p>
@@ -265,21 +270,69 @@
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>Like any database, storing data in Neo4j can be as simple as adding more records. We’ll add a few more nodes:</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_more_nodes">More Nodes</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Emil has a klout score of 99
-Johan, from Sweden, who is learning to surf
-Ian, from England, who is an author
-Rik, from Belgium, has a cat named Orval
-Allison, from California, who surfs
-Similar nodes can have different properties
-Properties can be strings, numbers, or booleans
-Neo4j can store billions of nodes
-More Nodes
-Consider Relationships
-Relationships connect nodes in the graph.</p>
+<p>Like any database, storing data in Neo4j can be as simple as adding more records. We’ll add a few more nodes, representing the following facts:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Emil has a klout score of 99</p>
+</li>
+<li>
+<p>Johan, from Sweden, who is learning to surf</p>
+</li>
+<li>
+<p>Ian, from England, who is an author</p>
+</li>
+<li>
+<p>Rik, from Belgium, has a cat named Orval</p>
+</li>
+<li>
+<p>Allison, from California, who surfs</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/more_nodes.png" alt="more nodes">
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Similar nodes can have different properties</p>
+</li>
+<li>
+<p>Properties can be strings, numbers, or booleans</p>
+</li>
+<li>
+<p>Neo4j can store billions of nodes</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_consider_relationships">Consider Relationships</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Relationships connect nodes in the graph.</p>
 </div>
 <div class="paragraph">
 <p>The real power of Neo4j is in connected data. To associate any two nodes, add a Relationship which describes how the records are related.</p>
@@ -287,16 +340,61 @@ Relationships connect nodes in the graph.</p>
 <div class="paragraph">
 <p>In our social graph, we simply say who KNOWS whom:</p>
 </div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Emil KNOWS Johan and Ian</p>
+</li>
+<li>
+<p>Johan KNOWS Ian and Rik</p>
+</li>
+<li>
+<p>Rik and Ian KNOWS Allison</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/relationships.png" alt="relationships">
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Relationships always have direction</p>
+</li>
+<li>
+<p>Relationships always have a type</p>
+</li>
+<li>
+<p>Relationships form patterns of data relationships</p>
+</li>
+<li>
+<p>Relationship properties</p>
+</li>
+<li>
+<p>Relationship properties store information shared by two nodes.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_relationship_properties">Relationship properties</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Emil KNOWS Johan and Ian
-Johan KNOWS Ian and Rik
-Rik and Ian KNOWS Allison
-Relationships always have direction
-Relationships always have a type
-Relationships form patterns of data
-relationships
-Relationship properties
-Relationship properties store information shared by two nodes.</p>
+<p>Relationships properties store information describing the relationship between two nodes.</p>
 </div>
 <div class="paragraph">
 <p>In a property graph, relationships are data records that can also contain properties. Looking more closely at Emil’s relationships, note that:</p>
@@ -304,9 +402,15 @@ Relationship properties store information shared by two nodes.</p>
 <div class="paragraph">
 <p>Emil has known Johan since 2001
 Emil rates Ian 5 (out of 5)
-Everyone else can have similar relationship properties
-Relationship Properties
-Want more details? Please refer to the Neo4j Manual</p>
+Everyone else can have similar relationship properties</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/rel-props.png" alt="rel props">
+</div>
+</div>
+<div class="paragraph">
+<p>Want more details? Please refer to the <a href="http://docs.neo4j.org/chunked/stable/what-is-a-graphdb.html#_neo4j_is_a_graph_database">Neo4j Manual</a>.</p>
 </div>
 </div>
 </div>
