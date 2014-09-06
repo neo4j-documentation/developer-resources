@@ -70,8 +70,7 @@
                          (get-graph limit)))
   (GET "/search" [q] (resp/response
                       (get-search q)))
-  (GET "/movie/:title" {{title :title} :params} (resp/response
-                                                 (get-movie title)))
+  (GET "/movie/:title" [title] (resp/response (get-movie title)))
   (route/resources "/")
   (route/not-found "Not Found"))
 
