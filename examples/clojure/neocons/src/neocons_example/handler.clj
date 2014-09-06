@@ -1,12 +1,12 @@
 (ns neocons-example.handler
-  (:require [clojure.string :as s]
-            [clojurewerkz.neocons.rest :as nr]
+  (:require [clojure.string                   :refer [blank?]]
+            [clojurewerkz.neocons.rest        :as nr]
             [clojurewerkz.neocons.rest.cypher :as cy]
-            [compojure.core :refer :all]
-            [compojure.handler :as handler]
-            [ring.util.response :as resp]
+            [compojure.core                   :refer [GET defroutes]]
+            [compojure.handler                :as handler]
+            [ring.util.response               :as resp]
             [ring.middleware.json             :as rj]
-            [compojure.route :as route]))
+            [compojure.route                  :as route]))
 
 
 (def conn (nr/connect "http://localhost:7474/db/data/"))
@@ -15,16 +15,6 @@
 (def graph-query "MATCH (m:Movie)<-[:ACTED_IN]-(a:Person)
                   RETURN m.title as movie, collect(a.name) as cast
                   LIMIT {limit};")
-
-(def search-query "MATCH (movie:Movie) WHERE movie.title =~ {title} RETURN movie;")
-
-(def title-query "MATCH (movie:Movie {title:{title}})
-                  OPTIONAL MATCH (movie)<-[r]-(person:Person)
-                  RETURN movie.title as title,
-                         collect({name:person.name,
-                                  job:head(split(lower(type(r)),'_')),
-                                  role:r.roles}) as cast LIMIT 1;")
-
 
 (defn get-graph
   [limit]
@@ -51,12 +41,22 @@
     {:nodes nodes :links (flatten links)}))
 
 
+(def search-query "MATCH (movie:Movie) WHERE movie.title =~ {title} RETURN movie;")
+
 (defn get-search
   [q]
-  (if (s/blank? q)
+  (if (blank? q)
     []
     (let  [result  (cy/tquery conn search-query {:title (str "(?i).*" q ".*")})]
       (map (fn [x] {:movie (:data (x "movie"))}) result))))
+
+
+(def title-query "MATCH (movie:Movie {title:{title}})
+                  OPTIONAL MATCH (movie)<-[r]-(person:Person)
+                  RETURN movie.title as title,
+                         collect({name:person.name,
+                                  job:head(split(lower(type(r)),'_')),
+                                  role:r.roles}) as cast LIMIT 1;")
 
 (defn get-movie
   [title]
