@@ -2,27 +2,84 @@
 
 This guide will help get your data into Neo4j wherever it happens to come from and regardless of how much of it there is.
 
-Existing data can come in many shapes and sizes:
+Existing data can come in many shapes and sizes but for this guide we're going to use a relational database as that's one of the most common data sources from which people export data into Neo4j.
 
-* Databases (relational, NoSQL)
-* Files (CSV, GraphML, Gephi, Geoff, Spreadsheet)
-* Services (web service, REST API, .NET)
+However, regardless of the source we typically won't be lucky enough to have our data already structured as a graph so we'll first need to design a graph model - you can learn how to do that in our link:../../build-a-graph-data-model/guide-intro-to-graph-modeling/index.html[modeling guide].
 
-But regardless of the source we typically won't be lucky enough to have our data already structured as a graph so we'll first need to design a graph model - you can learn how to do that in our link:../../build-a-graph-data-model/guide-intro-to-graph-modeling/index.html[modeling guide]
+We're going to make use of the Postgres relational database and use the link:https://code.google.com/p/northwindextended/downloads/detail?name=northwind.postgre.sql&can=2&q=[NorthWind data set].
 
-Now that we've got the first version of our model it's time to import some data in and see how well we're able to run queries against it.
+For this data set the following graph model serves as a first iteration:
 
-The appropriate tool to use depends on a few factors:
+<insert image of model here>
 
-* The source of the data
-* The amount of data to import
-* Whether the import needs to happen online or offline
+Now that we know what we'd like our graph to look like we need to extract the data from Postgres so we can create it. The easiest way to do that is to export the appropriate tables in CSV format.
 
-== What's the source for the data?
+We can make use of Postgres' 'copy' command to execute a SQL query and write the result to a CSV file:
 
-=== Relational Database
+[source, sql]
+----
+Copy (SELECT * FROM orders
+      left outer join customers ON customers."CustomerID" = orders."CustomerID"
+      left outer join employees ON employees."EmployeeID" = orders."EmployeeID"
+      left outer join order_details ON order_details."OrderID" = orders."OrderID"
+      left outer join products ON products."ProductID" = order_details."ProductID"
+      left outer join suppliers ON suppliers."SupplierID" = products."SupplierID"
+      left outer join categories ON categories."CategoryID" = products."CategoryID")
+      To '/tmp/customerDb.csv' With CSV header;
+----
 
-A relational database is one of the most common data sources from which people export data into Neo4j. The easiest way to do this is to export the appropriate tables in CSV format.
+First we'll create some indexes on the (label, property) pairs that we're going to create.
+
+[source, cypher]
+----
+create index on :Product(productId)
+----
+
+[source, cypher]
+----
+create index on :Category(categoryId)
+----
+
+[source, cypher]
+----
+create index on :Order(OrderId)
+----
+
+[source, cypher]
+----
+create index on :Employee(employeeId)
+----
+
+[source, cypher]
+----
+create index on :Supplier(supplierId)
+----
+
+[source, cypher]
+----
+LOAD CSV WITH HEADERS FROM "file:/tmp/customerDb.csv" AS row
+
+MERGE (order:Order {orderId: row.OrderID})
+
+MERGE (product:Product {productId: row.ProductID})
+ON CREATE SET product.name = row.ProductName
+
+MERGE (supplier:Supplier {supplierId: row.SupplierID})
+ON CREATE SET supplier.companyName = row.SupplierCompanyName
+
+MERGE (employee:Employee {employeeId: row.EmployeeID})
+
+MERGE (category:Category {categoryId: row.CategoryID})
+ON CREATE SET category.name = row.CategoryName
+
+MERGE (employee)-[:SOLD]->(order)
+MERGE (order)-[:PRODUCT]->(product)
+MERGE (supplier)-[:SUPPLIES]->(product)
+MERGE (product)-[:PART_OF]->(category)
+----
+
+We can now query the graph...
+
 
 Depending on the amount of data we'll either want to use Cypher's LOAD CSV command or the batch importer command line tool.
 
@@ -30,7 +87,20 @@ LOAD CSV has a smaller learning curve - only basic knowledge of cypher is requir
 
 If you need raw performance or are working with much larger CSV files then the batch importer is a more appropriate choice.
 
-Export it as a CSV and use LOAD CSV (up to 1m rows) or batch import (> 1 m rows)
+
+===== LOAD CSV
+
+Here
+
+===== Batch Importer
+
+Two options:
+
+* Export tables in a simple way and write a pre processing script that transforms it into batch import format
+* More complicated SQL script which returns batch import appropriate files
+
+Example from MDM -> http://maxdemarzi.com/2012/02/28/batch-importer-part-2/
+
 
 == What type of import is it?
 
