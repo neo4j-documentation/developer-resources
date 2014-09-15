@@ -180,6 +180,7 @@ graph visualization of the domain
 <pre>(:Movie {title,released,tagline})&lt;-[:ACTED_IN {roles}]-(actor:Person)</pre>
 </div>
 </div>
+
 </div>
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
@@ -236,7 +237,10 @@ curl http://localhost:8080/movie/The%20Matrix
 </div>
 </div>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> removing file - has its own folder now
 <div class="paragraph">
 <p>The Cypher query used, with the parameters <code>{title:"The Matrix"}</code></p>
 </div>
@@ -257,6 +261,7 @@ curl http://localhost:8080/movie/The%20Matrix
                 role:r.roles}) as cast LIMIT 1</code></pre>
 </div>
 </div>
+
 </div>
 <div class="sect3 "  >
     
@@ -273,7 +278,10 @@ curl http://localhost:8080/search?q=matrix
 </div>
 </div>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> removing file - has its own folder now
 <div class="paragraph">
 <p>The Cypher query used, with the parameters <code>{query:"(?i).*matrix.*"}</code>, a case-insensitive regular expression partial match.</p>
 </div>
@@ -292,6 +300,7 @@ So the result of this query is a list of maps with the title, released and tagli
  RETURN movie</code></pre>
 </div>
 </div>
+
 </div>
 <div class="sect3 "  >
     
@@ -312,7 +321,10 @@ curl http://localhost:8080/graph[?limit=50]
 </div>
 </div>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> removing file - has its own folder now
 <div class="paragraph">
 <p>The Cypher query used finds all pairs of movies and actors and returns the movie title and a collection of all actor names as cast.
 A separate function then takes this result and converts it into the node- and link-list that d3 expects.</p>
@@ -331,6 +343,7 @@ A separate function then takes this result and converts it into the node- and li
  LIMIT {limit}</code></pre>
 </div>
 </div>
+
 </div>
 </div>
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
@@ -419,7 +432,10 @@ heroku addons:open graphenedb</code></pre>
 </div>
 </div>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> removing file - has its own folder now
 <div class="paragraph">
 <p>In the Graphenedb-UI use "Launch Neo4j Admin UI".
 In the Neo4j-Browser import the <code>:play movies</code> dataset as of the install instructions above.</p>
@@ -434,9 +450,13 @@ In the Neo4j-Browser import the <code>:play movies</code> dataset as of the inst
 </div>
 </div>
 </div>
+<<<<<<< HEAD
 
 </div>
 </div>
+=======
+</div></div>
+>>>>>>> removing file - has its own folder now
 
 </div>
 </section>

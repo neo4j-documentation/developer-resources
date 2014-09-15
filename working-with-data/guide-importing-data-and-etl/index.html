@@ -146,13 +146,21 @@
 
 
 <div class="paragraph">
+<<<<<<< HEAD
 <p>LOAD CSV has a smaller learning curve - only basic knowledge of cypher is required - and should therefore be your default tool of choice for small to medium data sets (CSV files of up to 1 million rows).</p>
+=======
+<p>Existing data can come in many shapes and sizes but for this guide we&#8217;re going to use a relational database as that&#8217;s one of the most common data sources from which people export data into Neo4j.</p>
+>>>>>>> removing file - has its own folder now
 </div>
 
 
 
 <div class="paragraph">
+<<<<<<< HEAD
 <p>If you need raw performance or are working with much larger CSV files then the batch importer is a more appropriate choice.</p>
+=======
+<p>We&#8217;ll use the Postgres relational database and the <a href="https://code.google.com/p/northwindextended/downloads/detail?name=northwind.postgre.sql&amp;can=2&amp;q=">NorthWind data set</a> as our example.</p>
+>>>>>>> removing file - has its own folder now
 </div>
 
 <div class="sect4 "  >
@@ -162,9 +170,13 @@
 
 
 <div class="paragraph">
+<<<<<<< HEAD
 <p>Here</p>
 </div>
 
+=======
+<p>Regardless of the source we typically won&#8217;t have our data already structured as a graph so we&#8217;ll first need to design a graph model - you can learn how to do that in our <a href="../../build-a-graph-data-model/guide-intro-to-graph-modeling/index.html">modeling guide</a>.</p>
+>>>>>>> removing file - has its own folder now
 </div>
 <div class="sect4 "  >
     
@@ -173,6 +185,7 @@
 
 
 <div class="paragraph">
+<<<<<<< HEAD
 <p>Two options:</p>
 </div>
 
@@ -215,10 +228,54 @@ Ongoing updates (Transactional)
 </ul>
 
 </div>
+=======
+<p>For this data set the following graph model serves as a first iteration:</p>
+</div>
+<div class="paragraph">
+<p>&lt;insert image of model here&gt;</p>
+</div>
+<div class="paragraph">
+<p>Now that we know what we&#8217;d like our graph to look like we need to extract the data from Postgres so we can create it. The easiest way to do that is to export the appropriate tables in CSV format.</p>
+</div>
+<div class="paragraph">
+<p>Postgres' <em>copy</em> command lets us execute a SQL query and write the result to a CSV file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code programlisting cm-s-neo" data-lang="sql"><code>Copy (SELECT * FROM orders
+      left outer join customers ON customers."CustomerID" = orders."CustomerID"
+      left outer join employees ON employees."EmployeeID" = orders."EmployeeID"
+      left outer join order_details ON order_details."OrderID" = orders."OrderID"
+      left outer join products ON products."ProductID" = order_details."ProductID"
+      left outer join suppliers ON suppliers."SupplierID" = products."SupplierID"
+      left outer join categories ON categories."CategoryID" = products."CategoryID")
+      To '/tmp/customerDb.csv' With CSV header;</code></pre>
 </div>
 </div>
 
+<div class="paragraph">
+<p>Next we&#8217;ll create some indexes on the (label, property) pairs that we&#8217;re going to create in Neo4j.</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>create index on :Product(productId)</code></pre>
+</div>
+</div>
+
+<div class="listingblock">
+<div class="content">
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>create index on :Category(categoryId)</code></pre>
+</div>
+>>>>>>> removing file - has its own folder now
+</div>
+
+<div class="listingblock">
+<div class="content">
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>create index on :Order(OrderId)</code></pre>
+</div>
+
+</div>
+<<<<<<< HEAD
 <div class="sect1 "  >
     
 <h3 id="_what_tools_can_i_use">What tools can I use?</h3>
@@ -243,9 +300,20 @@ Custom e.g. load2neo
 </li>
 </ul>
 
+=======
+
+<div class="listingblock">
+<div class="content">
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>create index on :Employee(employeeId)</code></pre>
+>>>>>>> removing file - has its own folder now
 </div>
 </div>
+
+<div class="listingblock">
+<div class="content">
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>create index on :Supplier(supplierId)</code></pre>
 </div>
+<<<<<<< HEAD
 
 </div>
 <div class="sect1 "  >
@@ -278,21 +346,53 @@ Transactional mode
 </div>
 
 
-<div class="paragraph">
-<p>Existing Database / Existing Service &#8594; Intermediate Format &#8594; Neo4j</p>
+=======
 </div>
+
+>>>>>>> removing file - has its own folder now
+<div class="paragraph">
+<p>After we&#8217;ve done that we&#8217;ll create a Cypher script using the  <a href="http://docs.neo4j.org/chunked/stable/query-load-csv.html">LOAD CSV</a> command to transform the contents of the CSV file into a graph structure.</p>
+</div>
+<<<<<<< HEAD
 
 
 
 <div class="paragraph">
 <p>Generating cypher statements - works well for smaller data sets but not so well for larger ones</p>
+=======
+<div class="listingblock">
+<div class="content">
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>LOAD CSV WITH HEADERS FROM "file:/tmp/customerDb.csv" AS row
+
+MERGE (order:Order {orderId: row.OrderID})
+
+MERGE (product:Product {productId: row.ProductID})
+ON CREATE SET product.name = row.ProductName
+
+MERGE (supplier:Supplier {supplierId: row.SupplierID})
+ON CREATE SET supplier.companyName = row.SupplierCompanyName
+
+MERGE (employee:Employee {employeeId: row.EmployeeID})
+
+MERGE (category:Category {categoryId: row.CategoryID})
+ON CREATE SET category.name = row.CategoryName
+
+MERGE (employee)-[:SOLD]-&gt;(order)
+MERGE (order)-[:PRODUCT]-&gt;(product)
+MERGE (supplier)-[:SUPPLIES]-&gt;(product)
+MERGE (product)-[:PART_OF]-&gt;(category)</code></pre>
+>>>>>>> removing file - has its own folder now
+</div>
+
+</div>
+
+<div class="paragraph">
+<p>We can now query the graph&#8230;</p>
 </div>
 
 </div>
 </div>
-
-</div>
-</div>
+</div></div>
 
 </div>
 </section>
