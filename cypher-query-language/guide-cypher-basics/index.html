@@ -183,6 +183,7 @@ Neo4j then figures out what&#8217;s the best way to do that.</p>
 <pre>(matrix:Movie {title:"The Matrix", released:1997})</pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>The <code>Movie</code> label tags the otherwise untyped node as a movie and is prefixed by a colon to become a symbol: <code>:Movie</code>.
 The <code>matrix</code> identifier is just a name that we use to refer to this node within the statement later on.
@@ -205,6 +206,7 @@ So a basic fact or pattern in this domain would be:</p>
 <pre>(keanu:Person:Actor {name:"Keanu Reeves"}) -[role:ACTED_IN {roles : ["Neo"]}]-&gt; (matrix:Movie {title:"The Matrix"})</pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>Like with node labels, the relationship-type <code>ACTED_IN</code> is added as a symbol, prefixed with a colon: <code>:ACTED_IN</code>.
 As with nodes you can use identifiers, in this case <code>role</code>, to refer to the relationship in later parts of the statement.
@@ -220,6 +222,7 @@ This way you can for instance inspect them or use them in other expressions.</p>
 <pre>path = (:Person)-[:ACTED_IN]-&gt;(:Movie)</pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>This path variable would contain 2 nodes and the connecting relationship for each such pattern found or created.
 There are a number of functions to access details of a path, including <code>nodes(path)</code>, <code>rels(path)</code>, and <code>length(path)</code>.</p>
@@ -259,6 +262,7 @@ It will just go ahead and directly create the patterns that you specify.</p>
 <pre class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (:Movie {title:"The Matrix",released:1997})</code></pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>If we execute this statement, Cypher returns the number of changes, in this case adding 1 node, 1 label and 2 properties.</p>
 </div>
@@ -271,6 +275,7 @@ It will just go ahead and directly create the patterns that you specify.</p>
 RETURN p</code></pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>If we want to create more than one element, we can separate them with commas or use multiple <code>CREATE</code> statements.</p>
 </div>
@@ -284,6 +289,7 @@ CREATE (d:Person {name:"Robert Zemeckis", born:1951})-[:DIRECTED]-&gt;(m)
 RETURN a,d,r,m</code></pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>The movie graph sample in the Neo4j Browser is one example of a large set of <code>CREATE</code> statements that create a complete graph.</p>
 </div>
@@ -322,6 +328,7 @@ A <code>MATCH</code> statement will search for the patterns we specify and retur
 RETURN m</code></pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>This should show both <em>The Matrix</em> and <em>Forrest Gump</em>.</p>
 </div>
@@ -334,6 +341,7 @@ RETURN m</code></pre>
 RETURN p</code></pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>Note that we only provide enough information to find the nodes, not all properties are required.
 In most cases you have key-properties like SSN, ISBN, emails, logins, geolocation or product codes to look for.</p>
@@ -347,6 +355,7 @@ In most cases you have key-properties like SSN, ISBN, emails, logins, geolocatio
 RETURN m.title, r.roles</code></pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>In this case we only returned the properties of the nodes and relationships that we were interested in.
 You can access them everywhere via a dot notation <code>identifer.property</code>.</p>
@@ -374,6 +383,7 @@ CREATE (p)-[r:ACTED_IN {roles:['Zachry']} ]-&gt;(m)
 RETURN p,r,m</code></pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>It is important to remember that we can assign identifiers to both nodes and relationships and use them later on, no matter if they were created or matched.
 It is possible to attach both node and relationship in a single <code>CREATE</code> clause.
@@ -407,6 +417,7 @@ Usually, as with <code>MATCH</code> you only want to include the key property to
 RETURN m</code></pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>In any case we get a result, either the data (potentially more than one row) that was already in the graph or a single, newly created <code>Movie</code> node.</p>
 </div>
@@ -428,6 +439,7 @@ MERGE (p)-[r:ACTED_IN]-&gt;(m) ON CREATE SET r.roles = ['Zachry']
 RETURN p,r,m</code></pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>In case the direction of your relationship is arbitrary, you can leave off the arrow tip.
 <code>MERGE</code> will then check for the relationship in either direction, and if not found create a new, directed relationship.</p>
@@ -445,6 +457,7 @@ MERGE (y)&lt;-[:IN_YEAR]-(m11:Month {month:11})
 RETURN y,m10,m11</code></pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>Here the two months are not checked against globally but only in the context of the year <em>2014</em>.</p>
 </div>
@@ -467,6 +480,7 @@ WHERE m.title = "The Matrix"
 RETURN m</code></pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>More interesting are numeric comparisons, matching regular expressions and checking the existence of values within a collection.</p>
 </div>
@@ -479,6 +493,7 @@ WHERE p.name =~ "K.+"
 RETURN p,r,m</code></pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>One aspect that might be little surprising is that you can even use patterns as predicates.
 Where <code>MATCH</code> expands the number and shape of patterns matched, a pattern predicate restricts the current result set again, only allowing the paths to pass that satisfy these additional patterns as well (or <code>NOT</code>).</p>
@@ -490,6 +505,7 @@ WHERE NOT (p)-[:DIRECTED]-&gt;()
 RETURN p,m</code></pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>Here we find actors, because they sport an <code>ACTED_IN</code> relationship but then skip those that ever <code>DIRECTED</code> any movie.</p>
 </div>
@@ -528,6 +544,7 @@ You can later on refer to that column using its alias.</p>
 RETURN p, p.name AS name, upper(p.name), coalesce(p.nickname,"n/a") AS nickname, {name: p.name, label:head(labels(p))} AS person</code></pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>If you&#8217;re interested in unique results you can use the <code>DISTINCT</code> keyword after <code>RETURN</code> to indicate that.</p>
 </div>
@@ -550,6 +567,7 @@ Many common aggregation functions are supported, e.g. <code>count</code>, <code>
 RETURN count(*) as people</code></pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>Please note that <code>NULL</code> values are skipped during aggregation.
 For aggregating only unique values use <code>DISTINCT</code>, like in <code>count(DISTINCT role)</code>.</p>
@@ -570,6 +588,7 @@ You specify which result columns you want to aggregate and <em>Cypher will use a
 RETURN actor,director,count(*) as collaborations</code></pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>Frequently you want to sort and paginate after aggregating a <code>count(x)</code>.</p>
 </div>
@@ -604,6 +623,7 @@ ORDER BY appearances DESC
 LIMIT 10;</code></pre>
 </div>
 </div>
+
 </div>
 </div>
 <div class="sect1">
@@ -626,6 +646,7 @@ This means there&#8217;s no need to repeat the parent information per each child
 RETURN m.title as movie, collect(a.name) as cast, count(*) as actors</code></pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>The lists created by collect can either be used from the client consuming the Cypher results or directly within a statement with any of the collection functions or predicates.</p>
 </div>
@@ -655,6 +676,7 @@ MATCH (p:Person)-[r:DIRECTED]-&gt;(m:Movie)
 RETURN p,type(r) as rel,m</code></pre>
 </div>
 </div>
+
 </div>
 <div class="sect2">
 <h3 id="_use_with_to_chain_statements">Use WITH to chain statements</h3>
@@ -690,6 +712,7 @@ As already mentioned you can create literal lists (<code>[1,2,3]</code>) and map
 RETURN m.title as movie, collect(a.name)[0..5] as five_of_cast</code></pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>You can also access individual elements or slices of a list quickly with <code>list[1]</code> or <code>list[5..-5]</code>.
 Other functions to access parts of a list are <code>head(list)</code>, <code>tail(list)</code> and <code>last(list)</code>.</p>
@@ -708,6 +731,7 @@ AND any(n in nodes(path) WHERE n.name = 'Clint Eastwood')
 RETURN path</code></pre>
 </div>
 </div>
+
 </div>
 <div class="sect2">
 <h3 id="_list_processing">List processing</h3>
@@ -727,6 +751,7 @@ WITH filter(n in squares WHERE n &gt; 25) as large_squares
 RETURN reduce( a = 0, n in large_squares | a + n ) as sum_large_squares</code></pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>In a graph-query you can filter or aggregate collected values instead or work on array properties.</p>
 </div>
@@ -737,6 +762,7 @@ WITH m.title as movie, collect({name: a.name, roles: r.roles}) as cast
 RETURN movie, extract(c2 IN filter(c1 IN cast WHERE c1.name =~ "A.*") | c2.roles )</code></pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>Cypher offers to create and consume more complex data structures out of the box.
 As already mentioned you can create literal lists (<code>[1,2,3]</code>) and maps (<code>{name: value}</code>) within your statement.</p>
@@ -750,6 +776,7 @@ As already mentioned you can create literal lists (<code>[1,2,3]</code>) and map
 RETURN m.title as movie, collect(a.name)[0..5] as five_of_cast</code></pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>You can also access individual elements or slices of a list quickly with <code>list[1]</code> or <code>list[5..-5]</code>.
 Other functions to access parts of a list are <code>head(list)</code>, <code>tail(list)</code> and <code>last(list)</code>.</p>
@@ -777,6 +804,7 @@ MATCH (m)&lt;-[:ACTED_IN]-(a)
 RETURN m.title as movie, collect(a.name) as cast</code></pre>
 </div>
 </div>
+
 </div>
 </div>
 </div>
@@ -849,6 +877,7 @@ Those can be scalar values, maps, lists or even lists of maps.</p>
 ]</pre>
 </div>
 </div>
+
 <div class="listingblock">
 <div class="content">
 <pre class="code programlisting cm-s-neo" data-lang="cypher"><code>UNWIND {movies} as movie
@@ -859,6 +888,7 @@ FOREACH (role IN movie.cast |
 )</code></pre>
 </div>
 </div>
+
 </div>
 </div>
 </div>
@@ -889,6 +919,7 @@ MATCH (a:Person {id:line.personId})
 CREATE (a)-[:ACTED_IN {roles:[line.role]}]-&gt;(m);</code></pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>If your file contains denormalized data, you can either run the same file with multiple passes and simple operations as shown above or you might have to use MERGE to create entities uniquely.</p>
 </div>
@@ -903,6 +934,7 @@ Back to the Future;1985;Christopher Lloyd;1938;Dr. Emmet Brown
 ...</code></pre>
 </div>
 </div>
+
 <div class="listingblock">
 <div class="content">
 <pre class="code programlisting cm-s-neo" data-lang="cypher"><code>LOAD CSV WITH HEADERS FROM "http://server/movie_actor_roles.csv" AS line FIELDTERMINATOR ";"
@@ -911,6 +943,7 @@ MERGE (a:Person {name:line.actor}) ON CREATE SET a.born = toInt(line.born)
 MERGE (a)-[:ACTED_IN {roles:split(line.characters,",") }]-&gt;(m)</code></pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>If you import a large amount of data (more than 10000 rows), it is recommended to prefix your <code>LOAD CSV</code> clause with a <code>PERIODIC COMMIT</code> hint,
 which allows Cypher to regularly commit the import transactions to avoid memory churn for large transaction-states.</p>
@@ -934,6 +967,7 @@ For immediate execution you can use the <code>/db/data/transaction/commit</code>
 {"results":[{"columns":["p"],"data":[{"row":[{"name":"Keanu Reeves","born":1964}]}]}],"errors":[]}</pre>
 </div>
 </div>
+
 <div class="paragraph">
 <p>In the payload you can add as many "statement" objects in the "statements" list.</p>
 </div>
@@ -955,9 +989,9 @@ Location: http://localhost:7474/db/data/transaction/261
  "results":[{"columns":["p"],"data":[{"row":[{"name":"Clint Eastwood","born":1930}]}]}]}</pre>
 </div>
 </div>
+
 </div>
-</div>
-</div>
+</div></div>
 
 </div>
 </section>
