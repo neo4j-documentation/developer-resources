@@ -1,136 +1,55 @@
-== What is a graph database?
+== What is a Graph Database?
 
-A graph database manages real world information efficiently in an appropriate data model consisting of nodes (vertex) connected by named, directed relationships (edges). Nodes and relationships capture the structural and semantic meaning of your data. Properties on each provide a place to store the actual data.
+We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us. Only a database that embraces relationships as a core aspect of its data model is able to store, process, and query connections efficiently. While other databases compute relationships expensively at query time, a graph database stores connections as first level citizens, readily available for any "join-like" navigation operation. Accessing those already persistent connections is an efficient, constant-time operation and allows you to quickly traverse millions of connections per second.
 
-Most graph databases are schema free, supporting quick, agile development and fast evolution of your domain. 
-The flexible model allows for many different use-cases to be handled by the same data. 
-The information about how your graph data is used, lives in the applications you write.
+Independent of the size of the total dataset, graph databases excel at managing highly connected data and complex queries. Armed only with a pattern and a set of starting points, graph databases explore the larger neighborhood around their initial points--collecting and aggregating information from millions of nodes and relationships--leaving the billions outside the search perimeter untouched.
 
-If you're used to drawing models of your domain on whiteboards or in diagrams, you've alredy used graph representations. And now you're able to continue to use the same, well suited modeling concepts not only in your design and application but even in your database.
+=== The Property Graph Model
 
-For developers experienced in object oriented programming or entity-relationship-diagrams (which are actually graphs) the step to the similar but more versatile and powerful graph model should be a small one.
+If you’ve ever worked with an object model or entity relationship diagram, the labeled property graph model will seem familiar.
+The property graph contains connected entities (the _nodes_) which can hold arbitrary types and numbers of properties (key-value-pairs). Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata--index or constraint information, for example--to nodes.
+_Relationships_ provide directed, named semantic connections between two nodes. A relationship always has a direction, a type, a _start node_, and an __end node__. Like nodes, relationships can have arbitrary properties. In most cases, relationship have quantitative properties, such as weights, distances, ratings, time intervals, or strengths. As relationships are stored efficiently, two nodes can have any number or type of relationships between them without sacrificing performance. Note that although they are directed, relationships can always be navigated in both directions.
 
-It not only provides a memory model of that graph data, but also persistence storage with optimized representations for graph concepts on disk. 
-
-As graph databases use a fine-grained, very normalized data model, they provide transactional safety for sets of update operations. You wouldn't want your business transaction to be only partially applied in your graph.
-
-The transactional guarantees known from relational databases (Atomicity, Consistency, Isolation and Durability - ACID) make sure your data will be persistent after being committed and recovered after failures.
-
-As a graph database is optimized for managing relationships (by storing them as real database records) it can quickly retrieve them as part of complex query or traversal operations.
-
-That's why graph databases outperform other database which have to compute connections between records expensively at query time.
-
-Neo4j as an open-source graph database supports all the aforementioned aspects.
-
-Advanced features such as High Availability, Scale-out, Failover and Monitoring are also supported in http://neo4j.com/business-subscription/?edition=enterprise&release=2.1.4[Neo4j's Enterprise] offering.
-
-Let's look at some examples.
-
-** TODO BETTER EXAMPLES **
-
-== Core concepts
-
-A graph database can store any kind of data using a few simple concepts represent information and structure
-
-* Nodes – graph data records
-* Relationships – connect nodes
-* Properties – named attribute values
-* Labels - assign roles to nodes
-
-== A Graph Database
-
-Neo4j stores data in a Graph, with records called Nodes.
+image::img/graphdb-gve.png[]
+_The building blocks of the Property Graph_
 
 
-== Create a node
 
-The simplest graph has just a single node with some attributes. Let’s create a social graph of our friends on the Neo4j team:
+There is only one consistent rule in a graph database: "No broken links". Since a relationship always has a start and end node, you can’t delete a node without also deleting its associated relationships. You also can always assume that an existing relationship will not point to a non-existing endpoint.
 
-. Start by drawing a circle for the node
-. Add the name _Emil_
-. Note that he is from _Sweden_ //todo Sweden as relationship
 
-image::img/one_node.png[]
+image::img/property_graph_model.png[]
+_A concrete Property Graph Example_
 
-[TIP]
-====
-* Nodes are the name for entities in a graph
-* Data is stored as properties
-* Properties are simple name/value pairs
-====
 
-== Add a Label
+== What is Neo4j?
 
-Labels associate a set of nodes and assign roles to a node.
+Sponsored by Neo Technology, Neo4j is an open-source, NoSQL graph database implemented in Java and Scala. With development starting in 2003, it has been publicly available since 2007. The source code and issue tracking is available at GitHub.com/neo4j, with support readily available on Stack Overflow and the Neo4j Google group.
+Limited only by hardware, Neo4j is used today by hundreds of thousands of users in almost all industries. Use cases include match making, network management, software analytics, scientific research, routing, organizational and project management, recommendations, social networks, and more.
 
-Nodes can be categorized by applying labels. In our social graph, we’ll label each node that represents a Person.
+Neo4j implements the Property Graph Model down to the storage level. As opposed to grph processing or in-memory libraries, Neo4j
+provides full database characteristics like ACID compliance, cluster support and runtime failover, making it suitable to use graph data
+in production scenarios.
 
-. Apply the label “Person” to the node we created for Emil
-. Color “Person” nodes red
+Some particular features make Neo4j very popular among users, developers and DBAs:
 
-image::img/labeled_node.png[]
+- Materializing of relationships at creation time, resulting in no penalties for runtime queries
+- Constant time traversals for relationships in the graph both in depth and in breadth, due to double-linking on storage level between nodes and relationships
+- Compact storage and memory caching for graphs, resulting in efficient scale up and billions of nodes in one database on moderate hardware
+- Written on top of the JVM, thus portable and fast
 
-[TIP]
-====
-* A node can have multiple labels
-* Labels do not have any properties
-* Labeled Node
-* More Nodes
-* Schema-free, nodes can have a mix of common and unique properties.
-====
+image::img/neo4j-nosql.png[]
 
-== More Nodes
 
-Like any database, storing data in Neo4j can be as simple as adding more records. We’ll add a few more nodes, representing the following facts:
+=== Neo4j Editions
 
-. Emil has a klout score of 99
-. Johan, from Sweden, who is learning to surf
-. Ian, from England, who is an author
-. Rik, from Belgium, has a cat named Orval
-. Allison, from California, who surfs
+Neo4j’s free and open-source _Community_  edition is a high-performance, fully ACID-transactional database. The _Community_ edition includes (but is not limited to) all the functionality described in this Refcard.
+Neo4j's _Enterprise_ editions provide all of the functionality of the Community edition in addition to  scalable clustering, fail-over, live backups, and comprehensive monitoring. 
+_More information about the Community and Enterprise editions is available at http://docs.neo4j.org/
 
-image::img/more_nodes.png[]
+=== Neo4j Server
 
-[TIP]
-====
-* Similar nodes can have different properties
-* Properties can be strings, numbers, or booleans
-* Neo4j can store billions of nodes
-====
+You can download Neo4j from `http://neo4j.com/download[http://neo4j.com/download]` and install it as a server on all operating systems. By default, the Neo4j Server is bundled with a web interface bound to `http://localhost:7474`.
+The simplest way of getting started is to use Neo4j's database browser to execute your graph queries (written in Cypher, the graph query language described below) in a workbench-like fashion. Results are presented as either intuitive graph visualizations or as easy-to-read, exportable tables. 
 
-== Consider Relationships
-
-Relationships connect nodes in the graph.
-
-The real power of Neo4j is in connected data. To associate any two nodes, add a Relationship which describes how the records are related.
-
-In our social graph, we simply say who KNOWS whom:
-
-. Emil KNOWS Johan and Ian
-. Johan KNOWS Ian and Rik
-. Rik and Ian KNOWS Allison
-
-image::img/relationships.png[]
-
-[TIP]
-====
-* Relationships always have direction
-* Relationships always have a type
-* Relationships form patterns of structural connections
-* Relationship properties store information shared by two nodes.
-* Relationships are qualified by their properties.
-====
-
-== Relationship properties
-
-Relationships properties store information qualifying the relationships between two nodes.
-
-In a property graph, relationships are data records that can also contain attributes. Looking more closely at Emil’s relationships, note that:
-
-* Emil has known Johan since 2001
-* Emil rates Ian 5 (out of 5)
-* Everyone else has similar relationship properties
-
-image::img/rel-props.png[]
-
-Want more details? Please refer to the http://docs.neo4j.org/chunked/stable/what-is-a-graphdb.html#_neo4j_is_a_graph_database[Neo4j Manual].
+A remote Neo4j server can be accessed via its Cypher HTTP API, either directly or through one of the many available language drivers. For high performance special cases, you can write Neo4j server extensions in any JVM language to access Neo4j's internal database engine directly without network overhead. 

@@ -127,340 +127,96 @@
 
 <div id="content">
 <div class="sect1">
-<h2 id="_what_is_a_graph_database">What is a graph database?</h2>
+<h2 id="_what_is_a_graph_database">What is a Graph Database?</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A graph database manages real world information efficiently in an appropriate data model consisting of nodes (vertex) connected by named, directed relationships (edges). Nodes and relationships capture the structural and semantic meaning of your data. Properties on each provide a place to store the actual data.</p>
+<p>We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us. Only a database that embraces relationships as a core aspect of its data model is able to store, process, and query connections efficiently. While other databases compute relationships expensively at query time, a graph database stores connections as first level citizens, readily available for any "join-like" navigation operation. Accessing those already persistent connections is an efficient, constant-time operation and allows you to quickly traverse millions of connections per second.</p>
 </div>
 <div class="paragraph">
-<p>Most graph databases are schema free, supporting quick, agile development and fast evolution of your domain.
-The flexible model allows for many different use-cases to be handled by the same data.
-The information about how your graph data is used, lives in the applications you write.</p>
+<p>Independent of the size of the total dataset, graph databases excel at managing highly connected data and complex queries. Armed only with a pattern and a set of starting points, graph databases explore the larger neighborhood around their initial points&#8212;collecting and aggregating information from millions of nodes and relationships&#8212;leaving the billions outside the search perimeter untouched.</p>
 </div>
+<div class="sect2">
+<h3 id="_the_property_graph_model">The Property Graph Model</h3>
 <div class="paragraph">
-<p>If you&#8217;re used to drawing models of your domain on whiteboards or in diagrams, you&#8217;ve alredy used graph representations. And now you&#8217;re able to continue to use the same, well suited modeling concepts not only in your design and application but even in your database.</p>
-</div>
-<div class="paragraph">
-<p>For developers experienced in object oriented programming or entity-relationship-diagrams (which are actually graphs) the step to the similar but more versatile and powerful graph model should be a small one.</p>
-</div>
-<div class="paragraph">
-<p>It not only provides a memory model of that graph data, but also persistence storage with optimized representations for graph concepts on disk.</p>
-</div>
-<div class="paragraph">
-<p>As graph databases use a fine-grained, very normalized data model, they provide transactional safety for sets of update operations. You wouldn&#8217;t want your business transaction to be only partially applied in your graph.</p>
-</div>
-<div class="paragraph">
-<p>The transactional guarantees known from relational databases (Atomicity, Consistency, Isolation and Durability - ACID) make sure your data will be persistent after being committed and recovered after failures.</p>
-</div>
-<div class="paragraph">
-<p>As a graph database is optimized for managing relationships (by storing them as real database records) it can quickly retrieve them as part of complex query or traversal operations.</p>
-</div>
-<div class="paragraph">
-<p>That&#8217;s why graph databases outperform other database which have to compute connections between records expensively at query time.</p>
-</div>
-<div class="paragraph">
-<p>Neo4j as an open-source graph database supports all the aforementioned aspects.</p>
-</div>
-<div class="paragraph">
-<p>Advanced features such as High Availability, Scale-out, Failover and Monitoring are also supported in <a href="http://neo4j.com/business-subscription/?edition=enterprise&amp;release=2.1.4">Neo4j&#8217;s Enterprise</a> offering.</p>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s look at some examples.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>TODO BETTER EXAMPLES **</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_core_concepts">Core concepts</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>A graph database can store any kind of data using a few simple concepts represent information and structure</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Nodes – graph data records</p>
-</li>
-<li>
-<p>Relationships – connect nodes</p>
-</li>
-<li>
-<p>Properties – named attribute values</p>
-</li>
-<li>
-<p>Labels - assign roles to nodes</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_a_graph_database">A Graph Database</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Neo4j stores data in a Graph, with records called Nodes.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_create_a_node">Create a node</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The simplest graph has just a single node with some attributes. Let’s create a social graph of our friends on the Neo4j team:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Start by drawing a circle for the node</p>
-</li>
-<li>
-<p>Add the name <em>Emil</em></p>
-</li>
-<li>
-<p>Note that he is from <em>Sweden</em> //todo Sweden as relationship</p>
-</li>
-</ol>
+<p>If you’ve ever worked with an object model or entity relationship diagram, the labeled property graph model will seem familiar.
+The property graph contains connected entities (the <em>nodes</em>) which can hold arbitrary types and numbers of properties (key-value-pairs). Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata&#8212;index or constraint information, for example&#8212;to nodes.
+<em>Relationships</em> provide directed, named semantic connections between two nodes. A relationship always has a direction, a type, a <em>start node</em>, and an <em>end node</em>. Like nodes, relationships can have arbitrary properties. In most cases, relationship have quantitative properties, such as weights, distances, ratings, time intervals, or strengths. As relationships are stored efficiently, two nodes can have any number or type of relationships between them without sacrificing performance. Note that although they are directed, relationships can always be navigated in both directions.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="img/one_node.png" alt="one node">
+<img src="img/graphdb-gve.png" alt="graphdb gve">
 </div>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Tip</div>
-</td>
-<td class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>Nodes are the name for entities in a graph</p>
-</li>
-<li>
-<p>Data is stored as properties</p>
-</li>
-<li>
-<p>Properties are simple name/value pairs</p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_add_a_label">Add a Label</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Labels associate a set of nodes and assign roles to a node.</p>
 </div>
 <div class="paragraph">
-<p>Nodes can be categorized by applying labels. In our social graph, we’ll label each node that represents a Person.</p>
+<p><em>The building blocks of the Property Graph</em></p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Apply the label “Person” to the node we created for Emil</p>
-</li>
-<li>
-<p>Color “Person” nodes red</p>
-</li>
-</ol>
+<div class="paragraph">
+<p>There is only one consistent rule in a graph database: "No broken links". Since a relationship always has a start and end node, you can’t delete a node without also deleting its associated relationships. You also can always assume that an existing relationship will not point to a non-existing endpoint.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="img/labeled_node.png" alt="labeled node">
+<img src="img/property_graph_model.png" alt="property graph model">
 </div>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Tip</div>
-</td>
-<td class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>A node can have multiple labels</p>
-</li>
-<li>
-<p>Labels do not have any properties</p>
-</li>
-<li>
-<p>Labeled Node</p>
-</li>
-<li>
-<p>More Nodes</p>
-</li>
-<li>
-<p>Schema-free, nodes can have a mix of common and unique properties.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><em>A concrete Property Graph Example</em></p>
 </div>
-</td>
-</tr>
-</table>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_more_nodes">More Nodes</h2>
+<h2 id="_what_is_neo4j">What is Neo4j?</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Like any database, storing data in Neo4j can be as simple as adding more records. We’ll add a few more nodes, representing the following facts:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Emil has a klout score of 99</p>
-</li>
-<li>
-<p>Johan, from Sweden, who is learning to surf</p>
-</li>
-<li>
-<p>Ian, from England, who is an author</p>
-</li>
-<li>
-<p>Rik, from Belgium, has a cat named Orval</p>
-</li>
-<li>
-<p>Allison, from California, who surfs</p>
-</li>
-</ol>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="img/more_nodes.png" alt="more nodes">
-</div>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Tip</div>
-</td>
-<td class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>Similar nodes can have different properties</p>
-</li>
-<li>
-<p>Properties can be strings, numbers, or booleans</p>
-</li>
-<li>
-<p>Neo4j can store billions of nodes</p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_consider_relationships">Consider Relationships</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Relationships connect nodes in the graph.</p>
+<p>Sponsored by Neo Technology, Neo4j is an open-source, NoSQL graph database implemented in Java and Scala. With development starting in 2003, it has been publicly available since 2007. The source code and issue tracking is available at GitHub.com/neo4j, with support readily available on Stack Overflow and the Neo4j Google group.
+Limited only by hardware, Neo4j is used today by hundreds of thousands of users in almost all industries. Use cases include match making, network management, software analytics, scientific research, routing, organizational and project management, recommendations, social networks, and more.</p>
 </div>
 <div class="paragraph">
-<p>The real power of Neo4j is in connected data. To associate any two nodes, add a Relationship which describes how the records are related.</p>
+<p>Neo4j implements the Property Graph Model down to the storage level. As opposed to grph processing or in-memory libraries, Neo4j
+provides full database characteristics like ACID compliance, cluster support and runtime failover, making it suitable to use graph data
+in production scenarios.</p>
 </div>
 <div class="paragraph">
-<p>In our social graph, we simply say who KNOWS whom:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Emil KNOWS Johan and Ian</p>
-</li>
-<li>
-<p>Johan KNOWS Ian and Rik</p>
-</li>
-<li>
-<p>Rik and Ian KNOWS Allison</p>
-</li>
-</ol>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="img/relationships.png" alt="relationships">
-</div>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Tip</div>
-</td>
-<td class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>Relationships always have direction</p>
-</li>
-<li>
-<p>Relationships always have a type</p>
-</li>
-<li>
-<p>Relationships form patterns of structural connections</p>
-</li>
-<li>
-<p>Relationship properties store information shared by two nodes.</p>
-</li>
-<li>
-<p>Relationships are qualified by their properties.</p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_relationship_properties">Relationship properties</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Relationships properties store information qualifying the relationships between two nodes.</p>
-</div>
-<div class="paragraph">
-<p>In a property graph, relationships are data records that can also contain attributes. Looking more closely at Emil’s relationships, note that:</p>
+<p>Some particular features make Neo4j very popular among users, developers and DBAs:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Emil has known Johan since 2001</p>
+<p>Materializing of relationships at creation time, resulting in no penalties for runtime queries</p>
 </li>
 <li>
-<p>Emil rates Ian 5 (out of 5)</p>
+<p>Constant time traversals for relationships in the graph both in depth and in breadth, due to double-linking on storage level between nodes and relationships</p>
 </li>
 <li>
-<p>Everyone else has similar relationship properties</p>
+<p>Compact storage and memory caching for graphs, resulting in efficient scale up and billions of nodes in one database on moderate hardware</p>
+</li>
+<li>
+<p>Written on top of the JVM, thus portable and fast</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="img/rel-props.png" alt="rel props">
+<img src="img/neo4j-nosql.png" alt="neo4j nosql">
 </div>
+</div>
+<div class="sect2">
+<h3 id="_neo4j_editions">Neo4j Editions</h3>
+<div class="paragraph">
+<p>Neo4j’s free and open-source <em>Community</em>  edition is a high-performance, fully ACID-transactional database. The <em>Community</em> edition includes (but is not limited to) all the functionality described in this Refcard.
+Neo4j&#8217;s <em>Enterprise</em> editions provide all of the functionality of the Community edition in addition to  scalable clustering, fail-over, live backups, and comprehensive monitoring.
+_More information about the Community and Enterprise editions is available at <a href="http://docs.neo4j.org/">http://docs.neo4j.org/</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_neo4j_server">Neo4j Server</h3>
+<div class="paragraph">
+<p>You can download Neo4j from <code>http://neo4j.com/download[http://neo4j.com/download]</code> and install it as a server on all operating systems. By default, the Neo4j Server is bundled with a web interface bound to <code>http://localhost:7474</code>.
+The simplest way of getting started is to use Neo4j&#8217;s database browser to execute your graph queries (written in Cypher, the graph query language described below) in a workbench-like fashion. Results are presented as either intuitive graph visualizations or as easy-to-read, exportable tables.</p>
 </div>
 <div class="paragraph">
-<p>Want more details? Please refer to the <a href="http://docs.neo4j.org/chunked/stable/what-is-a-graphdb.html#_neo4j_is_a_graph_database">Neo4j Manual</a>.</p>
+<p>A remote Neo4j server can be accessed via its Cypher HTTP API, either directly or through one of the many available language drivers. For high performance special cases, you can write Neo4j server extensions in any JVM language to access Neo4j&#8217;s internal database engine directly without network overhead.</p>
+</div>
 </div>
 </div>
 </div>

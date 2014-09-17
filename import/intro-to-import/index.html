@@ -126,59 +126,6 @@
 
 
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>This guide will help get your data into Neo4j wherever it happens to come from and regardless of how much of it there is.</p>
-</div>
-<div class="paragraph">
-<p>Existing data can come in many shapes and sizes:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Databases (relational, NoSQL)</p>
-</li>
-<li>
-<p>Files (CSV, GraphML, Gephi, Geoff, Spreadsheet)</p>
-</li>
-<li>
-<p>Services (web service, REST API, .NET)</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>But regardless of the source we typically won&#8217;t be lucky enough to have our data already structured as a graph so we&#8217;ll first need to design a graph model - you can learn how to do that in our <a href="../../build-a-graph-data-model/guide-intro-to-graph-modeling/index.html">modeling guide</a></p>
-</div>
-<div class="paragraph">
-<p>Now that we&#8217;ve got the first version of our model it&#8217;s time to import some data in and see how well we&#8217;re able to run queries against it.</p>
-</div>
-<div class="paragraph">
-<p>The appropriate tool to use depends on a few factors:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The source of the data</p>
-</li>
-<li>
-<p>The amount of data to import</p>
-</li>
-<li>
-<p>Whether the import needs to happen online or offline</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_what_s_the_source_for_the_data">What&#8217;s the source for the data?</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_relational_database">Relational Database</h3>
-<div class="paragraph">
-<p>A relational database is one of the most common data sources from which people export data into Neo4j. The easiest way to do this is to export the appropriate tables in CSV format.</p>
-</div>
 <div class="paragraph">
 <p>Depending on the amount of data we&#8217;ll either want to use Cypher&#8217;s LOAD CSV command or the batch importer command line tool.</p>
 </div>
@@ -188,10 +135,29 @@
 <div class="paragraph">
 <p>If you need raw performance or are working with much larger CSV files then the batch importer is a more appropriate choice.</p>
 </div>
+<div class="sect4">
+<h5 id="_load_csv">LOAD CSV</h5>
 <div class="paragraph">
-<p>Export it as a CSV and use LOAD CSV (up to 1m rows) or batch import (&gt; 1 m rows)</p>
+<p>Here</p>
 </div>
 </div>
+<div class="sect4">
+<h5 id="_batch_importer">Batch Importer</h5>
+<div class="paragraph">
+<p>Two options:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Export tables in a simple way and write a pre processing script that transforms it into batch import format</p>
+</li>
+<li>
+<p>More complicated SQL script which returns batch import appropriate files</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Example from MDM &#8594; <a href="http://maxdemarzi.com/2012/02/28/batch-importer-part-2/">http://maxdemarzi.com/2012/02/28/batch-importer-part-2/</a></p>
 </div>
 </div>
 <div class="sect1">
@@ -236,7 +202,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>'expensive' index reads</p>
+<p><em>expensive</em> index reads</p>
 </li>
 <li>
 <p>duplicate checking</p>
