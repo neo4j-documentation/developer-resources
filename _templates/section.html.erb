@@ -14,7 +14,7 @@ if slevel.zero?
 <%= content %><%
 else
   snum = @numbered && @caption.nil? && slevel <= (@document.attr 'sectnumlevels', 3).to_i ? %(#{sectnum} ) : nil
-  hlevel = slevel == 1 ? 1 : slevel + 2
+  hlevel = slevel == 1 ? 1 : slevel + 1
   cols = ""
   if slevel == 2
      cols = "columns medium-" + (captioned_title == 'Sidebar' || role == 'sidebar' ? "3" : "9")
