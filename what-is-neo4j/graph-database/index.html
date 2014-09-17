@@ -130,7 +130,49 @@
 <h2 id="_what_is_a_graph_database">What is a graph database?</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A graph database stores records in the shape of a mathematical graph.</p>
+<p>A graph database manages real world information efficiently in an appropriate data model consisting of nodes (vertex) connected by named, directed relationships (edges). Nodes and relationships capture the structural and semantic meaning of your data. Properties on each provide a place to store the actual data.</p>
+</div>
+<div class="paragraph">
+<p>Most graph databases are schema free, supporting quick, agile development and fast evolution of your domain.
+The flexible model allows for many different use-cases to be handled by the same data.
+The information about how your graph data is used, lives in the applications you write.</p>
+</div>
+<div class="paragraph">
+<p>If you&#8217;re used to drawing models of your domain on whiteboards or in diagrams, you&#8217;ve alredy used graph representations. And now you&#8217;re able to continue to use the same, well suited modeling concepts not only in your design and application but even in your database.</p>
+</div>
+<div class="paragraph">
+<p>For developers experienced in object oriented programming or entity-relationship-diagrams (which are actually graphs) the step to the similar but more versatile and powerful graph model should be a small one.</p>
+</div>
+<div class="paragraph">
+<p>It not only provides a memory model of that graph data, but also persistence storage with optimized representations for graph concepts on disk.</p>
+</div>
+<div class="paragraph">
+<p>As graph databases use a fine-grained, very normalized data model, they provide transactional safety for sets of update operations. You wouldn&#8217;t want your business transaction to be only partially applied in your graph.</p>
+</div>
+<div class="paragraph">
+<p>The transactional guarantees known from relational databases (Atomicity, Consistency, Isolation and Durability - ACID) make sure your data will be persistent after being committed and recovered after failures.</p>
+</div>
+<div class="paragraph">
+<p>As a graph database is optimized for managing relationships (by storing them as real database records) it can quickly retrieve them as part of complex query or traversal operations.</p>
+</div>
+<div class="paragraph">
+<p>That&#8217;s why graph databases outperform other database which have to compute connections between records expensively at query time.</p>
+</div>
+<div class="paragraph">
+<p>Neo4j as an open-source graph database supports all the aforementioned aspects.</p>
+</div>
+<div class="paragraph">
+<p>Advanced features such as High Availability, Scale-out, Failover and Monitoring are also supported in <a href="http://neo4j.com/business-subscription/?edition=enterprise&amp;release=2.1.4">Neo4j&#8217;s Enterprise</a> offering.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s look at some examples.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>TODO BETTER EXAMPLES **</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -138,7 +180,7 @@
 <h2 id="_core_concepts">Core concepts</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A graph database can store any kind of data using a few simple concepts</p>
+<p>A graph database can store any kind of data using a few simple concepts represent information and structure</p>
 </div>
 <div class="ulist">
 <ul>
@@ -149,10 +191,10 @@
 <p>Relationships – connect nodes</p>
 </li>
 <li>
-<p>Properties – named data values</p>
+<p>Properties – named attribute values</p>
 </li>
 <li>
-<p>Labels - associate sets of nodes</p>
+<p>Labels - assign roles to nodes</p>
 </li>
 </ul>
 </div>
@@ -170,7 +212,7 @@
 <h2 id="_create_a_node">Create a node</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The simplest graph has just a single node with some named values called Properties. Let’s draw a social graph of our friends on the Neo4j team:</p>
+<p>The simplest graph has just a single node with some attributes. Let’s create a social graph of our friends on the Neo4j team:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -178,10 +220,10 @@
 <p>Start by drawing a circle for the node</p>
 </li>
 <li>
-<p>Add the name Emil</p>
+<p>Add the name <em>Emil</em></p>
 </li>
 <li>
-<p>Note that he is from Sweden</p>
+<p>Note that he is from <em>Sweden</em> //todo Sweden as relationship</p>
 </li>
 </ol>
 </div>
@@ -200,10 +242,10 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Nodes are the name for data records in a graph</p>
+<p>Nodes are the name for entities in a graph</p>
 </li>
 <li>
-<p>Data is stored as Properties</p>
+<p>Data is stored as properties</p>
 </li>
 <li>
 <p>Properties are simple name/value pairs</p>
@@ -220,10 +262,10 @@
 <h2 id="_add_a_label">Add a Label</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Labels associate a set of nodes.</p>
+<p>Labels associate a set of nodes and assign roles to a node.</p>
 </div>
 <div class="paragraph">
-<p>Nodes can be grouped together by applying a Label to each member. In our social graph, we’ll label each node that represents a Person.</p>
+<p>Nodes can be categorized by applying labels. In our social graph, we’ll label each node that represents a Person.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -250,7 +292,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>A node can have zero or more labels</p>
+<p>A node can have multiple labels</p>
 </li>
 <li>
 <p>Labels do not have any properties</p>
@@ -374,13 +416,13 @@
 <p>Relationships always have a type</p>
 </li>
 <li>
-<p>Relationships form patterns of data relationships</p>
-</li>
-<li>
-<p>Relationship properties</p>
+<p>Relationships form patterns of structural connections</p>
 </li>
 <li>
 <p>Relationship properties store information shared by two nodes.</p>
+</li>
+<li>
+<p>Relationships are qualified by their properties.</p>
 </li>
 </ul>
 </div>
@@ -394,15 +436,23 @@
 <h2 id="_relationship_properties">Relationship properties</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Relationships properties store information describing the relationship between two nodes.</p>
+<p>Relationships properties store information qualifying the relationships between two nodes.</p>
 </div>
 <div class="paragraph">
-<p>In a property graph, relationships are data records that can also contain properties. Looking more closely at Emil’s relationships, note that:</p>
+<p>In a property graph, relationships are data records that can also contain attributes. Looking more closely at Emil’s relationships, note that:</p>
 </div>
-<div class="paragraph">
-<p>Emil has known Johan since 2001
-Emil rates Ian 5 (out of 5)
-Everyone else can have similar relationship properties</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Emil has known Johan since 2001</p>
+</li>
+<li>
+<p>Emil rates Ian 5 (out of 5)</p>
+</li>
+<li>
+<p>Everyone else has similar relationship properties</p>
+</li>
+</ul>
 </div>
 <div class="imageblock">
 <div class="content">
