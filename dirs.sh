@@ -1,12 +1,22 @@
 function dir_and_adoc {
   mkdir -p $1
   if [ ! -f "$1/$1.adoc" ]; then
-     echo "== $1" > $1/$1.adoc
+     sed -e "s/Guide Title/$1/" ../guide_template.adoc > $1/$1.adoc
   else 
 	 echo  "$1/$1.adoc already exists"
   fi
 }
 
+mkdir -p neo4j-in-production
+cd neo4j-in-production
+dir_and_adoc guide-cloud-deployment
+dir_and_adoc guide-sizing-and-hardware-calculator
+dir_and_adoc guide-performance-tuning
+dir_and_adoc guide-clustering-neo4j
+dir_and_adoc guide-ha
+cd ..
+
+exit
 
 mkdir -p what-is-neo4j
 cd what-is-neo4j
@@ -60,11 +70,3 @@ dir_and_adoc libraries
 dir_and_adoc visualization-tools
 cd ..
 
-mkdir -p neo4j-in-production
-cd neo4j-in-production
-dir_and_adoc guide-cloud-deployment
-dir_and_adoc guide-sizing-and-hardware-calculator
-dir_and_adoc guide-performance-tuning
-dir_and_adoc guide-clustering-neo4j
-dir_and_adoc guide-ha
-cd ..
