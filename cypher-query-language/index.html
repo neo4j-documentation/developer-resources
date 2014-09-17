@@ -126,22 +126,142 @@
 
 
 <div id="content">
-<div class="sect1">
-<h2 id="_query_with_cypher">Query with Cypher</h2>
+<div id="preamble">
 <div class="sectionbody">
-<div class="paragraph">
-<p>Easy to read, powerfully expressive.</p>
+<div class="quoteblock abstract">
+<div class="title">Goals</div><blockquote>
+This guide explains the basic concepts of Cypher, Neo4j&#8217;s query language. You should be able to read Cypher queries after finishing this guide.
+</blockquote>
 </div>
-<div class="sect2">
+<div class="quoteblock abstract">
+<div class="title">Prerequisites</div><blockquote>
+This is a guide for Beginner. You should have familiarized yourself with <a href="../what-is-neo4j/graph-database">Graph Databases</a> and the <a href="../what-is-neo4j/property-graph">Property Graph Model</a>.
+</blockquote>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle" class="title">Overview</div>
+<ul class="sectlevel1">
+<li><a href="#_about_cypher">About Cypher</a></li>
+<li><a href="#_practical_example">Practical Example</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1 ">
+<h2 id="_about_cypher">About Cypher</h2>
+<div class="sectionbody row">
+<div class="columns medium-12">
+<div class="paragraph">
+<p>Cypher is a declarative, SQL inspired language for describing patterns in graphs. It allows us to describe <strong>what</strong> we want to select, insert, update or delete from a graph database without requiring us to describe exactly <strong>how</strong> to do it.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="cypher_pattern_simple.png" alt="cypher pattern simple">
+</div>
+</div>
+<div class="sect2 columns medium-9">
+<h3 id="_nodes">Nodes</h3>
+<div class="paragraph">
+<p>Cypher uses ASCII-Art to represent patterns. We surround nodes with parentheses which look like circles, e.g. <code>(node)</code>. If we later want to refer to the node, we&#8217;ll give it an identifier like <code>(p)</code> for person or <code>(t)</code> for thing. In real world queries, we&#8217;ll probably use longer, more expressive variable names like <code>(person)</code> or <code>(thing)</code>.</p>
+</div>
+<div class="paragraph">
+<p>So for example, if we want to find all the <strong>persons</strong> and the <strong>things</strong> they like, the query will include the identifiers <strong>person</strong> and <strong>thing</strong>, e.g. in a pattern like <code>(person)-&#8594;(thing)</code> so we can refer to them later, e.g. to access properties like <code>person.name</code> and <code>thing.quality</code>.</p>
+</div>
+<div class="paragraph">
+<p>The more general structure is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (node) RETURN node.property
+
+MATCH (node1)--&gt;(node2)
+RETURN node2.propertyA, node2.propertyB</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2 columns medium-3">
+<h3 id="_sidebar">Sidebar</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="./guide-cypher-basics">Cypher Guide</a></p>
+</li>
+<li>
+<p><a href="/online-training">Online Training</a></p>
+</li>
+<li>
+<p><a href="http://docs.neo4j.org/">Cypher Manual</a></p>
+</li>
+<li>
+<p><a href="http://docs.neo4j.org/refcard/2.1.4/">Cypher Reference Card</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2 columns medium-9">
+<h3 id="_relationships">Relationships</h3>
+<div class="paragraph">
+<p>The problem with the Cypher snippets we saw above is that they didn&#8217;t say anything about the relationship between the nodes, so even though we used the identifier <strong>person</strong>, we may well have gotten back <strong>suppliers</strong> and <strong>sellers</strong> of our <strong>things</strong>. So we need to be able to describe the types of relationships in our Cypher queries.</p>
+</div>
+<div class="paragraph">
+<p>If we wanted to retrieve everyone who likes a thing, we would describe the pattern <code>(person)-[:LIKE]&#8594;(thing)</code> to retrieve only nodes that had a relationship typed <strong>LIKE</strong> with other nodes (<strong>thing</strong>). Those nodes would the be <strong>persons</strong> as implied by the <strong>LIKE</strong> relationship.</p>
+</div>
+<div class="paragraph">
+<p>Or generally:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (node1)-[:REL_TYPE]-&gt;(node2)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Sometimes we need access to information about a relationship (e.g. its type or properties). For example, we might want to output the <strong>rating</strong> that an <strong>person</strong> gave in a <strong>thing</strong> and that <strong>rating</strong> would probably be a property of the <strong>like</strong> relationship. As with nodes, we can use identifiers for relationships (in front of the <strong>:TYPE</strong>). If we tried to match <code>(person)-[like:LIKE]&#8594;(thing)</code>, we would be able to output the <code>like.rating</code> for each of the persons and all the things that they like.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (node1)-[rel:TYPE]-&gt;(node2)
+RETURN rel.property</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2 columns medium-9">
+<h3 id="_labels">Labels</h3>
+<div class="paragraph">
+<p>Labels allow us to group our nodes. For example, we might want to distinguish <strong>things</strong> from <strong>persons</strong> or companies (both deal with things). By matching for <code>(person:Person)-[:LIKE]&#8594;(thing)</code>, it will return <strong>John</strong>, but not <strong>ACME Inc</strong> - a well known manufacturer.</p>
+</div>
+<div class="paragraph">
+<p>Labels are usually used like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (node:Label) RETURN node
+
+MATCH (node1:Label1)-[:REL_TYPE]-&gt;(node2:Label2)
+RETURN node1, node2</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="sect1 ">
+<h2 id="_practical_example">Practical Example</h2>
+<div class="sectionbody row">
+<div class="columns medium-12">
+<div class="paragraph">
+<p>Let&#8217;s try it out what we&#8217;ve learned.</p>
+</div>
+<div class="sect2 columns medium-9">
 <h3 id="_create_a_record_for_yourself">Create a record for yourself</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (you:Person {name:"You"})-[like:LIKE]-&gt;(us:Database:NoSql:Graph {name:"Neo4j" })
-RETURN you,like,us</code></pre>
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (you:Person {name:"You"})-[like:LIKE]-&gt;(neo:Database:NoSql:Graph {name:"Neo4j" })
+RETURN you,like,neo</code></pre>
 </div>
 </div>
 </div>
-<div class="sect2">
+<div class="sect2 columns medium-9">
 <h3 id="_create_your_friends">Create your friends</h3>
 <div class="listingblock">
 <div class="content">
@@ -151,7 +271,16 @@ FOREACH (name in ["Johan","Rajesh","Anna","Julia","Andrew"] |
 </div>
 </div>
 </div>
-<div class="sect2">
+<div class="sect2 columns medium-9">
+<h3 id="_find_your_friends">Find your friends</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you {name:"You"})-[:FRIEND]-&gt;(yourFriends)
+RETURN you, yourFriends</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2 columns medium-9">
 <h3 id="_create_second_degree_friends_and_expertise">Create second degree friends and expertise</h3>
 <div class="listingblock">
 <div class="content">
@@ -162,16 +291,7 @@ FOREACH (pair in [{friend:"Anna",expert:"Amanda"},{friend:"Johan",expert:"Max"}]
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_find_your_friends">Find your friends</h3>
-<div class="listingblock">
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you {name:"You"})-[:FRIEND]-&gt;(yourFriends)
-RETURN you, yourFriends</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
+<div class="sect2 columns medium-9">
 <h3 id="_find_someone_who_can_help_you_learn_neo4j">Find someone who can help you learn Neo4j</h3>
 <div class="listingblock">
 <div class="content">
@@ -182,6 +302,8 @@ RETURN p,db</code></pre>
 </div>
 </div>
 </div>
+</div>
+
 </div>
 </div>
 
