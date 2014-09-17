@@ -6,7 +6,7 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>Developer Resources | Neo4j Graph Database</title>
+         <title>Neo4j Movies Example Application | Developer Resources | Neo4j Graph Database</title>
          <script type="text/javascript">
             var _kmq = _kmq || [];
             var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
@@ -114,7 +114,7 @@
                   </div>
                   <div class="row text-center">
                      <div class="medium-10 small-centered columns">
-                        <h1 class="hero-title">Developer Resources</h1>
+                        <h1 class="hero-title">Neo4j Movies Example Application</h1>
                         <h2 class="subheader"></h2>
                      </div>
                   </div>
@@ -127,11 +127,11 @@
 
 <div id="content">
 <div class="sect1 ">
-<h2 id="_neo4j_movies_example_application">Neo4j Movies Example Application</h2>
+<h1 id="_neo4j_movies_example_application">Neo4j Movies Example Application</h1>
 <div class="sectionbody row">
 <div class="columns medium-12">
 <div class="sect2 columns medium-9">
-<h3 id="_application">Application</h3>
+<h4 id="_application">Application</h4>
 <div class="paragraph">
 <p>We use the existing movie and crew (actor, director, producer) dataset known from the Neo4j Browser and Neo4j Training to power this simple web application.
 The application runs as a single page, that uses Javascript to access 3 HTTP endpoints in the backend to provide:</p>
@@ -151,7 +151,7 @@ The application runs as a single page, that uses Javascript to access 3 HTTP end
 </div>
 </div>
 <div class="sect2 columns medium-9">
-<h3 id="_domain_model">Domain Model</h3>
+<h4 id="_domain_model">Domain Model</h4>
 <div class="listingblock">
 <div class="content">
 <pre>(:Movie {title,released,tagline})&lt;-[:ACTED_IN {roles}]-(actor:Person)</pre>
@@ -159,7 +159,7 @@ The application runs as a single page, that uses Javascript to access 3 HTTP end
 </div>
 </div>
 <div class="sect2 columns medium-9">
-<h3 id="_webpage">Webpage</h3>
+<h4 id="_webpage">Webpage</h4>
 <div class="paragraph">
 <p>The webpage is a single bootstrap page that uses jquery-ajax calls to access the backend and adds the returned JSON result data to HTML elements in the page.</p>
 </div>
@@ -171,7 +171,7 @@ If you click on any of the movie titles, the side-view is populated with the mov
 <p>For the movie details it uses the <code>/movie/Movie%20Title</code> endpoint and the results are rendered as panel title, image source and unordered list for crew.</p>
 </div>
 <div class="sect3 ">
-<h4 id="_graph_visualization">Graph Visualization</h4>
+<h5 id="_graph_visualization">Graph Visualization</h5>
 <div class="paragraph">
 <p>For the Graph Visualization we use <a href="http://d3js.org">d3.js</a>, our <code>/graph</code> endpoint already returns the data in the format of "nodes" and "links"-list that d3 can use directly.
 We then apply the force-layout algorithm, render nodes as circles and relationships as lines, and add some minor styling to the visualization provide the movie title/person name as HTML title attribute to the node circles.</p>
@@ -179,9 +179,9 @@ We then apply the force-layout algorithm, render nodes as circles and relationsh
 </div>
 </div>
 <div class="sect2 columns medium-9">
-<h3 id="_endpoints">Endpoints</h3>
+<h4 id="_endpoints">Endpoints</h4>
 <div class="sect3 ">
-<h4 id="_get_movie">Get Movie</h4>
+<h5 id="_get_movie">Get Movie</h5>
 <div class="listingblock">
 <div class="content">
 <pre>// JSON object for single movie with cast
@@ -210,7 +210,7 @@ curl http://localhost:8080/movie/The%20Matrix
 </div>
 </div>
 <div class="sect3 ">
-<h4 id="_search_movies">Search Movies</h4>
+<h5 id="_search_movies">Search Movies</h5>
 <div class="listingblock">
 <div class="content">
 <pre>// list of JSON objects for movie search results
@@ -237,7 +237,7 @@ So the result of this query is a list of maps with the title, released and tagli
 </div>
 </div>
 <div class="sect3 ">
-<h4 id="_graph_visualization_2">Graph Visualization</h4>
+<h5 id="_graph_visualization_2">Graph Visualization</h5>
 <div class="listingblock">
 <div class="content">
 <pre>// JSON object for whole graph viz (nodes, links - arrays)
@@ -269,7 +269,7 @@ A separate function then takes this result and converts it into the node- and li
 </div>
 </div>
 <div class="sect2 columns medium-9">
-<h3 id="_data_setup">Data Setup</h3>
+<h4 id="_data_setup">Data Setup</h4>
 <div class="paragraph">
 <p>Start your local Neo4j Server (<a href="http://neo4j.com/download">Download &amp; Install</a>), open the <a href="http://localhost:7474">Neo4j Browser</a>.
 Then install the Movies data-set with <code>:play movies</code>, click the create statement, and hit the triangular "Run" button to insert the data.</p>
@@ -279,7 +279,7 @@ Then install the Movies data-set with <code>:play movies</code>, click the creat
 </div>
 </div>
 <div class="sect2 columns medium-9">
-<h3 id="_run_locally">Run locally</h3>
+<h4 id="_run_locally">Run locally</h4>
 <div class="paragraph">
 <p>Then setup and start the language/stack specific implementation of the backend and open the web-application on <code><a href="http://localhost:8080" class="bare">http://localhost:8080</a></code>.</p>
 </div>
@@ -288,7 +288,7 @@ Then install the Movies data-set with <code>:play movies</code>, click the creat
 </div>
 </div>
 <div class="sect2 columns medium-9">
-<h3 id="_deploy_to_heroku">Deploy to Heroku</h3>
+<h4 id="_deploy_to_heroku">Deploy to Heroku</h4>
 <div class="paragraph">
 <p>We want to install our application to the cloud, for instance the <a href="http://heroku.com">Heroku</a> PaaS.
 We will also use the <a href="http://graphenedb.com">GraphenDB</a> Neo4j Database Hosting Add-On.</p>
