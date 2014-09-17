@@ -1,0 +1,64 @@
+== Query with Cypher
+
+Easy to read, powerfully expressive.
+
+=== Create a record for yourself
+
+//setup
+[source,cypher]
+----
+CREATE (you:Person {name:"You"})-[like:LIKE]->(us:Database:NoSql:Graph {name:"Neo4j" })
+RETURN you,like,us
+----
+
+// graph
+
+=== Create your friends
+
+//setup
+[source,cypher]
+----
+MATCH (you:Person {name:"You"})
+FOREACH (name in ["Johan","Rajesh","Anna","Julia","Andrew"] |
+  CREATE (you)-[:FRIEND]->(:Person {name:name}))
+----
+
+// graph
+
+=== Create second degree friends and expertise
+
+//setup
+[source,cypher]
+----
+MATCH (neo:Database {name:"Neo4j"})
+FOREACH (pair in [{friend:"Anna",expert:"Amanda"},{friend:"Johan",expert:"Max"}] |
+  MERGE (friend:Person {name:pair.friend})
+  CREATE (friend)-[:FRIEND]->(:Person:Expert {name:pair.expert})-[:WORKED_WITH]->(neo))
+----
+
+// graph
+
+=== Find your friends
+
+[source,cypher]
+----
+MATCH (you {name:"You"})-[:FRIEND]->(yourFriends)
+RETURN you, yourFriends
+----
+
+// graph_result
+
+// table
+
+=== Find someone who can help you learn Neo4j
+
+[source,cypher]
+----
+MATCH (you {name:"You"}), (expert)-[:WORKED_WITH]->(db:Database {name:"Neo4j" }),
+  p = shortestPath( (you)-[:FRIEND*..5]-(expert) )
+RETURN p,db
+----
+
+// graph_result
+
+// table
