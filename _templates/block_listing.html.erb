@@ -2,7 +2,7 @@
 if title? %>
 <div class="title"><%= captioned_title %></div><%
 end %>
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;"><%
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;"><%
 nowrap = !(@document.attr? :prewrap) || (option? :nowrap)
 if @style == 'source'
   language = attr :language
@@ -31,7 +31,7 @@ if @style == 'source'
      nowrap = false
    end
   pre_class << 'nowrap' if nowrap %>
-<pre style="font-size: 15px;" <%= pre_class.empty? ? nil : %( class="#{pre_class * ' '}") %><%= pre_lang && %( data-lang="#{pre_lang}") %>><code<%= code_class.empty? ? nil : %( class="#{code_class * ' '}") %>><%= content %></code></pre><%
+<pre style="font-size: 16px;" <%= pre_class.empty? ? nil : %( class="#{pre_class * ' '}") %><%= pre_lang && %( data-lang="#{pre_lang}") %>><code<%= code_class.empty? ? nil : %( class="#{code_class * ' '}") %>><%= content %></code></pre><%
 else %>
 <pre<%= nowrap ? ' class="nowrap"' : nil %>><%= content %></pre><%
 end %>

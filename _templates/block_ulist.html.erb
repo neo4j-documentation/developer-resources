@@ -20,14 +20,17 @@ end %>
 <%
 colOpen = ""
 colClose = ""
+listStyleNone = ""
 
    colOpen = (captioned_title == 'Sidebar' || role == 'side-nav' ? "<ul class='side-nav'><li>Sidebar</li>" : "")
    colClose = (captioned_title == 'Sidebar' || role == 'side-nav' ? "</ul>" : "")
+   listStyleNone = (role == "recommended" ? " style='list-style: none outside none;'" : "")
+
 %>
 <%= colOpen %>
 <ul<%= (style_class = checklist || @style) ? %( class="#{style_class}") : nil %>><%
 items.each do |item| %>
-<li>
+<li<%= listStyleNone %>>
 <%
   if checklist && (item.attr? :checkbox) %><%= %(#{(item.attr? :checked) ? marker_checked : marker_unchecked} #{item.text}) %><%
   else %><%= item.text %><%

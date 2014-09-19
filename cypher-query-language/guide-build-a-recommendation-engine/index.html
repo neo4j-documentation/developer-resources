@@ -127,7 +127,7 @@
                  </div>
                  </div>
                  <div class="row">
-                   <div class="columns large-12" style="padding: 0;">
+                   <div class="columns large-12">
                    <h1 style="font-size:2.1rem;">Building a Recommendation Engine with Cypher in 2 minutes</h1>
                  </div>
                  </div>
@@ -140,12 +140,14 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="quoteblock abstract">
-<div class="title">Goals</div><blockquote>
+<div class="title">Goals</div>
+<blockquote style="padding-left: 0;">
 We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
-<div class="title">Prerequisites</div><blockquote>
+<div class="title">Prerequisites</div>
+<blockquote style="padding-left: 0;">
 Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes.
 </blockquote>
 </div>
@@ -158,13 +160,14 @@ Nodes can be tagged with zero to many labels representing their different roles 
 <h3 class="title">Overview</h3>
 <ul class="sectlevel2">
 <li><a href="#_setup">Setup</a></li>
-<li><a href="#_recommended_guides">Recommended Guides</a></li>
+<li><a href="#_recommended">Recommended</a></li>
 <li><a href="#_basic_queries">Basic Queries</a></li>
-<li><a href="#_recommended_guides_2">Recommended Guides</a></li>
+<li><a href="#_recommended_2">Recommended</a></li>
 <li><a href="#_collaborative_filtering">Collaborative Filtering</a></li>
-<li><a href="#_recommended_guides_3">Recommended Guides</a></li>
+<li><a href="#_recommended_3">Recommended</a></li>
 <li><a href="#_connection_paths">Connection Paths</a></li>
 </ul>
+<hr>
 
 
 <div class="paragraph">
@@ -175,7 +178,7 @@ This is the basis for many recommendation engines.</p>
 
 </div>
 </div>
-<div class="sect2 columns medium-9" style='padding-left: 0;' >
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_setup">Setup</h4>
 
@@ -192,8 +195,8 @@ Go to the second slide, click the query and run it.</p>
 </div>
 
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>LOAD CSV WITH HEADERS FROM "https://neo4j-contrib.github.io/developer-resources/cypher-query-language/movies_actors.csv" AS line
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>LOAD CSV WITH HEADERS FROM "https://neo4j-contrib.github.io/developer-resources/cypher-query-language/movies_actors.csv" AS line
 WHERE line.job = "ACTED_IN"
 MERGE (m:Movie {title:line.title}) ON CREATE SET m.released = toInt(line.released), m.tagline = line.tagline
 MERGE (p:Person {name:line.name}) ON CREATE SET p.born = toInt(line.born)
@@ -202,27 +205,27 @@ RETURN count(*);</code></pre>
 </div>
 </div>
 </div>
-<div class="sect2 side-nav columns medium-3" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto;'><li>
-<h2 id="_recommended_guides">Recommended Guides</h2></li>
-<div class="ulist">
+<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<h2 id="_recommended">Recommended</h2></li>
+<div class="ulist recommended">
 
 
 <ul>
-<li>
+<li style='list-style: none outside none;'>
 <a href="http://asciidoctor.org">Links to docs</a>
 </li>
-<li>
+<li style='list-style: none outside none;'>
 <a href="http://asciidoctor.org">Links to blog</a>
 </li>
-<li>
+<li style='list-style: none outside none;'>
 <a href="http://asciidoctor.org">Links to guides</a>
 </li>
 </ul>
 
 </div>
 </div>
-<div class="sect2 columns medium-9" style='padding-left: 0;' >
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_basic_queries">Basic Queries</h4>
 
@@ -232,8 +235,8 @@ RETURN count(*);</code></pre>
 </div>
 
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name:"Tom Hanks"})
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name:"Tom Hanks"})
 RETURN tom</code></pre>
 </div>
 </div>
@@ -244,8 +247,8 @@ RETURN tom</code></pre>
 </div>
 
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]-&gt;(movie:Movie)
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]-&gt;(movie:Movie)
 RETURN tom, movie</code></pre>
 </div>
 </div>
@@ -256,33 +259,33 @@ RETURN tom, movie</code></pre>
 </div>
 
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]-&gt;(:Movie)&lt;-[:ACTED_IN]-(coActor:Person)
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]-&gt;(:Movie)&lt;-[:ACTED_IN]-(coActor:Person)
 RETURN coActor.name</code></pre>
 </div>
 </div>
 </div>
-<div class="sect2 side-nav columns medium-3" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto;'><li>
-<h2 id="_recommended_guides_2">Recommended Guides</h2></li>
-<div class="ulist">
+<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<h2 id="_recommended_2">Recommended</h2></li>
+<div class="ulist recommended">
 
 
 <ul>
-<li>
+<li style='list-style: none outside none;'>
 <a href="http://asciidoctor.org">Links to docs</a>
 </li>
-<li>
+<li style='list-style: none outside none;'>
 <a href="http://asciidoctor.org">Links to blog</a>
 </li>
-<li>
+<li style='list-style: none outside none;'>
 <a href="http://asciidoctor.org">Links to guides</a>
 </li>
 </ul>
 
 </div>
 </div>
-<div class="sect2 columns medium-9" style='padding-left: 0;' >
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_collaborative_filtering">Collaborative Filtering</h4>
 
@@ -292,8 +295,8 @@ RETURN coActor.name</code></pre>
 </div>
 
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
          (coActor)-[:ACTED_IN]-&gt;(movie2)&lt;-[:ACTED_IN]-(coCoActor:Person)
 WHERE tom.name = "Tom Hanks"
 AND   NOT    (tom)-[:ACTED_IN]-&gt;(movie2)
@@ -308,8 +311,8 @@ Also you&#8217;d probably want to state that <em>Tom Hanks</em> <strong>never</s
 </div>
 
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
          (coActor)-[:ACTED_IN]-&gt;(movie2)&lt;-[:ACTED_IN]-(coCoActor:Person)
 WHERE tom.name = "Tom Hanks"
 AND   NOT    (tom)-[:ACTED_IN]-&gt;()&lt;-[:ACTED_IN]-(coCoActor)
@@ -326,32 +329,32 @@ Now let&#8217;s see which movies and actors are between the two Toms.</p>
 </div>
 
 </div>
-<div class="sect2 side-nav columns medium-3" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto;'><li>
-<h2 id="_recommended_guides_3">Recommended Guides</h2></li>
-<div class="ulist">
+<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<h2 id="_recommended_3">Recommended</h2></li>
+<div class="ulist recommended">
 
 
 <ul>
-<li>
+<li style='list-style: none outside none;'>
 <a href="http://asciidoctor.org">Links to docs</a>
 </li>
-<li>
+<li style='list-style: none outside none;'>
 <a href="http://asciidoctor.org">Links to blog</a>
 </li>
-<li>
+<li style='list-style: none outside none;'>
 <a href="http://asciidoctor.org">Links to guides</a>
 </li>
 </ul>
 
 </div>
 </div>
-<div class="sect2 columns medium-9" style='padding-left: 0;' >
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_connection_paths">Connection Paths</h4>
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
          (coActor)-[:ACTED_IN]-&gt;(movie2)&lt;-[:ACTED_IN]-(cruise:Person)
 WHERE tom.name = "Tom Hanks" and cruise.name = "Tom Cruise"
 AND   NOT    (tom)-[:ACTED_IN]-&gt;(movie2)

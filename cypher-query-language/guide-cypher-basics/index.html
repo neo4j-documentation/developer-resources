@@ -127,7 +127,7 @@
                  </div>
                  </div>
                  <div class="row">
-                   <div class="columns large-12" style="padding: 0;">
+                   <div class="columns large-12">
                    <h1 style="font-size:2.1rem;">Guide to Cypher Basics</h1>
                  </div>
                  </div>
@@ -140,12 +140,14 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="quoteblock abstract">
-<div class="title">Goals</div><blockquote>
+<div class="title">Goals</div>
+<blockquote style="padding-left: 0;">
 We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
-<div class="title">Prerequisites</div><blockquote>
+<div class="title">Prerequisites</div>
+<blockquote style="padding-left: 0;">
 Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes.
 </blockquote>
 </div>
@@ -158,15 +160,17 @@ Nodes can be tagged with zero to many labels representing their different roles 
 <h3 class="title">Overview</h3>
 <ul class="sectlevel2">
 <li><a href="#_pop_cultural_connections">Pop-cultural connections</a></li>
+<li><a href="#_recommended">Recommended</a></li>
 <li><a href="#_create">Create</a></li>
 <li><a href="#_find">Find</a></li>
 <li><a href="#_query">Query</a></li>
 <li><a href="#_solve">Solve</a></li>
 <li><a href="#_clean_up">Clean up</a></li>
 </ul>
+<hr>
 </div>
 </div>
-<div class="sect2 columns medium-9" style='padding-left: 0;' >
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_pop_cultural_connections">Pop-cultural connections</h4>
 
@@ -182,7 +186,7 @@ Nodes can be tagged with zero to many labels representing their different roles 
 </div>
 
 <div class="olist arabic">
-<ol class="arabic">
+<ol style="margin-left: 2.4rem;" class="arabic">
 <li>
 <p style="margin-bottom: 0.75rem;">Create: insert movie data into the graph</p>
 </li>
@@ -198,7 +202,27 @@ Nodes can be tagged with zero to many labels representing their different roles 
 </ol>
 </div>
 </div>
-<div class="sect2 columns medium-9" style='padding-left: 0;' >
+<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<h2 id="_recommended">Recommended</h2></li>
+<div class="ulist recommended">
+
+
+<ul>
+<li style='list-style: none outside none;'>
+<a href="http://asciidoctor.org">Links to docs</a>
+</li>
+<li style='list-style: none outside none;'>
+<a href="http://asciidoctor.org">Links to blog</a>
+</li>
+<li style='list-style: none outside none;'>
+<a href="http://asciidoctor.org">Links to guides</a>
+</li>
+</ul>
+
+</div>
+</div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_create">Create</h4>
 
@@ -220,7 +244,7 @@ Nodes can be tagged with zero to many labels representing their different roles 
 </div>
 
 </div>
-<div class="sect2 columns medium-9" style='padding-left: 0;' >
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_find">Find</h4>
 
@@ -230,7 +254,7 @@ Nodes can be tagged with zero to many labels representing their different roles 
 </div>
 
 <div class="olist arabic">
-<ol class="arabic">
+<ol style="margin-left: 2.4rem;" class="arabic">
 <li>
 <p style="margin-bottom: 0.75rem;">Look on every query example</p>
 </li>
@@ -255,8 +279,8 @@ Nodes can be tagged with zero to many labels representing their different roles 
     
 <h5 id="_find_the_actor_named_tom_hanks">Find the actor named "Tom Hanks"&#8230;&#8203;</h5>
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom {name: "Tom Hanks"})
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom {name: "Tom Hanks"})
 RETURN tom</code></pre>
 </div>
 </div>
@@ -265,8 +289,8 @@ RETURN tom</code></pre>
     
 <h5 id="_find_the_movie_with_title_cloud_atlas">Find the movie with title "Cloud Atlas"&#8230;&#8203;</h5>
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (cloudAtlas {title: "Cloud Atlas"})
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (cloudAtlas {title: "Cloud Atlas"})
 RETURN cloudAtlas</code></pre>
 </div>
 </div>
@@ -275,8 +299,8 @@ RETURN cloudAtlas</code></pre>
     
 <h5 id="_find_10_people">Find 10 people&#8230;&#8203;</h5>
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (people:Person)
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (people:Person)
 RETURN people.name LIMIT 10</code></pre>
 </div>
 </div>
@@ -285,15 +309,15 @@ RETURN people.name LIMIT 10</code></pre>
     
 <h5 id="_find_movies_released_in_the_1990s">Find movies released in the 1990s&#8230;&#8203;</h5>
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (nineties:Movie)
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (nineties:Movie)
 WHERE nineties.released &gt; 1990 AND nineties.released &lt; 2000
 RETURN nineties.title</code></pre>
 </div>
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-9" style='padding-left: 0;' >
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_query">Query</h4>
 
@@ -303,7 +327,7 @@ RETURN nineties.title</code></pre>
 </div>
 
 <div class="olist arabic">
-<ol class="arabic">
+<ol style="margin-left: 2.4rem;" class="arabic">
 <li>
 <p style="margin-bottom: 0.75rem;">Actors are people who acted in movies</p>
 </li>
@@ -325,8 +349,8 @@ RETURN nineties.title</code></pre>
     
 <h5 id="_list_all_tom_hanks_movies">List all Tom Hanks movies&#8230;&#8203;</h5>
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name: "Tom Hanks"})-[:ACTED_IN]-&gt;(tomHanksMovies)
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name: "Tom Hanks"})-[:ACTED_IN]-&gt;(tomHanksMovies)
 RETURN tom,tomHanksMovies</code></pre>
 </div>
 </div>
@@ -335,8 +359,8 @@ RETURN tom,tomHanksMovies</code></pre>
     
 <h5 id="_who_directed_cloud_atlas">Who directed "Cloud Atlas"?</h5>
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (cloudAtlas {title: "Cloud Atlas"})&lt;-[:DIRECTED]-(directors)
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (cloudAtlas {title: "Cloud Atlas"})&lt;-[:DIRECTED]-(directors)
 RETURN directors.name</code></pre>
 </div>
 </div>
@@ -345,8 +369,8 @@ RETURN directors.name</code></pre>
     
 <h5 id="_tom_hanks_co_actors">Tom Hanks' co-actors&#8230;&#8203;</h5>
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]-&gt;(m)&lt;-[:ACTED_IN]-(coActors)
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]-&gt;(m)&lt;-[:ACTED_IN]-(coActors)
 RETURN tom, m, coActors</code></pre>
 </div>
 </div>
@@ -355,14 +379,14 @@ RETURN tom, m, coActors</code></pre>
     
 <h5 id="_how_people_are_related_to_cloud_atlas">How people are related to "Cloud Atlas"&#8230;&#8203;</h5>
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (people:Person)-[relatedTo]-(:Movie {title: "Cloud Atlas"})
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (people:Person)-[relatedTo]-(:Movie {title: "Cloud Atlas"})
 RETURN people.name, Type(relatedTo), relatedTo</code></pre>
 </div>
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-9" style='padding-left: 0;' >
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_solve">Solve</h4>
 
@@ -372,7 +396,7 @@ RETURN people.name, Type(relatedTo), relatedTo</code></pre>
 </div>
 
 <div class="olist arabic">
-<ol class="arabic">
+<ol style="margin-left: 2.4rem;" class="arabic">
 <li>
 <p style="margin-bottom: 0.75rem;">Variable length patterns</p>
 </li>
@@ -392,8 +416,8 @@ RETURN people.name, Type(relatedTo), relatedTo</code></pre>
     
 <h5 id="_movies_and_actors_up_to_3_hops_away_from_kevin_bacon">Movies and actors up to 3 "hops" away from Kevin Bacon</h5>
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (bacon:Person {name:"Kevin Bacon"})-[*1..3]-(hollywood)
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (bacon:Person {name:"Kevin Bacon"})-[*1..3]-(hollywood)
 RETURN DISTINCT hollywood</code></pre>
 </div>
 </div>
@@ -402,8 +426,8 @@ RETURN DISTINCT hollywood</code></pre>
     
 <h5 id="_bacon_path_the_shortest_path_of_any_relationships_to_meg_ryan">Bacon path, the shortest path of any relationships to Meg Ryan</h5>
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH p=shortestPath(
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH p=shortestPath(
   (bacon:Person {name:"Kevin Bacon"})-[*]-(meg:Person {name:"Meg Ryan"})
 )
 RETURN p</code></pre>
@@ -411,7 +435,7 @@ RETURN p</code></pre>
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-9" style='padding-left: 0;' >
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_clean_up">Clean up</h4>
 
@@ -421,7 +445,7 @@ RETURN p</code></pre>
 </div>
 
 <div class="olist NOTE">
-<ol class="NOTE">
+<ol style="margin-left: 2.4rem;" class="NOTE">
 <li>
 <p style="margin-bottom: 0.75rem;">Nodes can&#8217;t be deleted if relationships exist</p>
 </li>
@@ -452,8 +476,8 @@ This will remove all Person and Movie nodes!
     
 <h5 id="_delete_all_movie_and_person_nodes_and_their_relationships">Delete all Movie and Person nodes, and their relationships</h5>
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (a:Person),(m:Movie)
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (a:Person),(m:Movie)
 OPTIONAL MATCH (a)-[r1]-(), (m)-[r2]-()
 DELETE a,r1,m,r2</code></pre>
 </div>
@@ -463,8 +487,8 @@ DELETE a,r1,m,r2</code></pre>
     
 <h5 id="_prove_that_the_movie_graph_is_gone">Prove that the Movie Graph is gone</h5>
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (n)
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (n)
 RETURN count(*)</code></pre>
 </div>
 </div>

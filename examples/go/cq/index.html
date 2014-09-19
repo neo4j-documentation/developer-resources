@@ -127,7 +127,7 @@
                  </div>
                  </div>
                  <div class="row">
-                   <div class="columns large-12" style="padding: 0;">
+                   <div class="columns large-12">
                    <h1 style="font-size:2.1rem;">Neo4j Movies Example Application</h1>
                  </div>
                  </div>
@@ -142,7 +142,7 @@
 <h3 id="_neo4j_movies_example_application">Neo4j Movies Example Application</h3>
 <div class="sectionbody row">
 <div class="columns medium-12">
-<div class="sect2 columns medium-9" style='padding-left: 0;' >
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_stack">Stack</h4>
 <div class="ulist">
@@ -165,7 +165,7 @@ Frontend: jquery, bootstrap, <a href="http://d3js.org/">d3.js</a>
 
 </div>
 </div>
-<div class="sect2 columns medium-9" style='padding-left: 0;' >
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_endpoints">Endpoints:</h4>
 
@@ -175,7 +175,7 @@ Frontend: jquery, bootstrap, <a href="http://d3js.org/">d3.js</a>
 </div>
 
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre>// JSON object for single movie with cast
 curl http://cq-neo4j-movies.herokuapp.com/movie/The%20Matrix
 
@@ -187,7 +187,7 @@ curl http://cq-neo4j-movies.herokuapp.com/graph</pre>
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-9" style='padding-left: 0;' >
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_setup">Setup</h4>
 
@@ -198,7 +198,7 @@ and a mix of standard database/sql and jmoiron/sqlx functionality.</p>
 </div>
 
 </div>
-<div class="sect2 columns medium-9" style='padding-left: 0;' >
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_run_locally">Run locally:</h4>
 
@@ -215,8 +215,8 @@ Then install the Movies data-set with <code>:play movies</code>, click the state
 </div>
 
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="shell"><code>PORT=8080 go run server.go</code></pre>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="shell"><code>PORT=8080 go run server.go</code></pre>
 </div>
 </div>
 
@@ -232,12 +232,12 @@ Then install the Movies data-set with <code>:play movies</code>, click the state
 </div>
 
 </div>
-<div class="sect2 columns medium-9" style='padding-left: 0;' >
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_deploy_to_heroku">Deploy to Heroku</h4>
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="shell"><code># create a new app with the go buildpack
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="shell"><code># create a new app with the go buildpack
 heroku create -b https://github.com/kr/heroku-buildpack-go.git
 # add the graphenedb addon
 heroku addons:add graphenedb:chalk

@@ -127,7 +127,7 @@
                  </div>
                  </div>
                  <div class="row">
-                   <div class="columns large-12" style="padding: 0;">
+                   <div class="columns large-12">
                    <h1 style="font-size:2.1rem;">Neo4j Movies Example Application</h1>
                  </div>
                  </div>
@@ -142,7 +142,7 @@
 <h3 id="_neo4j_movies_example_application">Neo4j Movies Example Application</h3>
 <div class="sectionbody row">
 <div class="columns medium-12">
-<div class="sect2 columns medium-9" style='padding-left: 0;' >
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_application">Application</h4>
 
@@ -169,16 +169,16 @@ graph visualization of the domain
 
 </div>
 </div>
-<div class="sect2 columns medium-9" style='padding-left: 0;' >
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_domain_model">Domain Model</h4>
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre>(:Movie {title,released,tagline})&lt;-[:ACTED_IN {roles}]-(actor:Person)</pre>
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-9" style='padding-left: 0;' >
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_webpage">Webpage</h4>
 
@@ -212,14 +212,14 @@ We then apply the force-layout algorithm, render nodes as circles and relationsh
 
 </div>
 </div>
-<div class="sect2 columns medium-9" style='padding-left: 0;' >
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_endpoints">Endpoints</h4>
 <div class="sect3 "  >
     
 <h5 id="_get_movie">Get Movie</h5>
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre>// JSON object for single movie with cast
 curl http://localhost:8080/movie/The%20Matrix
 
@@ -241,8 +241,8 @@ curl http://localhost:8080/movie/The%20Matrix
 </div>
 
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (movie:Movie {title:{title}})
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (movie:Movie {title:{title}})
  OPTIONAL MATCH (movie)&lt;-[r]-(person:Person)
  RETURN movie.title as title,
        collect({name:person.name,
@@ -255,7 +255,7 @@ curl http://localhost:8080/movie/The%20Matrix
     
 <h5 id="_search_movies">Search Movies</h5>
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre>// list of JSON objects for movie search results
 curl http://localhost:8080/search?q=matrix
 
@@ -278,8 +278,8 @@ So the result of this query is a list of maps with the title, released and tagli
 </div>
 
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (movie:Movie)
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (movie:Movie)
  WHERE movie.title =~ {query}
  RETURN movie</code></pre>
 </div>
@@ -289,7 +289,7 @@ So the result of this query is a list of maps with the title, released and tagli
     
 <h5 id="_graph_visualization_2">Graph Visualization</h5>
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre>// JSON object for whole graph viz (nodes, links - arrays)
 curl http://localhost:8080/graph[?limit=50]
 
@@ -316,15 +316,15 @@ A separate function then takes this result and converts it into the node- and li
 </div>
 
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (m:Movie)&lt;-[:ACTED_IN]-(a:Person)
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (m:Movie)&lt;-[:ACTED_IN]-(a:Person)
  RETURN m.title as movie, collect(a.name) as cast
  LIMIT {limit}</code></pre>
 </div>
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-9" style='padding-left: 0;' >
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_data_setup">Data Setup</h4>
 
@@ -341,7 +341,7 @@ Then install the Movies data-set with <code>:play movies</code>, click the creat
 </div>
 
 </div>
-<div class="sect2 columns medium-9" style='padding-left: 0;' >
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_run_locally">Run locally</h4>
 
@@ -357,7 +357,7 @@ Then install the Movies data-set with <code>:play movies</code>, click the creat
 </div>
 
 </div>
-<div class="sect2 columns medium-9" style='padding-left: 0;' >
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_deploy_to_heroku">Deploy to Heroku</h4>
 
@@ -380,8 +380,8 @@ We will also use the <a href="http://graphenedb.com">GraphenDB</a> Neo4j Databas
 </div>
 
 <div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="shell"><code># initialize git repository and add files
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="shell"><code># initialize git repository and add files
 git init
 git add .
 git commit -m"my neo4j movies app"
