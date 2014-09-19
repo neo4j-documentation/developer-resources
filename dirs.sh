@@ -2,7 +2,7 @@ function dir_and_adoc {
   mkdir -p $1
   if [ ! -f "$1/$1.adoc" ]; then
      sed -e "s/Guide Title/$1/" ../guide_template.adoc > $1/$1.adoc
-  else 
+  else
 	 echo  "$1/$1.adoc already exists"
   fi
 }
@@ -69,4 +69,3 @@ dir_and_adoc language-drivers
 dir_and_adoc libraries
 dir_and_adoc visualization-tools
 cd ..
-

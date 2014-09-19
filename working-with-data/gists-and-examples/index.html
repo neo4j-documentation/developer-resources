@@ -141,12 +141,12 @@
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <div class="title">Goals</div><blockquote>
-prose that explains the goals of this guide
+We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div><blockquote>
-prose and links to prerequisites also target audience
+Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes.
 </blockquote>
 </div>
 
@@ -260,7 +260,7 @@ Hit the submit link in the footer, when you are ready to get your t-shirt reward
 <h4 id="_setup_a_graph_to_show_you_and_your_likes">Setup a Graph to show you and your Likes</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 13px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (you:Person {name:"You"})-[like:LIKE]-&gt;(us:Database:NoSql:Graph {name:"Neo4j" })
+<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (you:Person {name:"You"})-[like:LIKE]-&gt;(us:Database:NoSql:Graph {name:"Neo4j" })
 RETURN you, like, us</code></pre>
 </div>
 </div>
@@ -276,7 +276,7 @@ RETURN you, like, us</code></pre>
 <h4 id="_now_query_the_graph_to_show_all_the_things_you_like">Now query the graph to show all the things you like</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 13px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you:Person {name:"You"})-[like:LIKE]-&gt;(liked)
+<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you:Person {name:"You"})-[like:LIKE]-&gt;(liked)
 RETURN you.name AS who, type(like) AS how, liked.name AS what</code></pre>
 </div>
 </div>

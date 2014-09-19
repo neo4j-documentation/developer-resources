@@ -196,7 +196,7 @@ This is a guide for Beginner. You should have familiarized yourself with <a href
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 13px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (node) RETURN node.property
+<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (node) RETURN node.property
 
 MATCH (node1)--&gt;(node2)
 RETURN node2.propertyA, node2.propertyB</code></pre>
@@ -249,7 +249,7 @@ RETURN node2.propertyA, node2.propertyB</code></pre>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 13px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (node1)-[:REL_TYPE]-&gt;(node2)</code></pre>
+<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (node1)-[:REL_TYPE]-&gt;(node2)</code></pre>
 </div>
 </div>
 
@@ -260,7 +260,7 @@ RETURN node2.propertyA, node2.propertyB</code></pre>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 13px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (node1)-[rel:TYPE]-&gt;(node2)
+<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (node1)-[rel:TYPE]-&gt;(node2)
 RETURN rel.property</code></pre>
 </div>
 </div>
@@ -282,7 +282,7 @@ RETURN rel.property</code></pre>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 13px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (node:Label) RETURN node
+<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (node:Label) RETURN node
 
 MATCH (node1:Label1)-[:REL_TYPE]-&gt;(node2:Label2)
 RETURN node1, node2</code></pre>
@@ -309,7 +309,7 @@ RETURN node1, node2</code></pre>
 <h4 id="_create_a_record_for_yourself">Create a record for yourself</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 13px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (you:Person {name:"You"})-[like:LIKE]-&gt;(neo:Database:NoSql:Graph {name:"Neo4j" })
+<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (you:Person {name:"You"})-[like:LIKE]-&gt;(neo:Database:NoSql:Graph {name:"Neo4j" })
 RETURN you,like,neo</code></pre>
 </div>
 </div>
@@ -319,7 +319,7 @@ RETURN you,like,neo</code></pre>
 <h4 id="_create_your_friends">Create your friends</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 13px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you:Person {name:"You"})
+<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you:Person {name:"You"})
 FOREACH (name in ["Johan","Rajesh","Anna","Julia","Andrew"] |
   CREATE (you)-[:FRIEND]-&gt;(:Person {name:name}))</code></pre>
 </div>
@@ -330,7 +330,7 @@ FOREACH (name in ["Johan","Rajesh","Anna","Julia","Andrew"] |
 <h4 id="_find_your_friends">Find your friends</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 13px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you {name:"You"})-[:FRIEND]-&gt;(yourFriends)
+<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you {name:"You"})-[:FRIEND]-&gt;(yourFriends)
 RETURN you, yourFriends</code></pre>
 </div>
 </div>
@@ -340,7 +340,7 @@ RETURN you, yourFriends</code></pre>
 <h4 id="_create_second_degree_friends_and_expertise">Create second degree friends and expertise</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 13px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (neo:Database {name:"Neo4j"})
+<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (neo:Database {name:"Neo4j"})
 FOREACH (pair in [{friend:"Anna",expert:"Amanda"},{friend:"Johan",expert:"Max"}] |
   MERGE (friend:Person {name:pair.friend})
   CREATE (friend)-[:FRIEND]-&gt;(:Person:Expert {name:pair.expert})-[:WORKED_WITH]-&gt;(neo))</code></pre>
@@ -352,7 +352,7 @@ FOREACH (pair in [{friend:"Anna",expert:"Amanda"},{friend:"Johan",expert:"Max"}]
 <h4 id="_find_someone_who_can_help_you_learn_neo4j">Find someone who can help you learn Neo4j</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
-<pre style="font-size: 13px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you {name:"You"}), (expert)-[:WORKED_WITH]-&gt;(db:Database {name:"Neo4j" }),
+<pre style="font-size: 15px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you {name:"You"}), (expert)-[:WORKED_WITH]-&gt;(db:Database {name:"Neo4j" }),
   p = shortestPath( (you)-[:FRIEND*..5]-(expert) )
 RETURN p,db</code></pre>
 </div>

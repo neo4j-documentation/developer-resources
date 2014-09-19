@@ -15,7 +15,7 @@ This is a guide for {level}. You should have familiarized yourself with link:../
 
 toc::[]
 
-== About Cypher 
+== About Cypher
 
 Cypher is a declarative, SQL inspired language for describing patterns in graphs. It allows us to describe *what* we want to select, insert, update or delete from a graph database without requiring us to describe exactly *how* to do it.
 
@@ -27,7 +27,7 @@ image::cypher_pattern_simple.png[]
 
 Cypher uses ASCII-Art to represent patterns. We surround nodes with parentheses which look like circles, e.g. `(node)`. If we later want to refer to the node, we'll give it an identifier like `(p)` for person or `(t)` for thing. In real world queries, we'll probably use longer, more expressive variable names like `(person)` or `(thing)`.
 
-So for example, if we want to find all the *persons* and the *things* they like, the query will include the identifiers *person* and *thing*, e.g. in a pattern like `(person)-->(thing)` so we can refer to them later, e.g. to access properties like `person.name` and `thing.quality`. 
+So for example, if we want to find all the *persons* and the *things* they like, the query will include the identifiers *person* and *thing*, e.g. in a pattern like `(person)-->(thing)` so we can refer to them later, e.g. to access properties like `person.name` and `thing.quality`.
 
 
 The more general structure is:
@@ -36,7 +36,7 @@ The more general structure is:
 ----
 MATCH (node) RETURN node.property
 
-MATCH (node1)-->(node2) 
+MATCH (node1)-->(node2)
 RETURN node2.propertyA, node2.propertyB
 ----
 
@@ -63,7 +63,7 @@ Sometimes we need access to information about a relationship (e.g. its type or p
 
 [source,cypher]
 ----
-MATCH (node1)-[rel:TYPE]->(node2) 
+MATCH (node1)-[rel:TYPE]->(node2)
 RETURN rel.property
 ----
 
@@ -77,7 +77,7 @@ Labels are usually used like this:
 ----
 MATCH (node:Label) RETURN node
 
-MATCH (node1:Label1)-[:REL_TYPE]->(node2:Label2) 
+MATCH (node1:Label1)-[:REL_TYPE]->(node2:Label2)
 RETURN node1, node2
 ----
 
