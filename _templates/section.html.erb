@@ -19,7 +19,7 @@ else
   hlevel = slevel == 1 ? 3 : slevel + 1
   hlevel = slevel == 2 && role != "side-nav" ? 4 : hlevel
   hlevel = slevel == 3 && role != "side-nav" ? 5 : hlevel
-  hlevel = hlevel == 3 && role == "side-nav" ? 5 : hlevel
+  hlevel = hlevel == 3 && role == "side-nav" ? 2 : hlevel
 
   cols = ""
   colOpen = ""
@@ -28,7 +28,7 @@ else
   marginFix = ""
   if slevel == 2
     cols = "columns medium-" + (captioned_title == 'Sidebar' || role == 'side-nav' ? "3" : "9")
-    colOpen = (captioned_title == 'Sidebar' || role == 'side-nav' ? "<ul class='side-nav'><li>" : "")
+    colOpen = (captioned_title == 'Sidebar' || role == 'side-nav' ? "<ul class='side-nav code-panel' style='width: auto; height:auto;'><li>" : "")
     colOpenClose = (captioned_title == 'Sidebar' || role == 'side-nav' ? "</li>" : "")
     colClose = (captioned_title == 'Sidebar' || role == 'side-nav' ? "</ul>" : "")
     marginFix = "style='padding-left: 0;'"

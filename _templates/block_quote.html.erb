@@ -1,4 +1,14 @@
-<%#encoding:UTF-8%><div<%= @id && %( id="#{@id}") %> class="<%= ['quoteblock example-panel',role].compact * ' ' %>"><%
+<%#encoding:UTF-8%><div<%= @id && %( id="#{@id}") %> class="<%= ['quoteblock',role].compact * ' ' %>" style="margin: auto; width: 95%;">
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+</div>
+<%
 if title? %>
 <div class="title"><%= title %></div><%
 end %>
@@ -17,4 +27,13 @@ if (attr? :attribution) or (attr? :citetitle) %>
   end %>
 </div><%
 end %>
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+</div>
 </div>

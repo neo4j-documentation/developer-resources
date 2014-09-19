@@ -41,6 +41,13 @@ MERGE (p)-[:ACTED_IN {roles:split(line.roles,";")}]->(m);
 RETURN count(*);
 ----
 
+[role=side-nav]
+=== Recommended Guides
+
+* http://asciidoctor.org[Links to docs]
+* http://asciidoctor.org[Links to blog]
+* http://asciidoctor.org[Links to guides]
+
 === Basic Queries
 
 //table
@@ -75,6 +82,13 @@ RETURN coActor.name
 
 //table
 
+[role=side-nav]
+=== Recommended Guides
+
+* http://asciidoctor.org[Links to docs]
+* http://asciidoctor.org[Links to blog]
+* http://asciidoctor.org[Links to guides]
+
 === Collaborative Filtering
 
 We can now turn this "co-actor" query into a recommendation query by following those relationships another step out to find the "co-co-actors", i.e. the second degree actors in Toms network that, he has not acted with.
@@ -107,6 +121,13 @@ LIMIT 5
 
 One of those "co-co-actors" is _Tom Cruise_.
 Now let's see which movies and actors are between the two Toms.
+
+[role=side-nav]
+=== Recommended Guides
+
+* http://asciidoctor.org[Links to docs]
+* http://asciidoctor.org[Links to blog]
+* http://asciidoctor.org[Links to guides]
 
 === Connection Paths
 

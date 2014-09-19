@@ -82,6 +82,43 @@
                      </li>
                   </ul>
                </aside>
+               <div class="marquee">
+                  <div class="navigation">
+                     <div class="navigation-large hide-for-small">
+                        <div class="row">
+                           <div class="medium-9 large-7 columns nav-list">
+                              <ul class="inline-list">
+                                 <li><a href="http://neo4j.com/index.php"><img src="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/logo-neo4j.svg" class="logo" alt="neo4j"></a></li>
+                                 <li class="nav-link"><a href="http://neo4j.com/use-cases/">Use Cases</a></li>
+                                 <li class="nav-link"><a href="http://neo4j.com/customers/">Customers</a></li>
+                                 <li class="nav-link"><a href="http://neo4j.com/community/">Community</a></li>
+                                 <li class="nav-link"><a href="http://neo4j.com/docs/">Docs</a></li>
+                              </ul>
+                           </div>
+                           <div class="medium-3 large-3 columns nav-search">
+                              <div class="row collapse">
+                                 <div class="small-10 columns">
+                                    <form role="search" method="get" id="searchform" class="searchform" action="http://neo4j.com/">
+                                       <input type="text" name="s" id="s"/>
+                                 </div>
+                                 <div class="small-2 columns"> <div class="button postfix"> <input type="image" id="searchsubmit" src="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/searchicon.png" style="vertical-align:middle;"/> </form> </div> </div>
+                              </div>
+                           </div>
+                           <div class="large-2 columns show-for-large-up"> <a href="http://neo4j.com/download/" class="tiny small button right">Download</a> </div>
+                        </div>
+                     </div>
+                     <nav class="tab-bar show-for-small">
+                        <section class="left-small"> <a class="left-off-canvas-toggle menu-icon"><span></span></a> </section>
+                        <section class="middle tab-bar-section"> <img src="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/logo-neo4j.svg" class="logo" alt="neo4j" </section>
+                     </nav>
+                  </div>
+                  <div class="row text-center">
+                     <div class="medium-10 small-centered columns">
+                        <h1 class="hero-title">Developer Resources</h1>
+                        <h2 class="subheader"></h2>
+                     </div>
+                  </div>
+               </div>
 
                <article id="content" role="main">
                  <div class="row" style="padding: 10px 0 0;">
@@ -121,8 +158,11 @@ prose and links to prerequisites also target audience
 <h3 class="title">Overview</h3>
 <ul class="sectlevel2">
 <li><a href="#_setup">Setup</a></li>
+<li><a href="#_recommended_guides">Recommended Guides</a></li>
 <li><a href="#_basic_queries">Basic Queries</a></li>
+<li><a href="#_recommended_guides_2">Recommended Guides</a></li>
 <li><a href="#_collaborative_filtering">Collaborative Filtering</a></li>
+<li><a href="#_recommended_guides_3">Recommended Guides</a></li>
 <li><a href="#_connection_paths">Connection Paths</a></li>
 </ul>
 
@@ -151,15 +191,35 @@ Go to the second slide, click the query and run it.</p>
 <p>Here in this guide we just load the dataset using LOAD CSV</p>
 </div>
 
-<div class="listingblock example-panel">
-<div class="content code-panel" style="width:100%;height:auto;">
-<pre  class="code programlisting cm-s-neo" data-lang="cypher"><code>LOAD CSV WITH HEADERS FROM "https://neo4j-contrib.github.io/developer-resources/cypher-query-language/movies_actors.csv" AS line
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
+<pre style="font-size: 13px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>LOAD CSV WITH HEADERS FROM "https://neo4j-contrib.github.io/developer-resources/cypher-query-language/movies_actors.csv" AS line
 WHERE line.job = "ACTED_IN"
 MERGE (m:Movie {title:line.title}) ON CREATE SET m.released = toInt(line.released), m.tagline = line.tagline
 MERGE (p:Person {name:line.name}) ON CREATE SET p.born = toInt(line.born)
 MERGE (p)-[:ACTED_IN {roles:split(line.roles,";")}]-&gt;(m);
 RETURN count(*);</code></pre>
 </div>
+</div>
+</div>
+<div class="sect2 side-nav columns medium-3" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto;'><li>
+<h2 id="_recommended_guides">Recommended Guides</h2></li>
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="http://asciidoctor.org">Links to docs</a>
+</li>
+<li>
+<a href="http://asciidoctor.org">Links to blog</a>
+</li>
+<li>
+<a href="http://asciidoctor.org">Links to guides</a>
+</li>
+</ul>
+
 </div>
 </div>
 <div class="sect2 columns medium-9" style='padding-left: 0;' >
@@ -171,9 +231,9 @@ RETURN count(*);</code></pre>
 <p>You should be able to run a query like this to find a single actor like <em>Tom Hanks</em>.</p>
 </div>
 
-<div class="listingblock example-panel">
-<div class="content code-panel" style="width:100%;height:auto;">
-<pre  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name:"Tom Hanks"})
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
+<pre style="font-size: 13px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name:"Tom Hanks"})
 RETURN tom</code></pre>
 </div>
 </div>
@@ -183,9 +243,9 @@ RETURN tom</code></pre>
 <p>Similarly you should be able to retrieve all his movies with a single query. Your results should already look like a graph.</p>
 </div>
 
-<div class="listingblock example-panel">
-<div class="content code-panel" style="width:100%;height:auto;">
-<pre  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]-&gt;(movie:Movie)
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
+<pre style="font-size: 13px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]-&gt;(movie:Movie)
 RETURN tom, movie</code></pre>
 </div>
 </div>
@@ -195,11 +255,31 @@ RETURN tom, movie</code></pre>
 <p>Of course Tom has colleagues that acted with him in his movies, this "co-actor" statement looks like this.</p>
 </div>
 
-<div class="listingblock example-panel">
-<div class="content code-panel" style="width:100%;height:auto;">
-<pre  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]-&gt;(:Movie)&lt;-[:ACTED_IN]-(coActor:Person)
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
+<pre style="font-size: 13px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]-&gt;(:Movie)&lt;-[:ACTED_IN]-(coActor:Person)
 RETURN coActor.name</code></pre>
 </div>
+</div>
+</div>
+<div class="sect2 side-nav columns medium-3" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto;'><li>
+<h2 id="_recommended_guides_2">Recommended Guides</h2></li>
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="http://asciidoctor.org">Links to docs</a>
+</li>
+<li>
+<a href="http://asciidoctor.org">Links to blog</a>
+</li>
+<li>
+<a href="http://asciidoctor.org">Links to guides</a>
+</li>
+</ul>
+
 </div>
 </div>
 <div class="sect2 columns medium-9" style='padding-left: 0;' >
@@ -211,9 +291,9 @@ RETURN coActor.name</code></pre>
 <p>We can now turn this "co-actor" query into a recommendation query by following those relationships another step out to find the "co-co-actors", i.e. the second degree actors in Toms network that, he has not acted with.</p>
 </div>
 
-<div class="listingblock example-panel">
-<div class="content code-panel" style="width:100%;height:auto;">
-<pre  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
+<pre style="font-size: 13px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
          (coActor)-[:ACTED_IN]-&gt;(movie2)&lt;-[:ACTED_IN]-(coCoActor:Person)
 WHERE tom.name = "Tom Hanks"
 AND   NOT    (tom)-[:ACTED_IN]-&gt;(movie2)
@@ -227,9 +307,9 @@ RETURN coCoActor.name</code></pre>
 Also you&#8217;d probably want to state that <em>Tom Hanks</em> <strong>never</strong> worked with the recommended people, not just not in movies that his co-actors worked in.</p>
 </div>
 
-<div class="listingblock example-panel">
-<div class="content code-panel" style="width:100%;height:auto;">
-<pre  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
+<pre style="font-size: 13px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
          (coActor)-[:ACTED_IN]-&gt;(movie2)&lt;-[:ACTED_IN]-(coCoActor:Person)
 WHERE tom.name = "Tom Hanks"
 AND   NOT    (tom)-[:ACTED_IN]-&gt;()&lt;-[:ACTED_IN]-(coCoActor)
@@ -246,12 +326,32 @@ Now let&#8217;s see which movies and actors are between the two Toms.</p>
 </div>
 
 </div>
+<div class="sect2 side-nav columns medium-3" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto;'><li>
+<h2 id="_recommended_guides_3">Recommended Guides</h2></li>
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="http://asciidoctor.org">Links to docs</a>
+</li>
+<li>
+<a href="http://asciidoctor.org">Links to blog</a>
+</li>
+<li>
+<a href="http://asciidoctor.org">Links to guides</a>
+</li>
+</ul>
+
+</div>
+</div>
 <div class="sect2 columns medium-9" style='padding-left: 0;' >
     
 <h4 id="_connection_paths">Connection Paths</h4>
-<div class="listingblock example-panel">
-<div class="content code-panel" style="width:100%;height:auto;">
-<pre  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium none; margin: auto 0px; padding: 1.25rem 0px 2em;">
+<pre style="font-size: 13px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
          (coActor)-[:ACTED_IN]-&gt;(movie2)&lt;-[:ACTED_IN]-(cruise:Person)
 WHERE tom.name = "Tom Hanks" and cruise.name = "Tom Cruise"
 AND   NOT    (tom)-[:ACTED_IN]-&gt;(movie2)
@@ -285,14 +385,166 @@ RETURN tom, movie1, coActor, movie2, cruise</code></pre>
 
 
             </article>
-      <script>
-         jQuery(document).foundation({
-           tab: {
-             callback : function (tab) {
-               $(window).trigger('resize');
-             }
-           }
-         });
-      </script>
-   </body>
+      <div class="row text-center hide-for-small hr-style">
+         <div class="medium-5 columns">
+            <hr>
+         </div>
+         <div class="medium-2 columns"> <object height="100%" width="100%" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg" type="image/svg+xml"></object> </div>
+         <div class="medium-5 columns">
+            <hr>
+         </div>
+      </div>
+      <div class="row text-center show-for-small">
+         <div class="medium-12 columns">
+            <hr>
+         </div>
+      </div>
+
+   </article>
+   <div class="calloutsection">
+      <div class="row">
+         <div class="medium-8 small-centered columns text-center">
+            <h3>Stay Connected</h3>
+            <p>Sign up to find out more about Neo4j's upcoming events &amp; meetups.</p>
+         </div>
+      </div>
+      <div class="row">
+         <div class="medium-6 small-centered columns">
+            <div class="row collapse">
+               <div class="small-8 columns">
+                  <script src="//app-sjl.marketo.com/js/forms2/js/forms2.js"></script>
+                  <form id="mktoForm_519"></form>
+                  <script>MktoForms2.loadForm("//app-sjl.marketo.com", "773-GON-065", 519);</script>
+               </div>
+               <div class="small-4 columns"> <a href="#" id="signupbody" class="button postfix">Keep Me Connected &rsaquo;</a> </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <style> .mktoButtonWrap {display:none;} </style>
+   <script>
+      var btn = document.getElementById("signupbody");
+      btn.onclick = function(){
+      MktoForms2.getForm(519).submit();
+      };
+   </script>
+   <div class="row text-center hide-for-small hr-style">
+      <div class="medium-5 columns">
+         <hr>
+      </div>
+      <div class="medium-2 columns"> <object height="100%" width="100%" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg" type="image/svg+xml"></object> </div>
+      <div class="medium-5 columns">
+         <hr>
+      </div>
+   </div>
+   <div class="row text-center show-for-small">
+      <div class="medium-12 columns">
+         <hr>
+      </div>
+   </div>
+   <footer id="footer">
+      <div class="row">
+         <div class="small-6 medium-3 columns">
+            <h5>Learn & Try</h5>
+            <ul>
+               <li><a href="../about-neo4j">About Neo4j</a></li>
+               <li><a href="../graph-concepts/">Graph Concepts</a></li>
+               <li><a href="http://neo4j.com/use-cases/">Use Cases</a></li>
+               <li><a href="http://neo4j.com/customers/">Our Customers</a></li>
+               <li><a href="http://neo4j.com/download/">Download Neo4j</a></li>
+               <li><a href="http://console.neo4j.org/">Live Neo4j Console</a></li>
+               <li><a href="working-with-data/guide-neo4j-browser/">Neo4j Browser</a></li>
+               <li><a href="http://gist.neo4j.org">Graph Gists</a></li>
+            </ul>
+         </div>
+         <div class="small-6 medium-3 columns">
+            <h5>Develop</h5>
+            <ul>
+               <li><a href="http://neo4j.com/docs/">Docs</a></li>
+               <li><a href="../">Neo4j Guides</a></li>
+               <li><a href="working-with-data/guide-importing-data-and-etl">Import Data</a></li>
+               <li><a href="http://neo4j.com/contrib/">Select a Driver</a></li>
+               <li><a href="cypher-query-language/guide-cypher-basics">Cypher Query Language</a></li>
+               <li><a href="build-a-graph-data-model/guide-intro-to-graph-modeling">Data Modeling</a></li>
+            </ul>
+         </div>
+         <div class="small-6 medium-3 columns">
+            <h5>Connect with Neo4j</h5>
+            <ul>
+               <li><a href="http://neo4j.com/training/">Training</a></li>
+               <li><a href="http://neo4j.com/events/">Events</a></li>
+               <li><a href="http://neo4j.com/blog/">Blog</a></li>
+               <li><a href="http://neo4j.com/community/#support">Support</a></li>
+               <li><a href="http://neo4j.com/neo4j-partner-program/">Neo4j Partner Program</a></li>
+               <li><a href="http://neotechnology.com/about/">About Neo Technology</a></li>
+            </ul>
+         </div>
+         <div class="small-12 medium-3 columns">
+            <h5><a href="http://neo4j.com/contact-us">Contact Us &rarr;</a></h5>
+            <p>1-855-636-4532 <a href="mailto:info@neotechnology.com">US <i class="fi-mail"></i></a><br/> +44 808 189 0493 <a href="mailto:uk@neotechnology.com">UK <i class="fi-mail"></i></a><br/> +49 800 723 6231 <a href="mailto:vertrieb@neotechnology.com">Germany <i class="fi-mail"></i></a><br/> +33 (0)8 05 08 03 44 <a href="mailto:ventes@neotechnology.com">France <i class="fi-mail"></i></a></p>
+            <h5>Get Neo4j News</h5>
+            <p>Keep up with the latest graph database trends, tips &amp; events.</p>
+            <div class="row collapse">
+               <div class="small-9 columns">
+                  <script src="//app-sjl.marketo.com/js/forms2/js/forms2.js"></script>
+                  <form id="mktoForm_477"></form>
+                  <script>MktoForms2.loadForm("//app-sjl.marketo.com", "773-GON-065", 477);</script>
+               </div>
+               <div class="small-3 columns"> <a href="#" id="signup" class="button postfix">Go &rsaquo;</a> </div>
+            </div>
+         </div>
+      </div>
+   </footer>
+   <style> #mktoForm_477 button {display:none;} #mktoForm_477 {margin-left:-20px;} </style>
+   <script>
+      var btn = document.getElementById("signup");
+      btn.onclick = function(){
+        MktoForms2.getForm(477).submit();
+      };
+   </script>
+   <div class="row text-center hide-for-small hr-style">
+      <div class="medium-5 columns">
+         <hr>
+      </div>
+      <div class="medium-2 columns"> <object height="100%" width="100%" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg" type="image/svg+xml"></object> </div>
+      <div class="medium-5 columns">
+         <hr>
+      </div>
+   </div>
+   <div class="row text-center show-for-small">
+      <div class="medium-12 columns">
+         <hr>
+      </div>
+   </div>
+   <div class="row collapse copyright">
+      <div class="small-12 medium-3 columns text-center">
+         <p>&copy; 2014 <a href="http://neotechnology.com/">Neo Technology, Inc.</a></p>
+      </div>
+      <div class="small-12 medium-6 columns text-center">
+         <code>&#40;graphs&#41;-&#91;&#58;ARE&#93;-&rsaquo;&#40;everywhere&#41;</code>
+         <p>With &hearts; from Sweden &amp; the <a href="http://neo4j.com/community/">Neo4j</a> Community</p>
+      </div>
+      <div class="small-12 medium-3 columns text-center">
+         <ul>
+            <li><a href="http://neo4j.com/terms">Terms</a></li>
+            <li><a href="http://neo4j.com/privacy-policy/">Privacy Policy</a></li>
+         </ul>
+      </div>
+   </div>
+   <a class="exit-off-canvas"></a>
+</div>
+</div>
+<script src="http://munchkin.marketo.net/munchkin.js" type="text/javascript"></script> <script type="text/javascript">mktoMunchkin("773-GON-065");</script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/akismet/_inc/form.js?ver=3.0.1'></script> <script type='text/javascript' src='http://neo4j.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script> <script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.2/d3.min.js?ver=3.9.2'></script> <script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/json3/3.3.0/json3.min.js?ver=3.9.2'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jzurb/assets/js/neo_d3.js?ver=3.9.2'></script> <script type='text/javascript' src='http://neo4j.com/wp-includes/js/comment-reply.min.js?ver=3.9.2'></script> <script>
+jQuery(document).foundation({
+  tab: {
+    callback : function (tab) {
+      $(window).trigger('resize');
+    }
+  }
+});
+</script> <script src="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/js/foundation/foundation.equalizer.js"></script>
+</body>
+<script type="text/javascript" src="http://munchkin.marketo.net/munchkin.js"></script> <script type="text/javascript">
+mktoMunchkin("773-GON-065");
+</script>
 </html>
