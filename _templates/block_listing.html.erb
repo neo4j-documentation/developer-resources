@@ -1,8 +1,8 @@
-<%#encoding:UTF-8%><div<%= @id && %( id="#{@id}") %> class="<%= ['listingblock',role].compact * ' ' %>"><%
+<%#encoding:UTF-8%><div<%= @id && %( id="#{@id}") %> class="<%= ['listingblock example-panel',role].compact * ' ' %>"><%
 if title? %>
 <div class="title"><%= captioned_title %></div><%
 end %>
-<div class="content"><%
+<div class="content code-panel" style="width:100%;height:auto;"><%
 nowrap = !(@document.attr? :prewrap) || (option? :nowrap)
 if @style == 'source'
   language = attr :language
@@ -26,12 +26,12 @@ if @style == 'source'
     nowrap = false
    when 'codemirror'
      pre_lang = language
-     pre_class = ["code","programlisting","cm-s-neo"]
+     pre_class = ["code programlisting cm-s-neo"]
      code_class = []
      nowrap = false
    end
   pre_class << 'nowrap' if nowrap %>
-<pre<%= pre_class.empty? ? nil : %( class="#{pre_class * ' '}") %><%= pre_lang && %( data-lang="#{pre_lang}") %>><code<%= code_class.empty? ? nil : %( class="#{code_class * ' '}") %>><%= content %></code></pre><%
+<pre <%= pre_class.empty? ? nil : %( class="#{pre_class * ' '}") %><%= pre_lang && %( data-lang="#{pre_lang}") %>><code<%= code_class.empty? ? nil : %( class="#{code_class * ' '}") %>><%= content %></code></pre><%
 else %>
 <pre<%= nowrap ? ' class="nowrap"' : nil %>><%= content %></pre><%
 end %>

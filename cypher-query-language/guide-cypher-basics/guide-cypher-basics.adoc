@@ -1,15 +1,22 @@
 = Guide to Cypher Basics
+:level: Beginner
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 1
 
-This friendly guide will introduce you to the Cypher query language, which is used by Neo4j.
+.Goals
+[abstract]
+prose that explains the goals of this guide
 
-If you want to keep a reference on your side while reading, please see the http://docs.neo4j.org/refcard/{neo4j-version}[Cypher Refcard].
+.Prerequisites
+[abstract]
+prose and links to prerequisites also target audience
 
+[role=expertise]
+{level}
 
-
-****
-* http://docs.neo4j.org/chunked/stable/cypher-introduction.html[Cypher Intro Manual]
-* New Cypher Intro
-****
+toc::[]
 
 === Pop-cultural connections
 _The Movie Graph_ is a mini graph application containing actors and directors that are related through the movies they've collaborated on.
@@ -44,7 +51,8 @@ Example queries for finding individual nodes.
 
 [source,cypher]
 ----
-MATCH (tom {name: "Tom Hanks"}) RETURN tom
+MATCH (tom {name: "Tom Hanks"})
+RETURN tom
 ----
 
 //graph_result
@@ -54,7 +62,8 @@ MATCH (tom {name: "Tom Hanks"}) RETURN tom
 
 [source,cypher]
 ----
-MATCH (cloudAtlas {title: "Cloud Atlas"}) RETURN cloudAtlas
+MATCH (cloudAtlas {title: "Cloud Atlas"})
+RETURN cloudAtlas
 ----
 
 //graph_result
@@ -65,7 +74,8 @@ MATCH (cloudAtlas {title: "Cloud Atlas"}) RETURN cloudAtlas
 
 [source,cypher]
 ----
-MATCH (people:Person) RETURN people.name LIMIT 10
+MATCH (people:Person)
+RETURN people.name LIMIT 10
 ----
 
 // table
@@ -74,7 +84,9 @@ MATCH (people:Person) RETURN people.name LIMIT 10
 
 [source,cypher]
 ----
-MATCH (nineties:Movie) WHERE nineties.released > 1990 AND nineties.released < 2000 RETURN nineties.title
+MATCH (nineties:Movie)
+WHERE nineties.released > 1990 AND nineties.released < 2000
+RETURN nineties.title
 ----
 
 //table
@@ -93,7 +105,8 @@ Finding patterns within the graph.
 
 [source,cypher]
 ----
-MATCH (tom:Person {name: "Tom Hanks"})-[:ACTED_IN]->(tomHanksMovies) RETURN tom,tomHanksMovies
+MATCH (tom:Person {name: "Tom Hanks"})-[:ACTED_IN]->(tomHanksMovies)
+RETURN tom,tomHanksMovies
 ----
 
 //graph_result
@@ -104,7 +117,8 @@ MATCH (tom:Person {name: "Tom Hanks"})-[:ACTED_IN]->(tomHanksMovies) RETURN tom,
 
 [source,cypher]
 ----
-MATCH (cloudAtlas {title: "Cloud Atlas"})<-[:DIRECTED]-(directors) RETURN directors.name
+MATCH (cloudAtlas {title: "Cloud Atlas"})<-[:DIRECTED]-(directors)
+RETURN directors.name
 ----
 
 //table
@@ -113,7 +127,8 @@ MATCH (cloudAtlas {title: "Cloud Atlas"})<-[:DIRECTED]-(directors) RETURN direct
 
 [source,cypher]
 ----
-MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]->(m)<-[:ACTED_IN]-(coActors) RETURN tom, m, coActors
+MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]->(m)<-[:ACTED_IN]-(coActors)
+RETURN tom, m, coActors
 ----
 
 //graph_result
@@ -124,7 +139,8 @@ MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]->(m)<-[:ACTED_IN]-(coActors) R
 
 [source,cypher]
 ----
-MATCH (people:Person)-[relatedTo]-(:Movie {title: "Cloud Atlas"}) RETURN people.name, Type(relatedTo), relatedTo
+MATCH (people:Person)-[relatedTo]-(:Movie {title: "Cloud Atlas"})
+RETURN people.name, Type(relatedTo), relatedTo
 ----
 
 //table
@@ -173,7 +189,7 @@ When you're done experimenting, you can remove the movie data set.
 1. Nodes can't be deleted if relationships exist
 2. Delete both nodes and relationships together
 
-[WARNING] 
+[WARNING]
 This will remove all Person and Movie nodes!
 
 <<DELETE,+:help DELETE+>>
@@ -183,14 +199,17 @@ This will remove all Person and Movie nodes!
 //output
 [source,cypher]
 ----
-MATCH (a:Person),(m:Movie) OPTIONAL MATCH (a)-[r1]-(), (m)-[r2]-() DELETE a,r1,m,r2
+MATCH (a:Person),(m:Movie)
+OPTIONAL MATCH (a)-[r1]-(), (m)-[r2]-()
+DELETE a,r1,m,r2
 ----
 
 ==== Prove that the Movie Graph is gone
 
 [source,cypher]
 ----
-MATCH (n) RETURN count(*)
+MATCH (n)
+RETURN count(*)
 ----
 
 //table

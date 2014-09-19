@@ -4,23 +4,38 @@ anchor = link_start = link_end = nil
 if @id
   if @document.attr? :sectanchors
     anchor = %(<a class="anchor" href="##{@id}"></a>)
-  elsif @document.attr? :sectlinks
+  elsif @document.attr? :sectlinks && role != "side-nav"
     link_start = %(<a class="link" href="##{@id}">)
     link_end = '</a>'
   end
 end
-if slevel.zero?
+if slevel == 0
   %><h1<%= @id && %( id="#{@id}") %> class="sect0"><%= %(#{anchor}#{link_start}#{title}#{link_end}) %></h1>
+<div class="title"><%= title %></div>
 <%= content %><%
 else
   snum = @numbered && @caption.nil? && slevel <= (@document.attr 'sectnumlevels', 3).to_i ? %(#{sectnum} ) : nil
-  hlevel = slevel == 1 ? 1 : slevel + 1
+
+  hlevel = slevel == 1 ? 3 : slevel + 1
+  hlevel = slevel == 2 && role != "side-nav" ? 4 : hlevel
+  hlevel = slevel == 3 && role != "side-nav" ? 5 : hlevel
+  hlevel = hlevel == 3 && role == "side-nav" ? 5 : hlevel
+
   cols = ""
+  colOpen = ""
+  colClose = ""
+  colOpenClose = ""
+  marginFix = ""
   if slevel == 2
-     cols = "columns medium-" + (captioned_title == 'Sidebar' || role == 'sidebar' ? "3" : "9")
+    cols = "columns medium-" + (captioned_title == 'Sidebar' || role == 'side-nav' ? "3" : "9")
+    colOpen = (captioned_title == 'Sidebar' || role == 'side-nav' ? "<ul class='side-nav'><li>" : "")
+    colOpenClose = (captioned_title == 'Sidebar' || role == 'side-nav' ? "</li>" : "")
+    colClose = (captioned_title == 'Sidebar' || role == 'side-nav' ? "</ul>" : "")
+    marginFix = "style='padding-left: 0;'"
   end
-  %><div class="<%= [%(sect#{slevel}),role].compact * ' ' %> <%= cols %>">
-<h<%= hlevel %><%= @id && %( id="#{@id}") %>><%= %(#{anchor}#{link_start}#{snum}#{captioned_title}#{link_end}) %></h<%= hlevel %>><%
+  %><div class="<%= [%(sect#{slevel}),role].compact * ' ' %> <%= cols %>" <%= marginFix %> >
+    <%= colOpen %>
+<h<%= hlevel %><%= @id && %( id="#{@id}") %>><%= %(#{anchor}#{link_start}#{snum}#{captioned_title}#{link_end}) %></h<%= hlevel %>><%= colOpenClose %><%
   if slevel == 1 %>
 <div class="sectionbody row">
 <div class="columns medium-12">

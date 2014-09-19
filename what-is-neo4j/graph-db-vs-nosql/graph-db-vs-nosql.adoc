@@ -1,9 +1,27 @@
-== How Graph Database relate to other NoSQL data models?
+= How Graph Database relate to other NoSQL data models?
+:level: Beginner
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 1
 
-The NoSQL space is an interesting place, despite its unfitting name, which we see as "Not only SQL". 
+.Goals
+[abstract]
+prose that explains the goals of this guide
+
+.Prerequisites
+[abstract]
+prose and links to prerequisites also target audience
+
+[role=expertise]
+{level}
+
+toc::[]
+
+The NoSQL space is an interesting place, despite its unfitting name, which we see as "Not only SQL".
 It brings together many interesting solutions offering different data models and database systems.
 
-Each one is suitable for different use cases and shapes of data. 
+Each one is suitable for different use cases and shapes of data.
 With the advent of the NoSQL movement, the "one-size-fits-all" proposition of large relational systems was replaced by making conscious decisions for the right tool for the job.
 
 That also means that developers have to gain the necessary insight to make informed choices which approaches are best suited for the applications they work on.
@@ -37,8 +55,8 @@ image::nosql-space.png[]
 
 === (A Graph Database) –[:TRANSFORMS_A]–> (RDBMS)
 
-Reconnect the rows of tables in a *Relational Database* by uncovering all the relationships, and you’ll see a graph. 
-Dumb JOIN tables are replaced by interesting relationships. 
+Reconnect the rows of tables in a *Relational Database* by uncovering all the relationships, and you’ll see a graph.
+Dumb JOIN tables are replaced by interesting relationships.
 
 image::vs-rdbms.png[]
 
@@ -47,25 +65,25 @@ Where a RDBMS is optimized for aggregated, highly structured data, Neo4j is opti
 image::as-rdbms.png[]
 
 .Relational databases also lack relationships
-[quote, "Jim Webber, Ian Robinson", "Graph Databases, O'Reilly"]     
+[quote, "Jim Webber, Ian Robinson", "Graph Databases, O'Reilly"]
 For several decades, developers have tried to accommodate connected, semi- structured datasets inside relational databases. But whereas relational databases were initially designed to codify paper forms and tabular structures — something they do exceedingly well — they struggle when attempting to model the ad hoc, exceptional relationships that crop up in the real world. +
 *Ironically, relational databases deal poorly with relationships. Relationships do exist in the vernacular of relational databases, but only as a means of joining tables.*
 
 
 === (A Graph Database) –[:RELATES_A]–> (Key-Value Store)
 
-A *Key-Value* model is great and highly performant for lookups of huge amounts of simple or even complex values. 
+A *Key-Value* model is great and highly performant for lookups of huge amounts of simple or even complex values.
 
 image::vs-key-value.png[]
 
-When the values are themselves interconnected, you’ve got a graph. 
+When the values are themselves interconnected, you’ve got a graph.
 Neo4j lets you traverse quickly among all the connected values and find insights in the relationships.
 
 image::as-key-value.png[]
 
 === (A Graph Database) –[:NAVIGATES_A]–> (Document Store)
 
-The structured hierarchy of a *Document* accommodates a lot of schema-free data that can easily be represented as a tree. Which is of course a graph but represents only one projection of your data. 
+The structured hierarchy of a *Document* accommodates a lot of schema-free data that can easily be represented as a tree. Which is of course a graph but represents only one projection of your data.
 
 image::vs-document.png[]
 
