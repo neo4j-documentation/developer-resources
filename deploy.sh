@@ -1,3 +1,6 @@
+rm -rf deploy
+mkdir deploy
+
 for file in `find . -mindepth 2 -name "*.adoc"`; do
    echo "Rendering $file"
    filename=${file##*/}
