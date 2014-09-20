@@ -142,13 +142,13 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us.
+This guide explains how to leverage connections in your data to gather insights and start recommending, currently unrelated but relevant facts to your nodes in focus.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes.
+You should have a basic understanding of the <a href="/what-is-neo4j/property-graph">property graph model</a>. Having <a href="/download">downloaded</a> and installed Neo4j server helps you code along with the examples.
 </blockquote>
 </div>
 
@@ -158,21 +158,30 @@ Nodes can be tagged with zero to many labels representing their different roles 
 
 <div class="toc">
 <h3 class="title">Overview</h3>
+
 <ul class="sectlevel2">
-<li><a href="#_setup">Setup</a></li>
-<li><a href="#_recommended">Recommended</a></li>
+<li><a href="#_recommendation_for_collaboration_of_actors">Recommendation for Collaboration of Actors</a></li>
+
 <li><a href="#_basic_queries">Basic Queries</a></li>
-<li><a href="#_recommended_2">Recommended</a></li>
+
 <li><a href="#_collaborative_filtering">Collaborative Filtering</a></li>
-<li><a href="#_recommended_3">Recommended</a></li>
+
 <li><a href="#_connection_paths">Connection Paths</a></li>
+<li><a href="#_restaurant_recommendation">Restaurant recommendation</a></li>
+
 </ul>
+
 <hr>
 
 
 <div class="paragraph">
-<p>This demo explains how to use a basic dataset of <em>Actors</em> acting in <em>Movies</em> to create recommendations with a graph database.
-By following the relationships between the people and movies in am meaningful manner you can determine co-occurences, frequencies and relevant nodes in the graph.
+<p>This demo explains how to use a basic dataset of <em>Actors</em> acting in <em>Movies</em> to create recommendations with a graph database.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>By following the relationships between the people and movies in am meaningful manner you can determine co-occurences, frequencies and relevant nodes in the graph.
 This is the basis for many recommendation engines.</p>
 </div>
 
@@ -180,7 +189,8 @@ This is the basis for many recommendation engines.</p>
 </div>
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
-<h4 id="_setup">Setup</h4>
+<h4 id="_recommendation_for_collaboration_of_actors">Recommendation for Collaboration of Actors</h4>
+
 
 
 <div class="paragraph">
@@ -207,19 +217,17 @@ RETURN count(*);</code></pre>
 </div>
 <div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
     <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
-<h2 id="_recommended">Recommended</h2></li>
-<div class="ulist recommended">
+<h2 id="_recommended">Recommended</h2>
+</li>
+<div class="ulist">
 
 
 <ul>
-<li style='list-style: none outside none;'>
-<a href="http://asciidoctor.org">Links to docs</a>
+<li>
+<a href="/online-training">Online Cypher Training</a>
 </li>
-<li style='list-style: none outside none;'>
-<a href="http://asciidoctor.org">Links to blog</a>
-</li>
-<li style='list-style: none outside none;'>
-<a href="http://asciidoctor.org">Links to guides</a>
+<li>
+<a href="/use-cases/recommendations/">Recommendation Use Cases</a>
 </li>
 </ul>
 
@@ -228,6 +236,7 @@ RETURN count(*);</code></pre>
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_basic_queries">Basic Queries</h4>
+
 
 
 <div class="paragraph">
@@ -267,18 +276,19 @@ RETURN coActor.name</code></pre>
 </div>
 <div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
     <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
-<h2 id="_recommended_2">Recommended</h2></li>
-<div class="ulist recommended">
+<h2 id="_recommended_2">Recommended</h2>
+</li>
+<div class="ulist">
 
 
 <ul>
-<li style='list-style: none outside none;'>
+<li>
 <a href="http://asciidoctor.org">Links to docs</a>
 </li>
-<li style='list-style: none outside none;'>
+<li>
 <a href="http://asciidoctor.org">Links to blog</a>
 </li>
-<li style='list-style: none outside none;'>
+<li>
 <a href="http://asciidoctor.org">Links to guides</a>
 </li>
 </ul>
@@ -288,6 +298,7 @@ RETURN coActor.name</code></pre>
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_collaborative_filtering">Collaborative Filtering</h4>
+
 
 
 <div class="paragraph">
@@ -331,18 +342,19 @@ Now let&#8217;s see which movies and actors are between the two Toms.</p>
 </div>
 <div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
     <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
-<h2 id="_recommended_3">Recommended</h2></li>
-<div class="ulist recommended">
+<h2 id="_recommended_3">Recommended</h2>
+</li>
+<div class="ulist">
 
 
 <ul>
-<li style='list-style: none outside none;'>
+<li>
 <a href="http://asciidoctor.org">Links to docs</a>
 </li>
-<li style='list-style: none outside none;'>
+<li>
 <a href="http://asciidoctor.org">Links to blog</a>
 </li>
-<li style='list-style: none outside none;'>
+<li>
 <a href="http://asciidoctor.org">Links to guides</a>
 </li>
 </ul>
@@ -352,6 +364,7 @@ Now let&#8217;s see which movies and actors are between the two Toms.</p>
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_connection_paths">Connection Paths</h4>
+
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
@@ -380,6 +393,76 @@ RETURN tom, movie1, coActor, movie2, cruise</code></pre>
 </div>
 
 <iframe width="640" height="480" src="//www.youtube.com/embed/qbZ_Q-YnHYo" frameborder="0" allowfullscreen></iframe>
+</div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
+    
+<h4 id="_restaurant_recommendation">Restaurant recommendation</h4>
+
+
+
+<div class="paragraph">
+<p>Imagine a graph like this, a few friends with their favorite restaurants, their cusines and locations.</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="restaurant-recommendation.png" alt="restaurant recommendation">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>A practical question to answer here, formulated in <a href="http://neo4j.com/blog/why-the-most-important-part-of-facebook-graph-search-is-graph/">Graph Search</a> slang is:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre>Sushi restaurants in New York that my friends like</pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>How could we translate that into the appropriate Cypher statement?</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (person:Person)-[:IS_FRIEND_OF]-&gt;(friend),
+      (friend)-[:LIKES]-&gt;(restaurant:Restaurant),
+      (restaurant)-[:LOCATED_IN]-&gt;(loc:Location),
+      (restaurant)-[:SERVES]-&gt;(type:Cuisine)
+
+WHERE person.name = 'Philip'
+  AND loc.location='New York'
+  AND type.cuisine='Sushi'
+
+RETURN restaurant.name, count(*) as occurrence
+ORDER BY occurrence DESC
+LIMIT 5</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Other factors that can be easily integrated in this query are favorites, allergies, ratings and closeness to my current position.</p>
+</div>
+
+</div>
+<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<h2 id="_recommended_4">Recommended</h2>
+</li>
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="http://maxdemarzi.com/2014/01/31/neo4j-spatial-part-1/">Restaurant Recommendation (mdm)</a>
+</li>
+</ul>
+
+</div>
 </div>
 </div>
 

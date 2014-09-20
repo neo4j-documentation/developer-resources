@@ -7,11 +7,11 @@
 
 .Goals
 [abstract]
-We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us.
+This guide explains how to leverage connections in your data to gather insights and start recommending, currently unrelated but relevant facts to your nodes in focus.
 
 .Prerequisites
 [abstract]
-Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes.
+You should have a basic understanding of the link:/what-is-neo4j/property-graph[property graph model]. Having link:/download[downloaded] and installed Neo4j server helps you code along with the examples. 
 
 [role=expertise]
 {level}
@@ -19,10 +19,11 @@ Nodes can be tagged with zero to many labels representing their different roles 
 toc::[]
 
 This demo explains how to use a basic dataset of _Actors_ acting in _Movies_ to create recommendations with a graph database.
+
 By following the relationships between the people and movies in am meaningful manner you can determine co-occurences, frequencies and relevant nodes in the graph.
 This is the basis for many recommendation engines.
 
-=== Setup
+=== Recommendation for Collaboration of Actors
 
 You can follow along by link:/download[installing and starting] Neo4j server, opening it on http://localhost:7474  and then inserting the movie dataset via the `:play movie graph` command.
 Go to the second slide, click the query and run it.
@@ -44,10 +45,8 @@ RETURN count(*);
 [role=side-nav]
 === Recommended
 
-[role=recommended]
-* http://asciidoctor.org[Links to docs]
-* http://asciidoctor.org[Links to blog]
-* http://asciidoctor.org[Links to guides]
+* link:/online-training[Online Cypher Training]
+* link:/use-cases/recommendations/[Recommendation Use Cases]
 
 === Basic Queries
 
@@ -86,7 +85,6 @@ RETURN coActor.name
 [role=side-nav]
 === Recommended
 
-[role=recommended]
 * http://asciidoctor.org[Links to docs]
 * http://asciidoctor.org[Links to blog]
 * http://asciidoctor.org[Links to guides]
@@ -127,7 +125,6 @@ Now let's see which movies and actors are between the two Toms.
 [role=side-nav]
 === Recommended
 
-[role=recommended]
 * http://asciidoctor.org[Links to docs]
 * http://asciidoctor.org[Links to blog]
 * http://asciidoctor.org[Links to guides]
@@ -155,3 +152,58 @@ You can also watch the video of Andreas running these queries live on our main e
 ++++
 <iframe width="640" height="480" src="//www.youtube.com/embed/qbZ_Q-YnHYo" frameborder="0" allowfullscreen></iframe>
 ++++
+
+=== Restaurant recommendation
+
+Imagine a graph like this, a few friends with their favorite restaurants, their cusines and locations.
+
+image::restaurant-recommendation.png[]
+
+A practical question to answer here, formulated in http://neo4j.com/blog/why-the-most-important-part-of-facebook-graph-search-is-graph/[Graph Search] slang is:
+
+----
+Sushi restaurants in New York that my friends like
+----
+
+How could we translate that into the appropriate Cypher statement?
+
+[source,cypher]
+----
+MATCH (person:Person)-[:IS_FRIEND_OF]->(friend),
+      (friend)-[:LIKES]->(restaurant:Restaurant),
+      (restaurant)-[:LOCATED_IN]->(loc:Location),
+      (restaurant)-[:SERVES]->(type:Cuisine)
+
+WHERE person.name = 'Philip' 
+  AND loc.location='New York' 
+  AND type.cuisine='Sushi'
+
+RETURN restaurant.name, count(*) as occurrence
+ORDER BY occurrence DESC
+LIMIT 5
+----
+
+Other factors that can be easily integrated in this query are favorites, allergies, ratings and closeness to my current position.
+
+[role=side-nav]
+=== Recommended
+* http://maxdemarzi.com/2014/01/31/neo4j-spatial-part-1/[Restaurant Recommendation (mdm)]
+
+////
+
+=== Dating / Job Search 
+
+Match making with a graph database relies on extracting the relevant attributes of people (or jobs) as attribute nodes to allow for matches across those. 
+The people in your graph are connected to their attributes with weighted relationships that allow for aggregation and filtering.
+
+
+[source,cypher]
+----
+----
+
+[role=side-nav]
+=== Recommended
+* link:/examples/dating/[Dating Examples]
+* http://http://watch.neo4j.org/video/86754045["5 Graphs of Love",role=video]
+* http://maxdemarzi.com/2013/04/19/match-making-with-neo4j/[Match Making with Neo4j (mdm)]
+////
