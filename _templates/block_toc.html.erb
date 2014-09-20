@@ -13,6 +13,10 @@ if @document.attr? :toc
   if toc_title %>
 <h3 class="title"<%= toc_title_id && %( id="#{toc_title_id}") %>><%= toc_title %></h3><%
   end %>
-<%= converter.convert_with_options @document, 'outline', :toclevels => toc_levels %><%
+<% toc = converter.convert_with_options @document, 'outline', :toclevels => toc_levels 
+   toc = toc.gsub(/<li><a href=\"#_(sidebar|recommended).*?\">.+?<\/a><\/li>/,"")
+%>
+<%= toc %>
+<%
 end %>
 <hr>
