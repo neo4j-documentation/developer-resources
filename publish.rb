@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+require 'rubygems'
+require 'bundler/setup'
 #
 html=ARGV[0]
 raise "Usage: feed me html files" unless html
