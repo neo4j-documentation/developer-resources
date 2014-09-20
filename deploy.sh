@@ -7,6 +7,7 @@ for file in `find . -mindepth 2 -name "*.adoc"`; do
    filename=${filename%.adoc}
    bundle exec asciidoctor -a source-highlighter=codemirror -T _templates/wordpress $file -o deploy/${filename}.html
 done
+./publish.rb 'deploy/guide-build-a-recommendation-engine.html'
 
 #git add .
 #git commit -m "content-update for github-pages"
