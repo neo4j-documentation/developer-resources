@@ -23,7 +23,7 @@ blog_id  = ENV['BLOG_HOSTNAME']
 username = ENV['BLOG_USERNAME']
 password = ENV['BLOG_PASSWORD']
 
-wp = Rubypress::Client.new(:host => blog_id)
+wp = Rubypress::Client.new(:host => blog_id,
                            :username => username,
                            :password => password)
 
