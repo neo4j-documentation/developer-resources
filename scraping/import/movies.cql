@@ -1,8 +1,8 @@
 // Create indexes
 CREATE CONSTRAINT ON (m:Movie) ASSERT m.id IS UNIQUE;
 CREATE CONSTRAINT ON (g:Genre) ASSERT g.id IS UNIQUE;
-CREATE CONSTRAINT ON (c:Character) ASSERT c.id IS UNIQUE;
 CREATE CONSTRAINT ON (a:Actor) ASSERT a.id IS UNIQUE;
+CREATE CONSTRAINT ON (k:Keyword) ASSERT k.id IS UNIQUE;
 
 
 // Movie titles
@@ -38,4 +38,4 @@ ON CREATE SET k.name = line.KeyWord
 
 MERGE (m:Movie {id: line.MovieId})
 
-MERGE (m)-[:HAS_KEYWORD]->(k)
+MERGE (m)-[:HAS_KEYWORD]->(k);

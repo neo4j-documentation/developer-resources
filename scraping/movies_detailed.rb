@@ -17,8 +17,6 @@ CSV.foreach("all-movies.csv", :headers => true) do  |row|
   content = open("http://api.themoviedb.org/3/movie/#{movie_id}?api_key=#{API_KEY}&append_to_response=casts").read
   result = JSON.parse(content)
 
-  p result
-
   CSV.open("all-genres.csv", 'ab') do |f|
       result["genres"].each do |row|
         f << [movie_id, row["id"], row["name"]]
