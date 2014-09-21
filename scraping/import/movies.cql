@@ -1,7 +1,7 @@
 // Create indexes
 CREATE CONSTRAINT ON (m:Movie) ASSERT m.id IS UNIQUE;
 CREATE CONSTRAINT ON (g:Genre) ASSERT g.id IS UNIQUE;
-CREATE CONSTRAINT ON (a:Actor) ASSERT a.id IS UNIQUE;
+CREATE CONSTRAINT ON (p:Person) ASSERT p.id IS UNIQUE;
 CREATE CONSTRAINT ON (k:Keyword) ASSERT k.id IS UNIQUE;
 
 
@@ -25,10 +25,10 @@ LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/neo4j-contrib/deve
 
 MERGE (m:Movie {id: line.MovieId})
 
-MERGE (a:Actor {id: line.ActorId})
-ON CREATE SET a.name = line.ActorName
+MERGE (p:Person {id: line.ActorId})
+ON CREATE SET p.name = line.ActorName
 
-MERGE (a)-[:ACTED_IN {character: line.Character}]-(m);
+MERGE (p)-[:ACTED_IN {role: line.Character}]-(m);
 
 // Key words
 LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/neo4j-contrib/developer-resources/movies-csv/scraping/all-keywords.csv" AS line
