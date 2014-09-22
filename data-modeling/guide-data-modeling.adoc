@@ -3,7 +3,7 @@
 :toc:
 :toc-placement!:
 :toc-title: Overview
-:toclevels: 1
+:toclevels: 2
 
 .Goals
 [abstract]
@@ -21,8 +21,6 @@ toc::[]
 :img: .
 
 This guide will introduce you to graph data modeling for Neo4j. You will be introduced to the basic process in which one takes an arbitrary domain and designs a graph data model for answering a wide range of business questions.
-
-You will be guided through the process of iterating on a graph data model as questions about your data become more complex. Finally, you'll be introduced to graph refactoring, which is the process of evolving your graph data model to answer questions you did not initially anticipate when first designing your graph data model.
 
 == Introduction
 
@@ -125,8 +123,19 @@ We have gone through the process of creating a basic graph data model for the in
 
 === List your questions
 
-[TODO]
-Finish section
+First, start by listing your questions that you want to answer about your data.
+
+* When did John and Sally become friends?
+* What is the average rating of the book Graph Databases?
+* Who is the author of the book Graph Databases?
+* How old is Sally?
+* How old is John?
+* Who is older, Sally or John?
+* Who read the book Graph Databases first, Sally or John?
+
+From these list of questions, you can identify the attributes that must belong to entities within your data model.
+
+image:data-modeling-5.png[Graph data model with properties]
 
 [role=side-nav]
 === Recommended
@@ -135,3 +144,99 @@ Finish section
 * http://docs.neo4j.org/chunked/stable/data-modeling-examples.html[Data Modeling Examples]
 * https://github.com/neo4j-contrib/graphgist/wiki[GraphGist Project]
 * http://vimeo.com/89075703[Video]
+
+=== Create a sample dataset
+
+Now that we have a complete graph data model for our domain that sufficiently answers our questions, we can go about creating a sample dataset using Cypher.
+
+[source,cypher]
+----
+// Create Sally
+CREATE (sally:Person { name: 'Sally', age: 29 })
+
+// Create John
+CREATE (john:Person { name: 'John', age: 27 })
+
+// Create Graph Databases book
+CREATE (gdb:Book { title: 'Graph Databases',
+                   authors: ['Ian Robinson', 'Jim Webber'] })
+
+// Connect Sally and John as friends
+CREATE (sally)-[:FRIEND_OF { since: 1357718400 }]->(john)
+
+// Connect Sally to Graph Databases book
+CREATE (sally)-[:HAS_READ { rating: 4, on: 1360396800 }]->(gdb)
+
+// Connect John to Graph Databases book
+CREATE (john)-[:HAS_READ { rating: 5, on: 1359878400 }]->(gdb)
+----
+
+=== Translate questions to Cypher queries
+
+Now that we have a sample dataset of our graph data model, we can translate our questions from earlier into queries that sufficiently answer them.
+
+==== When did John and Sally become friends?
+
+[source,cypher]
+----
+MATCH (sally:Person { name: 'Sally' })
+MATCH (john:Person { name: 'John' })
+MATCH (sally)-[r:FRIEND_OF]-(john)
+RETURN r.since as friends_since
+----
+
+==== What is the average rating of the book Graph Databases?
+
+[source,cypher]
+----
+MATCH (gdb:Book { title: 'Graph Databases' })
+MATCH (gdb)<-[r:HAS_READ]-()
+RETURN avg(r.rating) as average_rating
+----
+
+==== Who are the authors of the book Graph Databases?
+
+[source,cypher]
+----
+MATCH (gdb:Book { title: 'Graph Databases' })
+RETURN gdb.authors as authors
+----
+
+==== How old is Sally?
+
+[source,cypher]
+----
+MATCH (sally:Person { name: 'Sally' })
+RETURN r.age as sally_age
+----
+
+==== How old is John?
+
+[source,cypher]
+----
+MATCH (john:Person { name: 'John' })
+RETURN r.age as john_age
+----
+
+==== Who is older, Sally or John?
+
+[source,cypher]
+----
+MATCH (people:Person)
+WHERE people.name = 'John' OR people.name = 'Sally'
+RETURN people.name as oldest
+ORDER BY people.age DESC
+LIMIT 1
+----
+
+==== Who read the book Graph Databases first, Sally or John?
+
+[source,cypher]
+----
+MATCH (people:Person)
+WHERE people.name = 'John' OR people.name = 'Sally'
+MATCH (people)-[r:HAS_READ]->(gdb:Book { title: 'Graph Databases' })
+RETURN people.name as first_reader
+ORDER BY r.on
+LIMIT 1
+----
