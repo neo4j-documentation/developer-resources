@@ -19,7 +19,49 @@ toc::[]
 
 text and pictures for section 1
 
-=== Subsection
+=== Data Synchronization between master and slaves
+
+Neo4j HA is a full master-slave replication. Any index created on the master is propagated to the slaves depending on the settings of ha.tx_push_factor and ha.pull_interval. See http://docs.neo4j.org/chunked/stable/ha.html for details.
+
+=== Mending Procedure for Master
+
+Mending procedure for master
+
+* Shut down all members of the cluster and stop any load against the cluster
+* On the master instance, copy the data/graph.db folder as a backup
+* Modify neo4j-server.properties, set the org.neo4j.server.database.mode to "STANDALONE"
+* Start the database and, once it's running, stop it again (this is to ensure he database is cleanly shut down)
+* Remove all files named nioneo_logical.log.vXX in data/graph.db, being careful to not remove any files without the "v", like nioneo_logical.log.1 or nioneo_logical.log.active
+* Start the server and use either neo4j-shell or the neo4j browser to issue the following two queries:
+
+. First query, note the id returned here
+
+.. CREATE (n) RETURN id(n)
+
+. Second query, use the id returned from the previous one
+
+.. START n=node( <ID RETURNED> ) DELETE n // For instance, START n=node(1234) DELETE n
+
+* Stop the server
+* Set org.neo4j.server.database.mode to HA
+* Start the server
+
+=== Mending Procedure for Slaves
+* On each slave, remove the data/graph.db folder
+* Start the slave, watch data/graph.db for it to copy the store from the master
+* Once copying is done, move to do the same thing on the second slave
+
+=== Configuring a two slave cluster with an arbiter
+
+There's a step-by-step tutorial for setting up HA available here: http://docs.neo4j.org/chunked/stable/ha-setup-tutorial.html. For a 2 node cluster, you'll actually want to run 3 separate machines, and use the Neo4j arbiter on the 3rd. Details on the arbiter are available in the documentation here: http://docs.neo4j.org/chunked/stable/arbiter-instances.html. The configuration for the arbiter is identical to that of a regular instance, excepting anything relating to the actual graph db itself (since an arbiter doesn't hold any data).
+
+The ha.initial_hosts should be the same on all the instances, including the arbiter. The arbiter should have a unique ha.server_id (3 is fine).
+
+=== Setting a server in slave-only mode
+
+See ha.slave_only here: http://docs.neo4j.org/chunked/stable/ha-configuration.html
+
+You might want to configure a machine with that setting if it’s acting as a reporting instance but you need to make sure that 2 members don’t have that setting otherwise you won’t have any failover in the cluster.
 
 image::neo4j-logo.png[]
 
