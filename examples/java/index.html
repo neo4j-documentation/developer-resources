@@ -6,7 +6,7 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>Building a Recommendation Engine with Cypher in 2 minutes | Developer Resources | Neo4j Graph Database</title>
+         <title>Neo4j Java examples | Developer Resources | Neo4j Graph Database</title>
          <script type="text/javascript">
             var _kmq = _kmq || [];
             var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
@@ -128,7 +128,7 @@
                  </div>
                  <div class="row">
                    <div class="columns large-12">
-                   <h1 style="font-size:2.1rem;">Building a Recommendation Engine with Cypher in 2 minutes</h1>
+                   <h1 style="font-size:2.1rem;">Neo4j Java examples</h1>
                  </div>
                  </div>
                   <section class="row" style="padding:10px 0;">
@@ -137,332 +137,64 @@
 
 
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="quoteblock abstract">
-<div class="title">Goals</div>
-<blockquote style="padding-left: 0;">
-This guide explains how to leverage connections in your data to gather insights and start recommending, currently unrelated but relevant facts to your nodes in focus.
-</blockquote>
-</div>
-<div class="quoteblock abstract">
-<div class="title">Prerequisites</div>
-<blockquote style="padding-left: 0;">
-You should have a basic understanding of the <a href="/what-is-neo4j/property-graph">property graph model</a>. Having <a href="/download">downloaded</a> and installed Neo4j server helps you code along with the examples.
-</blockquote>
-</div>
-
-
-<div class="label">Beginner</div>
-<hr/>
-
-<div id="toc" class="toc">
-<h3 class="title" id="toctitle">Overview</h3>
-
-<ul class="sectlevel2">
-<li><a href="#_recommendation_for_collaboration_of_actors">Recommendation for Collaboration of Actors</a></li>
-
-<li><a href="#_basic_queries">Basic Queries</a></li>
-
-<li><a href="#_collaborative_filtering">Collaborative Filtering</a></li>
-
-<li><a href="#_connection_paths">Connection Paths</a></li>
-<li><a href="#_restaurant_recommendation">Restaurant recommendation</a></li>
-
-</ul>
-
-<hr>
-
-
-<div class="paragraph">
-<p>This demo explains how to use a basic dataset of <em>Actors</em> acting in <em>Movies</em> to create recommendations with a graph database.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>By following the relationships between the people and movies in am meaningful manner you can determine co-occurences, frequencies and relevant nodes in the graph.
-This is the basis for many recommendation engines.</p>
-</div>
-
-</div>
-</div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect1 "  >
     
-<h4 id="_recommendation_for_collaboration_of_actors">Recommendation for Collaboration of Actors</h4>
+<h3 id="_neo4j_java_examples">Neo4j Java examples</h3>
+
+<div class="sectionbody row">
+<div class="columns medium-12">
+
+
+<div class="paragraph">
+<p>Welcome to Neo4j. For a Java or JVM-language developer, Neo4j offers a rich set of integration possibilities. Make sure to have looked at our information on graph databases and Neo4j in general. You should also check out our graph query language Cypher which makes it very easy to get going regardless of the development platform.</p>
+</div>
 
 
 
 <div class="paragraph">
-<p>You can follow along by <a href="/download">installing and starting</a> Neo4j server, opening it on <a href="http://localhost:7474">http://localhost:7474</a>  and then inserting the movie dataset via the <code>:play movie graph</code> command.
-Go to the second slide, click the query and run it.</p>
+<p>Neo4j comes in two flavors. The <a href="http://neo4j.com/download/">standalone Neo4j-Server</a> can be installed on any machine and then accessed via its REST API. You can then use whatever REST-library you choose for any JVM language. The dedicated Neo4j drivers go beyond that by offering comprehensive APIs for integrating with graph based applications.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Here in this guide we just load the dataset using LOAD CSV</p>
+<p>But you can also run <a href="http://docs.neo4j.org/chunked/snapshot/tutorials-java-embedded.html">Neo4j embedded in your JVM process</a>, much like HSQL or Derby. This is great for unit testing, but also for high performance / no-network setups. If you use Neo4j embedded you can use the Neo4j Core-API directly. Besides an object oriented approach to the graph database, working with Nodes, Relationships and Paths, it also offers highly customizable high-speed traversal- and graph-algorithm implementations. You can also choose from any useful wrapping drivers that exist either for specific programming languages or that add interesting functionality.</p>
 </div>
 
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>LOAD CSV WITH HEADERS FROM "https://neo4j-contrib.github.io/developer-resources/cypher-query-language/movies_actors.csv" AS line
-WHERE line.job = "ACTED_IN"
-MERGE (m:Movie {title:line.title}) ON CREATE SET m.released = toInt(line.released), m.tagline = line.tagline
-MERGE (p:Person {name:line.name}) ON CREATE SET p.born = toInt(line.born)
-MERGE (p)-[:ACTED_IN {roles:split(line.roles,";")}]-&gt;(m);
-RETURN count(*);</code></pre>
+
+
+<div class="paragraph">
+<p>One example is <a href="http://projects.spring.io/spring-data-neo4j/">Spring Data Neo4j</a> which integrates tightly with the <a href="http://spring.io/">SpringFramework</a> and offers Object-Graph mapping on top of Neo4j. Just to tease your interest - there are hundreds of open source Neo4j-related ecosystem projects, example applications and tutorials that can spark new ideas and possibilities.</p>
 </div>
+
+
+
+<div class="paragraph">
+<p>As a JVM developer you are also on the bright side when it comes to pouring large amounts of data into Neo4j. With its non-transactional batch-insertion facilities it can ingest millions of nodes and relationships in just seconds.</p>
 </div>
+
+
+
+<div class="paragraph">
+<p>Here are two guides to get you started:</p>
 </div>
-<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
-<h2 id="_recommended">Recommended</h2>
-</li>
+
 <div class="ulist">
 
 
 <ul>
 <li>
-<a href="/online-training">Online Cypher Training</a>
+<a href="jdbc/index.html">JDBC</a>
 </li>
 <li>
-<a href="/use-cases/recommendations/">Recommendation Use Cases</a>
+<a href="extension/index.html">JDBC</a>
 </li>
 </ul>
 
 </div>
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
-    
-<h4 id="_basic_queries">Basic Queries</h4>
-
-
-
-<div class="paragraph">
-<p>You should be able to run a query like this to find a single actor like <em>Tom Hanks</em>.</p>
 </div>
 
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name:"Tom Hanks"})
-RETURN tom</code></pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>Similarly you should be able to retrieve all his movies with a single query. Your results should already look like a graph.</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]-&gt;(movie:Movie)
-RETURN tom, movie</code></pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>Of course Tom has colleagues that acted with him in his movies, this "co-actor" statement looks like this.</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]-&gt;(:Movie)&lt;-[:ACTED_IN]-(coActor:Person)
-RETURN coActor.name</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
-<h2 id="_recommended_2">Recommended</h2>
-</li>
-<div class="ulist">
-
-
-<ul>
-<li>
-<a href="http://asciidoctor.org">Links to docs</a>
-</li>
-<li>
-<a href="http://asciidoctor.org">Links to blog</a>
-</li>
-<li>
-<a href="http://asciidoctor.org">Links to guides</a>
-</li>
-</ul>
-
-</div>
-</div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
-    
-<h4 id="_collaborative_filtering">Collaborative Filtering</h4>
-
-
-
-<div class="paragraph">
-<p>We can now turn this "co-actor" query into a recommendation query by following those relationships another step out to find the "co-co-actors", i.e. the second degree actors in Toms network that, he has not acted with.</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
-         (coActor)-[:ACTED_IN]-&gt;(movie2)&lt;-[:ACTED_IN]-(coCoActor:Person)
-WHERE tom.name = "Tom Hanks"
-AND   NOT    (tom)-[:ACTED_IN]-&gt;(movie2)
-RETURN coCoActor.name</code></pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>For a collaborative filtering, you often take frequencies of occurrences into account to find the people or things that appear most frequently in your network.
-Also you&#8217;d probably want to state that <em>Tom Hanks</em> <strong>never</strong> worked with the recommended people, not just not in movies that his co-actors worked in.</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
-         (coActor)-[:ACTED_IN]-&gt;(movie2)&lt;-[:ACTED_IN]-(coCoActor:Person)
-WHERE tom.name = "Tom Hanks"
-AND   NOT    (tom)-[:ACTED_IN]-&gt;()&lt;-[:ACTED_IN]-(coCoActor)
-RETURN coCoActor.name, count(distinct coCoActor) as frequency
-ORDER BY frequency DESC
-LIMIT 5</code></pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>One of those "co-co-actors" is <em>Tom Cruise</em>.
-Now let&#8217;s see which movies and actors are between the two Toms.</p>
-</div>
-
-</div>
-<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
-<h2 id="_recommended_3">Recommended</h2>
-</li>
-<div class="ulist">
-
-
-<ul>
-<li>
-<a href="http://asciidoctor.org">Links to docs</a>
-</li>
-<li>
-<a href="http://asciidoctor.org">Links to blog</a>
-</li>
-<li>
-<a href="http://asciidoctor.org">Links to guides</a>
-</li>
-</ul>
-
-</div>
-</div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
-    
-<h4 id="_connection_paths">Connection Paths</h4>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
-         (coActor)-[:ACTED_IN]-&gt;(movie2)&lt;-[:ACTED_IN]-(cruise:Person)
-WHERE tom.name = "Tom Hanks" and cruise.name = "Tom Cruise"
-AND   NOT    (tom)-[:ACTED_IN]-&gt;(movie2)
-RETURN tom, movie1, coActor, movie2, cruise</code></pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>This returns multiple <em>Bacon-Paths</em>, even with <em>Kevin Bacon</em> himself. :)</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>So with two simple Cypher statements we created already two recommendation algorithms: <strong>Who you show know</strong> and <strong>How you get to know them</strong>.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>You can also watch the video of Andreas running these queries live on our main example movie dataset.</p>
-</div>
-
-<iframe width="640" height="480" src="//www.youtube.com/embed/qbZ_Q-YnHYo" frameborder="0" allowfullscreen></iframe>
-</div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
-    
-<h4 id="_restaurant_recommendation">Restaurant recommendation</h4>
-
-
-
-<div class="paragraph">
-<p>Imagine a graph like this, a few friends with their favorite restaurants, their cusines and locations.</p>
-</div>
-
-<div class="imageblock">
-<p class="content">
-<img src="restaurant-recommendation.png" alt="restaurant recommendation">
-</p>
-</div>
-
-
-<div class="paragraph">
-<p>A practical question to answer here, formulated in <a href="http://neo4j.com/blog/why-the-most-important-part-of-facebook-graph-search-is-graph/">Graph Search</a> slang is:</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre>Sushi restaurants in New York that my friends like</pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>How could we translate that into the appropriate Cypher statement?</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (person:Person)-[:IS_FRIEND_OF]-&gt;(friend),
-      (friend)-[:LIKES]-&gt;(restaurant:Restaurant),
-      (restaurant)-[:LOCATED_IN]-&gt;(loc:Location),
-      (restaurant)-[:SERVES]-&gt;(type:Cuisine)
-
-WHERE person.name = 'Philip'
-  AND loc.location='New York'
-  AND type.cuisine='Sushi'
-
-RETURN restaurant.name, count(*) as occurrence
-ORDER BY occurrence DESC
-LIMIT 5</code></pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>Other factors that can be easily integrated in this query are favorites, allergies, ratings and closeness to my current position.</p>
-</div>
-
-</div>
-<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
-<h2 id="_recommended_4">Recommended</h2>
-</li>
-<div class="ulist">
-
-
-<ul>
-<li>
-<a href="http://maxdemarzi.com/2014/01/31/neo4j-spatial-part-1/">Restaurant Recommendation (mdm)</a>
-</li>
-</ul>
-
-</div>
 </div>
 </div>
 

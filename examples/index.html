@@ -140,11 +140,13 @@
 <div class="sect1 "  >
     
 <h3 id="_neo4j_movies_example_application">Neo4j Movies Example Application</h3>
+
 <div class="sectionbody row">
 <div class="columns medium-12">
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_application">Application</h4>
+
 
 
 <div class="paragraph">
@@ -172,6 +174,7 @@ graph visualization of the domain
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_domain_model">Domain Model</h4>
+
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre>(:Movie {title,released,tagline})&lt;-[:ACTED_IN {roles}]-(actor:Person)</pre>
@@ -181,6 +184,7 @@ graph visualization of the domain
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_webpage">Webpage</h4>
+
 
 
 <div class="paragraph">
@@ -205,6 +209,7 @@ If you click on any of the movie titles, the side-view is populated with the mov
 <h5 id="_graph_visualization">Graph Visualization</h5>
 
 
+
 <div class="paragraph">
 <p>For the Graph Visualization we use <a href="http://d3js.org">d3.js</a>, our <code>/graph</code> endpoint already returns the data in the format of "nodes" and "links"-list that d3 can use directly.
 We then apply the force-layout algorithm, render nodes as circles and relationships as lines, and add some minor styling to the visualization provide the movie title/person name as HTML title attribute to the node circles.</p>
@@ -215,9 +220,11 @@ We then apply the force-layout algorithm, render nodes as circles and relationsh
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_endpoints">Endpoints</h4>
+
 <div class="sect3 "  >
     
 <h5 id="_get_movie">Get Movie</h5>
+
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre>// JSON object for single movie with cast
@@ -254,6 +261,7 @@ curl http://localhost:8080/movie/The%20Matrix
 <div class="sect3 "  >
     
 <h5 id="_search_movies">Search Movies</h5>
+
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre>// list of JSON objects for movie search results
@@ -267,7 +275,7 @@ curl http://localhost:8080/search?q=matrix
 
 
 <div class="paragraph">
-<p>The Cypher query used, with the parameters <code>{query:"(?i).*matrix.*"}</code>, a case-insensitive regular expression partial match.</p>
+<p>The Cypher query used, with the parameters <code>{query:"(?i).\*matrix.*"}</code>, a case-insensitive regular expression partial match.</p>
 </div>
 
 
@@ -288,6 +296,7 @@ So the result of this query is a list of maps with the title, released and tagli
 <div class="sect3 "  >
     
 <h5 id="_graph_visualization_2">Graph Visualization</h5>
+
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre>// JSON object for whole graph viz (nodes, links - arrays)
@@ -329,6 +338,7 @@ A separate function then takes this result and converts it into the node- and li
 <h4 id="_data_setup">Data Setup</h4>
 
 
+
 <div class="paragraph">
 <p>Start your local Neo4j Server (<a href="http://neo4j.com/download">Download &amp; Install</a>), open the <a href="http://localhost:7474">Neo4j Browser</a>.
 Then install the Movies data-set with <code>:play movies</code>, click the create statement, and hit the triangular "Run" button to insert the data.</p>
@@ -346,8 +356,9 @@ Then install the Movies data-set with <code>:play movies</code>, click the creat
 <h4 id="_run_locally">Run locally</h4>
 
 
+
 <div class="paragraph">
-<p>Then setup and start the language/stack specific implementation of the backend and open the web-application on <code><a href="http://localhost:8080" class="bare">http://localhost:8080</a></code>.</p>
+<p>Then setup and start the language/stack specific implementation of the backend and open the web-application on <code>http://localhost:8080</code>.</p>
 </div>
 
 
@@ -360,6 +371,7 @@ Then install the Movies data-set with <code>:play movies</code>, click the creat
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_deploy_to_heroku">Deploy to Heroku</h4>
+
 
 
 <div class="paragraph">
