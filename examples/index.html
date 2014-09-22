@@ -249,7 +249,7 @@ curl http://localhost:8080/movie/The%20Matrix
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (movie:Movie {title:{title}})
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (movie:Movie {title:{title}})
  OPTIONAL MATCH (movie)&lt;-[r]-(person:Person)
  RETURN movie.title as title,
        collect({name:person.name,
@@ -287,7 +287,7 @@ So the result of this query is a list of maps with the title, released and tagli
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (movie:Movie)
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (movie:Movie)
  WHERE movie.title =~ {query}
  RETURN movie</code></pre>
 </div>
@@ -326,7 +326,7 @@ A separate function then takes this result and converts it into the node- and li
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (m:Movie)&lt;-[:ACTED_IN]-(a:Person)
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (m:Movie)&lt;-[:ACTED_IN]-(a:Person)
  RETURN m.title as movie, collect(a.name) as cast
  LIMIT {limit}</code></pre>
 </div>
@@ -393,7 +393,7 @@ We will also use the <a href="http://graphenedb.com">GraphenDB</a> Neo4j Databas
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="shell"><code># initialize git repository and add files
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="shell"><code># initialize git repository and add files
 git init
 git add .
 git commit -m"my neo4j movies app"

@@ -31,7 +31,7 @@ if @style == 'source'
      nowrap = false
    end
   pre_class << 'nowrap' if nowrap %>
-<pre style="font-size: 16px;" <%= pre_class.empty? ? nil : %( class="#{pre_class * ' '}") %><%= pre_lang && %( data-lang="#{pre_lang}") %>><code<%= code_class.empty? ? nil : %( class="#{code_class * ' '}") %>><%= content %></code></pre><%
+<pre style="font-size: 16px; font-weight: 100;" <%= pre_class.empty? ? nil : %( class="#{pre_class * ' '}") %><%= pre_lang && %( data-lang="#{pre_lang}") %>><code<%= code_class.empty? ? nil : %( class="#{code_class * ' '}") %>><%= content %></code></pre><%
 else %>
 <pre<%= nowrap ? ' class="nowrap"' : nil %>><%= content %></pre><%
 end %>

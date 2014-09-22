@@ -287,7 +287,7 @@ Nodes can be tagged with zero to many labels representing their different roles 
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom {name: "Tom Hanks"})
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom {name: "Tom Hanks"})
 RETURN tom</code></pre>
 </div>
 </div>
@@ -298,7 +298,7 @@ RETURN tom</code></pre>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (cloudAtlas {title: "Cloud Atlas"})
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (cloudAtlas {title: "Cloud Atlas"})
 RETURN cloudAtlas</code></pre>
 </div>
 </div>
@@ -309,7 +309,7 @@ RETURN cloudAtlas</code></pre>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (people:Person)
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (people:Person)
 RETURN people.name LIMIT 10</code></pre>
 </div>
 </div>
@@ -320,7 +320,7 @@ RETURN people.name LIMIT 10</code></pre>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (nineties:Movie)
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (nineties:Movie)
 WHERE nineties.released &gt; 1990 AND nineties.released &lt; 2000
 RETURN nineties.title</code></pre>
 </div>
@@ -362,7 +362,7 @@ RETURN nineties.title</code></pre>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name: "Tom Hanks"})-[:ACTED_IN]-&gt;(tomHanksMovies)
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name: "Tom Hanks"})-[:ACTED_IN]-&gt;(tomHanksMovies)
 RETURN tom,tomHanksMovies</code></pre>
 </div>
 </div>
@@ -373,7 +373,7 @@ RETURN tom,tomHanksMovies</code></pre>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (cloudAtlas {title: "Cloud Atlas"})&lt;-[:DIRECTED]-(directors)
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (cloudAtlas {title: "Cloud Atlas"})&lt;-[:DIRECTED]-(directors)
 RETURN directors.name</code></pre>
 </div>
 </div>
@@ -384,7 +384,7 @@ RETURN directors.name</code></pre>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]-&gt;(m)&lt;-[:ACTED_IN]-(coActors)
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]-&gt;(m)&lt;-[:ACTED_IN]-(coActors)
 RETURN tom, m, coActors</code></pre>
 </div>
 </div>
@@ -395,7 +395,7 @@ RETURN tom, m, coActors</code></pre>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (people:Person)-[relatedTo]-(:Movie {title: "Cloud Atlas"})
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (people:Person)-[relatedTo]-(:Movie {title: "Cloud Atlas"})
 RETURN people.name, Type(relatedTo), relatedTo</code></pre>
 </div>
 </div>
@@ -434,7 +434,7 @@ RETURN people.name, Type(relatedTo), relatedTo</code></pre>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (bacon:Person {name:"Kevin Bacon"})-[*1..3]-(hollywood)
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (bacon:Person {name:"Kevin Bacon"})-[*1..3]-(hollywood)
 RETURN DISTINCT hollywood</code></pre>
 </div>
 </div>
@@ -445,7 +445,7 @@ RETURN DISTINCT hollywood</code></pre>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH p=shortestPath(
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH p=shortestPath(
   (bacon:Person {name:"Kevin Bacon"})-[*]-(meg:Person {name:"Meg Ryan"})
 )
 RETURN p</code></pre>
@@ -497,7 +497,7 @@ This will remove all Person and Movie nodes!
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (a:Person),(m:Movie)
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (a:Person),(m:Movie)
 OPTIONAL MATCH (a)-[r1]-(), (m)-[r2]-()
 DELETE a,r1,m,r2</code></pre>
 </div>
@@ -509,7 +509,7 @@ DELETE a,r1,m,r2</code></pre>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (n)
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (n)
 RETURN count(*)</code></pre>
 </div>
 </div>

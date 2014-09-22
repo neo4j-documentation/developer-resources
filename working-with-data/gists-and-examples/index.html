@@ -266,7 +266,7 @@ Hit the submit link in the footer, when you are ready to get your t-shirt reward
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (you:Person {name:"You"})-[like:LIKE]-&gt;(us:Database:NoSql:Graph {name:"Neo4j" })
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (you:Person {name:"You"})-[like:LIKE]-&gt;(us:Database:NoSql:Graph {name:"Neo4j" })
 RETURN you, like, us</code></pre>
 </div>
 </div>
@@ -283,7 +283,7 @@ RETURN you, like, us</code></pre>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you:Person {name:"You"})-[like:LIKE]-&gt;(liked)
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you:Person {name:"You"})-[like:LIKE]-&gt;(liked)
 RETURN you.name AS who, type(like) AS how, liked.name AS what</code></pre>
 </div>
 </div>

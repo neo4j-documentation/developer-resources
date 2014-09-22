@@ -658,7 +658,7 @@ Who read the book Graph Databases first, Sally or John?
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>// Create Sally
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>// Create Sally
 CREATE (sally:Person { name: 'Sally', age: 29 })
 
 // Create John
@@ -695,7 +695,7 @@ CREATE (john)-[:HAS_READ { rating: 5, on: 1359878400 }]-&gt;(gdb)</code></pre>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (sally:Person { name: 'Sally' })
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (sally:Person { name: 'Sally' })
 MATCH (john:Person { name: 'John' })
 MATCH (sally)-[r:FRIEND_OF]-(john)
 RETURN r.since as friends_since</code></pre>
@@ -708,7 +708,7 @@ RETURN r.since as friends_since</code></pre>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (gdb:Book { title: 'Graph Databases' })
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (gdb:Book { title: 'Graph Databases' })
 MATCH (gdb)&lt;-[r:HAS_READ]-()
 RETURN avg(r.rating) as average_rating</code></pre>
 </div>
@@ -720,7 +720,7 @@ RETURN avg(r.rating) as average_rating</code></pre>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (gdb:Book { title: 'Graph Databases' })
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (gdb:Book { title: 'Graph Databases' })
 RETURN gdb.authors as authors</code></pre>
 </div>
 </div>
@@ -731,7 +731,7 @@ RETURN gdb.authors as authors</code></pre>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (sally:Person { name: 'Sally' })
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (sally:Person { name: 'Sally' })
 RETURN r.age as sally_age</code></pre>
 </div>
 </div>
@@ -742,7 +742,7 @@ RETURN r.age as sally_age</code></pre>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (john:Person { name: 'John' })
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (john:Person { name: 'John' })
 RETURN r.age as john_age</code></pre>
 </div>
 </div>
@@ -753,7 +753,7 @@ RETURN r.age as john_age</code></pre>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (people:Person)
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (people:Person)
 WHERE people.name = 'John' OR people.name = 'Sally'
 RETURN people.name as oldest
 ORDER BY people.age DESC
@@ -767,7 +767,7 @@ LIMIT 1</code></pre>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (people:Person)
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (people:Person)
 WHERE people.name = 'John' OR people.name = 'Sally'
 MATCH (people)-[r:HAS_READ]-&gt;(gdb:Book { title: 'Graph Databases' })
 RETURN people.name as first_reader
