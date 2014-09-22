@@ -6,7 +6,7 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>guide-cloud-deployment | Developer Resources | Neo4j Graph Database</title>
+         <title>Graph Data Modeling Guidelines &amp; Best Practices | Developer Resources | Neo4j Graph Database</title>
          <script type="text/javascript">
             var _kmq = _kmq || [];
             var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
@@ -128,7 +128,7 @@
                  </div>
                  <div class="row">
                    <div class="columns large-12">
-                   <h1 style="font-size:2.1rem;">guide-cloud-deployment</h1>
+                   <h1 style="font-size:2.1rem;">Graph Data Modeling Guidelines &amp; Best Practices</h1>
                  </div>
                  </div>
                   <section class="row" style="padding:10px 0;">
@@ -142,73 +142,410 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us.
+The goal of this guide is to walk you through the graph data modeling lifecycle for Neo4j.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes. Beginner
+You should have a firm understanding of the <a href="./property-graph">property graph data model</a> of Neo4j. You should understand the basics of Neo4j&#8217;s query language, <a href="./cypher">Cypher</a>.
 </blockquote>
 </div>
+
+
+<div class="label">Intermediate</div>
+<hr/>
+
 <div class="toc">
 <h3 class="title">Overview</h3>
 
 <ul class="sectlevel1">
-<li><a href="#_section_1">Section 1</a></li>
-<li><a href="#_section_2">Section 2</a></li>
+<li><a href="#_introduction">Introduction</a></li>
+<li><a href="#_describing_a_domain">Describing a domain</a></li>
+<li><a href="#_answering_questions">Answering questions</a></li>
 </ul>
 
 <hr>
+
+
+<div class="paragraph">
+<p>This guide will introduce you to graph data modeling for Neo4j. You will be introduced to the basic process in which one takes an arbitrary domain and designs a graph data model for answering a wide range of business questions.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>You will be guided through the process of iterating on a graph data model as questions about your data become more complex. Finally, you&#8217;ll be introduced to graph refactoring, which is the process of evolving your graph data model to answer questions you did not initially anticipate when first designing your graph data model.</p>
+</div>
+
 </div>
 </div>
 <div class="sect1 "  >
     
-<h3 id="_section_1">Section 1</h3>
+<h3 id="_introduction">Introduction</h3>
 
 <div class="sectionbody row">
 <div class="columns medium-12">
 
 
 <div class="paragraph">
-<p>text and pictures for section 1</p>
+<p>Graph data modeling is the process in which a Neo4j user describes an arbitrary domain as a connected graph of nodes and relationships. From this description, a graph data model is designed to answer questions in the form of Cypher queries.</p>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="sect1 "  >
+    
+<h3 id="_describing_a_domain">Describing a domain</h3>
+
+<div class="sectionbody row">
+<div class="columns medium-12">
+
+
+<div class="paragraph">
+<p>The first step in creating a good graph data model is to describe your domain. Consider the following description of the connection between two people, Sally and John.</p>
+</div>
+
+<div class="quoteblock" style="margin: auto; width: 95%;">
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+</div>
+
+<blockquote>
+Two <em>people</em>, <strong>John</strong> and <strong>Sally</strong>, are <u>friends</u>. Both <strong>John</strong> and <strong>Sally</strong> have <u>read</u> the <em>book</em>, <strong>Graph Databases</strong>.
+</blockquote>
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>We can take this statement and identify labels, nodes, and relationships.</p>
 </div>
 
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
-<h4 id="_subsection">Subsection</h4>
+<h4 id="_nodes">Nodes</h4>
 
+
+
+<div class="paragraph">
+<p>The first entities that we&#8217;ll identify in our domain are the nodes. The Neo4j documentation describes nodes as:</p>
+</div>
+
+<div class="quoteblock" style="margin: auto; width: 95%;">
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+</div>
+
+<blockquote>
+The fundamental units that form a graph are nodes and relationships. In Neo4j, both nodes and relationships can contain properties. Nodes are often used to represent entities, but depending on the domain relationships may be used for that purpose as well. Apart from properties and relationships, nodes can also be labeled with zero or more labels.
+</blockquote>
+<div class="attribution">
+<cite>docs.neo4j.org</cite><br>
+&#8212; 3.1 Nodes
+</div>
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+</div>
+</div>
 <div class="imageblock">
 <p class="content">
-<img src="neo4j-logo.png" alt="neo4j logo">
+<img src="node.svg" alt="Nodes">
 </p>
 </div>
 
 
 <div class="paragraph">
-<p>text and pictures for subsection 1.1</p>
+<p>We can identify nodes as entities with a unique conceptual identity. In this case, these entities are outlined below in bold.</p>
 </div>
 
+<div class="quoteblock" style="margin: auto; width: 95%;">
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
 </div>
-<div class="sect2 sidebar columns medium-2" style='padding-left: 0;' >
+
+<blockquote>
+Two people, <strong>John</strong> and <strong>Sally</strong>, are friends. Both <strong>John</strong> and <strong>Sally</strong> have read the book, <strong>Graph Databases</strong>.
+</blockquote>
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Which yields the nodes:</p>
+</div>
+
+<div class="ulist">
+
+
+<ul>
+<li>
+<strong>John</strong>
+</li>
+<li>
+<strong>Sally</strong>
+</li>
+<li>
+<strong>Graph Databases</strong>
+</li>
+</ul>
+
+</div>
+<div class="imageblock">
+<p class="content">
+<img src="data-modeling-3.png" alt="Extract Nodes">
+</p>
+</div>
+</div>
+<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
     <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
-<h2 id="_sidebar">Sidebar</h2>
+<h2 id="_recommended">Recommended</h2>
 </li>
+<div class="ulist recommended">
+
+
+<ul style='margin-left: 0;'>
+<li style='list-style: none outside none;'>
+<strong>Neo4j Docs:</strong>
+</li>
+<li style='list-style: none outside none;'>
+<a href="http://docs.neo4j.org/chunked/stable/graphdb-neo4j-nodes.html">3.1. Nodes</a>
+</li>
+</ul>
+
+</div>
+</div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
+    
+<h4 id="_labels">Labels</h4>
+
+
+
+<div class="paragraph">
+<p>In the documentation, labels are described as:</p>
+</div>
+
+<div class="quoteblock" style="margin: auto; width: 95%;">
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+</div>
+
+<blockquote>
+A label is a named graph construct that is used to group nodes into sets; all nodes labeled with the same label belongs to the same set. Many database queries can work with these sets instead of the whole graph, making queries easier to write and more efficient. A node may be labeled with any number of labels, including none, making labels an optional addition to the graph.
+</blockquote>
+<div class="attribution">
+<cite>docs.neo4j.org</cite><br>
+&#8212; 3.4 Labels
+</div>
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+</div>
+</div>
+<div class="imageblock">
+<p class="content">
+<img src="label.svg" alt="Labels">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>First we&#8217;ll start by identifying the roles of objects mentioned in the statement. We know that this statement is about two objects.</p>
+</div>
+
+<div class="quoteblock" style="margin: auto; width: 95%;">
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+</div>
+
+<blockquote>
+Two <em>people</em>, John and Sally, are friends. Both John and Sally have read the <em>book</em>, Graph Databases.
+</blockquote>
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>We can conclude that there are two labels within this graph:</p>
+</div>
+
 <div class="ulist">
 
 
 <ul>
 <li>
-links to manual
+<em>Person</em>
 </li>
 <li>
-link to blog
-</li>
-<li>
-link to call to action
+<em>Book</em>
 </li>
 </ul>
 
+</div>
+<div class="imageblock">
+<p class="content">
+<img src="data-modeling-2.png" alt="Extract labels">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>Now that we have identified both our nodes and labels, we can assign the labels to the nodes that they describe. For <strong>John</strong> and <strong>Sally</strong> we apply the role <em>Person</em>. For <strong>Graph Databases</strong> we apply the role <em>Book</em>.</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="data-modeling-4.png" alt="Apply labels">
+</p>
+</div>
+</div>
+<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<h2 id="_recommended_2">Recommended</h2>
+</li>
+<div class="ulist recommended">
+
+
+<ul style='margin-left: 0;'>
+<li style='list-style: none outside none;'>
+<strong>Neo4j Docs:</strong>
+</li>
+<li style='list-style: none outside none;'>
+<a href="http://docs.neo4j.org/chunked/stable/graphdb-neo4j-labels.html">3.4. Labels</a>
+</li>
+</ul>
+
+</div>
+</div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
+    
+<h4 id="_relationships">Relationships</h4>
+
+
+
+<div class="paragraph">
+<p>Further, we can identify the interactions between these subjects:</p>
+</div>
+
+<div class="ulist">
+
+
+<ul>
+<li>
+<strong>John</strong> is a <u>friend</u> of <strong>Sally</strong>
+</li>
+<li>
+<strong>Sally</strong> is a <u>friend</u> of <strong>John</strong>
+</li>
+<li>
+<strong>John</strong> has <u>read</u> <strong>Graph Databases</strong>
+</li>
+<li>
+<strong>Sally</strong> has <u>read</u> <strong>Graph Databases</strong>
+</li>
+</ul>
+
+</div>
+
+
+<div class="paragraph">
+<p>Now that we have described the kinds of things in our domain as nodes with their labels, we can connect the nodes together to describe their interactions.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>For a <em>Person</em> label, we can see that these kinds of nodes can be connected by the <u>friend of</u> relationship.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>For a <em>Book</em> label, we can see that a <em>Person</em> can be connected to these nodes by a <u>has read</u> relationship.</p>
+</div>
+
+</div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
+    
+<h4 id="_draw_the_data_model">Draw the data model</h4>
+
+
+
+<div class="paragraph">
+<p>Now that we have identified the kinds of relationships that can exist between labels of nodes, we can complete our graph data model.</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="data-modeling-1.png" alt="Graph data model">
+</p>
 </div>
 </div>
 </div>
@@ -217,50 +554,46 @@ link to call to action
 </div>
 <div class="sect1 "  >
     
-<h3 id="_section_2">Section 2</h3>
+<h3 id="_answering_questions">Answering questions</h3>
 
 <div class="sectionbody row">
 <div class="columns medium-12">
 
 
 <div class="paragraph">
-<p>text and pictures for section 2</p>
+<p>We have gone through the process of creating a basic graph data model for the interactions between people and books. We can take this data model further by defining attributes of these entities as key-value properties.</p>
 </div>
 
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
-<h4 id="_subsection_2">Subsection</h4>
+<h4 id="_list_your_questions">List your questions</h4>
 
-<div class="imageblock">
-<p class="content">
-<img src="neo4j-logo.png" alt="neo4j logo">
-</p>
+
+
+<div class="paragraph">
+<p>Finish section</p>
 </div>
+
 </div>
-<div class="sect2 sidebar columns medium-10" style='padding-left: 0;' >
-    
-<h4 id="_further_reading">Further Reading</h4>
-
-<div class="ulist">
-
-
-<ul>
-<li>
-links to manual
+<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<h2 id="_recommended_3">Recommended</h2>
 </li>
-<li>
-link to blog
+<div class="ulist recommended">
+
+
+<ul style='margin-left: 0;'>
+<li style='list-style: none outside none;'>
+<a href="http://docs.neo4j.org/chunked/stable/data-modeling-examples.html">Data Modeling Examples</a>
 </li>
-<li>
-link to call to action
+<li style='list-style: none outside none;'>
+<a href="https://github.com/neo4j-contrib/graphgist/wiki">GraphGist Project</a>
+</li>
+<li style='list-style: none outside none;'>
+<a href="http://vimeo.com/89075703">Video</a>
 </li>
 </ul>
 
-</div>
-<div class="sidebarblock">
-<div class="content">
-
-</div>
 </div>
 </div>
 </div>

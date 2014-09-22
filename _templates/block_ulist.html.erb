@@ -21,14 +21,16 @@ end %>
 colOpen = ""
 colClose = ""
 listStyleNone = ""
+ulMarginNone = ""
 
    colOpen = (captioned_title == 'Sidebar' || role == 'side-nav' ? "<ul class='side-nav'><li>Sidebar</li>" : "")
    colClose = (captioned_title == 'Sidebar' || role == 'side-nav' ? "</ul>" : "")
    listStyleNone = (role == "recommended" ? " style='list-style: none outside none;'" : "")
+   ulMarginNone = (role == "recommended" ? " style='margin-left: 0;'" : "")
 
 %>
 <%= colOpen %>
-<ul<%= (style_class = checklist || @style) ? %( class="#{style_class}") : nil %>><%
+<ul<%=ulMarginNone%><%= (style_class = checklist || @style) ? %( class="#{style_class}") : nil %>><%
 items.each do |item| %>
 <li<%= listStyleNone %>>
 <%
