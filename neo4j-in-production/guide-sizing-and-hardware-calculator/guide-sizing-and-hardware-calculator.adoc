@@ -7,11 +7,12 @@
 
 .Goals
 [abstract]
-We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us.
+This guide explains Neo4J sizing and hardware calculation best practices and tips. 
+
 
 .Prerequisites
 [abstract]
-Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes. {level}
+This guide describes how to calculate sizing and hardware calculations in an Enterprise Neo4J installation.   {level}
 
 toc::[]
 
@@ -19,7 +20,36 @@ toc::[]
 
 text and pictures for section 1
 
-=== Subsection
+=== Disk Space
+
+Nodes occupy 14B of space, relationships occupy 31B of space and properties occupy 41B of space.
+
+An example disk space calculation is:
+
+10,000    Nodes x 14B = 140kB
+1,000,000 Rels  x 33B = 31.5MB
+2,010,000 Props x 41B = 78.6MB
+
+Total  is 110.2MB
+
+=== Low Level Cache
+
+The low level cache requirements are the same as disk space.
+
+=== Optimizing
+
+In optimizing a graph database solution for performance, we should bear in mind the following guidelines:
+
+* We should utilize the filesystem cache as much as possible; if possible, we should map our store files in their entirety into this cache
+* We should tune the JVM heap and keep an eye on GC behaviors
+* We should consider using fast disks—SSDs or enterprise flash hardware—to bring up the bottom line when disk access becomes inevitable
+
+=== Performance Optimization
+There are three areas in which we can optimize for performance:
+
+* Increase the object cache (from 2 GB, all the way up to 200 GB or more in exceptional circumstances)
+* Increase the percentage of the store mapped into the filesystem cache
+* Invest in faster disks: SSDs or enterprise flash hardware
 
 image::neo4j-logo.png[]
 
