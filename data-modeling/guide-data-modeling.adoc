@@ -207,7 +207,7 @@ RETURN gdb.authors as authors
 [source,cypher]
 ----
 MATCH (sally:Person { name: 'Sally' })
-RETURN r.age as sally_age
+RETURN sally.age as sally_age
 ----
 
 ==== How old is John?
@@ -215,7 +215,7 @@ RETURN r.age as sally_age
 [source,cypher]
 ----
 MATCH (john:Person { name: 'John' })
-RETURN r.age as john_age
+RETURN john.age as john_age
 ----
 
 ==== Who is older, Sally or John?
