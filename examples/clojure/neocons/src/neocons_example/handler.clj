@@ -9,7 +9,7 @@
             [compojure.route                  :as route]))
 
 
-(def conn (nr/connect "http://localhost:7474/db/data/"))
+(def conn (nr/connect "http://localhost:7530/db/data/"))
 
 
 (def graph-query "MATCH (m:Movie)<-[:ACTED_IN]-(a:Person)
