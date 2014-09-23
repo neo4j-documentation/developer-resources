@@ -63,6 +63,8 @@ You might want to configure a machine with that setting if it’s acting as a re
 
 Neo4j Server must be configured to run a backup service. This is enabled via the configuration parameter online_backup_enabled, and is enabled by default. The interface and port the backup service listens on is configured via the parameter online_backup_server and defaults to the loopback interface and port 6362. It is typical to reconfigure this to listen on an external interface, by setting online_backup_server=<my-host-ip-address>:6362. It can also be configured to listen on all interfaces by setting online_backup_server=0.0.0.0:6362.
 
+It is best to use the form ./bin/neo4j-backup -host 192.168.1.34 -to /mnt/backup/neo4j-backup, which will backup the store from that specific host even if that host is running in a cluster. 
+
 Additional details can be found here: http://docs.neo4j.org/chunked/stable/backup-introduction.html
 
 image::neo4j-logo.png[]
@@ -71,14 +73,6 @@ image::neo4j-logo.png[]
 === Sidebar
 
 * http://docs.neo4j.org/chunked/stable/ha.html
-* link to blog
-* link to call to action
 
-[role=sidebar]
-=== Further Reading
-
-* links to manual
-* link to blog
-* link to call to action
 ****
 
