@@ -11,19 +11,15 @@ This guide explains Clustering best practices and troubleshooting tips.
 
 .Prerequisites
 [abstract]
-This guide describes how to configure clustering in an Enterprise Neo4J installation. This includes topics such as data synchronization, mending procedures, configuring an arbiter and slave-only mode configuration.  {level}
+This guide describes how to configure clustering in an Enterprise Neo4J installation. This includes topics such as data synchronization, mending procedures, configuring an arbiter and slave-only mode configuration. 
 
 toc::[]
 
-== Section 1
-
-text and pictures for section 1
-
-=== Data Synchronization between master and slaves
+== Data Synchronization between master and slaves
 
 Neo4j HA is a full master-slave replication. Any index created on the master is propagated to the slaves depending on the settings of ha.tx_push_factor and ha.pull_interval. See http://docs.neo4j.org/chunked/stable/ha.html for details.
 
-=== Mending Procedure for Master
+== Mending Procedure for Master
 
 Mending procedure for master
 
@@ -46,42 +42,37 @@ Mending procedure for master
 * Set org.neo4j.server.database.mode to HA
 * Start the server
 
-=== Mending Procedure for Slaves
+== Mending Procedure for Slaves
 * On each slave, remove the data/graph.db folder
 * Start the slave, watch data/graph.db for it to copy the store from the master
 * Once copying is done, move to do the same thing on the second slave
 
-=== Configuring a two slave cluster with an arbiter
+== Configuring a two slave cluster with an arbiter
 
 There's a step-by-step tutorial for setting up HA available here: http://docs.neo4j.org/chunked/stable/ha-setup-tutorial.html. For a 2 node cluster, you'll actually want to run 3 separate machines, and use the Neo4j arbiter on the 3rd. Details on the arbiter are available in the documentation here: http://docs.neo4j.org/chunked/stable/arbiter-instances.html. The configuration for the arbiter is identical to that of a regular instance, excepting anything relating to the actual graph db itself (since an arbiter doesn't hold any data).
 
 The ha.initial_hosts should be the same on all the instances, including the arbiter. The arbiter should have a unique ha.server_id (3 is fine).
 
-=== Setting a server in slave-only mode
+== Setting a server in slave-only mode
 
 See ha.slave_only here: http://docs.neo4j.org/chunked/stable/ha-configuration.html
 
 You might want to configure a machine with that setting if it’s acting as a reporting instance but you need to make sure that 2 members don’t have that setting otherwise you won’t have any failover in the cluster.
 
-image::neo4j-logo.png[]
+== Backing up a cluster server
 
-text and pictures for subsection 1.1
+Neo4j Server must be configured to run a backup service. This is enabled via the configuration parameter online_backup_enabled, and is enabled by default. The interface and port the backup service listens on is configured via the parameter online_backup_server and defaults to the loopback interface and port 6362. It is typical to reconfigure this to listen on an external interface, by setting online_backup_server=<my-host-ip-address>:6362. It can also be configured to listen on all interfaces by setting online_backup_server=0.0.0.0:6362.
+
+Additional details can be found here: http://docs.neo4j.org/chunked/stable/backup-introduction.html
+
+image::neo4j-logo.png[]
 
 [role=sidebar]
 === Sidebar
 
-* links to manual
+* http://docs.neo4j.org/chunked/stable/ha.html
 * link to blog
 * link to call to action
-
-
-== Section 2
-
-text and pictures for section 2
-
-=== Subsection
-
-image::neo4j-logo.png[]
 
 [role=sidebar]
 === Further Reading
@@ -91,4 +82,3 @@ image::neo4j-logo.png[]
 * link to call to action
 ****
 
-// .. etc ..
