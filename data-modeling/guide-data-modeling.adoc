@@ -7,11 +7,11 @@
 
 .Goals
 [abstract]
-The goal of this guide is to walk you through the graph data modeling lifecycle for Neo4j.
+This guide is designed to walk you through the graph data modeling lifecycle of Neo4j. You will be introduced to the basic process of designing a graph data model that can answer a wide range of business questions across a variety of domains. 
 
 .Prerequisites
 [abstract]
-You should have a firm understanding of the link:./property-graph[property graph data model] of Neo4j. You should understand the basics of Neo4j's query language, link:./cypher[Cypher].
+You should have a firm understanding of the Neo4j's link:./property-graph[property graph data model], and its query language, link:./cypher[Cypher].
 
 [role=expertise]
 {level}
@@ -20,24 +20,22 @@ toc::[]
 
 :img: .
 
-This guide will introduce you to graph data modeling for Neo4j. You will be introduced to the basic process in which one takes an arbitrary domain and designs a graph data model for answering a wide range of business questions.
-
 == Introduction
 
 Graph data modeling is the process in which a Neo4j user describes an arbitrary domain as a connected graph of nodes and relationships. From this description, a graph data model is designed to answer questions in the form of Cypher queries.
 
 == Describing a domain
 
-The first step in creating a good graph data model is to describe your domain. Consider the following description of the connection between two people, Sally and John.
+Consider the following description of the connection between two people, Sally and John.
 
 [quote]
 Two _people_, *John* and *Sally*, are +++<u>friends</u>+++. Both *John* and *Sally* have +++<u>read</u>+++ the _book_, *Graph Databases*.
 
-We can take this statement and identify labels, nodes, and relationships.
+We can take this statement, identify components such as labels, nodes, and relationships, and use these to build our model. 
 
 === Nodes
 
-The first entities that we'll identify in our domain are the nodes. The Neo4j documentation describes nodes as:
+The first entity that we'll identify in our domain are the nodes. 
 
 [quote, "3.1 Nodes", "docs.neo4j.org"]
 The fundamental units that form a graph are nodes and relationships. In Neo4j, both nodes and relationships can contain properties. Nodes are often used to represent entities, but depending on the domain relationships may be used for that purpose as well. Apart from properties and relationships, nodes can also be labeled with zero or more labels.
@@ -49,7 +47,7 @@ We can identify nodes as entities with a unique conceptual identity. In this cas
 [quote]
 Two people, *John* and *Sally*, are friends. Both *John* and *Sally* have read the book, *Graph Databases*.
 
-Which yields the nodes:
+Extracting the nodes:
 
 * *John*
 * *Sally*
@@ -66,26 +64,26 @@ image::data-modeling-3.png[Extract Nodes]
 
 === Labels
 
-In the documentation, labels are described as:
+Now that we have an idea of what our nodes will be, we decide what labels (if any) to assign our nodes. 
 
 [quote, "3.4 Labels", "docs.neo4j.org"]
-A label is a named graph construct that is used to group nodes into sets; all nodes labeled with the same label belongs to the same set. Many database queries can work with these sets instead of the whole graph, making queries easier to write and more efficient. A node may be labeled with any number of labels, including none, making labels an optional addition to the graph.
+A label is a named graph construct that is used to group nodes into sets. All nodes labeled with the same label belongs to the same set. Many database queries can work with these sets instead of the whole graph, making queries easier to write and more efficient. A node may be labeled with any number of labels, including none, making labels an optional addition to the graph.
 
 image::label.svg[Labels]
 
-First we'll start by identifying the roles of objects mentioned in the statement. We know that this statement is about two objects.
+First we'll start by identifying the roles of objects (John, Sally, Graph Databases) mentioned in the statement. We know that this statement is about two different types of objects:
 
 [quote]
 Two _people_, John and Sally, are friends. Both John and Sally have read the _book_, Graph Databases.
 
-We can conclude that there are two labels within this graph:
+Extracting the labels:
 
 * _Person_
 * _Book_
 
 image::data-modeling-2.png[Extract labels]
 
-Now that we have identified both our nodes and labels, we can assign the labels to the nodes that they describe. For *John* and *Sally* we apply the role _Person_. For *Graph Databases* we apply the role _Book_.
+Now that we have identified both our nodes and labels, we can assign the labels to the nodes they describe. For *John* and *Sally* we apply the role _Person_. For *Graph Databases* we apply the role _Book_.
 
 image::data-modeling-4.png[Apply labels]
 
@@ -107,9 +105,9 @@ Further, we can identify the interactions between these subjects:
 
 Now that we have described the kinds of things in our domain as nodes with their labels, we can connect the nodes together to describe their interactions.
 
-For a _Person_ label, we can see that these kinds of nodes can be connected by the +++<u>friend of</u>+++ relationship.
+Pairs of nodes labeled _Person_ label can be connected to each other by the +++<u>friend of</u>+++ relationship.
 
-For a _Book_ label, we can see that a _Person_ can be connected to these nodes by a +++<u>has read</u>+++ relationship.
+Pairs of nodes labeled _Book_ and _Person_ can be connected to each other by a +++<u>has read</u>+++ relationship.
 
 === Draw the data model
 
@@ -131,7 +129,7 @@ First, start by listing your questions that you want to answer about your data.
 * How old is Sally?
 * How old is John?
 * Who is older, Sally or John?
-* Who read the book Graph Databases first, Sally or John?
+* Who read the book _Graph Databases_ first, Sally or John?
 
 From these list of questions, you can identify the attributes that must belong to entities within your data model.
 
@@ -173,7 +171,7 @@ CREATE (john)-[:HAS_READ { rating: 5, on: 1359878400 }]->(gdb)
 
 === Translate questions to Cypher queries
 
-Now that we have a sample dataset of our graph data model, we can translate our questions from earlier into queries that sufficiently answer them.
+Now that we have a sample dataset of our graph data model, we can translate our questions from earlier into queries.
 
 ==== When did John and Sally become friends?
 
@@ -185,7 +183,7 @@ MATCH (sally)-[r:FRIEND_OF]-(john)
 RETURN r.since as friends_since
 ----
 
-==== What is the average rating of the book Graph Databases?
+==== What is the average rating of _Graph Databases_?
 
 [source,cypher]
 ----
@@ -194,7 +192,7 @@ MATCH (gdb)<-[r:HAS_READ]-()
 RETURN avg(r.rating) as average_rating
 ----
 
-==== Who are the authors of the book Graph Databases?
+==== Who are the authors of _Graph Databases_?
 
 [source,cypher]
 ----
@@ -229,7 +227,7 @@ ORDER BY people.age DESC
 LIMIT 1
 ----
 
-==== Who read the book Graph Databases first, Sally or John?
+==== Who read _Graph Databases_ first, Sally or John?
 
 [source,cypher]
 ----
