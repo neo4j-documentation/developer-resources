@@ -11,7 +11,7 @@ We live in a connected world. There are no isolated pieces of information, but r
 
 .Prerequisites
 [abstract]
-Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes.
+Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata--index or constraint information, for example--to nodes.
 
 [role=expertise]
 {level}
@@ -22,16 +22,16 @@ toc::[]
 
 This guide will show you how to design a graph model and you can then apply the lessons to your own data set. We'll be following Ian Robinson's *Design for Queryability* modeling approach.
 
-The creation of a graph model should be treated as an iterative process - we don't need to come up with the perfect model on our first try.
+The creation of a graph model should be treated as an iterative process--we don't need to come up with the perfect model on our first try.
 
 === Application/End User Goals
 
-Designing a graph model fits easily into an agile development approach and we'd typically start with link:http://en.wikipedia.org/wiki/User_story[agile stories].
+As designing a graph model fits easily into an Agile development approach, we'd typically start with link:http://en.wikipedia.org/wiki/User_story[Agile stories].
 
-For example if we're building an application that will recommend colleagues we should work with then we might start out with the following story:
+For example, if we're building an application that will recommend colleagues we should work with based on similar skills, we might start out with the following story:
 ____
 As an employee +
-I want to know who in the company has similar skills to me +
+I want to know who in the company has similar skills as me +
 So that we can exchange knowledge
 ____
 
@@ -48,10 +48,10 @@ ____
 We can restructure that into the following question:
 
 ____
-Which people, who work for the same company as me, have similar skills to me?
+Which people, who work for the same company as me, have similar skills as me?
 ____
 
-Now that we've got our first question we can come up with a model based on that.
+Now that we've got our first question, we can come up with a model.
 
 [role=side-nav]
 === Recommended
@@ -66,7 +66,7 @@ Now that we've got our first question we can come up with a model based on that.
 The first thing we need to do is identify entities or nouns. These will become the nodes in our model. e.g.
 
 ____
-Which *people*, who work for the same *company* as me, have similar *skills* to me? +
+Which *people*, who work for the same *company* as me, have similar *skills* as me? +
  +
 person +
 company +
@@ -86,21 +86,21 @@ ____
 The next step is to pull out the relationships between those entities which we can do by pulling out the verbs:
 
 ____
-Which people, who *work for* the same company as me, *have* similar skills to me? +
+Which people, who *work for* the same company as me, *have* similar skills as me? +
  +
 person WORKS_FOR company +
 person HAS_SKILL skill +
 ____
 
-During this process it's helpful to have a whiteboard handy where you can easily collaborate with colleagues on the model. Using actual data rather than the type names tends to make things easier to grasp.
+During this process, it's helpful to have a whiteboard handy on which you can easily brainstorm with colleagues on the model. In addition, using actual data rather than the type names tends to make system properties easier to grasp.
 
-e.g. our model with actual data would look like this
+WIth actual data, our model might look like this:
 
 image:{img}/domain-model.png[]
 
-As we come up with new questions and associated queries we can repeat this process keeping in mind that we only need to create a model to answer our questions - we don't need to model everything.
+As we come up with new questions and associated queries we can repeat this process. 
 
-This is a very simple example of a graph model which is merely intended to explain the process of coming up with one.
+Although models used in production are much more complex than this simple example, keeping in mind that a good model is made up of both components that are both necessary and sufficient. In other words, although our model has to be detailed enough answer our questions, we don't need to model every detail of the system in question.
 
 === Further resources
 
