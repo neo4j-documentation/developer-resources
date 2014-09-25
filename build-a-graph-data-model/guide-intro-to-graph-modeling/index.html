@@ -123,7 +123,7 @@
                <article id="content" role="main">
                  <div class="row" style="padding: 10px 0 0;">
                    <div class="columns large-12" style="padding:10px 0 0;">
-                   <ul class="breadcrumbs"> <li><a href="/developer-resources">Developer Guides</a></li> <li><a href="../">Cypher</a></li> <li class="current"><a href="#">Introduction to Cypher</a></li> </ul>
+                   <ul class="breadcrumbs"> <li><a href="/developer-resources">Developer Guides</a></li> <li><a href="../">Graph Data Modeling</a></li> <li class="current"><a href="#">Data Modelling Guide</a></li> </ul>
                  </div>
                  </div>
                  <div class="row">
@@ -148,7 +148,7 @@ We live in a connected world. There are no isolated pieces of information, but r
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes.
+Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata&#8212;&#8203;index or constraint information, for example&#8212;&#8203;to nodes.
 </blockquote>
 </div>
 
@@ -167,7 +167,7 @@ Nodes can be tagged with zero to many labels representing their different roles 
 <li><a href="#_identity_entities">Identity entities</a></li>
 
 <li><a href="#_identity_relationships">Identity relationships</a></li>
-<li><a href="#_further_resources">Further resources</a></li>
+
 </ul>
 
 <hr>
@@ -180,7 +180,7 @@ Nodes can be tagged with zero to many labels representing their different roles 
 
 
 <div class="paragraph">
-<p>The creation of a graph model should be treated as an iterative process - we don&#8217;t need to come up with the perfect model on our first try.</p>
+<p>The creation of a graph model should be treated as an iterative process&#8212;&#8203;we don&#8217;t need to come up with the perfect model on our first try.</p>
 </div>
 
 </div>
@@ -192,13 +192,13 @@ Nodes can be tagged with zero to many labels representing their different roles 
 
 
 <div class="paragraph">
-<p>Designing a graph model fits easily into an agile development approach and we&#8217;d typically start with <a href="http://en.wikipedia.org/wiki/User_story">agile stories</a>.</p>
+<p>As designing a graph model fits easily into an Agile development approach, we&#8217;d typically start with <a href="http://en.wikipedia.org/wiki/User_story">Agile stories</a>.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>For example if we&#8217;re building an application that will recommend colleagues we should work with then we might start out with the following story:</p>
+<p>For example, if we&#8217;re building an application that will recommend colleagues we should work with based on similar skills, we might start out with the following story:</p>
 </div>
 
 <div class="quoteblock" style="margin: auto; width: 95%;">
@@ -217,7 +217,7 @@ Nodes can be tagged with zero to many labels representing their different roles 
 
 <div class="paragraph">
 <p>As an employee<br>
-I want to know who in the company has similar skills to me<br>
+I want to know who in the company has similar skills as me<br>
 So that we can exchange knowledge</p>
 </div>
 
@@ -279,7 +279,7 @@ So that we can exchange knowledge</p>
 
 
 <div class="paragraph">
-<p>Which people, who work for the same company as me, have similar skills to me?</p>
+<p>Which people, who work for the same company as me, have similar skills as me?</p>
 </div>
 
 </blockquote>
@@ -296,7 +296,7 @@ So that we can exchange knowledge</p>
 
 
 <div class="paragraph">
-<p>Now that we&#8217;ve got our first question we can come up with a model based on that.</p>
+<p>Now that we&#8217;ve got our first question, we can come up with a model.</p>
 </div>
 
 </div>
@@ -346,7 +346,7 @@ So that we can exchange knowledge</p>
 
 
 <div class="paragraph">
-<p>Which <strong>people</strong>, who work for the same <strong>company</strong> as me, have similar <strong>skills</strong> to me?<br>
+<p>Which <strong>people</strong>, who work for the same <strong>company</strong> as me, have similar <strong>skills</strong> as me?<br>
 <br>
 person<br>
 company<br>
@@ -411,7 +411,7 @@ skill</p>
 
 
 <div class="paragraph">
-<p>Which people, who <strong>work for</strong> the same company as me, <strong>have</strong> similar skills to me?<br>
+<p>Which people, who <strong>work for</strong> the same company as me, <strong>have</strong> similar skills as me?<br>
 <br>
 person WORKS_FOR company<br>
 person HAS_SKILL skill<br></p>
@@ -431,31 +431,31 @@ person HAS_SKILL skill<br></p>
 
 
 <div class="paragraph">
-<p>During this process it&#8217;s helpful to have a whiteboard handy where you can easily collaborate with colleagues on the model. Using actual data rather than the type names tends to make things easier to grasp.</p>
+<p>During this process, it&#8217;s helpful to have a whiteboard handy on which you can easily brainstorm with colleagues on the model. In addition, using actual data rather than the type names tends to make system properties easier to grasp.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>e.g. our model with actual data would look like this</p>
+<p>WIth actual data, our model might look like this:</p>
 </div>
 
 
 
 <div class="paragraph">
-<p><span class="image"><img src="./domain-model.png" alt="domain-model"></span></p>
+<p><span class="image"><img src=".//domain-model.png" alt="domain-model"></span></p>
 </div>
 
 
 
 <div class="paragraph">
-<p>As we come up with new questions and associated queries we can repeat this process keeping in mind that we only need to create a model to answer our questions - we don&#8217;t need to model everything.</p>
+<p>As we come up with new questions and associated queries we can repeat this process.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>This is a very simple example of a graph model which is merely intended to explain the process of coming up with one.</p>
+<p>Although models used in production are much more complex than this simple example, keeping in mind that a good model is made up of both components that are both necessary and sufficient. In other words, although our model has to be detailed enough answer our questions, we don&#8217;t need to model every detail of the system in question.</p>
 </div>
 
 </div>

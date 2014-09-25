@@ -123,7 +123,7 @@
                <article id="content" role="main">
                  <div class="row" style="padding: 10px 0 0;">
                    <div class="columns large-12" style="padding:10px 0 0;">
-                   <ul class="breadcrumbs"> <li><a href="/developer-resources">Developer Guides</a></li> <li><a href="../">Cypher</a></li> <li class="current"><a href="#">Introduction to Cypher</a></li> </ul>
+                   <ul class="breadcrumbs"> <li><a href="/developer-resources">Developer Guides</a></li> <li><a href="../">Guide</a></li> <li class="current"><a href="#">guide-sizing-and-hardware-calculator</a></li> </ul>
                  </div>
                  </div>
                  <div class="row">
@@ -142,13 +142,13 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-This guide explains Neo4J sizing and hardware calculation best practices and tips.
+We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-This guide describes how to calculate sizing and hardware calculations in an Enterprise Neo4J installation.   Beginner
+Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes. Beginner
 </blockquote>
 </div>
 <div class="toc">
@@ -176,102 +176,11 @@ This guide describes how to calculate sizing and hardware calculations in an Ent
 
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
-<h4 id="_disk_space">Disk Space</h4>
+<h4 id="_subsection">Subsection</h4>
 
-
-
-<div class="paragraph">
-<p>Nodes occupy 14B of space, relationships occupy 31B of space and properties occupy 41B of space.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>An example disk space calculation is:</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>10,000    Nodes x 14B = 140kB
-1,000,000 Rels  x 33B = 31.5MB
-2,010,000 Props x 41B = 78.6MB</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Total  is 110.2MB</p>
-</div>
-
-</div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
-    
-<h4 id="_low_level_cache">Low Level Cache</h4>
-
-
-
-<div class="paragraph">
-<p>The low level cache requirements are the same as disk space.</p>
-</div>
-
-</div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
-    
-<h4 id="_optimizing">Optimizing</h4>
-
-
-
-<div class="paragraph">
-<p>In optimizing a graph database solution for performance, we should bear in mind the following guidelines:</p>
-</div>
-
-<div class="ulist">
-
-
-<ul>
-<li>
-We should utilize the filesystem cache as much as possible; if possible, we should map our store files in their entirety into this cache
-</li>
-<li>
-We should tune the JVM heap and keep an eye on GC behaviors
-</li>
-<li>
-We should consider using fast disks—SSDs or enterprise flash hardware—to bring up the bottom line when disk access becomes inevitable
-</li>
-</ul>
-
-</div>
-</div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
-    
-<h4 id="_performance_optimization">Performance Optimization</h4>
-
-
-
-<div class="paragraph">
-<p>There are three areas in which we can optimize for performance:</p>
-</div>
-
-<div class="ulist">
-
-
-<ul>
-<li>
-Increase the object cache (from 2 GB, all the way up to 200 GB or more in exceptional circumstances)
-</li>
-<li>
-Increase the percentage of the store mapped into the filesystem cache
-</li>
-<li>
-Invest in faster disks: SSDs or enterprise flash hardware
-</li>
-</ul>
-
-</div>
 <div class="imageblock">
 <p class="content">
-<img src="neo4j-logo.png" alt="neo4j logo">
+<img src="./neo4j-logo.png" alt="neo4j logo">
 </p>
 </div>
 
@@ -320,11 +229,11 @@ link to call to action
 
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
-<h4 id="_subsection">Subsection</h4>
+<h4 id="_subsection_2">Subsection</h4>
 
 <div class="imageblock">
 <p class="content">
-<img src="neo4j-logo.png" alt="neo4j logo">
+<img src="./neo4j-logo.png" alt="neo4j logo">
 </p>
 </div>
 </div>
