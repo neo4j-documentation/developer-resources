@@ -51,7 +51,7 @@ Not only SQL, but modern choices which excel at answering different kinds of que
 * Structured product information? Store as a *Document*.
 * How did you get here? Follow a *Graph*.
 
-image::nosql-space.png[]
+image::{img}nosql-space.png[]
 
 [role=side-nav]
 === Recommended
@@ -66,11 +66,11 @@ image::nosql-space.png[]
 Reconnect the rows of tables in a *Relational Database* by uncovering all the relationships, and you’ll see a graph.
 Dumb JOIN tables are replaced by interesting relationships.
 
-image::vs-rdbms.png[]
+image::{img}vs-rdbms.png[]
 
 Where a RDBMS is optimized for aggregated, highly structured data, Neo4j is optimized for highly connected heterogenuous data.
 
-image::as-rdbms.png[]
+image::{img}as-rdbms.png[]
 
 .Relational databases also lack relationships
 [quote, "Jim Webber, Ian Robinson", "Graph Databases, O'Reilly"]
@@ -82,20 +82,20 @@ For several decades, developers have tried to accommodate connected, semi- struc
 
 A *Key-Value* model is great and highly performant for lookups of huge amounts of simple or even complex values.
 
-image::vs-key-value.png[]
+image::{img}vs-key-value.png[]
 
 When the values are themselves interconnected, you’ve got a graph.
 Neo4j lets you traverse quickly among all the connected values and find insights in the relationships.
 
-image::as-key-value.png[]
+image::{img}as-key-value.png[]
 
 === (A Graph Database) –[:NAVIGATES_A]–> (Document Store)
 
 The structured hierarchy of a *Document* accommodates a lot of schema-free data that can easily be represented as a tree. Which is of course a graph but represents only one projection of your data.
 
-image::vs-document.png[]
+image::{img}vs-document.png[]
 
 Refer to other documents (or contained elements) within that tree and you have a more expressive representation of the same data that you can easily navigate with Neo4j.
 A graph data model lets more than one natural representation emerge dynamically as needed.
 
-image::as-document.png[]
+image::{img}as-document.png[]

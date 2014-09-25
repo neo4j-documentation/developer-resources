@@ -1,5 +1,5 @@
 = Graph Databases versus Relational Databases
-:level: Beginner
+:level: Intermediate
 :toc:
 :toc-placement!:
 :toc-title: Overview
@@ -7,11 +7,11 @@
 
 .Goals
 [abstract]
-We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us.
+Being a relational database developer, you will learn how graph databases and their data model differ from what you know. We will also explain how to integrate graph databases with relational databases and how to import data from a relational store.
 
 .Prerequisites
 [abstract]
-Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes.
+You should have looked into the link:/what-is-neo4j/property-graph[property-graph model] and into link/build-a-graph-data-model/guide-intro-to-graph-modeling[data modeling with graphs].
 
 [role=expertise]
 {level}
@@ -28,8 +28,6 @@ Every relevant system used a relational database to store and query its data.
 
 Relational databases store highly structured data in tables with predetermined columns of certain types and many rows of the same type of information.
 The structure is recorded in a fixed schema that all data in the database has to adhere to.
-If you want to change your model, you have to change the schema and for that you had to work your way by the database administrator.
-And don't try this more than once per week.
 
 Despite having "relational" in its name, the data model is not about connections but about _Relational Algebra_, a set algebra.
 
@@ -38,27 +36,21 @@ References to other rows and tables are indicated by referring to their (primary
 Relationships are computed at query time by matching primary and foreign keys of the many (potentially indexed) rows of the to be joined tables.
 This operation is CPU and RAM intensive and has an exponential cost.
 
-image::rel_graph4.jpg[]
+image::{img}rel_graph4.jpg[]
 
-.Relational databases also lack relationships
-[quote, "Jim Webber, Ian Robinson", "Graph Databases, O'Reilly"]
-For several decades, developers have tried to accommodate connected, semi- structured datasets inside relational databases. But whereas relational databases were initially designed to codify paper forms and tabular structures — something they do exceedingly well — they struggle when attempting to model the ad hoc, exceptional relationships that crop up in the real world. +
-*Ironically, relational databases deal poorly with relationships. Relationships do exist in the vernacular of relational databases, but only as a means of joining tables.*
+If you use many-to-many relationships, you have to introduce a _JOIN_ table that lists foreign keys of both participating tables which further increases join operation costs.
+That's why 
 
-If you had to manage many-to-many relationships, just listing a foreign key did not cut it.
-You had to introduce another "dummy" _JOIN_ table that listed foreign keys of both participating tables.
-And so those join operations immediately doubled in complexity and cost.
+Those costly join operations are usually addressed by denormalising data to reduce the number of joins necessary.
 
-Those costly join operations, made the database administrator take your nice little model, that you created lovingly with no unneccessary redundancies and denormalized it to make it fly.
+Not every use-case was a good fit for this type of stringent datamodel but for the lack of well known alternatives, you had to work with what you had.
 
-Not every use-case was a good fit for this type of datamodel but for the lack of well known alternatives, you worked around this fact.
-At least you tried.
+The relational data model and query language SQL are common knowledge among developers.
+There is a huge number of tools that make your life as database developer or -adminstrator easier.
 
-Many tools competed to make life with relational databases easier, and they did.
+But sometimes a different, more flexible data model or database would allow you to solve your use-cases without putting in a lot of additional effort.
 
-It was convenient to know the common data model and widespread query language SQL.
-If you knew one relational database, you knew all, execpt fo the devil that was in the detail.
-Of thousands of configuration and tuning options, vendor specific SQL extensions and specialized tools for operating and managing the database.
+Meet graph databases.
 
 [role=side-nav]
 === Recommended
@@ -70,7 +62,99 @@ Of thousands of configuration and tuning options, vendor specific SQL extensions
 
 === Relational to Graph
 
+In some regards graph databases are like the next generation of relational databases.
+For once the name "relational" really has the meaning of "first class relationship support".
+A graph database treats those implicit connections that you indicated via foreign-keys as data structures in the store layer.
+Each node (entity or attribute) in the model directly contains a list of relationship-records that represent its relationships to other nodes, organized by type and direction and holding additional attributes.
+Whenever you run a _join_ operation the database just walks this list and has direct access to the connected nodes.
+So there is no need for a costly search / match computation.
 
-image::rel_graph5.jpg[]
+image::{img}rel_graph5.jpg[]
 
-image::rel_graph9.jpg[]
+Graph databases are part of the link:../graph-db-vs-nosql[NoSQL movement], they are open-source, schema free and scalable database solutions.
+But unlike the other NoSQL databases they support a very flexible and fine-grained data model that allows you to model and manage your rich domain in an easy way.
+You more or less keep the data as it is in the real world, in small, normalized but richly connected entities.
+This allows you to query and view your data from any imaginable view point, supporting many different use-cases.
+
+The fine grained model also means that there is no natural boundary around aggregates, so the scope of update operations has to be provided by the application.
+The well known and tested concept of transactions groups a set of updates of nodes and relationships into a atomic, consistent, isolated and durable (ACID) operation.
+Graph databases like Neo4j fully support the transactional concepts including write ahead logs and recovery after abnormal termination.
+
+image::{img}rel_graph9.jpg[]
+
+If you're used to model with relational databases, try to remember the ease and beauty of good, normalized ER-diagrams.
+Those graphs actually are what we aim for. Not the de-normalized, disconnected physical structure you end up with in a relational database.
+Simple, easy to understand models that you can quickly whiteboard with your colleagues and domain experts.
+
+Let's take a more realistic model of an organizational domain and show how it would be modeled in a relational database vs. the graph database:
+
+image::{img}domain.png[]
+
+=== Graph Querying with Cypher
+
+Querying relational databases is easy with SQL. This declarative query language allows both for easy ad-hoc querying in a database tool as well as specifying use-case related queries in your code. Even object-relational mappers use SQL under the hood to talk to the database.
+
+Do graph databases have something similar? Well, Neo4j has a declarative graph query language which built on basic concepts and clauses from SQL but added a lot of graph specific functionality to make it simple to work with your rich graph model without being too verbose.
+
+If you ever tried to write a SQL statement with a large number of joins, you know that you quickly loose the insight of what the query actually does for all the technical noise.
+
+So for our domain, what would a SQL statement that lists the _employees in the "IT-Department"_ look like?
+// sum of the weekly work hours of employees of "GraphIT" working in the different projects
+Let's just look at the statements without explaining them in detail.
+
+[source,sql]
+----
+SELECT * FROM Person
+LEFT JOIN Person_Department 
+  ON Person.Id = Person_Department.PersonId
+LEFT JOIN Department 
+  ON Department.Id = Person_Department.DepartmentId
+WHERE Department.name = "IT-Department"
+----
+
+[source,cypher]
+----
+MATCH (p:Person)<-[:EMPLOYEE]-(d:Dept {name:"IT-Department"})
+RETURN p.name, d.name
+----
+
+[role=side-nav]
+=== Recommended
+
+* link:/online-training[Online Training]
+* link:../../cypher-query-language[Quick Cypher Intro]
+* link:/use-cases[Use-Case Examples]
+* http://docs.neo4j.org/chunked/milestone/examples-from-sql-to-cypher.html[Manual: From SQL to Cypher]
+
+
+=== Connecting to Neo4j
+
+You probably also wonder how you would connect from your programming language to a Neo4j Database?
+If you've installed and started Neo4j as a server on your system, you can interact with the database with the built-in Neo4j browser application.
+
+
+[role=side-nav]
+=== Recommended
+
+* link:/download[Install Neo4j]
+* link:../../examples[Develop with Neo4j]
+* link:../../examples/java/jdbc[JDBC example]
+
+=== Importing Data from a Relational Database
+
+If you have a good understanding what your graph model should look like, i.e. what data will be represented as nodes or relationships and how the labels, relationship-types and attributes are named, you're ready to go.
+
+The easiest way to import data from your relational database is to create a CSV dump of either sindividual tables and join-tables or of a joined, denormalized representation.
+
+Then you can use that CSV file and
+
+[role=side-nav]
+=== Recommended
+
+* link:../../working-with-data/guide-importing-data-and-etl[Data Import,role=guide]
+* http://docs.neo4j.org/chunked/milestone/query-load-csv.html[LOAD CSV,role=manual]
+* http://watch.neo4j.org/video/90358900[Data Import Webinar,role=video]
+* http://jexp.de/blog/2014/06/load-csv-into-neo4j-quickly-and-successfully/[LOAD CSV Tips,role=blog]
+
+// === Keeping Neo4j in Sync with a Relational Database
+

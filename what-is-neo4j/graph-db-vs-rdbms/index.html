@@ -142,18 +142,18 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us.
+Being a relational database developer, you will learn how graph databases and their data model differ from what you know. We will also explain how to integrate graph databases with relational databases and how to import data from a relational store.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes.
+You should have looked into the <a href="/what-is-neo4j/property-graph">property-graph model</a> and into link/build-a-graph-data-model/guide-intro-to-graph-modeling[data modeling with graphs].
 </blockquote>
 </div>
 
 
-<div class="label">Beginner</div>
+<div class="label">Intermediate</div>
 <hr/>
 
 </div>
@@ -195,9 +195,7 @@ Every relevant system used a relational database to store and query its data.</p
 
 <div class="paragraph">
 <p>Relational databases store highly structured data in tables with predetermined columns of certain types and many rows of the same type of information.
-The structure is recorded in a fixed schema that all data in the database has to adhere to.
-If you want to change your model, you have to change the schema and for that you had to work your way by the database administrator.
-And don&#8217;t try this more than once per week.</p>
+The structure is recorded in a fixed schema that all data in the database has to adhere to.</p>
 </div>
 
 
@@ -221,72 +219,45 @@ This operation is CPU and RAM intensive and has an exponential cost.</p>
 
 <div class="imageblock">
 <p class="content">
-<img src="rel_graph4.jpg" alt="rel graph4">
+<img src="./rel_graph4.jpg" alt="rel graph4">
 </p>
 </div>
-<div class="quoteblock" style="margin: auto; width: 95%;">
-<div class="row text-center hide-for-small hr-style">
-   <div class="medium-5 columns">
-      <hr>
-   </div>
-   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
-   <div class="medium-5 columns">
-      <hr>
-   </div>
-</div>
-
-<div class="title">Relational databases also lack relationships</div>
-<blockquote>
-For several decades, developers have tried to accommodate connected, semi- structured datasets inside relational databases. But whereas relational databases were initially designed to codify paper forms and tabular structures — something they do exceedingly well — they struggle when attempting to model the ad hoc, exceptional relationships that crop up in the real world.<br>
-<strong>Ironically, relational databases deal poorly with relationships. Relationships do exist in the vernacular of relational databases, but only as a means of joining tables.</strong>
-</blockquote>
-<div class="attribution">
-<cite>Graph Databases, O'Reilly</cite><br>
-&#8212; Jim Webber, Ian Robinson
-</div>
-<div class="row text-center hide-for-small hr-style">
-   <div class="medium-5 columns">
-      <hr>
-   </div>
-   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
-   <div class="medium-5 columns">
-      <hr>
-   </div>
-</div>
-</div>
 
 
 <div class="paragraph">
-<p>If you had to manage many-to-many relationships, just listing a foreign key did not cut it.
-You had to introduce another "dummy" <em>JOIN</em> table that listed foreign keys of both participating tables.
-And so those join operations immediately doubled in complexity and cost.</p>
+<p>If you use many-to-many relationships, you have to introduce a <em>JOIN</em> table that lists foreign keys of both participating tables which further increases join operation costs.
+That&#8217;s why</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Those costly join operations, made the database administrator take your nice little model, that you created lovingly with no unneccessary redundancies and denormalized it to make it fly.</p>
+<p>Those costly join operations are usually addressed by denormalising data to reduce the number of joins necessary.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Not every use-case was a good fit for this type of datamodel but for the lack of well known alternatives, you worked around this fact.
-At least you tried.</p>
+<p>Not every use-case was a good fit for this type of stringent datamodel but for the lack of well known alternatives, you had to work with what you had.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Many tools competed to make life with relational databases easier, and they did.</p>
+<p>The relational data model and query language SQL are common knowledge among developers.
+There is a huge number of tools that make your life as database developer or -adminstrator easier.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>It was convenient to know the common data model and widespread query language SQL.
-If you knew one relational database, you knew all, execpt fo the devil that was in the detail.
-Of thousands of configuration and tuning options, vendor specific SQL extensions and specialized tools for operating and managing the database.</p>
+<p>But sometimes a different, more flexible data model or database would allow you to solve your use-cases without putting in a lot of additional effort.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Meet graph databases.</p>
 </div>
 
 </div>
@@ -315,15 +286,212 @@ Of thousands of configuration and tuning options, vendor specific SQL extensions
     
 <h4 id="_relational_to_graph">Relational to Graph</h4>
 
+
+
+<div class="paragraph">
+<p>In some regards graph databases are like the next generation of relational databases.
+For once the name "relational" really has the meaning of "first class relationship support".
+A graph database treats those implicit connections that you indicated via foreign-keys as data structures in the store layer.
+Each node (entity or attribute) in the model directly contains a list of relationship-records that represent its relationships to other nodes, organized by type and direction and holding additional attributes.
+Whenever you run a <em>join</em> operation the database just walks this list and has direct access to the connected nodes.
+So there is no need for a costly search / match computation.</p>
+</div>
+
 <div class="imageblock">
 <p class="content">
-<img src="rel_graph5.jpg" alt="rel graph5">
+<img src="./rel_graph5.jpg" alt="rel graph5">
 </p>
 </div>
+
+
+<div class="paragraph">
+<p>Graph databases are part of the <a href="../graph-db-vs-nosql">NoSQL movement</a>, they are open-source, schema free and scalable database solutions.
+But unlike the other NoSQL databases they support a very flexible and fine-grained data model that allows you to model and manage your rich domain in an easy way.
+You more or less keep the data as it is in the real world, in small, normalized but richly connected entities.
+This allows you to query and view your data from any imaginable view point, supporting many different use-cases.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>The fine grained model also means that there is no natural boundary around aggregates, so the scope of update operations has to be provided by the application.
+The well known and tested concept of transactions groups a set of updates of nodes and relationships into a atomic, consistent, isolated and durable (ACID) operation.
+Graph databases like Neo4j fully support the transactional concepts including write ahead logs and recovery after abnormal termination.</p>
+</div>
+
 <div class="imageblock">
 <p class="content">
-<img src="rel_graph9.jpg" alt="rel graph9">
+<img src="./rel_graph9.jpg" alt="rel graph9">
 </p>
+</div>
+
+
+<div class="paragraph">
+<p>If you&#8217;re used to model with relational databases, try to remember the ease and beauty of good, normalized ER-diagrams.
+Those graphs actually are what we aim for. Not the de-normalized, disconnected physical structure you end up with in a relational database.
+Simple, easy to understand models that you can quickly whiteboard with your colleagues and domain experts.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Let&#8217;s take a more realistic model of an organizational domain and show how it would be modeled in a relational database vs. the graph database:</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="./domain.png" alt="domain">
+</p>
+</div>
+</div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
+    
+<h4 id="_graph_querying_with_cypher">Graph Querying with Cypher</h4>
+
+
+
+<div class="paragraph">
+<p>Querying relational databases is easy with SQL. This declarative query language allows both for easy ad-hoc querying in a database tool as well as specifying use-case related queries in your code. Even object-relational mappers use SQL under the hood to talk to the database.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Do graph databases have something similar? Well, Neo4j has a declarative graph query language which built on basic concepts and clauses from SQL but added a lot of graph specific functionality to make it simple to work with your rich graph model without being too verbose.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>If you ever tried to write a SQL statement with a large number of joins, you know that you quickly loose the insight of what the query actually does for all the technical noise.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>So for our domain, what would a SQL statement that lists the <em>employees in the "IT-Department"</em> look like?
+Let&#8217;s just look at the statements without explaining them in detail.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="sql"><code>SELECT * FROM Person
+LEFT JOIN Person_Department
+  ON Person.Id = Person_Department.PersonId
+LEFT JOIN Department
+  ON Department.Id = Person_Department.DepartmentId
+WHERE Department.name = "IT-Department"</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Person)&lt;-[:EMPLOYEE]-(d:Dept {name:"IT-Department"})
+RETURN p.name, d.name</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<h2 id="_recommended_2">Recommended</h2>
+</li>
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="/online-training">Online Training</a>
+</li>
+<li>
+<a href="../../cypher-query-language">Quick Cypher Intro</a>
+</li>
+<li>
+<a href="/use-cases">Use-Case Examples</a>
+</li>
+<li>
+<a href="http://docs.neo4j.org/chunked/milestone/examples-from-sql-to-cypher.html">Manual: From SQL to Cypher</a>
+</li>
+</ul>
+
+</div>
+</div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
+    
+<h4 id="_connecting_to_neo4j">Connecting to Neo4j</h4>
+
+
+
+<div class="paragraph">
+<p>You probably also wonder how you would connect from your programming language to a Neo4j Database?
+If you&#8217;ve installed and started Neo4j as a server on your system, you can interact with the database with the built-in Neo4j browser application.</p>
+</div>
+
+</div>
+<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<h2 id="_recommended_3">Recommended</h2>
+</li>
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="/download">Install Neo4j</a>
+</li>
+<li>
+<a href="../../examples">Develop with Neo4j</a>
+</li>
+<li>
+<a href="../../examples/java/jdbc">JDBC example</a>
+</li>
+</ul>
+
+</div>
+</div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
+    
+<h4 id="_importing_data_from_a_relational_database">Importing Data from a Relational Database</h4>
+
+
+
+<div class="paragraph">
+<p>If you have a good understanding what your graph model should look like, i.e. what data will be represented as nodes or relationships and how the labels, relationship-types and attributes are named, you&#8217;re ready to go.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>The easiest way to import data from your relational database is to create a CSV dump of either sindividual tables and join-tables or of a joined, denormalized representation.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Then you can use that CSV file and</p>
+</div>
+
+</div>
+<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<h2 id="_recommended_4">Recommended</h2>
+</li>
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="../../working-with-data/guide-importing-data-and-etl">Data Import,role=guide</a>
+</li>
+<li>
+<a href="http://docs.neo4j.org/chunked/milestone/query-load-csv.html">LOAD CSV,role=manual</a>
+</li>
+<li>
+<a href="http://watch.neo4j.org/video/90358900">Data Import Webinar,role=video</a>
+</li>
+<li>
+<a href="http://jexp.de/blog/2014/06/load-csv-into-neo4j-quickly-and-successfully/">LOAD CSV Tips,role=blog</a>
+</li>
+</ul>
+
 </div>
 </div>
 </div>

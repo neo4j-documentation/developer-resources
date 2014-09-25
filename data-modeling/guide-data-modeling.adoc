@@ -42,7 +42,7 @@ The first entities that we'll identify in our domain are the nodes. The Neo4j do
 [quote, "3.1 Nodes", "docs.neo4j.org"]
 The fundamental units that form a graph are nodes and relationships. In Neo4j, both nodes and relationships can contain properties. Nodes are often used to represent entities, but depending on the domain relationships may be used for that purpose as well. Apart from properties and relationships, nodes can also be labeled with zero or more labels.
 
-image::node.svg[Nodes]
+image::{img}node.svg[Nodes]
 
 We can identify nodes as entities with a unique conceptual identity. In this case, these entities are outlined below in bold.
 
@@ -55,7 +55,7 @@ Which yields the nodes:
 * *Sally*
 * *Graph Databases*
 
-image::data-modeling-3.png[Extract Nodes]
+image::{img}data-modeling-3.png[Extract Nodes]
 
 [role=side-nav]
 === Recommended
@@ -71,7 +71,7 @@ In the documentation, labels are described as:
 [quote, "3.4 Labels", "docs.neo4j.org"]
 A label is a named graph construct that is used to group nodes into sets; all nodes labeled with the same label belongs to the same set. Many database queries can work with these sets instead of the whole graph, making queries easier to write and more efficient. A node may be labeled with any number of labels, including none, making labels an optional addition to the graph.
 
-image::label.svg[Labels]
+image::{img}label.svg[Labels]
 
 First we'll start by identifying the roles of objects mentioned in the statement. We know that this statement is about two objects.
 
@@ -83,11 +83,11 @@ We can conclude that there are two labels within this graph:
 * _Person_
 * _Book_
 
-image::data-modeling-2.png[Extract labels]
+image::{img}data-modeling-2.png[Extract labels]
 
 Now that we have identified both our nodes and labels, we can assign the labels to the nodes that they describe. For *John* and *Sally* we apply the role _Person_. For *Graph Databases* we apply the role _Book_.
 
-image::data-modeling-4.png[Apply labels]
+image::{img}data-modeling-4.png[Apply labels]
 
 [role=side-nav]
 === Recommended
@@ -115,7 +115,7 @@ For a _Book_ label, we can see that a _Person_ can be connected to these nodes b
 
 Now that we have identified the kinds of relationships that can exist between labels of nodes, we can complete our graph data model.
 
-image::data-modeling-1.png[Graph data model]
+image::{img}data-modeling-1.png[Graph data model]
 
 == Answering questions
 

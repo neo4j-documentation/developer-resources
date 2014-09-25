@@ -28,7 +28,7 @@ If you’ve ever worked with an object model or entity relationship diagram, the
 The property graph contains connected entities (the _nodes_) which can hold arbitrary types and numbers of properties (key-value-pairs). Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata--index or constraint information, for example--to nodes.
 _Relationships_ provide directed, named semantic connections between two nodes. A relationship always has a direction, a type, a _start node_, and an __end node__. Like nodes, relationships can have arbitrary properties. In most cases, relationship have quantitative properties, such as weights, distances, ratings, time intervals, or strengths. As relationships are stored efficiently, two nodes can have any number or type of relationships between them without sacrificing performance. Note that although they are directed, relationships can always be navigated in both directions.
 
-image::img/graphdb-gve.png[]
+image::{img}img/graphdb-gve.png[]
 _The building blocks of the Property Graph_
 
 
@@ -36,7 +36,7 @@ _The building blocks of the Property Graph_
 There is only one consistent rule in a graph database: "No broken links". Since a relationship always has a start and end node, you can’t delete a node without also deleting its associated relationships. You also can always assume that an existing relationship will not point to a non-existing endpoint.
 
 
-image::img/property_graph_model.png[]
+image::{img}img/property_graph_model.png[]
 _A concrete Property Graph Example_
 
 [role=side-nav]
@@ -64,7 +64,7 @@ Some particular features make Neo4j very popular among users, developers and DBA
 - Compact storage and memory caching for graphs, resulting in efficient scale up and billions of nodes in one database on moderate hardware
 - Written on top of the JVM, thus portable and fast
 
-image::img/neo4j-nosql.png[]
+image::{img}img/neo4j-nosql.png[]
 
 [role=side-nav]
 === Recommended
