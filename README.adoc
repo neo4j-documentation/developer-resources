@@ -1,14 +1,72 @@
-## Neo4j Developer Resources
+== Neo4j Developer Resources
 
 Contains guides in asciidoc format, rendered with asciidoctor into HTML and pushed to the single gh-pages branch,
 use the `render.sh` script to do that.
 
 We use the template defined in https://raw.githubusercontent.com/neo4j-contrib/developer-resources/gh-pages/guide_template.adoc[guide_template.adoc] for the guide structure, which is rendered like http://neo4j-contrib.github.io/developer-resources/guide_template.html[this]-
 
-### Example Applications per Language, Stack and Driver
+=== Guides
 
-A simple, one page movies app based on the Neo4j-Movies dataset that comes with the database (`:play movies` in the Neo4j-browser)
+Most of the documents in this developer resources section are organized as a guide. 
+Those guides come with a consistent structure and similar use of language and assets. 
+Each of the guides lives in its own directory and is rendered into an `index.html` file for publication. You can run the rendering process by calling `render.sh` on the command line.
 
-The HTML page uses jquery ajax to query 3 REST-Endpoints in the backend for `/search`, `/movie` and `/graph`
+A guide has this general structure
 
-See the
+1. goal for this guide
+2. prerequisite with links to relevant sections
+3. recommended experience level (Beginner, Intermediate, Advanced)
+4. Multiple sections and subsections outlining the content
+use a welcoming and helpful, not overly complex or eloquent language with examples in code, pictures or videos
+5. each top level (`===`) section can be followed by a sidebar section which will be rendered on the right side with links to follow up information (internal links, calls to action, external links)
+
+Please see the link:./guide_template.adoc[example guide template file] for a blueprint of the document structure needed.
+And as link:./guide_template.html[rendered document].
+
+==== Calls to Action
+
+* Webinar Registration
+* Book Downloads
+* Newsletter Registration
+* Online Training
+* Offline Training Classes
+* Neo4j Download
+* Whitepapers
+
+==== Internal and External Content
+
+* Other developer-resources and neo4j.com pages
+* Manual Pages and Articles
+* Blog Posts (neo4j.com/blog, Rik, Max, Mark, Kenny, Michael, Ian, Jim, ...)
+* Local Meetup Groups
+* Webinar/Talk Recordings
+
+=== Example Applications per Language, Stack and Driver
+
+To explain how to use Neo4j with different programming languages we provide an intro section per language, located in `examples/<language>/<language>.adoc`.
+
+To show how the different drivers for that language would be used/integrated we also provide small example projects/setups in the `examples/<language>/<driver>` directories.
+
+The example application is a simple, single-page movies app based on the Neo4j-Movies dataset that comes with the Neo4j-Server (`:play movies` in the Neo4j-Browser).
+
+See an example running http://my-neo4j-movies-app.herokuapp.com/[here on Heroku].
+
+The HTML page uses jQuery ajax requests to query 3 REST-Endpoints in the backend for `/search`, `/movie` and `/graph`
+
+* `/search` lists the movies found by title
+* `/movie` returns details for a single movie
+* `/graph` renders the full graph as a basic d3-visualization
+
+We currently have:
+
+* java/jdbc
+* java/server-extension
+* python/py2neo (Thanks Nigel & Mark)
+* python/neo4j-rest-client (Thanks Javier)
+* clojure/neocons (Thanks Rohit)
+* go/cq (Thanks Wes)
+* perl/neo4p (Thanks Mark)
+* php/neo4jphp (Thanks Josh)
+
+
+
