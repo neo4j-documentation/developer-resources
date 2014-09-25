@@ -16,10 +16,12 @@ You should have looked into the link:/what-is-neo4j/property-graph[property-grap
 [role=expertise]
 {level}
 
+////
 == TODO
 * polyglot setup, integration with relational db's
 * data import from relational (short section with link to data import)
 * guides / tips for relational database developers / DBA's
+////
 
 === Relational Databases
 
@@ -132,6 +134,47 @@ RETURN p.name, d.name
 You probably also wonder how you would connect from your programming language to a Neo4j Database?
 If you've installed and started Neo4j as a server on your system, you can interact with the database with the built-in Neo4j browser application.
 
+If you want to access Neo4j programmatically, you can do so with the integrated HTTP-APIs.
+With those you can:
+
+* POST one or more cypher statements with parameters per request to the server
+* Keep transactions open over multiple requests
+* Choose different result formats
+
+A sample http request would look like:
+
+[source,json]
+----
+curl -i -H accept:application/json -H content-type:application/json \
+-XPOST http://localhost:7474/db/data/transaction/commit \
+  -d '{"statements":[{"statement":"CREATE (p:Person {name:{name}}) RETURN p",
+       "parameters":{"name":"Daniel"}}]}'
+
+{"results":[{"columns":["p"],"data":[{"row":[{"name":"Daniel"}]}]}],"errors":[]}
+----
+
+In most cases you don't want to connect to Neo4j manually but you a driver or connector library for your stack or programming language.
+
+Fortunately there are drivers for Neo4j for almost every popular programming language.
+Most of the drivers are developed by our awesome community and try to mimic existing database driver idioms and approaches.
+
+For instance the Neo4j JDBC driver would be used like this:
+
+[source,java]
+----
+Connection con = DriverManager.getConnection("jdbc:neo4j://localhost:7474/");
+
+String query = 
+    "MATCH (:Person {name:{1}})-[:EMPLOYEE]-(d:Dept) RETURN d.name as dept";
+try (PreparedStatement stmt = con.prepareStatement(QUERY)) {
+    stmt.setString(1,"John");
+    ResultSet rs = stmt.executeQuery();
+    while(rs.next()) {
+        String department = rs.getString("dept");
+        ....
+    }
+}
+----
 
 [role=side-nav]
 === Recommended
@@ -139,6 +182,8 @@ If you've installed and started Neo4j as a server on your system, you can intera
 * link:/download[Install Neo4j]
 * link:../../examples[Develop with Neo4j]
 * link:../../examples/java/jdbc[JDBC example]
+* http://docs.neo4j.org/chunked/milestone/rest-api-transactional.html[Cypher HTTP Endpoint,role=docs]
+* link:/contrib[Neo4j Drivers List]
 
 === Importing Data from a Relational Database
 
@@ -146,15 +191,45 @@ If you have a good understanding what your graph model should look like, i.e. wh
 
 The easiest way to import data from your relational database is to create a CSV dump of either sindividual tables and join-tables or of a joined, denormalized representation.
 
-Then you can use that CSV file and
+Then you can take that CSV file and use Cypher's `LOAD CSV` power tool to:
+
+* Ingest the data, accessing columns by header name or offset
+* Convert values from strings to different formats and structures (`toFloat`, `split`, ...)
+* Skip rows to ignore
+* `MATCH` nodes based on attribute lookups 
+* `CREATE` or `MERGE` nodes and relationships with labels and attributes from the row data
+
+For Example:
+
+.persons.csv
+[source,csv]
+----
+name;email;dept
+"Lars Higgs";"lars@higgs.com";"IT-Department"
+"Maura Wilson";"maura@wilson.com";"Procurement"
+----
+
+[source,cypher]
+----
+LOAD CSV FROM 'file:///data/persons.csv' WITH HEADERS AS line
+FIELDTERMINATOR ";"
+MERGE (person:Person {email: line.email}) ON CREATE SET p.name = line.name
+MATCH (dep:Department {name:line.dept})
+CREATE (person)-[:EMPLOYEE]->(dept)
+----
+
+
+
+You can import multiple CSV files from one or more data sources to enrich your core domain model with other information that might add interesting insights and capabilities.
 
 [role=side-nav]
 === Recommended
 
 * link:../../working-with-data/guide-importing-data-and-etl["Data Import",role=guide]
-* http://docs.neo4j.org/chunked/milestone/query-load-csv.html["LOAD CSV",role=manual]
+* http://docs.neo4j.org/chunked/milestone/query-load-csv.html["LOAD CSV",role=docs]
 * http://watch.neo4j.org/video/90358900["Data Import Webinar",role=video]
 * http://jexp.de/blog/2014/06/load-csv-into-neo4j-quickly-and-successfully/["LOAD CSV Tips",role=blog]
+* http://worldcup.neo4j.org/the-world-cup-graph-domain-model/["World Cup Dataset",role=blog]
 
 // === Keeping Neo4j in Sync with a Relational Database
 

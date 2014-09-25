@@ -158,28 +158,6 @@ You should have looked into the <a href="/what-is-neo4j/property-graph">property
 
 </div>
 </div>
-<div class="sect1 "  >
-    
-<h3 id="_todo">TODO</h3>
-
-<div class="sectionbody row">
-<div class="columns medium-12">
-<div class="ulist">
-
-
-<ul>
-<li>
-polyglot setup, integration with relational db&#8217;s
-</li>
-<li>
-data import from relational (short section with link to data import)
-</li>
-<li>
-guides / tips for relational database developers / DBA&#8217;s
-</li>
-</ul>
-
-</div>
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_relational_databases">Relational Databases</h4>
@@ -425,6 +403,80 @@ RETURN p.name, d.name</code></pre>
 If you&#8217;ve installed and started Neo4j as a server on your system, you can interact with the database with the built-in Neo4j browser application.</p>
 </div>
 
+
+
+<div class="paragraph">
+<p>If you want to access Neo4j programmatically, you can do so with the integrated HTTP-APIs.
+With those you can:</p>
+</div>
+
+<div class="ulist">
+
+
+<ul>
+<li>
+POST one or more cypher statements with parameters per request to the server
+</li>
+<li>
+Keep transactions open over multiple requests
+</li>
+<li>
+Choose different result formats
+</li>
+</ul>
+
+</div>
+
+
+<div class="paragraph">
+<p>A sample http request would look like:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="json"><code>curl -i -H accept:application/json -H content-type:application/json \
+-XPOST http://localhost:7474/db/data/transaction/commit \
+  -d '{"statements":[{"statement":"CREATE (p:Person {name:{name}}) RETURN p",
+       "parameters":{"name":"Daniel"}}]}'
+
+{"results":[{"columns":["p"],"data":[{"row":[{"name":"Daniel"}]}]}],"errors":[]}</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>In most cases you don&#8217;t want to connect to Neo4j manually but you a driver or connector library for your stack or programming language.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Fortunately there are drivers for Neo4j for almost every popular programming language.
+Most of the drivers are developed by our awesome community and try to mimic existing database driver idioms and approaches.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>For instance the Neo4j JDBC driver would be used like this:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>Connection con = DriverManager.getConnection("jdbc:neo4j://localhost:7474/");
+
+String query =
+    "MATCH (:Person {name:{1}})-[:EMPLOYEE]-(d:Dept) RETURN d.name as dept";
+try (PreparedStatement stmt = con.prepareStatement(QUERY)) {
+    stmt.setString(1,"John");
+    ResultSet rs = stmt.executeQuery();
+    while(rs.next()) {
+        String department = rs.getString("dept");
+        ....
+    }
+}</code></pre>
+</div>
+</div>
 </div>
 <div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
     <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
@@ -442,6 +494,12 @@ If you&#8217;ve installed and started Neo4j as a server on your system, you can 
 </li>
 <li>
 <a href="../../examples/java/jdbc">JDBC example</a>
+</li>
+<li>
+<a href="http://docs.neo4j.org/chunked/milestone/rest-api-transactional.html" class="docs">Cypher HTTP Endpoint</a>
+</li>
+<li>
+<a href="/contrib">Neo4j Drivers List</a>
 </li>
 </ul>
 
@@ -466,7 +524,58 @@ If you&#8217;ve installed and started Neo4j as a server on your system, you can 
 
 
 <div class="paragraph">
-<p>Then you can use that CSV file and</p>
+<p>Then you can take that CSV file and use Cypher&#8217;s <code>LOAD CSV</code> power tool to:</p>
+</div>
+
+<div class="ulist">
+
+
+<ul>
+<li>
+Ingest the data, accessing columns by header name or offset
+</li>
+<li>
+Convert values from strings to different formats and structures (<code>toFloat</code>, <code>split</code>, &#8230;&#8203;)
+</li>
+<li>
+Skip rows to ignore
+</li>
+<li>
+<code>MATCH</code> nodes based on attribute lookups
+</li>
+<li>
+<code>CREATE</code> or <code>MERGE</code> nodes and relationships with labels and attributes from the row data
+</li>
+</ul>
+
+</div>
+
+
+<div class="paragraph">
+<p>For Example:</p>
+</div>
+
+<div class="listingblock">
+<div class="title">persons.csv</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="csv"><code>name;email;dept
+"Lars Higgs";"lars@higgs.com";"IT-Department"
+"Maura Wilson";"maura@wilson.com";"Procurement"</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>LOAD CSV FROM 'file:///data/persons.csv' WITH HEADERS AS line
+FIELDTERMINATOR ";"
+MERGE (person:Person {email: line.email}) ON CREATE SET p.name = line.name
+MATCH (dep:Department {name:line.dept})
+CREATE (person)-[:EMPLOYEE]-&gt;(dept)</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>You can import multiple CSV files from one or more data sources to enrich your core domain model with other information that might add interesting insights and capabilities.</p>
 </div>
 
 </div>
@@ -482,7 +591,7 @@ If you&#8217;ve installed and started Neo4j as a server on your system, you can 
 <a href="../../working-with-data/guide-importing-data-and-etl" class="guide">Data Import</a>
 </li>
 <li>
-<a href="http://docs.neo4j.org/chunked/milestone/query-load-csv.html" class="manual">LOAD CSV</a>
+<a href="http://docs.neo4j.org/chunked/milestone/query-load-csv.html" class="docs">LOAD CSV</a>
 </li>
 <li>
 <a href="http://watch.neo4j.org/video/90358900" class="video">Data Import Webinar</a>
@@ -490,13 +599,12 @@ If you&#8217;ve installed and started Neo4j as a server on your system, you can 
 <li>
 <a href="http://jexp.de/blog/2014/06/load-csv-into-neo4j-quickly-and-successfully/" class="blog">LOAD CSV Tips</a>
 </li>
+<li>
+<a href="http://worldcup.neo4j.org/the-world-cup-graph-domain-model/" class="blog">World Cup Dataset</a>
+</li>
 </ul>
 
 </div>
-</div>
-</div>
-</div>
-
 </div>
 </div>
 
