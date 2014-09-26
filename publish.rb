@@ -40,7 +40,7 @@ puts post.inspect
 
 
 if post
-  post_id = post['post_id'].to_i,
+  post_id = post['post_id'].to_i
   puts "Editing #{post_id}"
    wp.editPost(:blog_id => blog_id,
                :post_id => post_id,
