@@ -137,36 +137,30 @@
 
 
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us.
-</blockquote>
+We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us.</blockquote>
 </div>
+
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes.
-</blockquote>
+Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes.</blockquote>
 </div>
-
 
 <div class="label">Beginner</div>
 <hr/>
-
-
 
 <div class="paragraph">
 <p>To give you a head start when using Neo4j-Browser I wanted to share these quick tips for styling and querying.</p>
 </div>
 
-
-
 <div class="paragraph">
 <p><span class="image"><img src=".//howto_style.png" alt="howto_style" width="800"></span></p>
 </div>
-
-
 
 <div class="paragraph">
 <p>First of all, you have to <a href="http://neo4j.org/download">download</a>, unzip and start neo4j. If you have a JDK (Java7) installed and on the path it should look like this:</p>
@@ -184,22 +178,15 @@ http://localhost:7474/ is ready.</code></pre>
 </div>
 </div>
 
-<<<<<<< HEAD
-
-=======
->>>>>>> removing file - has its own folder now
 <div class="paragraph">
 <p>As told, we open the URL <a href="http://localhost:7474/">http://localhost:7474/</a> in our browser and can start working with Neo4j and its query language Cypher directly.</p>
 </div>
-
-
 
 <div class="paragraph">
 <p>If you want to learn more first, click on any of the helpful links show after startup, these are quick slide shows that introduce the different concepts quickly.</p>
 </div>
 
 <div class="ulist">
-
 
 <ul>
 <li>
@@ -215,61 +202,43 @@ http://localhost:7474/ is ready.</code></pre>
 <strong>The Movie Graph</strong> - a mini graph app <code>:play movie graph</code>
 </li>
 </ul>
-
 </div>
-
 
 <div class="paragraph">
-<p>But we want to get going with the visualization. So let&#8217;s import some data, query it and start styling. To do that, we run <code>:play movies</code>, click on the huge Cypher CREATE ... statement and
+<p>But we want to get going with the visualization. So let&#8217;s import some data, query it and start styling. To do that, we run <code>:play movies</code>, click on the huge Cypher <code>CREATE &#8230;</code> statement and
 run it using the triangular run button in the command line editor.</p>
 </div>
-
-
 
 <div class="paragraph">
 <p>After a few seconds the data is imported, but we&#8217;ll see only the lonely <em>Matrix</em> node that&#8217;s returned. We want to see more and that&#8217;s why go to the favorites tab on the left, indicated by a star and
 click on the <strong>Get Some Data</strong> entry, preferably on the green round run-button besides the title. This should give us a graph visualization to play with.</p>
 </div>
 
-
-
 <div class="paragraph">
-<p>But those nodes only show numbers! Now click on any red node that has ACTED_IN relationships pointing to it. These are Movie nodes. In the popup you&#8217;ll see the node label "Movie" on the top.
+<p>But those nodes only show numbers! Now click on any red node that has <code>ACTED_IN</code> relationships pointing to it. These are <code>Movie</code> nodes. In the popup you&#8217;ll see the node label "Movie" on the top.
 In the tab on the right, denoted with an "eye", you can set the styling parameters and property chosen for the displayed title.</p>
 </div>
-
-
 
 <div class="paragraph">
 <p><span class="image"><img src=".//style_node.jpg" alt="style_node"></span></p>
 </div>
 
-
-
 <div class="paragraph">
-<p>Play a bit with the styling options and do the same for the other nodes (labeled Person). The next step is styling relationships, just click on one (e.g. DIRECTED) and try it out.</p>
+<p>Play a bit with the styling options and do the same for the other nodes (labeled <code>Person</code>). The next step is styling relationships, just click on one (e.g. <code>DIRECTED</code>) and try it out.</p>
 </div>
-
-
 
 <div class="paragraph">
 <p><span class="image"><img src=".//style_relationship.jpg" alt="style_relationship"></span></p>
 </div>
-
-
 
 <div class="paragraph">
 <p>The whole visualization is powered by a concept called <strong>Graph Style Sheet</strong> or GRASS. You can access the style sheet with the link at the bottom of the styling popup.
 The resulting style renderer allows you to look at the style-sheet, download it or update it via drag-and-drop. You can also reset all styling with the "fire extinguisher".</p>
 </div>
 
-
-
 <div class="paragraph">
 <p><span class="image"><img src=".//style_sheet_grass.jpg" alt="style_sheet_grass"></span></p>
 </div>
-
-
 
 <div class="paragraph">
 <p>If you rather watch me performing all these things, here is the screencasts that explains it all in detail. Enjoy!</p>
@@ -277,10 +246,7 @@ The resulting style renderer allows you to look at the style-sheet, download it 
 
 <iframe src="//player.vimeo.com/video/97204829?color=ff9933" width="1000" height="600" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 </div>
-<<<<<<< HEAD
-=======
 </div></div>
->>>>>>> removing file - has its own folder now
 
 </div>
 </section>
