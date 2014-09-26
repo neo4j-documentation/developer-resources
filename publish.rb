@@ -29,7 +29,11 @@ wp = Rubypress::Client.new(:host => blog_id,
                            :username => username,
                            :password => password)
 
-post = wp.getPosts(:filter => {:post_type => 'page'}).select {|post| post['post_title'] == title}.first
+post = wp.getPosts(:filter => {:post_type => 'page'}).select do |post|
+  puts post['post_title']
+  puts title
+  post['post_title'] == title
+end.first
 content =         { :post_status  => "publish",
                     :post_date    => Time.now,
                     :post_content => content,
