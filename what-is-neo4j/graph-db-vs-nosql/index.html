@@ -142,13 +142,13 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us.
+This guide quickly explains how graph databases are related to other NoSQL databases.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes.
+You need no prior knowledge of other NoSQL stores, although it might be helpful to have read the guide on <a href="../graph-database">graph databases</a>.
 </blockquote>
 </div>
 
@@ -160,38 +160,31 @@ Nodes can be tagged with zero to many labels representing their different roles 
 <h3 class="title">Overview</h3>
 
 <ul class="sectlevel2">
-<li><a href="#__neo4j_is_a_nosql_database">(Neo4j) –[:IS_A]–&gt; (NoSQL Database)</a></li>
+<li><a href="#_neo4j_as_a_nosql_database">Neo4j as a NoSQL Database</a></li>
 
-<li><a href="#__a_graph_database_transforms_a_rdbms">(A Graph Database) –[:TRANSFORMS_A]–&gt; (RDBMS)</a></li>
-<li><a href="#__a_graph_database_relates_a_key_value_store">(A Graph Database) –[:RELATES_A]–&gt; (Key-Value Store)</a></li>
-<li><a href="#__a_graph_database_navigates_a_document_store">(A Graph Database) –[:NAVIGATES_A]–&gt; (Document Store)</a></li>
+<li><a href="#_uncover_the_graph_in_a_relational_database">Uncover the Graph in a Relational Database</a></li>
+<li><a href="#_relate_key_value_stores_with_graph_databases">Relate Key-Value Stores with Graph Databases</a></li>
+<li><a href="#_navigate_document_stores_with_graph_databases">Navigate Document Stores with Graph Databases</a></li>
 </ul>
 
 <hr>
 
 
 <div class="paragraph">
-<p>The NoSQL space is an interesting place, despite its unfitting name, which we see as "Not only SQL".
-It brings together many interesting solutions offering different data models and database systems.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Each one is suitable for different use cases and shapes of data.
+<p>The although somewhat vaguely named, the NoSQL ("Not only SQL") space brings together many interesting solutions offering different data models and database systems, each suitable for different use cases and shapes of data.
 With the advent of the NoSQL movement, the "one-size-fits-all" proposition of large relational systems was replaced by making conscious decisions for the right tool for the job.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>That also means that developers have to gain the necessary insight to make informed choices which approaches are best suited for the applications they work on.</p>
+<p>With this larger toolbox, developers have to gain the necessary insights and intuitions to decide which approaches are best suited for their particular applications.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Most NoSQL systems are aggregate oriented, providing only atomic operations within their natural aggregate which forms one dedicated view of your data.
+<p>Most NoSQL systems are aggregate oriented, providing only atomic operations within their natural aggregate to which forms only one dedicated view of your data.
 Other projections have to be computed crunching your data.
 Focusing on one aggregate at a time allows for easy sharding of bucketed data across a network of machines along the aggregate dimension, for instance the <strong>Document</strong> in Document Databases.</p>
 </div>
@@ -217,7 +210,7 @@ Known and trusted from relational systems, transactional guarantees protect upda
 <div class="title">NoSQL databases lack relationships</div>
 <blockquote>
 Most NO-SQL databases store sets of disconnected aggregates. <strong>This makes it difficult to use them for connected data and graphs.</strong><br>
-One well-known strategy for adding relationships to such stores is to embed an aggregate’s identifier inside the field belonging to another aggregate — effectively introducing foreign keys.<br>
+One well-known strategy for adding relationships to such stores is to embed an aggregate&#8217;s identifier inside the field belonging to another aggregate — effectively introducing foreign keys.<br>
 <strong>But this requires joining aggregates at the application level, which quickly becomes prohibitively expensive.</strong>
 </blockquote>
 <div class="attribution">
@@ -244,12 +237,12 @@ One well-known strategy for adding relationships to such stores is to embed an a
 </div>
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
-<h4 id="__neo4j_is_a_nosql_database">(Neo4j) –[:IS_A]–&gt; (NoSQL Database)</h4>
+<h4 id="_neo4j_as_a_nosql_database">Neo4j as a NoSQL Database</h4>
 
 
 
 <div class="paragraph">
-<p>Not only SQL, but modern choices which excel at answering different kinds of questions.</p>
+<p>With the advent of the NoSQL movement, businesses of all sizes have a variety of modern options from which to build solutions relevant to their use cases.</p>
 </div>
 
 <div class="ulist">
@@ -257,16 +250,16 @@ One well-known strategy for adding relationships to such stores is to embed an a
 
 <ul>
 <li>
-Average income? Ask a <strong>relational database</strong>.
+Calculating average income? Ask a <strong>relational database</strong>.
 </li>
 <li>
-Shopping cart? Use a <strong>Key-Value Store</strong>.
+Building a shopping cart? Use a <strong>key-value Store</strong>.
 </li>
 <li>
-Structured product information? Store as a <strong>Document</strong>.
+Storing structured product information? Store as a <strong>document</strong>.
 </li>
 <li>
-How did you get here? Follow a <strong>Graph</strong>.
+Describing how did a user got from point A to point B? Follow a <strong>graph</strong>.
 </li>
 </ul>
 
@@ -300,12 +293,12 @@ How did you get here? Follow a <strong>Graph</strong>.
 </div>
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
-<h4 id="__a_graph_database_transforms_a_rdbms">(A Graph Database) –[:TRANSFORMS_A]–&gt; (RDBMS)</h4>
+<h4 id="_uncover_the_graph_in_a_relational_database">Uncover the Graph in a Relational Database</h4>
 
 
 
 <div class="paragraph">
-<p>Reconnect the rows of tables in a <strong>Relational Database</strong> by uncovering all the relationships, and you’ll see a graph.
+<p>Connect the rows of tables in a <strong>Relational Database</strong> by uncovering all the relationships, and you&#8217;ll see a graph.
 Dumb JOIN tables are replaced by interesting relationships.</p>
 </div>
 
@@ -317,7 +310,7 @@ Dumb JOIN tables are replaced by interesting relationships.</p>
 
 
 <div class="paragraph">
-<p>Where a RDBMS is optimized for aggregated, highly structured data, Neo4j is optimized for highly connected heterogenuous data.</p>
+<p>Where a RDBMS is optimized for aggregated, highly structured data, Neo4j is optimized for highly connected heterogeneous data.</p>
 </div>
 
 <div class="imageblock">
@@ -338,7 +331,8 @@ Dumb JOIN tables are replaced by interesting relationships.</p>
 
 <div class="title">Relational databases also lack relationships</div>
 <blockquote>
-For several decades, developers have tried to accommodate connected, semi- structured datasets inside relational databases. But whereas relational databases were initially designed to codify paper forms and tabular structures — something they do exceedingly well — they struggle when attempting to model the ad hoc, exceptional relationships that crop up in the real world.<br>
+For several decades, developers have tried to accommodate connected, semi-structured datasets inside relational databases.
+But whereas relational databases were initially designed to codify paper forms and tabular structures&#8212;&#8203;something they do exceedingly well&#8212;&#8203;they struggle when attempting to model the ad hoc, exceptional relationships that crop up in the real world.<br>
 <strong>Ironically, relational databases deal poorly with relationships. Relationships do exist in the vernacular of relational databases, but only as a means of joining tables.</strong>
 </blockquote>
 <div class="attribution">
@@ -358,12 +352,12 @@ For several decades, developers have tried to accommodate connected, semi- struc
 </div>
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
-<h4 id="__a_graph_database_relates_a_key_value_store">(A Graph Database) –[:RELATES_A]–&gt; (Key-Value Store)</h4>
+<h4 id="_relate_key_value_stores_with_graph_databases">Relate Key-Value Stores with Graph Databases</h4>
 
 
 
 <div class="paragraph">
-<p>A <strong>Key-Value</strong> model is great and highly performant for lookups of huge amounts of simple or even complex values.</p>
+<p>The <strong>Key-Value</strong> model is great and highly performant for lookups of huge amounts of simple or even complex values.</p>
 </div>
 
 <div class="imageblock">
@@ -374,7 +368,7 @@ For several decades, developers have tried to accommodate connected, semi- struc
 
 
 <div class="paragraph">
-<p>When the values are themselves interconnected, you’ve got a graph.
+<p>When the values are themselves interconnected, you&#8217;ve got a graph.
 Neo4j lets you traverse quickly among all the connected values and find insights in the relationships.</p>
 </div>
 
@@ -386,12 +380,13 @@ Neo4j lets you traverse quickly among all the connected values and find insights
 </div>
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
-<h4 id="__a_graph_database_navigates_a_document_store">(A Graph Database) –[:NAVIGATES_A]–&gt; (Document Store)</h4>
+<h4 id="_navigate_document_stores_with_graph_databases">Navigate Document Stores with Graph Databases</h4>
 
 
 
 <div class="paragraph">
-<p>The structured hierarchy of a <strong>Document</strong> accommodates a lot of schema-free data that can easily be represented as a tree. Which is of course a graph but represents only one projection of your data.</p>
+<p>The structured hierarchy of a <strong>Document</strong> accommodates a lot of schema-free data that can easily be represented as a tree.
+Which is of course a graph but represents only one projection of your data.</p>
 </div>
 
 <div class="imageblock">
@@ -411,7 +406,8 @@ A graph data model lets more than one natural representation emerge dynamically 
 <img src="./as-document.png" alt="as document">
 </p>
 </div>
-</div></div>
+</div>
+</div>
 
 </div>
 </section>

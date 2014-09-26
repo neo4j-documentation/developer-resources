@@ -6,7 +6,7 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>Guide to importing data into Neo4j | Developer Resources | Neo4j Graph Database</title>
+         <title>LOAD CSV | Developer Resources | Neo4j Graph Database</title>
          <script type="text/javascript">
             var _kmq = _kmq || [];
             var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
@@ -123,12 +123,12 @@
                <article id="content" role="main">
                  <div class="row" style="padding: 10px 0 0;">
                    <div class="columns large-12" style="padding:10px 0 0;">
-                   <ul class="breadcrumbs"> <li><a href="/developer-resources">Developer Guides</a></li> <li><a href="../">Data Import</a></li> <li class="current"><a href="#">Guide to importing data into Neo4j</a></li> </ul>
+                   <ul class="breadcrumbs"> <li><a href="/developer-resources">Developer Guides</a></li> <li><a href="../">Guide</a></li> <li class="current"><a href="#">LOAD CSV</a></li> </ul>
                  </div>
                  </div>
                  <div class="row">
                    <div class="columns large-12">
-                   <h1 style="font-size:2.1rem;">Guide to importing data into Neo4j</h1>
+                   <h1 style="font-size:2.1rem;">LOAD CSV</h1>
                  </div>
                  </div>
                   <section class="row" style="padding:10px 0;">
@@ -137,275 +137,160 @@
 
 
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="quoteblock abstract">
-<div class="title">Goals</div>
-<blockquote style="padding-left: 0;">
-Existing data comes in many shapes and sizes and one of the most popular is a relational database. In this guide we&#8217;ll look at how we can export a Postgres data set into Neo4j.
-</blockquote>
-</div>
-<div class="quoteblock abstract">
-<div class="title">Prerequisites</div>
-<blockquote style="padding-left: 0;">
-You should have a basic understanding of the <a href="/what-is-neo4j/property-graph">property graph model</a> and have completed the <a href="../../build-a-graph-data-model/guide-intro-to-graph-modeling/index.html">modeling guide</a>. Having <a href="/download">downloaded</a> and installed Neo4j server helps you code along with the examples.
-</blockquote>
-</div>
-
-
-<div class="label">Beginner</div>
-<hr/>
-
-</div>
-</div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
-    
-<h4 id="_northwind_introduction">Northwind Introduction</h4>
-
 
 
 <div class="paragraph">
-<p>In this guide we&#8217;ll be using the <a href="https://code.google.com/p/northwindextended/downloads/detail?name=northwind.postgre.sql&amp;can=2&amp;q=">NorthWind data set</a> as our example. NorthWind is a popular data set used to demonstrate SQL and relational databases but the data is graphy enough to be interesting for us.</p>
+<p>Depending on the amount of data we&#8217;ll either want to use Cypher&#8217;s LOAD CSV command or the batch importer command line tool.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>The following is an entity relationship diagram of the data set:</p>
+<p>LOAD CSV has a smaller learning curve - only basic knowledge of cypher is required - and should therefore be your default tool of choice for small to medium data sets (CSV files of up to 1 million rows).</p>
 </div>
 
 
 
 <div class="paragraph">
-<p><span class="image"><img src=".//Northwind_diagram.jpg" alt="Northwind_diagram"></span></p>
+<p>If you need raw performance or are working with much larger CSV files then the batch importer is a more appropriate choice.</p>
 </div>
 
-</div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
-    
-<h4 id="_developing_a_graph_model">Developing a Graph Model</h4>
-
-
-
-<div class="paragraph">
-<p>There are a couple of rules of thumbs when deriving a graph model from a relational one which we can use to come up with our first cut:</p>
-</div>
-
-<div class="ulist">
-
-
-<ul>
-<li>
-A row is a node
-</li>
-<li>
-A table name is a label name
-</li>
-</ul>
-
-</div>
-
-
-<div class="paragraph">
-<p>For this data set the following graph model serves as a first iteration:</p>
-</div>
-
-
-
-<div class="paragraph">
-<p><span class="image"><img src=".//northwind_graph_simple.png" alt="northwind_graph_simple"></span></p>
-</div>
-
-<div class="sect3 "  >
-    
-<h5 id="_how_does_it_differ_to_the_relational_model">How does it differ to the relational model?</h5>
-
-<div class="ulist">
-
-
-<ul>
-<li>
-Graph should be more normalised. e.g. addresses have been denormalised in the Suppliers, Orders, Customers and Employees table
-</li>
-<li>
-No nulls in the graph model - in the relational one to track the employee hierarchy we have a null enttry in the 'ReportsTo' column if they don&#8217;t report to anybody
-</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
-    
-<h4 id="_exporting_the_data_to_csv">Exporting the Data to CSV</h4>
-
-
-
-<div class="paragraph">
-<p>Now that we know what we&#8217;d like our graph to look like we need to extract the data from Postgres so we can create it. The easiest way to do that is to export the appropriate tables in CSV format. Postgres' 'copy' command lets us execute a SQL query and write the result to a CSV file:</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="sql"><code>Copy (SELECT * FROM orders
-      left outer join customers ON customers."CustomerID" = orders."CustomerID"
-      left outer join employees ON employees."EmployeeID" = orders."EmployeeID"
-      left outer join order_details ON order_details."OrderID" = orders."OrderID"
-      left outer join products ON products."ProductID" = order_details."ProductID"
-      left outer join suppliers ON suppliers."SupplierID" = products."SupplierID"
-      left outer join categories ON categories."CategoryID" = products."CategoryID")
-      To '/tmp/customerDb.csv' With CSV header;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
-    
-<h4 id="_importing_the_data_using_cypher">Importing the Data using Cypher</h4>
-
-<div class="sect3 "  >
-    
-<h5 id="_indexes">Indexes</h5>
-
-
-
-<div class="paragraph">
-<p>Next we&#8217;ll create some indexes on the (label, property) pairs that we&#8217;re going to create in Neo4j.</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>create index on :Product(productId);
-create index on :Category(categoryId);
-create index on :Order(OrderId);
-create index on :Employee(employeeId);
-create index on :Supplier(supplierId);</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3 "  >
+<div class="sect4 "  >
     
 <h5 id="_load_csv">LOAD CSV</h5>
 
 
 
 <div class="paragraph">
-<p>After we&#8217;ve done that we&#8217;ll use Cypher&#8217;s <a href="http://docs.neo4j.org/chunked/stable/query-load-csv.html">LOAD CSV</a> command to transform the contents of the CSV file into a graph structure.</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>LOAD CSV WITH HEADERS FROM "file:/tmp/customerDb.csv" AS row
-
-MERGE (order:Order {orderId: row.OrderID})
-
-MERGE (product:Product {productId: row.ProductID})
-ON CREATE SET product.name = row.ProductName
-
-MERGE (supplier:Supplier {supplierId: row.SupplierID})
-ON CREATE SET supplier.companyName = row.SupplierCompanyName
-
-MERGE (employee:Employee {employeeId: row.EmployeeID})
-
-MERGE (category:Category {categoryId: row.CategoryID})
-ON CREATE SET category.name = row.CategoryName
-
-MERGE (employee)-[:SOLD]-&gt;(order)
-MERGE (order)-[:PRODUCT]-&gt;(product)
-MERGE (supplier)-[:SUPPLIES]-&gt;(product)
-MERGE (product)-[:PART_OF]-&gt;(category)</code></pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>A sample of the graph looks like this:</p>
-</div>
-
-
-
-<div class="paragraph">
-<p><span class="image"><img src=".//northwind_graph_sample.png" alt="northwind_graph_sample"></span></p>
-</div>
-
-
-
-<div class="paragraph">
-<p>We can now query the graph&#8230;&#8203;</p>
+<p>Here</p>
 </div>
 
 </div>
-</div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect4 "  >
     
-<h4 id="_querying_the_graph">Querying the Graph</h4>
+<h5 id="_batch_importer">Batch Importer</h5>
 
 
 
 <div class="paragraph">
-<p>One question we would love to answer is:</p>
+<p>Two options:</p>
 </div>
 
-<div class="sect3 "  >
+<div class="ulist">
+
+
+<ul>
+<li>
+Export tables in a simple way and write a pre processing script that transforms it into batch import format
+</li>
+<li>
+More complicated SQL script which returns batch import appropriate files
+</li>
+</ul>
+
+</div>
+
+
+<div class="paragraph">
+<p>Example from MDM &#8594; <a href="http://maxdemarzi.com/2012/02/28/batch-importer-part-2/" class="bare">http://maxdemarzi.com/2012/02/28/batch-importer-part-2/</a></p>
+</div>
+
+</div>
+<div class="sect1 "  >
     
-<h5 id="_which_employee_had_the_highest_cross_selling_count_of_which_product_with_chocolade">Which employee had the highest cross selling count of which product with 'Chocolade'</h5>
+<h3 id="_what_type_of_import_is_it">What type of import is it?</h3>
 
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (choc:Product {name:'Chocolade'})&lt;-[:PRODUCT]-(:Order)&lt;-[:SOLD]-(employee),
-      (employee)-[:SOLD]-&gt;()-[:PRODUCT]-&gt;(other:Product)
-RETURN employee.employeeId, other.name, count(*) as count
-ORDER BY count DESC
-LIMIT 5</code></pre>
+<div class="sectionbody row">
+<div class="columns medium-12">
+<div class="ulist">
+
+
+<ul>
+<li>
+Initial one off import (Batch)
+</li>
+<li>
+Ongoing updates (Transactional)
+</li>
+</ul>
+
 </div>
+</div>
+</div>
+
+</div>
+<div class="sect1 "  >
+    
+<h3 id="_what_tools_can_i_use">What tools can I use?</h3>
+
+<div class="sectionbody row">
+<div class="columns medium-12">
+<div class="ulist">
+
+
+<ul>
+<li>
+Cypher
+</li>
+<li>
+Java - batch importer, unmanaged extension
+</li>
+<li>
+ETL
+</li>
+<li>
+Custom e.g. load2neo
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="sect1 "  >
+    
+<h3 id="_issues">Issues</h3>
+
+<div class="sectionbody row">
+<div class="columns medium-12">
+<div class="ulist">
+
+
+<ul>
+<li>
+'expensive' index reads
+</li>
+<li>
+duplicate checking
+</li>
+<li>
+huge transaction sizes
+</li>
+<li>
+high volumes via Cypher
+</li>
+<li>
+Transactional mode
+</li>
+</ul>
+
 </div>
 
 
 <div class="paragraph">
-<p>And as we can see, employee number 1 was really busy.</p>
+<p>Existing Database / Existing Service &#8594; Intermediate Format &#8594; Neo4j</p>
 </div>
 
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 33%;">
-<col style="width: 33%;">
-<col style="width: 33%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">employee.employeeId</th>
-<th class="tableblock halign-left valign-top">other.name</th>
-<th class="tableblock halign-left valign-top">count</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Flotemysost</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">24</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Gorgonzola Telino</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">22</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Pavlova</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">22</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Camembert Pierrot</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">22</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Ikura</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">20</p></td>
-</tr>
-</tbody>
-</table>
+
+
+<div class="paragraph">
+<p>Generating cypher statements - works well for smaller data sets but not so well for larger ones</p>
 </div>
+
+</div>
+</div>
+
 </div>
 </div>
 

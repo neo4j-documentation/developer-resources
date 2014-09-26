@@ -142,13 +142,13 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-The goal of this guide is to walk you through the graph data modeling lifecycle for Neo4j.
+This guide is designed to walk you through the graph data modeling lifecycle of Neo4j. You will be introduced to the basic process of designing a graph data model that can answer a wide range of business questions across a variety of domains.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should have a firm understanding of the <a href="./property-graph">property graph data model</a> of Neo4j. You should understand the basics of Neo4j&#8217;s query language, <a href="./cypher">Cypher</a>.
+You should have a firm understanding of the Neo4j&#8217;s <a href="./property-graph">property graph data model</a>, and its query language, <a href="./cypher">Cypher</a>.
 </blockquote>
 </div>
 
@@ -182,12 +182,6 @@ You should have a firm understanding of the <a href="./property-graph">property 
 </ul>
 
 <hr>
-
-
-<div class="paragraph">
-<p>This guide will introduce you to graph data modeling for Neo4j. You will be introduced to the basic process in which one takes an arbitrary domain and designs a graph data model for answering a wide range of business questions.</p>
-</div>
-
 </div>
 </div>
 <div class="sect1 "  >
@@ -215,7 +209,7 @@ You should have a firm understanding of the <a href="./property-graph">property 
 
 
 <div class="paragraph">
-<p>The first step in creating a good graph data model is to describe your domain. Consider the following description of the connection between two people, Sally and John.</p>
+<p>Consider the following description of the connection between two people, Sally and John.</p>
 </div>
 
 <div class="quoteblock" style="margin: auto; width: 95%;">
@@ -245,7 +239,7 @@ Two <em>people</em>, <strong>John</strong> and <strong>Sally</strong>, are <u>fr
 
 
 <div class="paragraph">
-<p>We can take this statement and identify labels, nodes, and relationships.</p>
+<p>We can take this statement, identify components such as labels, nodes, and relationships, and use these to build our model.</p>
 </div>
 
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
@@ -255,7 +249,7 @@ Two <em>people</em>, <strong>John</strong> and <strong>Sally</strong>, are <u>fr
 
 
 <div class="paragraph">
-<p>The first entities that we&#8217;ll identify in our domain are the nodes. The Neo4j documentation describes nodes as:</p>
+<p>The first entity that we&#8217;ll identify in our domain are the nodes.</p>
 </div>
 
 <div class="quoteblock" style="margin: auto; width: 95%;">
@@ -324,7 +318,7 @@ Two people, <strong>John</strong> and <strong>Sally</strong>, are friends. Both 
 
 
 <div class="paragraph">
-<p>Which yields the nodes:</p>
+<p>Extracting the nodes:</p>
 </div>
 
 <div class="ulist">
@@ -374,7 +368,7 @@ Two people, <strong>John</strong> and <strong>Sally</strong>, are friends. Both 
 
 
 <div class="paragraph">
-<p>In the documentation, labels are described as:</p>
+<p>Now that we have an idea of what our nodes will be, we decide what labels (if any) to assign our nodes.</p>
 </div>
 
 <div class="quoteblock" style="margin: auto; width: 95%;">
@@ -389,7 +383,7 @@ Two people, <strong>John</strong> and <strong>Sally</strong>, are friends. Both 
 </div>
 
 <blockquote>
-A label is a named graph construct that is used to group nodes into sets; all nodes labeled with the same label belongs to the same set. Many database queries can work with these sets instead of the whole graph, making queries easier to write and more efficient. A node may be labeled with any number of labels, including none, making labels an optional addition to the graph.
+A label is a named graph construct that is used to group nodes into sets. All nodes labeled with the same label belongs to the same set. Many database queries can work with these sets instead of the whole graph, making queries easier to write and more efficient. A node may be labeled with any number of labels, including none, making labels an optional addition to the graph.
 </blockquote>
 <div class="attribution">
 <cite>docs.neo4j.org</cite><br>
@@ -413,7 +407,7 @@ A label is a named graph construct that is used to group nodes into sets; all no
 
 
 <div class="paragraph">
-<p>First we&#8217;ll start by identifying the roles of objects mentioned in the statement. We know that this statement is about two objects.</p>
+<p>First we&#8217;ll start by identifying the roles of objects (John, Sally, Graph Databases) mentioned in the statement. We know that this statement is about two different types of objects:</p>
 </div>
 
 <div class="quoteblock" style="margin: auto; width: 95%;">
@@ -443,7 +437,7 @@ Two <em>people</em>, John and Sally, are friends. Both John and Sally have read 
 
 
 <div class="paragraph">
-<p>We can conclude that there are two labels within this graph:</p>
+<p>Extracting the labels:</p>
 </div>
 
 <div class="ulist">
@@ -467,7 +461,7 @@ Two <em>people</em>, John and Sally, are friends. Both John and Sally have read 
 
 
 <div class="paragraph">
-<p>Now that we have identified both our nodes and labels, we can assign the labels to the nodes that they describe. For <strong>John</strong> and <strong>Sally</strong> we apply the role <em>Person</em>. For <strong>Graph Databases</strong> we apply the role <em>Book</em>.</p>
+<p>Now that we have identified both our nodes and labels, we can assign the labels to the nodes they describe. For <strong>John</strong> and <strong>Sally</strong> we apply the role <em>Person</em>. For <strong>Graph Databases</strong> we apply the role <em>Book</em>.</p>
 </div>
 
 <div class="imageblock">
@@ -532,13 +526,13 @@ Two <em>people</em>, John and Sally, are friends. Both John and Sally have read 
 
 
 <div class="paragraph">
-<p>For a <em>Person</em> label, we can see that these kinds of nodes can be connected by the <u>friend of</u> relationship.</p>
+<p>Pairs of nodes labeled <em>Person</em> can be connected to each other by the <u>friend of</u> relationship.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>For a <em>Book</em> label, we can see that a <em>Person</em> can be connected to these nodes by a <u>has read</u> relationship.</p>
+<p>Pairs of nodes labeled <em>Book</em> and <em>Person</em> can be connected to each other by a <u>has read</u> relationship.</p>
 </div>
 
 </div>
@@ -607,7 +601,7 @@ How old is John?
 Who is older, Sally or John?
 </li>
 <li>
-Who read the book Graph Databases first, Sally or John?
+Who read the book <em>Graph Databases</em> first, Sally or John?
 </li>
 </ul>
 
@@ -686,7 +680,7 @@ CREATE (john)-[:HAS_READ { rating: 5, on: 1359878400 }]-&gt;(gdb)</code></pre>
 
 
 <div class="paragraph">
-<p>Now that we have a sample dataset of our graph data model, we can translate our questions from earlier into queries that sufficiently answer them.</p>
+<p>Now that we have a sample dataset of our graph data model, we can translate our questions from earlier into queries.</p>
 </div>
 
 <div class="sect3 "  >
@@ -704,7 +698,7 @@ RETURN r.since as friends_since</code></pre>
 </div>
 <div class="sect3 "  >
     
-<h5 id="_what_is_the_average_rating_of_the_book_graph_databases">What is the average rating of the book Graph Databases?</h5>
+<h5 id="_what_is_the_average_rating_of_em_graph_databases_em">What is the average rating of <em>Graph Databases</em>?</h5>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
@@ -716,7 +710,7 @@ RETURN avg(r.rating) as average_rating</code></pre>
 </div>
 <div class="sect3 "  >
     
-<h5 id="_who_are_the_authors_of_the_book_graph_databases">Who are the authors of the book Graph Databases?</h5>
+<h5 id="_who_are_the_authors_of_em_graph_databases_em">Who are the authors of <em>Graph Databases</em>?</h5>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
@@ -763,7 +757,7 @@ LIMIT 1</code></pre>
 </div>
 <div class="sect3 "  >
     
-<h5 id="_who_read_the_book_graph_databases_first_sally_or_john">Who read the book Graph Databases first, Sally or John?</h5>
+<h5 id="_who_read_em_graph_databases_em_first_sally_or_john">Who read <em>Graph Databases</em> first, Sally or John?</h5>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">

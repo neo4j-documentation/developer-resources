@@ -139,7 +139,6 @@
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
-<<<<<<< HEAD
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
@@ -151,410 +150,6 @@ We live in a connected world. There are no isolated pieces of information, but r
 <blockquote style="padding-left: 0;">
 Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes.
 </blockquote>
-=======
-<div class="paragraph">
-<p>This friendly guide will introduce you to the Cypher query language, which is used by Neo4j.
-It was developed at Neo Technology for creating and querying graph data.</p>
-</div>
-<div class="paragraph">
-<p>If you want to keep a reference on your side while reading, please see the <a href="http://docs.neo4j.org/refcard/{neo4j-version}">Cypher Refcard</a>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_it_s_all_about_patterns">It&#8217;s all about Patterns</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Graphs thrive on patterns, each graph is a connected structure which consists of many different patterns.</p>
-</div>
-<div class="paragraph">
-<p>Patterns capture semantic information by describing how things relate.
-They tell you if <em>I KNOW you</em>, <em>an_Author WROTE a Book</em>, <em>a Person LIVES at a Place</em> or <em>an Actor ACTED_IN a Movie</em>.</p>
-</div>
-<div class="paragraph">
-<p>This kind of simple pattern typically describes how two entities are related.
-Combined with other patterns, this can represent complex domains and interesting use-cases.</p>
-</div>
-<div class="paragraph">
-<p>Small pattern structures are also easy for the human brain to handle.
-We are well versed in detecting patterns not only in our daily lives but also in data, when the data is presented visually.</p>
-</div>
-<div class="paragraph">
-<p>Cypher is all about patterns.
-They are used to describe graph structures you want to create or information you want to find.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_cypher_concepts">Cypher Concepts</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Cypher is a textual, declarative query language, much like SQL for relational databases, but for graphs.
-It doesn&#8217;t instruct the database to run certain operations but instead describes the things you want to create or find.
-Neo4j then figures out what&#8217;s the best way to do that.</p>
-</div>
-<div class="paragraph">
-<p>With Cypher, you describe graph patterns (circles and arrows for nodes and relationships) that you would usually draw on a whiteboard as symbolic, textual patterns.</p>
-</div>
-<div class="paragraph">
-<p>It uses ASCII-art to visualize the typical circles for nodes with parentheses surrounding a piece of information.</p>
-</div>
-<div class="paragraph">
-<p>To describe a node for a  "Movie" entity with a "title" and a "released"-year we would use a textual pattern like this:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>(matrix:Movie {title:"The Matrix", released:1997})</pre>
-</div>
-</div>
-
-<div class="paragraph">
-<p>The <code>Movie</code> label tags the otherwise untyped node as a movie and is prefixed by a colon to become a symbol: <code>:Movie</code>.
-The <code>matrix</code> identifier is just a name that we use to refer to this node within the statement later on.
-It is optional and only relevant in the scope of the statement; it&#8217;s not persisted.</p>
-</div>
-<div class="paragraph">
-<p>The freely chosen properties of that node, <code>title</code> and <code>released</code> are represented as a map (you might want to call it a dictionary or javascript-object like structure).
-They are listed as keys/value pairs within curly braces.</p>
-</div>
-<div class="paragraph">
-<p>To &#8220;draw&#8221; the arrow of your pattern, you would just use the appropriate symbols, which, in the simplest case is <code>-&#8594;</code>.
-If you have more information about that relationship, like a relationship type or properties on it, you can include them in square brackets.</p>
-</div>
-<div class="paragraph">
-<p>For the movies domain, this could be the <em>ACTED_IN</em> relationship.
-So a basic fact or pattern in this domain would be:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>(keanu:Person:Actor {name:"Keanu Reeves"}) -[role:ACTED_IN {roles : ["Neo"]}]-&gt; (matrix:Movie {title:"The Matrix"})</pre>
-</div>
-</div>
-
-<div class="paragraph">
-<p>Like with node labels, the relationship-type <code>ACTED_IN</code> is added as a symbol, prefixed with a colon: <code>:ACTED_IN</code>.
-As with nodes you can use identifiers, in this case <code>role</code>, to refer to the relationship in later parts of the statement.
-You use the same notation for relationship properties as for node properties.
-In this case we went with an array property.</p>
-</div>
-<div class="paragraph">
-<p>You can also assign the whole pattern to an identifier which then allows you to access each of the matched paths in the graph.
-This way you can for instance inspect them or use them in other expressions.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>path = (:Person)-[:ACTED_IN]-&gt;(:Movie)</pre>
-</div>
-</div>
-
-<div class="paragraph">
-<p>This path variable would contain 2 nodes and the connecting relationship for each such pattern found or created.
-There are a number of functions to access details of a path, including <code>nodes(path)</code>, <code>rels(path)</code>, and <code>length(path)</code>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_clauses">Clauses</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Cypher statements consist of individual <em>clauses</em> which are their building blocks.
-There are clauses that can create and match patterns in the graph but also filter, project, sort or paginate results or connect/compose partial statements.
-We will use Cypher clauses to compose more complex statements that express what we want to know or create.
-Neo4j then figures out how to achieve that in an efficient manner.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_creating_data">Creating Data</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>We&#8217;ll start by looking into the clause(s) that allow us to create data.</p>
-</div>
-<div class="paragraph">
-<p>To add data, we just use the patterns we already know.
-By providing patterns we can specify what graph structures, labels and attributes we would like to make part of our graph.</p>
-</div>
-<div class="paragraph">
-<p>Obviously the simplest clause is called <code>CREATE</code>.
-It will just go ahead and directly create the patterns that you specify.</p>
-</div>
-<div class="paragraph">
-<p>For the patterns we&#8217;ve looked at so far this could look like this:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (:Movie {title:"The Matrix",released:1997})</code></pre>
-</div>
-</div>
-
-<div class="paragraph">
-<p>If we execute this statement, Cypher returns the number of changes, in this case adding 1 node, 1 label and 2 properties.</p>
-</div>
-<div class="paragraph">
-<p>If case we also want to return the created data we can add a <code>RETURN</code> clause, which refers to the identifier we&#8217;ve assigned to our pattern elements.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (p:Person {name:"Keanu Reeves", born:1964})
-RETURN p</code></pre>
-</div>
-</div>
-
-<div class="paragraph">
-<p>If we want to create more than one element, we can separate them with commas or use multiple <code>CREATE</code> statements.</p>
-</div>
-<div class="paragraph">
-<p>We can of course also create more complex structures, like an <code>ACTED_IN</code> relationship with information about the character, or <code>DIRECTED</code> ones for the director.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (a:Person {name:"Tom Hanks", born:1956})-[r:ACTED_IN {roles:["Forrest"]}]-&gt;(m:Movie {title:"Forrest Gump",released:1994})
-CREATE (d:Person {name:"Robert Zemeckis", born:1951})-[:DIRECTED]-&gt;(m)
-RETURN a,d,r,m</code></pre>
-</div>
-</div>
-
-<div class="paragraph">
-<p>The movie graph sample in the Neo4j Browser is one example of a large set of <code>CREATE</code> statements that create a complete graph.</p>
-</div>
-<div class="paragraph">
-<p>In most cases, we want to connect new data to existing structures.
-This requires that we know how to find existing patterns in our graph data, which we will look at next.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_matching_patterns">Matching Patterns</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Matching patterns is a task for the <code>MATCH</code> statement.
-We pass the same patterns we&#8217;ve used so far to <code>MATCH</code> to describe what we&#8217;re looking for.
-It is a similar to <em>by example</em> queries, only that our examples also include the structures.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-A <code>MATCH</code> statement will search for the patterns we specify and return <strong>one row per successful pattern match</strong>.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>To find the data we&#8217;ve created so far, we can start looking for all nodes labeled with the <code>Movie</code> label.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (m:Movie)
-RETURN m</code></pre>
-</div>
-</div>
-
-<div class="paragraph">
-<p>This should show both <em>The Matrix</em> and <em>Forrest Gump</em>.</p>
-</div>
-<div class="paragraph">
-<p>We can also look for a specific person, like <em>Keanu Reeves</em>.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Person {name:"Keanu Reeves"})
-RETURN p</code></pre>
-</div>
-</div>
-
-<div class="paragraph">
-<p>Note that we only provide enough information to find the nodes, not all properties are required.
-In most cases you have key-properties like SSN, ISBN, emails, logins, geolocation or product codes to look for.</p>
-</div>
-<div class="paragraph">
-<p>We can also find more interesting connections, like for instance the movies titles that <em>Tom Hanks</em> acted in and the roles he played.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Person {name:"Tom Hanks"})-[r:ACTED_IN]-&gt;(m:Movie)
-RETURN m.title, r.roles</code></pre>
-</div>
-</div>
-
-<div class="paragraph">
-<p>In this case we only returned the properties of the nodes and relationships that we were interested in.
-You can access them everywhere via a dot notation <code>identifer.property</code>.</p>
-</div>
-<div class="paragraph">
-<p>Of course this only lists his role as <em>Forrest</em> in <em>Forrest Gump</em> because that&#8217;s all data that we&#8217;ve added.</p>
-</div>
-<div class="paragraph">
-<p>But now we know enough to connect new nodes to existing ones and can combine <code>MATCH</code> and <code>CREATE</code> to attach structures to the graph.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_attaching_structures">Attaching Structures</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>To extend the graph with new information, we first have to match the existing connection points and then attach the newly created nodes with relationships.
-Adding <em>Cloud Atlas</em> as new movie for <em>Tom Hanks</em> could be achieved like this:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Person {name:"Tom Hanks"})
-CREATE (m:Movie {title:"Cloud Atlas",released:2012})
-CREATE (p)-[r:ACTED_IN {roles:['Zachry']} ]-&gt;(m)
-RETURN p,r,m</code></pre>
-</div>
-</div>
-
-<div class="paragraph">
-<p>It is important to remember that we can assign identifiers to both nodes and relationships and use them later on, no matter if they were created or matched.
-It is possible to attach both node and relationship in a single <code>CREATE</code> clause.
-For readability it helps to split them up though.</p>
-</div>
-<div class="paragraph">
-<p>A tricky aspect of the combination of <code>MATCH</code> and <code>CREATE</code> is that we get one row per matched pattern.
-This causes subsequent create statements to be executed for each row.
-In many cases that is what you want.
-If that&#8217;s not intended, please move the create statement before the <code>MATCH</code>, change the cardinality of the query with means discussed later or use the <em>get or create</em> semantics of the next clause: <code>MERGE</code>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_completing_patterns">Completing Patterns</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Whenever we get data from external systems or are not sure if certain information already exists in the graph, we want to be able to express a repeatable (idempotent) update operation.
-In Cypher <code>MERGE</code> has this function.
-It acts like a combination of <code>MATCH</code> <em>or</em> <code>CREATE</code>, that checks for the existence of data first before creating it.
-Again: you specify a pattern with <code>MERGE</code> to be found or created.
-Usually, as with <code>MATCH</code> you only want to include the key property to look for in your core pattern.
-<code>MERGE</code> allows you to provide additional properties you want to set <code>ON CREATE</code>.</p>
-</div>
-<div class="paragraph">
-<p>If we wouldn&#8217;t know if our graph already contained <em>Cloud Atlas</em> we could merge it in again.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MERGE (m:Movie {title:"Cloud Atlas"}) ON CREATE SET m.released = 2012
-RETURN m</code></pre>
-</div>
-</div>
-
-<div class="paragraph">
-<p>In any case we get a result, either the data (potentially more than one row) that was already in the graph or a single, newly created <code>Movie</code> node.</p>
-</div>
-<div class="paragraph">
-<p>So foremost <code>MERGE</code> makes sure that you can&#8217;t create duplicate information or structures, but it comes with the cost of needing to check first for existing matches.
-Especially on large graphs it can be costly to scan a large set of labeled nodes for a certain property.
-You can alleviate some of that by creating supporting indexes or constraints, which we&#8217;ll discuss later.
-But it&#8217;s not for free, so whenever you&#8217;re sure to not create duplicate data use <code>CREATE</code> over <code>MERGE</code></p>
-</div>
-<div class="paragraph">
-<p><code>MERGE</code> can also assert that a relationship is only created once.
-For that to work you <strong>have to pass in</strong> both nodes from a previous pattern match.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (m:Movie {title:"Cloud Atlas"})
-MATCH (p:Person {name:"Tom Hanks"})
-MERGE (p)-[r:ACTED_IN]-&gt;(m) ON CREATE SET r.roles = ['Zachry']
-RETURN p,r,m</code></pre>
-</div>
-</div>
-
-<div class="paragraph">
-<p>In case the direction of your relationship is arbitrary, you can leave off the arrow tip.
-<code>MERGE</code> will then check for the relationship in either direction, and if not found create a new, directed relationship.</p>
-</div>
-<div class="paragraph">
-<p>If you choose to pass in only one node externally, <code>MERGE</code> offers an interesting functionality.
-It will then only match within the direct neighborhood of the provided node for the given pattern, and, if not found create it.
-This can come in very handy for creating tree structures.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (y:Year {year:2014})
-MERGE (y)&lt;-[:IN_YEAR]-(m10:Month {month:10})
-MERGE (y)&lt;-[:IN_YEAR]-(m11:Month {month:11})
-RETURN y,m10,m11</code></pre>
-</div>
-</div>
-
-<div class="paragraph">
-<p>Here the two months are not checked against globally but only in the context of the year <em>2014</em>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_filtering_results">Filtering Results</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>So far we&#8217;ve matched patterns in the graph and always returned all results we found.
-Quite often there are conditions in play for what we want to see.
-Similarly to <em>SQL</em> those filter conditions are expressed in a <code>WHERE</code> clause.
-This clause allows to use any number of boolean expressions (predicates) combined with <code>AND</code>, <code>OR</code> and <code>NOT</code>.
-The simplest predicates are comparisons, especially equality.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (m:Movie)
-WHERE m.title = "The Matrix"
-RETURN m</code></pre>
-</div>
-</div>
-
-<div class="paragraph">
-<p>More interesting are numeric comparisons, matching regular expressions and checking the existence of values within a collection.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Person)-[r:ACTED_IN]-&gt;(m:Movie)
-WHERE p.name =~ "K.+"
-   OR m.released &gt; 2000
-   OR "Neo" IN r.roles
-RETURN p,r,m</code></pre>
-</div>
-</div>
-
-<div class="paragraph">
-<p>One aspect that might be little surprising is that you can even use patterns as predicates.
-Where <code>MATCH</code> expands the number and shape of patterns matched, a pattern predicate restricts the current result set again, only allowing the paths to pass that satisfy these additional patterns as well (or <code>NOT</code>).</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Person)-[:ACTED_IN]-&gt;(m)
-WHERE NOT (p)-[:DIRECTED]-&gt;()
-RETURN p,m</code></pre>
-</div>
-</div>
-
-<div class="paragraph">
-<p>Here we find actors, because they sport an <code>ACTED_IN</code> relationship but then skip those that ever <code>DIRECTED</code> any movie.</p>
-</div>
-<div class="paragraph">
-<p>There are also more advanced ways of filtering like collection-predicates which we will look at later on.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_returning_results">Returning Results</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>So far we&#8217;ve returned only nodes, relationships, or paths directly via their identifiers.
-But the <code>RETURN</code> clause can actually return any number of expressions.
-But what are actually expressions in Cypher?</p>
-</div>
-<div class="paragraph">
-<p>The simplest expressions are literal values like numbers, strings and arrays as <code>[1,2,3]</code>, and maps like <code>{name:"Tom Hanks",born:1964, movies:["Forrest Gump", &#8230;], count:13}</code>.
-You can access individual properties of any node, relationship, or map with a dot-syntax like <code>n.name</code>.
-Individual elements or slices of arrays can be retrieved with subscripts like <code>names[0]</code> or <code>movies[1..-1]</code>.
-Each function evaluation like <code>length(array)</code>, <code>toInt("12")</code>, <code>substring("2014-07-01",0,4)</code>, or <code>coalesce(p.nickname,"n/a")</code> is also an expression.</p>
-</div>
-<div class="paragraph">
-<p>Predicates that you&#8217;d use in <code>WHERE</code> count as boolean expressions.</p>
->>>>>>> removing file - has its own folder now
 </div>
 
 
@@ -631,13 +226,10 @@ Each function evaluation like <code>length(array)</code>, <code>toInt("12")</cod
 
 </div>
 </div>
-<<<<<<< HEAD
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_create">Create</h4>
 
-=======
->>>>>>> removing file - has its own folder now
 
 
 <div class="paragraph">
@@ -655,20 +247,7 @@ Each function evaluation like <code>length(array)</code>, <code>toInt("12")</cod
 <div class="paragraph">
 <p><a href="#CYPHER">:help Cypher</a>, <a href="#CREATE">:help CREATE</a></p>
 </div>
-<<<<<<< HEAD
 
-=======
-<div class="listingblock">
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (:Person)
-RETURN count(*) as people</code></pre>
-</div>
-</div>
-
-<div class="paragraph">
-<p>Please note that <code>NULL</code> values are skipped during aggregation.
-For aggregating only unique values use <code>DISTINCT</code>, like in <code>count(DISTINCT role)</code>.</p>
->>>>>>> removing file - has its own folder now
 </div>
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
@@ -707,21 +286,9 @@ For aggregating only unique values use <code>DISTINCT</code>, like in <code>coun
 <h5 id="_find_the_actor_named_tom_hanks">Find the actor named "Tom Hanks"&#8230;&#8203;</h5>
 
 <div class="listingblock">
-<<<<<<< HEAD
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom {name: "Tom Hanks"})
 RETURN tom</code></pre>
-=======
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (actor:Person)-[:ACTED_IN]-&gt;(movie:Movie)&lt;-[:DIRECTED]-(director:Person)
-RETURN actor,director,count(*) as collaborations</code></pre>
-</div>
-</div>
-
-<div class="paragraph">
-<p>Frequently you want to sort and paginate after aggregating a <code>count(x)</code>.</p>
-</div>
->>>>>>> removing file - has its own folder now
 </div>
 </div>
 </div>
@@ -730,20 +297,9 @@ RETURN actor,director,count(*) as collaborations</code></pre>
 <h5 id="_find_the_movie_with_title_cloud_atlas">Find the movie with title "Cloud Atlas"&#8230;&#8203;</h5>
 
 <div class="listingblock">
-<<<<<<< HEAD
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (cloudAtlas {title: "Cloud Atlas"})
 RETURN cloudAtlas</code></pre>
-=======
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (a:Person)-[:ACTED_IN]-&gt;(m:Movie)
-RETURN a,count(*) as appearances
-ORDER BY appearances DESC
-LIMIT 10;</code></pre>
-</div>
-</div>
-
->>>>>>> removing file - has its own folder now
 </div>
 </div>
 </div>
@@ -757,29 +313,6 @@ LIMIT 10;</code></pre>
 RETURN people.name LIMIT 10</code></pre>
 </div>
 </div>
-<<<<<<< HEAD
-=======
-
-<div class="paragraph">
-<p>The lists created by collect can either be used from the client consuming the Cypher results or directly within a statement with any of the collection functions or predicates.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_building_larger_statements">Building Larger Statements</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_combining_statements_with_union">Combining statements with UNION</h3>
-<div class="paragraph">
-<p>A Cypher statement is usually quite compact.
-Expressing references between nodes as visual patterns makes them easy to understand.</p>
-</div>
-<div class="paragraph">
-<p>If you want to combine the results of two statements that have the same result structure, you can use <code>UNION [ALL]</code>.</p>
-</div>
-<div class="paragraph">
-<p>For instance if you want to list both actors and directors without using the alternative relationship-type syntax <code>()-[:ACTED_IN|:DIRECTED]&#8594;()</code> you can do this:</p>
->>>>>>> removing file - has its own folder now
 </div>
 <div class="sect3 "  >
     
@@ -791,7 +324,6 @@ Expressing references between nodes as visual patterns makes them easy to unders
 WHERE nineties.released &gt; 1990 AND nineties.released &lt; 2000
 RETURN nineties.title</code></pre>
 </div>
-
 </div>
 </div>
 </div>
@@ -834,19 +366,6 @@ RETURN nineties.title</code></pre>
 RETURN tom,tomHanksMovies</code></pre>
 </div>
 </div>
-<<<<<<< HEAD
-=======
-
-<div class="paragraph">
-<p>You can also access individual elements or slices of a list quickly with <code>list[1]</code> or <code>list[5..-5]</code>.
-Other functions to access parts of a list are <code>head(list)</code>, <code>tail(list)</code> and <code>last(list)</code>.</p>
-</div>
-<div class="sect2">
-<h3 id="_list_predicates">List predicates</h3>
-<div class="paragraph">
-<p>When using lists and arrays in comparisons you can use predicates like <code>value IN list</code> or <code>any(x IN list WHERE x = value)</code>.
-There are list predicates to satisfy conditions for <code>all</code>, <code>any</code>, <code>none</code> and <code>single</code> elements.</p>
->>>>>>> removing file - has its own folder now
 </div>
 <div class="sect3 "  >
     
@@ -857,7 +376,6 @@ There are list predicates to satisfy conditions for <code>all</code>, <code>any<
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (cloudAtlas {title: "Cloud Atlas"})&lt;-[:DIRECTED]-(directors)
 RETURN directors.name</code></pre>
 </div>
-
 </div>
 </div>
 <div class="sect3 "  >
@@ -870,45 +388,23 @@ RETURN directors.name</code></pre>
 RETURN tom, m, coActors</code></pre>
 </div>
 </div>
-<<<<<<< HEAD
-=======
-
-<div class="paragraph">
-<p>In a graph-query you can filter or aggregate collected values instead or work on array properties.</p>
->>>>>>> removing file - has its own folder now
 </div>
 <div class="sect3 "  >
     
 <h5 id="_how_people_are_related_to_cloud_atlas">How people are related to "Cloud Atlas"&#8230;&#8203;</h5>
 
 <div class="listingblock">
-<<<<<<< HEAD
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (people:Person)-[relatedTo]-(:Movie {title: "Cloud Atlas"})
 RETURN people.name, Type(relatedTo), relatedTo</code></pre>
-=======
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (m:Movie)&lt;-[r:ACTED_IN]-(a:Person)
-WITH m.title as movie, collect({name: a.name, roles: r.roles}) as cast
-RETURN movie, extract(c2 IN filter(c1 IN cast WHERE c1.name =~ "A.*") | c2.roles )</code></pre>
-</div>
-</div>
-
-<div class="paragraph">
-<p>Cypher offers to create and consume more complex data structures out of the box.
-As already mentioned you can create literal lists (<code>[1,2,3]</code>) and maps (<code>{name: value}</code>) within your statement.</p>
->>>>>>> removing file - has its own folder now
 </div>
 </div>
 </div>
 </div>
-<<<<<<< HEAD
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_solve">Solve</h4>
 
-=======
->>>>>>> removing file - has its own folder now
 
 
 <div class="paragraph">
@@ -937,66 +433,12 @@ As already mentioned you can create literal lists (<code>[1,2,3]</code>) and map
 <h5 id="_movies_and_actors_up_to_3_hops_away_from_kevin_bacon">Movies and actors up to 3 "hops" away from Kevin Bacon</h5>
 
 <div class="listingblock">
-<<<<<<< HEAD
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (bacon:Person {name:"Kevin Bacon"})-[*1..3]-(hollywood)
 RETURN DISTINCT hollywood</code></pre>
-=======
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (a:Person)-[:ACTED_IN]-&gt;(m:Movie)&lt;-[:ACTED_IN]-(colleague:Person)
-WITH colleague, count(*) as frequency, collect(distinct m) as movies
-ORDER BY frequency DESC
-LIMIT 5
-UNWIND movies as m
-MATCH (m)&lt;-[:ACTED_IN]-(a)
-RETURN m.title as movie, collect(a.name) as cast</code></pre>
-</div>
-</div>
-
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_indexes_and_constraints">Indexes and Constraints</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Labels allow you to group nodes, and add indexes or constraints to them.
-Adding an index gives fast lookups for starting nodes in the graph.</p>
-</div>
-<div class="sect2">
-<h3 id="_lookup_indexes">Lookup Indexes</h3>
-<div class="paragraph">
-<p>In general, for a graph query to run fast, you don&#8217;t need indexes, you only need them to find your starting points.
-After that initial lookups you rely on the in-graph structures and first class citizenship of relationships in the graph database to achieve high performance.</p>
-</div>
-<div class="paragraph">
-<p>You would create an index like this: <code>CREATE INDEX ON :Movie(title)</code></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_unique_constraints">Unique Constraints</h3>
-<div class="paragraph">
-<p>You can also specify unique constraints that guarantee uniqueness of a certain property on nodes with a specific label.</p>
-</div>
-<div class="paragraph">
-<p>These constraints are also used by the <code>MERGE</code> clause to make certain that a node only exists once.</p>
-</div>
-<div class="paragraph">
-<p>A constraint definition would look like this: <code>CREATE CONSTRAINT ON (p:Person) ASSERT p.name IS UNIQUE</code>.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_loading_data">Loading Data</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>As you&#8217;ve seen you can not only query data expressively but also create data with Cypher statements.</p>
->>>>>>> removing file - has its own folder now
-</div>
-</div>
-</div>
-<<<<<<< HEAD
 <div class="sect3 "  >
     
 <h5 id="_bacon_path_the_shortest_path_of_any_relationships_to_meg_ryan">Bacon path, the shortest path of any relationships to Meg Ryan</h5>
@@ -1007,22 +449,6 @@ After that initial lookups you rely on the in-graph structures and first class c
   (bacon:Person {name:"Kevin Bacon"})-[*]-(meg:Person {name:"Meg Ryan"})
 )
 RETURN p</code></pre>
-=======
-
-<div class="listingblock">
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>UNWIND {movies} as movie
-MERGE (m:Movie {title:movie.title}) ON CREATE SET m.released = movie.released
-FOREACH (role IN movie.cast |
-   MERGE (a:Person {name:role.actor.name}) ON CREATE SET a.born = role.actor.born
-   MERGE (a)-[:ACTED_IN {roles:role.characters}]-&gt;(m)
-)</code></pre>
-</div>
-</div>
-
-</div>
-</div>
->>>>>>> removing file - has its own folder now
 </div>
 </div>
 </div>
@@ -1032,50 +458,9 @@ FOREACH (role IN movie.cast |
 <h4 id="_clean_up">Clean up</h4>
 
 
-<<<<<<< HEAD
 
-=======
-<<<<<<< HEAD
->>>>>>> removing file - has its own folder now
 <div class="paragraph">
 <p>When you&#8217;re done experimenting, you can remove the movie data set.</p>
-=======
-LOAD CSV WITH HEADERS FROM "http://docs.neo4j.org/chunked/stable/csv/import/roles.csv" AS line
-MATCH (m:Movie {id:line.movieId})
-MATCH (a:Person {id:line.personId})
-CREATE (a)-[:ACTED_IN {roles:[line.role]}]-&gt;(m);</code></pre>
-</div>
-</div>
-
-<div class="paragraph">
-<p>If your file contains denormalized data, you can either run the same file with multiple passes and simple operations as shown above or you might have to use MERGE to create entities uniquely.</p>
-</div>
-<div class="paragraph">
-<p>For our use-case we can import the data using a CSV structure like this:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="csv"><code>title;released;actor;born;characters
-Back to the Future;1985;Michael J. Fox;1961;Marty McFly
-Back to the Future;1985;Christopher Lloyd;1938;Dr. Emmet Brown
-...</code></pre>
-</div>
-</div>
-
-<div class="listingblock">
-<div class="content">
-<pre class="code programlisting cm-s-neo" data-lang="cypher"><code>LOAD CSV WITH HEADERS FROM "http://server/movie_actor_roles.csv" AS line FIELDTERMINATOR ";"
-MERGE (m:Movie {title:line.title}) ON CREATE SET m.released = toInt(line.released)
-MERGE (a:Person {name:line.actor}) ON CREATE SET a.born = toInt(line.born)
-MERGE (a)-[:ACTED_IN {roles:split(line.characters,",") }]-&gt;(m)</code></pre>
-</div>
-</div>
-
-<div class="paragraph">
-<p>If you import a large amount of data (more than 10000 rows), it is recommended to prefix your <code>LOAD CSV</code> clause with a <code>PERIODIC COMMIT</code> hint,
-which allows Cypher to regularly commit the import transactions to avoid memory churn for large transaction-states.</p>
-</div>
->>>>>>> removing file - has its own folder now
 </div>
 
 <div class="olist NOTE">
@@ -1116,12 +501,6 @@ This will remove all Person and Movie nodes!
 OPTIONAL MATCH (a)-[r1]-(), (m)-[r2]-()
 DELETE a,r1,m,r2</code></pre>
 </div>
-<<<<<<< HEAD
-=======
-
-<div class="paragraph">
-<p>In the payload you can add as many "statement" objects in the "statements" list.</p>
->>>>>>> removing file - has its own folder now
 </div>
 </div>
 <div class="sect3 "  >
@@ -1134,9 +513,9 @@ DELETE a,r1,m,r2</code></pre>
 RETURN count(*)</code></pre>
 </div>
 </div>
-
 </div>
-</div></div>
+</div>
+</div>
 
 </div>
 </section>

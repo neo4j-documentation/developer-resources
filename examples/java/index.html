@@ -137,37 +137,90 @@
 
 
 <div id="content">
-<div class="sect1 "  >
+<div id="preamble">
+<div class="sectionbody">
+<div class="quoteblock abstract">
+<div class="title">Goals</div>
+<blockquote style="padding-left: 0;">
+If you are a Java developer, you should find enough information to get you started with Neo4j. While this guide is not comprehensive it will introduce the different APIs and link to the relevant resources.
+</blockquote>
+</div>
+<div class="quoteblock abstract">
+<div class="title">Prerequisites</div>
+<blockquote style="padding-left: 0;">
+You should be familiar with <a href="../../what-is-neo4j/graph-database">graph database concepts</a> and the property graph model. You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="../../cypher-query-language">Cypher Query language</a>. And you should have an JDK 7 ready and your IDE up and running.
+</blockquote>
+</div>
+
+
+<div class="label">Intermediate</div>
+<hr/>
+
+<div class="toc">
+<h3 class="title">Overview</h3>
+
+<ul class="sectlevel2">
+<li><a href="#_neo4j_for_java_developers">Neo4j for Java Developers</a></li>
+<li><a href="#_the_example_project">The Example Project</a></li>
+<li><a href="#_using_neo4j_server_with_jdbc">Using Neo4j Server with JDBC</a></li>
+<li><a href="#_extending_neo4j_server_with_a_server_extension">Extending Neo4j Server with a Server Extension</a></li>
+<li><a href="#_using_spring_data_neo4j">Using Spring Data Neo4j</a></li>
+
+</ul>
+
+<hr>
+</div>
+</div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
     
-<h3 id="_neo4j_java_examples">Neo4j Java examples</h3>
+<h4 id="_neo4j_for_java_developers">Neo4j for Java Developers</h4>
 
-<div class="sectionbody row">
-<div class="columns medium-12">
-<div class="paragraph">
-<p>Welcome to Neo4j. For a Java or JVM-language developer, Neo4j offers a rich set of integration possibilities. Make sure to have looked at our information on graph databases and Neo4j in general. You should also check out our graph query language Cypher which makes it very easy to get going regardless of the development platform.</p>
-</div>
+
 
 <div class="paragraph">
-<p>Neo4j comes in two flavors. The <a href="http://neo4j.com/download/">standalone Neo4j-Server</a> can be installed on any machine and then accessed via its REST API. You can then use whatever REST-library you choose for any JVM language. The dedicated Neo4j drivers go beyond that by offering comprehensive APIs for integrating with graph based applications.</p>
+<p>Welcome to Neo4j. For a Java or JVM-language developer, Neo4j offers a rich set of integration possibilities.</p>
 </div>
 
-<div class="paragraph">
-<p>But you can also run <a href="http://docs.neo4j.org/chunked/snapshot/tutorials-java-embedded.html">Neo4j embedded in your JVM process</a>, much like HSQL or Derby. This is great for unit testing, but also for high performance / no-network setups. If you use Neo4j embedded you can use the Neo4j Core-API directly. Besides an object oriented approach to the graph database, working with Nodes, Relationships and Paths, it also offers highly customizable high-speed traversal- and graph-algorithm implementations. You can also choose from any useful wrapping drivers that exist either for specific programming languages or that add interesting functionality.</p>
-</div>
+
 
 <div class="paragraph">
-<p>One example is <a href="http://projects.spring.io/spring-data-neo4j/">Spring Data Neo4j</a> which integrates tightly with the <a href="http://spring.io/">SpringFramework</a> and offers Object-Graph mapping on top of Neo4j. Just to tease your interest - there are hundreds of open source Neo4j-related ecosystem projects, example applications and tutorials that can spark new ideas and possibilities.</p>
+<p>Neo4j comes in two flavors.
+The standalone Neo4j-Server can be installed on any machine and then accessed via its HTTP API.
+You can use whatever REST-library you choose for any JVM language.
+The dedicated Neo4j drivers go beyond that by offering comprehensive APIs for integrating with graph based applications.</p>
 </div>
 
+
+
 <div class="paragraph">
-<p>As a JVM developer you are also on the bright side when it comes to pouring large amounts of data into Neo4j. With its non-transactional batch-insertion facilities it can ingest millions of nodes and relationships in just seconds.</p>
+<p>But you can also run <a href="http://docs.neo4j.org/chunked/snapshot/tutorials-java-embedded.html">Neo4j embedded in your JVM process</a>, much like HSQL or Derby.
+This is great for unit testing, but also for high performance / no-network setups.
+If you use Neo4j embedded you can use the Neo4j Core-Java-API directly.
+Besides an object oriented approach to the graph database, working with Nodes, Relationships and Paths, it also offers highly customizable high-speed traversal- and graph-algorithm implementations.
+You can also choose from any useful drivers wrapping that API, which exist for either for specific programming languages or that add interesting functionality.</p>
 </div>
+
+
+
+<div class="paragraph">
+<p>One example is <a href="http://projects.spring.io/spring-data-neo4j/">Spring Data Neo4j</a> which integrates tightly with the <a href="http://spring.io/">SpringFramework</a> and offers Object-Graph mapping on top of Neo4j.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>As a JVM developer you are also on the bright side when it comes to inserting large amounts of data into Neo4j.
+With its non-transactional, low-level batch-insertion API it can ingest millions of nodes and relationships in just seconds.</p>
+</div>
+
+
 
 <div class="paragraph">
 <p>Here are two guides to get you started:</p>
 </div>
 
 <div class="ulist">
+
 
 <ul>
 <li>
@@ -177,10 +230,128 @@
 <a href="extension/index.html">a Java-based Neo4j Server extensiontypo</a>
 </li>
 </ul>
+
 </div>
 </div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
+    
+<h4 id="_the_example_project">The Example Project</h4>
+
+
+
+<div class="paragraph">
+<p>You can find the example projects for Java (and other languages) on the [GitHub repository] for the Neo4j developer resources.
+Feel free to check them out.</p>
 </div>
 
+</div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
+    
+<h4 id="_using_neo4j_server_with_jdbc">Using Neo4j Server with JDBC</h4>
+
+
+
+<div class="paragraph">
+<p>Being a Java developer you&#8217;re probably familiar with JDBC as a way to work with relational databases, either directly or via abstractions like Spring&#8217;s <code>JDBCTemplate</code> or MyBatis.
+Also many tools for ETL, Business Intelligence and data management use JDBC drivers to interac</p>
+</div>
+
+</div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
+    
+<h4 id="_extending_neo4j_server_with_a_server_extension">Extending Neo4j Server with a Server Extension</h4>
+
+
+
+<div class="paragraph">
+<p>A great way of accessing the high performance graph database directly from your Java code is to write a Neo4j Server extension.
+Then you get the double benefit of easy deployment and high performance database access.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>A Server extension provides a Jersey JAX-RS REST endpoint with a protocol and granularity that you control, you use it to send and receive datastructures of your domain.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>After declaring the dependencies to Neo4j and Neo4j-Server-APIs you can create REST-resources that are deployed by Jersey at startup.
+Within those resources you can get the <code>GraphDatabaseService</code> and <code>ExecutionEngine</code> injected and use all Java APIs as well as executing Cypher directly.
+The path-finding and traversal APIs are also available.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>The results of your graph operations are then collected and rendered as the format you want to expose, e.g. JSON, XML, plain text or binary.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>The <a href="./extension">example project</a> shows how you would do that for our movie application endpoints.</p>
+</div>
+
+</div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
+    
+<h4 id="_using_spring_data_neo4j">Using Spring Data Neo4j</h4>
+
+
+
+<div class="paragraph">
+<p>To use Neo4j with Spring Data Neo4j, you&#8217;d add the necessary dependency to your build configuration, e.g. <code>org.springframework.data:spring.data.neo4j:3.2.0.RELEASE</code>.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>After setting up a simple Java based configuration, and annotating your <code>@Node-</code> and <code>@RelationshipEntity`s, you can use the `Neo4jTemplate</code> to access Neo4j APIs and object graph mapping functionality.
+Alternatively you can leverage the convenient Spring-Data repositories to get interface based DAO implementations injected into your Spring Components.</p>
+</div>
+
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title label">Note</div>
+</td>
+<td class="content">
+The current version of Spring Data Neo4j works best with an embedded Neo4j database.
+To achieve high-performance Neo4j-Server integration move your SDN persistence layer into an Server Extension.
+</td>
+</tr>
+</table>
+</div>
+
+
+<div class="paragraph">
+<p>See the <a href="./spring-data-neo4j">example project with Spring Data Neo4j</a> for further details.</p>
+</div>
+
+</div>
+<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<h2 id="_further_reading">Further Reading</h2>
+</li>
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="./spring-data-neo4j">Spring Data Neo4j Example Project</a>
+</li>
+<li>
+<a href="http://projects.spring.io/spring-data-neo4j">Spring Data Neo4j Project</a>
+</li>
+<li>
+<a href="http://www.youtube.com/watch?v=ZfbJ1ZJdb_A" class="video">Webinar Spring Boot &amp; SDN</a>
+</li>
+</ul>
+
+</div>
 </div>
 </div>
 
