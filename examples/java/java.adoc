@@ -1,0 +1,92 @@
+= Neo4j Java examples
+:level: Intermediate
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 2
+
+.Goals
+[abstract]
+If you are a Java developer, you should find enough information to get you started with Neo4j. While this guide is not comprehensive it will introduce the different APIs and link to the relevant resources.
+
+.Prerequisites
+[abstract]
+You should be familiar with link:../../what-is-neo4j/graph-database[graph database concepts] and the property graph model. You should have link:/download[installed Neo4j] and made yourself familiar with our link:../../cypher-query-language[Cypher Query language]. And you should have an JDK 7 ready and your IDE up and running.
+
+[role=expertise]
+{level}
+
+toc::[]
+
+=== Neo4j for Java Developers
+
+Welcome to Neo4j. For a Java or JVM-language developer, Neo4j offers a rich set of integration possibilities. 
+
+Neo4j comes in two flavors. 
+The standalone Neo4j-Server can be installed on any machine and then accessed via its HTTP API. 
+You can use whatever REST-library you choose for any JVM language. 
+The dedicated Neo4j drivers go beyond that by offering comprehensive APIs for integrating with graph based applications.
+
+But you can also run http://docs.neo4j.org/chunked/snapshot/tutorials-java-embedded.html[Neo4j embedded in your JVM process], much like HSQL or Derby. 
+This is great for unit testing, but also for high performance / no-network setups. 
+If you use Neo4j embedded you can use the Neo4j Core-Java-API directly. 
+Besides an object oriented approach to the graph database, working with Nodes, Relationships and Paths, it also offers highly customizable high-speed traversal- and graph-algorithm implementations. 
+You can also choose from any useful drivers wrapping that API, which exist for either for specific programming languages or that add interesting functionality.
+
+One example is http://projects.spring.io/spring-data-neo4j/[Spring Data Neo4j] which integrates tightly with the http://spring.io/[SpringFramework] and offers Object-Graph mapping on top of Neo4j. 
+
+As a JVM developer you are also on the bright side when it comes to inserting large amounts of data into Neo4j. 
+With its non-transactional, low-level batch-insertion API it can ingest millions of nodes and relationships in just seconds.
+
+
+Here are two guides to get you started:
+
+* link:jdbc/index.html[JDBC]
+* link:extension/index.html[a Java-based Neo4j Server extensiontypo]
+
+=== The Example Project
+
+You can find the example projects for Java (and other languages) on the [GitHub repository] for the Neo4j developer resources.
+Feel free to check them out.
+
+=== Using Neo4j Server with JDBC
+
+Being a Java developer you're probably familiar with JDBC as a way to work with relational databases, either directly or via abstractions like Spring's `JDBCTemplate` or MyBatis. 
+Also many tools for ETL, Business Intelligence and data management use JDBC drivers to interac 
+
+=== Extending Neo4j Server with a Server Extension
+
+A great way of accessing the high performance graph database directly from your Java code is to write a Neo4j Server extension.
+Then you get the double benefit of easy deployment and high performance database access.
+
+A Server extension provides a Jersey JAX-RS REST endpoint with a protocol and granularity that you control, you use it to send and receive datastructures of your domain.
+
+After declaring the dependencies to Neo4j and Neo4j-Server-APIs you can create REST-resources that are deployed by Jersey at startup. 
+Within those resources you can get the `GraphDatabaseService` and `ExecutionEngine` injected and use all Java APIs as well as executing Cypher directly.
+The path-finding and traversal APIs are also available.
+
+The results of your graph operations are then collected and rendered as the format you want to expose, e.g. JSON, XML, plain text or binary.
+
+The link:./extension[example project] shows how you would do that for our movie application endpoints.
+
+=== Using Spring Data Neo4j
+
+To use Neo4j with Spring Data Neo4j, you'd add the necessary dependency to your build configuration, e.g. `org.springframework.data:spring.data.neo4j:3.2.0.RELEASE`.
+
+After setting up a simple Java based configuration, and annotating your `@Node-` and `@RelationshipEntity`s, you can use the `Neo4jTemplate` to access Neo4j APIs and object graph mapping functionality.
+Alternatively you can leverage the convenient Spring-Data repositories to get interface based DAO implementations injected into your Spring Components.
+
+[NOTE]
+The current version of Spring Data Neo4j works best with an embedded Neo4j database.
+To achieve high-performance Neo4j-Server integration move your SDN persistence layer into an Server Extension.
+// Work on improving the Spring Data Neo4j performance with Neo4j server is underway.
+
+See the link:./spring-data-neo4j[example project with Spring Data Neo4j] for further details.
+
+[role=side-nav]
+=== Further Reading
+
+* link:./spring-data-neo4j[Spring Data Neo4j Example Project]
+* http://projects.spring.io/spring-data-neo4j[Spring Data Neo4j Project]
+* http://www.youtube.com/watch?v=ZfbJ1ZJdb_A[Webinar Spring Boot & SDN, role=video]
+
