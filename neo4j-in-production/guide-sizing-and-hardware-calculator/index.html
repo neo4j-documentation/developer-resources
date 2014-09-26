@@ -6,7 +6,7 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>guide-sizing-and-hardware-calculator | Developer Resources | Neo4j Graph Database</title>
+         <title>Neo4j&#8217;s Hardware Requirements? | Developer Resources | Neo4j Graph Database</title>
          <script type="text/javascript">
             var _kmq = _kmq || [];
             var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
@@ -123,12 +123,12 @@
                <article id="content" role="main">
                  <div class="row" style="padding: 10px 0 0;">
                    <div class="columns large-12" style="padding:10px 0 0;">
-                   <ul class="breadcrumbs"> <li><a href="/developer-resources">Developer Guides</a></li> <li><a href="../">Guide</a></li> <li class="current"><a href="#">guide-sizing-and-hardware-calculator</a></li> </ul>
+                   <ul class="breadcrumbs"> <li><a href="/developer-resources">Developer Guides</a></li> <li><a href="../">Neo4j in Production</a></li> <li class="current"><a href="#">Neo4j&#8217;s Hardware Requirements?</a></li> </ul>
                  </div>
                  </div>
                  <div class="row">
                    <div class="columns large-12">
-                   <h1 style="font-size:2.1rem;">guide-sizing-and-hardware-calculator</h1>
+                   <h1 style="font-size:2.1rem;">Neo4j&#8217;s Hardware Requirements?</h1>
                  </div>
                  </div>
                   <section class="row" style="padding:10px 0;">
@@ -142,130 +142,209 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us.
+This guide explains Neo4J sizing and hardware calculation best practices and tips.
+What hardware do your need to run your graph use-cases efficiently and what can you do to help make Neo4j fly.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes. Beginner
+You should know how to <a href="/download">download</a> and install Neo4j on your system.
+If you are a developer you should be accustomed to the graph data model and have written your Neo4j application.
+You should know that Neo4j employs its own persistence and caching implementation for the graph data records and have seen the files on disk (<code>data/graph.db</code>) and glanced at <code>messages.log</code>
 </blockquote>
 </div>
+
+
+<div class="label">Advanced</div>
+<hr/>
+
 <div class="toc">
 <h3 class="title">Overview</h3>
 
-<ul class="sectlevel1">
-<li><a href="#_section_1">Section 1</a></li>
-<li><a href="#_section_2">Section 2</a></li>
+<ul class="sectlevel2">
+<li><a href="#_neo4j_s_architecture">Neo4j&#8217;s architecture</a></li>
+<li><a href="#_disk_storage">Disk Storage</a></li>
+<li><a href="#_low_level_cache">Low Level Cache</a></li>
+<li><a href="#_optimizing">Optimizing</a></li>
+<li><a href="#_performance_optimization">Performance Optimization</a></li>
+<li><a href="#_hardware_sizing_calculator">Hardware sizing calculator</a></li>
+
 </ul>
 
 <hr>
 </div>
 </div>
-<div class="sect1 "  >
-    
-<h3 id="_section_1">Section 1</h3>
-
-<div class="sectionbody row">
-<div class="columns medium-12">
-
-
-<div class="paragraph">
-<p>text and pictures for section 1</p>
-</div>
-
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
-<h4 id="_subsection">Subsection</h4>
+<h4 id="_neo4j_s_architecture">Neo4j&#8217;s architecture</h4>
 
-<div class="imageblock">
-<p class="content">
-<img src="./neo4j-logo.png" alt="neo4j logo">
-</p>
+
+
+<div class="paragraph">
+<p>Neo4j is a native graph database, it handles the graph data records down to the disk/filesystem level.
+On top of the memory mapped filesystem, Neo4j employs additional caches for loaded Node and Relationship-Records.</p>
+</div>
+
+</div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
+    
+<h4 id="_disk_storage">Disk Storage</h4>
+
+
+
+<div class="paragraph">
+<p>Neo4j&#8217;s storage is organized in record based files per data structure - nodes, relationships, properties, labels, etc.
+Each node and relationship record block is directly addressable by its id.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>The blocks have different sizes to accomodate the different type of data they contain:</p>
+</div>
+
+<div class="ulist">
+
+
+<ul>
+<li>
+Node records: labels, pointer to first relationship, pointer to first property block.
+</li>
+<li>
+Relationship records: relationship-type, pointers to: start-node, end-node, first property block, next-relationship and previous relationship for both start and end-nodes
+</li>
+<li>
+Property records: up to 4 property entries, for each the property-key-id, and a encoded / compressed property value or pointer to string or array storage list
+</li>
+</ul>
+
 </div>
 
 
 <div class="paragraph">
-<p>text and pictures for subsection 1.1</p>
+<p>Nodes occupy 15B of space, relationships occupy 31B of space and properties occupy 41B of space.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>An example disk space calculation is:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre>10,000    Nodes x 14B = 140kB
+1,000,000 Rels  x 33B = 31.5MB
+2,010,000 Props x 41B = 78.6MB
+
+Total  is 110.2MB</pre>
+</div>
+</div>
+</div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
+    
+<h4 id="_low_level_cache">Low Level Cache</h4>
+
+
+
+<div class="paragraph">
+<p>The low level cache requirements are the same as disk space.
+It&#8217;s configuration (memory mapped regions per file), is done in <code>conf/neo4j.properties</code>.
+You should try to memory map as much data as your RAM allows (allow for 6-16GB heap depending on availability and use-cases).</p>
 </div>
 
 </div>
-<div class="sect2 sidebar columns medium-2" style='padding-left: 0;' >
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
+    
+<h4 id="_optimizing">Optimizing</h4>
+
+
+
+<div class="paragraph">
+<p>In optimizing a graph database solution for performance, we should bear in mind the following guidelines:</p>
+</div>
+
+<div class="ulist">
+
+
+<ul>
+<li>
+We should utilize the filesystem cache as much as possible; if possible, we should map our store files in their entirety into this cache
+</li>
+<li>
+We should have as much RAM available as possible, the more the better.
+</li>
+<li>
+We should tune the JVM heap and keep an eye on GC behaviors
+</li>
+<li>
+We should consider using fast disks—SSDs or enterprise flash hardware—to bring up the bottom line when disk access becomes inevitable
+</li>
+</ul>
+
+</div>
+</div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
+    
+<h4 id="_performance_optimization">Performance Optimization</h4>
+
+
+
+<div class="paragraph">
+<p>There are three areas in which we can optimize for performance:</p>
+</div>
+
+<div class="ulist">
+
+
+<ul>
+<li>
+Keep the object cache to a reasonable size (2 to 16 GB, about 50% of the heap)
+</li>
+<li>
+Increase the file cache (from 2 GB, all the way up to 200 GB or more in exceptional circumstances)
+</li>
+<li>
+Increase the percentage of the store mapped into the filesystem cache
+</li>
+<li>
+Invest in faster disks: SSDs or enterprise flash hardware
+</li>
+</ul>
+
+</div>
+</div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
+    
+<h4 id="_hardware_sizing_calculator">Hardware sizing calculator</h4>
+
+<div class="row">
+<div class="small-4 columns">&nbsp;</div>
+<div class="small-4 columns"> <a href="/hardware-sizing" class="small button">Hardware Sizing Calculator →</a> </div>
+<div class="small-4 columns">&nbsp;</div>
+</div>
+</div>
+<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
     <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
-<h2 id="_sidebar">Sidebar</h2>
+<h2 id="_further_reading">Further Reading</h2>
 </li>
 <div class="ulist">
 
 
 <ul>
 <li>
-links to manual
+<a href="/hardware-sizing/">Hardware Sizing Calculator</a>
 </li>
 <li>
-link to blog
+<a href="http://docs.neo4j.org/chunked/milestone/capabilities-capacity.html" class="docs">Neo4j Capacities</a>
 </li>
 <li>
-link to call to action
+<a href="http://watch.neo4j.org/video/46049647" class="video">Hardware Sizing</a>
 </li>
 </ul>
 
 </div>
-</div>
-</div>
-</div>
-
-</div>
-<div class="sect1 "  >
-    
-<h3 id="_section_2">Section 2</h3>
-
-<div class="sectionbody row">
-<div class="columns medium-12">
-
-
-<div class="paragraph">
-<p>text and pictures for section 2</p>
-</div>
-
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
-    
-<h4 id="_subsection_2">Subsection</h4>
-
-<div class="imageblock">
-<p class="content">
-<img src="./neo4j-logo.png" alt="neo4j logo">
-</p>
-</div>
-</div>
-<div class="sect2 sidebar columns medium-10" style='padding-left: 0;' >
-    
-<h4 id="_further_reading">Further Reading</h4>
-
-<div class="ulist">
-
-
-<ul>
-<li>
-links to manual
-</li>
-<li>
-link to blog
-</li>
-<li>
-link to call to action
-</li>
-</ul>
-
-</div>
-<div class="sidebarblock">
-<div class="content">
-
-</div>
-</div>
-</div>
-</div>
-</div>
-
 </div>
 </div>
 
