@@ -8,11 +8,13 @@
 
 .Goals
 [abstract]
-We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us.
+We live in a connected world.
+There are no isolated pieces of information, but rich, connected domains all around us.
 
 .Prerequisites
 [abstract]
-Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes.
+Nodes can be tagged with zero to many labels representing their different roles in the domain.
+In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes.
 
 [role=expertise]
 {level}
@@ -39,7 +41,6 @@ Known and trusted from relational systems, transactional guarantees protect upda
 Most NO-SQL databases store sets of disconnected aggregates. *This makes it difficult to use them for connected data and graphs.* +
 One well-known strategy for adding relationships to such stores is to embed an aggregate’s identifier inside the field belonging to another aggregate — effectively introducing foreign keys. +
 *But this requires joining aggregates at the application level, which quickly becomes prohibitively expensive.*
-
 
 Let's compare graph databases to other NoSQL systems.
 
@@ -75,7 +76,8 @@ image::{img}as-rdbms.png[]
 
 .Relational databases also lack relationships
 [quote, "Jim Webber, Ian Robinson", "Graph Databases, O'Reilly"]
-For several decades, developers have tried to accommodate connected, semi- structured datasets inside relational databases. But whereas relational databases were initially designed to codify paper forms and tabular structures — something they do exceedingly well — they struggle when attempting to model the ad hoc, exceptional relationships that crop up in the real world. +
+For several decades, developers have tried to accommodate connected, semi- structured datasets inside relational databases.
+But whereas relational databases were initially designed to codify paper forms and tabular structures — something they do exceedingly well — they struggle when attempting to model the ad hoc, exceptional relationships that crop up in the real world. +
 *Ironically, relational databases deal poorly with relationships. Relationships do exist in the vernacular of relational databases, but only as a means of joining tables.*
 
 
@@ -92,7 +94,8 @@ image::{img}as-key-value.png[]
 
 === (A Graph Database) –[:NAVIGATES_A]–> (Document Store)
 
-The structured hierarchy of a *Document* accommodates a lot of schema-free data that can easily be represented as a tree. Which is of course a graph but represents only one projection of your data.
+The structured hierarchy of a *Document* accommodates a lot of schema-free data that can easily be represented as a tree.
+Which is of course a graph but represents only one projection of your data.
 
 image::{img}vs-document.png[]
 
