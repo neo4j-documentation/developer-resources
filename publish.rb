@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require 'rubygems'
 require 'bundler/setup'
-#
+
 html=ARGV[0]
 raise "Usage: feed me html files" unless html
 
@@ -34,11 +34,19 @@ content =         { :post_status  => "publish",
                     :post_date    => Time.now,
                     :post_content => content,
                     :post_title   => title }
+
+puts "DEBUG: I got a post and it looks like:"
+puts post.inspect
+
+
 if post
+  post_id = post['post_id'].to_i,
+  puts "Editing #{post_id}"
    wp.editPost(:blog_id => blog_id,
-               :post_id => post['post_id'].to_i,
+               :post_id => post_id,
                :content => content)
 else
+  puts "Making a new post for #{title}"
   puts wp.newPost(:blog_id => blog_id,
                   :content => content.merge({ :post_type => 'page'}))
 end
