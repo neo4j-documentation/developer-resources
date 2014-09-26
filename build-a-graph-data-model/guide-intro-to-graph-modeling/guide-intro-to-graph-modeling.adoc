@@ -8,11 +8,12 @@
 
 .Goals
 [abstract]
-We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us.
+This guide will show you how to design a graph model and you can then apply the lessons to your own data set. We'll be following Ian Robinson's *Design for Queryability* modeling approach.
 
 .Prerequisites
 [abstract]
-Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata--index or constraint information, for example--to nodes.
+You should be familiar with the guide on link:../../what-is-neo4j/graph-database[graph databases] and our link:../../cypher-query-language[Cypher query language].
+
 
 [role=expertise]
 {level}
@@ -21,7 +22,6 @@ toc::[]
 
 :img: .
 
-This guide will show you how to design a graph model and you can then apply the lessons to your own data set. We'll be following Ian Robinson's *Design for Queryability* modeling approach.
 
 The creation of a graph model should be treated as an iterative process--we don't need to come up with the perfect model on our first try.
 
@@ -30,19 +30,12 @@ The creation of a graph model should be treated as an iterative process--we don'
 As designing a graph model fits easily into an Agile development approach, we'd typically start with link:http://en.wikipedia.org/wiki/User_story[Agile stories].
 
 For example, if we're building an application that will recommend colleagues we should work with based on similar skills, we might start out with the following story:
+
 ____
 As an employee +
 I want to know who in the company has similar skills as me +
 So that we can exchange knowledge
 ____
-
-[role=side-nav]
-=== Recommended
-
-[role=recommended]
-* http://asciidoctor.org[Links to docs]
-* http://asciidoctor.org[Links to blog]
-* http://asciidoctor.org[Links to guides]
 
 === Questions to ask of the domain
 
@@ -53,14 +46,6 @@ Which people, who work for the same company as me, have similar skills as me?
 ____
 
 Now that we've got our first question, we can come up with a model.
-
-[role=side-nav]
-=== Recommended
-
-[role=recommended]
-* http://asciidoctor.org[Links to docs]
-* http://asciidoctor.org[Links to blog]
-* http://asciidoctor.org[Links to guides]
 
 === Identity entities
 
@@ -73,14 +58,6 @@ person +
 company +
 skill
 ____
-
-[role=side-nav]
-=== Recommended
-
-[role=recommended]
-* http://asciidoctor.org[Links to docs]
-* http://asciidoctor.org[Links to blog]
-* http://asciidoctor.org[Links to guides]
 
 === Identity relationships
 
@@ -103,9 +80,8 @@ As we come up with new questions and associated queries we can repeat this proce
 
 Although models used in production are much more complex than this simple example, keeping in mind that a good model is made up of both components that are both necessary and sufficient. In other words, although our model has to be detailed enough answer our questions, we don't need to model every detail of the system in question.
 
-=== Further resources
+[role="side-nav"]
+=== Further Reading
 
-The following resources contain examples of models that others have come up with to answer the questions they had of their data:
-
-* link:http://docs.neo4j.org/chunked/stable/data-modeling-examples.html[Data Modelling Examples in the Neo4j Manual]
-* link:https://github.com/neo4j-contrib/graphgist/wiki[Graph Gists]
+* link:http://docs.neo4j.org/chunked/stable/data-modeling-examples.html[Data Modelling Examples,role=docs]
+* link:../../working-with-data/gists-and-example[Graph Gists]
