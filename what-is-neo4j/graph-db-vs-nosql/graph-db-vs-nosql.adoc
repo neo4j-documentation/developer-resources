@@ -14,7 +14,7 @@ There are no isolated pieces of information, but rich, connected domains all aro
 .Prerequisites
 [abstract]
 Nodes can be tagged with zero to many labels representing their different roles in the domain.
-In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes.
+In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​-index or constraint information, for example—​-to nodes.
 
 [role=expertise]
 {level}
@@ -39,7 +39,7 @@ Known and trusted from relational systems, transactional guarantees protect upda
 .NoSQL databases lack relationships
 [quote, "Jim Webber, Ian Robinson", "Graph Databases, O'Reilly"]
 Most NO-SQL databases store sets of disconnected aggregates. *This makes it difficult to use them for connected data and graphs.* +
-One well-known strategy for adding relationships to such stores is to embed an aggregate’s identifier inside the field belonging to another aggregate — effectively introducing foreign keys. +
+One well-known strategy for adding relationships to such stores is to embed an aggregate's identifier inside the field belonging to another aggregate — effectively introducing foreign keys. +
 *But this requires joining aggregates at the application level, which quickly becomes prohibitively expensive.*
 
 Let's compare graph databases to other NoSQL systems.
@@ -65,12 +65,12 @@ image::{img}nosql-space.png[]
 
 === (A Graph Database) –[:TRANSFORMS_A]–> (RDBMS)
 
-Reconnect the rows of tables in a *Relational Database* by uncovering all the relationships, and you’ll see a graph.
+Reconnect the rows of tables in a *Relational Database* by uncovering all the relationships, and you'll see a graph.
 Dumb JOIN tables are replaced by interesting relationships.
 
 image::{img}vs-rdbms.png[]
 
-Where a RDBMS is optimized for aggregated, highly structured data, Neo4j is optimized for highly connected heterogenuous data.
+Where a RDBMS is optimized for aggregated, highly structured data, Neo4j is optimized for highly connected heterogeneous data.
 
 image::{img}as-rdbms.png[]
 
@@ -87,7 +87,7 @@ A *Key-Value* model is great and highly performant for lookups of huge amounts o
 
 image::{img}vs-key-value.png[]
 
-When the values are themselves interconnected, you’ve got a graph.
+When the values are themselves interconnected, you've got a graph.
 Neo4j lets you traverse quickly among all the connected values and find insights in the relationships.
 
 image::{img}as-key-value.png[]
