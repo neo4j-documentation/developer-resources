@@ -1,52 +1,92 @@
-= guide-sizing-and-hardware-calculator
-:level: Beginner
+= Neo4j's Hardware Requirements?
+:level: Advanced
 :toc:
 :toc-placement!:
 :toc-title: Overview
 :toclevels: 1
+:section: Neo4j in Production
 
 .Goals
 [abstract]
-We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us.
+This guide explains Neo4J sizing and hardware calculation best practices and tips. 
+What hardware do your need to run your graph use-cases efficiently and what can you do to help make Neo4j fly.
+
 
 .Prerequisites
 [abstract]
-Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes. {level}
+You should know how to link:/download[download] and install Neo4j on your system. 
+If you are a developer you should be accustomed to the graph data model and have written your Neo4j application.
+You should know that Neo4j employs its own persistence and caching implementation for the graph data records and have seen the files on disk (`data/graph.db`) and glanced at `messages.log`
+
+[role=expertise]
+{level}
 
 toc::[]
 
-== Section 1
+=== Neo4j's architecture
 
-text and pictures for section 1
+Neo4j is a native graph database, it handles the graph data records down to the disk/filesystem level.
+On top of the memory mapped filesystem, Neo4j employs additional caches for loaded Node and Relationship-Records.
 
-=== Subsection
+=== Disk Storage
 
-image::{img}neo4j-logo.png[]
+Neo4j's storage is organized in record based files per data structure - nodes, relationships, properties, labels, etc.
+Each node and relationship record block is directly addressable by its id.
 
-text and pictures for subsection 1.1
+The blocks have different sizes to accomodate the different type of data they contain:
 
-[role=sidebar]
-=== Sidebar
+* Node records: labels, pointer to first relationship, pointer to first property block.
+* Relationship records: relationship-type, pointers to: start-node, end-node, first property block, next-relationship and previous relationship for both start and end-nodes
+* Property records: up to 4 property entries, for each the property-key-id, and a encoded / compressed property value or pointer to string or array storage list
 
-* links to manual
-* link to blog
-* link to call to action
+Nodes occupy 15B of space, relationships occupy 31B of space and properties occupy 41B of space.
 
+An example disk space calculation is:
 
-== Section 2
+----
+10,000    Nodes x 14B = 140kB
+1,000,000 Rels  x 33B = 31.5MB
+2,010,000 Props x 41B = 78.6MB
 
-text and pictures for section 2
+Total  is 110.2MB
+----
 
-=== Subsection 
+=== Low Level Cache
 
-image::{img}neo4j-logo.png[]
+The low level cache requirements are the same as disk space.
+It's configuration (memory mapped regions per file), is done in `conf/neo4j.properties`.
+You should try to memory map as much data as your RAM allows (allow for 6-16GB heap depending on availability and use-cases).
 
-[role=sidebar]
+=== Optimizing
+
+In optimizing a graph database solution for performance, we should bear in mind the following guidelines:
+
+* We should utilize the filesystem cache as much as possible; if possible, we should map our store files in their entirety into this cache
+* We should have as much RAM available as possible, the more the better.
+* We should tune the JVM heap and keep an eye on GC behaviors
+* We should consider using fast disks—SSDs or enterprise flash hardware—to bring up the bottom line when disk access becomes inevitable
+
+=== Performance Optimization
+There are three areas in which we can optimize for performance:
+
+* Keep the object cache to a reasonable size (2 to 16 GB, about 50% of the heap)
+* Increase the file cache (from 2 GB, all the way up to 200 GB or more in exceptional circumstances)
+* Increase the percentage of the store mapped into the filesystem cache
+* Invest in faster disks: SSDs or enterprise flash hardware
+
+=== Hardware sizing calculator
+
+++++
+<div class="row"> 
+<div class="small-4 columns">&nbsp;</div>
+<div class="small-4 columns"> <a href="/hardware-sizing" class="small button">Hardware Sizing Calculator →</a> </div> 
+<div class="small-4 columns">&nbsp;</div>
+</div>
+++++
+
+[role=side-nav]
 === Further Reading
 
-* links to manual
-* link to blog
-* link to call to action
-****
-
-// .. etc ..
+* link:/hardware-sizing/[Hardware Sizing Calculator]
+* http://docs.neo4j.org/chunked/milestone/capabilities-capacity.html[Neo4j Capacities,role=docs]
+* http://watch.neo4j.org/video/46049647[Hardware Sizing, role=video]
