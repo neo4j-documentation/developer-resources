@@ -156,6 +156,12 @@ You should have a basic understanding of the <a href="/what-is-neo4j/property-gr
 <div class="label">Beginner</div>
 <hr/>
 
+</div>
+</div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
+    
+<h4 id="_northwind_introduction">Northwind Introduction</h4>
+
 
 
 <div class="paragraph">
@@ -173,6 +179,11 @@ You should have a basic understanding of the <a href="/what-is-neo4j/property-gr
 <div class="paragraph">
 <p><span class="image"><img src=".//Northwind_diagram.jpg" alt="Northwind_diagram"></span></p>
 </div>
+
+</div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
+    
+<h4 id="_developing_a_graph_model">Developing a Graph Model</h4>
 
 
 
@@ -202,13 +213,13 @@ A table name is a label name
 
 
 <div class="paragraph">
-<p>&lt;insert image of model here&gt;</p>
+<p><span class="image"><img src=".//northwind_graph_simple.png" alt="northwind_graph_simple"></span></p>
 </div>
 
-</div>
-</div>
-<h1 id="_how_does_it_differ_to_the_relational_model" class="sect0">How does it differ to the relational model?</h1>
-<div class="title">How does it differ to the relational model?</div>
+<div class="sect3 "  >
+    
+<h5 id="_how_does_it_differ_to_the_relational_model">How does it differ to the relational model?</h5>
+
 <div class="ulist">
 
 
@@ -222,6 +233,12 @@ No nulls in the graph model - in the relational one to track the employee hierar
 </ul>
 
 </div>
+</div>
+</div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
+    
+<h4 id="_exporting_the_data_to_csv">Exporting the Data to CSV</h4>
+
 
 
 <div class="paragraph">
@@ -240,6 +257,15 @@ No nulls in the graph model - in the relational one to track the employee hierar
       To '/tmp/customerDb.csv' With CSV header;</code></pre>
 </div>
 </div>
+</div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
+    
+<h4 id="_importing_the_data_using_cypher">Importing the Data using Cypher</h4>
+
+<div class="sect3 "  >
+    
+<h5 id="_indexes">Indexes</h5>
+
 
 
 <div class="paragraph">
@@ -248,29 +274,18 @@ No nulls in the graph model - in the relational one to track the employee hierar
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>create index on :Product(productId)</code></pre>
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>create index on :Product(productId);
+create index on :Category(categoryId);
+create index on :Order(OrderId);
+create index on :Employee(employeeId);
+create index on :Supplier(supplierId);</code></pre>
 </div>
 </div>
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>create index on :Category(categoryId)</code></pre>
 </div>
-</div>
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>create index on :Order(OrderId)</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>create index on :Employee(employeeId)</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>create index on :Supplier(supplierId)</code></pre>
-</div>
-</div>
+<div class="sect3 "  >
+    
+<h5 id="_load_csv">LOAD CSV</h5>
+
 
 
 <div class="paragraph">
@@ -303,9 +318,95 @@ MERGE (product)-[:PART_OF]-&gt;(category)</code></pre>
 
 
 <div class="paragraph">
+<p>A sample of the graph looks like this:</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><span class="image"><img src=".//northwind_graph_sample.png" alt="northwind_graph_sample"></span></p>
+</div>
+
+
+
+<div class="paragraph">
 <p>We can now query the graph&#8230;&#8203;</p>
 </div>
 
+</div>
+</div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
+    
+<h4 id="_querying_the_graph">Querying the Graph</h4>
+
+
+
+<div class="paragraph">
+<p>One question we would love to answer is:</p>
+</div>
+
+<div class="sect3 "  >
+    
+<h5 id="_which_employee_had_the_highest_cross_selling_count_of_which_product_with_chocolade">Which employee had the highest cross selling count of which product with 'Chocolade'</h5>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (choc:Product {name:'Chocolade'})&lt;-[:PRODUCT]-(:Order)&lt;-[:SOLD]-(employee),
+      (employee)-[:SOLD]-&gt;()-[:PRODUCT]-&gt;(other:Product)
+RETURN employee.employeeId, other.name, count(*) as count
+ORDER BY count DESC
+LIMIT 5</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>And as we can see, employee number 1 was really busy.</p>
+</div>
+
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">employee.employeeId</th>
+<th class="tableblock halign-left valign-top">other.name</th>
+<th class="tableblock halign-left valign-top">count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Flotemysost</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">24</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gorgonzola Telino</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">22</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pavlova</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">22</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Camembert Pierrot</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">22</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ikura</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">20</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 
 </div>

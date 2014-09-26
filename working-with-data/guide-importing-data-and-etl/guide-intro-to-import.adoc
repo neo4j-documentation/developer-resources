@@ -17,11 +17,15 @@ You should have a basic understanding of the link:/what-is-neo4j/property-graph[
 [role=expertise]
 {level}
 
+=== Northwind Introduction
+
 In this guide we'll be using the link:https://code.google.com/p/northwindextended/downloads/detail?name=northwind.postgre.sql&can=2&q=[NorthWind data set] as our example. NorthWind is a popular data set used to demonstrate SQL and relational databases but the data is graphy enough to be interesting for us.
 
 The following is an entity relationship diagram of the data set:
 
 image:{img}/Northwind_diagram.jpg[]
+
+=== Developing a Graph Model
 
 There are a couple of rules of thumbs when deriving a graph model from a relational one which we can use to come up with our first cut:
 
@@ -30,16 +34,16 @@ There are a couple of rules of thumbs when deriving a graph model from a relatio
 
 For this data set the following graph model serves as a first iteration:
 
-<insert image of model here>
+image:{img}/northwind_graph_simple.png[]
 
-= How does it differ to the relational model?
+==== How does it differ to the relational model?
 
 * Graph should be more normalised. e.g. addresses have been denormalised in the Suppliers, Orders, Customers and Employees table
 * No nulls in the graph model - in the relational one to track the employee hierarchy we have a null enttry in the 'ReportsTo' column if they don't report to anybody
 
+=== Exporting the Data to CSV
+
 Now that we know what we'd like our graph to look like we need to extract the data from Postgres so we can create it. The easiest way to do that is to export the appropriate tables in CSV format. Postgres' 'copy' command lets us execute a SQL query and write the result to a CSV file:
-
-
 
 [source, sql]
 ----
@@ -53,32 +57,22 @@ Copy (SELECT * FROM orders
       To '/tmp/customerDb.csv' With CSV header;
 ----
 
+=== Importing the Data using Cypher
+
+==== Indexes
+
 Next we'll create some indexes on the (label, property) pairs that we're going to create in Neo4j.
 
 [source, cypher]
 ----
-create index on :Product(productId)
+create index on :Product(productId);
+create index on :Category(categoryId);
+create index on :Order(OrderId);
+create index on :Employee(employeeId);
+create index on :Supplier(supplierId);
 ----
 
-[source, cypher]
-----
-create index on :Category(categoryId)
-----
-
-[source, cypher]
-----
-create index on :Order(OrderId)
-----
-
-[source, cypher]
-----
-create index on :Employee(employeeId)
-----
-
-[source, cypher]
-----
-create index on :Supplier(supplierId)
-----
+==== LOAD CSV
 
 After we've done that we'll use Cypher's link:http://docs.neo4j.org/chunked/stable/query-load-csv.html[LOAD CSV] command to transform the contents of the CSV file into a graph structure.
 
@@ -105,6 +99,35 @@ MERGE (supplier)-[:SUPPLIES]->(product)
 MERGE (product)-[:PART_OF]->(category)
 ----
 
+A sample of the graph looks like this:
 
+image:{img}/northwind_graph_sample.png[]
 
 We can now query the graph...
+
+=== Querying the Graph
+
+One question we would love to answer is:
+
+==== Which employee had the highest cross selling count of which product with 'Chocolade'
+
+[source,cypher]
+----
+MATCH (choc:Product {name:'Chocolade'})<-[:PRODUCT]-(:Order)<-[:SOLD]-(employee),
+      (employee)-[:SOLD]->()-[:PRODUCT]->(other:Product)
+RETURN employee.employeeId, other.name, count(*) as count
+ORDER BY count DESC
+LIMIT 5
+----
+
+And as we can see, employee number 1 was really busy.
+
+[format="csv", options="header"]
+|===
+employee.employeeId,other.name,count
+1,Flotemysost,24
+1,Gorgonzola Telino,22
+1,Pavlova,22
+1,Camembert Pierrot,22
+1,Ikura,20
+|===
