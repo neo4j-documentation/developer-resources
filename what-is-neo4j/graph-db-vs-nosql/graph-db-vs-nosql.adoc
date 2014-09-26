@@ -21,15 +21,12 @@ In addition to contextualizing node and relationship properties, labels may also
 
 toc::[]
 
-The NoSQL space is an interesting place, despite its unfitting name, which we see as "Not only SQL".
-It brings together many interesting solutions offering different data models and database systems.
-
-Each one is suitable for different use cases and shapes of data.
+The although somewhat vaguely named, the NoSQL ("Not only SQL") space brings together many interesting solutions offering different data models and database systems, each suitable for different use cases and shapes of data.
 With the advent of the NoSQL movement, the "one-size-fits-all" proposition of large relational systems was replaced by making conscious decisions for the right tool for the job.
 
-That also means that developers have to gain the necessary insight to make informed choices which approaches are best suited for the applications they work on.
+With this larger toolbox, developers have to gain the necessary insights and intuitions to decide which approaches are best suited for their particular applications.
 
-Most NoSQL systems are aggregate oriented, providing only atomic operations within their natural aggregate which forms one dedicated view of your data.
+Most NoSQL systems are aggregate oriented, providing only atomic operations within their natural aggregate which form one dedicated view of your data.
 Other projections have to be computed crunching your data.
 Focusing on one aggregate at a time allows for easy sharding of bucketed data across a network of machines along the aggregate dimension, for instance the *Document* in Document Databases.
 
@@ -44,14 +41,14 @@ One well-known strategy for adding relationships to such stores is to embed an a
 
 Let's compare graph databases to other NoSQL systems.
 
-=== (Neo4j) –[:IS_A]–> (NoSQL Database)
+=== Neo4j as a NoSQL Database
 
-Not only SQL, but modern choices which excel at answering different kinds of questions.
+With the advent of the NoSQL movement, businesses of all sizes have a variety of modern options from which to build solutions relevant to their use cases. 
 
-* Average income? Ask a *relational database*.
-* Shopping cart? Use a *Key-Value Store*.
-* Structured product information? Store as a *Document*.
-* How did you get here? Follow a *Graph*.
+* Calculating average income? Ask a *relational database*.
+* Building a shopping cart? Use a *key-value Store*.
+* Storing structured product information? Store as a *document*.
+* Describing how did a user got from point A to point B? Follow a *graph*.
 
 image::{img}nosql-space.png[]
 
@@ -63,7 +60,7 @@ image::{img}nosql-space.png[]
 * http://asciidoctor.org[Links to blog]
 * http://asciidoctor.org[Links to guides]
 
-=== (A Graph Database) –[:TRANSFORMS_A]–> (RDBMS)
+=== Uncover the Graph in a Relational Database
 
 Reconnect the rows of tables in a *Relational Database* by uncovering all the relationships, and you'll see a graph.
 Dumb JOIN tables are replaced by interesting relationships.
@@ -76,14 +73,13 @@ image::{img}as-rdbms.png[]
 
 .Relational databases also lack relationships
 [quote, "Jim Webber, Ian Robinson", "Graph Databases, O'Reilly"]
-For several decades, developers have tried to accommodate connected, semi- structured datasets inside relational databases.
-But whereas relational databases were initially designed to codify paper forms and tabular structures — something they do exceedingly well — they struggle when attempting to model the ad hoc, exceptional relationships that crop up in the real world. +
+For several decades, developers have tried to accommodate connected, semi-structured datasets inside relational databases.
+But whereas relational databases were initially designed to codify paper forms and tabular structures--something they do exceedingly well--they struggle when attempting to model the ad hoc, exceptional relationships that crop up in the real world. +
 *Ironically, relational databases deal poorly with relationships. Relationships do exist in the vernacular of relational databases, but only as a means of joining tables.*
 
+=== Relate Key-Value Stores with Graph Databases
 
-=== (A Graph Database) –[:RELATES_A]–> (Key-Value Store)
-
-A *Key-Value* model is great and highly performant for lookups of huge amounts of simple or even complex values.
+The *Key-Value* model is great and highly performant for lookups of huge amounts of simple or even complex values.
 
 image::{img}vs-key-value.png[]
 
@@ -92,7 +88,7 @@ Neo4j lets you traverse quickly among all the connected values and find insights
 
 image::{img}as-key-value.png[]
 
-=== (A Graph Database) –[:NAVIGATES_A]–> (Document Store)
+=== Navigate Document Stores with Graph Databases
 
 The structured hierarchy of a *Document* accommodates a lot of schema-free data that can easily be represented as a tree.
 Which is of course a graph but represents only one projection of your data.
