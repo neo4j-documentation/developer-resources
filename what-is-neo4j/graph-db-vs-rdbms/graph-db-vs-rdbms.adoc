@@ -8,7 +8,8 @@
 
 .Goals
 [abstract]
-This article explores the differences between relational and graph databases and data models. In addition, it explains how to integrate graph databases with relational databases and how to import data from a relational store.
+This article explores the differences between relational and graph databases and data models.
+In addition, it explains how to integrate graph databases with relational databases and how to import data from a relational store.
 
 .Prerequisites
 [abstract]
@@ -17,19 +18,32 @@ You should have looked into the link:/what-is-neo4j/property-graph[property-grap
 [role=expertise]
 {level}
 
+toc::[]
+
+////
+== TODO
+* polyglot setup, integration with relational db's
+* data import from relational (short section with link to data import)
+* guides / tips for relational database developers / DBAs
+////
+
 === Relational Databases
 
-Relational databases have been (and continue to be) the power-horse of software applications since the 80s. They store highly structured data in tables with predetermined columns of certain types and many rows of the same type of information, and, thanks in part to the rigidity of their organization, force developers and applications to strictly structure the data used in their applications.
+Relational databases have been (and continue to be) the power-horse of software applications since the 80s. 
+They store highly structured data in tables with predetermined columns of certain types and many rows of the same type of information, and, thanks in part to the rigidity of their organization, force developers and applications to strictly structure the data used in their applications.
 
 References to other rows and tables are indicated by referring to their (primary-)key attributes, enforceable with constraints only when the connection is never optional.
 
-Relationships are computed at query time by matching primary and foreign keys of the many (potentially indexed) rows of the to be joined tables. This operation is CPU and RAM intensive and has an exponential cost.
+Relationships are computed at query time by matching primary and foreign keys of the many (potentially indexed) rows of the to be joined tables.
+This operation is CPU and RAM intensive and has an exponential cost.
 
 image::{img}rel_graph4.jpg[]
 
-If you use many-to-many relationships, you have to introduce a _JOIN_ table that lists foreign keys of both participating tables which further increases JOIN operation costs. Those costly JOIN operations are usually addressed by denormalising data to reduce the number of JOINs necessary. 
+If you use many-to-many relationships, you have to introduce a _JOIN_ table that lists foreign keys of both participating tables which further increases JOIN operation costs.
+Those costly JOIN operations are usually addressed by denormalising data to reduce the number of JOINs necessary. 
 
-Although not every use-case is a good fit for this type of stringent data model, the lack of viable alternatives and the support for relational databases has made for the lack of well known alternatives has made made it difficult for alternative models to break into the mainstream. In spite of all the benefits of traditional, relational databases, sometimes a different, more flexible data model may be a better fit, both conceptually and performance-wise. 
+Although not every use-case is a good fit for this type of stringent data model, the lack of viable alternatives and the support for relational databases has made for the lack of well known alternatives has made made it difficult for alternative models to break into the mainstream.
+In spite of all the benefits of traditional, relational databases, sometimes a different, more flexible data model may be a better fit, both conceptually and performance-wise. 
 
 Meet graph databases.
 
@@ -43,13 +57,16 @@ Meet graph databases.
 
 === Relational to Graph
 
-In some regards, graph databases are like the next generation of relational databases, but with first class support for "relationships", or those implicit connections indicated via foreign-keys in the traditional relational databases. A graph database treats these foreign keys as data structures in the store layer.
+In some regards, graph databases are like the next generation of relational databases, but with first class support for "relationships", or those implicit connections indicated via foreign-keys in the traditional relational databases.
+A graph database treats these foreign keys as data structures in the store layer.
 Each node (entity or attribute) in the model directly contains a list of relationship-records that represent its relationships to other nodes, organized by type and direction and holding additional attributes.
 Whenever you run the equivalent of a  _JOIN_ operation, the database just walks this list and has direct access to the connected nodes, eliminating the need for a costly search / match computation.
 
 image::{img}rel_graph5.jpg[]
 
-Graph databases are part of the link:../graph-db-vs-nosql[NoSQL movement]. They are open-source, schema-free, and scalable database solutions. Unlike other NoSQL databases, graph databases support a very flexible and fine-grained data model that allows you to model and manage rich domains in an easy and intuitive way.
+Graph databases are part of the link:../graph-db-vs-nosql[NoSQL movement].
+They are open-source, schema-free, and scalable database solutions.
+Unlike other NoSQL databases, graph databases support a very flexible and fine-grained data model that allows you to model and manage rich domains in an easy and intuitive way.
 
 You more or less keep the data as it is in the real world, in small, normalized but richly connected entities.
 This allows you to query and view your data from any imaginable view point, supporting many different use-cases.
@@ -68,13 +85,15 @@ image::{img}domain.png[]
 
 === Graph Querying with Cypher
 
-Querying relational databases is easy with SQL. This declarative query language allows both for easy ad-hoc querying in a database tool as well as specifying use-case related queries in your code. Even object-relational mappers use SQL under the hood to talk to the database.
+Querying relational databases is easy with SQL.
+This declarative query language allows both for easy ad-hoc querying in a database tool as well as specifying use-case related queries in your code. Even object-relational mappers use SQL under the hood to talk to the database.
 
-Do graph databases have something similar? Neo4j has a declarative graph query language built on the basic concepts and clauses of SQL but added a lot of graph specific functionality to make it simple to work with your rich graph model without being too verbose.
+Do graph databases have something similar?
+Neo4j has a declarative graph query language built on the basic concepts and clauses of SQL but added a lot of graph specific functionality to make it simple to work with your rich graph model without being too verbose.
 
 If you ever tried to write a SQL statement with a large number of JOINs, you know that you quickly lose sight of what the query actually does due to all the technical noise.
 
-So for our domain, what would a SQL statement that lists the _employees in the "IT-Department"_ look like?
+So for our domain, what would a SQL statement that lists the _employees in the "IT Department"_ look like?
 // sum of the weekly work hours of employees of "GraphIT" working in the different projects
 Let's just look at the statements without explaining them in detail.
 
@@ -85,12 +104,12 @@ LEFT JOIN Person_Department
   ON Person.Id = Person_Department.PersonId
 LEFT JOIN Department 
   ON Department.Id = Person_Department.DepartmentId
-WHERE Department.name = "IT-Department"
+WHERE Department.name = "IT Department"
 ----
 
 [source,cypher]
 ----
-MATCH (p:Person)<-[:EMPLOYEE]-(d:Dept {name:"IT-Department"})
+MATCH (p:Person)<-[:EMPLOYEE]-(d:Dept {name:"IT Department"})
 RETURN p.name, d.name
 ----
 
@@ -126,7 +145,8 @@ curl -i -H accept:application/json -H content-type:application/json \
 {"results":[{"columns":["p"],"data":[{"row":[{"name":"Daniel"}]}]}],"errors":[]}
 ----
 
-Fortunately, there are drivers for Neo4j for almost every popular programming language. 
+In most cases you don't want to connect to Neo4j manually but you a driver or connector library for your stack or programming language.
+Thanks to the Neo4j community, there are drivers for Neo4j for almost every popular programming language, most of which mimic existing database driver idioms and approaches.
 
 For instance, the Neo4j JDBC driver would be used like this:
 
@@ -163,7 +183,7 @@ The easiest way to import data from your relational database is to create a CSV 
 
 Then you can take the CSV file and use Cypher's `LOAD CSV` power tool to:
 
-* Ingest the data
+* Ingest the data, accessing columns by header name or offset
 * Convert values from strings to different formats and structures (`toFloat`, `split`, ...)
 * Skip rows to ignore
 * `MATCH` nodes based on attribute lookups 
@@ -198,3 +218,5 @@ You can import multiple CSV files from one or more data sources to enrich your c
 * http://watch.neo4j.org/video/90358900["Data Import Webinar",role=video]
 * http://jexp.de/blog/2014/06/load-csv-into-neo4j-quickly-and-successfully/["LOAD CSV Tips",role=blog]
 * http://worldcup.neo4j.org/the-world-cup-graph-domain-model/["World Cup Dataset",role=blog]
+
+// === Keeping Neo4j in Sync with a Relational Database
