@@ -29,24 +29,23 @@ wp = Rubypress::Client.new(:host => blog_id,
                            :username => username,
                            :password => password)
 
-post = wp.getPosts(:filter => {:post_type => 'page'}).select do |post|
-  puts post['post_title']
-  puts title
-  post['post_title'] == title
-end.first
+all_pages = wp.getPosts( :filter => {:post_type => 'page',
+                                 :number => 1000,
+                                 :post_status => 'published'})
+puts "Got #{all_pages.length} pages from the database"
+pages = all_pages.select { |page| page['post_title'] == title }
+puts "Got #{pages.length} pages matching the title"
+
+page = pages.sort_by {|hash| hash['post_id'] }.first
 content =         { :post_status  => "publish",
                     :post_date    => Time.now,
                     :post_content => content,
                     :post_title   => title }
 
-puts "DEBUG: I got a post and it looks like:"
-puts post.inspect
-
-
-if post
-  post_id = post['post_id'].to_i
+if page
+  post_id = page['post_id'].to_i
   puts "Editing #{post_id}"
-   wp.editPost(:blog_id => blog_id,
+  wp.editPost(:blog_id => blog_id,
                :post_id => post_id,
                :content => content)
 else
