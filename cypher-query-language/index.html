@@ -151,8 +151,8 @@ This guide explains the basic concepts of Cypher, Neo4j&#8217;s query language. 
 This is a guide for Beginner. You should have familiarized yourself with <a href="../what-is-neo4j/graph-database">Graph Databases</a> and the <a href="../what-is-neo4j/property-graph">Property Graph Model</a>.
 </blockquote>
 </div>
-<div class="toc">
-<h3 class="title">Overview</h3>
+<div id="toc" class="toc">
+<h3 class="title" id="toctitle">Overview</h3>
 
 <ul class="sectlevel1">
 <li><a href="#_about_cypher">About Cypher</a></li>
@@ -192,7 +192,7 @@ This is a guide for Beginner. You should have familiarized yourself with <a href
 
 
 <div class="paragraph">
-<p>So for example, if we want to find all the <strong>persons</strong> and the <strong>things</strong> they like, the query will include the identifiers <strong>person</strong> and <strong>thing</strong>, e.g. in a pattern like <code>(person)-&#8594;(thing)</code> so we can refer to them later, e.g. to access properties like <code>person.name</code> and <code>thing.quality</code>.</p>
+<p>So for example, if we want to find all the <strong>persons</strong> and the <strong>things</strong> they like, the query will include the identifiers <strong>person</strong> and <strong>thing</strong>, e.g. in a pattern like <code>(person)--&gt;(thing)</code> so we can refer to them later, e.g. to access properties like <code>person.name</code> and <code>thing.quality</code>.</p>
 </div>
 
 
@@ -247,7 +247,7 @@ RETURN node2.propertyA, node2.propertyB</code></pre>
 
 
 <div class="paragraph">
-<p>If we wanted to retrieve everyone who likes a thing, we would describe the pattern <code>(person)-[:LIKE]&#8594;(thing)</code> to retrieve only nodes that had a relationship typed <strong>LIKE</strong> with other nodes (<strong>thing</strong>). Those nodes would the be <strong>persons</strong> as implied by the <strong>LIKE</strong> relationship.</p>
+<p>If we wanted to retrieve everyone who likes a thing, we would describe the pattern <code>(person)-[:LIKE]-&gt;(thing)</code> to retrieve only nodes that had a relationship typed <strong>LIKE</strong> with other nodes (<strong>thing</strong>). Those nodes would the be <strong>persons</strong> as implied by the <strong>LIKE</strong> relationship.</p>
 </div>
 
 
@@ -264,7 +264,7 @@ RETURN node2.propertyA, node2.propertyB</code></pre>
 
 
 <div class="paragraph">
-<p>Sometimes we need access to information about a relationship (e.g. its type or properties). For example, we might want to output the <strong>rating</strong> that an <strong>person</strong> gave in a <strong>thing</strong> and that <strong>rating</strong> would probably be a property of the <strong>like</strong> relationship. As with nodes, we can use identifiers for relationships (in front of the <strong>:TYPE</strong>). If we tried to match <code>(person)-[like:LIKE]&#8594;(thing)</code>, we would be able to output the <code>like.rating</code> for each of the persons and all the things that they like.</p>
+<p>Sometimes we need access to information about a relationship (e.g. its type or properties). For example, we might want to output the <strong>rating</strong> that an <strong>person</strong> gave in a <strong>thing</strong> and that <strong>rating</strong> would probably be a property of the <strong>like</strong> relationship. As with nodes, we can use identifiers for relationships (in front of the <strong>:TYPE</strong>). If we tried to match <code>(person)-[like:LIKE]-&gt;(thing)</code>, we would be able to output the <code>like.rating</code> for each of the persons and all the things that they like.</p>
 </div>
 
 <div class="listingblock">
@@ -281,7 +281,7 @@ RETURN rel.property</code></pre>
 
 
 <div class="paragraph">
-<p>Labels allow us to group our nodes. For example, we might want to distinguish <strong>things</strong> from <strong>persons</strong> or companies (both deal with things). By matching for <code>(person:Person)-[:LIKE]&#8594;(thing)</code>, it will return <strong>John</strong>, but not <strong>ACME Inc</strong> - a well known manufacturer.</p>
+<p>Labels allow us to group our nodes. For example, we might want to distinguish <strong>things</strong> from <strong>persons</strong> or companies (both deal with things). By matching for <code>(person:Person)-[:LIKE]-&gt;(thing)</code>, it will return <strong>John</strong>, but not <strong>ACME Inc</strong> - a well known manufacturer.</p>
 </div>
 
 

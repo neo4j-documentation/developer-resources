@@ -11,7 +11,7 @@ This example demonstrates how to use neo4j-core to execute cypher queries
 
 ## How to run
 
-`bundle exec rackup`
+`ruby movies.rb`
 
-or `bundle exec shotgun`
+or 'bundle exec shotgun movies.rb'
 
