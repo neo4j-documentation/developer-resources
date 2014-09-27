@@ -142,7 +142,8 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-Existing data comes in many shapes and sizes and one of the most popular is a relational database. In this guide we&#8217;ll look at how we can export a Postgres data set into Neo4j.
+Existing data comes in many shapes and sizes and one of the most popular is a relational database.
+In this guide we&#8217;ll look at how we can export a Postgres data set into Neo4j.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
@@ -165,7 +166,8 @@ You should have a basic understanding of the <a href="/what-is-neo4j/property-gr
 
 
 <div class="paragraph">
-<p>In this guide we&#8217;ll be using the <a href="https://code.google.com/p/northwindextended/downloads/detail?name=northwind.postgre.sql&amp;can=2&amp;q=">NorthWind data set</a> as our example. NorthWind is a popular data set used to demonstrate SQL and relational databases but the data is graphy enough to be interesting for us.</p>
+<p>In this guide we&#8217;ll be using the <a href="https://code.google.com/p/northwindextended/downloads/detail?name=northwind.postgre.sql&amp;can=2&amp;q=">NorthWind data set</a> as our example.
+NorthWind is a popular data set used to demonstrate SQL and relational databases but the data is graphy enough to be interesting for us.</p>
 </div>
 
 
@@ -225,7 +227,7 @@ A table name is a label name
 
 <ul>
 <li>
-Graph should be more normalised. e.g. addresses have been denormalised in the Suppliers, Orders, Customers and Employees table
+Graph should be more normalised. e.g. addresses have been denormalised in the Suppliers, Orders, Customers, and Employees table
 </li>
 <li>
 No nulls in the graph model - in the relational one to track the employee hierarchy we have a null enttry in the 'ReportsTo' column if they don&#8217;t report to anybody
@@ -242,7 +244,8 @@ No nulls in the graph model - in the relational one to track the employee hierar
 
 
 <div class="paragraph">
-<p>Now that we know what we&#8217;d like our graph to look like we need to extract the data from Postgres so we can create it. The easiest way to do that is to export the appropriate tables in CSV format. Postgres' 'copy' command lets us execute a SQL query and write the result to a CSV file:</p>
+<p>Now that we know what we&#8217;d like our graph to look like we need to extract the data from Postgres so we can create it.
+The easiest way to do that is to export the appropriate tables in CSV format. Postgres' 'copy' command lets us execute a SQL query and write the result to a CSV file:</p>
 </div>
 
 <div class="listingblock">
@@ -256,6 +259,27 @@ No nulls in the graph model - in the relational one to track the employee hierar
       left outer join categories ON categories."CategoryID" = products."CategoryID")
       To '/tmp/customerDb.csv' With CSV header;</code></pre>
 </div>
+</div>
+</div>
+<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<h2 id="_recommended">Recommended</h2>
+</li>
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="http://neo4j.com/docs">The Neo4j Docs</a>
+</li>
+<li>
+<a href="/blog">The Neo4j Blog</a>
+</li>
+<li>
+<a href="/build-a-graph-data-model/guide-intro-to-graph-modeling">Intro to Graph Modeling</a>
+</li>
+</ul>
+
 </div>
 </div>
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
@@ -405,6 +429,27 @@ LIMIT 5</code></pre>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<h2 id="_further_reading">Further Reading</h2>
+</li>
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="/books">The Neo4j Bookshelf</a>
+</li>
+<li>
+<a href="http://watch.neo4j.org">The Neo4j Video Library</a>
+</li>
+<li>
+<a href="http://gist.neo4j.org/">GraphGists</a>
+</li>
+</ul>
+
 </div>
 </div>
 </div>

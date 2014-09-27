@@ -6,7 +6,7 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>How to set up a Neo4j Cluster | Developer Resources | Neo4j Graph Database</title>
+         <title>The neo4j-core Ruby driver | Developer Resources | Neo4j Graph Database</title>
          <script type="text/javascript">
             var _kmq = _kmq || [];
             var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
@@ -123,12 +123,12 @@
                <article id="content" role="main">
                  <div class="row" style="padding: 10px 0 0;">
                    <div class="columns large-12" style="padding:10px 0 0;">
-                   <ul class="breadcrumbs"> <li><a href="/developer-resources">Developer Guides</a></li> <li><a href="../">Neo4j in Production</a></li> <li class="current"><a href="#">How to set up a Neo4j Cluster</a></li> </ul>
+                   <ul class="breadcrumbs"> <li><a href="/developer-resources">Developer Guides</a></li> <li><a href="../">Guide</a></li> <li class="current"><a href="#">The neo4j-core Ruby driver</a></li> </ul>
                  </div>
                  </div>
                  <div class="row">
                    <div class="columns large-12">
-                   <h1 style="font-size:2.1rem;">How to set up a Neo4j Cluster</h1>
+                   <h1 style="font-size:2.1rem;">The neo4j-core Ruby driver</h1>
                  </div>
                  </div>
                   <section class="row" style="padding:10px 0;">
@@ -137,259 +137,55 @@
 
 
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="quoteblock abstract">
-<div class="title">Goals</div>
-<blockquote style="padding-left: 0;">
-This guide describes how to configure clustering in an Enterprise Neo4J installation.
-This includes topics such as data synchronization, mending procedures, configuring an arbiter and slave-only mode configuration.
-</blockquote>
-</div>
-<div class="quoteblock abstract">
-<div class="title">Prerequisites</div>
-<blockquote style="padding-left: 0;">
-You should know how to <a href="/download">download</a> and install Neo4j on your system.
-If you are a developer you should be accustomed to the graph data model and have written your Neo4j application.
-A sound understanding of Neo4j&#8217;s HTTP APIs, <a href="../guide-performance-tuning">tuning</a>, security and upgrade aspects, will help you set up a stable cluster.
-</blockquote>
+<div class="sect1 "  >
+    
+<h3 id="_the_neo4j_core_ruby_driver">The neo4j-core Ruby driver</h3>
+
+<div class="sectionbody row">
+<div class="columns medium-12">
+
+
+<div class="paragraph">
+<p>This example demonstrates how to use <a href="https://github.com/neo4jrb/neo4j-core">neo4j-core</a> to execute cypher queries</p>
 </div>
 
-
-<div class="label">Advanced</div>
-<hr/>
-
-<div class="toc">
-<h3 class="title">Overview</h3>
-
-<ul class="sectlevel2">
-<li><a href="#_data_synchronization_between_master_and_slaves">Data Synchronization between master and slaves</a></li>
-
-<li><a href="#_configuring_a_two_slave_cluster_with_an_arbiter">Configuring a Two-Slave Cluster with an Arbiter</a></li>
-<li><a href="#_setting_a_server_in_slave_only_mode">Setting a Server in Slave-Only Mode</a></li>
-<li><a href="#_backing_up_a_cluster_server">Backing Up a Cluster Server</a></li>
-<li><a href="#_mending_procedure_for_master">Mending Procedure for Master</a></li>
-<li><a href="#_mending_procedure_for_slaves">Mending Procedure for Slaves</a></li>
-
-</ul>
-
-<hr>
-</div>
-</div>
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
-<h4 id="_data_synchronization_between_master_and_slaves">Data Synchronization between master and slaves</h4>
+<h4 id="_how_to_install">How to install</h4>
 
-
-
-<div class="paragraph">
-<p>Neo4j High Availability Cluster is a full master-slave replication.
-Any data (graph or index) created on the master is propagated to the slaves depending on the settings of the master <code>ha.tx_push_factor</code> (number of slaves to actively push to during commit) and slaves <code>ha.pull_interval</code> (frequency of pulling updates from the master).</p>
-</div>
-
-</div>
-<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
-<h2 id="_recommended">Recommended</h2>
-</li>
-<div class="ulist">
-
-
-<ul>
-<li>
-<a href="http://jimwebber.org/2011/03/strategies-for-scaling-neo4j/" class="blog">Strategies for Scaling Neo4j</a>
-</li>
-<li>
-<a href="http://docs.neo4j.org/chunked/stable/ha.html" class="docs">Neo4j High Availability</a>
-</li>
-<li>
-<a href="http://docs.neo4j.org/chunked/stable/ha-setup-tutorial.html" class="docs">Tutorial Cluster Setup</a>
-</li>
-</ul>
-
-</div>
-</div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
-    
-<h4 id="_configuring_a_two_slave_cluster_with_an_arbiter">Configuring a Two-Slave Cluster with an Arbiter</h4>
-
-
-
-<div class="paragraph">
-<p>There&#8217;s a <a href="http://docs.neo4j.org/chunked/stable/ha-setup-tutorial.html">step-by-step tutorial for setting up a HA cluster</a>.
-For a 2 node cluster, you&#8217;ll actually want to run 3 separate machines, and use the Neo4j arbiter on the 3rd.
-Details on the arbiter are available in the <a href="http://docs.neo4j.org/chunked/stable/arbiter-instances.html">Neo4j Manual</a>.
-The configuration for the arbiter is identical to that of a regular instance, excepting anything relating to the actual graph db itself (since an arbiter doesn&#8217;t hold any data).</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>The <code>ha.initial_hosts</code> property should be the same on all the instances, including the arbiter.
-The arbiter should have a unique <code>ha.server_id</code> (<code>3</code> is fine).</p>
-</div>
-
-</div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
-    
-<h4 id="_setting_a_server_in_slave_only_mode">Setting a Server in Slave-Only Mode</h4>
-
-
-
-<div class="paragraph">
-<p>See the <a href="http://docs.neo4j.org/chunked/stable/ha-configuration.html">documentation</a> on <code>ha.slave_only</code>.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>You might want to configure a machine with that setting if it’s acting as a reporting instance but you need to make sure that 2 members don’t have that setting otherwise you won’t have any failover in the cluster.</p>
-</div>
-
-</div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
-    
-<h4 id="_backing_up_a_cluster_server">Backing Up a Cluster Server</h4>
-
-
-
-<div class="paragraph">
-<p>Neo4j Server must be configured to run a backup service.
-This is enabled via the configuration parameter <code>online_backup_enabled</code>, and is enabled by default.
-The interface and port the backup service listens on is configured via the parameter <code>online_backup_server</code> and defaults to the <code>loopback</code> interface and port <code>6362</code>.
-It is typical to reconfigure this to listen on an external interface, by setting <code>online_backup_server=&lt;my-host-ip-address&gt;:6362</code>.
-It can also be configured to listen on all interfaces by setting <code>online_backup_server=0.0.0.0:6362</code>.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>It is best to use the back tool with the command line <code>./bin/neo4j-backup -host 192.168.1.34 -to /mnt/backup/neo4j-backup</code>, which will backup the store from that specific host even if that host is running in a cluster.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Additional details can be found <a href="http://docs.neo4j.org/chunked/stable/backup-introduction.html">in the manual</a>.</p>
-</div>
-
-<div class="imageblock">
-<p class="content">
-<img src="./neo4j-logo.png" alt="neo4j logo">
-</p>
-</div>
-</div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
-    
-<h4 id="_mending_procedure_for_master">Mending Procedure for Master</h4>
-
-<div class="ulist">
-
-
-<ul>
-<li>
-Shut down all members of the cluster and stop any load against the cluster
-</li>
-<li>
-On the master instance, copy the data/graph.db folder as a backup
-</li>
-<li>
-Modify neo4j-server.properties, set the org.neo4j.server.database.mode to "STANDALONE"
-</li>
-<li>
-Start the database and, once it&#8217;s running, stop it again (this is to ensure he database is cleanly shut down)
-</li>
-<li>
-Remove all files named nioneo_logical.log.vXX in data/graph.db, being careful to not remove any files without the "v", like nioneo_logical.log.1 or nioneo_logical.log.active
-</li>
-<li>
-Start the server and use either neo4j-shell or the neo4j browser to issue the following two queries:
-<div class="olist arabic">
-<ol style="margin-left: 2.4rem;" class="arabic">
-<li>
-<p style="margin-bottom: 0.75rem;">First query, note the id returned here</p>
-</li>
-</ol>
-</div>
-</li>
-</ul>
-
-</div>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (n) RETURN id(n)</code></pre>
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="bash"><code>bundle install</code></pre>
 </div>
-</div>
-<div class="olist arabic">
-<ol style="margin-left: 2.4rem;" class="arabic">
-<li>
-<p style="margin-bottom: 0.75rem;">Second query, use the id returned from the previous one</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (n) WHERE id(n) = &lt;your node id&gt; DELETE n</code></pre>
-</div>
-</div>
-<div class="ulist">
-
-
-<ul>
-<li>
-Stop the server
-</li>
-<li>
-Set org.neo4j.server.database.mode to HA
-</li>
-<li>
-Start the server
-</li>
-</ul>
-
 </div>
 </div>
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
-<h4 id="_mending_procedure_for_slaves">Mending Procedure for Slaves</h4>
+<h4 id="_how_to_run">How to run</h4>
 
-<div class="ulist">
-
-
-<ul>
-<li>
-On each slave, remove the <code>data/graph.db</code> folder
-</li>
-<li>
-Start the slave, watch <code>data/graph.db</code> for it to copy the store from the master
-</li>
-<li>
-Once copying is done, move to do the same thing on the second slave
-</li>
-</ul>
-
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="bash"><code>bundle install
+ruby movies.rb`</code></pre>
 </div>
 </div>
-<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
-<h2 id="_further_reading">Further Reading</h2>
-</li>
-<div class="ulist">
 
 
-<ul>
-<li>
-<a href="/books">The Neo4j Bookshelf</a>
-</li>
-<li>
-<a href="http://watch.neo4j.org">The Neo4j Video Library</a>
-</li>
-<li>
-<a href="http://gist.neo4j.org/">GraphGists</a>
-</li>
-</ul>
-
+<div class="paragraph">
+<p>or, for development and reloading,</p>
 </div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="bash"><code>bundle install
+gem install shotgun
+bundle exec shotgun movies.rb</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
 </div>
 </div>
 

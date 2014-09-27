@@ -142,7 +142,8 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-This guide is designed to walk you through the graph data modeling lifecycle of Neo4j. You will be introduced to the basic process of designing a graph data model that can answer a wide range of business questions across a variety of domains.
+This guide is designed to walk you through the graph data modeling lifecycle of Neo4j.
+You will be introduced to the basic process of designing a graph data model that can answer a wide range of business questions across a variety of domains.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
@@ -156,13 +157,12 @@ You should have a firm understanding of the Neo4j&#8217;s <a href="./property-gr
 <div class="label">Intermediate</div>
 <hr/>
 
-<div id="toc" class="toc">
-<h3 class="title" id="toctitle">Overview</h3>
+<div class="toc">
+<h3 class="title">Overview</h3>
 
 <ul class="sectlevel1">
 <li><a href="#_introduction">Introduction</a></li>
-<li><a href="#_describing_a_domain">Describing a domain</a></li>
-<li>
+<li><a href="#_describing_a_domain">Describing a domain</a>
 <ul class="sectlevel2">
 <li><a href="#_nodes">Nodes</a></li>
 
@@ -172,13 +172,13 @@ You should have a firm understanding of the Neo4j&#8217;s <a href="./property-gr
 <li><a href="#_draw_the_data_model">Draw the data model</a></li>
 </ul>
 </li>
-<li><a href="#_answering_questions">Answering questions</a></li>
-<li>
+<li><a href="#_answering_questions">Answering questions</a>
 <ul class="sectlevel2">
 <li><a href="#_list_your_questions">List your questions</a></li>
 
 <li><a href="#_create_a_sample_dataset">Create a sample dataset</a></li>
 <li><a href="#_translate_questions_to_cypher_queries">Translate questions to Cypher queries</a></li>
+
 </ul>
 </li>
 </ul>
@@ -195,7 +195,8 @@ You should have a firm understanding of the Neo4j&#8217;s <a href="./property-gr
 
 
 <div class="paragraph">
-<p>Graph data modeling is the process in which a Neo4j user describes an arbitrary domain as a connected graph of nodes and relationships. From this description, a graph data model is designed to answer questions in the form of Cypher queries.</p>
+<p>Graph data modeling is the process in which a Neo4j user describes an arbitrary domain as a connected graph of nodes and relationships.
+From this description, a graph data model is designed to answer questions in the form of Cypher queries.</p>
 </div>
 
 </div>
@@ -266,7 +267,10 @@ Two <em>people</em>, <strong>John</strong> and <strong>Sally</strong>, are <u>fr
 </div>
 
 <blockquote>
-The fundamental units that form a graph are nodes and relationships. In Neo4j, both nodes and relationships can contain properties. Nodes are often used to represent entities, but depending on the domain relationships may be used for that purpose as well. Apart from properties and relationships, nodes can also be labeled with zero or more labels.
+The fundamental units that form a graph are nodes and relationships.
+In Neo4j, both nodes and relationships can contain properties.
+Nodes are often used to represent entities, but depending on the domain relationships may be used for that purpose as well.
+Apart from properties and relationships, nodes can also be labeled with zero or more labels.
 </blockquote>
 <div class="attribution">
 <cite>docs.neo4j.org</cite><br>
@@ -385,7 +389,10 @@ Two people, <strong>John</strong> and <strong>Sally</strong>, are friends. Both 
 </div>
 
 <blockquote>
-A label is a named graph construct that is used to group nodes into sets. All nodes labeled with the same label belongs to the same set. Many database queries can work with these sets instead of the whole graph, making queries easier to write and more efficient. A node may be labeled with any number of labels, including none, making labels an optional addition to the graph.
+A label is a named graph construct that is used to group nodes into sets.
+All nodes labeled with the same label belongs to the same set.
+Many database queries can work with these sets instead of the whole graph, making queries easier to write and more efficient.
+A node may be labeled with any number of labels, including none, making labels an optional addition to the graph.
 </blockquote>
 <div class="attribution">
 <cite>docs.neo4j.org</cite><br>
@@ -409,7 +416,8 @@ A label is a named graph construct that is used to group nodes into sets. All no
 
 
 <div class="paragraph">
-<p>First we&#8217;ll start by identifying the roles of objects (John, Sally, Graph Databases) mentioned in the statement. We know that this statement is about two different types of objects:</p>
+<p>First we&#8217;ll start by identifying the roles of objects (John, Sally, Graph Databases) mentioned in the statement.
+We know that this statement is about two different types of objects:</p>
 </div>
 
 <div class="quoteblock" style="margin: auto; width: 95%;">
@@ -463,7 +471,9 @@ Two <em>people</em>, John and Sally, are friends. Both John and Sally have read 
 
 
 <div class="paragraph">
-<p>Now that we have identified both our nodes and labels, we can assign the labels to the nodes they describe. For <strong>John</strong> and <strong>Sally</strong> we apply the role <em>Person</em>. For <strong>Graph Databases</strong> we apply the role <em>Book</em>.</p>
+<p>Now that we have identified both our nodes and labels, we can assign the labels to the nodes they describe.
+For <strong>John</strong> and <strong>Sally</strong> we apply the role <em>Person</em>.
+For <strong>Graph Databases</strong> we apply the role <em>Book</em>.</p>
 </div>
 
 <div class="imageblock">
@@ -567,7 +577,8 @@ Two <em>people</em>, John and Sally, are friends. Both John and Sally have read 
 
 
 <div class="paragraph">
-<p>We have gone through the process of creating a basic graph data model for the interactions between people and books. We can take this data model further by defining attributes of these entities as key-value properties.</p>
+<p>We have gone through the process of creating a basic graph data model for the interactions between people and books.
+We can take this data model further by defining attributes of these entities as key-value properties.</p>
 </div>
 
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
@@ -771,6 +782,27 @@ ORDER BY r.on
 LIMIT 1</code></pre>
 </div>
 </div>
+</div>
+</div>
+<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<h2 id="_further_reading">Further Reading</h2>
+</li>
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="/books">The Neo4j Bookshelf</a>
+</li>
+<li>
+<a href="http://watch.neo4j.org">The Neo4j Video Library</a>
+</li>
+<li>
+<a href="http://gist.neo4j.org/">GraphGists</a>
+</li>
+</ul>
+
 </div>
 </div>
 </div>

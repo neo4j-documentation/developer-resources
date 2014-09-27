@@ -148,7 +148,8 @@ This guide explains Configuration and Performance Tuning best practices and trou
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-This guide describes how to configure and tune a Neo4j installation. This includes topics such as cache sizing, JVM configuration, Memory Mapped IO (MMIO) settings and logical log configuration.
+This guide describes how to configure and tune a Neo4j installation.
+This includes topics such as cache sizing, JVM configuration, Memory Mapped IO (MMIO) settings and logical log configuration.
 </blockquote>
 </div>
 
@@ -213,25 +214,35 @@ However, that reduces the size available for the caches accordingly.</p>
 
 
 <div class="paragraph">
-<p>Tuning the standalone server is achieved by editing the neo4j-wrapper.conf file in the conf directory of NEO4J_HOME.</p>
+<p>Tuning the standalone server is achieved by editing the <code>neo4j-wrapper.conf</code> file in the conf directory of NEO4J_HOME.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>The heap space parameter is the most important one for Neo4j, since this governs how many objects you can allocate. When it comes to heap space the general rule is: the larger heap space you have the better, but make sure the heap fits in the RAM memory of the computer. If the heap is paged out to disk performance will degrade rapidly. Having a heap that is much larger than what your application needs is not good either, since this means that the JVM will accumulate a lot of dead objects before the garbage collector is executed, this leads to long garbage collection pauses and undesired performance behavior.</p>
+<p>The heap space parameter is the most important one for Neo4j, since this governs how many objects you can allocate.
+When it comes to heap space the general rule is: the larger heap space you have the better, but make sure the heap fits in the RAM memory of the computer.
+If the heap is paged out to disk performance will degrade rapidly.
+Having a heap that is much larger than what your application needs is not good either, since this means that the JVM will accumulate a lot of dead objects before the garbage collector is executed, this leads to long garbage collection pauses and undesired performance behavior.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Typically we aim to have those memory_mappings cover the entire size of the on-disk store, to ensure all the graph content is cached into memory. The remaining memory can then be split between the Neo4j heap and the rest of the operating system (&amp; other processes).</p>
+<p>Typically we aim to have those memory_mappings cover the entire size of the on-disk store, to ensure all the graph content is cached into memory.
+The remaining memory can then be split between the Neo4j heap and the rest of the operating system (&amp; other processes).</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Edit your neo4j-wrapper file to set the heap size. It is recommended that the initmemory and the maxmemory properties be set to the same number. For example:</p>
+<p>Edit your neo4j-wrapper file to set the heap size. It is recommended that the initmemory and the maxmemory properties be set to the same number.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>For example:</p>
 </div>
 
 <div class="listingblock">
@@ -244,7 +255,7 @@ wrapper.java.maxmemory=24512</pre>
 
 <div class="paragraph">
 <p>Finally make sure that the OS has some memory left to manage proper file system caches.
-This means, if your server has 8GB of RAM don’t use all of that RAM for heap (unless you have turned off memory mapped buffers), but leave a good part of it to the OS.</p>
+This means, if your server has 8GB of RAM don&#8217;t use all of that RAM for heap (unless you have turned off memory mapped buffers), but leave a good part of it to the OS.</p>
 </div>
 
 </div>
@@ -255,7 +266,8 @@ This means, if your server has 8GB of RAM don’t use all of that RAM for heap (
 
 
 <div class="paragraph">
-<p>You should adopt the MMIO cache settings to fit your graph size in neo4j.properties and not rely on the default values. To determine the graph size:</p>
+<p>You should adopt the MMIO cache settings to fit your graph size in <code>neo4j.properties</code> and not rely on the default values.
+To determine the graph size:</p>
 </div>
 
 <div class="listingblock">
@@ -323,13 +335,14 @@ Logs are rotated every now and then (defaults to when they surpass 25 Mb in size
 <div class="paragraph">
 <p>The usual default of <code>1024</code> is often not enough, especially when many indexes are used or a server installation sees too many connections (network sockets count against that limit as well).
 Users are therefore encouraged to increase that limit to a healthy value of <code>40000</code> or more, depending on usage patterns.
-Setting this value via the ulimit command is possible only for the root user and that for that session only. To set the value system wide you have to follow the instructions for your platform (<a href="http://docs.neo4j.org/chunked/stable/linux-performance-guide.html#_setting_the_number_of_open_files">Linux</a>).</p>
+Setting this value via the ulimit command is possible only for the root user and that for that session only.
+To set the value system wide you have to follow the instructions for your platform (<a href="http://docs.neo4j.org/chunked/stable/linux-performance-guide.html#_setting_the_number_of_open_files">Linux</a>).</p>
 </div>
 
 </div>
 <div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
     <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
-<h2 id="_sidebar">Sidebar</h2>
+<h2 id="_recommended">Recommended</h2>
 </li>
 <div class="ulist">
 
@@ -367,6 +380,33 @@ Setting this value via the ulimit command is possible only for the root user and
 <ul>
 <li>
 Heap is too small, or caches are too big. See recommended setup
+</li>
+</ul>
+
+</div>
+
+
+<div class="paragraph">
+<p>\\TODO this seems unfinished ^</p>
+</div>
+
+</div>
+<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<h2 id="_further_reading">Further Reading</h2>
+</li>
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="/books">The Neo4j Bookshelf</a>
+</li>
+<li>
+<a href="http://watch.neo4j.org">The Neo4j Video Library</a>
+</li>
+<li>
+<a href="http://gist.neo4j.org/">GraphGists</a>
 </li>
 </ul>
 

@@ -123,7 +123,7 @@
                <article id="content" role="main">
                  <div class="row" style="padding: 10px 0 0;">
                    <div class="columns large-12" style="padding:10px 0 0;">
-                   <ul class="breadcrumbs"> <li><a href="/developer-resources">Developer Guides</a></li> <li><a href="../">Guide</a></li> <li class="current"><a href="#">Graph Vizualisation for Neo4j</a></li> </ul>
+                   <ul class="breadcrumbs"> <li><a href="/developer-resources">Developer Guides</a></li> <li><a href="../">Working with Data</a></li> <li class="current"><a href="#">Graph Vizualisation for Neo4j</a></li> </ul>
                  </div>
                  </div>
                  <div class="row">
@@ -137,22 +137,40 @@
 
 
 <div id="content">
-<div class="sect1 "  >
-    
-<h3 id="_graph_vizualisation_for_neo4j">Graph Vizualisation for Neo4j</h3>
+<div id="preamble">
+<div class="sectionbody">
+<div class="quoteblock abstract">
+<div class="title">Goals</div>
+<blockquote style="padding-left: 0;">
+We live in a connected world.
+There are no isolated pieces of information, but rich, connected domains all around us.
+</blockquote>
+</div>
+<div class="quoteblock abstract">
+<div class="title">Prerequisites</div>
+<blockquote style="padding-left: 0;">
+Nodes can be tagged with zero to many labels representing their different roles in the domain.
+In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes.
+</blockquote>
+</div>
 
-<div class="sectionbody row">
-<div class="columns medium-12">
+
+<div class="label">Beginner</div>
+<hr/>
+
 
 
 <div class="paragraph">
-<p>Storing a graph is one thing, but visualizing it creates awe and epiphanies. Graph visualisations are a powerful tool to convey the content of a graph. They can highlight patterns, show clusters and connections. There are different tools that you can use to visualize the content of a Neo4j graph database.</p>
+<p>Storing a graph is one thing, but visualizing it creates awe and epiphanies.
+Graph visualisations are a powerful tool to convey the content of a graph.
+They can highlight patterns, show clusters and connections. There are different tools that you can use to visualize the content of a Neo4j graph database.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>A popular choice are javascript frameworks such as <a href="http://d3js.org/">the D3.js</a>, <a href="http://threejs.org/">three.js</a> and <a href="http://sigmajs.org/">sigma.js</a>. In all cases, the technique is to request JSON data for all or a part of the graph data from the server backend, and then dynamically add this data to the Javascript visualisation in-memory model for rendering on the client side.</p>
+<p>A popular choice are javascript frameworks such as <a href="http://d3js.org/">the D3.js</a>, <a href="http://threejs.org/">three.js</a> and <a href="http://sigmajs.org/">sigma.js</a>.
+In all cases, the technique is to request JSON data for all or a part of the graph data from the server backend, and then dynamically add this data to the Javascript visualisation in-memory model for rendering on the client side.</p>
 </div>
 
 
@@ -161,6 +179,8 @@
 <p>There are a great number of ways to show and manipulate graph data, below are listed a few of the more popular ones.</p>
 </div>
 
+</div>
+</div>
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_the_neo4j_browser">The Neo4j Browser</h4>
@@ -169,7 +189,9 @@
 
 <div class="paragraph">
 <p>The default <a href="http://neo4j.com/download">Neo4j Server</a> has a powerful, customizable data visualisation tool based on the D3.js
- library built in. Michael shows how to style Nodes and Relationships in the Neo4j&#8217;s Browser visualization, setting colors, sizes and titles. He discusses the Graph-Style-Sheet (GRASS) and how you can download, update and reset the styling information.</p>
+ library built in.
+ Michael shows how to style Nodes and Relationships in the Neo4j&#8217;s Browser visualization, setting colors, sizes and titles.
+ He discusses the Graph-Style-Sheet (GRASS) and how you can download, update, and reset the styling information.</p>
 </div>
 
 <iframe src="//player.vimeo.com/video/97204829" width="500" height="313" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
@@ -190,6 +212,27 @@
 <p>Alistair Jones is building a very powerful graph web editing tool based on SVG, suited for easy integration into modern HTML frameworks.</p>
 </div>
 
+</div>
+<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<h2 id="_recommended">Recommended</h2>
+</li>
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="http://neo4j.com/docs">The Neo4j Docs</a>
+</li>
+<li>
+<a href="/blog">The Neo4j Blog</a>
+</li>
+<li>
+<a href="/build-a-graph-data-model/guide-intro-to-graph-modeling">Intro to Graph Modeling</a>
+</li>
+</ul>
+
+</div>
 </div>
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
@@ -214,7 +257,10 @@
 
 
 <div class="paragraph">
-<p>KeyLines will integrate into existing web applications easily and with very little effort. How and where you get the data is up to you. KeyLines does the job of rendering it and responding to user interactions like clicking, touching, moving nodes, etc. You bind to these events to customize what happens. Your data stays under your control at all times: KeyLines is self-contained and needs no external connections.</p>
+<p>KeyLines will integrate into existing web applications easily and with very little effort.
+How and where you get the data is up to you. KeyLines does the job of rendering it and responding to user interactions like clicking, touching, moving nodes, etc.
+You bind to these events to customize what happens.
+Your data stays under your control at all times: KeyLines is self-contained and needs no external connections.</p>
 </div>
 
 </div>
@@ -227,13 +273,31 @@
 
 
 <div class="paragraph">
-<p><a href="https://www.tomsawyer.com/pressreleases/pressrelease.php?release_id=164&amp;news=product">Tom Sawyer Perspectives 6.0</a> offers Cypher support for Neo4j graph databases and connects them to the broad visualization capabilities of the tool. The integration with the latest Neo4j version makes it easier to write complex queries and render their results in a comprehensive way.</p>
+<p><a href="https://www.tomsawyer.com/pressreleases/pressrelease.php?release_id=164&amp;news=product">Tom Sawyer Perspectives 6.0</a> offers Cypher support for Neo4j graph databases and connects them to the broad visualization capabilities of the tool.
+The integration with the latest Neo4j version makes it easier to write complex queries and render their results in a comprehensive way.</p>
 </div>
 
 </div>
-</div>
-</div>
+<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<h2 id="_further_reading">Further Reading</h2>
+</li>
+<div class="ulist">
 
+
+<ul>
+<li>
+<a href="/books">The Neo4j Bookshelf</a>
+</li>
+<li>
+<a href="http://watch.neo4j.org">The Neo4j Video Library</a>
+</li>
+<li>
+<a href="http://gist.neo4j.org/">GraphGists</a>
+</li>
+</ul>
+
+</div>
 </div>
 </div>
 

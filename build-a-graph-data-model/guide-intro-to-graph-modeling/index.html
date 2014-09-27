@@ -6,7 +6,7 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>Data Modelling Guide | Developer Resources | Neo4j Graph Database</title>
+         <title>Data Modeling Guide | Developer Resources | Neo4j Graph Database</title>
          <script type="text/javascript">
             var _kmq = _kmq || [];
             var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
@@ -123,12 +123,12 @@
                <article id="content" role="main">
                  <div class="row" style="padding: 10px 0 0;">
                    <div class="columns large-12" style="padding:10px 0 0;">
-                   <ul class="breadcrumbs"> <li><a href="/developer-resources">Developer Guides</a></li> <li><a href="../">Graph Data Modeling</a></li> <li class="current"><a href="#">Data Modelling Guide</a></li> </ul>
+                   <ul class="breadcrumbs"> <li><a href="/developer-resources">Developer Guides</a></li> <li><a href="../">Graph Data Modeling</a></li> <li class="current"><a href="#">Data Modeling Guide</a></li> </ul>
                  </div>
                  </div>
                  <div class="row">
                    <div class="columns large-12">
-                   <h1 style="font-size:2.1rem;">Data Modelling Guide</h1>
+                   <h1 style="font-size:2.1rem;">Data Modeling Guide</h1>
                  </div>
                  </div>
                   <section class="row" style="padding:10px 0;">
@@ -142,7 +142,8 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-This guide will show you how to design a graph model and you can then apply the lessons to your own data set. We&#8217;ll be following Ian Robinson&#8217;s <strong>Design for Queryability</strong> modeling approach.
+This guide will show you how to design a graph model and you can then apply the lessons to your own data set.
+We&#8217;ll be following Ian Robinson&#8217;s <strong>Design for Queryability</strong> modeling approach.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
@@ -162,8 +163,9 @@ You should be familiar with the guide on <a href="../../what-is-neo4j/graph-data
 <ul class="sectlevel2">
 <li><a href="#_application_end_user_goals">Application/End User Goals</a></li>
 <li><a href="#_questions_to_ask_of_the_domain">Questions to ask of the domain</a></li>
-<li><a href="#_identity_entities">Identity entities</a></li>
-<li><a href="#_identity_relationships">Identity relationships</a></li>
+<li><a href="#_identity_entities">Identity Entities</a></li>
+
+<li><a href="#_identity_relationships">Identity Relationships</a></li>
 
 </ul>
 
@@ -272,7 +274,7 @@ So that we can exchange knowledge</p>
 </div>
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
-<h4 id="_identity_entities">Identity entities</h4>
+<h4 id="_identity_entities">Identity Entities</h4>
 
 
 
@@ -314,14 +316,36 @@ skill</p>
 </div>
 </div>
 </div>
+<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<h2 id="_recommended">Recommended</h2>
+</li>
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="http://neo4j.com/docs">The Neo4j Docs</a>
+</li>
+<li>
+<a href="/blog">The Neo4j Blog</a>
+</li>
+<li>
+<a href="/build-a-graph-data-model/guide-intro-to-graph-modeling">Intro to Graph Modeling</a>
+</li>
+</ul>
+
+</div>
+</div>
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
-<h4 id="_identity_relationships">Identity relationships</h4>
+<h4 id="_identity_relationships">Identity Relationships</h4>
 
 
 
 <div class="paragraph">
-<p>The next step is to pull out the relationships between those entities which we can do by pulling out the verbs:</p>
+<p>The next step is to pull out the relationships between those entities.
+We can do so by pulling out the verbs:</p>
 </div>
 
 <div class="quoteblock" style="margin: auto; width: 95%;">
@@ -359,7 +383,8 @@ person HAS_SKILL skill<br></p>
 
 
 <div class="paragraph">
-<p>During this process, it&#8217;s helpful to have a whiteboard handy on which you can easily brainstorm with colleagues on the model. In addition, using actual data rather than the type names tends to make system properties easier to grasp.</p>
+<p>During this process, it&#8217;s helpful to have a whiteboard handy on which you can easily brainstorm with colleagues on the model.
+In addition, using actual data rather than the type names tends to make system properties easier to grasp.</p>
 </div>
 
 
@@ -377,13 +402,14 @@ person HAS_SKILL skill<br></p>
 
 
 <div class="paragraph">
-<p>As we come up with new questions and associated queries we can repeat this process.</p>
+<p>As we come up with new questions and associated queries, we can repeat this process.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Although models used in production are much more complex than this simple example, keeping in mind that a good model is made up of both components that are both necessary and sufficient. In other words, although our model has to be detailed enough answer our questions, we don&#8217;t need to model every detail of the system in question.</p>
+<p>Although models used in production are much more complex than this simple example, keeping in mind that a good model is made up of both components that are both necessary and sufficient.
+In other words, although our model has to be detailed enough answer our questions, we don&#8217;t need to model every detail of the system in question.</p>
 </div>
 
 </div>
@@ -400,6 +426,9 @@ person HAS_SKILL skill<br></p>
 </li>
 <li>
 <a href="../../working-with-data/gists-and-example">Graph Gists</a>
+</li>
+<li>
+<a href="http://gist.neo4j.org/">GraphGists</a>
 </li>
 </ul>
 
