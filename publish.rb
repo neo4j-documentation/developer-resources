@@ -19,19 +19,22 @@ email = get_value(lines)
 header = lines.shift
 
 content=  lines.join
-
+POST_TYPE='guide'
 require 'rubypress'
 blog_id  = ENV['BLOG_HOSTNAME']
 username = ENV['BLOG_USERNAME']
 password = ENV['BLOG_PASSWORD']
 
-wp = Rubypress::Client.new(:host => blog_id,
+
+
+wp = Rubypress::Client.new(:host     => blog_id,
                            :username => username,
                            :password => password)
 
-all_pages = wp.getPosts( :filter => {:post_type => 'page',
-                                 :number => 1000,
-                                 :post_status => 'published'})
+all_pages = wp.getPosts( :filter => {:post_type   => POST_TYPE,
+                                     :number      => 1000,
+                                     :post_status => 'published'})
+
 puts "Got #{all_pages.length} pages from the database"
 pages = all_pages.select { |page| page['post_title'] == title }
 puts "Got #{pages.length} pages matching the title"
@@ -45,11 +48,11 @@ content =         { :post_status  => "publish",
 if page
   post_id = page['post_id'].to_i
   puts "Editing #{post_id}"
-  wp.editPost(:blog_id => blog_id,
+  wp.editPost(:blog_id  => blog_id,
                :post_id => post_id,
                :content => content)
 else
   puts "Making a new post for #{title}"
   puts wp.newPost(:blog_id => blog_id,
-                  :content => content.merge({ :post_type => 'page'}))
+                  :content => content.merge({ :post_type => POST_TYPE}))
 end
