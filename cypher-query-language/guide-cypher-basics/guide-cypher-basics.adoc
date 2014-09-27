@@ -12,14 +12,15 @@ We live in a connected world. There are no isolated pieces of information, but r
 
 .Prerequisites
 [abstract]
-Nodes can be tagged with zero to many labels representing their different roles in the domain. In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes.
+Nodes can be tagged with zero to many labels representing their different roles in the domain.
+In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes.
 
 [role=expertise]
 {level}
 
 toc::[]
 
-=== Pop-cultural connections
+=== Pop-Cultural Connections
 _The Movie Graph_ is a mini graph application containing actors and directors that are related through the movies they've collaborated on.
 
 This guide will show you how to:
@@ -33,13 +34,14 @@ This guide will show you how to:
 === Recommended
 
 [role=recommended]
-* http://asciidoctor.org[Links to docs]
-* http://asciidoctor.org[Links to blog]
-* http://asciidoctor.org[Links to guides]
+* http://neo4j.com/docs[The Neo4j Docs]
+* link:/blog[The Neo4j Blog]
+* link:/build-a-graph-data-model/guide-intro-to-graph-modeling[Intro to Graph Modeling]
 
 === Create
 
-Hidden below this text is a giant code block containing a single Cypher query statement composed of multiple CREATE clauses. This will create the movie graph.
+Hidden below this text is a giant code block containing a single Cypher query statement composed of multiple `CREATE` clauses.
+This will create the movie graph.
 
 (You can unfold it with the little [role='icon-plus-sign-alt']plus button)
 
@@ -56,7 +58,7 @@ Example queries for finding individual nodes.
 
 <<MATCH,+:help MATCH+>>, <<WHERE,+:help WHERE+>>, <<RETURN,+:help RETURN+>>
 
-==== Find the actor named "Tom Hanks"...
+==== Find the Actor Named "Tom Hanks"...
 
 [source,cypher]
 ----
@@ -67,7 +69,7 @@ RETURN tom
 //graph_result
 //table
 
-==== Find the movie with title "Cloud Atlas"...
+==== Find the Movie Titled "Cloud Atlas"...
 
 [source,cypher]
 ----
@@ -79,7 +81,7 @@ RETURN cloudAtlas
 
 //table
 
-==== Find 10 people...
+==== Find 10 People...
 
 [source,cypher]
 ----
@@ -89,7 +91,7 @@ RETURN people.name LIMIT 10
 
 // table
 
-==== Find movies released in the 1990s...
+==== Find Movies Released in the 1990s...
 
 [source,cypher]
 ----
@@ -110,7 +112,7 @@ Finding patterns within the graph.
 
 <<MATCH,+:help MATCH+>>
 
-==== List all Tom Hanks movies...
+==== List All Tom Hanks Movies...
 
 [source,cypher]
 ----
@@ -122,7 +124,7 @@ RETURN tom,tomHanksMovies
 
 //table
 
-==== Who directed "Cloud Atlas"?
+==== Who Directed "Cloud Atlas"?
 
 [source,cypher]
 ----
@@ -132,7 +134,7 @@ RETURN directors.name
 
 //table
 
-==== Tom Hanks' co-actors...
+==== Tom Hanks' Co-Actors...
 
 [source,cypher]
 ----
@@ -164,7 +166,7 @@ You've heard of the classic "Six Degrees of Kevin Bacon"? That is simply a short
 http://docs.neo4j.org/chunked/stable/query-match.html#match-variable-length-relationships[variable length relationships]
 http://docs.neo4j.org/chunked/stable/query-match.html#match-shortest-path[shortestPath]
 
-==== Movies and actors up to 3 "hops" away from Kevin Bacon
+==== Movies and Actors up to Three Hops Away from Kevin Bacon
 
 [source,cypher]
 ----
@@ -176,7 +178,7 @@ RETURN DISTINCT hollywood
 
 //table
 
-==== Bacon path, the shortest path of any relationships to Meg Ryan
+==== The Bacon Path, to Meg Ryan
 
 [source,cypher]
 ----
@@ -190,7 +192,7 @@ RETURN p
 
 //table
 
-=== Clean up
+=== Clean Up
 
 When you're done experimenting, you can remove the movie data set.
 
@@ -203,7 +205,7 @@ This will remove all Person and Movie nodes!
 
 <<DELETE,+:help DELETE+>>
 
-==== Delete all Movie and Person nodes, and their relationships
+==== Delete all Movie and Person nodes and their Relationships
 
 //output
 [source,cypher]
@@ -213,7 +215,7 @@ OPTIONAL MATCH (a)-[r1]-(), (m)-[r2]-()
 DELETE a,r1,m,r2
 ----
 
-==== Prove that the Movie Graph is gone
+==== Prove that the Movie Graph is Gone
 
 [source,cypher]
 ----
@@ -222,3 +224,10 @@ RETURN count(*)
 ----
 
 //table
+
+[role=side-nav]
+=== Further Reading
+
+* link:/books[The Neo4j Bookshelf]
+* http://watch.neo4j.org[The Neo4j Video Library]
+* http://gist.neo4j.org/[GraphGists]

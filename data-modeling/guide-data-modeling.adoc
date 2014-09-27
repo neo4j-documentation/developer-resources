@@ -8,7 +8,8 @@
 
 .Goals
 [abstract]
-This guide is designed to walk you through the graph data modeling lifecycle of Neo4j. You will be introduced to the basic process of designing a graph data model that can answer a wide range of business questions across a variety of domains. 
+This guide is designed to walk you through the graph data modeling lifecycle of Neo4j.
+You will be introduced to the basic process of designing a graph data model that can answer a wide range of business questions across a variety of domains. 
 
 .Prerequisites
 [abstract]
@@ -23,7 +24,8 @@ toc::[]
 
 == Introduction
 
-Graph data modeling is the process in which a Neo4j user describes an arbitrary domain as a connected graph of nodes and relationships. From this description, a graph data model is designed to answer questions in the form of Cypher queries.
+Graph data modeling is the process in which a Neo4j user describes an arbitrary domain as a connected graph of nodes and relationships.
+From this description, a graph data model is designed to answer questions in the form of Cypher queries.
 
 == Describing a domain
 
@@ -39,7 +41,10 @@ We can take this statement, identify components such as labels, nodes, and relat
 The first entity that we'll identify in our domain are the nodes. 
 
 [quote, "3.1 Nodes", "docs.neo4j.org"]
-The fundamental units that form a graph are nodes and relationships. In Neo4j, both nodes and relationships can contain properties. Nodes are often used to represent entities, but depending on the domain relationships may be used for that purpose as well. Apart from properties and relationships, nodes can also be labeled with zero or more labels.
+The fundamental units that form a graph are nodes and relationships.
+In Neo4j, both nodes and relationships can contain properties.
+Nodes are often used to represent entities, but depending on the domain relationships may be used for that purpose as well.
+Apart from properties and relationships, nodes can also be labeled with zero or more labels.
 
 image::{img}node.svg[Nodes]
 
@@ -68,11 +73,15 @@ image::{img}data-modeling-3.png[Extract Nodes]
 Now that we have an idea of what our nodes will be, we decide what labels (if any) to assign our nodes. 
 
 [quote, "3.4 Labels", "docs.neo4j.org"]
-A label is a named graph construct that is used to group nodes into sets. All nodes labeled with the same label belongs to the same set. Many database queries can work with these sets instead of the whole graph, making queries easier to write and more efficient. A node may be labeled with any number of labels, including none, making labels an optional addition to the graph.
+A label is a named graph construct that is used to group nodes into sets.
+All nodes labeled with the same label belongs to the same set.
+Many database queries can work with these sets instead of the whole graph, making queries easier to write and more efficient.
+A node may be labeled with any number of labels, including none, making labels an optional addition to the graph.
 
 image::{img}label.svg[Labels]
 
-First we'll start by identifying the roles of objects (John, Sally, Graph Databases) mentioned in the statement. We know that this statement is about two different types of objects:
+First we'll start by identifying the roles of objects (John, Sally, Graph Databases) mentioned in the statement.
+We know that this statement is about two different types of objects:
 
 [quote]
 Two _people_, John and Sally, are friends. Both John and Sally have read the _book_, Graph Databases.
@@ -84,7 +93,9 @@ Extracting the labels:
 
 image::{img}data-modeling-2.png[Extract labels]
 
-Now that we have identified both our nodes and labels, we can assign the labels to the nodes they describe. For *John* and *Sally* we apply the role _Person_. For *Graph Databases* we apply the role _Book_.
+Now that we have identified both our nodes and labels, we can assign the labels to the nodes they describe.
+For *John* and *Sally* we apply the role _Person_.
+For *Graph Databases* we apply the role _Book_.
 
 image::{img}data-modeling-4.png[Apply labels]
 
@@ -118,7 +129,8 @@ image::{img}data-modeling-1.png[Graph data model]
 
 == Answering questions
 
-We have gone through the process of creating a basic graph data model for the interactions between people and books. We can take this data model further by defining attributes of these entities as key-value properties.
+We have gone through the process of creating a basic graph data model for the interactions between people and books.
+We can take this data model further by defining attributes of these entities as key-value properties.
 
 === List your questions
 
@@ -239,3 +251,10 @@ RETURN people.name as first_reader
 ORDER BY r.on
 LIMIT 1
 ----
+
+[role=side-nav]
+=== Further Reading
+
+* link:/books[The Neo4j Bookshelf]
+* http://watch.neo4j.org[The Neo4j Video Library]
+* http://gist.neo4j.org/[GraphGists]

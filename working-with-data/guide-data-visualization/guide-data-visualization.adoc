@@ -1,15 +1,39 @@
-== Graph Vizualisation for Neo4j
+= Graph Vizualisation for Neo4j
+:level: Beginner
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 1
+:section: Working with Data
 
-Storing a graph is one thing, but visualizing it creates awe and epiphanies. Graph visualisations are a powerful tool to convey the content of a graph. They can highlight patterns, show clusters and connections. There are different tools that you can use to visualize the content of a Neo4j graph database.
+.Goals
+[abstract]
+We live in a connected world.
+There are no isolated pieces of information, but rich, connected domains all around us.
 
-A popular choice are javascript frameworks such as http://d3js.org/[the D3.js], http://threejs.org/[three.js] and http://sigmajs.org/[sigma.js]. In all cases, the technique is to request JSON data for all or a part of the graph data from the server backend, and then dynamically add this data to the Javascript visualisation in-memory model for rendering on the client side.
+.Prerequisites
+[abstract]
+Nodes can be tagged with zero to many labels representing their different roles in the domain.
+In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes.
+
+[role=expertise]
+{level}
+
+Storing a graph is one thing, but visualizing it creates awe and epiphanies.
+Graph visualisations are a powerful tool to convey the content of a graph.
+They can highlight patterns, show clusters and connections. There are different tools that you can use to visualize the content of a Neo4j graph database.
+
+A popular choice are javascript frameworks such as http://d3js.org/[the D3.js], http://threejs.org/[three.js] and http://sigmajs.org/[sigma.js].
+In all cases, the technique is to request JSON data for all or a part of the graph data from the server backend, and then dynamically add this data to the Javascript visualisation in-memory model for rendering on the client side.
 
 There are a great number of ways to show and manipulate graph data, below are listed a few of the more popular ones.
 
 === The Neo4j Browser
 
 The default http://neo4j.com/download[Neo4j Server] has a powerful, customizable data visualisation tool based on the D3.js
- library built in. Michael shows how to style Nodes and Relationships in the Neo4j's Browser visualization, setting colors, sizes and titles. He discusses the Graph-Style-Sheet (GRASS) and how you can download, update and reset the styling information.
+ library built in.
+ Michael shows how to style Nodes and Relationships in the Neo4j's Browser visualization, setting colors, sizes and titles.
+ He discusses the Graph-Style-Sheet (GRASS) and how you can download, update, and reset the styling information.
 
 ++++
 <iframe src="//player.vimeo.com/video/97204829" width="500" height="313" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
@@ -21,6 +45,12 @@ image:http://assets.neo4j.org/img/still/seening_pattern_in_data.jpg[width=500, l
 
 Alistair Jones is building a very powerful graph web editing tool based on SVG, suited for easy integration into modern HTML frameworks.
 
+[role=side-nav]
+=== Recommended
+
+* http://neo4j.com/docs[The Neo4j Docs]
+* link:/blog[The Neo4j Blog]
+* link:/build-a-graph-data-model/guide-intro-to-graph-modeling[Intro to Graph Modeling]
 
 === Keylines Neo4j Graph Visualization
 
@@ -30,7 +60,10 @@ KeyLines is a JavaScript toolkit for visualizing networks. It works in all major
 
 ==== How does it work?
 
-KeyLines will integrate into existing web applications easily and with very little effort. How and where you get the data is up to you. KeyLines does the job of rendering it and responding to user interactions like clicking, touching, moving nodes, etc. You bind to these events to customize what happens. Your data stays under your control at all times: KeyLines is self-contained and needs no external connections.
+KeyLines will integrate into existing web applications easily and with very little effort.
+How and where you get the data is up to you. KeyLines does the job of rendering it and responding to user interactions like clicking, touching, moving nodes, etc.
+You bind to these events to customize what happens.
+Your data stays under your control at all times: KeyLines is self-contained and needs no external connections.
 
 === Tom Sawyer Perspectives
 
@@ -38,5 +71,12 @@ KeyLines will integrate into existing web applications easily and with very litt
 <iframe src="//player.vimeo.com/video/90897466" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 ++++
 
-https://www.tomsawyer.com/pressreleases/pressrelease.php?release_id=164&news=product[Tom Sawyer Perspectives 6.0] offers Cypher support for Neo4j graph databases and connects them to the broad visualization capabilities of the tool. The integration with the latest Neo4j version makes it easier to write complex queries and render their results in a comprehensive way.
+https://www.tomsawyer.com/pressreleases/pressrelease.php?release_id=164&news=product[Tom Sawyer Perspectives 6.0] offers Cypher support for Neo4j graph databases and connects them to the broad visualization capabilities of the tool.
+The integration with the latest Neo4j version makes it easier to write complex queries and render their results in a comprehensive way.
 
+[role=side-nav]
+=== Further Reading
+
+* link:/books[The Neo4j Bookshelf]
+* http://watch.neo4j.org[The Neo4j Video Library]
+* http://gist.neo4j.org/[GraphGists]

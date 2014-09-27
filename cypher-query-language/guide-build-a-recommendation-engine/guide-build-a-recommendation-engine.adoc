@@ -1,4 +1,4 @@
-= Building a Recommendation Engine with Cypher in 2 minutes
+= Building a Recommendation Engine with Cypher in Two minutes
 :level: Beginner
 :toc:
 :toc-placement!:
@@ -8,11 +8,11 @@
 
 .Goals
 [abstract]
-This guide explains how to leverage connections in your data to gather insights and start recommending, currently unrelated but relevant facts to your nodes in focus.
+This guide explains how to leverage connections in your data to gather insights and start recommending currently unrelated but relevant facts to your nodes in focus.
 
 .Prerequisites
 [abstract]
-You should have a basic understanding of the link:/what-is-neo4j/property-graph[property graph model]. Having link:/download[downloaded] and installed Neo4j server helps you code along with the examples. 
+You should have a basic understanding of the link:/what-is-neo4j/property-graph[property graph model]. Having link:/download[downloaded] and installed the Neo4j server helps you code along with the examples. 
 
 [role=expertise]
 {level}
@@ -21,15 +21,15 @@ toc::[]
 
 This demo explains how to use a basic dataset of _Actors_ acting in _Movies_ to create recommendations with a graph database.
 
-By following the relationships between the people and movies in am meaningful manner you can determine co-occurences, frequencies and relevant nodes in the graph.
+By following the relationships between the people and movies in am meaningful manner you can determine co-occurences, frequencies, and relevant nodes in the graph.
 This is the basis for many recommendation engines.
 
 === Recommendation for Collaboration of Actors
 
-You can follow along by link:/download[installing and starting] Neo4j server, opening it on http://localhost:7474  and then inserting the movie dataset via the `:play movie graph` command.
-Go to the second slide, click the query and run it.
+You can follow along by link:/download[installing and starting] Neo4j server, opening it on `http://localhost:7474` then inserting the movie dataset via the `:play movie graph` command.
+Go to the second slide, click the query, and run it.
 
-Here in this guide we just load the dataset using LOAD CSV
+In this guide we will load the dataset using `LOAD CSV`
 
 //hide
 //setup
@@ -48,6 +48,7 @@ RETURN count(*);
 
 * link:/online-training[Online Cypher Training]
 * link:/use-cases/recommendations/[Recommendation Use Cases]
+* link:/build-a-graph-data-model/guide-intro-to-graph-modeling[Intro to Graph Modeling]
 
 === Basic Queries
 
@@ -63,7 +64,8 @@ RETURN tom
 
 //table
 
-Similarly you should be able to retrieve all his movies with a single query. Your results should already look like a graph.
+Similarly, you should be able to retrieve all his movies with a single query.
+Your results should already look like a graph.
 
 [source,cypher]
 ----
@@ -73,7 +75,7 @@ RETURN tom, movie
 
 //graph_result
 
-Of course Tom has colleagues that acted with him in his movies, this "co-actor" statement looks like this.
+Of course Tom has colleagues that acted with him in his movies. This "co-actor" statement looks like this:
 
 [source,cypher]
 ----
@@ -86,13 +88,13 @@ RETURN coActor.name
 [role=side-nav]
 === Recommended
 
-* http://asciidoctor.org[Links to docs]
-* http://asciidoctor.org[Links to blog]
-* http://asciidoctor.org[Links to guides]
+* http://watch.neo4j.org[The Neo4j Video Library]
+* http://neo4j.com/docs[The Neo4j Manual]
+* http://neo4j.com/books[The Neo4j Bookshelf]
 
 === Collaborative Filtering
 
-We can now turn this "co-actor" query into a recommendation query by following those relationships another step out to find the "co-co-actors", i.e. the second degree actors in Toms network that, he has not acted with.
+We can now turn this "co-actor" query into a recommendation query by following those relationships another step out to find the "co-co-actors", i.e. the second degree actors in Toms network with whom he has not acted.
 
 [source,cypher]
 ----
@@ -126,9 +128,9 @@ Now let's see which movies and actors are between the two Toms.
 [role=side-nav]
 === Recommended
 
-* http://asciidoctor.org[Links to docs]
-* http://asciidoctor.org[Links to blog]
-* http://asciidoctor.org[Links to guides]
+* http://neo4j.com/docs[The Neo4j Docs]
+* link:/blog[The Neo4j Blog]
+* link:/build-a-graph-data-model/guide-intro-to-graph-modeling[Intro to Graph Modeling]
 
 === Connection Paths
 
@@ -147,16 +149,15 @@ This returns multiple _Bacon-Paths_, even with _Kevin Bacon_ himself. :)
 
 So with two simple Cypher statements we created already two recommendation algorithms: *Who you show know* and *How you get to know them*.
 
-
 You can also watch the video of Andreas running these queries live on our main example movie dataset.
 
 ++++
 <iframe width="640" height="480" src="//www.youtube.com/embed/qbZ_Q-YnHYo" frameborder="0" allowfullscreen></iframe>
 ++++
 
-=== Restaurant recommendation
+=== Restaurant Recommendation
 
-Imagine a graph like this, a few friends with their favorite restaurants, their cusines and locations.
+Imagine a graph like this, a few friends with their favorite restaurants, their cuisines and locations.
 
 image::{img}restaurant-recommendation.png[]
 
@@ -197,7 +198,6 @@ Other factors that can be easily integrated in this query are favorites, allergi
 Match making with a graph database relies on extracting the relevant attributes of people (or jobs) as attribute nodes to allow for matches across those. 
 The people in your graph are connected to their attributes with weighted relationships that allow for aggregation and filtering.
 
-
 [source,cypher]
 ----
 ----
@@ -208,3 +208,10 @@ The people in your graph are connected to their attributes with weighted relatio
 * http://http://watch.neo4j.org/video/86754045["5 Graphs of Love",role=video]
 * http://maxdemarzi.com/2013/04/19/match-making-with-neo4j/[Match Making with Neo4j (mdm)]
 ////
+
+[role=side-nav]
+=== Further Reading
+
+* link:/books[The Neo4j Bookshelf]
+* http://watch.neo4j.org[The Neo4j Video Library]
+* http://gist.neo4j.org/[GraphGists]

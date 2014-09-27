@@ -23,7 +23,7 @@ You should know that Neo4j employs its own persistence and caching implementatio
 
 toc::[]
 
-=== Neo4j's architecture
+=== Neo4j's Architecture
 
 Neo4j is a native graph database, it handles the graph data records down to the disk/filesystem level.
 On top of the memory mapped filesystem, Neo4j employs additional caches for loaded Node and Relationship-Records.
@@ -33,7 +33,7 @@ On top of the memory mapped filesystem, Neo4j employs additional caches for load
 Neo4j's storage is organized in record based files per data structure - nodes, relationships, properties, labels, etc.
 Each node and relationship record block is directly addressable by its id.
 
-The blocks have different sizes to accomodate the different type of data they contain:
+The blocks have different sizes to accommodate the different type of data they contain:
 
 * Node records: labels, pointer to first relationship, pointer to first property block.
 * Relationship records: relationship-type, pointers to: start-node, end-node, first property block, next-relationship and previous relationship for both start and end-nodes
@@ -51,6 +51,13 @@ An example disk space calculation is:
 Total  is 110.2MB
 ----
 
+[role=side-nav]
+=== Recommended
+
+* http://neo4j.com/docs[The Neo4j Docs]
+* link:/blog[The Neo4j Blog]
+* link:/build-a-graph-data-model/guide-intro-to-graph-modeling[Intro to Graph Modeling]
+
 === Low Level Cache
 
 The low level cache requirements are the same as disk space.
@@ -64,7 +71,7 @@ In optimizing a graph database solution for performance, we should bear in mind 
 * We should utilize the filesystem cache as much as possible; if possible, we should map our store files in their entirety into this cache
 * We should have as much RAM available as possible, the more the better.
 * We should tune the JVM heap and keep an eye on GC behaviors
-* We should consider using fast disks—SSDs or enterprise flash hardware—to bring up the bottom line when disk access becomes inevitable
+* We should consider using fast disks—SSDs or enterprise flash hardware to bring up the bottom line when disk access becomes inevitable
 
 === Performance Optimization
 There are three areas in which we can optimize for performance:

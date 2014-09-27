@@ -8,7 +8,8 @@
 
 .Goals
 [abstract]
-This guide explains the basic concepts of Cypher, Neo4j's query language. You should be able to read Cypher queries after finishing this guide.
+This guide explains the basic concepts of Cypher, Neo4j's query language.
+You should be able to read Cypher queries after finishing this guide.
 
 .Prerequisites
 [abstract]
@@ -18,7 +19,8 @@ toc::[]
 
 == About Cypher
 
-Cypher is a declarative, SQL inspired language for describing patterns in graphs. It allows us to describe *what* we want to select, insert, update or delete from a graph database without requiring us to describe exactly *how* to do it.
+Cypher is a declarative, SQL inspired language for describing patterns in graphs.
+It allows us to describe *what* we want to select, insert, update or delete from a graph database without requiring us to describe exactly *how* to do it.
 
 
 image::{img}cypher_pattern_simple.png[]
@@ -26,7 +28,10 @@ image::{img}cypher_pattern_simple.png[]
 
 === Nodes
 
-Cypher uses ASCII-Art to represent patterns. We surround nodes with parentheses which look like circles, e.g. `(node)`. If we later want to refer to the node, we'll give it an identifier like `(p)` for person or `(t)` for thing. In real world queries, we'll probably use longer, more expressive variable names like `(person)` or `(thing)`.
+Cypher uses ASCII-Art to represent patterns.
+We surround nodes with parentheses which look like circles, e.g. `(node)`.
+If we later want to refer to the node, we'll give it an identifier like `(p)` for person or `(t)` for thing.
+In real world queries, we'll probably use longer, more expressive variable names like `(person)` or `(thing)`.
 
 So for example, if we want to find all the *persons* and the *things* they like, the query will include the identifiers *person* and *thing*, e.g. in a pattern like `(person)-->(thing)` so we can refer to them later, e.g. to access properties like `person.name` and `thing.quality`.
 
@@ -68,9 +73,18 @@ MATCH (node1)-[rel:TYPE]->(node2)
 RETURN rel.property
 ----
 
+[role=side-nav]
+=== Recommended
+
+* http://neo4j.com/docs[The Neo4j Docs]
+* link:/blog[The Neo4j Blog]
+* link:/build-a-graph-data-model/guide-intro-to-graph-modeling[Intro to Graph Modeling]
+
 === Labels
 
-Labels allow us to group our nodes. For example, we might want to distinguish *things* from *persons* or companies (both deal with things). By matching for `(person:Person)-[:LIKE]->(thing)`, it will return *John*, but not *ACME Inc* - a well known manufacturer.
+Labels allow us to group our nodes.
+For example, we might want to distinguish *things* from *persons* or companies (both deal with things).
+By matching for `(person:Person)-[:LIKE]->(thing)`, it will return *John*, but not *ACME Inc*--a well known manufacturer.
 
 Labels are usually used like this:
 
@@ -86,7 +100,7 @@ RETURN node1, node2
 
 Let's try it out what we've learned.
 
-=== Create a record for yourself
+=== Create a Record for Yourself
 
 //setup
 [source,cypher]
@@ -97,7 +111,7 @@ RETURN you,like,neo
 
 // graph
 
-=== Create your friends
+=== Create Your Friends
 
 //setup
 [source,cypher]
@@ -110,7 +124,7 @@ FOREACH (name in ["Johan","Rajesh","Anna","Julia","Andrew"] |
 
 // graph
 
-=== Find your friends
+=== Find Your Friends
 
 [source,cypher]
 ----
@@ -122,7 +136,7 @@ RETURN you, yourFriends
 
 // table
 
-=== Create second degree friends and expertise
+=== Create Second Degree Friends and Expertise
 
 //setup
 [source,cypher]
@@ -135,7 +149,7 @@ FOREACH (pair in [{friend:"Anna",expert:"Amanda"},{friend:"Johan",expert:"Max"}]
 
 // graph
 
-=== Find someone who can help you learn Neo4j
+=== Find Someone Who Can Help You Learn Neo4j
 
 [source,cypher]
 ----
@@ -147,3 +161,11 @@ RETURN p,db
 // graph_result
 
 // table
+
+[role=side-nav]
+=== Further Reading
+
+* link:/books[The Neo4j Bookshelf]
+* http://watch.neo4j.org[The Neo4j Video Library]
+* http://gist.neo4j.org/[GraphGists]
+

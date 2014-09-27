@@ -28,13 +28,13 @@ Neo4j High Availability Cluster is a full master-slave replication.
 Any data (graph or index) created on the master is propagated to the slaves depending on the settings of the master `ha.tx_push_factor` (number of slaves to actively push to during commit) and slaves `ha.pull_interval` (frequency of pulling updates from the master).
 
 [role=side-nav]
-=== Sidebar
+=== Recommended
 
 * http://jimwebber.org/2011/03/strategies-for-scaling-neo4j/[Strategies for Scaling Neo4j,role=blog]
 * http://docs.neo4j.org/chunked/stable/ha.html[Neo4j High Availability,role=docs]
 * http://docs.neo4j.org/chunked/stable/ha-setup-tutorial.html[Tutorial Cluster Setup,role=docs]
 
-=== Configuring a two slave cluster with an arbiter
+=== Configuring a Two-Slave Cluster with an Arbiter
 
 There's a http://docs.neo4j.org/chunked/stable/ha-setup-tutorial.html[step-by-step tutorial for setting up a HA cluster]. 
 For a 2 node cluster, you'll actually want to run 3 separate machines, and use the Neo4j arbiter on the 3rd. 
@@ -44,13 +44,13 @@ The configuration for the arbiter is identical to that of a regular instance, ex
 The `ha.initial_hosts` property should be the same on all the instances, including the arbiter. 
 The arbiter should have a unique `ha.server_id` (`3` is fine).
 
-=== Setting a server in slave-only mode
+=== Setting a Server in Slave-Only Mode
 
 See the http://docs.neo4j.org/chunked/stable/ha-configuration.html[documentation] on `ha.slave_only`.
 
 You might want to configure a machine with that setting if it’s acting as a reporting instance but you need to make sure that 2 members don’t have that setting otherwise you won’t have any failover in the cluster.
 
-=== Backing up a cluster server
+=== Backing Up a Cluster Server
 
 Neo4j Server must be configured to run a backup service. 
 This is enabled via the configuration parameter `online_backup_enabled`, and is enabled by default. 
@@ -95,3 +95,10 @@ MATCH (n) WHERE id(n) = <your node id> DELETE n
 * On each slave, remove the `data/graph.db` folder
 * Start the slave, watch `data/graph.db` for it to copy the store from the master
 * Once copying is done, move to do the same thing on the second slave
+
+[role=side-nav]
+=== Further Reading
+
+* link:/books[The Neo4j Bookshelf]
+* http://watch.neo4j.org[The Neo4j Video Library]
+* http://gist.neo4j.org/[GraphGists]
