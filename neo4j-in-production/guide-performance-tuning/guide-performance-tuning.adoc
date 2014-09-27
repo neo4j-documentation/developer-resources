@@ -12,7 +12,8 @@ This guide explains Configuration and Performance Tuning best practices and trou
 
 .Prerequisites
 [abstract]
-This guide describes how to configure and tune a Neo4j installation. This includes topics such as cache sizing, JVM configuration, Memory Mapped IO (MMIO) settings and logical log configuration. 
+This guide describes how to configure and tune a Neo4j installation.
+This includes topics such as cache sizing, JVM configuration, Memory Mapped IO (MMIO) settings and logical log configuration. 
 
 [role=expertise]
 {level}
@@ -37,13 +38,19 @@ However, that reduces the size available for the caches accordingly.
 
 === Specifying JVM tuning properties
 
-Tuning the standalone server is achieved by editing the neo4j-wrapper.conf file in the conf directory of NEO4J_HOME.
+Tuning the standalone server is achieved by editing the `neo4j-wrapper.conf` file in the conf directory of NEO4J_HOME.
 
-The heap space parameter is the most important one for Neo4j, since this governs how many objects you can allocate. When it comes to heap space the general rule is: the larger heap space you have the better, but make sure the heap fits in the RAM memory of the computer. If the heap is paged out to disk performance will degrade rapidly. Having a heap that is much larger than what your application needs is not good either, since this means that the JVM will accumulate a lot of dead objects before the garbage collector is executed, this leads to long garbage collection pauses and undesired performance behavior.
+The heap space parameter is the most important one for Neo4j, since this governs how many objects you can allocate.
+When it comes to heap space the general rule is: the larger heap space you have the better, but make sure the heap fits in the RAM memory of the computer.
+If the heap is paged out to disk performance will degrade rapidly.
+Having a heap that is much larger than what your application needs is not good either, since this means that the JVM will accumulate a lot of dead objects before the garbage collector is executed, this leads to long garbage collection pauses and undesired performance behavior.
 
-Typically we aim to have those memory_mappings cover the entire size of the on-disk store, to ensure all the graph content is cached into memory. The remaining memory can then be split between the Neo4j heap and the rest of the operating system (& other processes).
+Typically we aim to have those memory_mappings cover the entire size of the on-disk store, to ensure all the graph content is cached into memory.
+The remaining memory can then be split between the Neo4j heap and the rest of the operating system (& other processes).
 
-Edit your neo4j-wrapper file to set the heap size. It is recommended that the initmemory and the maxmemory properties be set to the same number. For example:
+Edit your neo4j-wrapper file to set the heap size. It is recommended that the initmemory and the maxmemory properties be set to the same number.
+
+For example:
 
 ----
 wrapper.java.initmemory=24512
@@ -51,12 +58,13 @@ wrapper.java.maxmemory=24512
 ----
 
 Finally make sure that the OS has some memory left to manage proper file system caches. 
-This means, if your server has 8GB of RAM don’t use all of that RAM for heap (unless you have turned off memory mapped buffers), but leave a good part of it to the OS.
+This means, if your server has 8GB of RAM don't use all of that RAM for heap (unless you have turned off memory mapped buffers), but leave a good part of it to the OS.
 
 
 === Memory Mapped IO Settings
 
-You should adopt the MMIO cache settings to fit your graph size in neo4j.properties and not rely on the default values. To determine the graph size:
+You should adopt the MMIO cache settings to fit your graph size in `neo4j.properties` and not rely on the default values.
+To determine the graph size:
 
 ----
 run 'ls -alh /neo4j/data/graph.db/neostore*'
@@ -93,10 +101,11 @@ It is recommended that the `keep_logical_logs` parameter be set to `7 days`
 
 The usual default of `1024` is often not enough, especially when many indexes are used or a server installation sees too many connections (network sockets count against that limit as well). 
 Users are therefore encouraged to increase that limit to a healthy value of `40000` or more, depending on usage patterns. 
-Setting this value via the ulimit command is possible only for the root user and that for that session only. To set the value system wide you have to follow the instructions for your platform (http://docs.neo4j.org/chunked/stable/linux-performance-guide.html#_setting_the_number_of_open_files[Linux]).
+Setting this value via the ulimit command is possible only for the root user and that for that session only.
+To set the value system wide you have to follow the instructions for your platform (http://docs.neo4j.org/chunked/stable/linux-performance-guide.html#_setting_the_number_of_open_files[Linux]).
 
 [role=side-nav]
-=== Sidebar
+=== Recommended
 
 * http://docs.neo4j.org/chunked/stable/operations.html[Operations,role=manual]
 * http://docs.neo4j.org/chunked/stable/configuration.html[Configuration & Performance,role=manual]
@@ -108,3 +117,12 @@ Setting this value via the ulimit command is possible only for the root user and
 === GC pressure, frequent garbage collections
 
 * Heap is too small, or caches are too big. See recommended setup
+
+\\TODO this seems unfinished ^
+
+[role=side-nav]
+=== Further Reading
+
+* link:/books[The Neo4j Bookshelf]
+* http://watch.neo4j.org[The Neo4j Video Library]
+* http://gist.neo4j.org/[GraphGists]
