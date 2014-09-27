@@ -27,7 +27,8 @@ Only a database that embraces relationships as a core aspect of its data model i
 While other databases compute relationships expensively at query time, a graph database stores connections as first level citizens, readily available for any "join-like" navigation operation.
 Accessing those already persistent connections is an efficient, constant-time operation and allows you to quickly traverse millions of connections per second.
 
-Independent of the size of the total dataset, graph databases excel at managing highly connected data and complex queries. Armed only with a pattern and a set of starting points, graph databases explore the larger neighborhood around their initial points--collecting and aggregating information from millions of nodes and relationships--leaving the billions outside the search perimeter untouched.
+Independent of the size of the total dataset, graph databases excel at managing highly connected data and complex queries.
+Armed only with a pattern and a set of starting points, graph databases explore the larger neighborhood around their initial points--collecting and aggregating information from millions of nodes and relationships--leaving the billions outside the search perimeter untouched.
 
 === The Property Graph Model
 
@@ -40,7 +41,8 @@ _Relationships_ provide directed, named semantic connections between two nodes.
 A relationship always has a direction, a type, a _start node_, and an __end node__.
 Like nodes, relationships can have arbitrary properties.
 In most cases, relationship have quantitative properties, such as weights, distances, ratings, time intervals, or strengths.
-As relationships are stored efficiently, two nodes can have any number or type of relationships between them without sacrificing performance. Note that although they are directed, relationships can always be navigated in both directions.
+As relationships are stored efficiently, two nodes can have any number or type of relationships between them without sacrificing performance.
+Note that although they are directed, relationships can always be navigated in both directions.
 
 image::{img}img/graphdb-gve.png[]
 _The building blocks of the Property Graph_
@@ -56,10 +58,9 @@ _A concrete Property Graph Example_
 [role=side-nav]
 === Recommended
 
-[role=recommended]
-* http://asciidoctor.org[Links to docs]
-* http://asciidoctor.org[Links to blog]
-* http://asciidoctor.org[Links to guides]
+* http://neo4j.com/docs[The Neo4j Docs]
+* link:/blog[The Neo4j Blog]
+* link:/build-a-graph-data-model/guide-intro-to-graph-modeling[Intro to Graph Modeling]
 
 === What is Neo4j?
 
@@ -82,27 +83,11 @@ Some particular features make Neo4j very popular among users, developers and DBA
 
 image::{img}img/neo4j-nosql.png[]
 
-[role=side-nav]
-=== Recommended
-
-[role=recommended]
-* http://asciidoctor.org[Links to docs]
-* http://asciidoctor.org[Links to blog]
-* http://asciidoctor.org[Links to guides]
-
 === Neo4j Editions
 
 Neo4j’s free and open-source _Community_  edition is a high-performance, fully ACID-transactional database. The _Community_ edition includes (but is not limited to) all the functionality described in this Refcard.
 Neo4j's _Enterprise_ editions provide all of the functionality of the Community edition in addition to  scalable clustering, fail-over, live backups, and comprehensive monitoring.
 _More information about the Community and Enterprise editions is available at http://docs.neo4j.org/
-
-[role=side-nav]
-=== Recommended
-
-[role=recommended]
-* http://asciidoctor.org[Links to docs]
-* http://asciidoctor.org[Links to blog]
-* http://asciidoctor.org[Links to guides]
 
 === Neo4j Server
 
@@ -115,9 +100,8 @@ A remote Neo4j server can be accessed via its Cypher HTTP API, either directly o
 For high performance special cases, you can write Neo4j server extensions in any JVM language to access Neo4j's internal database engine directly without network overhead.
 
 [role=side-nav]
-=== Recommended
+=== Further Reading
 
-[role=recommended]
-* http://asciidoctor.org[Links to docs]
-* http://asciidoctor.org[Links to blog]
-* http://asciidoctor.org[Links to guides]
+* link:/books[The Neo4j Bookshelf]
+* http://watch.neo4j.org[The Neo4j Video Library]
+* http://gist.neo4j.org/[GraphGists]
