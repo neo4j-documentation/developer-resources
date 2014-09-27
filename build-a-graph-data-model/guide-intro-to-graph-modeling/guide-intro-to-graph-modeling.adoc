@@ -1,4 +1,4 @@
-= Data Modelling Guide
+= Data Modeling Guide
 :level: Beginner
 :toc:
 :toc-placement!:
@@ -8,7 +8,8 @@
 
 .Goals
 [abstract]
-This guide will show you how to design a graph model and you can then apply the lessons to your own data set. We'll be following Ian Robinson's *Design for Queryability* modeling approach.
+This guide will show you how to design a graph model and you can then apply the lessons to your own data set.
+We'll be following Ian Robinson's *Design for Queryability* modeling approach.
 
 .Prerequisites
 [abstract]
@@ -45,7 +46,7 @@ ____
 
 Now that we've got our first question, we can come up with a model.
 
-=== Identity entities
+=== Identity Entities
 
 The first thing we need to do is identify entities or nouns. These will become the nodes in our model. e.g.
 
@@ -57,7 +58,14 @@ company +
 skill
 ____
 
-=== Identity relationships
+[role=side-nav]
+=== Recommended
+
+* http://neo4j.com/docs[The Neo4j Docs]
+* link:/blog[The Neo4j Blog]
+* link:/build-a-graph-data-model/guide-intro-to-graph-modeling[Intro to Graph Modeling]
+
+=== Identity Relationships
 
 The next step is to pull out the relationships between those entities. 
 We can do so by pulling out the verbs:
@@ -69,7 +77,8 @@ person WORKS_FOR company +
 person HAS_SKILL skill +
 ____
 
-During this process, it's helpful to have a whiteboard handy on which you can easily brainstorm with colleagues on the model. In addition, using actual data rather than the type names tends to make system properties easier to grasp.
+During this process, it's helpful to have a whiteboard handy on which you can easily brainstorm with colleagues on the model.
+In addition, using actual data rather than the type names tends to make system properties easier to grasp.
 
 WIth actual data, our model might look like this:
 
@@ -85,3 +94,4 @@ In other words, although our model has to be detailed enough answer our question
 
 * link:http://docs.neo4j.org/chunked/stable/data-modeling-examples.html[Data Modelling Examples,role=docs]
 * link:../../working-with-data/gists-and-example[Graph Gists]
+* http://gist.neo4j.org/[GraphGists]
