@@ -9,7 +9,11 @@ for file in `find . -mindepth 2 -name "*.adoc"`; do
    filename=${filename%.adoc}
    bundle exec asciidoctor -a source-highlighter=codemirror -a linkattrs -a img=${IMAGE_BASE_URL} -T _templates/wordpress $file -o deploy/${filename}.html
 done
-./publish.rb 'deploy/guide-build-a-recommendation-engine.html'
+
+for guide in deploy/* ; do
+  ./publish.rb $guide
+done
+
 
 #git add .
 #git commit -m "content-update for github-pages"
