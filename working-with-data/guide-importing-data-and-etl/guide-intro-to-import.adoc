@@ -8,7 +8,8 @@
 
 .Goals
 [abstract]
-Existing data comes in many shapes and sizes and one of the most popular is a relational database. In this guide we'll look at how we can export a Postgres data set into Neo4j.
+Existing data comes in many shapes and sizes and one of the most popular is a relational database.
+In this guide we'll look at how we can export a Postgres data set into Neo4j.
 
 .Prerequisites
 [abstract]
@@ -19,7 +20,8 @@ You should have a basic understanding of the link:/what-is-neo4j/property-graph[
 
 === Northwind Introduction
 
-In this guide we'll be using the link:https://code.google.com/p/northwindextended/downloads/detail?name=northwind.postgre.sql&can=2&q=[NorthWind data set] as our example. NorthWind is a popular data set used to demonstrate SQL and relational databases but the data is graphy enough to be interesting for us.
+In this guide we'll be using the link:https://code.google.com/p/northwindextended/downloads/detail?name=northwind.postgre.sql&can=2&q=[NorthWind data set] as our example.
+NorthWind is a popular data set used to demonstrate SQL and relational databases but the data is graphy enough to be interesting for us.
 
 The following is an entity relationship diagram of the data set:
 
@@ -38,12 +40,13 @@ image:{img}/northwind_graph_simple.png[]
 
 ==== How does it differ to the relational model?
 
-* Graph should be more normalised. e.g. addresses have been denormalised in the Suppliers, Orders, Customers and Employees table
+* Graph should be more normalised. e.g. addresses have been denormalised in the Suppliers, Orders, Customers, and Employees table
 * No nulls in the graph model - in the relational one to track the employee hierarchy we have a null enttry in the 'ReportsTo' column if they don't report to anybody
 
 === Exporting the Data to CSV
 
-Now that we know what we'd like our graph to look like we need to extract the data from Postgres so we can create it. The easiest way to do that is to export the appropriate tables in CSV format. Postgres' 'copy' command lets us execute a SQL query and write the result to a CSV file:
+Now that we know what we'd like our graph to look like we need to extract the data from Postgres so we can create it.
+The easiest way to do that is to export the appropriate tables in CSV format. Postgres' 'copy' command lets us execute a SQL query and write the result to a CSV file:
 
 [source, sql]
 ----
@@ -56,6 +59,13 @@ Copy (SELECT * FROM orders
       left outer join categories ON categories."CategoryID" = products."CategoryID")
       To '/tmp/customerDb.csv' With CSV header;
 ----
+
+[role=side-nav]
+=== Recommended
+
+* http://neo4j.com/docs[The Neo4j Docs]
+* link:/blog[The Neo4j Blog]
+* link:/build-a-graph-data-model/guide-intro-to-graph-modeling[Intro to Graph Modeling]
 
 === Importing the Data using Cypher
 
@@ -131,3 +141,10 @@ employee.employeeId,other.name,count
 1,Camembert Pierrot,22
 1,Ikura,20
 |===
+
+[role=side-nav]
+=== Further Reading
+
+* link:/books[The Neo4j Bookshelf]
+* http://watch.neo4j.org[The Neo4j Video Library]
+* http://gist.neo4j.org/[GraphGists]
