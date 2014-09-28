@@ -1,59 +1,42 @@
 require 'sinatra'
-
 require 'neo4j-core'
-set :public_folder, File.dirname(__FILE__) + '/static'
-
+set :root, File.dirname(__FILE__)
 
 session = Neo4j::Session.open
+
 get '/' do
-  redirect to('/index.html')
+  redirect '/index.html'
 end
 
 get '/graph' do
-  query = "MATCH (m:Movie)<-[:ACTED_IN]-(a:Person) " +
-      "RETURN m.title as movie, collect(a.name) as cast " +
-      "LIMIT 10"
+  puts "QUERY"
+  query = """
+    MATCH (m:Movie)<-[:ACTED_IN]-(a:Person)
+    RETURN m.title as movie, collect(a.name) as cast
+    LIMIT {limit}
+  """
+
+  movies_and_casts = session.query(query, limit: params[:limit] || 50)
+
   nodes = []
   rels = []
-
   i = 0
-  session.query(query).each do |record|
-    nodes.push({
-                   "title" => record.movie,
-                   "label" => "movie"
-               })
+  movies_and_casts.each do |row|
+    nodes << {title: row.movie, label: 'movie'}
     target = i
-    i +=1
-    record.cast.each do |c|
-      actor = {
-          "title" => c,
-          "label" => "actor"
-      }
-      k = 0
-      source = -1
-      nodes.each do |a|
-        if (a['title'] == actor['title'])
-          source = k
-        end
-        k +=1
-      end
-      if source == -1
-        nodes.push(actor)
+    i += 1
+    row.cast.each do |name|
+      actor = {title: name, label: "actor"}
+      source = nodes.index(actor)
+      unless source
         source = i
-        i += 1
+        nodes << actor
+        i+=1
       end
-      rels.push({
-                    "source" => source,
-                    "target" => target
-                })
+      rels << {source: source, target: target}
     end
+
   end
+  {nodes: nodes, links: rels}.to_json
 
-  result = {
-      "nodes" => nodes,
-      "links" => rels
-  }
-
-  puts "RESULT #{result}"
-  result.to_json
 end

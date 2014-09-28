@@ -6,7 +6,6 @@ end
 
 class Engagement
   include Neo4j::ActiveRel
-  # set_label_name:
   property :roles
 end
 
