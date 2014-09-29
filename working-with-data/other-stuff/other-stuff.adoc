@@ -1,0 +1,45 @@
+Depending on the amount of data we'll either want to use Cypher's LOAD CSV command or the batch importer command line tool.
+
+LOAD CSV has a smaller learning curve - only basic knowledge of cypher is required - and should therefore be your default tool of choice for small to medium data sets (CSV files of up to 1 million rows).
+
+If you need raw performance or are working with much larger CSV files then the batch importer is a more appropriate choice.
+
+
+===== LOAD CSV
+
+Here
+
+===== Batch Importer
+
+Two options:
+
+* Export tables in a simple way and write a pre processing script that transforms it into batch import format
+* More complicated SQL script which returns batch import appropriate files
+
+Example from MDM -> http://maxdemarzi.com/2012/02/28/batch-importer-part-2/
+
+
+== What type of import is it?
+
+
+* Initial one off import (Batch)
+* Ongoing updates (Transactional)
+
+== What tools can I use?
+
+* Cypher
+* Java - batch importer, unmanaged extension
+* ETL
+* Custom e.g. load2neo
+
+== Issues
+
+* 'expensive' index reads
+* duplicate checking
+* huge transaction sizes
+* high volumes via Cypher
+* Transactional mode
+
+Existing Database / Existing Service -> Intermediate Format -> Neo4j
+
+Generating cypher statements - works well for smaller data sets but not so well for larger ones

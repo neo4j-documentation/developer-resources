@@ -40,8 +40,8 @@ image:{img}/northwind_graph_simple.png[]
 
 ==== How does it differ to the relational model?
 
-* Graph should be more normalised. e.g. addresses have been denormalised in the Suppliers, Orders, Customers, and Employees table
-* No nulls in the graph model - in the relational one to track the employee hierarchy we have a null enttry in the 'ReportsTo' column if they don't report to anybody
+* Graph should be more normalised. e.g. addresses have been denormalised in the Suppliers, Orders, Customers and Employees tables.
+* No nulls in the graph model - in the relational one to track the employee hierarchy we have a null entry in the 'ReportsTo' column if they don't report to anybody
 
 === Exporting the Data to CSV
 
@@ -50,14 +50,14 @@ The easiest way to do that is to export the appropriate tables in CSV format. Po
 
 [source, sql]
 ----
-Copy (SELECT * FROM orders
-      left outer join customers ON customers."CustomerID" = orders."CustomerID"
-      left outer join employees ON employees."EmployeeID" = orders."EmployeeID"
-      left outer join order_details ON order_details."OrderID" = orders."OrderID"
-      left outer join products ON products."ProductID" = order_details."ProductID"
-      left outer join suppliers ON suppliers."SupplierID" = products."SupplierID"
-      left outer join categories ON categories."CategoryID" = products."CategoryID")
-      To '/tmp/customerDb.csv' With CSV header;
+COPY (SELECT * FROM customers) TO '/tmp/customers.csv' WITH CSV header;
+COPY (SELECT * FROM suppliers) TO '/tmp/suppliers.csv' WITH CSV header;
+COPY (SELECT * FROM products)  TO '/tmp/products.csv' WITH CSV header;
+COPY (SELECT * FROM employees) TO '/tmp/employees.csv' WITH CSV header;
+COPY (SELECT * FROM categories) TO '/tmp/categories.csv' WITH CSV header;
+
+COPY (SELECT * FROM orders
+      LEFT OUTER JOIN order_details ON order_details."OrderID" = orders."OrderID") TO '/tmp/orders.csv' WITH CSV header;
 ----
 
 [role=side-nav]
@@ -69,44 +69,87 @@ Copy (SELECT * FROM orders
 
 === Importing the Data using Cypher
 
-==== Indexes
-
-Next we'll create some indexes on the (label, property) pairs that we're going to create in Neo4j.
-
-[source, cypher]
-----
-create index on :Product(productId);
-create index on :Category(categoryId);
-create index on :Order(OrderId);
-create index on :Employee(employeeId);
-create index on :Supplier(supplierId);
-----
-
-==== LOAD CSV
-
 After we've done that we'll use Cypher's link:http://docs.neo4j.org/chunked/stable/query-load-csv.html[LOAD CSV] command to transform the contents of the CSV file into a graph structure.
 
+We'll start by creating the nodes:
+
 [source, cypher]
 ----
-LOAD CSV WITH HEADERS FROM "file:/tmp/customerDb.csv" AS row
+# Create customers
+LOAD CSV WITH HEADERS FROM "file:/tmp/customers.csv" AS row
+CREATE (:Customer {CompanyName: row.CompanyName, CustomerID: row.CustomerID, Fax: row.Fax, Phone: row.Phone});
 
-MERGE (order:Order {orderId: row.OrderID})
+# Create products
+LOAD CSV WITH HEADERS FROM "file:/tmp/products.csv" AS row
+CREATE (:Product {ProductName: row.ProductName, ProductID: row.ProductID, UnitPrice: row.UnitPrice});
 
-MERGE (product:Product {productId: row.ProductID})
-ON CREATE SET product.name = row.ProductName
+# Create suppliers
+LOAD CSV WITH HEADERS FROM "file:/tmp/suppliers.csv" AS row
+CREATE (:Supplier {CompanyName: row.CompanyName, SupplierID: row.SupplierID});
 
-MERGE (supplier:Supplier {supplierId: row.SupplierID})
-ON CREATE SET supplier.companyName = row.SupplierCompanyName
+# Create employees
+LOAD CSV WITH HEADERS FROM "file:/tmp/employees.csv" AS row
+CREATE (:Employee {EmployeeID:row.EmployeeID,  FirstName: row.FirstName, LastName: row.LastName, Title: row.Title});
 
-MERGE (employee:Employee {employeeId: row.EmployeeID})
+# Create categories
+LOAD CSV WITH HEADERS FROM "file:/tmp/categories.csv" AS row
+CREATE (:Category {CategoryID: row.CategoryID, CategoryName: row.CategoryName, Description: row.Description});
+----
 
-MERGE (category:Category {categoryId: row.CategoryID})
-ON CREATE SET category.name = row.CategoryName
+The next step is to create the relationships between these nodes but first we'll create indexes on the nodes that we've just created to ensure their quick lookup when creating relationships in the next section.
+
+[source, cypher]
+----
+CREATE INDEX ON :Product(ProductID);
+CREATE INDEX ON :Category(CategoryID);
+CREATE INDEX ON :Employee(EmployeeID);
+CREATE INDEX ON :Supplier(SupplierID);
+CREATE INDEX ON :Customer(CustomerID);
+----
+
+With those indices in place we can now create orders and their relationships to products and employees:
+
+[source, cypher]
+----
+LOAD CSV WITH HEADERS FROM "file:/tmp/orders.csv" AS row
+CREATE (order:Order {OrderID: row.OrderID, ShipName: row.ShipName})
+
+WITH *
+MATCH (product:Product {ProductID: row.ProductID})
+MATCH (employee:Employee {EmployeeID: row.EmployeeID})
 
 MERGE (employee)-[:SOLD]->(order)
-MERGE (order)-[:PRODUCT]->(product)
+MERGE (order)-[:PRODUCT]->(product);
+----
+
+Next we'll create relationships between products, suppliers and categories:
+
+[source, cypher]
+----
+LOAD CSV WITH HEADERS FROM "file:/tmp/products.csv" AS row
+MATCH (product:Product {ProductID: row.ProductID})
+MATCH (supplier:Supplier {SupplierID: row.SupplierID})
+MATCH (category:Category {CategoryID: row.CategoryID})
+
 MERGE (supplier)-[:SUPPLIES]->(product)
-MERGE (product)-[:PART_OF]->(category)
+MERGE (product)-[:PART_OF]->(category);
+----
+
+Finally we'll create the 'REPORTS_TO' relationship between employees which will create the reporting structure in the graph:
+
+[source, cypher]
+----
+LOAD CSV WITH HEADERS FROM "file:/tmp/employees.csv" AS row
+MATCH (employee:Employee {EmployeeID: row.EmployeeID})
+MATCH (manager:Employee {EmployeeID: row.ReportsTo})
+MERGE (employee)-[:REPORTS_TO]->(manager);
+----
+
+For completeness we'll also create an index on orders so that we can look them up quickly in our queries:
+
+[source, cypher]
+----
+CREATE INDEX ON :Order(OrderId);
 ----
 
 A sample of the graph looks like this:
