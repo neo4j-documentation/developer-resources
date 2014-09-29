@@ -8,15 +8,14 @@
 
 .Goals
 [abstract]
-This guide explains Neo4J sizing and hardware calculation best practices and tips. 
-What hardware do your need to run your graph use-cases efficiently and what can you do to help make Neo4j fly.
-
+This guide explains Neo4J sizing and hardware calculation tips and best practices. 
+It details you need to make Neo4j fly.
 
 .Prerequisites
 [abstract]
 You should know how to link:/download[download] and install Neo4j on your system. 
-If you are a developer you should be accustomed to the graph data model and have written your Neo4j application.
-You should know that Neo4j employs its own persistence and caching implementation for the graph data records and have seen the files on disk (`data/graph.db`) and glanced at `messages.log`
+You should be accustomed to the graph data model and have written your Neo4j application.
+You should know that Neo4j employs its own persistence and caching implementation, have seen the files on disk (`data/graph.db`), and have glanced at `messages.log`.
 
 [role=expertise]
 {level}
@@ -66,12 +65,12 @@ You should try to memory map as much data as your RAM allows (allow for 6-16GB h
 
 === Optimizing
 
-In optimizing a graph database solution for performance, we should bear in mind the following guidelines:
+In optimizing a graph database solution for performance, we should bear the following guidelines in mind:
 
-* We should utilize the filesystem cache as much as possible; if possible, we should map our store files in their entirety into this cache
-* We should have as much RAM available as possible, the more the better.
-* We should tune the JVM heap and keep an eye on GC behaviors
-* We should consider using fast disks—SSDs or enterprise flash hardware to bring up the bottom line when disk access becomes inevitable
+* Utilize the filesystem cache as much as possible, and map store files in their entirety into this cache
+* Have as much RAM available as possible
+* Tune the JVM heap and keep an eye on GC behaviors
+* Consider using fast disks—SSDs or enterprise flash hardware to bring up the bottom line when disk access becomes inevitable
 
 === Performance Optimization
 There are three areas in which we can optimize for performance:
