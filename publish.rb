@@ -24,26 +24,32 @@ require 'rubypress'
 blog_id  = ENV['BLOG_HOSTNAME']
 username = ENV['BLOG_USERNAME']
 password = ENV['BLOG_PASSWORD']
+POST_STATUS = 'private'
 
+content =         { :post_status  => POST_STATUS,
+                    :post_date    => Time.now,
+                    :post_content => content,
+                    :post_title   => title }
 
+puts content.inspect
+
+exit
 
 wp = Rubypress::Client.new(:host     => blog_id,
                            :username => username,
                            :password => password)
 
 all_pages = wp.getPosts( :filter => {:post_type   => POST_TYPE,
-                                     :number      => 1000,
-                                     :post_status => 'published'})
+                                     :number      => 1000
+                                     })
+#                                     ,:post_status => 'published'
 
 puts "Got #{all_pages.length} pages from the database"
 pages = all_pages.select { |page| page['post_title'] == title }
 puts "Got #{pages.length} pages matching the title"
 
 page = pages.sort_by {|hash| hash['post_id'] }.first
-content =         { :post_status  => "publish",
-                    :post_date    => Time.now,
-                    :post_content => content,
-                    :post_title   => title }
+
 
 if page
   post_id = page['post_id'].to_i
@@ -54,5 +60,5 @@ if page
 else
   puts "Making a new post for #{title}"
   puts wp.newPost(:blog_id => blog_id,
-                  :content => content.merge({ :post_type => POST_TYPE}))
+                  :content => content.merge({ :post_type => POST_STATUS}))
 end
