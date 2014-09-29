@@ -1,21 +1,21 @@
 # WORK IN PROGRESS
 
-THIS DOES NOT YET WORK
-
-
 This example demonstrates how to map node and relationships to Ruby classes.
+
 ## How to install
 
 `bundle install`
 
-## Run migrations
-
-To prevent n+1 queries to load a single node run the add_classname rake tasks to add extra properties to the graph
-, see https://github.com/neo4jrb/neo4j/wiki/Neo4j-v3-Migrations
-
 ## How to run
 
-`ruby movies.rb`
+`bundle exec rackup config.ru`
 
-or 'bundle exec shotgun movies.rb'
+or 'bundle exec shotgun config.ru'
+
+
+## Design
+
+This example is very slow if used from the Neo4j Server since it does a lot of requests instead of using just one cypher query (as in the neo4j-core example).
+Also notice that Neo4j.rb tries to hide the internal neo4j ids. Instead in the example we have created primary keys on title and name
+properties.
 

@@ -1,6 +1,6 @@
 class Movie
   include Neo4j::ActiveNode
-  property :title
+  id_property :title
   has_many :in, :actors, type: :ACTED_IN, model_class: :Person
 end
 
@@ -11,7 +11,7 @@ end
 
 class Person
   include Neo4j::ActiveNode
-  property :name
+  id_property :name
   has_many :out, :acted_in, model_class: :Movie, type: :ACTED_IN, rel_class: Engagement
 end
 
