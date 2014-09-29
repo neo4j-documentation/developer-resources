@@ -1,6 +1,6 @@
 require 'sinatra'
 require 'neo4j'
-require 'models'
+require './models'
 
 set :public_folder, File.dirname(__FILE__) + '/static'
 
@@ -23,5 +23,23 @@ get '/graph' do
 
   nodes_hash = actors.map{|n| {title: n.name, label: "actor"}} + movies.map{|n| {title: n.title, label: "movie"}}
 
-  {nodes: nodes_hash, links:links}
+  {nodes: nodes_hash, links:links}.to_json
+end
+
+get '/search' do
+  movies = Movie.where(title: /.*#{request['q']}.*/i)
+
+  movies.map {|movie| {movie: movie.attributes} }.to_json
+end
+
+get '/movie/:title' do
+  movie = Movie.where(title: params['title']).first
+
+  cast_data_for_role = Proc.new do |query, role|
+    query.pluck(:person, :rel).map {|person, rel| {name: person.name, roles: rel.try(:roles) || [], job: role} }
+  end
+
+  cast_data = cast_data_for_role.call(movie.actors(:person, :rel), :acted) + cast_data_for_role.call(movie.directors(:person, :rel), :directed)
+
+  {title: movie.title, cast: cast_data}.to_json
 end
