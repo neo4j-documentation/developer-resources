@@ -8,13 +8,12 @@
 
 .Goals
 [abstract]
-We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us.
+This guide explains the basic concepts of Cypher, Neo4j's query language, including how to create and query graphs.
+You should be able to read Cypher queries after finishing this guide.
 
 .Prerequisites
 [abstract]
-Nodes can be tagged with zero to many labels representing their different roles in the domain.
-In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes.
-
+This is a guide for {level}. You should have familiarized yourself with link:../what-is-neo4j/graph-database[Graph Databases] and the link:../what-is-neo4j/property-graph[Property Graph Model].
 [role=expertise]
 {level}
 
@@ -146,7 +145,7 @@ RETURN tom, m, coActors
 
 //table
 
-==== How people are related to "Cloud Atlas"...
+==== How People are Related to "Cloud Atlas"...
 
 [source,cypher]
 ----
@@ -178,7 +177,7 @@ RETURN DISTINCT hollywood
 
 //table
 
-==== The Bacon Path, to Meg Ryan
+==== The Bacon Path to Meg Ryan
 
 [source,cypher]
 ----
@@ -197,7 +196,7 @@ RETURN p
 When you're done experimenting, you can remove the movie data set.
 
 [NOTE]
-1. Nodes can't be deleted if relationships exist
+1. Nodes can't be deleted if relationships to them exist
 2. Delete both nodes and relationships together
 
 [WARNING]
@@ -205,7 +204,7 @@ This will remove all Person and Movie nodes!
 
 <<DELETE,+:help DELETE+>>
 
-==== Delete all Movie and Person nodes and their Relationships
+==== Delete All Movie and Person Nodes and their Relationships
 
 //output
 [source,cypher]
