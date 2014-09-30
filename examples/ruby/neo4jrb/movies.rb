@@ -35,11 +35,19 @@ end
 get '/movie/:title' do
   movie = Movie.where(title: params['title']).first
 
-  cast_data_for_role = Proc.new do |query, role|
-    query.pluck(:person, :rel).map {|person, rel| {name: person.name, roles: rel.try(:roles) || [], job: role} }
+  cast_data_for_role = Proc.new do |role|
+    Proc.new do |person, rel|
+      {
+        name: person.name,
+        role: rel.props[:roles] || [],
+        job: role
+      }
+    end
   end
 
-  cast_data = cast_data_for_role.call(movie.actors(:person, :rel), :acted) + cast_data_for_role.call(movie.directors(:person, :rel), :directed)
+  cast_data = movie.actors.each_with_rel.map(&cast_data_for_role.call(:acted)) +
+              movie.directors.each_with_rel.map(&cast_data_for_role.call(:directed))
 
   {title: movie.title, cast: cast_data}.to_json
 end
+
