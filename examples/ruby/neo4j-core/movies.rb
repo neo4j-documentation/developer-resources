@@ -17,11 +17,11 @@ get '/graph' do
   """
 
   movies_and_casts = session.query(query, limit: params[:limit] || 50)
-
   nodes = []
   rels = []
   i = 0
   movies_and_casts.each do |row|
+    # puts "results #{row}"
     nodes << {title: row.movie, label: 'movie'}
     target = i
     i += 1
@@ -39,4 +39,48 @@ get '/graph' do
   end
   {nodes: nodes, links: rels}.to_json
 
+end
+
+get "/search" do
+  puts "query #{request[:q]}"
+  query = "MATCH (movie:Movie) WHERE movie.title =~ {title} RETURN movie.title as title, movie.released as released, movie.tagline as tagline"
+  response = session.query(query, title: "(?i).*#{request[:q]}.*")
+  results = []
+  response.each do |row|
+    results << {
+        "movie" => {
+            "title" => row[:title],
+            "released" => row[:released],
+            "tagline" => row[:tagline]
+        }
+    }
+  end
+  results.to_json
+end
+
+get "/movie/:movie" do
+  puts "movie #{params['movie']}"
+  query = "MATCH (movie:Movie {title:{title}}) OPTIONAL MATCH (movie)<-[r]-(person:Person) RETURN movie.title as title, collect([person.name, head(split(lower(type(r)), '_')), r.roles]) as cast LIMIT 1"
+  response = session.query(query, title: params['movie'])
+  row = response.next
+  puts row.to_json
+  cast = []
+  row[:cast].each do |c|
+    cast << {
+        "name" => c[0],
+        "job" => c[1],
+        "role" => c[2]
+    }
+  end
+  result = {
+      "title" => row[:title],
+      "cast" => cast
+  }
+  result.to_json
+
+end
+
+
+get '/index.html' do
+  File.read(File.join(File.dirname(__FILE__), 'static/index.html'))
 end
