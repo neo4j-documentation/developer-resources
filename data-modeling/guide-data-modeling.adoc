@@ -9,7 +9,7 @@
 .Goals
 [abstract]
 This guide is designed to walk you through the graph data modeling lifecycle of Neo4j.
-You will be introduced to the basic process of designing a graph data model that can answer a wide range of business questions across a variety of domains. 
+You will be introduced to the basic process of designing a graph data model that can answer a wide range of business questions across a variety of domains.
 
 .Prerequisites
 [abstract]
@@ -20,7 +20,7 @@ You should have a firm understanding of the Neo4j's link:./property-graph[proper
 
 toc::[]
 
-:img: .
+:img: http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/
 
 == Introduction
 
@@ -34,11 +34,11 @@ Consider the following description of the connection between two people, Sally a
 [quote]
 Two _people_, *John* and *Sally*, are +++<u>friends</u>+++. Both *John* and *Sally* have +++<u>read</u>+++ the _book_, *Graph Databases*.
 
-We can take this statement, identify components such as labels, nodes, and relationships, and use these to build our model. 
+We can take this statement, identify components such as labels, nodes, and relationships, and use these to build our model.
 
 === Nodes
 
-The first entity that we'll identify in our domain are the nodes. 
+The first entity that we'll identify in our domain are the nodes.
 
 [quote, "3.1 Nodes", "docs.neo4j.org"]
 The fundamental units that form a graph are nodes and relationships.
@@ -46,7 +46,7 @@ In Neo4j, both nodes and relationships can contain properties.
 Nodes are often used to represent entities, but depending on the domain relationships may be used for that purpose as well.
 Apart from properties and relationships, nodes can also be labeled with zero or more labels.
 
-image::{img}node.svg[Nodes]
+image::http://docs.neo4j.org/chunked/stable/images/graphdb-nodes-overview.svg[Nodes]
 
 We can identify nodes as entities with a unique conceptual identity. In this case, these entities are outlined below in bold.
 
@@ -59,7 +59,7 @@ Extracting the nodes:
 * *Sally*
 * *Graph Databases*
 
-image::{img}data-modeling-3.png[Extract Nodes]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/data-modeling-3.png[Extract Nodes]
 
 [role=side-nav]
 === Recommended
@@ -70,7 +70,7 @@ image::{img}data-modeling-3.png[Extract Nodes]
 
 === Labels
 
-Now that we have an idea of what our nodes will be, we decide what labels (if any) to assign our nodes. 
+Now that we have an idea of what our nodes will be, we decide what labels (if any) to assign our nodes.
 
 [quote, "3.4 Labels", "docs.neo4j.org"]
 A label is a named graph construct that is used to group nodes into sets.
@@ -78,7 +78,7 @@ All nodes labeled with the same label belongs to the same set.
 Many database queries can work with these sets instead of the whole graph, making queries easier to write and more efficient.
 A node may be labeled with any number of labels, including none, making labels an optional addition to the graph.
 
-image::{img}label.svg[Labels]
+image::http://docs.neo4j.org/chunked/stable/images/graphdb-labels.svg[Labels]
 
 First we'll start by identifying the roles of objects (John, Sally, Graph Databases) mentioned in the statement.
 We know that this statement is about two different types of objects:
@@ -91,13 +91,13 @@ Extracting the labels:
 * _Person_
 * _Book_
 
-image::{img}data-modeling-2.png[Extract labels]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/data-modeling-2.png[Extract labels]
 
 Now that we have identified both our nodes and labels, we can assign the labels to the nodes they describe.
 For *John* and *Sally* we apply the role _Person_.
 For *Graph Databases* we apply the role _Book_.
 
-image::{img}data-modeling-4.png[Apply labels]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/data-modeling-4.png[Apply labels]
 
 [role=side-nav]
 === Recommended
@@ -125,7 +125,7 @@ Pairs of nodes labeled _Book_ and _Person_ can be connected to each other by a +
 
 Now that we have identified the kinds of relationships that can exist between labels of nodes, we can complete our graph data model.
 
-image::{img}data-modeling-1.png[Graph data model]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/data-modeling-1.png[Graph data model]
 
 == Answering Questions
 
@@ -146,7 +146,7 @@ First, start by listing your questions that you want to answer about your data.
 
 From these list of questions, you can identify the attributes that must belong to entities within your data model.
 
-image:data-modeling-5.png[Graph data model with properties]
+image:http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/data-modeling-5.png[Graph data model with properties]
 
 [role=side-nav]
 === Recommended
