@@ -1,23 +1,71 @@
-= Running the Neo4j Movies Example Application
-:level: 
+= Using Neo4j with your Language
+:level: Intermediate
 :toc:
 :toc-placement!:
 :toc-title: Overview
 :toclevels: 2
+:section: Develop with Neo4j
 
 .Goals
 [abstract]
-This readme takes you through the setting up and running the Neo4j Movies example application. 
+You can use Neo4j with a lot of different programming languages. Here we provide an introduction and a consistent example application with several languages and Neo4j drivers. +
+This section explains the basic concepts for interacting with Neo4j and explains the sample Movie Application.
 
 .Prerequisites
 [abstract]
-Nodes can be tagged with zero to many labels representing their different roles in the domain.
-In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​-index or constraint information, for example—​-to nodes.
+You should be familiar with link:../../what-is-neo4j/graph-database[graph database concepts] and the property graph model. You should have link:/download[installed Neo4j] and made yourself familiar with our link:../../cypher-query-language[Cypher Query language]. And you should have whatever you need for development with your stack up and running.
 
 [role=expertise]
 {level}
 
 toc::[]
+
+=== Connecting to Neo4j
+
+You probably also wonder how you would connect from your programming language to a Neo4j Database?
+If you've installed and started Neo4j as a server on your system, you can interact with the database with the built-in Neo4j browser application.
+
+If you want to access Neo4j programmatically, you can do so with one of the many integrated HTTP-APIs, which allow you to:
+
+* POST one or more cypher statements with parameters per request to the server
+* Keep transactions open over multiple requests
+* Choose different result formats
+
+The simplest HTTP request would look like:
+
+[source,json]
+----
+curl -i -H accept:application/json -H content-type:application/json \
+-XPOST http://localhost:7474/db/data/transaction/commit \
+  -d '{"statements":[{"statement":"CREATE (p:Person {name:{name}}) RETURN p",
+       "parameters":{"name":"Daniel"}}]}'
+
+{"results":[{"columns":["p"],"data":[{"row":[{"name":"Daniel"}]}]}],"errors":[]}
+----
+
+In most cases you don't want to connect to Neo4j manually but you a driver or connector library for your stack or programming language.
+Thanks to the Neo4j community, there are drivers for Neo4j for almost every popular programming language, most of which mimic existing database driver idioms and approaches.
+
+
+=== Existing Language / Driver Examples
+
+For our example application we've provided a implementation for the languages and drivers listed below. 
+Most of them have thankfully been made available by the driver maintainers.
+
+* link:java[Java]
+** link:java/jdbc[JDBC]
+** link:java/server-extension[Server Extension]
+* link:python[Python]
+** link:python/py2neo-1.6[Py2Neo] by http://twitter.com/neonige[Nigel Small]
+** link:python/neo4j-rest-client[Neo4j-Rest-Client] by http://twitter.com/versae[Javier de la Rosa]
+* link:ruby[Ruby]
+** link:ruby/neo4j-core[Neo4j-Core] by http://twitter.com/neo4jrb[Neo4j.rb Team]
+** link:ruby/neo4jrb[Neo4j.rb Rails] by http://twitter.com/neo4jrb[Neo4j.rb Team]
+* *More*
+** link:clojure/neocons[Clojure: neocons] by https://twitter.com/ducky427[Rohit Aggarwal & ClojureWerkz]
+** link:go/cq[Go CQ] by https://twitter.com/wefreema[Wes Freeman]
+** link:perl/neo4p[Perl: Neo4p::REST] by https://twitter.com/thinkinator[Mark Jensen]
+** link:php/neo4jphp[PHP: Neo4jPHP] by http://twitter.com/josh_adell[Josh Adell]
 
 === Application
 
@@ -28,13 +76,15 @@ The application runs as a single page and uses JavaScript to access three HTTP e
 * single movie listing
 * graph visualization of the domain
 
-=== Domain Model
+image::{img}movie_application.png[]
+
+==== Domain Model
 
 ----
 (:Movie {title,released,tagline})<-[:ACTED_IN {roles}]-(actor:Person)
 ----
 
-=== Webpage
+==== Webpage
 
 The webpage is a single Bootstrap page that uses jQuery AJAX calls to access the backend and adds the returned JSON result data to HTML elements in the page.
 
@@ -48,9 +98,9 @@ For the movie details it uses the `/movie/Movie%20Title` endpoint and the result
 For the Graph Visualization we use http://d3js.org[d3.js], our `/graph` endpoint already returns the data in the format of "nodes" and "links"-list that d3 can use directly.
 We then apply the force-layout algorithm to render nodes as circles and relationships as lines, and add some minor styling to the visualization provide the movie title/person name as HTML title attribute to the node circles.
 
-=== Endpoints
+==== Endpoints
 
-==== Get Movie
+===== Get Movie
 
 ----
 // JSON object for single movie with cast
@@ -75,7 +125,7 @@ MATCH (movie:Movie {title:{title}})
                 role:r.roles}) as cast LIMIT 1
 ----
 
-==== Search Movies
+===== Search Movies
 
 ----
 // list of JSON objects for movie search results
@@ -97,7 +147,7 @@ MATCH (movie:Movie)
  RETURN movie
 ----
 
-==== Graph Visualization
+===== Graph Visualization
 
 ----
 // JSON object for whole graph viz (nodes, links - arrays)

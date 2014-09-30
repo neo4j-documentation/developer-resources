@@ -6,7 +6,7 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>Neo4j Movies Example Application | Developer Resources | Neo4j Graph Database</title>
+         <title>Using Neo4j with your Language | Developer Resources | Neo4j Graph Database</title>
          <script type="text/javascript">
             var _kmq = _kmq || [];
             var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
@@ -123,12 +123,12 @@
                <article id="content" role="main">
                  <div class="row" style="padding: 10px 0 0;">
                    <div class="columns large-12" style="padding:10px 0 0;">
-                   <ul class="breadcrumbs"> <li><a href="/developer-resources">Developer Guides</a></li> <li><a href="../">Guide</a></li> <li class="current"><a href="#">Neo4j Movies Example Application</a></li> </ul>
+                   <ul class="breadcrumbs"> <li><a href="/developer-resources">Developer Guides</a></li> <li><a href="../">Develop with Neo4j</a></li> <li class="current"><a href="#">Using Neo4j with your Language</a></li> </ul>
                  </div>
                  </div>
                  <div class="row">
                    <div class="columns large-12">
-                   <h1 style="font-size:2.1rem;">Neo4j Movies Example Application</h1>
+                   <h1 style="font-size:2.1rem;">Using Neo4j with your Language</h1>
                  </div>
                  </div>
                   <section class="row" style="padding:10px 0;">
@@ -137,12 +137,187 @@
 
 
 <div id="content">
-<div class="sect1 "  >
-    
-<h3 id="_neo4j_movies_example_application">Neo4j Movies Example Application</h3>
+<div id="preamble">
+<div class="sectionbody">
+<div class="quoteblock abstract">
+<div class="title">Goals</div>
+<blockquote style="padding-left: 0;">
+You can use Neo4j with a lot of different programming languages. Here we provide an introduction and a consistent example application with several languages and Neo4j drivers.<br>
+This section explains the basic concepts for interacting with Neo4j and explains the sample Movie Application.
+</blockquote>
+</div>
+<div class="quoteblock abstract">
+<div class="title">Prerequisites</div>
+<blockquote style="padding-left: 0;">
+You should be familiar with <a href="../../what-is-neo4j/graph-database">graph database concepts</a> and the property graph model. You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="../../cypher-query-language">Cypher Query language</a>. And you should have whatever you need for development with your stack up and running.
+</blockquote>
+</div>
 
-<div class="sectionbody row">
-<div class="columns medium-12">
+
+<div class="label">Intermediate</div>
+<hr/>
+
+<div class="toc">
+<h3 class="title">Overview</h3>
+
+<ul class="sectlevel2">
+<li><a href="#_connecting_to_neo4j">Connecting to Neo4j</a></li>
+<li><a href="#_existing_language_driver_examples">Existing Language / Driver Examples</a></li>
+<li><a href="#_application">Application</a></li>
+<li><a href="#_data_setup">Data Setup</a></li>
+<li><a href="#_run_locally">Run Locally</a></li>
+<li><a href="#_deploy_to_heroku">Deploy to Heroku</a></li>
+</ul>
+
+<hr>
+</div>
+</div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
+    
+<h4 id="_connecting_to_neo4j">Connecting to Neo4j</h4>
+
+
+
+<div class="paragraph">
+<p>You probably also wonder how you would connect from your programming language to a Neo4j Database?
+If you&#8217;ve installed and started Neo4j as a server on your system, you can interact with the database with the built-in Neo4j browser application.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>If you want to access Neo4j programmatically, you can do so with one of the many integrated HTTP-APIs, which allow you to:</p>
+</div>
+
+<div class="ulist">
+
+
+<ul>
+<li>
+POST one or more cypher statements with parameters per request to the server
+</li>
+<li>
+Keep transactions open over multiple requests
+</li>
+<li>
+Choose different result formats
+</li>
+</ul>
+
+</div>
+
+
+<div class="paragraph">
+<p>The simplest HTTP request would look like:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="json"><code>curl -i -H accept:application/json -H content-type:application/json \
+-XPOST http://localhost:7474/db/data/transaction/commit \
+  -d '{"statements":[{"statement":"CREATE (p:Person {name:{name}}) RETURN p",
+       "parameters":{"name":"Daniel"}}]}'
+
+{"results":[{"columns":["p"],"data":[{"row":[{"name":"Daniel"}]}]}],"errors":[]}</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>In most cases you don&#8217;t want to connect to Neo4j manually but you a driver or connector library for your stack or programming language.
+Thanks to the Neo4j community, there are drivers for Neo4j for almost every popular programming language, most of which mimic existing database driver idioms and approaches.</p>
+</div>
+
+</div>
+<div class="sect2 columns medium-10" style='padding-left: 0;' >
+    
+<h4 id="_existing_language_driver_examples">Existing Language / Driver Examples</h4>
+
+
+
+<div class="paragraph">
+<p>For our example application we&#8217;ve provided a implementation for the languages and drivers listed below.
+Most of them have thankfully been made available by the driver maintainers.</p>
+</div>
+
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="java">Java</a>
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="java/jdbc">JDBC</a>
+</li>
+<li>
+<a href="java/server-extension">Server Extension</a>
+</li>
+</ul>
+
+</div>
+</li>
+<li>
+<a href="python">Python</a>
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="python/py2neo-1.6">Py2Neo</a> by <a href="http://twitter.com/neonige">Nigel Small</a>
+</li>
+<li>
+<a href="python/neo4j-rest-client">Neo4j-Rest-Client</a> by <a href="http://twitter.com/versae">Javier de la Rosa</a>
+</li>
+</ul>
+
+</div>
+</li>
+<li>
+<a href="ruby">Ruby</a>
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="ruby/neo4j-core">Neo4j-Core</a> by <a href="http://twitter.com/neo4jrb">Neo4j.rb Team</a>
+</li>
+<li>
+<a href="ruby/neo4jrb">Neo4j.rb Rails</a> by <a href="http://twitter.com/neo4jrb">Neo4j.rb Team</a>
+</li>
+</ul>
+
+</div>
+</li>
+<li>
+<strong>More</strong>
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="clojure/neocons">Clojure: neocons</a> by <a href="https://twitter.com/ducky427">Rohit Aggarwal &amp; ClojureWerkz</a>
+</li>
+<li>
+<a href="go/cq">Go CQ</a> by <a href="https://twitter.com/wefreema">Wes Freeman</a>
+</li>
+<li>
+<a href="perl/neo4p">Perl: Neo4p::REST</a> by <a href="https://twitter.com/thinkinator">Mark Jensen</a>
+</li>
+<li>
+<a href="php/neo4jphp">PHP: Neo4jPHP</a> by <a href="http://twitter.com/josh_adell">Josh Adell</a>
+</li>
+</ul>
+
+</div>
+</li>
+</ul>
+
+</div>
+</div>
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_application">Application</h4>
@@ -151,7 +326,7 @@
 
 <div class="paragraph">
 <p>We use the existing movie and crew (actor, director, producer) dataset known from the Neo4j Browser and Neo4j Training to power this simple web application.
-The application runs as a single page, that uses Javascript to access 3 HTTP endpoints in the backend to provide:</p>
+The application runs as a single page and uses JavaScript to access three HTTP endpoints in the backend to provide:</p>
 </div>
 
 <div class="ulist">
@@ -170,10 +345,14 @@ graph visualization of the domain
 </ul>
 
 </div>
+<div class="imageblock">
+<p class="content">
+<img src="./movie_application.png" alt="movie application">
+</p>
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect3 "  >
     
-<h4 id="_domain_model">Domain Model</h4>
+<h5 id="_domain_model">Domain Model</h5>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
@@ -181,14 +360,14 @@ graph visualization of the domain
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect3 "  >
     
-<h4 id="_webpage">Webpage</h4>
+<h5 id="_webpage">Webpage</h5>
 
 
 
 <div class="paragraph">
-<p>The webpage is a single bootstrap page that uses jquery-ajax calls to access the backend and adds the returned JSON result data to HTML elements in the page.</p>
+<p>The webpage is a single Bootstrap page that uses jQuery AJAX calls to access the backend and adds the returned JSON result data to HTML elements in the page.</p>
 </div>
 
 
@@ -201,9 +380,10 @@ If you click on any of the movie titles, the side-view is populated with the mov
 
 
 <div class="paragraph">
-<p>For the movie details it uses the <code>/movie/Movie%20Title</code> endpoint and the results are rendered as panel title, image source and unordered list for crew.</p>
+<p>For the movie details it uses the <code>/movie/Movie%20Title</code> endpoint and the results are rendered as panel title, image source, and unordered list for crew.</p>
 </div>
 
+</div>
 <div class="sect3 "  >
     
 <h5 id="_graph_visualization">Graph Visualization</h5>
@@ -212,16 +392,15 @@ If you click on any of the movie titles, the side-view is populated with the mov
 
 <div class="paragraph">
 <p>For the Graph Visualization we use <a href="http://d3js.org">d3.js</a>, our <code>/graph</code> endpoint already returns the data in the format of "nodes" and "links"-list that d3 can use directly.
-We then apply the force-layout algorithm, render nodes as circles and relationships as lines, and add some minor styling to the visualization provide the movie title/person name as HTML title attribute to the node circles.</p>
+We then apply the force-layout algorithm to render nodes as circles and relationships as lines, and add some minor styling to the visualization provide the movie title/person name as HTML title attribute to the node circles.</p>
 </div>
 
 </div>
-</div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
-    
-<h4 id="_endpoints">Endpoints</h4>
-
 <div class="sect3 "  >
+    
+<h5 id="_endpoints">Endpoints</h5>
+
+<div class="sect4 "  >
     
 <h5 id="_get_movie">Get Movie</h5>
 
@@ -258,7 +437,7 @@ curl http://localhost:8080/movie/The%20Matrix
 </div>
 </div>
 </div>
-<div class="sect3 "  >
+<div class="sect4 "  >
     
 <h5 id="_search_movies">Search Movies</h5>
 
@@ -281,8 +460,7 @@ curl http://localhost:8080/search?q=matrix
 
 
 <div class="paragraph">
-<p>It matches the movies by title with a regular expression and then returns the movie nodes.
-So the result of this query is a list of maps with the title, released and tagline entries.</p>
+<p>The Search Movies query matches the movies by title with a regular expression and then returns the movie nodes as a list of maps with the title, released and tagline entries.</p>
 </div>
 
 <div class="listingblock">
@@ -293,7 +471,7 @@ So the result of this query is a list of maps with the title, released and tagli
 </div>
 </div>
 </div>
-<div class="sect3 "  >
+<div class="sect4 "  >
     
 <h5 id="_graph_visualization_2">Graph Visualization</h5>
 
@@ -333,27 +511,41 @@ A separate function then takes this result and converts it into the node- and li
 </div>
 </div>
 </div>
+</div>
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
 <h4 id="_data_setup">Data Setup</h4>
 
+<div class="ulist">
 
 
-<div class="paragraph">
-<p>Start your local Neo4j Server (<a href="http://neo4j.com/download">Download &amp; Install</a>), open the <a href="http://localhost:7474">Neo4j Browser</a>.
-Then install the Movies data-set with <code>:play movies</code>, click the create statement, and hit the triangular "Run" button to insert the data.</p>
+<ul>
+<li>
+Start your local Neo4j Server (<a href="http://neo4j.com/download">Download &amp; Install</a>)
+</li>
+<li>
+Open the <a href="http://localhost:7474">Neo4j Browser</a>.
+</li>
+<li>
+Install the Movies data-set with <code>:play movies</code>
+</li>
+<li>
+Click the <code>CREATE</code> statement and hit the triangular "Run" button to insert the data.
+</li>
+</ul>
+
 </div>
 
 
-
 <div class="paragraph">
-<p>You can also choose to use a cloud hosted Neo4j database, then you have to provide the URL to your Neo4j server in an environment variable <code>NEO4J_URL</code>.</p>
+<p>You can also choose to use a cloud hosted Neo4j database.
+If you go this route, then you have to provide the URL to your Neo4j server in an environment variable <code>NEO4J_URL</code>.</p>
 </div>
 
 </div>
 <div class="sect2 columns medium-10" style='padding-left: 0;' >
     
-<h4 id="_run_locally">Run locally</h4>
+<h4 id="_run_locally">Run Locally</h4>
 
 
 
@@ -388,7 +580,7 @@ We will also use the <a href="http://graphenedb.com">GraphenDB</a> Neo4j Databas
 
 
 <div class="paragraph">
-<p>Then run these commands</p>
+<p>Then run these commands:</p>
 </div>
 
 <div class="listingblock">
@@ -429,10 +621,6 @@ In the Neo4j-Browser import the <code>:play movies</code> dataset as of the inst
 
 <div class="paragraph">
 <p>Then your app is ready to roll.</p>
-</div>
-
-</div>
-</div>
 </div>
 
 </div>
