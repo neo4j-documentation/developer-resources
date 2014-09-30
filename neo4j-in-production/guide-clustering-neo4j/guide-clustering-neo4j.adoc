@@ -15,7 +15,7 @@ This includes topics such as data synchronization, mending procedures, configuri
 [abstract]
 You should know how to link:/download[download] and install Neo4j on your system. 
 If you are a developer you should be accustomed to the graph data model and have written your Neo4j application. 
-A sound understanding of Neo4j's HTTP APIs, link:../guide-performance-tuning[tuning], security and upgrade aspects, will help you set up a stable cluster.
+A sound understanding of Neo4j's HTTP APIs, link:../guide-performance-tuning[tuning], security, and upgrade aspects will help you set up a stable cluster.
 
 [role=expertise]
 {level}
@@ -24,7 +24,7 @@ toc::[]
 
 === Data Synchronization between master and slaves
 
-Neo4j High Availability Cluster is a full master-slave replication. 
+The Neo4j High Availability Cluster is a full master-slave replication. 
 Any data (graph or index) created on the master is propagated to the slaves depending on the settings of the master `ha.tx_push_factor` (number of slaves to actively push to during commit) and slaves `ha.pull_interval` (frequency of pulling updates from the master).
 
 [role=side-nav]
@@ -37,9 +37,9 @@ Any data (graph or index) created on the master is propagated to the slaves depe
 === Configuring a Two-Slave Cluster with an Arbiter
 
 There's a http://docs.neo4j.org/chunked/stable/ha-setup-tutorial.html[step-by-step tutorial for setting up a HA cluster]. 
-For a 2 node cluster, you'll actually want to run 3 separate machines, and use the Neo4j arbiter on the 3rd. 
+For a 2 node cluster, you'll actually want to run three separate machines, and use the Neo4j arbiter on the third. 
 Details on the arbiter are available in the http://docs.neo4j.org/chunked/stable/arbiter-instances.html[Neo4j Manual]. 
-The configuration for the arbiter is identical to that of a regular instance, excepting anything relating to the actual graph db itself (since an arbiter doesn't hold any data).
+The configuration for the arbiter is identical to that of a regular instance, with the exception of anything relating to the actual graph db itself (since an arbiter doesn't hold any data).
 
 The `ha.initial_hosts` property should be the same on all the instances, including the arbiter. 
 The arbiter should have a unique `ha.server_id` (`3` is fine).
@@ -48,7 +48,8 @@ The arbiter should have a unique `ha.server_id` (`3` is fine).
 
 See the http://docs.neo4j.org/chunked/stable/ha-configuration.html[documentation] on `ha.slave_only`.
 
-You might want to configure a machine with that setting if it’s acting as a reporting instance but you need to make sure that 2 members don’t have that setting otherwise you won’t have any failover in the cluster.
+You might want to configure a machine with that setting if it’s acting as a reporting instance but you need to make sure that two members don’t have that setting.
+Otherwise you won’t have any failover in the cluster.
 
 === Backing Up a Cluster Server
 
@@ -70,17 +71,17 @@ image::{img}neo4j-logo.png[]
 * On the master instance, copy the data/graph.db folder as a backup
 * Modify neo4j-server.properties, set the org.neo4j.server.database.mode to "STANDALONE"
 * Start the database and, once it's running, stop it again (this is to ensure he database is cleanly shut down)
-* Remove all files named nioneo_logical.log.vXX in data/graph.db, being careful to not remove any files without the "v", like nioneo_logical.log.1 or nioneo_logical.log.active
+* Remove all files named nioneo_logical.log.vXX in data/graph.db, being careful to not remove any files without the "v", like `nioneo_logical.log.1` or `nioneo_logical.log.active`
 * Start the server and use either neo4j-shell or the neo4j browser to issue the following two queries:
 
-. First query, note the id returned here
+. First query. Note the id returned here
 
 [source,cypher]
 ----
 CREATE (n) RETURN id(n)
 ----
 
-. Second query, use the id returned from the previous one
+. Second query. Use the id returned from the previous query
 
 [source,cypher]
 ----
@@ -92,6 +93,7 @@ MATCH (n) WHERE id(n) = <your node id> DELETE n
 * Start the server
 
 ===  Mending Procedure for Slaves
+
 * On each slave, remove the `data/graph.db` folder
 * Start the slave, watch `data/graph.db` for it to copy the store from the master
 * Once copying is done, move to do the same thing on the second slave

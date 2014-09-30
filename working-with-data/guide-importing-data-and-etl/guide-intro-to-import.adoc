@@ -1,4 +1,4 @@
-= Guide to importing data into Neo4j
+= Importing Data into Neo4j
 :level: Beginner
 :toc:
 :toc-placement!:
@@ -13,7 +13,8 @@ In this guide we'll look at how we can export a Postgres data set into Neo4j.
 
 .Prerequisites
 [abstract]
-You should have a basic understanding of the link:/what-is-neo4j/property-graph[property graph model] and have completed the link:../../build-a-graph-data-model/guide-intro-to-graph-modeling/index.html[modeling guide]. Having link:/download[downloaded] and installed Neo4j server helps you code along with the examples.
+You should have a basic understanding of the link:/what-is-neo4j/property-graph[property graph model] and have completed the link:../../build-a-graph-data-model/guide-intro-to-graph-modeling/index.html[modeling guide].
+Having link:/download[downloaded] and installed Neo4j server helps you code along with the examples.
 
 [role=expertise]
 {level}
@@ -21,7 +22,7 @@ You should have a basic understanding of the link:/what-is-neo4j/property-graph[
 === Northwind Introduction
 
 In this guide we'll be using the link:https://code.google.com/p/northwindextended/downloads/detail?name=northwind.postgre.sql&can=2&q=[NorthWind data set] as our example.
-NorthWind is a popular data set used to demonstrate SQL and relational databases but the data is graphy enough to be interesting for us.
+NorthWind is a popular data set used to demonstrate SQL and relational databases and is graphy enough to be interesting for us.
 
 The following is an entity relationship diagram of the data set:
 
@@ -34,18 +35,18 @@ There are a couple of rules of thumbs when deriving a graph model from a relatio
 * A row is a node
 * A table name is a label name
 
-For this data set the following graph model serves as a first iteration:
+In this data set, the following graph model serves as a first iteration:
 
 image:{img}/northwind_graph_simple.png[]
 
-==== How does it differ to the relational model?
+==== How does the Graph Model Differ from the Relational Model?
 
-* Graph should be more normalised. e.g. addresses have been denormalised in the Suppliers, Orders, Customers and Employees tables.
+* Graph should be more normalised. e.g. addresses have been denormalised in the Suppliers, Orders, Customers, and Employees tables.
 * No nulls in the graph model - in the relational one to track the employee hierarchy we have a null entry in the 'ReportsTo' column if they don't report to anybody
 
 === Exporting the Data to CSV
 
-Now that we know what we'd like our graph to look like we need to extract the data from Postgres so we can create it.
+Now that we know what we'd like our graph to look like we need to extract the data from PostgreSQL so we can create it.
 The easiest way to do that is to export the appropriate tables in CSV format. Postgres' 'copy' command lets us execute a SQL query and write the result to a CSV file:
 
 [source, sql]
@@ -69,7 +70,7 @@ COPY (SELECT * FROM orders
 
 === Importing the Data using Cypher
 
-After we've done that we'll use Cypher's link:http://docs.neo4j.org/chunked/stable/query-load-csv.html[LOAD CSV] command to transform the contents of the CSV file into a graph structure.
+After we've done exported our data from PostgreSQL, we'll use Cypher's link:http://docs.neo4j.org/chunked/stable/query-load-csv.html[LOAD CSV] command to transform the contents of the CSV file into a graph structure.
 
 We'll start by creating the nodes:
 
@@ -96,7 +97,7 @@ LOAD CSV WITH HEADERS FROM "file:/tmp/categories.csv" AS row
 CREATE (:Category {CategoryID: row.CategoryID, CategoryName: row.CategoryName, Description: row.Description});
 ----
 
-The next step is to create the relationships between these nodes but first we'll create indexes on the nodes that we've just created to ensure their quick lookup when creating relationships in the next section.
+The next step is to create the relationships between these nodes. Before we can do this, however, we'll create indexes on the nodes that we've just created to ensure their quick lookup when creating relationships in the next section.
 
 [source, cypher]
 ----
@@ -122,7 +123,7 @@ MERGE (employee)-[:SOLD]->(order)
 MERGE (order)-[:PRODUCT]->(product);
 ----
 
-Next we'll create relationships between products, suppliers and categories:
+Next we'll create relationships between products, suppliers, and categories:
 
 [source, cypher]
 ----
@@ -162,7 +163,7 @@ We can now query the graph...
 
 One question we would love to answer is:
 
-==== Which employee had the highest cross selling count of which product with 'Chocolade'
+==== Which Employee had the Highest Cross-Selling Count of Which Product with 'Chocolade'
 
 [source,cypher]
 ----

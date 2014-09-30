@@ -8,13 +8,11 @@
 
 .Goals
 [abstract]
-We live in a connected world.
-There are no isolated pieces of information, but rich, connected domains all around us.
+This article introduces the GraphGist project and guides the reader through the process of creating a simple GraphGist.
 
 .Prerequisites
 [abstract]
-Nodes can be tagged with zero to many labels representing their different roles in the domain.
-In addition to contextualizing node and relationship properties, labels may also serve to attach metadata—​index or constraint information, for example—​to nodes.
+None! :D
 
 [role=expertise]
 {level}
@@ -63,7 +61,7 @@ To see the expressive power of this approach, here are some winners of our past 
 ++++
 
 
-=== Setup a Graph to show you and your Likes
+=== Setup a Graph to Show You and Your Likes
 
 //setup
 [source,cypher]
@@ -76,7 +74,7 @@ And render as a graph.
 
 //graph
 
-=== Now query the graph to show all the things you like
+=== Query the Graph to Show All the Things You Like
 
 [source,cypher]
 ----
@@ -84,7 +82,7 @@ MATCH (you:Person {name:"You"})-[like:LIKE]->(liked)
 RETURN you.name AS who, type(like) AS how, liked.name AS what
 ----
 
-And render as a table.
+Render the results as a table:
 
 //table
 

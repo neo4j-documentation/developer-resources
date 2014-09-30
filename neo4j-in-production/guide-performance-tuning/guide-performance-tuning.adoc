@@ -8,12 +8,12 @@
 
 .Goals
 [abstract]
-This guide explains Configuration and Performance Tuning best practices and troubleshooting tips. 
+This guide explains Configuration and Performance Tuning best practices and troubleshooting tips, including topics such as cache sizing, JVM configuration, Memory Mapped IO (MMIO) settings, and logical log configuration. 
 
 .Prerequisites
 [abstract]
-This guide describes how to configure and tune a Neo4j installation.
-This includes topics such as cache sizing, JVM configuration, Memory Mapped IO (MMIO) settings and logical log configuration. 
+You should know how to link:/download[download] and install Neo4j on your system. 
+If you are a developer you should be accustomed to the graph data model and have written your Neo4j application. 
 
 [role=expertise]
 {level}
@@ -48,7 +48,7 @@ Having a heap that is much larger than what your application needs is not good e
 Typically we aim to have those memory_mappings cover the entire size of the on-disk store, to ensure all the graph content is cached into memory.
 The remaining memory can then be split between the Neo4j heap and the rest of the operating system (& other processes).
 
-Edit your neo4j-wrapper file to set the heap size. It is recommended that the initmemory and the maxmemory properties be set to the same number.
+Edit your `neo4j-wrapper` file to set the heap size. It is recommended that the initmemory and the maxmemory properties be set to the same number.
 
 For example:
 
