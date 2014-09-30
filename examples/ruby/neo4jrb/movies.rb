@@ -6,6 +6,10 @@ set :public_folder, File.dirname(__FILE__) + '/static'
 
 Neo4j::Session.open
 
+# We need to cache the label name as a _classname property in order to get better performance
+Neo4j::Session.query("MATCH (p:Person)-[r:`ACTED_IN`]->(m:Movie) SET p._classname = 'Person', r._classname = 'Engagement', m._classname = 'Movie'")
+
+
 get '/' do
   redirect '/index.html'
 end
@@ -39,7 +43,8 @@ get '/movie/:title' do
     Proc.new do |person, rel|
       {
         name: person.name,
-        role: rel.props[:roles] || [],
+        # we could have used the roles accessor (rel.roles) method here when rol is a Engagement class
+        role: rel.props[:roles] || [],  
         job: role
       }
     end
