@@ -6,7 +6,7 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>Guide to importing data into Neo4j | Developer Resources | Neo4j Graph Database</title>
+         <title>Importing Data into Neo4j | Developer Resources | Neo4j Graph Database</title>
          <script type="text/javascript">
             var _kmq = _kmq || [];
             var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
@@ -123,12 +123,12 @@
                <article id="content" role="main">
                  <div class="row" style="padding: 10px 0 0;">
                    <div class="columns large-12" style="padding:10px 0 0;">
-                   <ul class="breadcrumbs"> <li><a href="/developer-resources">Developer Guides</a></li> <li><a href="../">Data Import</a></li> <li class="current"><a href="#">Guide to importing data into Neo4j</a></li> </ul>
+                   <ul class="breadcrumbs"> <li><a href="/developer-resources">Developer Guides</a></li> <li><a href="../">Data Import</a></li> <li class="current"><a href="#">Importing Data into Neo4j</a></li> </ul>
                  </div>
                  </div>
                  <div class="row">
                    <div class="columns large-12">
-                   <h1 style="font-size:2.1rem;">Guide to importing data into Neo4j</h1>
+                   <h1 style="font-size:2.1rem;">Importing Data into Neo4j</h1>
                  </div>
                  </div>
                   <section class="row" style="padding:10px 0;">
@@ -149,7 +149,8 @@ In this guide we&#8217;ll look at how we can export a Postgres data set into Neo
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should have a basic understanding of the <a href="/what-is-neo4j/property-graph">property graph model</a> and have completed the <a href="../../build-a-graph-data-model/guide-intro-to-graph-modeling/index.html">modeling guide</a>. Having <a href="/download">downloaded</a> and installed Neo4j server helps you code along with the examples.
+You should have a basic understanding of the <a href="/what-is-neo4j/property-graph">property graph model</a> and have completed the <a href="../../build-a-graph-data-model/guide-intro-to-graph-modeling/index.html">modeling guide</a>.
+Having <a href="/download">downloaded</a> and installed Neo4j server helps you code along with the examples.
 </blockquote>
 </div>
 
@@ -159,7 +160,7 @@ You should have a basic understanding of the <a href="/what-is-neo4j/property-gr
 
 </div>
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_northwind_introduction">Northwind Introduction</h4>
 
@@ -167,7 +168,7 @@ You should have a basic understanding of the <a href="/what-is-neo4j/property-gr
 
 <div class="paragraph">
 <p>In this guide we&#8217;ll be using the <a href="https://code.google.com/p/northwindextended/downloads/detail?name=northwind.postgre.sql&amp;can=2&amp;q=">NorthWind data set</a> as our example.
-NorthWind is a popular data set used to demonstrate SQL and relational databases but the data is graphy enough to be interesting for us.</p>
+NorthWind is a popular data set used to demonstrate SQL and relational databases and is graphy enough to be interesting for us.</p>
 </div>
 
 
@@ -183,7 +184,7 @@ NorthWind is a popular data set used to demonstrate SQL and relational databases
 </div>
 
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_developing_a_graph_model">Developing a Graph Model</h4>
 
@@ -209,7 +210,7 @@ A table name is a label name
 
 
 <div class="paragraph">
-<p>For this data set the following graph model serves as a first iteration:</p>
+<p>In this data set, the following graph model serves as a first iteration:</p>
 </div>
 
 
@@ -220,49 +221,49 @@ A table name is a label name
 
 <div class="sect3 "  >
     
-<h5 id="_how_does_it_differ_to_the_relational_model">How does it differ to the relational model?</h5>
+<h5 id="_how_does_the_graph_model_differ_from_the_relational_model">How does the Graph Model Differ from the Relational Model?</h5>
 
 <div class="ulist">
 
 
 <ul>
 <li>
-Graph should be more normalised. e.g. addresses have been denormalised in the Suppliers, Orders, Customers, and Employees table
+Graph should be more normalised. e.g. addresses have been denormalised in the Suppliers, Orders, Customers, and Employees tables.
 </li>
 <li>
-No nulls in the graph model - in the relational one to track the employee hierarchy we have a null enttry in the 'ReportsTo' column if they don&#8217;t report to anybody
+No nulls in the graph model - in the relational one to track the employee hierarchy we have a null entry in the 'ReportsTo' column if they don&#8217;t report to anybody
 </li>
 </ul>
 
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_exporting_the_data_to_csv">Exporting the Data to CSV</h4>
 
 
 
 <div class="paragraph">
-<p>Now that we know what we&#8217;d like our graph to look like we need to extract the data from Postgres so we can create it.
+<p>Now that we know what we&#8217;d like our graph to look like we need to extract the data from PostgreSQL so we can create it.
 The easiest way to do that is to export the appropriate tables in CSV format. Postgres' 'copy' command lets us execute a SQL query and write the result to a CSV file:</p>
 </div>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="sql"><code>Copy (SELECT * FROM orders
-      left outer join customers ON customers."CustomerID" = orders."CustomerID"
-      left outer join employees ON employees."EmployeeID" = orders."EmployeeID"
-      left outer join order_details ON order_details."OrderID" = orders."OrderID"
-      left outer join products ON products."ProductID" = order_details."ProductID"
-      left outer join suppliers ON suppliers."SupplierID" = products."SupplierID"
-      left outer join categories ON categories."CategoryID" = products."CategoryID")
-      To '/tmp/customerDb.csv' With CSV header;</code></pre>
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="sql"><code>COPY (SELECT * FROM customers) TO '/tmp/customers.csv' WITH CSV header;
+COPY (SELECT * FROM suppliers) TO '/tmp/suppliers.csv' WITH CSV header;
+COPY (SELECT * FROM products)  TO '/tmp/products.csv' WITH CSV header;
+COPY (SELECT * FROM employees) TO '/tmp/employees.csv' WITH CSV header;
+COPY (SELECT * FROM categories) TO '/tmp/categories.csv' WITH CSV header;
+
+COPY (SELECT * FROM orders
+      LEFT OUTER JOIN order_details ON order_details."OrderID" = orders."OrderID") TO '/tmp/orders.csv' WITH CSV header;</code></pre>
 </div>
 </div>
 </div>
-<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
 <h2 id="_recommended">Recommended</h2>
 </li>
 <div class="ulist">
@@ -282,61 +283,119 @@ The easiest way to do that is to export the appropriate tables in CSV format. Po
 
 </div>
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_importing_the_data_using_cypher">Importing the Data using Cypher</h4>
 
-<div class="sect3 "  >
-    
-<h5 id="_indexes">Indexes</h5>
+
+
+<div class="paragraph">
+<p>After we&#8217;ve done exported our data from PostgreSQL, we&#8217;ll use Cypher&#8217;s <a href="http://docs.neo4j.org/chunked/stable/query-load-csv.html">LOAD CSV</a> command to transform the contents of the CSV file into a graph structure.</p>
+</div>
 
 
 
 <div class="paragraph">
-<p>Next we&#8217;ll create some indexes on the (label, property) pairs that we&#8217;re going to create in Neo4j.</p>
+<p>We&#8217;ll start by creating the nodes:</p>
 </div>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>create index on :Product(productId);
-create index on :Category(categoryId);
-create index on :Order(OrderId);
-create index on :Employee(employeeId);
-create index on :Supplier(supplierId);</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3 "  >
-    
-<h5 id="_load_csv">LOAD CSV</h5>
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code># Create customers
+LOAD CSV WITH HEADERS FROM "file:/tmp/customers.csv" AS row
+CREATE (:Customer {CompanyName: row.CompanyName, CustomerID: row.CustomerID, Fax: row.Fax, Phone: row.Phone});
 
+# Create products
+LOAD CSV WITH HEADERS FROM "file:/tmp/products.csv" AS row
+CREATE (:Product {ProductName: row.ProductName, ProductID: row.ProductID, UnitPrice: row.UnitPrice});
+
+# Create suppliers
+LOAD CSV WITH HEADERS FROM "file:/tmp/suppliers.csv" AS row
+CREATE (:Supplier {CompanyName: row.CompanyName, SupplierID: row.SupplierID});
+
+# Create employees
+LOAD CSV WITH HEADERS FROM "file:/tmp/employees.csv" AS row
+CREATE (:Employee {EmployeeID:row.EmployeeID,  FirstName: row.FirstName, LastName: row.LastName, Title: row.Title});
+
+# Create categories
+LOAD CSV WITH HEADERS FROM "file:/tmp/categories.csv" AS row
+CREATE (:Category {CategoryID: row.CategoryID, CategoryName: row.CategoryName, Description: row.Description});</code></pre>
+</div>
+</div>
 
 
 <div class="paragraph">
-<p>After we&#8217;ve done that we&#8217;ll use Cypher&#8217;s <a href="http://docs.neo4j.org/chunked/stable/query-load-csv.html">LOAD CSV</a> command to transform the contents of the CSV file into a graph structure.</p>
+<p>The next step is to create the relationships between these nodes. Before we can do this, however, we&#8217;ll create indexes on the nodes that we&#8217;ve just created to ensure their quick lookup when creating relationships in the next section.</p>
 </div>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>LOAD CSV WITH HEADERS FROM "file:/tmp/customerDb.csv" AS row
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE INDEX ON :Product(ProductID);
+CREATE INDEX ON :Category(CategoryID);
+CREATE INDEX ON :Employee(EmployeeID);
+CREATE INDEX ON :Supplier(SupplierID);
+CREATE INDEX ON :Customer(CustomerID);</code></pre>
+</div>
+</div>
 
-MERGE (order:Order {orderId: row.OrderID})
 
-MERGE (product:Product {productId: row.ProductID})
-ON CREATE SET product.name = row.ProductName
+<div class="paragraph">
+<p>With those indices in place we can now create orders and their relationships to products and employees:</p>
+</div>
 
-MERGE (supplier:Supplier {supplierId: row.SupplierID})
-ON CREATE SET supplier.companyName = row.SupplierCompanyName
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>LOAD CSV WITH HEADERS FROM "file:/tmp/orders.csv" AS row
+CREATE (order:Order {OrderID: row.OrderID, ShipName: row.ShipName})
 
-MERGE (employee:Employee {employeeId: row.EmployeeID})
-
-MERGE (category:Category {categoryId: row.CategoryID})
-ON CREATE SET category.name = row.CategoryName
+WITH *
+MATCH (product:Product {ProductID: row.ProductID})
+MATCH (employee:Employee {EmployeeID: row.EmployeeID})
 
 MERGE (employee)-[:SOLD]-&gt;(order)
-MERGE (order)-[:PRODUCT]-&gt;(product)
+MERGE (order)-[:PRODUCT]-&gt;(product);</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Next we&#8217;ll create relationships between products, suppliers, and categories:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>LOAD CSV WITH HEADERS FROM "file:/tmp/products.csv" AS row
+MATCH (product:Product {ProductID: row.ProductID})
+MATCH (supplier:Supplier {SupplierID: row.SupplierID})
+MATCH (category:Category {CategoryID: row.CategoryID})
+
 MERGE (supplier)-[:SUPPLIES]-&gt;(product)
-MERGE (product)-[:PART_OF]-&gt;(category)</code></pre>
+MERGE (product)-[:PART_OF]-&gt;(category);</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Finally we&#8217;ll create the 'REPORTS_TO' relationship between employees which will create the reporting structure in the graph:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>LOAD CSV WITH HEADERS FROM "file:/tmp/employees.csv" AS row
+MATCH (employee:Employee {EmployeeID: row.EmployeeID})
+MATCH (manager:Employee {EmployeeID: row.ReportsTo})
+MERGE (employee)-[:REPORTS_TO]-&gt;(manager);</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>For completeness we&#8217;ll also create an index on orders so that we can look them up quickly in our queries:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE INDEX ON :Order(OrderId);</code></pre>
 </div>
 </div>
 
@@ -358,8 +417,7 @@ MERGE (product)-[:PART_OF]-&gt;(category)</code></pre>
 </div>
 
 </div>
-</div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_querying_the_graph">Querying the Graph</h4>
 
@@ -371,7 +429,7 @@ MERGE (product)-[:PART_OF]-&gt;(category)</code></pre>
 
 <div class="sect3 "  >
     
-<h5 id="_which_employee_had_the_highest_cross_selling_count_of_which_product_with_chocolade">Which employee had the highest cross selling count of which product with 'Chocolade'</h5>
+<h5 id="_which_employee_had_the_highest_cross_selling_count_of_which_product_with_chocolade">Which Employee had the Highest Cross-Selling Count of Which Product with 'Chocolade'</h5>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
@@ -431,8 +489,8 @@ LIMIT 5</code></pre>
 </table>
 </div>
 </div>
-<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
 <h2 id="_further_reading">Further Reading</h2>
 </li>
 <div class="ulist">

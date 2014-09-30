@@ -142,16 +142,16 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-This guide explains Neo4J sizing and hardware calculation best practices and tips.
-What hardware do your need to run your graph use-cases efficiently and what can you do to help make Neo4j fly.
+This guide explains Neo4J sizing and hardware calculation tips and best practices.
+It details you need to make Neo4j fly.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
 You should know how to <a href="/download">download</a> and install Neo4j on your system.
-If you are a developer you should be accustomed to the graph data model and have written your Neo4j application.
-You should know that Neo4j employs its own persistence and caching implementation for the graph data records and have seen the files on disk (<code>data/graph.db</code>) and glanced at <code>messages.log</code>
+You should be accustomed to the graph data model and have written your Neo4j application.
+You should know that Neo4j employs its own persistence and caching implementation, have seen the files on disk (<code>data/graph.db</code>), and have glanced at <code>messages.log</code>.
 </blockquote>
 </div>
 
@@ -176,7 +176,7 @@ You should know that Neo4j employs its own persistence and caching implementatio
 <hr>
 </div>
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_neo4j_s_architecture">Neo4j&#8217;s Architecture</h4>
 
@@ -188,7 +188,7 @@ On top of the memory mapped filesystem, Neo4j employs additional caches for load
 </div>
 
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_disk_storage">Disk Storage</h4>
 
@@ -243,8 +243,8 @@ Total  is 110.2MB</pre>
 </div>
 </div>
 </div>
-<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
 <h2 id="_recommended">Recommended</h2>
 </li>
 <div class="ulist">
@@ -264,7 +264,7 @@ Total  is 110.2MB</pre>
 
 </div>
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_low_level_cache">Low Level Cache</h4>
 
@@ -277,14 +277,14 @@ You should try to memory map as much data as your RAM allows (allow for 6-16GB h
 </div>
 
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_optimizing">Optimizing</h4>
 
 
 
 <div class="paragraph">
-<p>In optimizing a graph database solution for performance, we should bear in mind the following guidelines:</p>
+<p>In optimizing a graph database solution for performance, we should bear the following guidelines in mind:</p>
 </div>
 
 <div class="ulist">
@@ -292,22 +292,22 @@ You should try to memory map as much data as your RAM allows (allow for 6-16GB h
 
 <ul>
 <li>
-We should utilize the filesystem cache as much as possible; if possible, we should map our store files in their entirety into this cache
+Utilize the filesystem cache as much as possible, and map store files in their entirety into this cache
 </li>
 <li>
-We should have as much RAM available as possible, the more the better.
+Have as much RAM available as possible
 </li>
 <li>
-We should tune the JVM heap and keep an eye on GC behaviors
+Tune the JVM heap and keep an eye on GC behaviors
 </li>
 <li>
-We should consider using fast disks—SSDs or enterprise flash hardware to bring up the bottom line when disk access becomes inevitable
+Consider using fast disks—SSDs or enterprise flash hardware to bring up the bottom line when disk access becomes inevitable
 </li>
 </ul>
 
 </div>
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_performance_optimization">Performance Optimization</h4>
 
@@ -337,7 +337,7 @@ Invest in faster disks: SSDs or enterprise flash hardware
 
 </div>
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_hardware_sizing_calculator">Hardware sizing calculator</h4>
 
@@ -347,8 +347,8 @@ Invest in faster disks: SSDs or enterprise flash hardware
 <div class="small-4 columns">&nbsp;</div>
 </div>
 </div>
-<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
 <h2 id="_further_reading">Further Reading</h2>
 </li>
 <div class="ulist">

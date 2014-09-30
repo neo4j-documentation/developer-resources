@@ -142,16 +142,17 @@
 
 
 <div class="paragraph">
-<p>THIS DOES NOT YET WORK</p>
+<p>This example demonstrates how to map node and relationships to Ruby classes.</p>
 </div>
 
-
-
-<div class="paragraph">
-<p>This example demonstrates how to map node and relationships to Ruby classes.
-## How to install</p>
 </div>
+</div>
+<div class="sect1 "  >
+    
+<h3 id="_how_to_install">How to install</h3>
 
+<div class="sectionbody row">
+<div class="columns medium-12">
 
 
 <div class="paragraph">
@@ -159,6 +160,8 @@
 </div>
 
 </div>
+</div>
+
 </div>
 <div class="sect1 "  >
     
@@ -169,13 +172,31 @@
 
 
 <div class="paragraph">
-<p><code>ruby movies.rb</code></p>
+<p><code>bundle exec rackup config.ru</code></p>
 </div>
 
 
 
 <div class="paragraph">
-<p>or 'bundle exec shotgun movies.rb'</p>
+<p>or 'bundle exec shotgun config.ru'</p>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="sect1 "  >
+    
+<h3 id="_design">Design</h3>
+
+<div class="sectionbody row">
+<div class="columns medium-12">
+
+
+<div class="paragraph">
+<p>This example is very slow if used from the Neo4j Server since it does a lot of requests instead of using just one cypher query (as in the neo4j-core example).
+Also notice that Neo4j.rb tries to hide the internal neo4j ids. Instead in the example we have created primary keys on title and name
+properties.</p>
 </div>
 
 </div>

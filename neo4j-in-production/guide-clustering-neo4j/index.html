@@ -151,7 +151,7 @@ This includes topics such as data synchronization, mending procedures, configuri
 <blockquote style="padding-left: 0;">
 You should know how to <a href="/download">download</a> and install Neo4j on your system.
 If you are a developer you should be accustomed to the graph data model and have written your Neo4j application.
-A sound understanding of Neo4j&#8217;s HTTP APIs, <a href="../guide-performance-tuning">tuning</a>, security and upgrade aspects, will help you set up a stable cluster.
+A sound understanding of Neo4j&#8217;s HTTP APIs, <a href="../guide-performance-tuning">tuning</a>, security, and upgrade aspects will help you set up a stable cluster.
 </blockquote>
 </div>
 
@@ -176,20 +176,20 @@ A sound understanding of Neo4j&#8217;s HTTP APIs, <a href="../guide-performance-
 <hr>
 </div>
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_data_synchronization_between_master_and_slaves">Data Synchronization between master and slaves</h4>
 
 
 
 <div class="paragraph">
-<p>Neo4j High Availability Cluster is a full master-slave replication.
+<p>The Neo4j High Availability Cluster is a full master-slave replication.
 Any data (graph or index) created on the master is propagated to the slaves depending on the settings of the master <code>ha.tx_push_factor</code> (number of slaves to actively push to during commit) and slaves <code>ha.pull_interval</code> (frequency of pulling updates from the master).</p>
 </div>
 
 </div>
-<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
 <h2 id="_recommended">Recommended</h2>
 </li>
 <div class="ulist">
@@ -209,7 +209,7 @@ Any data (graph or index) created on the master is propagated to the slaves depe
 
 </div>
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_configuring_a_two_slave_cluster_with_an_arbiter">Configuring a Two-Slave Cluster with an Arbiter</h4>
 
@@ -217,9 +217,9 @@ Any data (graph or index) created on the master is propagated to the slaves depe
 
 <div class="paragraph">
 <p>There&#8217;s a <a href="http://docs.neo4j.org/chunked/stable/ha-setup-tutorial.html">step-by-step tutorial for setting up a HA cluster</a>.
-For a 2 node cluster, you&#8217;ll actually want to run 3 separate machines, and use the Neo4j arbiter on the 3rd.
+For a 2 node cluster, you&#8217;ll actually want to run three separate machines, and use the Neo4j arbiter on the third.
 Details on the arbiter are available in the <a href="http://docs.neo4j.org/chunked/stable/arbiter-instances.html">Neo4j Manual</a>.
-The configuration for the arbiter is identical to that of a regular instance, excepting anything relating to the actual graph db itself (since an arbiter doesn&#8217;t hold any data).</p>
+The configuration for the arbiter is identical to that of a regular instance, with the exception of anything relating to the actual graph db itself (since an arbiter doesn&#8217;t hold any data).</p>
 </div>
 
 
@@ -230,7 +230,7 @@ The arbiter should have a unique <code>ha.server_id</code> (<code>3</code> is fi
 </div>
 
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_setting_a_server_in_slave_only_mode">Setting a Server in Slave-Only Mode</h4>
 
@@ -243,11 +243,12 @@ The arbiter should have a unique <code>ha.server_id</code> (<code>3</code> is fi
 
 
 <div class="paragraph">
-<p>You might want to configure a machine with that setting if it’s acting as a reporting instance but you need to make sure that 2 members don’t have that setting otherwise you won’t have any failover in the cluster.</p>
+<p>You might want to configure a machine with that setting if it’s acting as a reporting instance but you need to make sure that two members don’t have that setting.
+Otherwise you won’t have any failover in the cluster.</p>
 </div>
 
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_backing_up_a_cluster_server">Backing Up a Cluster Server</h4>
 
@@ -279,7 +280,7 @@ It can also be configured to listen on all interfaces by setting <code>online_ba
 </p>
 </div>
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_mending_procedure_for_master">Mending Procedure for Master</h4>
 
@@ -300,14 +301,14 @@ Modify neo4j-server.properties, set the org.neo4j.server.database.mode to "STAND
 Start the database and, once it&#8217;s running, stop it again (this is to ensure he database is cleanly shut down)
 </li>
 <li>
-Remove all files named nioneo_logical.log.vXX in data/graph.db, being careful to not remove any files without the "v", like nioneo_logical.log.1 or nioneo_logical.log.active
+Remove all files named nioneo_logical.log.vXX in data/graph.db, being careful to not remove any files without the "v", like <code>nioneo_logical.log.1</code> or <code>nioneo_logical.log.active</code>
 </li>
 <li>
 Start the server and use either neo4j-shell or the neo4j browser to issue the following two queries:
 <div class="olist arabic">
 <ol style="margin-left: 2.4rem;" class="arabic">
 <li>
-<p style="margin-bottom: 0.75rem;">First query, note the id returned here</p>
+<p style="margin-bottom: 0.75rem;">First query. Note the id returned here</p>
 </li>
 </ol>
 </div>
@@ -323,7 +324,7 @@ Start the server and use either neo4j-shell or the neo4j browser to issue the fo
 <div class="olist arabic">
 <ol style="margin-left: 2.4rem;" class="arabic">
 <li>
-<p style="margin-bottom: 0.75rem;">Second query, use the id returned from the previous one</p>
+<p style="margin-bottom: 0.75rem;">Second query. Use the id returned from the previous query</p>
 </li>
 </ol>
 </div>
@@ -349,7 +350,7 @@ Start the server
 
 </div>
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_mending_procedure_for_slaves">Mending Procedure for Slaves</h4>
 
@@ -370,8 +371,8 @@ Once copying is done, move to do the same thing on the second slave
 
 </div>
 </div>
-<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
 <h2 id="_further_reading">Further Reading</h2>
 </li>
 <div class="ulist">

@@ -142,14 +142,14 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-This guide explains Configuration and Performance Tuning best practices and troubleshooting tips.
+This guide explains Configuration and Performance Tuning best practices and troubleshooting tips, including topics such as cache sizing, JVM configuration, Memory Mapped IO (MMIO) settings, and logical log configuration.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-This guide describes how to configure and tune a Neo4j installation.
-This includes topics such as cache sizing, JVM configuration, Memory Mapped IO (MMIO) settings and logical log configuration.
+You should know how to <a href="/download">download</a> and install Neo4j on your system.
+If you are a developer you should be accustomed to the graph data model and have written your Neo4j application.
 </blockquote>
 </div>
 
@@ -173,7 +173,7 @@ This includes topics such as cache sizing, JVM configuration, Memory Mapped IO (
 
 <div class="sectionbody row">
 <div class="columns medium-12">
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_hardware">Hardware</h4>
 
@@ -191,7 +191,7 @@ Use SSDs or other fast I/O if possible
 
 </div>
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_cache_sizing">Cache Sizing</h4>
 
@@ -207,7 +207,7 @@ However, that reduces the size available for the caches accordingly.</p>
 </div>
 
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_specifying_jvm_tuning_properties">Specifying JVM tuning properties</h4>
 
@@ -236,7 +236,7 @@ The remaining memory can then be split between the Neo4j heap and the rest of th
 
 
 <div class="paragraph">
-<p>Edit your neo4j-wrapper file to set the heap size. It is recommended that the initmemory and the maxmemory properties be set to the same number.</p>
+<p>Edit your <code>neo4j-wrapper</code> file to set the heap size. It is recommended that the initmemory and the maxmemory properties be set to the same number.</p>
 </div>
 
 
@@ -259,7 +259,7 @@ This means, if your server has 8GB of RAM don&#8217;t use all of that RAM for he
 </div>
 
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_memory_mapped_io_settings">Memory Mapped IO Settings</h4>
 
@@ -297,7 +297,7 @@ neostore.relationshipstore.db.mapped_memory=800M</pre>
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_server_configuration">Server Configuration</h4>
 
@@ -308,7 +308,7 @@ neostore.relationshipstore.db.mapped_memory=800M</pre>
 </div>
 
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_logical_logs">Logical Logs</h4>
 
@@ -326,7 +326,7 @@ Logs are rotated every now and then (defaults to when they surpass 25 Mb in size
 </div>
 
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_setting_the_number_of_open_files_on_linux">Setting the Number of Open Files on Linux</h4>
 
@@ -340,8 +340,8 @@ To set the value system wide you have to follow the instructions for your platfo
 </div>
 
 </div>
-<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
 <h2 id="_recommended">Recommended</h2>
 </li>
 <div class="ulist">
@@ -364,13 +364,13 @@ To set the value system wide you have to follow the instructions for your platfo
 
 </div>
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_troubleshooting">Troubleshooting</h4>
 
 
 </div>
-<div class="sect2 columns medium-10" style='padding-left: 0;' >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_gc_pressure_frequent_garbage_collections">GC pressure, frequent garbage collections</h4>
 
@@ -391,8 +391,8 @@ Heap is too small, or caches are too big. See recommended setup
 </div>
 
 </div>
-<div class="sect2 side-nav columns medium-2" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: right; border: 0;'><li>
+<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
 <h2 id="_further_reading">Further Reading</h2>
 </li>
 <div class="ulist">
