@@ -1,4 +1,4 @@
-= Styling Neo4j Server Visualisation
+= Styling Graph Visualizations in the Neo4j Browser
 :level: Beginner
 :toc:
 :toc-placement!:
@@ -8,20 +8,20 @@
 
 .Goals
 [abstract]
-This article introduces the *Graph Style Sheet* (GRASS).
+This article introduces how to style graph visualizations in the Neo4j browser using a *Graph Style Sheet* (GRASS).
 
 .Prerequisites
 [abstract]
-None! :D
+It is suggested that you have read the starter guide link:/guides/what-is-a-graph-database[What is a Graph Database?]
 
 [role=expertise]
 {level}
 
 :img: .
 
-To give you a head start when using Neo4j-Browser I wanted to share these quick tips for styling and querying.
+To give you a head start when using the Neo4j Browser, I wanted to share these quick tips for styling and querying.
 
-image:{img}/howto_style.png[width=800]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/howto_style.png[How to style]
 
 First of all, you have to http://neo4j.org/download[download], unzip and start Neo4j.
 If you have a JDK (Java7) installed and on the path it should look like this:
@@ -65,18 +65,18 @@ But those nodes only show numbers! Now click on any red node that has +ACTED_IN+
 These are +Movie+ nodes. In the popup you'll see the node label "Movie" on the top.
 In the tab on the right, denoted with an "eye", you can set the styling parameters and property chosen for the displayed title.
 
-image:{img}/style_node.jpg[]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/style_node.jpg[]
 
 Play a bit with the styling options and do the same for the other nodes (labeled +Person+).
 The next step is styling relationships, just click on one (e.g. +DIRECTED+) and try it out.
 
-image:{img}/style_relationship.jpg[]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/style_relationship.jpg[]
 
 The whole visualization is powered by a concept called *Graph Style Sheet* or GRASS. You can access the style sheet with the link at the bottom of the styling pop-up.
 The resulting style renderer allows you to look at the style-sheet, download it or update it via drag-and-drop.
 You can also reset all styling with the "fire extinguisher".
 
-image:{img}/style_sheet_grass.jpg[]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/style_sheet_grass.jpg[]
 
 If you rather watch me (Michael) performing all these things, here is the screencasts that explains it all in detail. Enjoy!
 

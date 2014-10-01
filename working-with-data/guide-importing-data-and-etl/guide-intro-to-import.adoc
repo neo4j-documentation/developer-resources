@@ -19,6 +19,8 @@ If you link:/download[download] and install Neo4j server you'll be able to follo
 [role=expertise]
 {level}
 
+toc::[]
+
 === Northwind Introduction
 
 In this guide we'll be using the link:https://code.google.com/p/northwindextended/downloads/detail?name=northwind.postgre.sql&can=2&q=[NorthWind data set].
@@ -26,7 +28,7 @@ NorthWind is a popular data set used to demonstrate SQL and relational databases
 
 The following is an entity relationship diagram of the data set:
 
-image:{img}/Northwind_diagram.jpg[]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/Northwind_diagram.jpg[]
 
 === Developing a Graph Model
 
@@ -37,7 +39,7 @@ There are a couple of rules of thumbs when deriving a graph model from a relatio
 
 In this data set, the following graph model serves as a first iteration:
 
-image:{img}/northwind_graph_simple.png[]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/northwind_graph_simple.png[width=800]
 
 ==== How does the Graph Model Differ from the Relational Model?
 
@@ -155,7 +157,7 @@ CREATE INDEX ON :Order(OrderId);
 
 A sample of the graph looks like this:
 
-image:{img}/northwind_graph_sample.png[]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/northwind_graph_sample.png[]
 
 We can now query the graph.
 

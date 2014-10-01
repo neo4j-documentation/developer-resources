@@ -121,15 +121,35 @@
                </div>
                <article id="content" role="main">
                   <style>
-                    .lead
-                    {
-                      display: none;
-                    }
+                  .lead
+                   {
+                   display: none;
+                   }
+                   section.row
+                   {
+                   padding: 0;
+                   }
+                   #content section.row
+                   {
+                   max-width: 80em;
+                   padding-left: .5em;
+                   padding-right: .5em;
+                   }
+                   .row
+                   {
+                     max-width: 80em;
+                   }
+                   #content section.row .accordion-navigation > a {
+                   background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+                   padding: 0 !important;
+                   }
+                   .accordion .content { padding: 0; }
+                   .row .row { margin: auto; }
+                   .columns.medium-12
+                   {
+                     padding-left: 0;
+                   }
 
-                    section.row
-                    {
-                      padding: 0;
-                    }
                   </style>
                   <div style="padding-left: 1em; padding-right: 1em;">
                      <div class="row" style="padding: 10px;">
@@ -170,6 +190,20 @@ Having <a href="/download">downloaded</a> and installed Neo4j server helps you c
 <div class="label">Beginner</div>
 <hr/>
 
+<div class="toc">
+<h3 class="title">Overview</h3>
+
+<ul class="sectlevel2">
+<li><a href="#_northwind_introduction">Northwind Introduction</a></li>
+<li><a href="#_developing_a_graph_model">Developing a Graph Model</a></li>
+<li><a href="#_exporting_the_data_to_csv">Exporting the Data to CSV</a></li>
+
+<li><a href="#_importing_the_data_using_cypher">Importing the Data using Cypher</a></li>
+<li><a href="#_querying_the_graph">Querying the Graph</a></li>
+
+</ul>
+
+<hr>
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
@@ -189,12 +223,11 @@ NorthWind is a popular data set used to demonstrate SQL and relational databases
 <p>The following is an entity relationship diagram of the data set:</p>
 </div>
 
-
-
-<div class="paragraph">
-<p><span class="image"><img src=".//Northwind_diagram.jpg" alt="Northwind_diagram"></span></p>
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/Northwind_diagram.jpg" alt="Northwind diagram">
+</p>
 </div>
-
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
@@ -225,12 +258,11 @@ A table name is a label name
 <p>In this data set, the following graph model serves as a first iteration:</p>
 </div>
 
-
-
-<div class="paragraph">
-<p><span class="image"><img src=".//northwind_graph_simple.png" alt="northwind_graph_simple"></span></p>
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/northwind_graph_simple.png" alt="northwind graph simple" width="800">
+</p>
 </div>
-
 <div class="sect3 "  >
     
 <h5 id="_how_does_the_graph_model_differ_from_the_relational_model">How does the Graph Model Differ from the Relational Model?</h5>
@@ -416,12 +448,11 @@ MERGE (employee)-[:REPORTS_TO]-&gt;(manager);</code></pre>
 <p>A sample of the graph looks like this:</p>
 </div>
 
-
-
-<div class="paragraph">
-<p><span class="image"><img src=".//northwind_graph_sample.png" alt="northwind_graph_sample"></span></p>
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/northwind_graph_sample.png" alt="northwind graph sample">
+</p>
 </div>
-
 
 
 <div class="paragraph">

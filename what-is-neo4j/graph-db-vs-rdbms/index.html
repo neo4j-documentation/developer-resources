@@ -121,15 +121,35 @@
                </div>
                <article id="content" role="main">
                   <style>
-                    .lead
-                    {
-                      display: none;
-                    }
+                  .lead
+                   {
+                   display: none;
+                   }
+                   section.row
+                   {
+                   padding: 0;
+                   }
+                   #content section.row
+                   {
+                   max-width: 80em;
+                   padding-left: .5em;
+                   padding-right: .5em;
+                   }
+                   .row
+                   {
+                     max-width: 80em;
+                   }
+                   #content section.row .accordion-navigation > a {
+                   background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+                   padding: 0 !important;
+                   }
+                   .accordion .content { padding: 0; }
+                   .row .row { margin: auto; }
+                   .columns.medium-12
+                   {
+                     padding-left: 0;
+                   }
 
-                    section.row
-                    {
-                      padding: 0;
-                    }
                   </style>
                   <div style="padding-left: 1em; padding-right: 1em;">
                      <div class="row" style="padding: 10px;">
@@ -213,7 +233,7 @@ This operation is CPU and RAM intensive and has an exponential cost.</p>
 
 <div class="imageblock">
 <p class="content">
-<img src="./rel_graph4.jpg" alt="rel graph4">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/rel_graph4.jpg" alt="rel graph4">
 </p>
 </div>
 
@@ -252,7 +272,7 @@ Whenever you run the equivalent of a  <em>JOIN</em> operation, the database just
 
 <div class="imageblock">
 <p class="content">
-<img src="./rel_graph5.jpg" alt="rel graph5">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/rel_graph5.jpg" alt="rel graph5">
 </p>
 </div>
 
@@ -280,7 +300,7 @@ Graph databases like Neo4j fully support the transactional concepts including wr
 
 <div class="imageblock">
 <p class="content">
-<img src="./rel_graph9.jpg" alt="rel graph9">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/rel_graph9.jpg" alt="rel graph9">
 </p>
 </div>
 
@@ -297,7 +317,7 @@ Graph databases like Neo4j fully support the transactional concepts including wr
 
 <div class="imageblock">
 <p class="content">
-<img src="./domain.png" alt="domain">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/domain.png" alt="domain">
 </p>
 </div>
 </div>

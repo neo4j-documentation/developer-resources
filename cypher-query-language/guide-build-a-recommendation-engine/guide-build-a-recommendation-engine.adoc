@@ -12,7 +12,7 @@ This guide explains how to leverage connections in your data to gather insights 
 
 .Prerequisites
 [abstract]
-You should have a basic understanding of the link:/what-is-neo4j/property-graph[property graph model]. Having link:/download[downloaded] and installed the Neo4j server helps you code along with the examples. 
+You should have a basic understanding of the link:/what-is-neo4j/property-graph[property graph model]. Having link:/download[downloaded] and installed the Neo4j server helps you code along with the examples.
 
 [role=expertise]
 {level}
@@ -159,7 +159,7 @@ You can also watch the video of Andreas running these queries live on our main e
 
 Imagine a graph like this, a few friends with their favorite restaurants, their cuisines and locations.
 
-image::{img}restaurant-recommendation.png[]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/restaurant-recommendation.png[]
 
 A practical question to answer here, formulated in http://neo4j.com/blog/why-the-most-important-part-of-facebook-graph-search-is-graph/[Graph Search] slang is:
 
@@ -176,8 +176,8 @@ MATCH (person:Person)-[:IS_FRIEND_OF]->(friend),
       (restaurant)-[:LOCATED_IN]->(loc:Location),
       (restaurant)-[:SERVES]->(type:Cuisine)
 
-WHERE person.name = 'Philip' 
-  AND loc.location='New York' 
+WHERE person.name = 'Philip'
+  AND loc.location='New York'
   AND type.cuisine='Sushi'
 
 RETURN restaurant.name, count(*) as occurrence
@@ -193,9 +193,9 @@ Other factors that can be easily integrated in this query are favorites, allergi
 
 ////
 
-=== Dating / Job Search 
+=== Dating / Job Search
 
-Match making with a graph database relies on extracting the relevant attributes of people (or jobs) as attribute nodes to allow for matches across those. 
+Match making with a graph database relies on extracting the relevant attributes of people (or jobs) as attribute nodes to allow for matches across those.
 The people in your graph are connected to their attributes with weighted relationships that allow for aggregation and filtering.
 
 [source,cypher]

@@ -121,15 +121,35 @@
                </div>
                <article id="content" role="main">
                   <style>
-                    .lead
-                    {
-                      display: none;
-                    }
+                  .lead
+                   {
+                   display: none;
+                   }
+                   section.row
+                   {
+                   padding: 0;
+                   }
+                   #content section.row
+                   {
+                   max-width: 80em;
+                   padding-left: .5em;
+                   padding-right: .5em;
+                   }
+                   .row
+                   {
+                     max-width: 80em;
+                   }
+                   #content section.row .accordion-navigation > a {
+                   background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+                   padding: 0 !important;
+                   }
+                   .accordion .content { padding: 0; }
+                   .row .row { margin: auto; }
+                   .columns.medium-12
+                   {
+                     padding-left: 0;
+                   }
 
-                    section.row
-                    {
-                      padding: 0;
-                    }
                   </style>
                   <div style="padding-left: 1em; padding-right: 1em;">
                      <div class="row" style="padding: 10px;">
@@ -168,8 +188,25 @@ This is a guide for Beginner. You should have familiarized yourself with <a href
 <h3 class="title">Overview</h3>
 
 <ul class="sectlevel1">
-<li><a href="#_about_cypher">About Cypher</a></li>
-<li><a href="#_practical_example">Practical Example</a></li>
+<li><a href="#_about_cypher">About Cypher</a>
+<ul class="sectlevel2">
+<li><a href="#_nodes">Nodes</a></li>
+
+<li><a href="#_relationships">Relationships</a></li>
+
+<li><a href="#_labels">Labels</a></li>
+</ul>
+</li>
+<li><a href="#_practical_example">Practical Example</a>
+<ul class="sectlevel2">
+<li><a href="#_create_a_record_for_yourself">Create a Record for Yourself</a></li>
+<li><a href="#_create_your_friends">Create Your Friends</a></li>
+<li><a href="#_find_your_friends">Find Your Friends</a></li>
+<li><a href="#_create_second_degree_friends_and_expertise">Create Second Degree Friends and Expertise</a></li>
+<li><a href="#_find_someone_who_can_help_you_learn_neo4j">Find Someone Who Can Help You Learn Neo4j</a></li>
+
+</ul>
+</li>
 </ul>
 
 <hr>
@@ -190,7 +227,7 @@ It allows us to describe <strong>what</strong> we want to select, insert, update
 
 <div class="imageblock">
 <p class="content">
-<img src="./cypher_pattern_simple.png" alt="cypher pattern simple">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/cypher_pattern_simple.png" alt="cypher pattern simple">
 </p>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >

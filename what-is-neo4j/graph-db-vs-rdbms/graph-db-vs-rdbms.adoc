@@ -29,7 +29,7 @@ toc::[]
 
 === Relational Databases
 
-Relational databases have been (and continue to be) the power-horse of software applications since the 80s. 
+Relational databases have been (and continue to be) the power-horse of software applications since the 80s.
 They store highly structured data in tables with predetermined columns of certain types and many rows of the same type of information, and, thanks in part to the rigidity of their organization, force developers and applications to strictly structure the data used in their applications.
 
 References to other rows and tables are indicated by referring to their (primary-)key attributes, enforceable with constraints only when the connection is never optional.
@@ -37,13 +37,13 @@ References to other rows and tables are indicated by referring to their (primary
 Relationships are computed at query time by matching primary and foreign keys of the many (potentially indexed) rows of the to be joined tables.
 This operation is CPU and RAM intensive and has an exponential cost.
 
-image::{img}rel_graph4.jpg[]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/rel_graph4.jpg[]
 
 If you use many-to-many relationships, you have to introduce a _JOIN_ table that lists foreign keys of both participating tables which further increases JOIN operation costs.
-Those costly JOIN operations are usually addressed by denormalising data to reduce the number of JOINs necessary. 
+Those costly JOIN operations are usually addressed by denormalising data to reduce the number of JOINs necessary.
 
 Although not every use-case is a good fit for this type of stringent data model, the lack of viable alternatives and the support for relational databases has made for the lack of well known alternatives has made made it difficult for alternative models to break into the mainstream.
-In spite of all the benefits of traditional, relational databases, sometimes a different, more flexible data model may be a better fit, both conceptually and performance-wise. 
+In spite of all the benefits of traditional, relational databases, sometimes a different, more flexible data model may be a better fit, both conceptually and performance-wise.
 
 Meet graph databases.
 
@@ -54,7 +54,7 @@ A graph database treats these foreign keys as data structures in the store layer
 Each node (entity or attribute) in the model directly contains a list of relationship-records that represent its relationships to other nodes, organized by type and direction and holding additional attributes.
 Whenever you run the equivalent of a  _JOIN_ operation, the database just walks this list and has direct access to the connected nodes, eliminating the need for a costly search / match computation.
 
-image::{img}rel_graph5.jpg[]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/rel_graph5.jpg[]
 
 Graph databases are part of the link:../graph-db-vs-nosql[NoSQL movement].
 They are open-source, schema-free, and scalable database solutions.
@@ -67,13 +67,13 @@ The fine grained model also means that there is no natural boundary around aggre
 The well-known and tested concept of transactions groups a set of updates of nodes and relationships into a atomic, consistent, isolated, and durable (ACID) operation.
 Graph databases like Neo4j fully support the transactional concepts including write ahead logs and recovery after abnormal termination.
 
-image::{img}rel_graph9.jpg[]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/rel_graph9.jpg[]
 
 If you're used to modeling with relational databases, try to remember the ease and beauty of good, normalized entity-relationship diagram: a simple, easy to understand model you can quickly whiteboard with your colleagues and domain experts.
 
 Let's take a realistic model of an organizational domain and show how it would be modeled in a relational database vs. the graph database:
 
-image::{img}domain.png[]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/domain.png[]
 
 [role=side-nav]
 === Recommended
@@ -99,9 +99,9 @@ Let's just look at the statements without explaining them in detail.
 [source,sql]
 ----
 SELECT * FROM Person
-LEFT JOIN Person_Department 
+LEFT JOIN Person_Department
   ON Person.Id = Person_Department.PersonId
-LEFT JOIN Department 
+LEFT JOIN Department
   ON Department.Id = Person_Department.DepartmentId
 WHERE Department.name = "IT Department"
 ----
@@ -153,7 +153,7 @@ For instance, the Neo4j JDBC driver would be used like this:
 ----
 Connection con = DriverManager.getConnection("jdbc:neo4j://localhost:7474/");
 
-String query = 
+String query =
     "MATCH (:Person {name:{1}})-[:EMPLOYEE]-(d:Dept) RETURN d.name as dept";
 try (PreparedStatement stmt = con.prepareStatement(QUERY)) {
     stmt.setString(1,"John");
@@ -185,7 +185,7 @@ Then you can take the CSV file and use Cypher's `LOAD CSV` power tool to:
 * Ingest the data, accessing columns by header name or offset
 * Convert values from strings to different formats and structures (`toFloat`, `split`, ...)
 * Skip rows to ignore
-* `MATCH` nodes based on attribute lookups 
+* `MATCH` nodes based on attribute lookups
 * `CREATE` or `MERGE` nodes and relationships with labels and attributes from the row data
 
 For Example:

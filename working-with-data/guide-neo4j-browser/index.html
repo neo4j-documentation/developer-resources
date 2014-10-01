@@ -6,7 +6,7 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>Styling Neo4j Server Visualisation | Developer Resources | Neo4j Graph Database</title>
+         <title>Styling Graph Visualizations in the Neo4j Browser | Developer Resources | Neo4j Graph Database</title>
          <script type="text/javascript">
             var _kmq = _kmq || [];
             var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
@@ -121,15 +121,35 @@
                </div>
                <article id="content" role="main">
                   <style>
-                    .lead
-                    {
-                      display: none;
-                    }
+                  .lead
+                   {
+                   display: none;
+                   }
+                   section.row
+                   {
+                   padding: 0;
+                   }
+                   #content section.row
+                   {
+                   max-width: 80em;
+                   padding-left: .5em;
+                   padding-right: .5em;
+                   }
+                   .row
+                   {
+                     max-width: 80em;
+                   }
+                   #content section.row .accordion-navigation > a {
+                   background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+                   padding: 0 !important;
+                   }
+                   .accordion .content { padding: 0; }
+                   .row .row { margin: auto; }
+                   .columns.medium-12
+                   {
+                     padding-left: 0;
+                   }
 
-                    section.row
-                    {
-                      padding: 0;
-                    }
                   </style>
                   <div style="padding-left: 1em; padding-right: 1em;">
                      <div class="row" style="padding: 10px;">
@@ -137,13 +157,13 @@
                            <ul class="breadcrumbs">
                               <li><a href="/developer-resources">Developer Guides</a></li>
                               <li><a href="../">Working with Data</a></li>
-                              <li class="current"><a href="#">Styling Neo4j Server Visualisation</a></li>
+                              <li class="current"><a href="#">Styling Graph Visualizations in the Neo4j Browser</a></li>
                            </ul>
                         </div>
                      </div>
                      <div class="row">
                         <div class="columns large-12">
-                           <h1 style="font-size:2.1rem;">Styling Neo4j Server Visualisation</h1>
+                           <h1 style="font-size:2.1rem;">Styling Graph Visualizations in the Neo4j Browser</h1>
                         </div>
                      </div>
                      <section class="row" style="padding:10px 0;">
@@ -154,13 +174,13 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-This article introduces the <strong>Graph Style Sheet</strong> (GRASS).
+This article introduces how to style graph visualizations in the Neo4j browser using a <strong>Graph Style Sheet</strong> (GRASS).
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-None! :D
+It is suggested that you have read the starter guide <a href="/guides/what-is-a-graph-database">What is a Graph Database?</a>
 </blockquote>
 </div>
 
@@ -171,15 +191,14 @@ None! :D
 
 
 <div class="paragraph">
-<p>To give you a head start when using Neo4j-Browser I wanted to share these quick tips for styling and querying.</p>
+<p>To give you a head start when using the Neo4j Browser, I wanted to share these quick tips for styling and querying.</p>
 </div>
 
-
-
-<div class="paragraph">
-<p><span class="image"><img src=".//howto_style.png" alt="howto_style" width="800"></span></p>
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/howto_style.png" alt="How to style">
+</p>
 </div>
-
 
 
 <div class="paragraph">
@@ -275,12 +294,11 @@ These are Movie nodes. In the popup you&#8217;ll see the node label "Movie" on t
 In the tab on the right, denoted with an "eye", you can set the styling parameters and property chosen for the displayed title.</p>
 </div>
 
-
-
-<div class="paragraph">
-<p><span class="image"><img src=".//style_node.jpg" alt="style_node"></span></p>
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/style_node.jpg" alt="style node">
+</p>
 </div>
-
 
 
 <div class="paragraph">
@@ -288,12 +306,11 @@ In the tab on the right, denoted with an "eye", you can set the styling paramete
 The next step is styling relationships, just click on one (e.g. DIRECTED) and try it out.</p>
 </div>
 
-
-
-<div class="paragraph">
-<p><span class="image"><img src=".//style_relationship.jpg" alt="style_relationship"></span></p>
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/style_relationship.jpg" alt="style relationship">
+</p>
 </div>
-
 
 
 <div class="paragraph">
@@ -302,12 +319,11 @@ The resulting style renderer allows you to look at the style-sheet, download it 
 You can also reset all styling with the "fire extinguisher".</p>
 </div>
 
-
-
-<div class="paragraph">
-<p><span class="image"><img src=".//style_sheet_grass.jpg" alt="style_sheet_grass"></span></p>
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/style_sheet_grass.jpg" alt="style sheet grass">
+</p>
 </div>
-
 
 
 <div class="paragraph">

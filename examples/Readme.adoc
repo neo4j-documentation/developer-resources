@@ -49,7 +49,7 @@ Thanks to the Neo4j community, there are drivers for Neo4j for almost every popu
 
 === Existing Language / Driver Examples
 
-For our example application we've provided a implementation for the languages and drivers listed below. 
+For our example application we've provided a implementation for the languages and drivers listed below.
 Most of them have thankfully been made available by the driver maintainers.
 
 * link:java[Java]
@@ -76,7 +76,7 @@ The application runs as a single page and uses JavaScript to access three HTTP e
 * single movie listing
 * graph visualization of the domain
 
-image::{img}movie_application.png[]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/movie_application.png[]
 
 ==== Domain Model
 
@@ -106,7 +106,7 @@ We then apply the force-layout algorithm to render nodes as circles and relation
 // JSON object for single movie with cast
 curl http://localhost:8080/movie/The%20Matrix
 
-{"title": "The Matrix", 
+{"title": "The Matrix",
  "cast": [{"job": "acted", "role": ["Emil"], "name": "Emil Eifrem"}, {"job": "acted", "role": ["Agent Smith"], "name": "Hugo Weaving"}, ...
           {"job": "directed", "role": null, "name": "Andy Wachowski"}, {"job": "produced", "role": null, "name": "Joel Silver"}]}
 ----
@@ -117,10 +117,10 @@ It matches the movie by title, then optionally finds all people working on that 
 
 [source,cypher]
 ----
-MATCH (movie:Movie {title:{title}}) 
+MATCH (movie:Movie {title:{title}})
  OPTIONAL MATCH (movie)<-[r]-(person:Person)
- RETURN movie.title as title, 
-       collect({name:person.name, 
+ RETURN movie.title as title,
+       collect({name:person.name,
                 job:head(split(lower(type(r)),'_')),
                 role:r.roles}) as cast LIMIT 1
 ----
@@ -131,8 +131,8 @@ MATCH (movie:Movie {title:{title}})
 // list of JSON objects for movie search results
 curl http://localhost:8080/search?q=matrix
 
-[{"movie": {"released": 1999, "tagline": "Welcome to the Real World", "title": "The Matrix"}}, 
- {"movie": {"released": 2003, "tagline": "Free your mind", "title": "The Matrix Reloaded"}}, 
+[{"movie": {"released": 1999, "tagline": "Welcome to the Real World", "title": "The Matrix"}},
+ {"movie": {"released": 2003, "tagline": "Free your mind", "title": "The Matrix Reloaded"}},
  {"movie": {"released": 2003, "tagline": "Everything that has a beginning has an end", "title": "The Matrix Revolutions"}}]
 ----
 
@@ -170,7 +170,7 @@ The parameter `{limit:50}` is used to prevent the visualization from becoming a 
 [source,cypher]
 ----
 MATCH (m:Movie)<-[:ACTED_IN]-(a:Person)
- RETURN m.title as movie, collect(a.name) as cast 
+ RETURN m.title as movie, collect(a.name) as cast
  LIMIT {limit}
 ----
 
@@ -181,7 +181,7 @@ MATCH (m:Movie)<-[:ACTED_IN]-(a:Person)
 - Install the Movies data-set with `:play movies`
 - Click the `CREATE` statement and hit the triangular "Run" button to insert the data.
 
-You can also choose to use a cloud hosted Neo4j database. 
+You can also choose to use a cloud hosted Neo4j database.
 If you go this route, then you have to provide the URL to your Neo4j server in an environment variable `NEO4J_URL`.
 
 === Run Locally
