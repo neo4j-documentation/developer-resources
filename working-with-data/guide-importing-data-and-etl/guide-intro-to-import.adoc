@@ -167,9 +167,9 @@ One question we would love to answer is:
 
 [source,cypher]
 ----
-MATCH (choc:Product {name:'Chocolade'})<-[:PRODUCT]-(:Order)<-[:SOLD]-(employee),
+MATCH (choc:Product {ProductName:'Chocolade'})<-[:PRODUCT]-(:Order)<-[:SOLD]-(employee),
       (employee)-[:SOLD]->()-[:PRODUCT]->(other:Product)
-RETURN employee.employeeId, other.name, count(*) as count
+RETURN employee.EmployeeID, other.ProductName, count(*) as count
 ORDER BY count DESC
 LIMIT 5
 ----
@@ -184,6 +184,85 @@ employee.employeeId,other.name,count
 1,Pavlova,22
 1,Camembert Pierrot,22
 1,Ikura,20
+|===
+
+We might also like to answer the following question:
+
+==== Which employees report to each other?
+
+[source, cypher]
+----
+MATCH path = (e:Employee)<-[:REPORTS_TO]-(sub)
+RETURN e.EmployeeID AS manager, sub.EmployeeID AS employee
+----
+
+[format="csv", options="header"]
+|===
+manager,employee
+2,1
+2,3
+2,4
+2,5
+2,8
+5,6
+5,7
+5,9
+|===
+
+One interesting thing we might notice is that employee #5 has people reporting to them but also reports to employee #2.
+
+Our next query could investigate that a bit more:
+
+==== Which employees indirectly report to each other?
+
+[source, cypher]
+----
+MATCH path = (e:Employee)<-[:REPORTS_TO*]-(sub)
+WITH e, sub, [person in NODES(path) | person.EmployeeID][1..-1] AS path
+RETURN e.EmployeeID AS manager, sub.EmployeeID AS employee, CASE WHEN LENGTH(path) = 0 THEN "Direct Report" ELSE path END AS via
+ORDER BY LENGTH(path)
+----
+
+[format="csv", options="header"]
+|===
+e.EmployeeID,sub.EmployeeID,via
+2,1,Direct Report
+2,3,Direct Report
+2,4,Direct Report
+2,5,Direct Report
+2,8,Direct Report
+5,6,Direct Report
+5,7,Direct Report
+5,9,Direct Report
+2,6,"[""5""]"
+2,7,"[""5""]"
+2,9,"[""5""]"
+|===
+
+Finally we can bring together the organisation hierarchy with orders:
+
+==== How many orders were made by each part of the hierachy?
+
+[source, cypher]
+----
+MATCH (e:Employee)
+OPTIONAL MATCH (e)<-[:REPORTS_TO*0..]-(sub)-[:SOLD]->()
+RETURN e.EmployeeID, [x IN COLLECT(DISTINCT sub.EmployeeID) WHERE x <> e.EmployeeID] AS reports, COUNT(*) AS totalOrders
+ORDER BY totalOrders DESC
+----
+
+[format="csv", options="header"]
+|===
+e.EmployeeID,reports,totalOrders
+2,"[""1"",""3"",""4"",""5"",""6"",""7"",""9"",""8""]",2155
+5,"[""6"",""7"",""9""]",568
+4,[],420
+1,[],345
+3,[],321
+8,[],260
+7,[],176
+6,[],168
+9,[],107
 |===
 
 [role=side-nav]

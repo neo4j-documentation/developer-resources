@@ -155,17 +155,15 @@
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
 Existing data comes in many shapes and sizes and one of the most popular is a relational database.
-In this guide we&#8217;ll look at how we can export a Postgres data set into Neo4j.
-</blockquote>
+In this guide we&#8217;ll look at how we can export a Postgres data set into Neo4j.</blockquote>
 </div>
+
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
 You should have a basic understanding of the <a href="/what-is-neo4j/property-graph">property graph model</a> and have completed the <a href="../../build-a-graph-data-model/guide-intro-to-graph-modeling/index.html">modeling guide</a>.
-Having <a href="/download">downloaded</a> and installed Neo4j server helps you code along with the examples.
-</blockquote>
+Having <a href="/download">downloaded</a> and installed Neo4j server helps you code along with the examples.</blockquote>
 </div>
-
 
 <div class="label">Beginner</div>
 <hr/>
@@ -176,38 +174,30 @@ Having <a href="/download">downloaded</a> and installed Neo4j server helps you c
     
 <h4 id="_northwind_introduction">Northwind Introduction</h4>
 
-
-
 <div class="paragraph">
 <p>In this guide we&#8217;ll be using the <a href="https://code.google.com/p/northwindextended/downloads/detail?name=northwind.postgre.sql&amp;can=2&amp;q=">NorthWind data set</a> as our example.
 NorthWind is a popular data set used to demonstrate SQL and relational databases and is graphy enough to be interesting for us.</p>
 </div>
 
-
-
 <div class="paragraph">
 <p>The following is an entity relationship diagram of the data set:</p>
 </div>
 
-
-
 <div class="paragraph">
-<p><span class="image"><img src=".//Northwind_diagram.jpg" alt="Northwind_diagram"></span></p>
+<p><span class="image"><img src="./Northwind_diagram.jpg" alt="Northwind_diagram"></span></p>
 </div>
 
 </div>
+
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_developing_a_graph_model">Developing a Graph Model</h4>
-
-
 
 <div class="paragraph">
 <p>There are a couple of rules of thumbs when deriving a graph model from a relational one which we can use to come up with our first cut:</p>
 </div>
 
 <div class="ulist">
-
 
 <ul>
 <li>
@@ -217,18 +207,14 @@ A row is a node
 A table name is a label name
 </li>
 </ul>
-
 </div>
-
 
 <div class="paragraph">
 <p>In this data set, the following graph model serves as a first iteration:</p>
 </div>
 
-
-
 <div class="paragraph">
-<p><span class="image"><img src=".//northwind_graph_simple.png" alt="northwind_graph_simple"></span></p>
+<p><span class="image"><img src="./northwind_graph_simple.png" alt="northwind_graph_simple"></span></p>
 </div>
 
 <div class="sect3 "  >
@@ -237,28 +223,27 @@ A table name is a label name
 
 <div class="ulist">
 
-
 <ul>
 <li>
 Graph should be more normalised. e.g. addresses have been denormalised in the Suppliers, Orders, Customers, and Employees tables.
 </li>
 <li>
-No nulls in the graph model - in the relational one to track the employee hierarchy we have a null entry in the 'ReportsTo' column if they don&#8217;t report to anybody
+No nulls in the graph model - in the relational one to track the employee hierarchy we have a null entry in the <em>ReportsTo</em> column if they don&#8217;t report to anybody
 </li>
 </ul>
+</div>
 
 </div>
+
 </div>
-</div>
+
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_exporting_the_data_to_csv">Exporting the Data to CSV</h4>
 
-
-
 <div class="paragraph">
 <p>Now that we know what we&#8217;d like our graph to look like we need to extract the data from PostgreSQL so we can create it.
-The easiest way to do that is to export the appropriate tables in CSV format. Postgres' 'copy' command lets us execute a SQL query and write the result to a CSV file:</p>
+The easiest way to do that is to export the appropriate tables in CSV format. Postgres' <em>copy</em> command lets us execute a SQL query and write the result to a CSV file:</p>
 </div>
 
 <div class="listingblock">
@@ -273,13 +258,14 @@ COPY (SELECT * FROM orders
       LEFT OUTER JOIN order_details ON order_details."OrderID" = orders."OrderID") TO '/tmp/orders.csv' WITH CSV header;</code></pre>
 </div>
 </div>
+
 </div>
+
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
     <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
 <h2 id="_recommended">Recommended</h2>
 </li>
 <div class="ulist">
-
 
 <ul>
 <li>
@@ -292,20 +278,17 @@ COPY (SELECT * FROM orders
 <a href="/build-a-graph-data-model/guide-intro-to-graph-modeling">Intro to Graph Modeling</a>
 </li>
 </ul>
+</div>
 
 </div>
-</div>
+
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_importing_the_data_using_cypher">Importing the Data using Cypher</h4>
 
-
-
 <div class="paragraph">
 <p>After we&#8217;ve done exported our data from PostgreSQL, we&#8217;ll use Cypher&#8217;s <a href="http://docs.neo4j.org/chunked/stable/query-load-csv.html">LOAD CSV</a> command to transform the contents of the CSV file into a graph structure.</p>
 </div>
-
-
 
 <div class="paragraph">
 <p>We&#8217;ll start by creating the nodes:</p>
@@ -335,7 +318,6 @@ CREATE (:Category {CategoryID: row.CategoryID, CategoryName: row.CategoryName, D
 </div>
 </div>
 
-
 <div class="paragraph">
 <p>The next step is to create the relationships between these nodes. Before we can do this, however, we&#8217;ll create indexes on the nodes that we&#8217;ve just created to ensure their quick lookup when creating relationships in the next section.</p>
 </div>
@@ -349,7 +331,6 @@ CREATE INDEX ON :Supplier(SupplierID);
 CREATE INDEX ON :Customer(CustomerID);</code></pre>
 </div>
 </div>
-
 
 <div class="paragraph">
 <p>With those indices in place we can now create orders and their relationships to products and employees:</p>
@@ -369,7 +350,6 @@ MERGE (order)-[:PRODUCT]-&gt;(product);</code></pre>
 </div>
 </div>
 
-
 <div class="paragraph">
 <p>Next we&#8217;ll create relationships between products, suppliers, and categories:</p>
 </div>
@@ -386,9 +366,8 @@ MERGE (product)-[:PART_OF]-&gt;(category);</code></pre>
 </div>
 </div>
 
-
 <div class="paragraph">
-<p>Finally we&#8217;ll create the 'REPORTS_TO' relationship between employees which will create the reporting structure in the graph:</p>
+<p>Finally we&#8217;ll create the <em>REPORTS_TO</em> relationship between employees which will create the reporting structure in the graph:</p>
 </div>
 
 <div class="listingblock">
@@ -400,7 +379,6 @@ MERGE (employee)-[:REPORTS_TO]-&gt;(manager);</code></pre>
 </div>
 </div>
 
-
 <div class="paragraph">
 <p>For completeness we&#8217;ll also create an index on orders so that we can look them up quickly in our queries:</p>
 </div>
@@ -411,29 +389,23 @@ MERGE (employee)-[:REPORTS_TO]-&gt;(manager);</code></pre>
 </div>
 </div>
 
-
 <div class="paragraph">
 <p>A sample of the graph looks like this:</p>
 </div>
 
-
+<div class="paragraph">
+<p><span class="image"><img src="./northwind_graph_sample.png" alt="northwind_graph_sample"></span></p>
+</div>
 
 <div class="paragraph">
-<p><span class="image"><img src=".//northwind_graph_sample.png" alt="northwind_graph_sample"></span></p>
-</div>
-
-
-
-<div class="paragraph">
-<p>We can now query the graph&#8230;&#8203;</p>
+<p>We can now query the graph&#8230;</p>
 </div>
 
 </div>
+
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_querying_the_graph">Querying the Graph</h4>
-
-
 
 <div class="paragraph">
 <p>One question we would love to answer is:</p>
@@ -441,28 +413,27 @@ MERGE (employee)-[:REPORTS_TO]-&gt;(manager);</code></pre>
 
 <div class="sect3 "  >
     
-<h5 id="_which_employee_had_the_highest_cross_selling_count_of_which_product_with_chocolade">Which Employee had the Highest Cross-Selling Count of Which Product with 'Chocolade'</h5>
+<h5 id="_which_employee_had_the_highest_cross_selling_count_of_which_product_with_em_chocolade_em">Which Employee had the Highest Cross-Selling Count of Which Product with <em>Chocolade</em></h5>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (choc:Product {name:'Chocolade'})&lt;-[:PRODUCT]-(:Order)&lt;-[:SOLD]-(employee),
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (choc:Product {ProductName:'Chocolade'})&lt;-[:PRODUCT]-(:Order)&lt;-[:SOLD]-(employee),
       (employee)-[:SOLD]-&gt;()-[:PRODUCT]-&gt;(other:Product)
-RETURN employee.employeeId, other.name, count(*) as count
+RETURN employee.EmployeeID, other.ProductName, count(*) as count
 ORDER BY count DESC
 LIMIT 5</code></pre>
 </div>
 </div>
 
-
 <div class="paragraph">
 <p>And as we can see, employee number 1 was really busy.</p>
 </div>
 
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all" style="width:100%; ">
 <colgroup>
-<col style="width: 33%;">
-<col style="width: 33%;">
-<col style="width: 33%;">
+<col style="width:33%;">
+<col style="width:33%;">
+<col style="width:33%;"> 
 </colgroup>
 <thead>
 <tr>
@@ -499,14 +470,271 @@ LIMIT 5</code></pre>
 </tr>
 </tbody>
 </table>
+
+<div class="paragraph">
+<p>We might also like to answer the following question:</p>
+</div>
+
+</div>
+
+<div class="sect3 "  >
+    
+<h5 id="_which_employees_report_to_each_other">Which employees report to each other?</h5>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH path = (e:Employee)&lt;-[:REPORTS_TO]-(sub)
+RETURN e.EmployeeID AS manager, sub.EmployeeID AS employee</code></pre>
 </div>
 </div>
+
+<table class="tableblock frame-all grid-all" style="width:100%; ">
+<colgroup>
+<col style="width:50%;">
+<col style="width:50%;"> 
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">manager</th>
+<th class="tableblock halign-left valign-top">employee</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
+</tr>
+</tbody>
+</table>
+
+<div class="paragraph">
+<p>One interesting thing we might notice is that employee #5 has people reporting to them but also reports to employee #2.</p>
+</div>
+
+<div class="paragraph">
+<p>Our next query could investigate that a bit more:</p>
+</div>
+
+</div>
+
+<div class="sect3 "  >
+    
+<h5 id="_which_employees_indirectly_report_to_each_other">Which employees indirectly report to each other?</h5>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH path = (e:Employee)&lt;-[:REPORTS_TO*]-(sub)
+WITH e, sub, [person in NODES(path) | person.EmployeeID][1..-1] AS path
+RETURN e.EmployeeID AS manager, sub.EmployeeID AS employee, CASE WHEN LENGTH(path) = 0 THEN "Direct Report" ELSE path END AS via
+ORDER BY LENGTH(path)</code></pre>
+</div>
+</div>
+
+<table class="tableblock frame-all grid-all" style="width:100%; ">
+<colgroup>
+<col style="width:33%;">
+<col style="width:33%;">
+<col style="width:33%;"> 
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">e.EmployeeID</th>
+<th class="tableblock halign-left valign-top">sub.EmployeeID</th>
+<th class="tableblock halign-left valign-top">via</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Direct Report</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Direct Report</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Direct Report</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Direct Report</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Direct Report</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Direct Report</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Direct Report</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Direct Report</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">["5"]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">["5"]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">["5"]</p></td>
+</tr>
+</tbody>
+</table>
+
+<div class="paragraph">
+<p>Finally we can bring together the organisation hierarchy with orders:</p>
+</div>
+
+</div>
+
+<div class="sect3 "  >
+    
+<h5 id="_how_many_orders_were_made_by_each_part_of_the_hierachy">How many orders were made by each part of the hierachy?</h5>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (e:Employee)
+OPTIONAL MATCH (e)&lt;-[:REPORTS_TO*0..]-(sub)-[:SOLD]-&gt;()
+RETURN e.EmployeeID, [x IN COLLECT(DISTINCT sub.EmployeeID) WHERE x &lt;&gt; e.EmployeeID] AS reports, COUNT(*) AS totalOrders
+ORDER BY totalOrders DESC</code></pre>
+</div>
+</div>
+
+<table class="tableblock frame-all grid-all" style="width:100%; ">
+<colgroup>
+<col style="width:33%;">
+<col style="width:33%;">
+<col style="width:33%;"> 
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">e.EmployeeID</th>
+<th class="tableblock halign-left valign-top">reports</th>
+<th class="tableblock halign-left valign-top">totalOrders</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">["1"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"3"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"4"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"5"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"6"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"7"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"9"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"8"]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2155</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">["6"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"7"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"9"]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">568</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">420</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">345</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">321</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">260</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">176</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">168</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">107</p></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
     <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
 <h2 id="_further_reading">Further Reading</h2>
 </li>
 <div class="ulist">
-
 
 <ul>
 <li>
@@ -519,9 +747,10 @@ LIMIT 5</code></pre>
 <a href="http://gist.neo4j.org/">GraphGists</a>
 </li>
 </ul>
+</div>
 
 </div>
-</div>
+
                            </div>
                         </div>
                      </section>
