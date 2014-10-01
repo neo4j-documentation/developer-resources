@@ -9,12 +9,12 @@
 .Goals
 [abstract]
 Existing data comes in many shapes and sizes and one of the most popular is a relational database.
-In this guide we'll look at how we can export a Postgres data set into Neo4j.
+In this guide we'll look at how we can export a PostgreSQL database into Neo4j.
 
 .Prerequisites
 [abstract]
 You should have a basic understanding of the link:/what-is-neo4j/property-graph[property graph model] and have completed the link:../../build-a-graph-data-model/guide-intro-to-graph-modeling/index.html[modeling guide].
-Having link:/download[downloaded] and installed Neo4j server helps you code along with the examples.
+If you link:/download[download] and installed Neo4j server you'll be able to follow along with the examples.
 
 [role=expertise]
 {level}
@@ -70,7 +70,7 @@ COPY (SELECT * FROM orders
 
 === Importing the Data using Cypher
 
-After we've done exported our data from PostgreSQL, we'll use Cypher's link:http://docs.neo4j.org/chunked/stable/query-load-csv.html[LOAD CSV] command to transform the contents of the CSV file into a graph structure.
+After we've exported our data from PostgreSQL, we'll use Cypher's link:http://docs.neo4j.org/chunked/stable/query-load-csv.html[LOAD CSV] command to transform the contents of the CSV file into a graph structure.
 
 We'll start by creating the nodes:
 
@@ -157,7 +157,7 @@ A sample of the graph looks like this:
 
 image:{img}/northwind_graph_sample.png[]
 
-We can now query the graph...
+We can now query the graph.
 
 === Querying the Graph
 
