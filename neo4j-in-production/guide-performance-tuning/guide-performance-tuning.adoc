@@ -27,6 +27,71 @@ toc::[]
 * Provide as much memory as you can afford
 * Use SSDs or other fast I/O if possible
 
+=== Memory Configuration guidelines
+ 
+Also see: http://docs.neo4j.org/chunked/stable/configuration-caches.html
+
+3 types of memory to consider::
+. OS memory for non-neo4j usage
+. Mapped memory is all the neostore.*.db.*_mapped_memory, mapped from disk files
+. Heap is used for node & relationship caches + java memory management (old gen, new gen, garbage collection, etc.)
+
+Memory Calculations::
+. First, decide how much memory should be left for the OS.
+    * 1G is a good default.
+. Factoring growth, estimate the number of these mapped memory values, which correlate to files on disk in /opt/neo4j/data/graph.db/:
+    .. nodes N (neostore.nodestore.db)
+    .. relationships R (neostore.relationshipstore.db)
+    .. properties on nodes & relationships P (neostore.propertystore.db) (fewer reads, cache less)
+    .. string properties SP (neostore.propertystore.db.strings) (fewer reads, cache less)
+    .. array properties AP (neostore.propertystore.db.arrays) (fewer reads, cache less)
+. Set the properties:
+    .. neostore.nodestore.db.mapped_memory= (14 * N) / (1024 * 1024)M
+    .. neostore.relationshipstore.db.mapped_memory= (34 * R) / (1024 * 1024)M
+    .. neostore.propertystore.db.mapped_memory= (41 * P) / (1024 * 1024)M
+    .. neostore.propertystore.db.strings.mapped_memory = (128 * P) / (1024 * 1024)M
+    .. neostore.propertystore.db.arrays.mapped_memory = (128 * P) / (1024 * 1024)M
+.. Determine how much is left for the heap:
+    .. Total memory - OS memory (OS) - total mapped memory (MM) = heap (H)
+. In neo4j-wrapper.conf, set wrapper.java.initmemory and wrapper.java.maxmemory to H. NOTE: "M" is not specified in the value since it is already in MB
+    .. wrapper.java.initmemory=H / (1024 * 1024)
+    .. wrapper.java.maxmemory=H / (1024 * 1024)
+. Next decide on the size of caches that are stored in memory in the heap.
+    .. Heap consists of "new generation" and "old generation" memory. New generation is for short-lived objects and takes about 1/3 of the heap by default (specified by -XX:NewRatio=3). If an object survives long enough, it is moved to the old generation which takes about 2/3 of the heap by default. The caches live in the old generation. The old generation needs about 30-40% of its space for CMS gc and another amount for the working set, which tends to remain fairly constant. The remaining old generation is where the caches live and this amount should not exceed 35-40% of the old generation (although if we know the working set and lots of RAM, we could use more). So if the new gen ratio is 1/3, allocate roughly 1/3 of the heap for caches. If it's 1/2, allocate roughly 1/4 of the heap for caches. Adjust this accordingly to available RAM so there is enough space for GC & the working set.
+
+    .. node_cache_size + relationship_cache_size = (.25 to .33) * Heap
+
+Graph traversals to consider::
+. If you're using queries that will have a relatively large working set (ie. will be traversing long paths, looking at lots of properties, or collecting large sets of results in order to do sorting, etc) then you'll need a more working heap. If you have small queries, that do very limited traversal and return small amounts of data, you need less. Assume 1-2GB to start and tune from there
+
+. Fraction of the heap to use for nodes & relationships when using gcr. OK to leave at default (5% or 10%?). Acceptable values are 1-10%
+    .. #node_cache_array_fraction=10
+    .. #relationship_cache_array_fraction=10
+
+
+. Current configs are based on these arbitrary estimates with massive growth
+Values approximated and rounded up
+c3.large   = 2 CPU, 3.75 GB RAM
+c3.2xlarge = 8 CPU, 15 GB RAM
+1G for OS memory
+
+ ~5 M nodes                         80M
+ ~10 M relationships               370M
+ ~10 M properties                  400M
+ ~500k string properties            75M
+ ~500k array properties             75M
+ ---------------------------------------
+ Mapped Memory Total              1000M
+
+Config for c3.2xlarge instances (15 GB RAM)
+ ~15360M Total - 1000 OS - 1000M Mapped = 13360M Heap
+
+ node_cache_size                   1000M
+ relationship_cache_size           3000M
+ ---------------------------------------
+ Total Heap used by cache          4000M
+ (cache should take roughly 25-33% of heap)
+
 === Cache Sizing
 
 The node_cache_size and relationship_cache_size should not be more than 1/3 of the total heap size. 
@@ -60,31 +125,13 @@ wrapper.java.maxmemory=24512
 Finally make sure that the OS has some memory left to manage proper file system caches. 
 This means, if your server has 8GB of RAM don't use all of that RAM for heap (unless you have turned off memory mapped buffers), but leave a good part of it to the OS.
 
+[role=side-nav]
+=== Recommended
 
-=== Memory Mapped IO Settings
-
-You should adopt the MMIO cache settings to fit your graph size in `neo4j.properties` and not rely on the default values.
-To determine the graph size:
-
-----
-run 'ls -alh /neo4j/data/graph.db/neostore*'
-
--rw-r--r-- 1 neo4j neo4j 149M Nov 11 16:39 neostore.nodestore.db
--rw-r--r-- 1 neo4j neo4j 2.2G Nov 11 16:39 neostore.propertystore.db
--rw-r--r-- 1 neo4j neo4j 128 Nov 11 16:14 neostore.propertystore.db.arrays
--rw-r--r-- 1 neo4j neo4j 3.0G Nov 11 16:39 neostore.propertystore.db.strings
--rw-r--r-- 1 neo4j neo4j 687M Nov 11 16:39 neostore.relationshipstore.db
-----
-
-Set the MMIO settings are at or just a little bigger (30% or so) than they are:
-
-----
-neostore.nodestore.db.mapped_memory=200M
-neostore.propertystore.db.mapped_memory=2300M
-neostore.propertystore.db.arrays.mapped_memory=5M
-neostore.propertystore.db.strings.mapped_memory=3200M
-neostore.relationshipstore.db.mapped_memory=800M
-----
+* http://docs.neo4j.org/chunked/stable/operations.html[Operations,role=manual]
+* http://docs.neo4j.org/chunked/stable/configuration.html[Configuration & Performance,role=manual]
+* http://maxdemarzi.com/2013/11/25/scaling-up/[Scaling Up Neo4j,role=blog]
+* link:/support[Neo4j Professional Support]
 
 === Server Configuration
 
@@ -103,26 +150,3 @@ The usual default of `1024` is often not enough, especially when many indexes ar
 Users are therefore encouraged to increase that limit to a healthy value of `40000` or more, depending on usage patterns. 
 Setting this value via the ulimit command is possible only for the root user and that for that session only.
 To set the value system wide you have to follow the instructions for your platform (http://docs.neo4j.org/chunked/stable/linux-performance-guide.html#_setting_the_number_of_open_files[Linux]).
-
-[role=side-nav]
-=== Recommended
-
-* http://docs.neo4j.org/chunked/stable/operations.html[Operations,role=manual]
-* http://docs.neo4j.org/chunked/stable/configuration.html[Configuration & Performance,role=manual]
-* http://maxdemarzi.com/2013/11/25/scaling-up/[Scaling Up Neo4j,role=blog]
-* link:/support[Neo4j Professional Support]
-
-=== Troubleshooting
-
-=== GC pressure, frequent garbage collections
-
-* Heap is too small, or caches are too big. See recommended setup
-
-\\TODO this seems unfinished ^
-
-[role=side-nav]
-=== Further Reading
-
-* link:/books[The Neo4j Bookshelf]
-* http://watch.neo4j.org[The Neo4j Video Library]
-* http://gist.neo4j.org/[GraphGists]
