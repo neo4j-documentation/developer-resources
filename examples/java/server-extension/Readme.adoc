@@ -25,9 +25,8 @@ curl http://localhost:7474/movie/graph
 
 === Setup
 
-Spark is a micro-webframework to easily define routes for endpoints and provide their implementation.
-In our case the implementation calls the `MovieService` which has one method per endpoint that returns Java collections
-which are turned into JSON using Gson.
+Spark is a micro web framework used to easily define routes for endpoints and provide their implementation.
+In our case, the implementation calls the `MovieService` which has one method per endpoint that returns Java collections which are turned into JSON using Gson.
 
 The `MovieService` uses the Neo4j-JDBC driver to execute queries against the transactional endpoint of Neo4j-Server.
 You add the dependency to the JDBC driver in your `pom.xml`:
@@ -37,8 +36,7 @@ You add the dependency to the JDBC driver in your `pom.xml`:
 include::pom.xml[tags=jdbc-dependency]
 ----
 
-To use the JDBC driver you provide a connection URL, e.g. `jdbc:neo4j:localhost:7474`, get a `Connection`
-which then can be used to create `PreparedStatement`s with your Cypher query.
+To use the JDBC driver you provide a connection URL, e.g. `jdbc:neo4j:localhost:7474`, get a `Connection` which then can be used to create `PreparedStatement`s with your Cypher query.
 
 You would then set parameters on your statement, please note that only numeric parameter-names are possible, _starting from 1_.
 
@@ -76,7 +74,7 @@ mvn compile exec:java
 
 Go to http://localhost:8080
 
-You can search for movies by title or and click on any entry .
+You can search for movies by title or and click on any entry.
 
 === Deploy to Heroku
 
