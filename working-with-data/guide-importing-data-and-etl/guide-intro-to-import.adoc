@@ -1,4 +1,4 @@
-= Importing Data into Neo4j
+= Tutorial: Importing Data into Neo4j
 :level: Beginner
 :toc:
 :toc-placement!:
@@ -99,7 +99,8 @@ LOAD CSV WITH HEADERS FROM "file:/tmp/categories.csv" AS row
 CREATE (:Category {CategoryID: row.CategoryID, CategoryName: row.CategoryName, Description: row.Description});
 ----
 
-The next step is to create the relationships between these nodes. Before we can do this, however, we'll create indexes on the nodes that we've just created to ensure their quick lookup when creating relationships in the next section.
+The next step is to create the relationships between these nodes.
+Before we can do this, however, we'll create indexes on the nodes that we've just created to ensure their quick lookup when creating relationships in the next section.
 
 [source, cypher]
 ----
