@@ -29,15 +29,17 @@ toc::[]
 
 === Relational Databases
 
-For several decades, developers have tried to accommodate connected, semi-structured datasets inside relational databases.
-But whereas relational databases were initially designed to codify paper forms and tabular structures--something they do exceedingly well--they struggle when attempting to model the ad hoc, exceptional relationships that crop up in the real world.
-Ironically, relational databases deal poorly with relationships. 
+Relational databases have been (and continue to be) the power-horse of software applications since the 80s.
+They store highly structured data in tables with predetermined columns of certain types and many rows of the same type of information, and, thanks in part to the rigidity of their organization, force developers and applications to strictly structure the data used in their applications.
 
-Relationships do exist in the vernacular of relational databases, but only at modeling time, as a means of joining tables.
-In our discussion of connected data in the previous chapter, we mentioned we often need to disambiguate the semantics of the relationships that connect entities, as well as qualify their weight or strength. Relational relations do nothing of the sort. Worse still, as outlier data multiplies, and the overall structure of the dataset becomes more complex and less uniform, the relational model becomes burdened with large join tables, sparsely populated rows, and lots of null-checking logic. 
-The rise in connectedness translates in the relational world into increased joins, which impede performance and make it difficult for us to evolve an existing database in response to changing business needs.
+In relational databases, references to other rows and tables are indicated by referring to their (primary-)key attributes, enforceable with constraints only when the connection is never optional.
+Relationships are computed at query time by matching primary and foreign keys of the many (potentially indexed) rows of the to be joined tables.
+These operations are CPU and RAM intensive and with an exponential cost.
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/rel_graph4.jpg[]
+
+If you use many-to-many relationships, you have to introduce a _JOIN_ table that lists foreign keys of both participating tables which further increases JOIN operation costs.
+Those costly JOIN operations are usually addressed by denormalising data to reduce the number of JOINs necessary.
 
 Although not every use-case is a good fit for this type of stringent data model, the lack of viable alternatives and the support for relational databases has made for the lack of well known alternatives has made it difficult for alternative models to break into the mainstream.
 
@@ -48,6 +50,8 @@ Meet graph databases.
 Relationships are first-class citizens of the graph data model, unlike other database management systems, which require us to infer connections between entities using contrived properties such as foreign keys, or out-of-band processing like map-reduce. 
 By assembling the simple abstractions of nodes and relationships into connected structures, graph databases enable us to build arbitrarily sophisticated models that map closely to our problem domain.
 
+In some regards, graph databases are like the next generation of relational databases, but with first class support for "relationships", or those implicit connections indicated via foreign-keys in the traditional relational databases.
+
 Each node (entity or attribute) in the graph database model directly contains a list of relationship-records that represent its relationships to other nodes, organized by type and direction and holding additional attributes.
 Whenever you run the equivalent of a  _JOIN_ operation, the database walks this list and has direct access to the connected nodes, eliminating the need for a costly search / match computation.
 
@@ -57,8 +61,6 @@ image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/rel_graph
 
 Unlike other NoSQL databases, graph databases support a very flexible and fine-grained data model that allows you to model and manage rich domains in an easy and intuitive way.
 
-//////////////////////////////////////////
-// There's a whole article about NoSQL, deleting this section
 You more or less keep the data as it is in the real world: small, normalized, yet richly connected entities.
 This allows you to query and view your data from any imaginable view point, supporting many different use-cases.
  
@@ -67,7 +69,6 @@ The well-known and tested concept of transactions groups a set of updates of nod
 Graph databases like Neo4j fully support the transactional concepts including write ahead logs and recovery after abnormal termination.
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/rel_graph9.jpg[]
-//////////////////////////////////////////
 
 If you're used to modeling with relational databases, try to remember the ease and beauty of good, normalized entity-relationship diagram: a simple, easy to understand model you can quickly whiteboard with your colleagues and domain experts.
 
@@ -84,7 +85,8 @@ image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/domain.pn
 
 === Graph Querying with Cypher
 
-Querying relational databases is easy with SQL, a declarative query language allows both for easy ad-hoc querying in a database tool as well as specifying use-case related queries in your code. Even object-relational mappers use SQL under the hood to talk to the database.
+Querying relational databases is easy with SQL, a declarative query language allows both for easy ad-hoc querying in a database tool as well as specifying use-case related queries in your code.
+Even object-relational mappers use SQL under the hood to talk to the database.
 
 Do graph databases have something similar?
 Cypher, Neo4j's declarative graph query language, is built on the basic concepts and clauses of SQL but added a lot of graph-specific functionality to make it simple to work with your rich graph model without being too verbose.
@@ -95,8 +97,7 @@ In the organizational domain described in the image above, what would a SQL stat
 
 // sum of the weekly work hours of employees of "GraphIT" working in the different projects
 
-==== SQL:
-
+.SQL Statement
 [source,sql]
 ----
 SELECT * FROM Person
@@ -107,8 +108,7 @@ LEFT JOIN Department
 WHERE Department.name = "IT Department"
 ----
 
-==== Cypher:
-
+.Cypher Statement
 [source,cypher]
 ----
 MATCH (p:Person)<-[:EMPLOYEE]-(d:Dept {name:"IT Department"})
@@ -123,8 +123,6 @@ RETURN p.name, d.name
 * link:/use-cases[Use-Case Examples]
 * http://docs.neo4j.org/chunked/milestone/examples-from-sql-to-cypher.html[Manual: From SQL to Cypher]
 
-//////////////////////////////////////////
-// This section has nothing to do with RDBMS
 === Connecting to Neo4j
 
 If you've installed and started Neo4j as a server on your system, you can interact with the database with the built-in Neo4j browser application.
@@ -147,7 +145,7 @@ curl -i -H accept:application/json -H content-type:application/json \
 {"results":[{"columns":["p"],"data":[{"row":[{"name":"Daniel"}]}]}],"errors":[]}
 ----
 
-Once you've finished testing your queries and are getting ready to use Neo4j in production, you will need to connect to your Neo4j server automatically. 
+In most cases you don't want to connect to Neo4j manually, but with a driver or connector library designed for your stack or programming language.
 Thanks to the Neo4j community, there are drivers for Neo4j for almost every popular programming language, most of which mimic existing database driver idioms and approaches.
 
 For instance, the Neo4j JDBC driver would be used like this:
@@ -167,7 +165,6 @@ try (PreparedStatement stmt = con.prepareStatement(QUERY)) {
     }
 }
 ----
-//////////////////////////////////////////
 
 [role=side-nav]
 === Recommended
