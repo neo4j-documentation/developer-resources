@@ -49,13 +49,22 @@ Here are two guides to get you started:
 
 === The Example Project
 
-You can find the example projects for Java (and other languages) on the [GitHub repository] for the Neo4j developer resources.
+You can find out more about our example projects for Ruby (and other languages) here link:../[], you can also access it via the https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/examples/[GitHub repository] for the Neo4j developer resources.
 Feel free to check them out.
+
+It is a small one page webapp for our movies database.
+The front-end is the same for all drivers, just the backends show you how to connect to Neo4j from the different languages and drivers.
 
 === Using Neo4j Server with JDBC
 
 Being a Java developer you're probably familiar with JDBC as a way to work with relational databases, either directly or via abstractions like Spring's `JDBCTemplate` or MyBatis. 
-Also many tools for ETL, Business Intelligence and data management use JDBC drivers to interac 
+Also many tools for ETL, Business Intelligence and data management use JDBC drivers to interact with relational databases. 
+
+As Cypher, like SQL is a textual parametrizable query language that can return tabular results, it was possible for us to support the JDBC APIs, and make a Neo4j-JDBC driver available.
+More details on how to use it can be found with our example project for link:jdbc/[Java-JDBC]. 
+There we implement the backend as minimal Java webapp that leverages Neo4j-JDBC to connect to Neo4j Server.
+
+// todo a spring boot webapp with JDBC
 
 === Extending Neo4j Server with a Server Extension
 
@@ -71,6 +80,16 @@ The path-finding and traversal APIs are also available.
 The results of your graph operations are then collected and rendered as the format you want to expose, e.g. JSON, XML, plain text or binary.
 
 The link:./extension[example project] shows how you would do that for our movie application endpoints.
+
+=== Using Spring Boot with JDBC
+
+Spring Boot is a rapid application development infrastructure that allows you to quickly write Spring based applications with little setup and configuration.
+
+Here we use a simple Spring-Boot WebMVC and -JDBC application to provide a backend for our movie application.
+
+It just uses the well known APIs of `@RestController` and `JdbcTemplate` to do the Job.
+
+More details can be found in the link:spring-boot-jdbc[example project].
 
 === Using Spring Data Neo4j
 
@@ -93,3 +112,24 @@ See the link:./spring-data-neo4j[example project with Spring Data Neo4j] for fur
 * http://projects.spring.io/spring-data-neo4j[Spring Data Neo4j Project]
 * http://www.youtube.com/watch?v=ZfbJ1ZJdb_A[Webinar Spring Boot & SDN, role=video]
 
+=== Other Drivers
+
+==== http://www.grails.org/plugin/neo4j[Neo4j Grails Plugin]
+
+// image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/grails.png[]
+Author: Stefan Armbruster
+
+A plugin that integrates the Neo4j graph database into Grails, providing a GORM API onto it
+
+==== http://github.com/wagjo/borneo[Borneo]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/clojure.png[]
+Author: Jozef Wagner
+Clojure wrapper for Neo4j, a graph database, in embedded JVM mode.
+
+
+==== http://www.datanucleus.org/[DataNucleus Neo4j Plugin]
+// image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/DataNucleus16-300.jpg[]
+
+Author: Andy Jefferson
+
+datanucleus-neo4j provides persistence of Java objects to Neo4j. It builds on top of the basic persistence provided by datanucleus-core.
