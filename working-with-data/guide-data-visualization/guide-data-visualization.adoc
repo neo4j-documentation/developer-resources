@@ -12,27 +12,25 @@ This article reviews the different tools available for visualizing graph-based d
 
 .Prerequisites
 [abstract]
-None! :D
+You should have familiarized yourself with link:../what-is-neo4j/graph-database[Graph Databases] and the link:../what-is-neo4j/property-graph[Property Graph Model].
 
 [role=expertise]
 {level}
 
 toc::[]
 
-Storing a graph is one thing, but visualization creates awe and epiphanies.
 Graph visualisations are a powerful tool to convey the content of a graph.
-They can highlight patterns, show clusters and connections. There are different tools that you can use to visualize the content of a Neo4j graph database.
+They can highlight patterns, show clusters and connections.
+There are many excellent options for graph visualization, such as http://d3js.org/[the D3.js], http://threejs.org/[three.js] and http://sigmajs.org/[sigma.js].
+In all cases, the visualizer request JSON data for all or a part of the graph data then dynamically creates an in-memory JavaScript visualization on the client side.
 
-A popular choice are JavaScript frameworks such as http://d3js.org/[the D3.js], http://threejs.org/[three.js] and http://sigmajs.org/[sigma.js].
-In all cases, the technique is to request JSON data for all or a part of the graph data from the server backend, and then dynamically add this data to the JavaScript visualization in-memory model for rendering on the client side.
-
-There are a great number of ways to show and manipulate graph data, below are listed a few of the more popular ones.
+A few of the more popular graph-visualization methods are discussed below. 
 
 === The Neo4j Browser
 
-The default http://neo4j.com/download[Neo4j Server] has a powerful, customizable data visualization tool based on the D3.js library built in.
-In the following video, Michael shows how to style Nodes and Relationships in the Neo4j's Browser visualization, and how to set colors, sizes, and titles.
-He discusses the Graph-Style-Sheet (GRASS) and how you can download, update, and reset the styling information.
+The default http://neo4j.com/download[Neo4j Server] has a powerful, customizable data visualization tool based on the built-in D3.js library.
+In the following video, we demonstrate how to style nodes and relationships in the Neo4j's Browser visualization, and how to set colors, sizes, and titles.
+We then discuss the Graph-Style-Sheet (GRASS) and how you can download, update, and reset the styling information.
 
 ++++
 <iframe src="//player.vimeo.com/video/97204829" width="500" height="313" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
@@ -55,15 +53,13 @@ In this talk, Alistair Jones builds a very powerful graph web editing tool based
 
 image:http://keylines.com/im/product/KeyLinesNeo4j.png[link=http://keylines.com/neo4j]
 
-KeyLines is a JavaScript toolkit for visualizing networks. It works in all major browsers and all platforms, including the iPad.
-
-==== How Does it Work?
+KeyLines is an out-of-the-box JavaScript solution for visualizing networks. 
+It works in all major browsers and all platforms, including the iPad.
 
 KeyLines integrates into existing web applications easily and with very little effort.
 How and where you get the data is up to you.
 KeyLines does the job of rendering it and responding to user interactions like clicking, touching, moving nodes, and more.
-You bind to these events to customize what happens.
-Your data stays under your control at all times: KeyLines is self-contained and needs no external connections.
+You bind to these events to customize what happens, and, most importantly, your data stays under your control at all times: KeyLines is self-contained and needs no external connections.
 
 === Tom Sawyer Perspectives
 
@@ -72,7 +68,7 @@ Your data stays under your control at all times: KeyLines is self-contained and 
 ++++
 
 https://www.tomsawyer.com/pressreleases/pressrelease.php?release_id=164&news=product[Tom Sawyer Perspectives 6.0] offers Cypher support for Neo4j graph databases and connects them to the broad visualization capabilities of the tool.
-The integration with the latest Neo4j version makes it easier to write complex queries and render their results in a comprehensive way.
+Tom Sawyer Perspectives is integrated with the latest Neo4j version for easy visualization of complex results.
 
 [role=side-nav]
 === Further Reading

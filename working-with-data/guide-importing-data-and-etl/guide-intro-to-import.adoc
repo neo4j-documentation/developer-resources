@@ -1,4 +1,4 @@
-= Importing Data into Neo4j
+= Tutorial: Importing Data into Neo4j
 :level: Beginner
 :toc:
 :toc-placement!:
@@ -8,8 +8,8 @@
 
 .Goals
 [abstract]
-Existing data comes in many shapes and sizes and one of the most popular is a relational database.
-In this guide we'll look at how we can export a PostgreSQL database into Neo4j.
+Existing data comes in many shapes and sizes, and is commonly stored in a relational database.
+This guide explores how to export data from a PostgreSQL database into Neo4j.
 
 .Prerequisites
 [abstract]
@@ -23,19 +23,19 @@ toc::[]
 
 === Northwind Introduction
 
-In this guide we'll be using the link:https://code.google.com/p/northwindextended/downloads/detail?name=northwind.postgre.sql&can=2&q=[NorthWind data set].
-NorthWind is a popular data set used to demonstrate SQL and relational databases but is graphy enough to be interesting for us.
+In this guide we'll be using the link:https://code.google.com/p/northwindextended/downloads/detail?name=northwind.postgre.sql&can=2&q=[NorthWind dataset], a commonly used SQL dataset.
+Although the NorthWind dataset often used to demonstrate SQL and relational databases, it is graphy enough to be interesting for us.
 
-The following is an entity relationship diagram of the data set:
+The following is an entity relationship diagram of the NorthWind dataset:
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/Northwind_diagram.jpg[]
 
 === Developing a Graph Model
 
-There are a couple of rules of thumbs when deriving a graph model from a relational one which we can use to come up with our first cut:
+When deriving a graph model from a relational model, we should keep the following guidelines in mind: 
 
-* A row is a node
-* A table name is a label name
+* A _row_ is a _node_
+* A _table name_ is a _label name_
 
 In this data set, the following graph model serves as a first iteration:
 
@@ -48,8 +48,8 @@ image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/northwind
 
 === Exporting the Data to CSV
 
-Now that we know what we'd like our graph to look like we need to extract the data from PostgreSQL so we can create it.
-The easiest way to do that is to export the appropriate tables in CSV format. Postgres' 'copy' command lets us execute a SQL query and write the result to a CSV file:
+Now that we know what we'd like our graph to look like, we need to extract the data from PostgreSQL so we can create it as a graph.
+The easiest way to do that is to export the appropriate tables in CSV format. The PostgreSQL 'copy' command lets us execute a SQL query and write the result to a CSV file:
 
 [source, sql]
 ----
@@ -74,7 +74,7 @@ COPY (SELECT * FROM orders
 
 After we've exported our data from PostgreSQL, we'll use Cypher's link:http://docs.neo4j.org/chunked/stable/query-load-csv.html[LOAD CSV] command to transform the contents of the CSV file into a graph structure.
 
-We'll start by creating the nodes:
+First, create the nodes:
 
 [source, cypher]
 ----
@@ -99,7 +99,7 @@ LOAD CSV WITH HEADERS FROM "file:/tmp/categories.csv" AS row
 CREATE (:Category {CategoryID: row.CategoryID, CategoryName: row.CategoryName, Description: row.Description});
 ----
 
-The next step is to create the relationships between these nodes. Before we can do this, however, we'll create indexes on the nodes that we've just created to ensure their quick lookup when creating relationships in the next section.
+Next, we'll create indexes on the just-created nodes to ensure their quick lookup when creating relationships in the next step.
 
 [source, cypher]
 ----
@@ -110,7 +110,7 @@ CREATE INDEX ON :Supplier(SupplierID);
 CREATE INDEX ON :Customer(CustomerID);
 ----
 
-With those indices in place we can now create orders and their relationships to products and employees:
+Initial nodes and indices in place, we can now create relationships orders and their relationships to products and employees:
 
 [source, cypher]
 ----
@@ -125,7 +125,7 @@ MERGE (employee)-[:SOLD]->(order)
 MERGE (order)-[:PRODUCT]->(product);
 ----
 
-Next we'll create relationships between products, suppliers, and categories:
+Next, create relationships between products, suppliers, and categories:
 
 [source, cypher]
 ----
@@ -138,7 +138,7 @@ MERGE (supplier)-[:SUPPLIES]->(product)
 MERGE (product)-[:PART_OF]->(category);
 ----
 
-Finally we'll create the 'REPORTS_TO' relationship between employees which will create the reporting structure in the graph:
+Finally we'll create the 'REPORTS_TO' relationship between employees to represent the reporting structure:
 
 [source, cypher]
 ----
@@ -148,14 +148,14 @@ MATCH (manager:Employee {EmployeeID: row.ReportsTo})
 MERGE (employee)-[:REPORTS_TO]->(manager);
 ----
 
-For completeness we'll also create an index on orders so that we can look them up quickly in our queries:
+For completeness and optimal query speed, create an index on orders:
 
 [source, cypher]
 ----
 CREATE INDEX ON :Order(OrderId);
 ----
 
-A sample of the graph looks like this:
+The resulting graph should look like this:
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/northwind_graph_sample.png[]
 
@@ -163,9 +163,9 @@ We can now query the graph.
 
 === Querying the Graph
 
-One question we would love to answer is:
+One question we might be interested in is:
 
-==== Which Employee had the Highest Cross-Selling Count of Which Product with 'Chocolade'
+==== Which Employee had the Highest Cross-Selling Count of 'Chocolade' and Which Product?
 
 [source,cypher]
 ----
@@ -176,7 +176,7 @@ ORDER BY count DESC
 LIMIT 5
 ----
 
-And as we can see, employee number 1 was really busy.
+Looks like employee number 1 was very busy!
 
 [format="csv", options="header"]
 |===
@@ -190,7 +190,7 @@ employee.employeeId,other.name,count
 
 We might also like to answer the following question:
 
-==== Which employees report to each other?
+==== How are Employees Organized? Who Reports to Whom?
 
 [source, cypher]
 ----
@@ -211,11 +211,11 @@ manager,employee
 5,9
 |===
 
-One interesting thing we might notice is that employee #5 has people reporting to them but also reports to employee #2.
+Notice that employee #5 has people reporting to them but also reports to employee #2.
 
-Our next query could investigate that a bit more:
+Let's investigate that a bit more:
 
-==== Which employees indirectly report to each other?
+==== Which Employees Report to Each Other Indirectly?
 
 [source, cypher]
 ----
@@ -241,9 +241,8 @@ e.EmployeeID,sub.EmployeeID,via
 2,9,"[""5""]"
 |===
 
-Finally we can bring together the organisation hierarchy with orders:
 
-==== How many orders were made by each part of the hierachy?
+==== How Many Orders were Made by Each Part of the Hierachy?
 
 [source, cypher]
 ----
