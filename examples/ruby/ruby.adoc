@@ -1,0 +1,88 @@
+= Using Neo4j from Ruby
+:level: Intermediate
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 2
+:section: Develop with Neo4j
+
+.Goals
+[abstract]
+If you are a Rubyist, you should find enough information to get you started with Neo4j. While this guide is not comprehensive it will introduce the different drivers and link to the relevant resources.
+
+.Prerequisites
+[abstract]
+You should be familiar with link:../../what-is-neo4j/graph-database[graph database concepts] and the property graph model. You should have link:/download[installed Neo4j] and made yourself familiar with our link:../../cypher-query-language[Cypher Query language]. 
+
+[role=expertise]
+{level}
+
+toc::[]
+
+// tag::intro[]
+=== Neo4j for Rubyists
+
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/ruby.png[]
+
+Neo4j might be developed in Java, but don't assume that you need to use a Java client.
+We've got a long association with Ruby bindings for Neo4j.
+
+There’s a wide choice of ways to access Neo4j from Ruby: from low-level access to the core Java API with jRuby, to access via our HTTP API, to hooking into Rails ActiveModel. 
+The Ruby community has developed all these drivers because of their desire to use Neo4j. 
+// end::intro[]
+
+=== Deployment Mode
+
+There’s a choice to make here: the classic deployment option where your MRI based ruby process talks to a separate Neo4j Server process via our HTTP-API, or the embedded mode with jRuby.
+
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/jruby-logo-2.png[width=200]
+
+The former is a very familiar choice to any developer used to a relational or other NoSQL database. 
+Your Neo4j database can be on a backend server in a different network tier, or right next to your app on your Machine. 
+We generally recommend this model because it prevents mixing of concerns. 
+This also allows you to use any Ruby distribution that you’d like, on any OS.
+
+The latter is less common, but offers blazing fast performance and access to our core API. 
+The payoff is that you need to deploy a jRuby app; that’s less of a chore these days with RbEnv and friends.
+
+include::../_includes/sample_project.adoc[]
+
+=== Neo4j.rb
+
+Andreas Ronge is one of our Swedish friends from Malmö, who has been writing the https://github.com/neo4jrb[canonical Neo4j driver] since before we hit 1.0. 
+
+The http://twitter.com/neo4jrb[Neo4j.rb team] (Andreas Ronge, Brian Underwood, Chris Griggs) continued the effort and just http://neo4j.com/blog/neo4j-rb-3-0-released/[released version 3.0] in September 2014.
+
+It supports accessing Neo4j in embedded mode via jRuby and remotely also via MRI.
+The https://github.com/neo4jrb/neo4j[`neo4j` Gem] implements ActiveModel for use in Ruby on Rails.
+And the https://github.com/neo4jrb/neo4j-core[`neo4j-core`] Gem is a just thin layer on top of Neo4j with a neat Cypher DSL.
+
+There is https://github.com/neo4jrb/neo4j/wiki/Neo4j.rb-v3-Introduction[detailed documentation] for all features.
+
+You can find example projects for both gems here:
+
+* link:neo4jrb[Neo4j.rb with Rails]
+* link:neo4j-core[Neo4j-Core with plain Neo4j & Cypher]
+
+=== http://github.com/maxdemarzi/neography/[Neography]
+
+Author: http://twitter.com/maxdemarzi[Max De Marzi]
+
+Written by our own Max Di Marzi, Neography feels very familiar if you’re already used to Neo4j – it’s designed as a thin wrapper above our database APIs.
+It supports the Neo4j transactional Cypher endpoint as well as the existing REST API and even supports Neo4j-Spatial.
+
+=== Other Drivers
+
+////
+==== http://github.com/klobuczek/active_node[ActiveNode]
+
+Author: http://twitter.com/klobuczek[Heinrich Klobuczek]
+
+ActiveNode is object graph mapping layer for neo4j deployed as standalone server. It is implemented on top of neography by Max De Marzi.
+////
+
+==== http://github.com/pangloss/pacer[Pacer]
+
+Author: Darrick Wiebe
+
+Express yourself clearly and model your application in terms you understand with Pacer – a JRuby gem for building embedded Neo4j applications.

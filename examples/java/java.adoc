@@ -21,15 +21,18 @@ You should have and JDK 7 ready and your IDE up and running.
 
 toc::[]
 
+// tag::intro[]
 === Neo4j for Java Developers
 
-Welcome to Neo4j. 
+image::http://assets.neo4j.org/img/languages/java.jpg[]
+
 Neo4j offers a rich set of integration possibilities for Java or JVM-language developers.
 
 Neo4j comes in two flavors. 
 The standalone Neo4j-Server can be installed on any machine and then accessed via its HTTP API. 
 You can use whatever REST-library you choose for any JVM language. 
 The dedicated Neo4j drivers go beyond that by offering comprehensive APIs for integrating with graph based applications.
+// end::intro[]
 
 But you can also run http://docs.neo4j.org/chunked/snapshot/tutorials-java-embedded.html[Neo4j embedded in your JVM process], much like HSQL or Derby. 
 This is great for unit testing, but also for high performance / no-network setups. 
@@ -42,10 +45,7 @@ One example is http://projects.spring.io/spring-data-neo4j/[Spring Data Neo4j] w
 As a JVM developer you are also on the bright side when it comes to inserting large amounts of data into Neo4j. 
 With its non-transactional, low-level batch-insertion API it can ingest millions of nodes and relationships in just seconds.
 
-Here are two guides to get you started:
-
-* link:jdbc/index.html[JDBC]
-* link:extension/index.html[a Java-based Neo4j Server extensiontypo]
+Follow the guides below to get you started.
 
 === The Example Project
 
@@ -112,7 +112,10 @@ See the link:./spring-data-neo4j[example project with Spring Data Neo4j] for fur
 * http://projects.spring.io/spring-data-neo4j[Spring Data Neo4j Project]
 * http://www.youtube.com/watch?v=ZfbJ1ZJdb_A[Webinar Spring Boot & SDN, role=video]
 
-=== Other Drivers
+=== Tinkerpop
+
+
+=== Groovy
 
 ==== http://www.grails.org/plugin/neo4j[Neo4j Grails Plugin]
 
@@ -121,11 +124,33 @@ Author: Stefan Armbruster
 
 A plugin that integrates the Neo4j graph database into Grails, providing a GORM API onto it
 
-==== http://github.com/wagjo/borneo[Borneo]
+
+=== Clojure
+
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/clojure.png[]
+
+==== http://clojureneo4j.info/[Neocons]
+
+Author: Michael Klishin, Rohig Aggarval
+
+An idiomatic, feature rich Clojure client which supports (almost) all Neo4J REST API features and is constantly tested against bleeding edge server changes, like the Cypher language improvements.
+
+==== http://github.com/wagjo/borneo[Borneo]
+
 Author: Jozef Wagner
 Clojure wrapper for Neo4j, a graph database, in embedded JVM mode.
 
+=== Scala
+
+
+
+==== AnormCypher
+
+Author: Wes Freeman
+
+=== JPA
+
+==== Hibernate OGM
 
 ==== http://www.datanucleus.org/[DataNucleus Neo4j Plugin]
 // image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/DataNucleus16-300.jpg[]
@@ -133,3 +158,5 @@ Clojure wrapper for Neo4j, a graph database, in embedded JVM mode.
 Author: Andy Jefferson
 
 datanucleus-neo4j provides persistence of Java objects to Neo4j. It builds on top of the basic persistence provided by datanucleus-core.
+
+==== Kundera

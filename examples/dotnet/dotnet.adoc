@@ -1,0 +1,57 @@
+= Using Neo4j from .Net
+:level: Intermediate
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 2
+:section: Develop with Neo4j
+
+.Goals
+[abstract]
+If you are a .Net developer, you should find enough information to get you started with Neo4j. 
+While this guide is not comprehensive it will introduce the different drivers and link to the relevant resources.
+
+.Prerequisites
+[abstract]
+You should be familiar with link:../../what-is-neo4j/graph-database[graph database concepts] and the property graph model. 
+You should have link:/download[installed Neo4j] and made yourself familiar with our link:../../cypher-query-language[Cypher Query language].
+
+[role=expertise]
+{level}
+
+toc::[]
+
+// tag::intro[]
+=== Neo4j for .Net Developers
+
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/dotnet.png[]
+
+Neo4j might be developed in Java, but don't assume that you need to use a Java client. 
+Powerful .Net drivers like `Neo4jClient` from Tatham Oddie showed early on, how easy it is to connect to Neo4j from .Net
+
+// end::intro[]
+
+Members of the .Net community have invested a lot of time and love to develop all these drivers, so please if you use them provide feedback to the authors. 
+
+include::../_includes/sample_project.adoc[]
+
+=== http://www.nuget.org/packages/Neo4jClient[Neo4jClient]
+
+A .NET client for Neo4j, which makes it easy to write Cypher queries in C# with IntelliSense. Also supports basic CRUD and legacy indexing.
+
+[role=side-nav]
+===
+* https://github.com/Readify/Neo4jClient[GitHub]
+* Author: http://twitter.com/tathamoddie[Tatham Oddie] and Romiko Derbynew
+* http://stackoverflow.com/questions/tagged/neo4jclient[StackOverflow]
+* https://github.com/Readify/Neo4jClient/wiki[Documentation]
+* [Blog Post]
+
+=== Other Drivers
+
+==== http://mtranter.com/2013/09/21/cypher-net-a-neo4j-cypher-api/[Cypher.Net]
+
+A .Net API for the Neo4j HTTP Transactional Endpoint. (v2.0.0) Exposes strongly typed Graph Query API based on the Neo4j Cypher Query Language.
+
+* https://github.com/mtranter/CypherNet[GitHub]
+* Author: Matthew Tranter

@@ -1,0 +1,194 @@
+= Example Project
+:level: Beginner
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 2
+:section: Develop with Neo4j
+
+.Goals
+[abstract]
+This guide explains the example application we use to introduce the different Neo4j drivers in detail.
+
+.Prerequisites
+[abstract]
+You should be familiar with link:../../what-is-neo4j/graph-database[graph database concepts] and the property graph model. You should have link:/download[installed Neo4j] and made yourself familiar with our link:../../cypher-query-language[Cypher Query language]. 
+
+[role=expertise]
+{level}
+
+toc::[]
+
+// tag::intro[]
+== Example Project Description
+
+We use the existing movie and crew (actor, director, producer) dataset known from the Neo4j Browser and Neo4j Training to power this simple web application.
+The application runs as a single page app and uses Ajax to access three HTTP endpoints in the backend to provide:
+
+* movie search
+* single movie listing
+* graph visualization of the domain
+
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/movie_application.png[]
+
+=== Domain Model
+
+----
+(:Movie {title,released,tagline})<-[:ACTED_IN {roles}]-(actor:Person)
+----
+
+=== GitHub
+
+You can access the source code for the different languages via the https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/examples/[GitHub repository] for the Neo4j developer resources.
+// end::intro[]
+
+=== Webpage
+
+The webpage is a single Bootstrap page that uses jQuery AJAX calls to access the backend and adds the returned JSON result data to HTML elements in the page.
+
+For the search that is the `/search?q=query` endpoint whose results are added as table rows.
+If you click on any of the movie titles, the side-view is populated with the movie details.
+
+For the movie details it uses the `/movie/Movie%20Title` endpoint and the results are rendered as panel title, image source, and unordered list for crew.
+
+=== Graph Visualization
+
+For the Graph Visualization we use http://d3js.org[d3.js], our `/graph` endpoint already returns the data in the format of "nodes" and "links"-list that d3 can use directly.
+We then apply the force-layout algorithm to render nodes as circles and relationships as lines, and add some minor styling to the visualization provide the movie title/person name as HTML title attribute to the node circles.
+
+=== Endpoints
+
+==== Get Movie
+
+----
+// JSON object for single movie with cast
+curl http://localhost:8080/movie/The%20Matrix
+
+{"title": "The Matrix",
+ "cast": [{"job": "acted", "role": ["Emil"], "name": "Emil Eifrem"}, {"job": "acted", "role": ["Agent Smith"], "name": "Hugo Weaving"}, ...
+          {"job": "directed", "role": null, "name": "Andy Wachowski"}, {"job": "produced", "role": null, "name": "Joel Silver"}]}
+----
+
+The Cypher query used, with the parameters `{title:"The Matrix"}`
+
+It matches the movie by title, then optionally finds all people working on that movie and returns the movie title and a crew-list consisting of a map with person-name, job identifier derived from the relationship-type and optionally a role for actors.
+
+[source,cypher]
+----
+MATCH (movie:Movie {title:{title}})
+ OPTIONAL MATCH (movie)<-[r]-(person:Person)
+ RETURN movie.title as title,
+       collect({name:person.name,
+                job:head(split(lower(type(r)),'_')),
+                role:r.roles}) as cast LIMIT 1
+----
+
+==== Search Movies
+
+----
+// list of JSON objects for movie search results
+curl http://localhost:8080/search?q=matrix
+
+[{"movie": {"released": 1999, "tagline": "Welcome to the Real World", "title": "The Matrix"}},
+ {"movie": {"released": 2003, "tagline": "Free your mind", "title": "The Matrix Reloaded"}},
+ {"movie": {"released": 2003, "tagline": "Everything that has a beginning has an end", "title": "The Matrix Revolutions"}}]
+----
+
+The Cypher query used, with the parameters `{query:"(?i).\*matrix.*"}`, a case-insensitive regular expression partial match.
+
+The Search Movies query matches the movies by title with a regular expression and then returns the movie nodes as a list of maps with the title, released and tagline entries.
+
+[source,cypher]
+----
+MATCH (movie:Movie)
+ WHERE movie.title =~ {query}
+ RETURN movie
+----
+
+==== Graph Visualization
+
+----
+// JSON object for whole graph viz (nodes, links - arrays)
+curl http://localhost:8080/graph[?limit=50]
+
+{"nodes":
+  [{"title":"Apollo 13","label":"movie"},{"title":"Kevin Bacon","label":"actor"},
+   {"title":"Tom Hanks","label":"actor"},{"title":"Gary Sinise","label":"actor"},
+   {"title":"Ed Harris","label":"actor"},{"title":"Bill Paxton","label":"actor"}],
+ "links":
+  [{"source":1,"target":0},{"source":2,"target":0},{"source":3,"target":0},
+   {"source":4,"target":0},{"source":5,"target":0}]}
+----
+
+The Cypher query used finds all pairs of movies and actors and returns the movie title and a collection of all actor names as cast.
+A separate function then takes this result and converts it into the node- and link-list that d3 expects.
+
+The parameter `{limit:50}` is used to prevent the visualization from becoming a hairball.
+
+[source,cypher]
+----
+MATCH (m:Movie)<-[:ACTED_IN]-(a:Person)
+ RETURN m.title as movie, collect(a.name) as cast
+ LIMIT {limit}
+----
+
+== Data Setup
+
+- Start your local Neo4j Server (http://neo4j.com/download[Download & Install])
+- Open the http://localhost:7474[Neo4j Browser].
+- Install the Movies data-set with `:play movies`
+- Click the `CREATE` statement and hit the triangular "Run" button to insert the data.
+
+You can also choose to use a cloud hosted Neo4j database.
+If you go this route, then you have to provide the URL to your Neo4j server in an environment variable `NEO4J_URL`.
+
+== Run Locally
+
+Then setup and start the language/stack specific implementation of the backend and open the web-application on `http://localhost:8080`.
+
+You can search for movies by title or and click on any result entry to see the details.
+
+== Deploy to Heroku
+
+We want to install our application to the cloud, for instance the http://heroku.com[Heroku] PaaS.
+We will also use the http://graphenedb.com[GraphenDB] Neo4j Database Hosting Add-On.
+
+Install the https://toolbelt.heroku.com/[Heroku Toolbelt] and git.
+
+Then run these commands:
+
+[source,shell]
+----
+# initialize git repository and add files
+git init
+git add .
+git commit -m"my neo4j movies app"
+
+# create heroku application, please change the app-name
+export app=my-neo4j-movies-app
+heroku apps:create $app
+
+# add free graphenedb hosting
+heroku addons:add graphenedb:chalk --app $app
+
+# configure your app to use the add-on
+heroku config:set NEO4J_REST_URL=GRAPHENEDB_URL --app $app
+
+# deploy to heroku
+git push heroku master
+
+# open application
+heroku open --app $app
+
+# open addon admin page
+heroku addons:open graphenedb
+----
+
+In the Graphenedb-UI use "Launch Neo4j Admin UI".
+In the Neo4j-Browser import the `:play movies` dataset as of the install instructions above.
+
+Then your app is ready to roll.
+
+:leveloffset: -1
+
+include::../_includes/drivers_example_list.adoc[]

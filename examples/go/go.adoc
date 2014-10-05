@@ -1,0 +1,53 @@
+= Using Neo4j from Go
+:level: Intermediate
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 2
+:section: Develop with Neo4j
+
+.Goals
+[abstract]
+If you are a Go developer, you should find enough information to get you started with Neo4j. While this guide is not comprehensive it will introduce the different drivers and link to the relevant resources.
+
+.Prerequisites
+[abstract]
+You should be familiar with link:../../what-is-neo4j/graph-database[graph database concepts] and the property graph model. You should have link:/download[installed Neo4j] and made yourself familiar with our link:../../cypher-query-language[Cypher Query language]. 
+
+[role=expertise]
+{level}
+
+toc::[]
+
+// tag::intro[]
+=== Neo4j for Go Developers
+
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/GO.jpg[width=150]
+
+Neo4j might be developed in Java, but don't assume that you need to use a Java client. 
+Go drivers have been around for a while and especially with the excellent `cq` driver from Wes Freeman it got a lot of traction.
+// end::intro[]
+
+Members of the Go community have invested a lot of time and love to develop all these drivers, so please if you use them provide feedback to the authors. 
+
+include::../_includes/sample_project.adoc[]
+
+=== https://github.com/go-cq/cq[CQ]
+
+Author: https://twitter.com/wefreema[Wes Freeman]
+
+A database/sql implementation for Cypher.
+
+[role=side-nav]
+=== Sidebar
+* link:cq[Example Project with CQ]
+
+=== Other Drivers
+
+==== http://github.com/jmcvetta/neoism[Neoism (Go)]
+
+Author: https://github.com/jmcvetta[Jason McVetta]
+
+Neoism is a Go client library providing access to the Neo4j graph database via its REST API.
+This driver is fairly complete, and may now be suitable for general use. The code has an extensive set of integration tests.
+
