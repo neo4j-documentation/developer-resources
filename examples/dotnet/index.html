@@ -6,7 +6,7 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>WORK IN PROGRESS | Developer Resources | Neo4j Graph Database</title>
+         <title>Using Neo4j from .Net | Developer Resources | Neo4j Graph Database</title>
          <script type="text/javascript">
             var _kmq = _kmq || [];
             var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
@@ -156,14 +156,14 @@
                         <div class="columns large-12" style="padding:10px 0 0;">
                            <ul class="breadcrumbs">
                               <li><a href="/developer-resources">Developer Guides</a></li>
-                              <li><a href="../">Guide</a></li>
-                              <li class="current"><a href="#">WORK IN PROGRESS</a></li>
+                              <li><a href="../">Develop with Neo4j</a></li>
+                              <li class="current"><a href="#">Using Neo4j from .Net</a></li>
                            </ul>
                         </div>
                      </div>
                      <div class="row">
                         <div class="columns large-12">
-                           <h1 style="font-size:2.1rem;">WORK IN PROGRESS</h1>
+                           <h1 style="font-size:2.1rem;">Using Neo4j from .Net</h1>
                         </div>
                      </div>
                      <section class="row" style="padding:10px 0;">
@@ -171,68 +171,130 @@
                            <div id="content">
                               <div id="preamble">
 <div class="sectionbody">
-
-
-<div class="paragraph">
-<p>This example demonstrates how to map node and relationships to Ruby classes.</p>
+<div class="quoteblock abstract">
+<div class="title">Goals</div>
+<blockquote style="padding-left: 0;">
+If you are a .Net developer, you should find enough information to get you started with Neo4j.
+While this guide is not comprehensive it will introduce the different drivers and link to the relevant resources.
+</blockquote>
+</div>
+<div class="quoteblock abstract">
+<div class="title">Prerequisites</div>
+<blockquote style="padding-left: 0;">
+You should be familiar with <a href="../../what-is-neo4j/graph-database">graph database concepts</a> and the property graph model.
+You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="../../cypher-query-language">Cypher Query language</a>.
+</blockquote>
 </div>
 
+
+<div class="label">Intermediate</div>
+<hr/>
+
+<div class="toc">
+<h3 class="title">Overview</h3>
+
+<ul class="sectlevel2">
+<li><a href="#_neo4j_for_net_developers">Neo4j for .Net Developers</a></li>
+<li><a href="#_the_example_project">The Example Project</a></li>
+<li><a href="#__a_href_http_www_nuget_org_packages_neo4jclient_neo4jclient_a"><a href="http://www.nuget.org/packages/Neo4jClient">Neo4jClient</a></a></li>
+<li><a href="#_other_drivers">Other Drivers</a></li>
+</ul>
+
+<hr>
 </div>
 </div>
-<div class="sect1 "  >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h3 id="_how_to_install">How to install</h3>
+<h4 id="_neo4j_for_net_developers">Neo4j for .Net Developers</h4>
 
-<div class="sectionbody row">
-<div class="columns medium-12">
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/dotnet.png" alt="dotnet">
+</p>
+</div>
 
 
 <div class="paragraph">
-<p><code>bundle install</code></p>
+<p>Neo4j might be developed in Java, but don&#8217;t assume that you need to use a Java client.
+Powerful .Net drivers like <code>Neo4jClient</code> from Tatham Oddie showed early on, how easy it is to connect to Neo4j from .Net</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Members of the .Net community have invested a lot of time and love to develop all these drivers, so please if you use them provide feedback to the authors.</p>
 </div>
 
 </div>
-</div>
-
-</div>
-<div class="sect1 "  >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h3 id="_how_to_run">How to run</h3>
-
-<div class="sectionbody row">
-<div class="columns medium-12">
-
-
-<div class="paragraph">
-<p><code>bundle exec rackup config.ru</code></p>
-</div>
+<h4 id="_the_example_project">The Example Project</h4>
 
 
 
 <div class="paragraph">
-<p>or 'bundle exec shotgun config.ru'</p>
+<p>You can find out more about our example projects for many different languages <a href="../example-project">here</a>, you can also access it via the <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/examples/">GitHub repository</a> for the Neo4j developer resources.
+Feel free to check them out.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>It is a small one page webapp for our movies database.
+The front-end is the same for all drivers, just the backends show you how to connect to Neo4j from the different languages and drivers.</p>
 </div>
 
 </div>
-</div>
-
-</div>
-<div class="sect1 "  >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h3 id="_design">Design</h3>
+<h4 id="__a_href_http_www_nuget_org_packages_neo4jclient_neo4jclient_a"><a href="http://www.nuget.org/packages/Neo4jClient">Neo4jClient</a></h4>
 
-<div class="sectionbody row">
-<div class="columns medium-12">
 
 
 <div class="paragraph">
-<p>This example is very slow if used from the Neo4j Server since it does a lot of requests instead of using just one cypher query (as in the neo4j-core example).
-Notice that Neo4j.rb tries to hide the internal Neo4j ids. Instead in the example we have created primary keys on title and name properties.</p>
+<p>A .NET client for Neo4j, which makes it easy to write Cypher queries in C# with IntelliSense. Also supports basic CRUD and legacy indexing.</p>
+</div>
+
+
+
+<div class="paragraph side-nav">
+<p>===
+* <a href="https://github.com/Readify/Neo4jClient">GitHub</a>
+* Author: <a href="http://twitter.com/tathamoddie">Tatham Oddie</a> and Romiko Derbynew
+* <a href="http://stackoverflow.com/questions/tagged/neo4jclient">StackOverflow</a>
+* <a href="https://github.com/Readify/Neo4jClient/wiki">Documentation</a>
+* [Blog Post]</p>
 </div>
 
 </div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_other_drivers">Other Drivers</h4>
+
+<div class="sect3 "  >
+    
+<h5 id="__a_href_http_mtranter_com_2013_09_21_cypher_net_a_neo4j_cypher_api_cypher_net_a"><a href="http://mtranter.com/2013/09/21/cypher-net-a-neo4j-cypher-api/">Cypher.Net</a></h5>
+
+
+
+<div class="paragraph">
+<p>A .Net API for the Neo4j HTTP Transactional Endpoint. (v2.0.0) Exposes strongly typed Graph Query API based on the Neo4j Cypher Query Language.</p>
 </div>
 
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="https://github.com/mtranter/CypherNet">GitHub</a>
+</li>
+<li>
+Author: Matthew Tranter
+</li>
+</ul>
+
+</div>
+</div>
 </div>
                            </div>
                         </div>

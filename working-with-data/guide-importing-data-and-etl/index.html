@@ -6,7 +6,7 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>Importing Data into Neo4j | Developer Resources | Neo4j Graph Database</title>
+         <title>Tutorial: Importing Data into Neo4j | Developer Resources | Neo4j Graph Database</title>
          <script type="text/javascript">
             var _kmq = _kmq || [];
             var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
@@ -157,13 +157,13 @@
                            <ul class="breadcrumbs">
                               <li><a href="/developer-resources">Developer Guides</a></li>
                               <li><a href="../">Data Import</a></li>
-                              <li class="current"><a href="#">Importing Data into Neo4j</a></li>
+                              <li class="current"><a href="#">Tutorial: Importing Data into Neo4j</a></li>
                            </ul>
                         </div>
                      </div>
                      <div class="row">
                         <div class="columns large-12">
-                           <h1 style="font-size:2.1rem;">Importing Data into Neo4j</h1>
+                           <h1 style="font-size:2.1rem;">Tutorial: Importing Data into Neo4j</h1>
                         </div>
                      </div>
                      <section class="row" style="padding:10px 0;">
@@ -174,15 +174,15 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-Existing data comes in many shapes and sizes and one of the most popular is a relational database.
-In this guide we&#8217;ll look at how we can export a Postgres data set into Neo4j.
+Existing data comes in many shapes and sizes, and is commonly stored in a relational database.
+This guide explores how to export data from a PostgreSQL database into Neo4j.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
 You should have a basic understanding of the <a href="/what-is-neo4j/property-graph">property graph model</a> and have completed the <a href="../../build-a-graph-data-model/guide-intro-to-graph-modeling/index.html">modeling guide</a>.
-Having <a href="/download">downloaded</a> and installed Neo4j server helps you code along with the examples.
+If you <a href="/download">download</a> and install Neo4j server you&#8217;ll be able to follow along with the examples.
 </blockquote>
 </div>
 
@@ -213,14 +213,14 @@ Having <a href="/download">downloaded</a> and installed Neo4j server helps you c
 
 
 <div class="paragraph">
-<p>In this guide we&#8217;ll be using the <a href="https://code.google.com/p/northwindextended/downloads/detail?name=northwind.postgre.sql&amp;can=2&amp;q=">NorthWind data set</a> as our example.
-NorthWind is a popular data set used to demonstrate SQL and relational databases and is graphy enough to be interesting for us.</p>
+<p>In this guide we&#8217;ll be using the <a href="https://code.google.com/p/northwindextended/downloads/detail?name=northwind.postgre.sql&amp;can=2&amp;q=">NorthWind dataset</a>, a commonly used SQL dataset.
+Although the NorthWind dataset often used to demonstrate SQL and relational databases, it is graphy enough to be interesting for us.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>The following is an entity relationship diagram of the data set:</p>
+<p>The following is an entity relationship diagram of the NorthWind dataset:</p>
 </div>
 
 <div class="imageblock">
@@ -236,7 +236,7 @@ NorthWind is a popular data set used to demonstrate SQL and relational databases
 
 
 <div class="paragraph">
-<p>There are a couple of rules of thumbs when deriving a graph model from a relational one which we can use to come up with our first cut:</p>
+<p>When deriving a graph model from a relational model, we should keep the following guidelines in mind:</p>
 </div>
 
 <div class="ulist">
@@ -244,10 +244,10 @@ NorthWind is a popular data set used to demonstrate SQL and relational databases
 
 <ul>
 <li>
-A row is a node
+A <em>row</em> is a <em>node</em>
 </li>
 <li>
-A table name is a label name
+A <em>table name</em> is a <em>label name</em>
 </li>
 </ul>
 
@@ -289,8 +289,8 @@ No nulls in the graph model - in the relational one to track the employee hierar
 
 
 <div class="paragraph">
-<p>Now that we know what we&#8217;d like our graph to look like we need to extract the data from PostgreSQL so we can create it.
-The easiest way to do that is to export the appropriate tables in CSV format. Postgres' 'copy' command lets us execute a SQL query and write the result to a CSV file:</p>
+<p>Now that we know what we&#8217;d like our graph to look like, we need to extract the data from PostgreSQL so we can create it as a graph.
+The easiest way to do that is to export the appropriate tables in CSV format. The PostgreSQL 'copy' command lets us execute a SQL query and write the result to a CSV file:</p>
 </div>
 
 <div class="listingblock">
@@ -334,13 +334,13 @@ COPY (SELECT * FROM orders
 
 
 <div class="paragraph">
-<p>After we&#8217;ve done exported our data from PostgreSQL, we&#8217;ll use Cypher&#8217;s <a href="http://docs.neo4j.org/chunked/stable/query-load-csv.html">LOAD CSV</a> command to transform the contents of the CSV file into a graph structure.</p>
+<p>After we&#8217;ve exported our data from PostgreSQL, we&#8217;ll use Cypher&#8217;s <a href="http://docs.neo4j.org/chunked/stable/query-load-csv.html">LOAD CSV</a> command to transform the contents of the CSV file into a graph structure.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>We&#8217;ll start by creating the nodes:</p>
+<p>First, create the nodes:</p>
 </div>
 
 <div class="listingblock">
@@ -369,7 +369,7 @@ CREATE (:Category {CategoryID: row.CategoryID, CategoryName: row.CategoryName, D
 
 
 <div class="paragraph">
-<p>The next step is to create the relationships between these nodes. Before we can do this, however, we&#8217;ll create indexes on the nodes that we&#8217;ve just created to ensure their quick lookup when creating relationships in the next section.</p>
+<p>Next, we&#8217;ll create indexes on the just-created nodes to ensure their quick lookup when creating relationships in the next step.</p>
 </div>
 
 <div class="listingblock">
@@ -384,7 +384,7 @@ CREATE INDEX ON :Customer(CustomerID);</code></pre>
 
 
 <div class="paragraph">
-<p>With those indices in place we can now create orders and their relationships to products and employees:</p>
+<p>Initial nodes and indices in place, we can now create relationships orders and their relationships to products and employees:</p>
 </div>
 
 <div class="listingblock">
@@ -403,7 +403,7 @@ MERGE (order)-[:PRODUCT]-&gt;(product);</code></pre>
 
 
 <div class="paragraph">
-<p>Next we&#8217;ll create relationships between products, suppliers, and categories:</p>
+<p>Next, create relationships between products, suppliers, and categories:</p>
 </div>
 
 <div class="listingblock">
@@ -420,7 +420,7 @@ MERGE (product)-[:PART_OF]-&gt;(category);</code></pre>
 
 
 <div class="paragraph">
-<p>Finally we&#8217;ll create the 'REPORTS_TO' relationship between employees which will create the reporting structure in the graph:</p>
+<p>Finally we&#8217;ll create the 'REPORTS_TO' relationship between employees to represent the reporting structure:</p>
 </div>
 
 <div class="listingblock">
@@ -434,7 +434,7 @@ MERGE (employee)-[:REPORTS_TO]-&gt;(manager);</code></pre>
 
 
 <div class="paragraph">
-<p>For completeness we&#8217;ll also create an index on orders so that we can look them up quickly in our queries:</p>
+<p>For completeness and optimal query speed, create an index on orders:</p>
 </div>
 
 <div class="listingblock">
@@ -445,7 +445,7 @@ MERGE (employee)-[:REPORTS_TO]-&gt;(manager);</code></pre>
 
 
 <div class="paragraph">
-<p>A sample of the graph looks like this:</p>
+<p>The resulting graph should look like this:</p>
 </div>
 
 <div class="imageblock">
@@ -456,7 +456,7 @@ MERGE (employee)-[:REPORTS_TO]-&gt;(manager);</code></pre>
 
 
 <div class="paragraph">
-<p>We can now query the graph&#8230;&#8203;</p>
+<p>We can now query the graph.</p>
 </div>
 
 </div>
@@ -467,12 +467,12 @@ MERGE (employee)-[:REPORTS_TO]-&gt;(manager);</code></pre>
 
 
 <div class="paragraph">
-<p>One question we would love to answer is:</p>
+<p>One question we might be interested in is:</p>
 </div>
 
 <div class="sect3 "  >
     
-<h5 id="_which_employee_had_the_highest_cross_selling_count_of_which_product_with_chocolade">Which Employee had the Highest Cross-Selling Count of Which Product with 'Chocolade'</h5>
+<h5 id="_which_employee_had_the_highest_cross_selling_count_of_chocolade_and_which_product">Which Employee had the Highest Cross-Selling Count of 'Chocolade' and Which Product?</h5>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
@@ -486,7 +486,7 @@ LIMIT 5</code></pre>
 
 
 <div class="paragraph">
-<p>And as we can see, employee number 1 was really busy.</p>
+<p>Looks like employee number 1 was very busy!</p>
 </div>
 
 <table class="tableblock frame-all grid-all spread">
@@ -539,7 +539,7 @@ LIMIT 5</code></pre>
 </div>
 <div class="sect3 "  >
     
-<h5 id="_which_employees_report_to_each_other">Which employees report to each other?</h5>
+<h5 id="_how_are_employees_organized_who_reports_to_whom">How are Employees Organized? Who Reports to Whom?</h5>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
@@ -596,19 +596,19 @@ RETURN e.EmployeeID AS manager, sub.EmployeeID AS employee</code></pre>
 
 
 <div class="paragraph">
-<p>One interesting thing we might notice is that employee #5 has people reporting to them but also reports to employee #2.</p>
+<p>Notice that employee #5 has people reporting to them but also reports to employee #2.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Our next query could investigate that a bit more:</p>
+<p>Let&#8217;s investigate that a bit more:</p>
 </div>
 
 </div>
 <div class="sect3 "  >
     
-<h5 id="_which_employees_indirectly_report_to_each_other">Which employees indirectly report to each other?</h5>
+<h5 id="_which_employees_report_to_each_other_indirectly">Which Employees Report to Each Other Indirectly?</h5>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
@@ -689,16 +689,10 @@ ORDER BY LENGTH(path)</code></pre>
 </tr>
 </tbody>
 </table>
-
-
-<div class="paragraph">
-<p>Finally we can bring together the organisation hierarchy with orders:</p>
-</div>
-
 </div>
 <div class="sect3 "  >
     
-<h5 id="_how_many_orders_were_made_by_each_part_of_the_hierachy">How many orders were made by each part of the hierachy?</h5>
+<h5 id="_how_many_orders_were_made_by_each_part_of_the_hierachy">How Many Orders were Made by Each Part of the Hierachy?</h5>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">

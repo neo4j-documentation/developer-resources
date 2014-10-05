@@ -6,7 +6,7 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>WORK IN PROGRESS | Developer Resources | Neo4j Graph Database</title>
+         <title>Neo4j from JavaScript | Developer Resources | Neo4j Graph Database</title>
          <script type="text/javascript">
             var _kmq = _kmq || [];
             var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
@@ -156,14 +156,14 @@
                         <div class="columns large-12" style="padding:10px 0 0;">
                            <ul class="breadcrumbs">
                               <li><a href="/developer-resources">Developer Guides</a></li>
-                              <li><a href="../">Guide</a></li>
-                              <li class="current"><a href="#">WORK IN PROGRESS</a></li>
+                              <li><a href="../">Develop with Neo4j</a></li>
+                              <li class="current"><a href="#">Neo4j from JavaScript</a></li>
                            </ul>
                         </div>
                      </div>
                      <div class="row">
                         <div class="columns large-12">
-                           <h1 style="font-size:2.1rem;">WORK IN PROGRESS</h1>
+                           <h1 style="font-size:2.1rem;">Neo4j from JavaScript</h1>
                         </div>
                      </div>
                      <section class="row" style="padding:10px 0;">
@@ -171,68 +171,207 @@
                            <div id="content">
                               <div id="preamble">
 <div class="sectionbody">
-
-
-<div class="paragraph">
-<p>This example demonstrates how to map node and relationships to Ruby classes.</p>
+<div class="quoteblock abstract">
+<div class="title">Goals</div>
+<blockquote style="padding-left: 0;">
+If you are a JavaScript developer, you should find enough information to get you started with Neo4j.
+While this guide is not comprehensive it will introduce the different Drivers and link to the relevant resources.
+</blockquote>
+</div>
+<div class="quoteblock abstract">
+<div class="title">Prerequisites</div>
+<blockquote style="padding-left: 0;">
+You should be familiar with <a href="../../what-is-neo4j/graph-database">graph database concepts</a> and the property graph model.
+You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="../../cypher-query-language">Cypher Query language</a>.
+</blockquote>
 </div>
 
+
+<div class="label">Intermediate</div>
+<hr/>
+
+<div class="toc">
+<h3 class="title">Overview</h3>
+
+<ul class="sectlevel2">
+<li><a href="#_neo4j_for_javascript_developers">Neo4j for JavaScript Developers</a></li>
+<li><a href="#_the_example_project">The Example Project</a></li>
+<li><a href="#_using_the_http_endpoint_directly">Using the HTTP-Endpoint directly</a></li>
+<li><a href="#_other_drivers">Other Drivers</a></li>
+</ul>
+
+<hr>
 </div>
 </div>
-<div class="sect1 "  >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h3 id="_how_to_install">How to install</h3>
+<h4 id="_neo4j_for_javascript_developers">Neo4j for JavaScript Developers</h4>
 
-<div class="sectionbody row">
-<div class="columns medium-12">
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/nodejs.png" alt="nodejs">
+</p>
+</div>
 
 
 <div class="paragraph">
-<p><code>bundle install</code></p>
+<p>The standalone Neo4j-Server can be installed on any machine and then accessed via its HTTP API.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Below we show how you can use something as simple as the <code>request</code> module to send queries to and receive responses from Neo4j.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>But you can also choose to leverage one of the existing drivers for Neo4j which wrap that protocol in a more convenient API for you.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Follow the guides below to get you started.</p>
 </div>
 
 </div>
-</div>
-
-</div>
-<div class="sect1 "  >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h3 id="_how_to_run">How to run</h3>
-
-<div class="sectionbody row">
-<div class="columns medium-12">
-
-
-<div class="paragraph">
-<p><code>bundle exec rackup config.ru</code></p>
-</div>
+<h4 id="_the_example_project">The Example Project</h4>
 
 
 
 <div class="paragraph">
-<p>or 'bundle exec shotgun config.ru'</p>
+<p>You can find out more about our example projects for Ruby (and other languages) here <a href="../" class="bare">../</a>, you can also access it via the <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/examples/">GitHub repository</a> for the Neo4j developer resources.
+Feel free to check them out.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>It is a small one page webapp for our movies database.
+The front-end is the same for all drivers, just the backends show you how to connect to Neo4j from the different languages and drivers.</p>
 </div>
 
 </div>
-</div>
-
-</div>
-<div class="sect1 "  >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h3 id="_design">Design</h3>
+<h4 id="_using_the_http_endpoint_directly">Using the HTTP-Endpoint directly</h4>
 
-<div class="sectionbody row">
-<div class="columns medium-12">
 
 
 <div class="paragraph">
-<p>This example is very slow if used from the Neo4j Server since it does a lot of requests instead of using just one cypher query (as in the neo4j-core example).
-Notice that Neo4j.rb tries to hide the internal Neo4j ids. Instead in the example we have created primary keys on title and name properties.</p>
+<p>You can use something as simple as the <code>request</code> node-module to send queries to and receive responses from Neo4j.
+The endpoint protocol and formats are explained in detail in the <a href="http://docs.neo4j.org/chunked/milestone/rest-api-transactional.html">Neo4j Manual</a>.
+It enables you do to much more, e.g. sending many statments per requests or keeping transactions open across multiple requests.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Here is a simple example:</p>
+</div>
+
+<div class="listingblock">
+<div class="title">Simple Function Accessing the Remote Endpoint</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="javascript"><code>var r=require("request");
+var txUrl = "http://localhost:7474/db/data/transaction/commit";
+function cypher(query,params,cb) {
+  r.post({uri:txUrl,
+          json:{statements:[{statement:query,parameters:params}]}},
+         function(err,res) { cb(err,res.body)})
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Running the Function</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="javascript"><code>var query="MATCH (n:User) RETURN n, labels(n) as l LIMIT {limit}"
+var params={limit: 10}
+var cb=function(err,data) { console.log(JSON.stringify(data)) }
+
+cypher(query,params,cb)
+
+{"results":[
+  {"columns":["n","l"],
+   "data":[
+     {"row":[{"name":"Aran"},["User"]]}
+    ]
+  }],
+ "errors":[]}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_other_drivers">Other Drivers</h4>
+
+<div class="sect3 "  >
+    
+<h5 id="__a_href_http_github_com_thingdom_node_neo4j_node_neo4j_a"><a href="http://github.com/thingdom/node-neo4j">node-neo4j</a></h5>
+
+
+
+<div class="paragraph">
+<p>Author: <a href="https://twitter.com/aseemk">Aseem Kishore</a> &amp; Daniel Gasienica</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Most widely used Node.js driver for Neo4j.
+Documentation can be found <a href="http://coffeedoc.info/github/thingdom/node-neo4j/">here</a> and it even has a <a href="https://groups.google.com/forum/#!forum/node-neo4j">google group</a>.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>An example project using node-neo4j, can <a href="https://github.com/aseemk/node-neo4j-template">be found here</a>.</p>
 </div>
 
 </div>
+<div class="sect3 "  >
+    
+<h5 id="__a_href_http_github_com_bretcope_neo4j_js_neo4j_js_a"><a href="http://github.com/bretcope/neo4j-js">neo4j-js</a></h5>
+
+
+
+<div class="paragraph">
+<p>Author: Bret Copeland</p>
 </div>
 
+
+
+<div class="paragraph">
+<p>A Node.js (pure JavaScript) client library for accessing neo4j databases with batch support.</p>
+</div>
+
+</div>
+<div class="sect3 "  >
+    
+<h5 id="__a_href_http_github_com_joewhite86_node_neo4j_embedded_node_neo4j_embedded_a"><a href="http://github.com/joewhite86/node-neo4j-embedded">node-neo4j-embedded</a></h5>
+
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/nodejs.png" alt="nodejs">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>Author: Jochen Weis</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Node.js driver for the embedded Neo4j Database. Supports HA Setups, API is built to be as close to the Java API as possible.</p>
+</div>
+
+</div>
 </div>
                            </div>
                         </div>

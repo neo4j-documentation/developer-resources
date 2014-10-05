@@ -6,7 +6,7 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>WORK IN PROGRESS | Developer Resources | Neo4j Graph Database</title>
+         <title>Using Neo4j from Go | Developer Resources | Neo4j Graph Database</title>
          <script type="text/javascript">
             var _kmq = _kmq || [];
             var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
@@ -156,14 +156,14 @@
                         <div class="columns large-12" style="padding:10px 0 0;">
                            <ul class="breadcrumbs">
                               <li><a href="/developer-resources">Developer Guides</a></li>
-                              <li><a href="../">Guide</a></li>
-                              <li class="current"><a href="#">WORK IN PROGRESS</a></li>
+                              <li><a href="../">Develop with Neo4j</a></li>
+                              <li class="current"><a href="#">Using Neo4j from Go</a></li>
                            </ul>
                         </div>
                      </div>
                      <div class="row">
                         <div class="columns large-12">
-                           <h1 style="font-size:2.1rem;">WORK IN PROGRESS</h1>
+                           <h1 style="font-size:2.1rem;">Using Neo4j from Go</h1>
                         </div>
                      </div>
                      <section class="row" style="padding:10px 0;">
@@ -171,68 +171,133 @@
                            <div id="content">
                               <div id="preamble">
 <div class="sectionbody">
-
-
-<div class="paragraph">
-<p>This example demonstrates how to map node and relationships to Ruby classes.</p>
+<div class="quoteblock abstract">
+<div class="title">Goals</div>
+<blockquote style="padding-left: 0;">
+If you are a Go developer, you should find enough information to get you started with Neo4j. While this guide is not comprehensive it will introduce the different drivers and link to the relevant resources.
+</blockquote>
+</div>
+<div class="quoteblock abstract">
+<div class="title">Prerequisites</div>
+<blockquote style="padding-left: 0;">
+You should be familiar with <a href="../../what-is-neo4j/graph-database">graph database concepts</a> and the property graph model. You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="../../cypher-query-language">Cypher Query language</a>.
+</blockquote>
 </div>
 
+
+<div class="label">Intermediate</div>
+<hr/>
+
+<div class="toc">
+<h3 class="title">Overview</h3>
+
+<ul class="sectlevel2">
+<li><a href="#_neo4j_for_go_developers">Neo4j for Go Developers</a></li>
+<li><a href="#_the_example_project">The Example Project</a></li>
+<li><a href="#__a_href_https_github_com_go_cq_cq_cq_a"><a href="https://github.com/go-cq/cq">CQ</a></a></li>
+
+<li><a href="#_other_drivers">Other Drivers</a></li>
+</ul>
+
+<hr>
 </div>
 </div>
-<div class="sect1 "  >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h3 id="_how_to_install">How to install</h3>
+<h4 id="_neo4j_for_go_developers">Neo4j for Go Developers</h4>
 
-<div class="sectionbody row">
-<div class="columns medium-12">
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/GO.jpg" alt="GO" width="150">
+</p>
+</div>
 
 
 <div class="paragraph">
-<p><code>bundle install</code></p>
+<p>Neo4j might be developed in Java, but don&#8217;t assume that you need to use a Java client.
+Go drivers have been around for a while and especially with the excellent <code>cq</code> driver from Wes Freeman it got a lot of traction.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Members of the Go community have invested a lot of time and love to develop all these drivers, so please if you use them provide feedback to the authors.</p>
 </div>
 
 </div>
-</div>
-
-</div>
-<div class="sect1 "  >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h3 id="_how_to_run">How to run</h3>
-
-<div class="sectionbody row">
-<div class="columns medium-12">
-
-
-<div class="paragraph">
-<p><code>bundle exec rackup config.ru</code></p>
-</div>
+<h4 id="_the_example_project">The Example Project</h4>
 
 
 
 <div class="paragraph">
-<p>or 'bundle exec shotgun config.ru'</p>
+<p>You can find out more about our example projects for many different languages <a href="../example-project">here</a>, you can also access it via the <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/examples/">GitHub repository</a> for the Neo4j developer resources.
+Feel free to check them out.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>It is a small one page webapp for our movies database.
+The front-end is the same for all drivers, just the backends show you how to connect to Neo4j from the different languages and drivers.</p>
 </div>
 
 </div>
-</div>
-
-</div>
-<div class="sect1 "  >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h3 id="_design">Design</h3>
+<h4 id="__a_href_https_github_com_go_cq_cq_cq_a"><a href="https://github.com/go-cq/cq">CQ</a></h4>
 
-<div class="sectionbody row">
-<div class="columns medium-12">
 
 
 <div class="paragraph">
-<p>This example is very slow if used from the Neo4j Server since it does a lot of requests instead of using just one cypher query (as in the neo4j-core example).
-Notice that Neo4j.rb tries to hide the internal Neo4j ids. Instead in the example we have created primary keys on title and name properties.</p>
+<p>Author: <a href="https://twitter.com/wefreema">Wes Freeman</a></p>
+</div>
+
+
+
+<div class="paragraph">
+<p>A database/sql implementation for Cypher.</p>
 </div>
 
 </div>
+<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+<h2 id="_sidebar">Sidebar</h2>
+</li>
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="cq">Example Project with CQ</a>
+</li>
+</ul>
+
+</div>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_other_drivers">Other Drivers</h4>
+
+<div class="sect3 "  >
+    
+<h5 id="__a_href_http_github_com_jmcvetta_neoism_neoism_go_a"><a href="http://github.com/jmcvetta/neoism">Neoism (Go)</a></h5>
+
+
+
+<div class="paragraph">
+<p>Author: <a href="https://github.com/jmcvetta">Jason McVetta</a></p>
 </div>
 
+
+
+<div class="paragraph">
+<p>Neoism is a Go client library providing access to the Neo4j graph database via its REST API.
+This driver is fairly complete, and may now be suitable for general use. The code has an extensive set of integration tests.</p>
+</div>
+
+</div>
 </div>
                            </div>
                         </div>

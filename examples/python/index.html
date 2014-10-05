@@ -6,7 +6,7 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>WORK IN PROGRESS | Developer Resources | Neo4j Graph Database</title>
+         <title>Using Neo4j from Python | Developer Resources | Neo4j Graph Database</title>
          <script type="text/javascript">
             var _kmq = _kmq || [];
             var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
@@ -156,14 +156,14 @@
                         <div class="columns large-12" style="padding:10px 0 0;">
                            <ul class="breadcrumbs">
                               <li><a href="/developer-resources">Developer Guides</a></li>
-                              <li><a href="../">Guide</a></li>
-                              <li class="current"><a href="#">WORK IN PROGRESS</a></li>
+                              <li><a href="../">Develop with Neo4j</a></li>
+                              <li class="current"><a href="#">Using Neo4j from Python</a></li>
                            </ul>
                         </div>
                      </div>
                      <div class="row">
                         <div class="columns large-12">
-                           <h1 style="font-size:2.1rem;">WORK IN PROGRESS</h1>
+                           <h1 style="font-size:2.1rem;">Using Neo4j from Python</h1>
                         </div>
                      </div>
                      <section class="row" style="padding:10px 0;">
@@ -171,68 +171,286 @@
                            <div id="content">
                               <div id="preamble">
 <div class="sectionbody">
-
-
-<div class="paragraph">
-<p>This example demonstrates how to map node and relationships to Ruby classes.</p>
+<div class="quoteblock abstract">
+<div class="title">Goals</div>
+<blockquote style="padding-left: 0;">
+If you are a Pythonista, you should find enough information to get you started with Neo4j. While this guide is not comprehensive it will introduce the different drivers and link to the relevant resources.
+</blockquote>
+</div>
+<div class="quoteblock abstract">
+<div class="title">Prerequisites</div>
+<blockquote style="padding-left: 0;">
+You should be familiar with <a href="../../what-is-neo4j/graph-database">graph database concepts</a> and the property graph model. You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="../../cypher-query-language">Cypher Query language</a>.
+</blockquote>
 </div>
 
+
+<div class="label">Intermediate</div>
+<hr/>
+
+<div class="toc">
+<h3 class="title">Overview</h3>
+
+<ul class="sectlevel2">
+<li><a href="#_neo4j_from_python">Neo4j from Python</a></li>
+<li><a href="#_the_example_project">The Example Project</a></li>
+<li><a href="#_py2neo">Py2Neo</a></li>
+
+<li><a href="#_neo4jrestclient">Neo4jRestClient</a></li>
+
+<li><a href="#_other_drivers">Other Drivers</a></li>
+
+</ul>
+
+<hr>
 </div>
 </div>
-<div class="sect1 "  >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h3 id="_how_to_install">How to install</h3>
+<h4 id="_neo4j_from_python">Neo4j from Python</h4>
 
-<div class="sectionbody row">
-<div class="columns medium-12">
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/06/python-logo-master-v3-TM.png" alt="python logo master v3 TM" width="300">
+</p>
+</div>
 
 
 <div class="paragraph">
-<p><code>bundle install</code></p>
+<p>Python is an excellent dynamic language, and we&#8217;re proud to say that Neo4j works well it.
+Python drivers were there all from the beginning and a strong and driving force for adopting Neo4j in many places.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Drivers for the different Python stacks enable you to use Neo4j from your familiar environment.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Many Pythonistas have invested a lot of time and love to develop all these drivers, so please if you use them provide feedback to the authors.</p>
 </div>
 
 </div>
-</div>
-
-</div>
-<div class="sect1 "  >
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h3 id="_how_to_run">How to run</h3>
-
-<div class="sectionbody row">
-<div class="columns medium-12">
-
-
-<div class="paragraph">
-<p><code>bundle exec rackup config.ru</code></p>
-</div>
+<h4 id="_the_example_project">The Example Project</h4>
 
 
 
 <div class="paragraph">
-<p>or 'bundle exec shotgun config.ru'</p>
+<p>You can find out more about our example projects for many different languages <a href="../example-project">here</a>, you can also access it via the <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/examples/">GitHub repository</a> for the Neo4j developer resources.
+Feel free to check them out.</p>
 </div>
 
+
+
+<div class="paragraph">
+<p>It is a small one page webapp for our movies database.
+The front-end is the same for all drivers, just the backends show you how to connect to Neo4j from the different languages and drivers.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="python"><code>def find_lovers(graph_db):
+    query = "MATCH (n)-[r:loves]-&gt;(m) return n, r, m"
+    # This is our awesome Cypher query language.
+    # MATCH the ones that have a LOVES relationship
+    # and RETURN the starting node, the relationship, and the end node.
+    data, metadata = graph_db.execute(query)
+    return data[0]</code></pre>
 </div>
 </div>
 
+
+<div class="paragraph">
+<p>Python and Neo4j are a well established combination, mainly thanks to the sterling efforts of top contributor Nigel Small.</p>
 </div>
-<div class="sect1 "  >
+
+
+
+<div class="paragraph">
+<p>For small apps it’s feasible to connect directly to Neo4j and execute the Cypher queries that you need to.
+We also have Django support for building bigger web applications, in Neo4jDjango and Neomodel.</p>
+</div>
+
+<div class="sect3 "  >
     
-<h3 id="_design">Design</h3>
+<h5 id="_getting_started">Getting Started</h5>
 
-<div class="sectionbody row">
-<div class="columns medium-12">
 
 
 <div class="paragraph">
-<p>This example is very slow if used from the Neo4j Server since it does a lot of requests instead of using just one cypher query (as in the neo4j-core example).
-Notice that Neo4j.rb tries to hide the internal Neo4j ids. Instead in the example we have created primary keys on title and name properties.</p>
+<p>This excellent article from Nigel demonstrates how to join in the fun.</p>
 </div>
 
 </div>
 </div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_py2neo">Py2Neo</h4>
 
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/py2neo.png" alt="py2neo">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>Author: <a href="http://twitter.com/neonige">Nigel Small</a></p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Py2neo is a simple and pragmatic Python library that provides access to the popular graph database Neo4j via its HTTP-Apis.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>It has <a href="http://book.py2neo.org/en/latest/">comprehensive documentation</a> and a lof related articles by its author.</p>
+</div>
+
+</div>
+<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+<h2 id="_sidebar">Sidebar</h2>
+</li>
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="py2neo-1.6">Example Project with Py2Neo</a>
+</li>
+<li>
+<a href="http://nigelsmall.com/load2neo">Load2Neo</a>
+</li>
+</ul>
+
+</div>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_neo4jrestclient">Neo4jRestClient</h4>
+
+
+
+<div class="paragraph">
+<p>Author: Javier De La Rosa</p>
+</div>
+
+</div>
+<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+<h2 id="_sidebar_2">Sidebar</h2>
+</li>
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="neo4jrestclient">Example Project with Neo4jRestClient</a>
+</li>
+</ul>
+
+</div>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_other_drivers">Other Drivers</h4>
+
+<div class="sect3 "  >
+    
+<h5 id="__a_href_http_github_com_robinedwards_neomodel_neomodel_a"><a href="http://github.com/robinedwards/neomodel">NeoModel</a></h5>
+
+
+
+<div class="paragraph">
+<p>Author: Robin Edwards</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/neomodel-300.png" alt="neomodel 300">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>An Object Graph Mapper (OGM) also usable for Django for the Neo4j graph database.</p>
+</div>
+
+</div>
+<div class="sect3 "  >
+    
+<h5 id="__a_href_http_github_com_jakewins_neo4jdb_python_neo4jdb_python_a"><a href="http://github.com/jakewins/neo4jdb-python">neo4jdb-python</a></h5>
+
+
+
+<div class="paragraph">
+<p>Author: Jacob Hansson Implements the <a href="http://legacy.python.org/dev/peps/pep-0249/">Python DB API 2.0</a> for Neo4j, compatible with python 2.6, 2.7, 3.2 and 3.3 and Neo4j &gt;= 2.0.0</p>
+</div>
+
+</div>
+<div class="sect3 "  >
+    
+<h5 id="__a_href_http_github_com_scholrly_neo4django_neo4django_a"><a href="http://github.com/scholrly/neo4django">Neo4django</a></h5>
+
+
+
+<div class="paragraph">
+<p>Author: Matt Luongo</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>neo4django is an Object Graph Mapper (OGM) for Django. Use familiar Django models and queries against Neo4j.</p>
+</div>
+
+</div>
+<div class="sect3 "  >
+    
+<h5 id="__a_href_http_bulbflow_com_overview_bulbs_a"><a href="http://bulbflow.com/overview/">Bulbs</a></h5>
+
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/bulbflow.png" alt="bulbflow">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>Author: James Thornton</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Bulbs is an open-source Python persistence framework for graph databases and the first piece of a larger Web-development toolkit. It’s like an ORM for graphs.</p>
+</div>
+
+</div>
+</div>
+<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+<h2 id="_further_reading">Further Reading</h2>
+</li>
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="http://www.tsartsaris.gr/kivy2neo-sending-cypher-queries-from-a-kivy-app-to-a-neo4j-database">Using Neo4j from Kivy</a>
+</li>
+</ul>
+
+</div>
 </div>
                            </div>
                         </div>

@@ -174,13 +174,16 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-If you are a Java developer, you should find enough information to get you started with Neo4j. While this guide is not comprehensive it will introduce the different APIs and link to the relevant resources.
+If you are a Java developer, you should find enough information to get you started with Neo4j.
+While this guide is not comprehensive it will introduce the different APIs and link to the relevant resources.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should be familiar with <a href="../../what-is-neo4j/graph-database">graph database concepts</a> and the property graph model. You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="../../cypher-query-language">Cypher Query language</a>. And you should have an JDK 7 ready and your IDE up and running.
+You should be familiar with <a href="../../what-is-neo4j/graph-database">graph database concepts</a> and the property graph model.
+You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="../../cypher-query-language">Cypher Query language</a>.
+You should have and JDK 7 ready and your IDE up and running.
 </blockquote>
 </div>
 
@@ -199,7 +202,11 @@ You should be familiar with <a href="../../what-is-neo4j/graph-database">graph d
 <li><a href="#_using_spring_boot_with_jdbc">Using Spring Boot with JDBC</a></li>
 <li><a href="#_using_spring_data_neo4j">Using Spring Data Neo4j</a></li>
 
-<li><a href="#_other_drivers">Other Drivers</a></li>
+<li><a href="#_tinkerpop">Tinkerpop</a></li>
+<li><a href="#_groovy">Groovy</a></li>
+<li><a href="#_clojure">Clojure</a></li>
+<li><a href="#_scala">Scala</a></li>
+<li><a href="#_jpa">JPA</a></li>
 </ul>
 
 <hr>
@@ -209,10 +216,15 @@ You should be familiar with <a href="../../what-is-neo4j/graph-database">graph d
     
 <h4 id="_neo4j_for_java_developers">Neo4j for Java Developers</h4>
 
+<div class="imageblock">
+<p class="content">
+<img src="http://assets.neo4j.org/img/languages/java.jpg" alt="java">
+</p>
+</div>
 
 
 <div class="paragraph">
-<p>Welcome to Neo4j. For a Java or JVM-language developer, Neo4j offers a rich set of integration possibilities.</p>
+<p>Neo4j offers a rich set of integration possibilities for Java or JVM-language developers.</p>
 </div>
 
 
@@ -250,22 +262,9 @@ With its non-transactional, low-level batch-insertion API it can ingest millions
 
 
 <div class="paragraph">
-<p>Here are two guides to get you started:</p>
+<p>Follow the guides below to get you started.</p>
 </div>
 
-<div class="ulist">
-
-
-<ul>
-<li>
-<a href="jdbc/index.html">JDBC</a>
-</li>
-<li>
-<a href="extension/index.html">a Java-based Neo4j Server extensiontypo</a>
-</li>
-</ul>
-
-</div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
@@ -433,7 +432,13 @@ To achieve high-performance Neo4j-Server integration move your SDN persistence l
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h4 id="_other_drivers">Other Drivers</h4>
+<h4 id="_tinkerpop">Tinkerpop</h4>
+
+
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_groovy">Groovy</h4>
 
 <div class="sect3 "  >
     
@@ -452,21 +457,70 @@ To achieve high-performance Neo4j-Server integration move your SDN persistence l
 </div>
 
 </div>
-<div class="sect3 "  >
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h5 id="__a_href_http_github_com_wagjo_borneo_borneo_a"><a href="http://github.com/wagjo/borneo">Borneo</a></h5>
+<h4 id="_clojure">Clojure</h4>
 
 <div class="imageblock">
 <p class="content">
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/clojure.png" alt="clojure">
 </p>
 </div>
+<div class="sect3 "  >
+    
+<h5 id="__a_href_http_clojureneo4j_info_neocons_a"><a href="http://clojureneo4j.info/">Neocons</a></h5>
+
+
+
+<div class="paragraph">
+<p>Author: Michael Klishin, Rohig Aggarval</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>An idiomatic, feature rich Clojure client which supports (almost) all Neo4J REST API features and is constantly tested against bleeding edge server changes, like the Cypher language improvements.</p>
+</div>
+
+</div>
+<div class="sect3 "  >
+    
+<h5 id="__a_href_http_github_com_wagjo_borneo_borneo_a"><a href="http://github.com/wagjo/borneo">Borneo</a></h5>
+
 
 
 <div class="paragraph">
 <p>Author: Jozef Wagner
 Clojure wrapper for Neo4j, a graph database, in embedded JVM mode.</p>
 </div>
+
+</div>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_scala">Scala</h4>
+
+<div class="sect3 "  >
+    
+<h5 id="_anormcypher">AnormCypher</h5>
+
+
+
+<div class="paragraph">
+<p>Author: Wes Freeman</p>
+</div>
+
+</div>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_jpa">JPA</h4>
+
+<div class="sect3 "  >
+    
+<h5 id="_hibernate_ogm">Hibernate OGM</h5>
+
 
 </div>
 <div class="sect3 "  >
@@ -484,6 +538,12 @@ Clojure wrapper for Neo4j, a graph database, in embedded JVM mode.</p>
 <div class="paragraph">
 <p>datanucleus-neo4j provides persistence of Java objects to Neo4j. It builds on top of the basic persistence provided by datanucleus-core.</p>
 </div>
+
+</div>
+<div class="sect3 "  >
+    
+<h5 id="_kundera">Kundera</h5>
+
 
 </div>
 </div>
