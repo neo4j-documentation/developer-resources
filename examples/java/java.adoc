@@ -12,9 +12,9 @@ While this guide is not comprehensive it will introduce the different APIs and l
 
 .Prerequisites
 [abstract]
-You should be familiar with link:../../what-is-neo4j/graph-database[graph database concepts] and the property graph model.
-You should have link:/download[installed Neo4j] and made yourself familiar with our link:../../cypher-query-language[Cypher Query language].
-You should have and JDK 7 ready and your IDE up and running.
+You should be familiar with the link:../../what-is-neo4j/graph-database[graph database concepts] and the property graph model.
+Having link:/download[installed Neo4j] and tried out our link:../../cypher-query-language[Cypher Query language] helps too.
+For working with Neo4j please use JDK 7 and your favorite IDE.
 
 [role=expertise]
 {level}
@@ -93,17 +93,21 @@ More details can be found in the link:spring-boot-jdbc[example project].
 
 === Using Spring Data Neo4j
 
-To use Neo4j with Spring Data Neo4j, you'd add the necessary dependency to your build configuration, e.g. `org.springframework.data:spring.data.neo4j:3.2.0.RELEASE`.
+Spring Data Neo4j was the first Spring Data project and enables convenient integration of Neo4j in your Spring based application.
+It provides object-graph mapping functionality and other features common to the Spring Data projects.
 
-After setting up a simple Java based configuration, and annotating your `@Node-` and `@RelationshipEntity`s, you can use the `Neo4jTemplate` to access Neo4j APIs and object graph mapping functionality.
-Alternatively you can leverage the convenient Spring-Data repositories to get interface based DAO implementations injected into your Spring Components.
+To use Neo4j with Spring Data Neo4j, you just add the dependency to your build setup.
+After setting up a simple Java based Spring configuration, and annotating your `@Node-` and `@RelationshipEntity`s, you can use the `Neo4jTemplate` to access Neo4j APIs and object graph mapping functionality.
+Additionally you can leverage the convenient Spring-Data repositories to get interface based DAO implementations injected into your Spring Components.
 
 [NOTE]
 The current version of Spring Data Neo4j works best with an embedded Neo4j database.
-To achieve high-performance Neo4j-Server integration move your SDN persistence layer into an Server Extension.
+To achieve highest-performance Neo4j-Server integration move your SDN persistence layer into an Server Extension.
 // Work on improving the Spring Data Neo4j performance with Neo4j server is underway.
 
-See the link:./spring-data-neo4j[example project with Spring Data Neo4j] for further details.
+The example uses Spring-Boot with Spring-Data-Neo4j and Spring-Data-REST and an additional RestMVCController.
+
+See the link:./spring-data-neo4j[example project] for further details.
 
 [role=side-nav]
 === Further Reading

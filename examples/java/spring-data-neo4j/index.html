@@ -6,7 +6,7 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>Using Neo4j with your Language | Developer Resources | Neo4j Graph Database</title>
+         <title>Spring Data Neo4j with Spring Boot &amp; Spring Data Rest - Movies Example Application | Developer Resources | Neo4j Graph Database</title>
          <script type="text/javascript">
             var _kmq = _kmq || [];
             var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
@@ -156,85 +156,182 @@
                         <div class="columns large-12" style="padding:10px 0 0;">
                            <ul class="breadcrumbs">
                               <li><a href="/developer-resources">Developer Guides</a></li>
-                              <li><a href="../">Develop with Neo4j</a></li>
-                              <li class="current"><a href="#">Using Neo4j with your Language</a></li>
+                              <li><a href="../">Guide</a></li>
+                              <li class="current"><a href="#">Spring Data Neo4j with Spring Boot &amp; Spring Data Rest - Movies Example Application</a></li>
                            </ul>
                         </div>
                      </div>
                      <div class="row">
                         <div class="columns large-12">
-                           <h1 style="font-size:2.1rem;">Using Neo4j with your Language</h1>
+                           <h1 style="font-size:2.1rem;">Spring Data Neo4j with Spring Boot &amp; Spring Data Rest - Movies Example Application</h1>
                         </div>
                      </div>
                      <section class="row" style="padding:10px 0;">
                         <div class="large-12 columns" style="padding-top:0;">
                            <div id="content">
-                              <div id="preamble">
-<div class="sectionbody">
-<div class="quoteblock abstract">
-<div class="title">Goals</div>
-<blockquote style="padding-left: 0;">
-You can use Neo4j with a lot of different programming languages. Here we provide an introduction and a consistent example application with several languages and Neo4j drivers.<br>
-This section explains the basic concepts for interacting with Neo4j and explains the sample Movie Application.
-</blockquote>
-</div>
-<div class="quoteblock abstract">
-<div class="title">Prerequisites</div>
-<blockquote style="padding-left: 0;">
-You should be familiar with <a href="../../what-is-neo4j/graph-database">graph database concepts</a> and the property graph model. You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="../../cypher-query-language">Cypher Query language</a>. And you should have whatever you need for development with your stack up and running.
-</blockquote>
+                              <div class="sect1 "  >
+    
+<h3 id="_spring_data_neo4j_with_spring_boot_spring_data_rest_movies_example_application">Spring Data Neo4j with Spring Boot &amp; Spring Data Rest - Movies Example Application</h3>
+
+<div class="sectionbody row">
+<div class="columns medium-12">
+
+
+<div class="paragraph">
+<p>Spring Data Neo4j was the first Spring Data project, started by the two CEO&#8217;s Rod Johnson and Emil Eifrem.
+It enables convenient integration of Neo4j in your Spring based application.
+It provides object-graph mapping functionality and other features common to the Spring Data projects.</p>
 </div>
 
 
-<div class="label">Intermediate</div>
-<hr/>
 
-<div class="toc">
-<h3 class="title">Overview</h3>
-
-<ul class="sectlevel2">
-<li><a href="#_connecting_to_neo4j">Connecting to Neo4j</a></li>
-<li><a href="#_example_project_description">Example Project Description</a>
-<ul class="sectlevel2">
-<li><a href="#_domain_model">Domain Model</a></li>
-<li><a href="#_github">GitHub</a></li>
-</ul>
-</li>
-<li><a href="#_using_neo4j_from_your_programming_language">Using Neo4j from your Programming Language</a>
-<ul class="sectlevel2">
-<li><a href="#_neo4j_for_java_developers">Neo4j for Java Developers</a></li>
-<li><a href="#_neo4j_for_net_developers">Neo4j for .Net Developers</a></li>
-<li><a href="#_neo4j_for_javascript_developers">Neo4j for JavaScript Developers</a></li>
-<li><a href="#_neo4j_for_rubyists">Neo4j for Rubyists</a></li>
-<li><a href="#_neo4j_from_python">Neo4j from Python</a></li>
-<li><a href="#_neo4j_for_php_developers">Neo4j for PHP Developers</a></li>
-<li><a href="#_neo4j_for_go_developers">Neo4j for Go Developers</a></li>
-<li><a href="#_neo4j_for_clojure_developers">Neo4j for Clojure Developers</a></li>
-<li><a href="#_neo4j_for_perl_developers">Neo4j for Perl Developers</a></li>
-<li><a href="#_neo4j_from_r">Neo4j from R</a></li>
-<li><a href="#_neo4j_for_haskell_developers">Neo4j for Haskell Developers</a></li>
-</ul>
-</li>
-</ul>
-
-<hr>
+<div class="paragraph">
+<p>To use Neo4j with Spring Data Neo4j, you just add the dependency for <a href="http://projects.spring.io/spring-boot/">Spring-Boot</a> and <a href="http://projects.spring.io/spring-data-neo4j">Spring-Data-Neo4j</a> to your build setup.</p>
 </div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="xml"><code>    &lt;properties&gt;
+        &lt;java.version&gt;1.8&lt;/java.version&gt;
+        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+        &lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;
+        &lt;start-class&gt;movies.sdn.SampleMovieApplication&lt;/start-class&gt;
+        &lt;spring-data-rest.version&gt;2.1.0.RELEASE&lt;/spring-data-rest.version&gt;
+    &lt;/properties&gt;
+
+    &lt;parent&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+        &lt;version&gt;1.1.6.RELEASE&lt;/version&gt;
+    &lt;/parent&gt;
+
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.data&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-data-neo4j-rest&lt;/artifactId&gt;
+            &lt;version&gt;3.2.0.RELEASE&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-data-rest&lt;/artifactId&gt;
+        &lt;/dependency&gt;</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>After setting up a Java based Spring-Boot configuration,</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>@EnableTransactionManagement
+@Import(RepositoryRestMvcConfiguration.class)
+@EnableScheduling
+@EnableAutoConfiguration
+@ComponentScan(basePackages = {"movies.spring.data.neo4j.services"})
+@Configuration
+@EnableNeo4jRepositories(basePackages = "movies.spring.data.neo4j.repositories")
+public class MyNeo4jConfiguration extends Neo4jConfiguration {
+    public MyNeo4jConfiguration() {
+        setBasePackage("movies.spring.data.neo4j.domain");
+    }
+
+    public static final String URL = System.getenv("NEO4J_URL") != null ? System.getenv("NEO4J_URL") : "http://localhost:7474/db/data/";
+
+    @Bean
+    public GraphDatabaseService graphDatabaseService() {
+        return new SpringRestGraphDatabase(URL);
+    }
+
+    @Override
+    public TypeRepresentationStrategy&lt;Relationship&gt; relationshipTypeRepresentationStrategy() throws Exception {
+        return new NoopRelationshipTypeRepresentationStrategy();
+    }
+}</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>and annotating your <code>@Node-</code> and <code>@RelationshipEntity</code>, you can use the <code>Neo4jTemplate</code> to access Neo4j APIs and object graph mapping functionality.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>@NodeEntity
+public class Movie {
+    @GraphId Long id;
+
+    @Indexed(unique=true) String title;
+
+    int released;
+    String tagline;
+
+    @Fetch @RelatedToVia(type="ACTED_IN", direction = Direction.INCOMING) Collection&lt;Role&gt; roles;</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Additionally you can leverage the convenient Spring-Data repositories to get interface based DAO implementations injected into your Spring Components.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>public interface MovieRepository extends GraphRepository&lt;Movie&gt; {
+    // the "0" parameter is a workaround for a bug in SDN
+    Movie findByTitle(@Param("0") String title);
+
+    Collection&lt;Movie&gt; findByTitleContaining(@Param("0") String title);
+
+    @Query("MATCH (m:Movie)&lt;-[:ACTED_IN]-(a:Person) RETURN m.title as movie, collect(a.name) as cast LIMIT {limit}")
+    List&lt;Map&lt;String,Object&gt;&gt; graph(@Param("limit") int limit);
+}</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>In our case we use the repository from a <code>MovieService</code> to compute the graph representation for the visualization.
+The service is then injected in our main Boot-application which also doubles as <code>@RestMvcController</code> which exposes the <code>/graph</code> endpoint.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>The other two endpoints for finding multiple movies by title and loading a single movie are provided out of the box by the <a href="http://projects.spring.io/spring-data-rest/">Spring-Data-Rest project</a> which exposes our <code>MovieRepository</code> as REST endpoints.
+The rendering of the movie objects (and related entities) happens automatically out of the box via Jackson mapping.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>See the <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/examples/java/spring-data-neo4j">GitHub repository</a> for the source code.</p>
+</div>
+
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title label">Note</div>
+</td>
+<td class="content">
+The current version of Spring Data Neo4j works best with an embedded Neo4j database.
+To achieve highest-performance Neo4j-Server integration move your SDN persistence layer into an Server Extension.
+</td>
+</tr>
+</table>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h4 id="_connecting_to_neo4j">Connecting to Neo4j</h4>
+<h4 id="_the_stack">The Stack</h4>
 
 
 
 <div class="paragraph">
-<p>You probably also wonder how you would connect from your programming language to a Neo4j Database?
-If you&#8217;ve installed and started Neo4j as a server on your system, you can interact with the database with the built-in Neo4j browser application.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>If you want to access Neo4j programmatically, you can do so with one of the many integrated HTTP-APIs, which allow you to:</p>
+<p>These are the components of our Web Application:</p>
 </div>
 
 <div class="ulist">
@@ -242,423 +339,45 @@ If you&#8217;ve installed and started Neo4j as a server on your system, you can 
 
 <ul>
 <li>
-POST one or more cypher statements with parameters per request to the server
+Application Type:         Spring-Boot Java Web Application (Jetty)
 </li>
 <li>
-Keep transactions open over multiple requests
+Web framework:            Spring-Boot enabled Spring-WebMVC, Spring-Data-Rest
 </li>
 <li>
-Choose different result formats
+Persistence Access:       Spring-Data-Neo4j
+</li>
+<li>
+Database:                 Neo4j-Server
+</li>
+<li>
+Frontend:                 jquery, bootstrap, <a href="http://d3js.org/">d3.js</a>
 </li>
 </ul>
 
 </div>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_endpoints">Endpoints:</h4>
+
 
 
 <div class="paragraph">
-<p>The simplest HTTP request would look like:</p>
+<p>Get Movie</p>
 </div>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="json"><code>curl -i -H accept:application/json -H content-type:application/json \
--XPOST http://localhost:7474/db/data/transaction/commit \
-  -d '{"statements":[{"statement":"CREATE (p:Person {name:{name}}) RETURN p",
-       "parameters":{"name":"Daniel"}}]}'
+<pre>// JSON object for single movie with cast
+curl http://localhost:8080/movies/search/findByTitle?0=The%20Matrix
 
-{"results":[{"columns":["p"],"data":[{"row":[{"name":"Daniel"}]}]}],"errors":[]}</code></pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>In most cases you don&#8217;t want to connect to Neo4j manually but you a driver or connector library for your stack or programming language.
-Thanks to the Neo4j community, there are drivers for Neo4j for almost every popular programming language, most of which mimic existing database driver idioms and approaches.</p>
-</div>
-
-</div>
-<div class="sect1 "  >
-    
-<h3 id="_example_project_description">Example Project Description</h3>
-
-<div class="sectionbody row">
-<div class="columns medium-12">
-
-
-<div class="paragraph">
-<p>We use the existing movie and crew (actor, director, producer) dataset known from the Neo4j Browser and Neo4j Training to power this simple web application.
-The application runs as a single page app and uses Ajax to access three HTTP endpoints in the backend to provide:</p>
-</div>
-
-<div class="ulist">
-
-
-<ul>
-<li>
-movie search
-</li>
-<li>
-single movie listing
-</li>
-<li>
-graph visualization of the domain
-</li>
-</ul>
-
-</div>
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/movie_application.png" alt="movie application">
-</p>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_domain_model">Domain Model</h4>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre>(:Movie {title,released,tagline})&lt;-[:ACTED_IN {roles}]-(actor:Person)</pre>
-</div>
-</div>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_github">GitHub</h4>
-
-
-
-<div class="paragraph">
-<p>You can access the source code for the different languages via the <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/examples/">GitHub repository</a> for the Neo4j developer resources.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p><a href="example-project/">Read More</a></p>
-</div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="sect1 "  >
-    
-<h3 id="_using_neo4j_from_your_programming_language">Using Neo4j from your Programming Language</h3>
-
-<div class="sectionbody row">
-<div class="columns medium-12">
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_neo4j_for_java_developers">Neo4j for Java Developers</h4>
-
-<div class="imageblock">
-<p class="content">
-<img src="http://assets.neo4j.org/img/languages/java.jpg" alt="java">
-</p>
-</div>
-
-
-<div class="paragraph">
-<p>Neo4j offers a rich set of integration possibilities for Java or JVM-language developers.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Neo4j comes in two flavors.
-The standalone Neo4j-Server can be installed on any machine and then accessed via its HTTP API.
-You can use whatever REST-library you choose for any JVM language.
-The dedicated Neo4j drivers go beyond that by offering comprehensive APIs for integrating with graph based applications.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p><a href="java">Read More</a></p>
-</div>
-
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_neo4j_for_net_developers">Neo4j for .Net Developers</h4>
-
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/dotnet.png" alt="dotnet">
-</p>
-</div>
-
-
-<div class="paragraph">
-<p>Neo4j might be developed in Java, but don&#8217;t assume that you need to use a Java client.
-Powerful .Net drivers like <code>Neo4jClient</code> from Tatham Oddie showed early on, how easy it is to connect to Neo4j from .Net</p>
-</div>
-
-
-
-<div class="paragraph">
-<p><a href="dotnet">Read More</a></p>
-</div>
-
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_neo4j_for_javascript_developers">Neo4j for JavaScript Developers</h4>
-
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/nodejs.png" alt="nodejs">
-</p>
-</div>
-
-
-<div class="paragraph">
-<p>The standalone Neo4j-Server can be installed on any machine and then accessed via its HTTP API.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Below we show how you can use something as simple as the <code>request</code> module to send queries to and receive responses from Neo4j.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>But you can also choose to leverage one of the existing drivers for Neo4j which wrap that protocol in a more convenient API for you.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p><a href="javascript">Read More</a></p>
-</div>
-
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_neo4j_for_rubyists">Neo4j for Rubyists</h4>
-
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/ruby.png" alt="ruby">
-</p>
-</div>
-
-
-<div class="paragraph">
-<p>Neo4j might be developed in Java, but don&#8217;t assume that you need to use a Java client.
-We&#8217;ve got a long association with Ruby bindings for Neo4j.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>There’s a wide choice of ways to access Neo4j from Ruby: from low-level access to the core Java API with jRuby, to access via our HTTP API, to hooking into Rails ActiveModel.
-The Ruby community has developed all these drivers because of their desire to use Neo4j.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p><a href="ruby">Read More</a></p>
-</div>
+// list of JSON objects for movie search results
+curl http://localhost:8080/movies/search/findByTitleContaining?0=matrix
 
+// JSON object for whole graph viz (nodes, links - arrays)
+curl http://localhost:8080/graph</pre>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_neo4j_from_python">Neo4j from Python</h4>
-
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/06/python-logo-master-v3-TM.png" alt="python logo master v3 TM" width="300">
-</p>
-</div>
-
-
-<div class="paragraph">
-<p>Python is an excellent dynamic language, and we&#8217;re proud to say that Neo4j works well it.
-Python drivers were there all from the beginning and a strong and driving force for adopting Neo4j in many places.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Drivers for the different Python stacks enable you to use Neo4j from your familiar environment.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p><a href="python">Read More</a></p>
-</div>
-
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_neo4j_for_php_developers">Neo4j for PHP Developers</h4>
-
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/php-2.png" alt="php 2">
-</p>
-</div>
-
-
-<div class="paragraph">
-<p>Neo4j might be developed in Java, but don&#8217;t assume that you need to use a Java client.
-PHP drivers came along quite early and have enabled many interesting use-cases for Neo4j.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>There’s a number of of ways to access Neo4j from PHP.
-Drivers for the different PHP stacks enable you to use Neo4j from your familiar environment.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p><a href="php">Read More</a></p>
-</div>
-
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_neo4j_for_go_developers">Neo4j for Go Developers</h4>
-
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/GO.jpg" alt="GO" width="150">
-</p>
-</div>
-
-
-<div class="paragraph">
-<p>Neo4j might be developed in Java, but don&#8217;t assume that you need to use a Java client.
-Go drivers have been around for a while and especially with the excellent <code>cq</code> driver from Wes Freeman it got a lot of traction.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p><a href="go">Read More</a></p>
-</div>
-
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_neo4j_for_clojure_developers">Neo4j for Clojure Developers</h4>
-
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/clojure.png" alt="clojure">
-</p>
-</div>
-
-
-<div class="paragraph">
-<p>Clojure drivers either support Neo4j embedded on the JVM or use Neo4j Server via its HTTP APIs, like the impressive <code>neocons</code> project.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p><a href="clojure">Read More</a></p>
-</div>
-
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_neo4j_for_perl_developers">Neo4j for Perl Developers</h4>
-
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/perl.png" alt="perl">
-</p>
-</div>
-
-
-<div class="paragraph">
-<p>Neo4j might be developed in Java, but don&#8217;t assume that you need to use a Java client.
-Perl drivers came along quite early and have enabled many interesting use-cases for Neo4j.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>There’s a number of of ways to access Neo4j from Perl.
-Drivers for the different Perl stacks enable you to use Neo4j from your familiar environment.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p><a href="perl">Read More</a></p>
-</div>
-
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_neo4j_from_r">Neo4j from R</h4>
-
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/06/Rlogo.jpg" alt="Rlogo">
-</p>
-</div>
-<div class="sect3 "  >
-    
-<h5 id="__a_href_http_github_com_nicolewhite_rneo4j_rneo4j_a"><a href="http://github.com/nicolewhite/Rneo4j">RNeo4j</a></h5>
-
-
-
-<div class="paragraph">
-<p>Author: Nicole White</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>An R package that allows you to easily populate a Neo4j graph database from your R environment.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Compatible with Neo4j &gt;= 2.0.</p>
-</div>
-
-</div>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_neo4j_for_haskell_developers">Neo4j for Haskell Developers</h4>
-
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/haskell.png" alt="haskell">
-</p>
-</div>
-<div class="sect3 "  >
-    
-<h5 id="__a_href_http_neo4j_com_contrib_haskell_cypher_haskell_cypher_a"><a href="http://neo4j.com/contrib/haskell-cypher/">Haskell Cypher</a></h5>
-
-
-
-<div class="paragraph">
-<p>Author: Sam Anklesaria</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>haskell-cypher makes it easy to send cypher commands to neo4j servers over their REST API.
-Additionally, it allows users to parse haskell datatypes from cypher queries.</p>
-</div>
-
 </div>
 </div>
 </div>

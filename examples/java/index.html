@@ -181,9 +181,9 @@ While this guide is not comprehensive it will introduce the different APIs and l
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should be familiar with <a href="../../what-is-neo4j/graph-database">graph database concepts</a> and the property graph model.
-You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="../../cypher-query-language">Cypher Query language</a>.
-You should have and JDK 7 ready and your IDE up and running.
+You should be familiar with the <a href="../../what-is-neo4j/graph-database">graph database concepts</a> and the property graph model.
+Having <a href="/download">installed Neo4j</a> and tried out our <a href="../../cypher-query-language">Cypher Query language</a> helps too.
+For working with Neo4j please use JDK 7 and your favorite IDE.
 </blockquote>
 </div>
 
@@ -378,14 +378,16 @@ The path-finding and traversal APIs are also available.</p>
 
 
 <div class="paragraph">
-<p>To use Neo4j with Spring Data Neo4j, you&#8217;d add the necessary dependency to your build configuration, e.g. <code>org.springframework.data:spring.data.neo4j:3.2.0.RELEASE</code>.</p>
+<p>Spring Data Neo4j was the first Spring Data project and enables convenient integration of Neo4j in your Spring based application.
+It provides object-graph mapping functionality and other features common to the Spring Data projects.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>After setting up a simple Java based configuration, and annotating your <code>@Node-</code> and <code>@RelationshipEntity`s, you can use the `Neo4jTemplate</code> to access Neo4j APIs and object graph mapping functionality.
-Alternatively you can leverage the convenient Spring-Data repositories to get interface based DAO implementations injected into your Spring Components.</p>
+<p>To use Neo4j with Spring Data Neo4j, you just add the dependency to your build setup.
+After setting up a simple Java based Spring configuration, and annotating your <code>@Node-</code> and <code>@RelationshipEntity`s, you can use the `Neo4jTemplate</code> to access Neo4j APIs and object graph mapping functionality.
+Additionally you can leverage the convenient Spring-Data repositories to get interface based DAO implementations injected into your Spring Components.</p>
 </div>
 
 <div class="admonitionblock note">
@@ -396,7 +398,7 @@ Alternatively you can leverage the convenient Spring-Data repositories to get in
 </td>
 <td class="content">
 The current version of Spring Data Neo4j works best with an embedded Neo4j database.
-To achieve high-performance Neo4j-Server integration move your SDN persistence layer into an Server Extension.
+To achieve highest-performance Neo4j-Server integration move your SDN persistence layer into an Server Extension.
 </td>
 </tr>
 </table>
@@ -404,7 +406,13 @@ To achieve high-performance Neo4j-Server integration move your SDN persistence l
 
 
 <div class="paragraph">
-<p>See the <a href="./spring-data-neo4j">example project with Spring Data Neo4j</a> for further details.</p>
+<p>The example uses Spring-Boot with Spring-Data-Neo4j and Spring-Data-REST and an additional RestMVCController.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>See the <a href="./spring-data-neo4j">example project</a> for further details.</p>
 </div>
 
 </div>
