@@ -6,7 +6,7 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>Graph Databases versus Relational Databases | Developer Resources | Neo4j Graph Database</title>
+         <title>Using Neo4j with your Language | Developer Resources | Neo4j Graph Database</title>
          <script type="text/javascript">
             var _kmq = _kmq || [];
             var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
@@ -156,14 +156,14 @@
                         <div class="columns large-12" style="padding:10px 0 0;">
                            <ul class="breadcrumbs">
                               <li><a href="/developer-resources">Developer Guides</a></li>
-                              <li><a href="../">What is Neo4j</a></li>
-                              <li class="current"><a href="#">Graph Databases versus Relational Databases</a></li>
+                              <li><a href="../">Develop with Neo4j</a></li>
+                              <li class="current"><a href="#">Using Neo4j with your Language</a></li>
                            </ul>
                         </div>
                      </div>
                      <div class="row">
                         <div class="columns large-12">
-                           <h1 style="font-size:2.1rem;">Graph Databases versus Relational Databases</h1>
+                           <h1 style="font-size:2.1rem;">Using Neo4j with your Language</h1>
                         </div>
                      </div>
                      <section class="row" style="padding:10px 0;">
@@ -174,14 +174,14 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-This article explores the differences between relational and graph databases and data models.
-In addition, it explains how to integrate graph databases with relational databases and how to import data from a relational store.
+You can use Neo4j with a lot of different programming languages. Here we provide an introduction and a consistent example application with several languages and Neo4j drivers.<br>
+This section explains the basic concepts for interacting with Neo4j and explains the sample Movie Application.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should have looked into the <a href="/what-is-neo4j/property-graph">property-graph model</a> and into <a href="/build-a-graph-data-model/guide-intro-to-graph-modeling">data modeling with graphs</a>.
+You should be familiar with <a href="../../what-is-neo4j/graph-database">graph database concepts</a> and the property graph model. You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="../../cypher-query-language">Cypher Query language</a>. And you should have whatever you need for development with your stack up and running.
 </blockquote>
 </div>
 
@@ -193,235 +193,31 @@ You should have looked into the <a href="/what-is-neo4j/property-graph">property
 <h3 class="title">Overview</h3>
 
 <ul class="sectlevel2">
-<li><a href="#_relational_databases">Relational Databases</a></li>
-<li><a href="#_from_relational_to_graph_databases">From Relational to Graph Databases</a></li>
-
-<li><a href="#_graph_querying_with_cypher">Graph Querying with Cypher</a></li>
-
 <li><a href="#_connecting_to_neo4j">Connecting to Neo4j</a></li>
-
-<li><a href="#_importing_data_from_a_relational_database">Importing Data from a Relational Database</a></li>
-
+<li><a href="#_example_project_description">Example Project Description</a>
+<ul class="sectlevel2">
+<li><a href="#_domain_model">Domain Model</a></li>
+<li><a href="#_github">GitHub</a></li>
+</ul>
+</li>
+<li><a href="#_using_neo4j_from_your_programming_language">Using Neo4j from your Programming Language</a>
+<ul class="sectlevel2">
+<li><a href="#_neo4j_for_java_developers">Neo4j for Java Developers</a></li>
+<li><a href="#_neo4j_for_net_developers">Neo4j for .Net Developers</a></li>
+<li><a href="#_neo4j_for_javascript_developers">Neo4j for JavaScript Developers</a></li>
+<li><a href="#_neo4j_for_rubyists">Neo4j for Rubyists</a></li>
+<li><a href="#_neo4j_from_python">Neo4j from Python</a></li>
+<li><a href="#_neo4j_for_php_developers">Neo4j for PHP Developers</a></li>
+<li><a href="#_neo4j_for_go_developers">Neo4j for Go Developers</a></li>
+<li><a href="#_neo4j_for_clojure_developers">Neo4j for Clojure Developers</a></li>
+<li><a href="#_neo4j_for_perl_developers">Neo4j for Perl Developers</a></li>
+<li><a href="#_neo4j_from_r">Neo4j from R</a></li>
+<li><a href="#_neo4j_for_haskell_developers">Neo4j for Haskell Developers</a></li>
+</ul>
+</li>
 </ul>
 
 <hr>
-</div>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_relational_databases">Relational Databases</h4>
-
-
-
-<div class="paragraph">
-<p>Relational databases have been (and continue to be) the power-horse of software applications since the 80s.
-They store highly structured data in tables with predetermined columns of certain types and many rows of the same type of information, and, thanks in part to the rigidity of their organization, force developers and applications to strictly structure the data used in their applications.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>In relational databases, references to other rows and tables are indicated by referring to their (primary-)key attributes, enforceable with constraints only when the connection is never optional.
-Relationships are computed at query time by matching primary and foreign keys of the many (potentially indexed) rows of the to be joined tables.
-These operations are CPU and RAM intensive and with an exponential cost.</p>
-</div>
-
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/rel_graph4.jpg" alt="rel graph4">
-</p>
-</div>
-
-
-<div class="paragraph">
-<p>If you use many-to-many relationships, you have to introduce a <em>JOIN</em> table that lists foreign keys of both participating tables which further increases JOIN operation costs.
-Those costly JOIN operations are usually addressed by denormalising data to reduce the number of JOINs necessary.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Although not every use-case is a good fit for this type of stringent data model, the lack of viable alternatives and the support for relational databases has made for the lack of well known alternatives has made it difficult for alternative models to break into the mainstream.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Meet graph databases.</p>
-</div>
-
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_from_relational_to_graph_databases">From Relational to Graph Databases</h4>
-
-
-
-<div class="paragraph">
-<p>Relationships are first-class citizens of the graph data model, unlike other database management systems, which require us to infer connections between entities using contrived properties such as foreign keys, or out-of-band processing like map-reduce.
-By assembling the simple abstractions of nodes and relationships into connected structures, graph databases enable us to build arbitrarily sophisticated models that map closely to our problem domain.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>In some regards, graph databases are like the next generation of relational databases, but with first class support for "relationships", or those implicit connections indicated via foreign-keys in the traditional relational databases.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Each node (entity or attribute) in the graph database model directly contains a list of relationship-records that represent its relationships to other nodes, organized by type and direction and holding additional attributes.
-Whenever you run the equivalent of a  <em>JOIN</em> operation, the database walks this list and has direct access to the connected nodes, eliminating the need for a costly search / match computation.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>The resulting models are simpler and at the same time more expressive than those produced using traditional relational databases and the other NOSQL stores.</p>
-</div>
-
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/rel_graph5.jpg" alt="rel graph5">
-</p>
-</div>
-
-
-<div class="paragraph">
-<p>Unlike other NoSQL databases, graph databases support a very flexible and fine-grained data model that allows you to model and manage rich domains in an easy and intuitive way.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>You more or less keep the data as it is in the real world: small, normalized, yet richly connected entities.
-This allows you to query and view your data from any imaginable view point, supporting many different use-cases.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>The fine grained model also means that there is no natural boundary around aggregates, so the scope of update operations has to be provided by the application.
-The well-known and tested concept of transactions groups a set of updates of nodes and relationships into a atomic, consistent, isolated, and durable (ACID) operation.
-Graph databases like Neo4j fully support the transactional concepts including write ahead logs and recovery after abnormal termination.</p>
-</div>
-
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/rel_graph9.jpg" alt="rel graph9">
-</p>
-</div>
-
-
-<div class="paragraph">
-<p>If you&#8217;re used to modeling with relational databases, try to remember the ease and beauty of good, normalized entity-relationship diagram: a simple, easy to understand model you can quickly whiteboard with your colleagues and domain experts.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Let&#8217;s take a realistic model of an organizational domain and show how it would be modeled in a relational database vs. the graph database:</p>
-</div>
-
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/domain.png" alt="domain">
-</p>
-</div>
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
-<h2 id="_recommended">Recommended</h2>
-</li>
-<div class="ulist">
-
-
-<ul>
-<li>
-<a href="../graph-database">What is a Graph Database</a>
-</li>
-<li>
-<a href="https://vimeo.com/103466968" class="webinar">Intro to Neo4j</a>
-</li>
-<li>
-<a href="http://neo4j.com/events?type=Training" class="event">Neo4j Training</a>
-</li>
-</ul>
-
-</div>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_graph_querying_with_cypher">Graph Querying with Cypher</h4>
-
-
-
-<div class="paragraph">
-<p>Querying relational databases is easy with SQL, a declarative query language allows both for easy ad-hoc querying in a database tool as well as specifying use-case related queries in your code.
-Even object-relational mappers use SQL under the hood to talk to the database.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Do graph databases have something similar?
-Cypher, Neo4j&#8217;s declarative graph query language, is built on the basic concepts and clauses of SQL but added a lot of graph-specific functionality to make it simple to work with your rich graph model without being too verbose.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>If you have ever tried to write a SQL statement with a large number of JOINs, you know that you quickly lose sight of what the query actually does due to all the technical noise.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>In the organizational domain described in the image above, what would a SQL statement that lists the <em>employees in the "IT Department"</em> look like, and how does that statement compare to a Cypher statement?</p>
-</div>
-
-<div class="listingblock">
-<div class="title">SQL Statement</div>
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="sql"><code>SELECT * FROM Person
-LEFT JOIN Person_Department
-  ON Person.Id = Person_Department.PersonId
-LEFT JOIN Department
-  ON Department.Id = Person_Department.DepartmentId
-WHERE Department.name = "IT Department"</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Cypher Statement</div>
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Person)&lt;-[:EMPLOYEE]-(d:Dept {name:"IT Department"})
-RETURN p.name, d.name</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
-<h2 id="_recommended_2">Recommended</h2>
-</li>
-<div class="ulist">
-
-
-<ul>
-<li>
-<a href="/online-training">Online Training</a>
-</li>
-<li>
-<a href="../../cypher-query-language">Quick Cypher Intro</a>
-</li>
-<li>
-<a href="/use-cases">Use-Case Examples</a>
-</li>
-<li>
-<a href="http://docs.neo4j.org/chunked/milestone/examples-from-sql-to-cypher.html">Manual: From SQL to Cypher</a>
-</li>
-</ul>
-
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
@@ -431,13 +227,14 @@ RETURN p.name, d.name</code></pre>
 
 
 <div class="paragraph">
-<p>If you&#8217;ve installed and started Neo4j as a server on your system, you can interact with the database with the built-in Neo4j browser application.</p>
+<p>You probably also wonder how you would connect from your programming language to a Neo4j Database?
+If you&#8217;ve installed and started Neo4j as a server on your system, you can interact with the database with the built-in Neo4j browser application.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>If you want to access Neo4j programmatically, you can do so with one of the many integrated HTTP APIs, which allow you to:</p>
+<p>If you want to access Neo4j programmatically, you can do so with one of the many integrated HTTP-APIs, which allow you to:</p>
 </div>
 
 <div class="ulist">
@@ -459,7 +256,7 @@ Choose different result formats
 
 
 <div class="paragraph">
-<p>A sample HTTP request would look like:</p>
+<p>The simplest HTTP request would look like:</p>
 </div>
 
 <div class="listingblock">
@@ -475,160 +272,398 @@ Choose different result formats
 
 
 <div class="paragraph">
-<p>In most cases you don&#8217;t want to connect to Neo4j manually, but with a driver or connector library designed for your stack or programming language.
+<p>In most cases you don&#8217;t want to connect to Neo4j manually but you a driver or connector library for your stack or programming language.
 Thanks to the Neo4j community, there are drivers for Neo4j for almost every popular programming language, most of which mimic existing database driver idioms and approaches.</p>
 </div>
 
+</div>
+<div class="sect1 "  >
+    
+<h3 id="_example_project_description">Example Project Description</h3>
+
+<div class="sectionbody row">
+<div class="columns medium-12">
 
 
 <div class="paragraph">
-<p>For instance, the Neo4j JDBC driver would be used like this:</p>
+<p>We use the existing movie and crew (actor, director, producer) dataset known from the Neo4j Browser and Neo4j Training to power this simple web application.
+The application runs as a single page app and uses Ajax to access three HTTP endpoints in the backend to provide:</p>
 </div>
 
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>Connection con = DriverManager.getConnection("jdbc:neo4j://localhost:7474/");
-
-String query =
-    "MATCH (:Person {name:{1}})-[:EMPLOYEE]-(d:Dept) RETURN d.name as dept";
-try (PreparedStatement stmt = con.prepareStatement(QUERY)) {
-    stmt.setString(1,"John");
-    ResultSet rs = stmt.executeQuery();
-    while(rs.next()) {
-        String department = rs.getString("dept");
-        ....
-    }
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
-<h2 id="_recommended_3">Recommended</h2>
-</li>
 <div class="ulist">
 
 
 <ul>
 <li>
-<a href="/download">Install Neo4j</a>
+movie search
 </li>
 <li>
-<a href="../../language-guides">Develop with Neo4j</a>
+single movie listing
 </li>
 <li>
-<a href="../../language-guides/java/jdbc">JDBC example</a>
-</li>
-<li>
-<a href="http://docs.neo4j.org/chunked/milestone/rest-api-transactional.html" class="docs">Cypher HTTP Endpoint</a>
-</li>
-<li>
-<a href="/contrib">Neo4j Drivers List</a>
+graph visualization of the domain
 </li>
 </ul>
+
+</div>
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/movie_application.png" alt="movie application">
+</p>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_domain_model">Domain Model</h4>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre>(:Movie {title,released,tagline})&lt;-[:ACTED_IN {roles}]-(actor:Person)</pre>
+</div>
+</div>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_github">GitHub</h4>
+
+
+
+<div class="paragraph">
+<p>You can access the source code for the different languages via the <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/">GitHub repository</a> for the Neo4j developer resources.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><a href="example-project/">Read More</a></p>
+</div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="sect1 "  >
+    
+<h3 id="_using_neo4j_from_your_programming_language">Using Neo4j from your Programming Language</h3>
+
+<div class="sectionbody row">
+<div class="columns medium-12">
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_neo4j_for_java_developers">Neo4j for Java Developers</h4>
+
+<div class="imageblock">
+<p class="content">
+<img src="http://assets.neo4j.org/img/languages/java.jpg" alt="java">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>Neo4j offers a rich set of integration possibilities for Java or JVM-language developers.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Neo4j comes in two flavors.
+The standalone Neo4j-Server can be installed on any machine and then accessed via its HTTP API.
+You can use whatever REST-library you choose for any JVM language.
+The dedicated Neo4j drivers go beyond that by offering comprehensive APIs for integrating with graph based applications.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><a href="java">Read More</a></p>
+</div>
+
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_neo4j_for_net_developers">Neo4j for .Net Developers</h4>
+
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/dotnet.png" alt="dotnet">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>Neo4j might be developed in Java, but don&#8217;t assume that you need to use a Java client.
+Powerful .Net drivers like <code>Neo4jClient</code> from Tatham Oddie showed early on, how easy it is to connect to Neo4j from .Net</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><a href="dotnet">Read More</a></p>
+</div>
+
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_neo4j_for_javascript_developers">Neo4j for JavaScript Developers</h4>
+
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/nodejs.png" alt="nodejs">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>The standalone Neo4j-Server can be installed on any machine and then accessed via its HTTP API.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Below we show how you can use something as simple as the <code>request</code> module to send queries to and receive responses from Neo4j.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>But you can also choose to leverage one of the existing drivers for Neo4j which wrap that protocol in a more convenient API for you.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><a href="javascript">Read More</a></p>
+</div>
+
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_neo4j_for_rubyists">Neo4j for Rubyists</h4>
+
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/ruby.png" alt="ruby">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>Neo4j might be developed in Java, but don&#8217;t assume that you need to use a Java client.
+We&#8217;ve got a long association with Ruby bindings for Neo4j.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>There’s a wide choice of ways to access Neo4j from Ruby: from low-level access to the core Java API with jRuby, to access via our HTTP API, to hooking into Rails ActiveModel.
+The Ruby community has developed all these drivers because of their desire to use Neo4j.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><a href="ruby">Read More</a></p>
+</div>
+
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_neo4j_from_python">Neo4j from Python</h4>
+
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/06/python-logo-master-v3-TM.png" alt="python logo master v3 TM" width="300">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>Python is an excellent dynamic language, and we&#8217;re proud to say that Neo4j works well it.
+Python drivers were there all from the beginning and a strong and driving force for adopting Neo4j in many places.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Drivers for the different Python stacks enable you to use Neo4j from your familiar environment.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><a href="python">Read More</a></p>
+</div>
+
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_neo4j_for_php_developers">Neo4j for PHP Developers</h4>
+
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/php-2.png" alt="php 2">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>Neo4j might be developed in Java, but don&#8217;t assume that you need to use a Java client.
+PHP drivers came along quite early and have enabled many interesting use-cases for Neo4j.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>There’s a number of of ways to access Neo4j from PHP.
+Drivers for the different PHP stacks enable you to use Neo4j from your familiar environment.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><a href="php">Read More</a></p>
+</div>
+
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_neo4j_for_go_developers">Neo4j for Go Developers</h4>
+
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/GO.jpg" alt="GO" width="150">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>Neo4j might be developed in Java, but don&#8217;t assume that you need to use a Java client.
+Go drivers have been around for a while and especially with the excellent <code>cq</code> driver from Wes Freeman it got a lot of traction.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><a href="go">Read More</a></p>
+</div>
+
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_neo4j_for_clojure_developers">Neo4j for Clojure Developers</h4>
+
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/clojure.png" alt="clojure">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>Clojure drivers either support Neo4j embedded on the JVM or use Neo4j Server via its HTTP APIs, like the impressive <code>neocons</code> project.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><a href="clojure">Read More</a></p>
+</div>
+
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_neo4j_for_perl_developers">Neo4j for Perl Developers</h4>
+
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/perl.png" alt="perl">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>Neo4j might be developed in Java, but don&#8217;t assume that you need to use a Java client.
+Perl drivers came along quite early and have enabled many interesting use-cases for Neo4j.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>There’s a number of of ways to access Neo4j from Perl.
+Drivers for the different Perl stacks enable you to use Neo4j from your familiar environment.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><a href="perl">Read More</a></p>
+</div>
+
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_neo4j_from_r">Neo4j from R</h4>
+
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/06/Rlogo.jpg" alt="Rlogo">
+</p>
+</div>
+<div class="sect3 "  >
+    
+<h5 id="__a_href_http_github_com_nicolewhite_rneo4j_rneo4j_a"><a href="http://github.com/nicolewhite/Rneo4j">RNeo4j</a></h5>
+
+
+
+<div class="paragraph">
+<p>Author: Nicole White</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>An R package that allows you to easily populate a Neo4j graph database from your R environment.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Compatible with Neo4j &gt;= 2.0.</p>
+</div>
 
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h4 id="_importing_data_from_a_relational_database">Importing Data from a Relational Database</h4>
+<h4 id="_neo4j_for_haskell_developers">Neo4j for Haskell Developers</h4>
+
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/haskell.png" alt="haskell">
+</p>
+</div>
+<div class="sect3 "  >
+    
+<h5 id="__a_href_http_neo4j_com_contrib_haskell_cypher_haskell_cypher_a"><a href="http://neo4j.com/contrib/haskell-cypher/">Haskell Cypher</a></h5>
 
 
 
 <div class="paragraph">
-<p>If you have a good understanding what your graph model should look like, i.e. what data will be represented as nodes or relationships and how the labels, relationship-types, and attributes are named, you&#8217;re ready to go.</p>
+<p>Author: Sam Anklesaria</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>The easiest way to import data from your relational database is to create a CSV dump of either individual tables and JOIN-tables or of a JOINed, denormalized representation.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Then you can take the CSV file and use Cypher&#8217;s <code>LOAD CSV</code> power tool to:</p>
-</div>
-
-<div class="ulist">
-
-
-<ul>
-<li>
-Ingest the data, accessing columns by header name or offset
-</li>
-<li>
-Convert values from strings to different formats and structures (<code>toFloat</code>, <code>split</code>, &#8230;&#8203;)
-</li>
-<li>
-Skip rows to ignore
-</li>
-<li>
-<code>MATCH</code> nodes based on attribute lookups
-</li>
-<li>
-<code>CREATE</code> or <code>MERGE</code> nodes and relationships with labels and attributes from the row data
-</li>
-</ul>
-
-</div>
-
-
-<div class="paragraph">
-<p>For Example:</p>
-</div>
-
-<div class="listingblock">
-<div class="title">persons.csv</div>
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="csv"><code>name;email;dept
-"Lars Higgs";"lars@higgs.com";"IT-Department"
-"Maura Wilson";"maura@wilson.com";"Procurement"</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>LOAD CSV FROM 'file:///data/persons.csv' WITH HEADERS AS line
-FIELDTERMINATOR ";"
-MERGE (person:Person {email: line.email}) ON CREATE SET p.name = line.name
-MATCH (dep:Department {name:line.dept})
-CREATE (person)-[:EMPLOYEE]-&gt;(dept)</code></pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>You can import multiple CSV files from one or more data sources to enrich your core domain model with other information that might add interesting insights and capabilities.</p>
+<p>haskell-cypher makes it easy to send cypher commands to neo4j servers over their REST API.
+Additionally, it allows users to parse haskell datatypes from cypher queries.</p>
 </div>
 
 </div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
-<h2 id="_recommended_4">Recommended</h2>
-</li>
-<div class="ulist">
-
-
-<ul>
-<li>
-<a href="../../working-with-data/guide-importing-data-and-etl" class="guide">Data Import</a>
-</li>
-<li>
-<a href="http://docs.neo4j.org/chunked/milestone/query-load-csv.html" class="docs">LOAD CSV</a>
-</li>
-<li>
-<a href="http://watch.neo4j.org/video/90358900" class="video">Data Import Webinar</a>
-</li>
-<li>
-<a href="http://jexp.de/blog/2014/06/load-csv-into-neo4j-quickly-and-successfully/" class="blog">LOAD CSV Tips</a>
-</li>
-<li>
-<a href="http://worldcup.neo4j.org/the-world-cup-graph-domain-model/" class="blog">World Cup Dataset</a>
-</li>
-</ul>
-
 </div>
+</div>
+</div>
+
 </div>
                            </div>
                         </div>
