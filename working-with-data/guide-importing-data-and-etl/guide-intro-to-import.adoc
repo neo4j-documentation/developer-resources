@@ -32,7 +32,7 @@ image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/Northwind
 
 === Developing a Graph Model
 
-When deriving a graph model from a relational model, we should keep the following guidelines in mind: 
+When deriving a graph model from a relational model, we should keep the following guidelines in mind:
 
 * A _row_ is a _node_
 * A _table name_ is a _label name_
@@ -43,8 +43,9 @@ image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/northwind
 
 ==== How does the Graph Model Differ from the Relational Model?
 
-* Graph should be more normalised. e.g. addresses have been denormalised in the Suppliers, Orders, Customers, and Employees tables.
-* No nulls in the graph model - in the relational one to track the employee hierarchy we have a null entry in the 'ReportsTo' column if they don't report to anybody
+* There are no nulls. In the relational version, to track the employee hierarchy we have a null entry in the 'ReportsTo' column if they don't report to anybody. In the graph version we just don't define a relationship.
+* It describes the relationships in more detail e.g. we know that an employee SOLD an order rather than having a foreign key relationship between the Orders and Employees tables. We could also choose to add more meta data about that relationship should we wish.
+* It will often be more normalised. e.g. addresses have been denormalised in several of the tables but in a future version of the graph model we might choose to make it a node in its own right.
 
 === Exporting the Data to CSV
 
