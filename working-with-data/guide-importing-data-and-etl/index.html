@@ -272,10 +272,13 @@ A <em>table name</em> is a <em>label name</em>
 
 <ul>
 <li>
-Graph should be more normalised. e.g. addresses have been denormalised in the Suppliers, Orders, Customers, and Employees tables.
+There are no nulls. In the relational version, to track the employee hierarchy we have a null entry in the 'ReportsTo' column if they don&#8217;t report to anybody. In the graph version we just don&#8217;t define a relationship.
 </li>
 <li>
-No nulls in the graph model - in the relational one to track the employee hierarchy we have a null entry in the 'ReportsTo' column if they don&#8217;t report to anybody
+It describes the relationships in more detail e.g. we know that an employee SOLD an order rather than having a foreign key relationship between the Orders and Employees tables. We could also choose to add more meta data about that relationship should we wish.
+</li>
+<li>
+It will often be more normalised. e.g. addresses have been denormalised in several of the tables but in a future version of the graph model we might choose to make it a node in its own right.
 </li>
 </ul>
 
