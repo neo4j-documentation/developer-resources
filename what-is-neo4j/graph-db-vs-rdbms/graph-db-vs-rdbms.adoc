@@ -100,7 +100,7 @@ In the organizational domain described in the image above, what would a SQL stat
 .SQL Statement
 [source,sql]
 ----
-SELECT * FROM Person
+SELECT name FROM Person
 LEFT JOIN Person_Department
   ON Person.Id = Person_Department.PersonId
 LEFT JOIN Department
@@ -112,7 +112,7 @@ WHERE Department.name = "IT Department"
 [source,cypher]
 ----
 MATCH (p:Person)<-[:EMPLOYEE]-(d:Dept {name:"IT Department"})
-RETURN p.name, d.name
+RETURN p.name
 ----
 
 [role=side-nav]
