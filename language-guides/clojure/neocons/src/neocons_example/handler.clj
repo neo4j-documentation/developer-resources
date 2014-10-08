@@ -29,7 +29,7 @@
                                                 :label :actor})
                                        cast)))
                         result)
-          nodes        (apply concat nodes)
+          nodes        (distinct (apply concat nodes))
           nodes-index  (into {} (map-indexed #(vector %2 %1) nodes))
           links        (map (fn [{:strs [cast movie]}]
                               (let [target   (nodes-index {:title movie :label :movie})]
