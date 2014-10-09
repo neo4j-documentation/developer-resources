@@ -1,0 +1,39 @@
+== Neo4j Movies Example Application
+
+=== Stack
+
+* Clojure
+* Neo4j-Server Unmanaged Extension
+* Jersey JAX-RS Resource
+* Neo4j-Execution-Engine with Cypher
+
+=== Endpoints:
+
+Get Movie
+
+----
+// JSON object for single movie with cast
+curl http://localhost:7474/examples/unmanaged/The%20Matrix
+
+// list of JSON objects for movie search results
+curl http://localhost:7474/examples/unmanaged/search?q=matrix
+
+// JSON object for 10 movies (nodes, links - arrays)
+curl http://localhost:7474/examples/unmanaged/graph?limit=10
+----
+
+=== Setup
+
+You need to compile the code and package the dependencies using:
+
+[source,shell]
+----
+lein uberjar
+----
+
+The compiled jar file `target\server-extension-0.1.0-SNAPSHOT-standalone.jar` needs to be copied to `$NEO4J_HOME/plugins` folder. Additionally, you need to modify the `org.neo4j.server.thirdparty_jaxrs_classes` variable in `$NEO4J_HOME/conf/neo4j-server.properties`. An example could be:
+
+[source,text]
+----
+org.neo4j.server.thirdparty_jaxrs_classes=example.core=/examples/unmanaged
+----
