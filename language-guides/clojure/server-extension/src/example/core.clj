@@ -5,7 +5,8 @@
            (javax.ws.rs Path PathParam Produces GET QueryParam)
            (javax.ws.rs.core Context Response)
            (org.neo4j.cypher.javacompat ExecutionEngine ExecutionResult)
-           (org.neo4j.helpers.collection IteratorUtil)))
+           (org.neo4j.helpers.collection IteratorUtil)
+           (org.neo4j.server.database CypherExecutor)))
 
 
 (def search-query "MATCH (movie:Movie)
@@ -63,9 +64,9 @@ COLLECT({name:person.name, job:head(split(lower(type(r)),'_')), role:r.roles[0]}
 
 
 (definterface IMovieResource
-  (search [^org.neo4j.graphdb.GraphDatabaseService database ^String query])
-  (graph [^org.neo4j.graphdb.GraphDatabaseService database ^Integer limit])
-  (findMovie [^org.neo4j.graphdb.GraphDatabaseService database ^String title]))
+  (search [^org.neo4j.server.database.CypherExecutor executor ^String query])
+  (graph [^org.neo4j.server.database.CypherExecutor executor ^Integer limit])
+  (findMovie [^org.neo4j.server.database.CypherExecutor executor ^String title]))
 
 
 (deftype ^{Path "/"} MovieResource []
@@ -74,9 +75,9 @@ COLLECT({name:person.name, job:head(split(lower(type(r)),'_')), role:r.roles[0]}
             Produces ["text/plain"]
             Path "/search"}
           search
-          [this ^{Context true} database ^{QueryParam "q"} query]
+          [this ^{Context true} executor ^{QueryParam "q"} query]
             (require 'example.core)
-            (let  [result   (do-search (ExecutionEngine. database) query)]
+            (let  [result   (do-search (.getExecutionEngine executor) query)]
               (-> result
                   cc/generate-string
                   (Response/ok)
@@ -85,9 +86,9 @@ COLLECT({name:person.name, job:head(split(lower(type(r)),'_')), role:r.roles[0]}
             Produces ["text/plain"]
             Path "/graph"}
           graph
-          [this ^{Context true} database ^{QueryParam "limit"} limit]
+          [this ^{Context true} executor ^{QueryParam "limit"} limit]
             (require 'example.core)
-            (let  [result  (get-graph (ExecutionEngine. database) limit)]
+            (let  [result  (get-graph (.getExecutionEngine executor) limit)]
               (-> result
                   cc/generate-string
                   (Response/ok)
@@ -96,9 +97,9 @@ COLLECT({name:person.name, job:head(split(lower(type(r)),'_')), role:r.roles[0]}
             Produces ["text/plain"]
             Path "/{title}"}
           findMovie
-          [this ^{Context true} database ^{PathParam "title"} query]
+          [this ^{Context true} executor ^{PathParam "title"} query]
             (require 'example.core)
-            (let  [result   (find-movie (ExecutionEngine. database) query)]
+            (let  [result   (find-movie (.getExecutionEngine executor) query)]
               (-> result
                   cc/generate-string
                   (Response/ok)
