@@ -384,7 +384,7 @@ Cypher, Neo4j&#8217;s declarative graph query language, is built on the basic co
 <div class="listingblock">
 <div class="title">SQL Statement</div>
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="sql"><code>SELECT * FROM Person
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="sql"><code>SELECT name FROM Person
 LEFT JOIN Person_Department
   ON Person.Id = Person_Department.PersonId
 LEFT JOIN Department
@@ -396,7 +396,7 @@ WHERE Department.name = "IT Department"</code></pre>
 <div class="title">Cypher Statement</div>
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Person)&lt;-[:EMPLOYEE]-(d:Dept {name:"IT Department"})
-RETURN p.name, d.name</code></pre>
+RETURN p.name</code></pre>
 </div>
 </div>
 </div>
