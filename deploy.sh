@@ -5,7 +5,7 @@ export IMAGE_BASE_URL=http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/up
 export GITHUB=https://github.com/neo4j-contrib/developer-resources/tree/gh-pages
 export MANUAL=http://neo4j.com/docs/stable
 
-for file in `find . -mindepth 2 -name -maxdepth 3 "*.adoc"`; do
+for file in `find . -mindepth 2 -maxdepth 3 -name "*.adoc"`; do
    echo "Rendering $file"
    filename=${file##*/}
    filename=${filename%.adoc}

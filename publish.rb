@@ -35,9 +35,7 @@ content =         { :post_type => "developer",
                     :post_name => post_name
                   }
 
-puts html
-
-exit
+puts "publishing: #{post_name}"
 
 wp = Rubypress::Client.new(:host     => blog_id,
                            :username => username,
