@@ -121,35 +121,98 @@
                </div>
                <article id="content" role="main">
                   <style>
-                  .lead
-                   {
-                   display: none;
-                   }
-                   section.row
-                   {
-                   padding: 0;
-                   }
-                   #content section.row
-                   {
-                   max-width: 80em;
-                   padding-left: .5em;
-                   padding-right: .5em;
-                   }
-                   .row
-                   {
-                     max-width: 80em;
-                   }
-                   #content section.row .accordion-navigation > a {
-                   background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
-                   padding: 0 !important;
-                   }
-                   .accordion .content { padding: 0; }
-                   .row .row { margin: auto; }
-                   .columns.medium-12
-                   {
+                    .row { max-width: 62.5rem !important; }
+                     .lead
+                     {
+                     display: none;
+                     }
+                     section.row
+                     {
+                     padding: 0;
+                     }
+                     #content section.row
+                     {
+                     padding-left: .5em;
+                     padding-right: .5em;
+                     }
+                     .row
+                     {
+                     }
+                     #content section.row .accordion-navigation > a {
+                     background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+                     padding: 0 !important;
+                     }
+                     .accordion .content { padding: 0; }
+                     .row .row { margin: auto; }
+                     .columns.medium-12
+                     {
                      padding-left: 0;
-                   }
+                     }
+                  </style>
+                  <style> .lead { display: none; } section.row { padding: 0; } #content section.row { max-width: 62.5rem; padding-left: .5em; padding-right: .5em; } .row { max-width: 80em; } #content section.row .accordion-navigation > a { padding: 0 !important; } .accordion .content { padding: 0; } .row .row { margin: auto; } .columns.medium-12 { padding-left: 0; } .fa-stack.fa-lg { color: #0f5788; display: block; float: left; height: 70px; margin-right: 1em; padding-right: 2em; width: 50px; } h3 { font-weight: normal; } strong, b { font-weight:600; font-color:#333; } .calloutsection { padding: 20px 0; } section { padding: 40px 0 0 0; } .marquee { height: auto; margin-top: 1em; } #main-content .entry-title { display: none; } #main-content .subheader { display: none; } .marquee h1, .marquee h2 { padding-top: 0; } #main-content .next-steps h5 { font-size: 12px; } #main-content .next-steps h3 { margin-bottom: 1em; } #main-content .content.active { display: block; } #main-content .content { display: none; } #main-content { padding-top: 0; } .use-case .tab-container .content.active { border-top: 1px solid rgba(15, 87, 136, 0.7); padding: 2em 1em 1em; } .tabs dd > a:hover { color: #3d5360; } .breadcrumbs > * a, .breadcrumbs > * span { color: #0f5788; text-transform: none; } .breadcrumbs > * { text-transform: none; } .top-bar { height: 80px; } #main-content .top-bar-section ul { margin-top: 1em; } .panel-pod p { font-size: 14px; font-weight: normal; line-height: 26px; } .panel-pod > a { display: block; margin-bottom: 1em; } .panel-pod p a { display: block; margin-top: 1em; } .panel-pod { text-align: left; } .tab-container { margin-bottom: 2em; } .panel-pod img { display: block; margin: auto; } #content h3 { font-weight: 100; } #content ul {}
+                  #content section.row .accordion-navigation > a {
+                      background: url("http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/collapse.png") no-repeat scroll 100% 50% transparent;
+                      border-bottom: 1px dashed #ddd;
+                      padding: 0 !important;
+                  }
+                  .accordion-navigation.active > a {
+                      background: url("http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/roll-up.png") no-repeat scroll 100% 50% transparent !important;
+                  }
 
+                  .accordion-navigation h5 {
+                      font-weight: 100;
+                      height: 2em;
+                      line-height: 2em;
+                      margin: 0;
+                  }
+
+                  .content ul {
+                  margin-top: 1em;
+                  }
+
+                  .breadcrumbs>*:before {
+                     content: "→";
+                     color: #aaa;
+                     margin: 0 0.75rem;
+                     position: relative;
+                     top: 0;
+                     }
+
+                  #content code
+                  {
+                   font-weight: 100;
+                  }
+
+                  #content h3
+                  {
+                   margin-bottom: .5em;
+                  }
+
+                  #content h5
+                  {
+                   font-weight: 100;
+                  }
+
+                  #content h4
+                  {
+                   font-weight: 400;
+                  }
+
+                  #content strong
+                  {
+                   font-weight: 400;
+                  }
+
+                  #content h4
+                  {
+                   margin-bottom: 1em;
+                  }
+
+                  #content .title {
+                      font-size: 20px;
+                  }
+
+                  #content .breadcrumbs { margin-bottom: 0; }
                   </style>
                   <div style="padding-left: 1em; padding-right: 1em;">
                      <div class="row" style="padding: 10px;">
@@ -161,11 +224,11 @@
                            </ul>
                         </div>
                      </div>
-                     <div class="row">
+                     <!-- <div class="row">
                         <div class="columns large-12">
                            <h1 style="font-size:2.1rem;">What is the Neo4j GraphGist Project?</h1>
                         </div>
-                     </div>
+                     </div> -->
                      <section class="row" style="padding:10px 0;">
                         <div class="large-12 columns" style="padding-top:0;">
                            <div id="content">

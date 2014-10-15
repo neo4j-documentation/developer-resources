@@ -6,7 +6,7 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>The Example Project | Developer Resources | Neo4j Graph Database</title>
+         <title>Neo4j Movies Example Application - The PHP NeoClient Version | Developer Resources | Neo4j Graph Database</title>
          <script type="text/javascript">
             var _kmq = _kmq || [];
             var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
@@ -220,43 +220,58 @@
                            <ul class="breadcrumbs">
                               <li><a href="/developer-resources">Developer Guides</a></li>
                               <li><a href="../">Guide</a></li>
-                              <li class="current"><a href="#">The Example Project</a></li>
+                              <li class="current"><a href="#">Neo4j Movies Example Application - The PHP NeoClient Version</a></li>
                            </ul>
                         </div>
                      </div>
                      <!-- <div class="row">
                         <div class="columns large-12">
-                           <h1 style="font-size:2.1rem;">The Example Project</h1>
+                           <h1 style="font-size:2.1rem;">Neo4j Movies Example Application - The PHP NeoClient Version</h1>
                         </div>
                      </div> -->
                      <section class="row" style="padding:10px 0;">
                         <div class="large-12 columns" style="padding-top:0;">
                            <div id="content">
-                              <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_the_example_project">The Example Project</h4>
-
-
+                              
 
 <div class="paragraph">
-<p>You can find out more about our example projects for many different languages <a href="../example-project">here</a>, you can also access it via the <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/">GitHub repository</a> for the Neo4j developer resources.
-Feel free to check them out.</p>
+<p>First, download and install the <a href="https://getcomposer.org/">Composer dependency manager</a> for PHP.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>It is a small one page webapp for our movies database.
-The front-end is the same for all drivers, just the backends show you how to connect to Neo4j from the different languages and drivers.</p>
+<p>Next, change into the source directory and install the dependencies:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>$ composer install</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>If you are running PHP 5.4+, you can use the built-in PHP development web server to serve the application:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>$ php -S localhost:8080</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>If you are using a different version of PHP, or want to deploy to a different web server, make sure all it is serving on port 8080, and that all requests are routed to index.php</p>
 </div>
 
 
 
 <div class="paragraph">
-<p><a href="../example-project">Read More</a></p>
+<p>Navigate to <a href="http://localhost:8080" class="bare">http://localhost:8080</a> and you should see your first Neo4j application</p>
 </div>
 
-</div>
                            </div>
                         </div>
                      </section>
