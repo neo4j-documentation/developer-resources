@@ -13,7 +13,7 @@ This guide explores how to export data from a PostgreSQL database into Neo4j.
 
 .Prerequisites
 [abstract]
-You should have a basic understanding of the link:/what-is-neo4j/property-graph[property graph model] and have completed the link:../../build-a-graph-data-model/guide-intro-to-graph-modeling/index.html[modeling guide].
+You should have a basic understanding of the link:/what-is-neo4j/graph-database#property-graph[property graph model] and have completed the link:../../build-a-graph-data-model/guide-intro-to-graph-modeling/index.html[modeling guide].
 If you link:/download[download] and install Neo4j server you'll be able to follow along with the examples.
 
 [role=expertise]
@@ -64,12 +64,14 @@ COPY (SELECT * FROM orders
       LEFT OUTER JOIN order_details ON order_details."OrderID" = orders."OrderID") TO '/tmp/orders.csv' WITH CSV header;
 ----
 
+////
 [role=side-nav]
 === Recommended
 
 * http://neo4j.com/docs[The Neo4j Docs]
 * link:/blog[The Neo4j Blog]
-* link:/build-a-graph-data-model/guide-intro-to-graph-modeling[Intro to Graph Modeling]
+* link:../../build-a-graph-data-model/guide-intro-to-graph-modeling[Intro to Graph Modeling]
+////
 
 === Importing the Data using Cypher
 
@@ -267,9 +269,11 @@ e.EmployeeID,reports,totalOrders
 9,[],107
 |===
 
+////
 [role=side-nav]
 === Further Reading
 
 * link:/books[The Neo4j Bookshelf]
 * http://watch.neo4j.org[The Neo4j Video Library]
 * http://gist.neo4j.org/[GraphGists]
+////

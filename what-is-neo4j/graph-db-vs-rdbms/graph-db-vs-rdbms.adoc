@@ -13,7 +13,7 @@ In addition, it explains how to integrate graph databases with relational databa
 
 .Prerequisites
 [abstract]
-You should have looked into the link:/what-is-neo4j/property-graph[property-graph model] and into link:/build-a-graph-data-model/guide-intro-to-graph-modeling[data modeling with graphs].
+You should have looked into the link:../../what-is-neo4j/graph-database#property-graph[property-graph model] and into link:../../build-a-graph-data-model/guide-intro-to-graph-modeling[data modeling with graphs].
 
 [role=expertise]
 {level}
@@ -100,7 +100,7 @@ In the organizational domain described in the image above, what would a SQL stat
 .SQL Statement
 [source,sql]
 ----
-SELECT name FROM Person
+SELECT * FROM Person
 LEFT JOIN Person_Department
   ON Person.Id = Person_Department.PersonId
 LEFT JOIN Department
@@ -112,7 +112,7 @@ WHERE Department.name = "IT Department"
 [source,cypher]
 ----
 MATCH (p:Person)<-[:EMPLOYEE]-(d:Dept {name:"IT Department"})
-RETURN p.name
+RETURN p.name, d.name
 ----
 
 [role=side-nav]
@@ -173,7 +173,6 @@ try (PreparedStatement stmt = con.prepareStatement(QUERY)) {
 * link:../../language-guides[Develop with Neo4j]
 * link:../../language-guides/java/jdbc[JDBC example]
 * http://docs.neo4j.org/chunked/milestone/rest-api-transactional.html[Cypher HTTP Endpoint,role=docs]
-* link:/contrib[Neo4j Drivers List]
 
 === Importing Data from a Relational Database
 
