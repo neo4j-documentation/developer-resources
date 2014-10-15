@@ -34,18 +34,7 @@ Many Pythonistas have invested a lot of time and love to develop all these drive
 
 include::../_includes/sample_project.adoc[]
 
-[source,python]
-----
-def find_lovers(graph_db):
-    query = "MATCH (n)-[r:loves]->(m) return n, r, m"
-    # This is our awesome Cypher query language.
-    # MATCH the ones that have a LOVES relationship
-    # and RETURN the starting node, the relationship, and the end node.
-    data, metadata = graph_db.execute(query)
-    return data[0]
-----
-
-Python and Neo4j are a well established combination, mainly thanks to the sterling efforts of top contributor Nigel Small.
+Python and Neo4j are a well established combination, mainly thanks to the many contributors in the community.
 
 For small apps it’s feasible to connect directly to Neo4j and execute the Cypher queries that you need to. 
 We also have Django support for building bigger web applications, in Neo4jDjango and Neomodel.
@@ -61,8 +50,6 @@ This excellent article from Nigel demonstrates how to join in the fun.
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/py2neo.png[]
 
-Author: http://twitter.com/neonige[Nigel Small]
-
 Py2neo is a simple and pragmatic Python library that provides access to the popular graph database Neo4j via its HTTP-Apis.
 
 It has http://book.py2neo.org/en/latest/[comprehensive documentation] and a lof related articles by its author.
@@ -70,7 +57,10 @@ It has http://book.py2neo.org/en/latest/[comprehensive documentation] and a lof 
 [role=side-nav]
 === Sidebar
 
-* link:py2neo-1.6[Example Project with Py2Neo]
+* {github}/language-guides/python/py2neo-1.6[Example Project with Py2Neo]
+* https://github.com/nigelsmall/py2neo[Py2Neo on GitHub]
+* Author: http://twitter.com/neonige[Nigel Small]
+* http://book.py2neo.org/en/latest/[Documentation]
 * http://nigelsmall.com/load2neo[Load2Neo]
 
 === Neo4jRestClient
@@ -79,40 +69,44 @@ Author: Javier De La Rosa
 
 [role=side-nav]
 === Sidebar
-* link:neo4jrestclient[Example Project with Neo4jRestClient]
+* {github}/language-guides/python/neo4jrestclient[Example Project with Neo4jRestClient]
 
 === Other Drivers
 
-==== http://github.com/robinedwards/neomodel[NeoModel]
-
-Author: Robin Edwards
+==== NeoModel
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/neomodel-300.png[]
 
 An Object Graph Mapper (OGM) also usable for Django for the Neo4j graph database.
 
-==== http://github.com/jakewins/neo4jdb-python[neo4jdb-python]
+* http://github.com/robinedwards/neomodel[NeoModel on GitHub]
+* Author: Robin Edwards
 
-Author: Jacob Hansson Implements the http://legacy.python.org/dev/peps/pep-0249/[Python DB API 2.0] for Neo4j, compatible with python 2.6, 2.7, 3.2 and 3.3 and Neo4j >= 2.0.0
+==== neo4jdb-python
 
+Implements the http://legacy.python.org/dev/peps/pep-0249/[Python DB API 2.0] for Neo4j, compatible with python 2.6, 2.7, 3.2 and 3.3 and Neo4j >= 2.0.0
 
-====  http://github.com/scholrly/neo4django[Neo4django]
+* http://github.com/jakewins/neo4jdb-python[neo4jdb-python on GitHub]
+* Author: Jacob Hansson 
+
+====  neo4django
 
 // image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/django.png[]
 
-Author: Matt Luongo
-
 neo4django is an Object Graph Mapper (OGM) for Django. Use familiar Django models and queries against Neo4j.
 
-==== http://bulbflow.com/overview/[Bulbs]
+* http://github.com/scholrly/neo4django[neo4django on GitHub]
+* Author: Matt Luongo
+
+==== Bulbs
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/bulbflow.png[]
 
-Author: James Thornton
-
 Bulbs is an open-source Python persistence framework for graph databases and the first piece of a larger Web-development toolkit. It’s like an ORM for graphs.
+
+* http://bulbflow.com/overview/[Bulbs on GitHub]
+* Author: James Thornton
 
 [role=side-nav]
 === Further Reading
 * http://www.tsartsaris.gr/kivy2neo-sending-cypher-queries-from-a-kivy-app-to-a-neo4j-database[Using Neo4j from Kivy]
-

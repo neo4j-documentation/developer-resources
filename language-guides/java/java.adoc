@@ -28,9 +28,9 @@ image::http://assets.neo4j.org/img/languages/java.jpg[]
 
 Neo4j offers a rich set of integration possibilities for Java or JVM-language developers.
 
-Neo4j comes in two flavors. 
+There are two ways of using Neo4j from the JVM. 
 The standalone Neo4j-Server can be installed on any machine and then accessed via its HTTP API. 
-You can use whatever REST-library you choose for any JVM language. 
+You can use any REST-library you choose for any JVM language. 
 The dedicated Neo4j drivers go beyond that by offering comprehensive APIs for integrating with graph based applications.
 // end::intro[]
 
@@ -55,7 +55,7 @@ Being a Java developer you're probably familiar with JDBC as a way to work with 
 Also many tools for ETL, Business Intelligence and data management use JDBC drivers to interact with relational databases. 
 
 As Cypher, like SQL is a textual parametrizable query language that can return tabular results, it was possible for us to support the JDBC APIs, and make a Neo4j-JDBC driver available.
-More details on how to use it can be found with our example project for link:jdbc/[Java-JDBC]. 
+More details on how to use it can be found with our example project for {github}/language-guides/java/jdbc/[Java-JDBC]. 
 There we implement the backend as minimal Java webapp that leverages Neo4j-JDBC to connect to Neo4j Server.
 
 // todo a spring boot webapp with JDBC
@@ -73,7 +73,7 @@ The path-finding and traversal APIs are also available.
 
 The results of your graph operations are then collected and rendered as the format you want to expose, e.g. JSON, XML, plain text or binary.
 
-The link:./extension[example project] shows how you would do that for our movie application endpoints.
+The {github}/language-guides/java/extension[example project] shows how you would do that for our movie application endpoints.
 
 === Using Spring Boot with JDBC
 
@@ -83,7 +83,7 @@ Here we use a simple Spring-Boot WebMVC and -JDBC application to provide a backe
 
 It just uses the well known APIs of `@RestController` and `JdbcTemplate` to do the Job.
 
-More details can be found in the link:spring-boot-jdbc[example project].
+More details can be found in the {github}/language-guides/java/spring-boot-jdbc[example project].
 
 === Using Spring Data Neo4j
 
@@ -101,14 +101,15 @@ To achieve highest-performance Neo4j-Server integration move your SDN persistenc
 
 The example uses Spring-Boot with Spring-Data-Neo4j and Spring-Data-REST and an additional RestMVCController.
 
-See the link:./spring-data-neo4j[example project] for further details.
+See the {github}/language-guides/java/./spring-data-neo4j[example project] for further details.
 
 [role=side-nav]
 === Further Reading
 
-* link:./spring-data-neo4j[Spring Data Neo4j Example Project]
 * http://projects.spring.io/spring-data-neo4j[Spring Data Neo4j Project]
+* Authors: Michael Hunger, Oliver Gierke, Nicki Watt and many contributors
 * http://www.youtube.com/watch?v=ZfbJ1ZJdb_A[Webinar Spring Boot & SDN, role=video]
+* {github}/language-guides/java/spring-data-neo4j[Spring Data Neo4j Example Project]
 
 // === Tinkerpop
 

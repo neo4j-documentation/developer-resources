@@ -33,16 +33,9 @@ Below we show how you can use something as simple as the `request` module to sen
 But you can also choose to leverage one of the existing drivers for Neo4j which wrap that protocol in a more convenient API for you.
 // end::intro[]
 
-Follow the guides below to get you started.
+Follow the tips below to get you started.
 
-=== The Example Project
-
-You can find out more about our example projects for Ruby (and other languages) here link:../[], you can also access it via the {github}/language-guides/[GitHub repository] for the Neo4j developer resources.
-Feel free to check them out.
-
-It is a small one page webapp for our movies database.
-The front-end is the same for all drivers, just the backends show you how to connect to Neo4j from the different languages and drivers.
-
+include::../_includes/sample_project.adoc[]
 
 === Using the HTTP-Endpoint directly
 
@@ -82,29 +75,30 @@ cypher(query,params,cb)
  "errors":[]}
 ----
 
-=== http://github.com/thingdom/node-neo4j[node-neo4j]
-
-Author: https://twitter.com/aseemk[Aseem Kishore] & Daniel Gasienica
+=== node-neo4j
 
 Most widely used Node.js driver for Neo4j.
-Documentation can be found http://coffeedoc.info/github/thingdom/node-neo4j/[here] and it even has a https://groups.google.com/forum/#!forum/node-neo4j[google group].
-
-An example project using node-neo4j, can https://github.com/aseemk/node-neo4j-template[be found here].
 
 // TODO our example project
 
+* https://github.com/aseemk/node-neo4j-template[Example Project]
+* http://github.com/thingdom/node-neo4j[node-neo4j on GitHub]
+* Authors: https://twitter.com/aseemk[Aseem Kishore] & Daniel Gasienica
+* http://coffeedoc.info/github/thingdom/node-neo4j/[Documentation]
+* https://groups.google.com/forum/#!forum/node-neo4j[google group]
 
 === Other Drivers
 
-==== http://github.com/bretcope/neo4j-js[neo4j-js]
-
-Author: Bret Copeland
+==== neo4j-js
 
 A Node.js (pure JavaScript) client library for accessing neo4j databases with batch support.
 
-==== http://github.com/joewhite86/node-neo4j-embedded[node-neo4j-embedded]
+* http://github.com/bretcope/neo4j-js[neo4j-js on GitHub]
+* Author: Bret Copeland
 
-Author: Jochen Weis
+==== node-neo4j-embedded
 
 Node.js driver for the embedded Neo4j Database. Supports HA Setups, API is built to be as close to the Java API as possible.
 
+* http://github.com/joewhite86/node-neo4j-embedded[node-neo4j-embedded on GitHub]
+* Author: Jochen Weis
