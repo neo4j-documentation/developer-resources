@@ -20,7 +20,7 @@ email = get_value(lines)
 header = lines.shift
 
 html =  lines.join
-html = html.gsub(/href="(?:(?:\.\.|[a-zA-Z0-9_-]+)\/)*(.+?)"/,'href="\1"')
+html = html.gsub(/href="(?:(?:\.\.|[a-zA-Z0-9_-]+)\/)*(.+?)"/,'href="/developer/\1"')
 POST_TYPE='guide'
 require 'rubypress'
 blog_id  = ENV['BLOG_HOSTNAME']
