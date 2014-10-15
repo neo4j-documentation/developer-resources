@@ -29,7 +29,7 @@ toc::[]
 
 === Memory Configuration guidelines
  
-Also see: http://docs.neo4j.org/chunked/stable/configuration-caches.html
+Also see: {manual}/configuration-caches.html
 
 3 types of memory to consider::
 . OS memory for non-neo4j usage
@@ -128,8 +128,8 @@ This means, if your server has 8GB of RAM don't use all of that RAM for heap (un
 [role=side-nav]
 === Recommended
 
-* http://docs.neo4j.org/chunked/stable/operations.html[Operations,role=manual]
-* http://docs.neo4j.org/chunked/stable/configuration.html[Configuration & Performance,role=manual]
+* {manual}/operations.html[Operations,role=manual]
+* {manual}/configuration.html[Configuration & Performance,role=manual]
 * http://maxdemarzi.com/2013/11/25/scaling-up/[Scaling Up Neo4j,role=blog]
 * link:/support[Neo4j Professional Support]
 
@@ -149,4 +149,4 @@ It is recommended that the `keep_logical_logs` parameter be set to `7 days`
 The usual default of `1024` is often not enough, especially when many indexes are used or a server installation sees too many connections (network sockets count against that limit as well). 
 Users are therefore encouraged to increase that limit to a healthy value of `40000` or more, depending on usage patterns. 
 Setting this value via the ulimit command is possible only for the root user and that for that session only.
-To set the value system wide you have to follow the instructions for your platform (http://docs.neo4j.org/chunked/stable/linux-performance-guide.html#_setting_the_number_of_open_files[Linux]).
+To set the value system wide you have to follow the instructions for your platform ({manual}/linux-performance-guide.html#_setting_the_number_of_open_files[Linux]).
