@@ -1,8 +1,10 @@
+export GITHUB={github}/
+
 function render {
    file="$1"
    to=${file%/*}/index.html
    echo "Rendering $file to $to"
-   asciidoctor -a source-highlighter=codemirror -a linkattrs -a img=./ -T _templates $file -o $to
+   asciidoctor -a source-highlighter=codemirror -a linkattrs -a img=./ -a github="${GITHUB}" -T _templates $file -o $to
 }
 
 if [ "$1" != "" ]; then
