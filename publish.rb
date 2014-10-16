@@ -51,7 +51,7 @@ all_pages = wp.getPosts( :filter => {:post_type   => POST_TYPE,
 
 puts "Got #{all_pages.length} pages from the database"
 pages = all_pages.select { |page| page['post_name'] == post_name }
-puts "Got #{pages.length} pages matching the post_name ${post_name}"
+puts "Got #{pages.length} pages matching the post_name #{post_name}"
 
 page = pages.sort_by {|hash| hash['post_id'] }.first
 
