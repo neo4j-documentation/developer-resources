@@ -21,16 +21,16 @@ developer_section_name = get_value(lines)
 developer_section_slug = get_value(lines)
 header = lines.shift
 
-html =  lines.join
-html = html.gsub(/href="(?:(?:\.\.|[a-zA-Z0-9_-]+)\/)*([^#:]+?)"/,'href="/developer/\1"')
-POST_TYPE='guide'
+html =  lines.join.gsub(/href="(?:(?:\.\.|[a-zA-Z0-9_-]+)\/)*([^#:]+?)"/,'href="/developer/\1"')
+POST_TYPE='developer'
 require 'rubypress'
+
 blog_id  = ENV['BLOG_HOSTNAME']
 username = ENV['BLOG_USERNAME']
 password = ENV['BLOG_PASSWORD']
 
 
-content =         { :post_type => "developer",
+content =         { :post_type => POST_TYPE,
                     :post_date    => Time.now,
                     :post_content => html,
                     :post_title   => title,
@@ -45,7 +45,7 @@ wp = Rubypress::Client.new(:host     => blog_id,
                            :username => username,
                            :password => password)
 
-all_pages = wp.getPosts( :filter => {:post_type   => "developer",
+all_pages = wp.getPosts( :filter => {:post_type   => POST_TYPE,
                                      :number      => 1000})
 #
 
@@ -55,15 +55,14 @@ puts "Got #{pages.length} pages matching the post_name ${post_name}"
 
 page = pages.sort_by {|hash| hash['post_id'] }.first
 
-
 if page
   post_id = page['post_id'].to_i
-  puts "Editing #{post_id}"
+  puts "Editing #{post_id} on #{blog_id}"
   puts wp.editPost(:blog_id  => blog_id,
               :post_id => post_id,
               :content => content)
 else
-  puts "Making a new post for #{title}"
+  puts "Making a new post for #{title} on #{blog_id}"
   puts wp.newPost(:blog_id => blog_id,
                   :content => content.merge({ :post_status  => "publish"}))
 end
