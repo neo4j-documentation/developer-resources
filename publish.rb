@@ -58,11 +58,11 @@ page = pages.sort_by {|hash| hash['post_id'] }.first
 if page
   post_id = page['post_id'].to_i
   puts "Editing #{post_id} on #{blog_id}"
-  puts wp.editPost(:blog_id  => blog_id,
-              :post_id => post_id,
-              :content => content)
+  raise "edit failed" unless wp.editPost(:blog_id  => blog_id,
+                                         :post_id => post_id,
+                                         :content => content)
 else
   puts "Making a new post for #{title} on #{blog_id}"
-  puts wp.newPost(:blog_id => blog_id,
-                  :content => content.merge({ :post_status  => "publish"}))
+  raise "publish failed" unless wp.newPost(:blog_id => blog_id,
+                                           :content => content.merge({ :post_status  => "publish"}))
 end
