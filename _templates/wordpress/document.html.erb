@@ -7,7 +7,9 @@ developer_section_name: <%= attr :section %>
 developer_section_slug: <%= attr "section-link" %>
 -->
 <%=  File.new("_templates/wordpress/style_partial.erb").read %>
-<div class="row" style="padding-left: 0; padding-right: 0;">
+<div class="row" style="padding-left: 0; padding-right: 0; padding-top: 1em;">
    <%= File.new("_templates/wordpress/menu_partial.erb").read %>
+   <div class="columns large-9">
    <%= content %>
+   </div>
 </div>
