@@ -30,11 +30,11 @@ username = ENV['BLOG_USERNAME']
 password = ENV['BLOG_PASSWORD']
 
 
-content =         { :post_type => POST_TYPE,
-                    :post_date    => Time.now,
-                    :post_content => html,
-                    :post_title   => title,
-                    :post_name => post_name,
+content =         { :post_type     => POST_TYPE,
+                    :post_date     => Time.now,
+                    :post_content  => html,
+                    :post_title    => title,
+                    :post_name     => post_name,
                     :custom_fields => [{ :key => "developer_section_name", :value => developer_section_name },
                                        { :key => "developer_section_slug", :value => developer_section_slug }]
                   }
@@ -51,18 +51,18 @@ all_pages = wp.getPosts( :filter => {:post_type   => POST_TYPE,
 
 puts "Got #{all_pages.length} pages from the database"
 pages = all_pages.select { |page| page['post_name'] == post_name }
-puts "Got #{pages.length} pages matching the post_name #{post_name}"
+puts "Got #{pages.length} pages matching the post_name '#{post_name}'"
 
 page = pages.sort_by {|hash| hash['post_id'] }.first
 
 if page
   post_id = page['post_id'].to_i
-  puts "Editing #{post_id} on #{blog_id}"
-  raise "edit failed" unless wp.editPost(:blog_id  => blog_id,
+  puts "Editing #{post_id} on _#{blog_id}_"
+  raise "edit failed" unless wp.editPost(:blog_id => blog_id,
                                          :post_id => post_id,
                                          :content => content)
 else
-  puts "Making a new post for #{title} on #{blog_id}"
+  puts "Making a new post for '#{title}' on _#{blog_id}_"
   raise "publish failed" unless wp.newPost(:blog_id => blog_id,
                                            :content => content.merge({ :post_status  => "publish"}))
 end
