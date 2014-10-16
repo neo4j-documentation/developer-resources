@@ -39,8 +39,6 @@ content =         { :post_type     => POST_TYPE,
                                        { :key => "developer_section_slug", :value => developer_section_slug }]
                   }
 
-#puts "developer_section_name #{developer_section_name} #{developer_section_slug} developer_section_slug"
-
 puts "publishing: #{post_name}"
 
 wp = Rubypress::Client.new(:host     => blog_id,
@@ -49,7 +47,6 @@ wp = Rubypress::Client.new(:host     => blog_id,
 
 all_pages = wp.getPosts( :filter => {:post_type   => POST_TYPE,
                                      :number      => 1000})
-#
 
 puts "Got #{all_pages.length} pages from the database"
 pages = all_pages.select { |page| page['post_name'] == post_name }
@@ -58,8 +55,12 @@ puts "Got #{pages.length} pages matching the post_name '#{post_name}'"
 page = pages.sort_by {|hash| hash['post_id'] }.first
 
 if page
+  content[:custom_fields].each{ |f|
+     f['id']=page['custom_fields'].find{ |field| field['key']==f[:key] }['id']
+  }
   post_id = page['post_id'].to_i
-  puts "Editing #{post_id} on _#{blog_id}_"
+  puts "Editing #{post_id} on _#{blog_id}_ custom-field #{content[:custom_fields].inspect}"
+
   raise "edit failed" unless wp.editPost(:blog_id => blog_id,
                                          :post_id => post_id,
                                          :content => content)
