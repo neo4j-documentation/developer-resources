@@ -17,6 +17,8 @@ title = get_value(lines)
 level = get_value(lines)
 author = get_value(lines)
 email = get_value(lines)
+developer_section_name = get_value(lines)
+developer_section_slug = get_value(lines)
 header = lines.shift
 
 html =  lines.join
@@ -33,6 +35,8 @@ content =         { :post_type => "developer",
                     :post_content => html,
                     :post_title   => title,
                     :post_name => post_name
+                    :custom_fields => [{ :key => "developer_section_name", :value => developer_section_name },
+                                       { :key => "developer_section_slug", :value => developer_section_slug }]
                   }
 
 puts "publishing: #{post_name}"
@@ -61,5 +65,5 @@ if page
 else
   puts "Making a new post for #{title}"
   puts wp.newPost(:blog_id => blog_id,
-                  :content => content.merge({ :post_status  => "published"}))
+                  :content => content.merge({ :post_status  => "publish"}))
 end
