@@ -39,6 +39,8 @@ content =         { :post_type     => POST_TYPE,
                                        { :key => "developer_section_slug", :value => developer_section_slug }]
                   }
 
+#puts "developer_section_name #{developer_section_name} #{developer_section_slug} developer_section_slug"
+
 puts "publishing: #{post_name}"
 
 wp = Rubypress::Client.new(:host     => blog_id,
