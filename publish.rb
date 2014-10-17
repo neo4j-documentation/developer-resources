@@ -22,6 +22,9 @@ developer_section_slug = get_value(lines)
 header = lines.shift
 
 html =  lines.join.gsub(/href="(?:(?:\.\.|[a-zA-Z0-9_-]+)\/)*([^#:]+?)"/,'href="/developer/\1"')
+html =  lines.join.gsub("/developer/developer",'/developer')
+html =  lines.join.gsub("/developer/docs",'/docs')
+
 POST_TYPE='developer'
 require 'rubypress'
 
