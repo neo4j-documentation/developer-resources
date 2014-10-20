@@ -30,21 +30,21 @@ image::http://assets.neo4j.org/img/languages/java.jpg[]
 
 Neo4j offers a rich set of integration possibilities for Java or JVM-language developers.
 
-There are two ways of using Neo4j from the JVM. 
-The standalone Neo4j-Server can be installed on any machine and then accessed via its HTTP API. 
-You can use any REST-library you choose for any JVM language. 
+There are two ways of using Neo4j from the JVM.
+The standalone Neo4j-Server can be installed on any machine and then accessed via its HTTP API.
+You can use any REST-library you choose for any JVM language.
 The dedicated Neo4j drivers go beyond that by offering comprehensive APIs for integrating with graph based applications.
 // end::intro[]
 
-But you can also run {manual}/tutorials-java-embedded.html[Neo4j embedded in your JVM process], much like HSQL or Derby. 
-This is great for unit testing, but also for high performance / no-network setups. 
-If you use Neo4j embedded you can use the Neo4j Core-Java-API directly. 
-Besides an object oriented approach to the graph database, working with Nodes, Relationships and Paths, it also offers highly customizable high-speed traversal- and graph-algorithm implementations. 
+But you can also run {manual}/tutorials-java-embedded.html[Neo4j embedded in your JVM process], much like HSQL or Derby.
+This is great for unit testing, but also for high performance / no-network setups.
+If you use Neo4j embedded you can use the Neo4j Core-Java-API directly.
+Besides an object oriented approach to the graph database, working with Nodes, Relationships and Paths, it also offers highly customizable high-speed traversal- and graph-algorithm implementations.
 You can also choose from any useful drivers wrapping that API, which exist for either for specific programming languages or that add interesting functionality.
 
-One example is http://projects.spring.io/spring-data-neo4j/[Spring Data Neo4j] which integrates tightly with the http://spring.io/[SpringFramework] and offers Object-Graph mapping on top of Neo4j. 
+One example is http://projects.spring.io/spring-data-neo4j/[Spring Data Neo4j] which integrates tightly with the http://spring.io/[SpringFramework] and offers Object-Graph mapping on top of Neo4j.
 
-As a JVM developer you are also on the bright side when it comes to inserting large amounts of data into Neo4j. 
+As a JVM developer you are also on the bright side when it comes to inserting large amounts of data into Neo4j.
 With its non-transactional, low-level batch-insertion API it can ingest millions of nodes and relationships in just seconds.
 
 Follow the guides below to get you started.
@@ -53,11 +53,11 @@ include::../_includes/sample_project.adoc[]
 
 === Using Neo4j Server with JDBC
 
-Being a Java developer you're probably familiar with JDBC as a way to work with relational databases, either directly or via abstractions like Spring's `JDBCTemplate` or MyBatis. 
-Also many tools for ETL, Business Intelligence and data management use JDBC drivers to interact with relational databases. 
+Being a Java developer you're probably familiar with JDBC as a way to work with relational databases, either directly or via abstractions like Spring's `JDBCTemplate` or MyBatis.
+Also many tools for ETL, Business Intelligence and data management use JDBC drivers to interact with relational databases.
 
 As Cypher, like SQL is a textual parametrizable query language that can return tabular results, it was possible for us to support the JDBC APIs, and make a Neo4j-JDBC driver available.
-More details on how to use it can be found with our example project for {github}/language-guides/java/jdbc/[Java-JDBC]. 
+More details on how to use it can be found with our example project for {github}/language-guides/java/jdbc/[Java-JDBC].
 There we implement the backend as minimal Java webapp that leverages Neo4j-JDBC to connect to Neo4j Server.
 
 // todo a spring boot webapp with JDBC
@@ -67,9 +67,9 @@ There we implement the backend as minimal Java webapp that leverages Neo4j-JDBC 
 A great way of accessing the high performance graph database directly from your Java code is to write a Neo4j Server extension.
 Then you get the double benefit of easy deployment and high performance database access.
 
-A Server extension provides a Jersey JAX-RS REST endpoint with a protocol and granularity that you control, you use it to send and receive datastructures of your domain.
+A Server extension provides a Jersey JAX-RS REST endpoint with a protocol and granularity that you control, you use it to send and receive data structures of your domain.
 
-After declaring the dependencies to Neo4j and Neo4j-Server-APIs you can create REST-resources that are deployed by Jersey at startup. 
+After declaring the dependencies to Neo4j and Neo4j-Server-APIs you can create REST-resources that are deployed by Jersey at startup.
 Within those resources you can get the `GraphDatabaseService` and `ExecutionEngine` injected and use all Java APIs as well as executing Cypher directly.
 The path-finding and traversal APIs are also available.
 
@@ -93,7 +93,8 @@ Spring Data Neo4j was the first Spring Data project and enables convenient integ
 It provides object-graph mapping functionality and other features common to the Spring Data projects.
 
 To use Neo4j with Spring Data Neo4j, you just add the dependency to your build setup.
-After setting up a simple Java based Spring configuration, and annotating your `@Node-` and `@RelationshipEntity`s, you can use the `Neo4jTemplate` to access Neo4j APIs and object graph mapping functionality.
+After setting up a simple Java based Spring configuration, and annotating your `@Node-` and `@RelationshipEntity`.
+You can use `Neo4jTemplate` to access Neo4j APIs and object graph mapping functionality.
 Additionally you can leverage the convenient Spring-Data repositories to get interface based DAO implementations injected into your Spring Components.
 
 [NOTE]
@@ -197,4 +198,3 @@ Kundera is a JPA 2.0 compliant, object-datastore mapping library for NoSQL datas
 * http://groups.google.com/group/kundera-discuss[Forum]
 * https://github.com/impetus-opensource/Kundera/wiki/Graph-Database-Support[Docs]
 * http://github.com/impetus-opensource/Kundera-Examples[Examples]
-
