@@ -9,12 +9,12 @@
 
 .Goals
 [abstract]
-This guide explains Configuration and Performance Tuning best practices and troubleshooting tips, including topics such as cache sizing, JVM configuration, Memory Mapped IO (MMIO) settings, and logical log configuration. 
+This guide explains Configuration and Performance Tuning best practices and troubleshooting tips, including topics such as cache sizing, JVM configuration, Memory Mapped IO (MMIO) settings, and logical log configuration.
 
 .Prerequisites
 [abstract]
-You should know how to link:/download[download] and install Neo4j on your system. 
-If you are a developer you should be accustomed to the graph data model and have written your Neo4j application. 
+You should know how to link:/download[download] and install Neo4j on your system.
+If you are a developer you should be accustomed to the graph data model and have written your Neo4j application.
 
 [role=expertise]
 {level}
@@ -29,7 +29,7 @@ toc::[]
 * Use SSDs or other fast I/O if possible
 
 === Memory Configuration guidelines
- 
+
 Also see: {manual}/configuration-caches.html
 
 3 types of memory to consider::
@@ -47,19 +47,25 @@ Memory Calculations::
     .. string properties SP (neostore.propertystore.db.strings) (fewer reads, cache less)
     .. array properties AP (neostore.propertystore.db.arrays) (fewer reads, cache less)
 . Set the properties:
-    .. neostore.nodestore.db.mapped_memory= (14 * N) / (1024 * 1024)M
-    .. neostore.relationshipstore.db.mapped_memory= (34 * R) / (1024 * 1024)M
-    .. neostore.propertystore.db.mapped_memory= (41 * P) / (1024 * 1024)M
-    .. neostore.propertystore.db.strings.mapped_memory = (128 * P) / (1024 * 1024)M
-    .. neostore.propertystore.db.arrays.mapped_memory = (128 * P) / (1024 * 1024)M
+    .. neostore.nodestore.db.mapped_memory =
+        .. `(14 * N) / (1024 * 1024)M`
+    .. neostore.relationshipstore.db.mapped_memory =
+        .. `(34 * R) / (1024 * 1024)M`
+    .. neostore.propertystore.db.mapped_memory =
+        .. `(41 * P) / (1024 * 1024)M`
+    .. neostore.propertystore.db.strings.mapped_memory =
+        .. `(128 * P) / (1024 * 1024)M`
+    .. neostore.propertystore.db.arrays.mapped_memory =
+        .. `(128 * P) / (1024 * 1024)M`
 .. Determine how much is left for the heap:
     .. Total memory - OS memory (OS) - total mapped memory (MM) = heap (H)
 . In neo4j-wrapper.conf, set wrapper.java.initmemory and wrapper.java.maxmemory to H. NOTE: "M" is not specified in the value since it is already in MB
-    .. wrapper.java.initmemory=H / (1024 * 1024)
-    .. wrapper.java.maxmemory=H / (1024 * 1024)
+    .. wrapper.java.initmemory =
+        .. `H / (1024 * 1024)`
+    .. wrapper.java.maxmemory =
+        .. `H / (1024 * 1024)`
 . Next decide on the size of caches that are stored in memory in the heap.
     .. Heap consists of "new generation" and "old generation" memory. New generation is for short-lived objects and takes about 1/3 of the heap by default (specified by -XX:NewRatio=3). If an object survives long enough, it is moved to the old generation which takes about 2/3 of the heap by default. The caches live in the old generation. The old generation needs about 30-40% of its space for CMS gc and another amount for the working set, which tends to remain fairly constant. The remaining old generation is where the caches live and this amount should not exceed 35-40% of the old generation (although if we know the working set and lots of RAM, we could use more). So if the new gen ratio is 1/3, allocate roughly 1/3 of the heap for caches. If it's 1/2, allocate roughly 1/4 of the heap for caches. Adjust this accordingly to available RAM so there is enough space for GC & the working set.
-
     .. node_cache_size + relationship_cache_size = (.25 to .33) * Heap
 
 Graph traversals to consider::
@@ -72,9 +78,9 @@ Graph traversals to consider::
 
 . Current configs are based on these arbitrary estimates with massive growth
 Values approximated and rounded up
-c3.large   = 2 CPU, 3.75 GB RAM
-c3.2xlarge = 8 CPU, 15 GB RAM
-1G for OS memory
+`c3.large   = 2 CPU, 3.75 GB RAM`
+`c3.2xlarge = 8 CPU, 15 GB RAM`
+`1G for OS memory`
 
  ~5 M nodes                         80M
  ~10 M relationships               370M
@@ -95,11 +101,11 @@ Config for c3.2xlarge instances (15 GB RAM)
 
 === Cache Sizing
 
-The node_cache_size and relationship_cache_size should not be more than 1/3 of the total heap size. 
-The JVM typically uses 1/3 of the heap for the "new generation", leaving 2/3 for the old generation. 
-This is where the caches will live, along with any other longer term memory use. 
-This space also needs additional headroom to all the garbage collector to operate correctly. 
-Note that we also often suggest changing that initial ratio so that the "new generation" uses 1/2 the heap, rather than only 1/3, as Neo4j (and especially Cypher) often has high requirements for temporary memory use, especially when many concurrent threads are accessing it. 
+The node_cache_size and relationship_cache_size should not be more than 1/3 of the total heap size.
+The JVM typically uses 1/3 of the heap for the "new generation", leaving 2/3 for the old generation.
+This is where the caches will live, along with any other longer term memory use.
+This space also needs additional headroom to all the garbage collector to operate correctly.
+Note that we also often suggest changing that initial ratio so that the "new generation" uses 1/2 the heap, rather than only 1/3, as Neo4j (and especially Cypher) often has high requirements for temporary memory use, especially when many concurrent threads are accessing it.
 However, that reduces the size available for the caches accordingly.
 
 === Specifying JVM tuning properties
@@ -123,7 +129,7 @@ wrapper.java.initmemory=24512
 wrapper.java.maxmemory=24512
 ----
 
-Finally make sure that the OS has some memory left to manage proper file system caches. 
+Finally make sure that the OS has some memory left to manage proper file system caches.
 This means, if your server has 8GB of RAM don't use all of that RAM for heap (unless you have turned off memory mapped buffers), but leave a good part of it to the OS.
 
 [role=side-nav]
@@ -136,18 +142,18 @@ This means, if your server has 8GB of RAM don't use all of that RAM for heap (un
 
 === Server Configuration
 
-The main configuration file for the server can be found at `conf/neo4j-server.properties`. 
+The main configuration file for the server can be found at `conf/neo4j-server.properties`.
 
 === Logical Logs
 
-Logical logs in Neo4j are the source of truth in scenarios where the database needs to be recovered after a crash or similar. 
-Logs are rotated every now and then (defaults to when they surpass 25 Mb in size) and the amount of legacy logs to keep can be configured. 
+Logical logs in Neo4j are the source of truth in scenarios where the database needs to be recovered after a crash or similar.
+Logs are rotated every now and then (defaults to when they surpass 25 Mb in size) and the amount of legacy logs to keep can be configured.
 
 It is recommended that the `keep_logical_logs` parameter be set to `7 days`
 
 === Setting the Number of Open Files on Linux
 
-The usual default of `1024` is often not enough, especially when many indexes are used or a server installation sees too many connections (network sockets count against that limit as well). 
-Users are therefore encouraged to increase that limit to a healthy value of `40000` or more, depending on usage patterns. 
+The usual default of `1024` is often not enough, especially when many indexes are used or a server installation sees too many connections (network sockets count against that limit as well).
+Users are therefore encouraged to increase that limit to a healthy value of `40000` or more, depending on usage patterns.
 Setting this value via the ulimit command is possible only for the root user and that for that session only.
 To set the value system wide you have to follow the instructions for your platform ({manual}/linux-performance-guide.html#_setting_the_number_of_open_files[Linux]).
