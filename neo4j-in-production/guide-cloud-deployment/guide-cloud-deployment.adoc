@@ -1,0 +1,128 @@
+= Hosting Neo4j in the Cloud
+:level: Intermediate
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 1
+:section: Neo4j in Production
+:section-link: in-production
+
+.Goals
+[abstract]
+This guide highlights the different options for setting up Neo4j in the cloud. It will setting up a template on ec2 on AWS, expalin the setup on Azure and introduce the different Neo4j cloud hosting parters.
+
+.Prerequisites
+[abstract]
+You should know how to run and operate Neo4j locally. Knowledge of remote drivers to access Neo4j from your application helps you to connect to your cloud hosted database. For the self service hosting you should bring along enough sysops experience that a linux system doesn't freak you out.
+
+[role=expertise]
+{level}
+
+toc::[]
+
+=== Hosting on AWS / EC2
+
+We provide an https://github.com/neo4j-contrib/neo4j-puppet/blob/master/README.CLOUDFORMATION.md[*EC2 Cloud Formation Template*] that allows you to quickly provision an appropriate instance and install and set-up Neo4j on that machine.
+
+This template creates a complete Neo4j installation, including Amazon AWS server, fixed IP address and backup storage. 
+It's intended to help application developers get up and running quickly with Neo4j, 
+without in-depth experience of Linux servers, AWS, or installing databases like Neo4j.
+
+
+If you are proficient, setting up AWS instances, you can also install Neo4j on any provisioned Linux instance 
+
+[role=side-nav]
+=== Recommended
+
+* https://github.com/neo4j-contrib/neo4j-puppet/blob/master/README.CLOUDFORMATION.md[Neo4j Cloud Formation Template]
+* https://github.com/neo4j-contrib/neo4j-puppet/blob/master/README.md[Manual ec2 Setup with Puppet]
+* http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html[AWS EC2 Getting Started Guide]
+* http://blogs.mindspew-age.com/2012/12/04/another-great-example-of-aws-fidelity-neo4j-cloud-init-and-eucalyptus/[Neo4j, Cloud-Init and Eucalyptus]
+
+=== Neo4j Provisioning Solutions
+
+* https://github.com/michaelklishin/neo4j-server-chef-cookbook[Neo4j Server Chef Cookbook]
+* https://github.com/maxehmookau/neo4j-ansible[Ansible Playbooks] for booting a server running the neo4j graph database system
+* https://github.com/julienroubieu/ansible-neo4j[Ansible role to install Neo4j], with Vagrant support
+
+=== Windows Azure
+
+It gets easier to deploy Neo4j Server on Azure every day, so here you can find some step-by-step instructions and hints on how to achieve that.
+
+Neo4j installation on Windows Azure can be provisioned through the VMDepot Image or by provisioning Linux instances and then running any of the provisioning scripts you'd like.
+
+++++
+<iframe src="//www.slideshare.net/slideshow/embed_code/32462907" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/neo4j/neo4j-201-windows-azure-vm-release" title="Neo4j 2.0.1 Windows Azure VM Release" target="_blank">Neo4j 2.0.1 Windows Azure VM Release</a> </strong> from <strong><a href="//www.slideshare.net/neo4j" target="_blank">Neo4j - The Open Source Graph Database </a></strong> </div>
+++++
+
+* http://neo4j.com/blog/neo4j-2-0-1-community-released-on-windows-azure-vm-depot/[Azure VMDepot Image Blog Post]
+* How to deploy Neo4j to Azure with Visual Studio 2012 - http://blog.jongallant.com/2013/03/neo4j-azure-vs2012.html[A step-by-step guide].
+* http://www.opensourceazure.com/blog/2013/05/22/point-click-deployment-of-neo4j-to-windows-azure/[Point-Click Deployment of Neo4J to Windows Azure]
+* http://www.cogno-sys.com/cloud-azure-amazon-open-stack/neo4j-azure-installation-graph-database-tutorials/[Azure AWS Open Stack – Neo4j Setup Tutorials on Ubuntu]
+* http://blog.tatham.oddie.com.au/2014/02/11/podcast-graph-databases-and-neo4j-with-richard-and-carl-from-net-rocks/[Podcast .Net Rocks with Tatham Oddie]
+
+=== Further PaaS Integrations
+
+* https://www.digitalocean.com/community/tutorials/how-to-install-neo4j-on-an-ubuntu-vps[Digital Ocean]
+* http://docs.pivotal.io/p1-services/Neo4j.html[Pivotal CloudFoundry]
+* http://blog.jelastic.com/2013/03/21/neo4j-in-the-cloud/[Jelastx]
+* https://github.com/jelastic-public-cartridges/openshift-origin-cartridge-neo4j-v21[Jelastx OpenShift Cartridge]
+* http://tomasmuller.com.br/2012/03/29/10-steps-to-run-neo4j-at-redhat-openshift-cloud/[OpenShift in 10 Steps]
+* https://github.com/hannelita/neo4j-openshift[Neo4j-Openshift]
+
+=== Neo4j Cloud Hosting Providers
+
+There are a number of Neo4j partners that provide hosting of Neo4j instances in the cloud. 
+If you provision databases via their offering, you enter a contract with those partners, not with Neo Technology.
+
+==== GrapheneDB
+
+http://graphenedb.com/[GrapheneDB] offers comprehensive hosting plans for Neo4j, taking care of the operational aspects of running a graph database.
+GrapheneDB is also available Heroku Add-On with free and tiered plans
+
+image::{img}/graphenedb.png[width=400]
+
+The platform supports current Neo4j Community Editions.
+
+* Paid plans are dedicated instances running on Amazon with following features:
+* Hosting in any AWS region
+* Online, automated daily backups and manual snapshots
+* 24x7 monitoring and alerts
+* Support for provided and custom plugins and extensions
+
+==== GraphStory
+
+http://www.graphstory.com/features.php[GraphStory] focuses on a whole experience in Graph Database hosting.
+
+image::http://www.graphstory.com/img/imac.png[width=400]
+
+It comes with these features:
+
+* Staging and Production in one package
+* Graph Sample Apps & Data
+* Scheduled backups
+* Get your graph-backed application up & running within minutes
+* Secure access to your graph database and graph management tools
+
+==== Structr.com
+
+On http://structr.com you can host both http://structr.org[structr] and Neo4j instances. It offers:
+
+image::https://structr.org/blog/snapshots.png[width=400]
+
+* Embedded Graph Databases
+* Visual Application Builder
+* Easy Data Import
+* Physics-based Graph Visualization
+* Managed Cloud Server
+
+==== GraphHost
+
+Neo4j graph database hosting made easy with https://graphhost.com/[GraphHost]
+
+image::https://graphhost.com/assets/appbg-44a5e35aea32ecba2899d4a7e71ff598.png[width=400]
+
+* We just need your email address and a password.
+* Pick an instance size. We offer small, medium large. 
+* All plans come with 20GB storage and 1TB transfer as standard.
+* You then have full access to your graph database. API, webadmin within minutes.
