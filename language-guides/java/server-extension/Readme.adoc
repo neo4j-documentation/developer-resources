@@ -20,62 +20,40 @@ curl http://localhost:7474/movie/The%20Matrix
 curl http://localhost:7474/movie/search?q=matrix
 
 // JSON object for whole graph viz (nodes, links - arrays)
-curl http://localhost:7474/movie/graph
+curl http://localhost:7474/movie/graph?limit=100
 ----
 
 === Setup
 
-Spark is a micro web framework used to easily define routes for endpoints and provide their implementation.
-In our case, the implementation calls the `MovieService` which has one method per endpoint that returns Java collections which are turned into JSON using Gson.
+JAX-RS is a RESTful resource library in the JDK that allows you to specify classes as mapped resources and their methods as concrete
+endpoints for these resources.
 
-The `MovieService` uses the Neo4j-JDBC driver to execute queries against the transactional endpoint of Neo4j-Server.
-You add the dependency to the JDBC driver in your `pom.xml`:
+Those methods can be passed parameters from the http request but also injected services from the underlying system - in our case `GraphDatabaseService` and `CypherExecutor` instances.
+The endpoint method will then use the services with the parameters to execute its task and return a representation of the result data to be consumed by the client.
 
-[source,xml]
-----
-include::pom.xml[tags=jdbc-dependency]
-----
-
-To use the JDBC driver you provide a connection URL, e.g. `jdbc:neo4j:localhost:7474`, get a `Connection` which then can be used to create `PreparedStatement`s with your Cypher query.
-
-You would then set parameters on your statement, please note that only numeric parameter-names are possible, _starting from 1_.
-
-To access the `ResultSet` you call the cursor method `rs.next()` in a while loop, within which you can access the result-data by `rs.getString("columnName")` where the column name is the `RETURN` clause alias for each column.
-
-[source,java]
-----
-Connection con = DriverManager.getConnection("jdbc:neo4j://localhost:7474/");
-
-String query = "MATCH (:Movie {title:{1}})<-[:ACTED_IN]-(a:Person) RETURN a.name as actor";
-
-try (PreparedStatement stmt = con.prepareStatement(query)) {
-
-    stmt.setString(1,"The Matrix");
-
-    try (ResultSet rs = stmt.executeQuery()) {
-        while(rs.next()) {
-             System.out.println(rs.getString("actor"));
-        }
-    }
-}
-----
+In our case we just get an instance of the `ExecutionEngine` to execute Cypher queries with parameters.
+The results of the queries are converted into JSON and returned.
 
 === Run locally:
 
-Start your local Neo4j Server (http://neo4j.com/download[Download & Install]), open the http://localhost:7474[Neo4j Browser].
-Then install the Movies data-set with `:play movies`, click the statement, and hit the triangular "Run" button.
-
-Start this application with:
+Build the project with 
 
 [source,shell]
 ----
-mvn compile exec:java
+mvn package
 ----
+
+Then copy the generated jar-file in `target/neo4j-movies-2.0-SNAPSHOT.jar` into the plugins directory of your server `/path/to/neo4j/plugins`.
+To register the extension you have to edit the `/path/to/neo4j/conf/neo4j-server.properties` and add a line like this:
+
+----
+org.neo4j.server.thirdparty_jaxrs_classes=example.extension.movies=/movie
+----
+
+which registers the package `example.extension.movies` of our resource for the `/movie` root context.
+
+The `src/main/webapp/index.html` page can be served with any web-server, e.g. by running `python -m SimpleHTTPServer 8080` in that directory.
 
 Go to http://localhost:8080
 
 You can search for movies by title or and click on any entry.
-
-=== Deploy to Heroku
-
-include::../../Readme.adoc[tags=heroku]
