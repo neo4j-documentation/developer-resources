@@ -14,7 +14,7 @@ You should be able to read Cypher queries after finishing this guide.
 
 .Prerequisites
 [abstract]
-This is a guide for {level}. You should have familiarized yourself with link:/developer/graph-database[Graph Databases] and the link:/developer/graph-database#property-graph[Property Graph Model].
+This is a guide for {level}s. You should have familiarized yourself with link:/developer/graph-database[Graph Databases] and the link:/developer/graph-database#property-graph[Property Graph Model].
 
 [role=expertise]
 {level}
@@ -23,7 +23,7 @@ toc::[]
 
 == About Cypher
 
-Cypher is a declarative, SQL inspired language for describing patterns in graphs.
+Cypher is a declarative, SQL-inspired language for describing patterns in graphs.
 It allows us to describe *what* we want to select, insert, update or delete from a graph database without requiring us to describe exactly *how* to do it.
 
 
@@ -35,9 +35,9 @@ image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/cypher_pa
 Cypher uses ASCII-Art to represent patterns.
 We surround nodes with parentheses which look like circles, e.g. `(node)`.
 If we later want to refer to the node, we'll give it an identifier like `(p)` for person or `(t)` for thing.
-In real world queries, we'll probably use longer, more expressive variable names like `(person)` or `(thing)`.
+In real-world queries, we'll probably use longer, more expressive variable names like `(person)` or `(thing)`.
 
-So for example, if we want to find all the *persons* and the *things* they like, the query will include the identifiers *person* and *thing*, e.g. in a pattern like `(person)-->(thing)` so we can refer to them later, e.g. to access properties like `person.name` and `thing.quality`.
+To illustrate, if we want to find all the *persons* and the *things* they like, the query will include the identifiers *person* and *thing*. We might use a pattern like `(person)-->(thing)` so we can refer to them later, for example, to access properties like `person.name` and `thing.quality`.
 
 
 The more general structure is:
@@ -59,7 +59,7 @@ RETURN node2.propertyA, node2.propertyB
 
 The problem with the Cypher snippets we saw above is that they didn't say anything about the relationship between the nodes, so even though we used the identifier *person*, we may well have gotten back *suppliers* and *sellers* of our *things*. So we need to be able to describe the types of relationships in our Cypher queries.
 
-If we wanted to retrieve everyone who likes a thing, we would describe the pattern `(person)-[:LIKE]->(thing)` to retrieve only nodes that had a relationship typed *LIKE* with other nodes (*thing*). Those nodes would the be *persons* as implied by the *LIKE* relationship.
+If we wanted to retrieve everyone who likes a thing, we would describe the pattern `(person)-[:LIKE]->(thing)` to retrieve only nodes that had a relationship typed *LIKE* with other nodes (*thing*). Those nodes would then be *persons* as implied by the *LIKE* relationship.
 
 Or generally:
 
@@ -68,7 +68,7 @@ Or generally:
 MATCH (node1)-[:REL_TYPE]->(node2)
 ----
 
-Sometimes we need access to information about a relationship (e.g. its type or properties). For example, we might want to output the *rating* that an *person* gave in a *thing* and that *rating* would probably be a property of the *like* relationship. As with nodes, we can use identifiers for relationships (in front of the *:TYPE*). If we tried to match `(person)-[like:LIKE]->(thing)`, we would be able to output the `like.rating` for each of the persons and all the things that they like.
+Sometimes we need access to information about a relationship (e.g. its type or properties). For example, we might want to output the *rating* that a *person* gave a *thing* and that *rating* would probably be a property of the *like* relationship. As with nodes, we can use identifiers for relationships (in front of the *:TYPE*). If we tried to match `(person)-[like:LIKE]->(thing)`, we would be able to output the `like.rating` for each of the persons and all the things that they like.
 
 [source,cypher]
 ----
@@ -103,7 +103,7 @@ RETURN node1, node2
 
 == Practical Example
 
-Let's try it out what we've learned.
+Let's try out what we've learned.
 
 === Create a Record for Yourself
 
