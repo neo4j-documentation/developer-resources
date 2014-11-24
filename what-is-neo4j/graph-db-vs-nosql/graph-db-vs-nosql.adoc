@@ -20,21 +20,21 @@ You need no prior knowledge of other NoSQL stores, although it might be helpful 
 
 toc::[]
 
-The although somewhat vaguely named, the NoSQL ("Not only SQL") space brings together many interesting solutions offering different data models and database systems, each suitable for different use cases and shapes of data.
-With the advent of the NoSQL movement, the "one-size-fits-all" proposition of large relational systems was replaced by making conscious decisions for the right tool for the job.
+Although somewhat vaguely named, the NoSQL ("Not only SQL") space brings together many interesting solutions offering different data models and database systems, each suitable for different use cases and shapes of data.
+With the advent of the NoSQL movement, the "one-size-fits-all" proposition of large relational systems was replaced by making conscious decisions about finding the right tool for the job.
 
-With this larger toolbox, developers have to gain the insight necessary to make informed decisions about which approaches are best suited for their particular applications.
+With this larger toolbox, developers have to gain the insight necessary to make informed decisions about which approaches are best suited to their particular applications.
 
-Most NoSQL systems are aggregate oriented, providing only atomic operations within their natural aggregate to which forms only one dedicated view of your data.
+Most NoSQL systems are aggregate oriented, providing only atomic operations within their natural aggregate, which forms only one dedicated view of your data.
 Other projections have to be computed crunching your data.
 Focusing on one aggregate at a time allows for easy sharding of bucketed data across a network of machines along the aggregate dimension, for instance the *Document* in Document Databases.
 
-Graph databases handle fine grained networks of information providing any perspective on your data, fitting your use-cases.
+Graph databases handle fine-grained networks of information providing any perspective on your data that fits your use-cases.
 Known and trusted from relational systems, transactional guarantees protect updates of that web of data conforming to ACID standards.
 
 .NoSQL databases lack relationships
 [quote, "Jim Webber, Ian Robinson", "Graph Databases, O'Reilly"]
-Most NO-SQL databases store sets of disconnected aggregates. *This makes it difficult to use them for connected data and graphs.* +
+Most NoSQL databases store sets of disconnected aggregates. *This makes it difficult to use them for connected data and graphs.* +
 One well-known strategy for adding relationships to such stores is to embed an aggregate's identifier inside the field belonging to another aggregate — effectively introducing foreign keys. +
 *But this requires joining aggregates at the application level, which quickly becomes prohibitively expensive.*
 
@@ -56,7 +56,7 @@ With the advent of the NoSQL movement, businesses of all sizes have a variety of
 * Calculating average income? Ask a *relational database*.
 * Building a shopping cart? Use a *key-value Store*.
 * Storing structured product information? Store as a *document*.
-* Describing how did a user got from point A to point B? Follow a *graph*.
+* Describing how a user got from point A to point B? Follow a *graph*.
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/nosql-space.png[]
 
