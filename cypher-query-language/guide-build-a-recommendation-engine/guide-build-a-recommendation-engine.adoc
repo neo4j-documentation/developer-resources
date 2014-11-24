@@ -1,4 +1,4 @@
-= Building a Recommendation Engine with Cypher in Two minutes
+= Building a Recommendation Engine with Cypher in Two Minutes
 :level: Beginner
 :toc:
 :toc-placement!:
@@ -22,7 +22,7 @@ toc::[]
 
 This demo explains how to use a basic dataset of _Actors_ acting in _Movies_ to create recommendations with a graph database.
 
-By following the relationships between the people and movies in am meaningful manner you can determine co-occurences, frequencies, and relevant nodes in the graph.
+By following the relationships between the people and movies in a meaningful manner you can determine co-occurences, frequencies, and relevant nodes in the graph.
 This is the basis for many recommendation engines.
 
 === Recommendation for Collaboration of Actors
@@ -76,7 +76,7 @@ RETURN tom, movie
 
 //graph_result
 
-Of course Tom has colleagues that acted with him in his movies. This "co-actor" statement looks like this:
+Of course Tom has colleagues who acted with him in his movies. This "co-actor" statement looks like this:
 
 [source,cypher]
 ----
@@ -97,7 +97,7 @@ RETURN coActor.name
 
 === Collaborative Filtering
 
-We can now turn this "co-actor" query into a recommendation query by following those relationships another step out to find the "co-co-actors", i.e. the second degree actors in Toms network with whom he has not acted.
+We can now turn this "co-actor" query into a recommendation query by following those relationships another step out to find the "co-co-actors", i.e. the second-degree actors in Tom's network with whom he has not acted.
 
 [source,cypher]
 ----
@@ -150,7 +150,7 @@ RETURN tom, movie1, coActor, movie2, cruise
 
 This returns multiple _Bacon-Paths_, even with _Kevin Bacon_ himself.
 
-So with two simple Cypher statements we created already two recommendation algorithms: *Who you show know* and *How you get to know them*.
+So with two simple Cypher statements we created already two recommendation algorithms: *Who you should know* and *How you get to know them*.
 
 You can also watch the video of Andreas running these queries live on our main example movie dataset.
 
@@ -160,11 +160,11 @@ You can also watch the video of Andreas running these queries live on our main e
 
 === Restaurant Recommendation
 
-Imagine a graph like this, a few friends with their favorite restaurants, their cuisines and locations.
+Imagine a graph like this: a few friends with their favorite restaurants, their cuisines and locations.
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/restaurant-recommendation.png[]
 
-A practical question to answer here, formulated in http://neo4j.com/blog/why-the-most-important-part-of-facebook-graph-search-is-graph/[Graph Search] slang is:
+A practical question to answer here, formulated in http://neo4j.com/blog/why-the-most-important-part-of-facebook-graph-search-is-graph/[Graph Search] slang,
 
 ----
 Sushi restaurants in New York that my friends like
