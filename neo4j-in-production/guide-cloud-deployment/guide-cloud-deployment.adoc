@@ -9,11 +9,14 @@
 
 .Goals
 [abstract]
-This guide highlights the different options for setting up Neo4j in the cloud. It will setting up a template on ec2 on AWS, expalin the setup on Azure and introduce the different Neo4j cloud hosting parters.
+This guide highlights the different options for setting up Neo4j in the cloud.
+It includes setting up a template on EC2 on AWS, explain the setup on Azure, and introduce the different Neo4j cloud-hosting partners.
 
 .Prerequisites
 [abstract]
-You should know how to run and operate Neo4j locally. Knowledge of remote drivers to access Neo4j from your application helps you to connect to your cloud hosted database. For the self service hosting you should bring along enough sysops experience that a linux system doesn't freak you out.
+You should know how to run and operate Neo4j locally. 
+Knowledge of remote drivers to access Neo4j from your application helps you connect to your cloud-hosted database. 
+For self-service hosting you should bring along enough sysops experience that a Linux system doesn't freak you out.
 
 [role=expertise]
 {level}
@@ -25,24 +28,23 @@ toc::[]
 We provide an https://github.com/neo4j-contrib/neo4j-puppet/blob/master/README.CLOUDFORMATION.md[*EC2 Cloud Formation Template*] that allows you to quickly provision an appropriate instance and install and set-up Neo4j on that machine.
 
 This template creates a complete Neo4j installation, including Amazon AWS server, fixed IP address and backup storage. 
-It's intended to help application developers get up and running quickly with Neo4j, 
-without in-depth experience of Linux servers, AWS, or installing databases like Neo4j.
+It's intended to help application developers get up and running quickly with Neo4j without in-depth experience of Linux servers, AWS, or installing databases like Neo4j.
 
 
-If you are proficient, setting up AWS instances, you can also install Neo4j on any provisioned Linux instance 
+If you are proficient at setting up AWS instances, you can also install Neo4j on any provisioned Linux instance 
 
 [role=side-nav]
 === Recommended
 
 * https://github.com/neo4j-contrib/neo4j-puppet/blob/master/README.CLOUDFORMATION.md[Neo4j Cloud Formation Template]
-* https://github.com/neo4j-contrib/neo4j-puppet/blob/master/README.md[Manual ec2 Setup with Puppet]
+* https://github.com/neo4j-contrib/neo4j-puppet/blob/master/README.md[Manual EC2 Setup with Puppet]
 * http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html[AWS EC2 Getting Started Guide]
-* http://blogs.mindspew-age.com/2012/12/04/another-great-example-of-aws-fidelity-neo4j-cloud-init-and-eucalyptus/[Neo4j, Cloud-Init and Eucalyptus]
+* http://blogs.mindspew-age.com/2012/12/04/another-great-example-of-aws-fidelity-neo4j-cloud-init-and-eucalyptus/[Neo4j, Cloud-Init, and Eucalyptus]
 
 === Neo4j Provisioning Solutions
 
 * https://github.com/michaelklishin/neo4j-server-chef-cookbook[Neo4j Server Chef Cookbook]
-* https://github.com/maxehmookau/neo4j-ansible[Ansible Playbooks] for booting a server running the neo4j graph database system
+* https://github.com/maxehmookau/neo4j-ansible[Ansible Playbooks] for booting a server running the Neo4j graph database system
 * https://github.com/julienroubieu/ansible-neo4j[Ansible role to install Neo4j], with Vagrant support
 
 === Windows Azure
@@ -78,13 +80,13 @@ If you provision databases via their offering, you enter a contract with those p
 ==== GrapheneDB
 
 http://graphenedb.com/[GrapheneDB] offers comprehensive hosting plans for Neo4j, taking care of the operational aspects of running a graph database.
-GrapheneDB is also available Heroku Add-On with free and tiered plans
+GrapheneDB is also available as a Heroku Add-On with free and tiered plans.
 
 image::{img}/graphenedb.png[width=400]
 
 The platform supports current Neo4j Community Editions.
 
-* Paid plans are dedicated instances running on Amazon with following features:
+* Paid plans are dedicated instances running on Amazon with the following features:
 * Hosting in any AWS region
 * Online, automated daily backups and manual snapshots
 * 24x7 monitoring and alerts
@@ -99,14 +101,15 @@ image::http://www.graphstory.com/img/imac.png[width=400]
 It comes with these features:
 
 * Staging and Production in one package
-* Graph Sample Apps & Data
+* Graph Sample Apps and Data
 * Scheduled backups
-* Get your graph-backed application up & running within minutes
+* Get your graph-backed application up and running within minutes
 * Secure access to your graph database and graph management tools
 
 ==== Structr.com
 
-On http://structr.com you can host both http://structr.org[structr] and Neo4j instances. It offers:
+On http://structr.com you can host both http://structr.org[structr] and Neo4j instances.
+It offers:
 
 image::https://structr.org/blog/snapshots.png[width=400]
 
@@ -122,7 +125,7 @@ Neo4j graph database hosting made easy with https://graphhost.com/[GraphHost]
 
 image::https://graphhost.com/assets/appbg-44a5e35aea32ecba2899d4a7e71ff598.png[width=400]
 
-* We just need your email address and a password.
-* Pick an instance size. We offer small, medium large. 
-* All plans come with 20GB storage and 1TB transfer as standard.
-* You then have full access to your graph database. API, webadmin within minutes.
+* Just needs your email address and a password
+* Offers small, medium, and large instance sizes
+* All plans come with 20GB storage and 1TB transfer as standard
+* Rull access to your graph database. API, webadmin within minutes
