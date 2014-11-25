@@ -49,7 +49,7 @@ _The building blocks of the Property Graph_
 
 There is only one consistent rule in a graph database: "No broken links".
 Since a relationship always has a start and end node, you can’t delete a node without also deleting its associated relationships.
-You also can always assume that an existing relationship will not point to a non-existing endpoint.
+You can also always assume that an existing relationship will not point to a non-existing endpoint.
 
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/property_graph_model.png[]
@@ -67,9 +67,9 @@ image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/property_
 
 Sponsored by Neo Technology, Neo4j is an open-source NoSQL graph database implemented in Java and Scala.
 With development starting in 2003, it has been publicly available since 2007.
-The source code and issue tracking is available on https://github.com/neo4j[GitHub], with support readily available on Stack Overflow and the Neo4j Google group.
+The source code and issue tracking are available on https://github.com/neo4j[GitHub], with support readily available on Stack Overflow and the Neo4j Google group.
 Limited only by hardware, Neo4j is used today by hundreds of thousands of users in almost all industries.
-Use cases include match making, network management, software analytics, scientific research, routing, organizational and project management, recommendations, social networks, and more.
+Use cases include matchmaking, network management, software analytics, scientific research, routing, organizational and project management, recommendations, social networks, and more.
 
 Neo4j implements the Property Graph Model down to the storage level.
 As opposed to graph processing or in-memory libraries, Neo4j provides full database characteristics including ACID compliance, cluster support, and runtime failover, making it suitable to use graph data in production scenarios.
@@ -78,10 +78,11 @@ Some particular features make Neo4j very popular among users, developers, and DB
 
 - Materializing of relationships at creation time, resulting in no penalties for runtime queries
 - Constant time traversals for relationships in the graph both in depth and in breadth due to double-linking on storage level between nodes and relationships
-- All relationships in Neoj4 are equally important and fast, making it possible to materialize and use new relationships later on to "shortcut" and speed up the domain data when new needs arise
-- Compact storage and memory caching for graphs, resulting in efficient scale up and billions of nodes in one database on moderate hardware
+- All relationships in Neo4j are equally important and fast, making it possible to materialize and use new relationships later on to "shortcut" and speed up the domain data when new needs arise
+- Compact storage and memory caching for graphs, resulting in efficient scale-up and billions of nodes in one database on moderate hardware
 - Written on top of the JVM
 
+// Error in graphic: Embedded not embeded
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/neo4j-nosql.png[]
 
 === Neo4j Editions
