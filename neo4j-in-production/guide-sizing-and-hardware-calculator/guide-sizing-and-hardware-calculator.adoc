@@ -1,4 +1,4 @@
-= Neo4j's Hardware Requirements?
+= Neo4j's Hardware Requirements
 :level: Advanced
 :toc:
 :toc-placement!:
@@ -9,8 +9,8 @@
 
 .Goals
 [abstract]
-This guide explains Neo4J sizing and hardware calculation tips and best practices. 
-It details you need to make Neo4j fly.
+This guide explains Neo4j sizing and hardware calculation tips and best practices. 
+It details what you need to make Neo4j fly.
 
 .Prerequisites
 [abstract]
@@ -25,19 +25,19 @@ toc::[]
 
 === Neo4j's Architecture
 
-Neo4j is a native graph database, it handles the graph data records down to the disk/filesystem level.
+Neo4j is a native graph database; it handles the graph data records down to the disk/filesystem level.
 On top of the memory mapped filesystem, Neo4j employs additional caches for loaded Node and Relationship-Records.
 
 === Disk Storage
 
-Neo4j's storage is organized in record based files per data structure - nodes, relationships, properties, labels, etc.
+Neo4j's storage is organized in record-based files per data structure - nodes, relationships, properties, labels, and so on.
 Each node and relationship record block is directly addressable by its id.
 
 The blocks have different sizes to accommodate the different type of data they contain:
 
 * Node records: labels, pointer to first relationship, pointer to first property block.
 * Relationship records: relationship-type, pointers to: start-node, end-node, first property block, next-relationship and previous relationship for both start and end-nodes
-* Property records: up to 4 property entries, for each the property-key-id, and a encoded / compressed property value or pointer to string or array storage list
+* Property records: up to four property entries, each with a property-key id, and an encoded / compressed property value or pointer to string or array storage list
 
 Nodes occupy 15B of space, relationships occupy 31B of space and properties occupy 41B of space.
 
@@ -62,9 +62,9 @@ Total  is 110.2MB
 
 === Low Level Cache
 
-The low level cache requirements are the same as disk space.
-It's configuration (memory mapped regions per file), is done in `conf/neo4j.properties`.
-You should try to memory map as much data as your RAM allows (allow for 6-16GB heap depending on availability and use-cases).
+The low level cache requirements are the same as for the disk space.
+Its configuration (memory mapped regions per file), is done in `conf/neo4j.properties`.
+You should try to memory-map as much data as your RAM allows (allow for 6 to 16GB heap depending on availability and use-cases).
 
 === Optimizing
 
@@ -79,7 +79,7 @@ In optimizing a graph database solution for performance, we should bear the foll
 There are three areas in which we can optimize for performance:
 
 * Keep the object cache to a reasonable size (2 to 16 GB, about 50% of the heap)
-* Increase the file cache (from 2 GB, all the way up to 200 GB or more in exceptional circumstances)
+* Increase the file cache (from 2 GB all the way up to 200 GB or more in exceptional circumstances)
 * Increase the percentage of the store mapped into the filesystem cache
 * Invest in faster disks: SSDs or enterprise flash hardware
 
