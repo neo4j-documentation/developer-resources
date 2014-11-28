@@ -30,12 +30,12 @@ toc::[]
 
 === Relational Databases
 
-Relational databases have been (and continue to be) the power-horse of software applications since the 80s.
+Relational databases have been the power-horse of software applications since the 80s, and continue so to this day.
 They store highly structured data in tables with predetermined columns of certain types and many rows of the same type of information, and, thanks in part to the rigidity of their organization, force developers and applications to strictly structure the data used in their applications.
 
 In relational databases, references to other rows and tables are indicated by referring to their (primary-)key attributes, enforceable with constraints only when the connection is never optional.
-Relationships are computed at query time by matching primary and foreign keys of the many (potentially indexed) rows of the to be joined tables.
-These operations are CPU and RAM intensive and with an exponential cost.
+Relationships are computed at query time by matching primary and foreign keys of the many (potentially indexed) rows of the to-be-joined tables.
+These operations are CPU- and RAM-intensive and with an exponential cost.
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/rel_graph4.jpg[]
 
@@ -56,18 +56,18 @@ In some regards, graph databases are like the next generation of relational data
 Each node (entity or attribute) in the graph database model directly contains a list of relationship-records that represent its relationships to other nodes, organized by type and direction and holding additional attributes.
 Whenever you run the equivalent of a  _JOIN_ operation, the database walks this list and has direct access to the connected nodes, eliminating the need for a costly search / match computation.
 
-The resulting models are simpler and at the same time more expressive than those produced using traditional relational databases and the other NOSQL stores.
+The resulting models are simpler and at the same time more expressive than those produced using traditional relational databases and the other NoSQL stores.
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/rel_graph5.jpg[]
 
 Unlike other NoSQL databases, graph databases support a very flexible and fine-grained data model that allows you to model and manage rich domains in an easy and intuitive way.
 
 You more or less keep the data as it is in the real world: small, normalized, yet richly connected entities.
-This allows you to query and view your data from any imaginable view point, supporting many different use-cases.
+This allows you to query and view your data from any imaginable viewpoint, supporting many different use-cases.
 
-The fine grained model also means that there is no natural boundary around aggregates, so the scope of update operations has to be provided by the application.
-The well-known and tested concept of transactions groups a set of updates of nodes and relationships into a atomic, consistent, isolated, and durable (ACID) operation.
-Graph databases like Neo4j fully support the transactional concepts including write ahead logs and recovery after abnormal termination.
+The fine-grained model also means that there is no natural boundary around aggregates, so the scope of update operations has to be provided by the application.
+The well-known and tested concept of transactions groups a set of updates of nodes and relationships into an atomic, consistent, isolated, and durable (ACID) operation.
+Graph databases like Neo4j fully support the transactional concepts including write-ahead logs and recovery after abnormal termination.
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/rel_graph9.jpg[]
 
@@ -80,17 +80,17 @@ image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/domain.pn
 [role=side-nav]
 === Recommended
 
-* link:../graph-database["What is a Graph Database"]
+* link:../graph-database["What is a Graph Database?"]
 * https://vimeo.com/103466968["Intro to Neo4j"^,role=webinar]
 * http://neo4j.com/events?type=Training["Neo4j Training",role=event]
 
 === Graph Querying with Cypher
 
-Querying relational databases is easy with SQL, a declarative query language allows both for easy ad-hoc querying in a database tool as well as specifying use-case related queries in your code.
+Querying relational databases is easy with SQL a declarative query language that allows both for easy ad-hoc querying in a database tool as well as specifying use-case related queries in your code.
 Even object-relational mappers use SQL under the hood to talk to the database.
 
 Do graph databases have something similar?
-Cypher, Neo4j's declarative graph query language, is built on the basic concepts and clauses of SQL but added a lot of graph-specific functionality to make it simple to work with your rich graph model without being too verbose.
+Cypher, Neo4j's declarative graph query language, is built on the basic concepts and clauses of SQL but has a lot of additional graph-specific functionality to make it simple to work with your rich graph model without being too verbose.
 
 If you have ever tried to write a SQL statement with a large number of JOINs, you know that you quickly lose sight of what the query actually does due to all the technical noise.
 
@@ -130,7 +130,7 @@ If you've installed and started Neo4j as a server on your system, you can intera
 
 If you want to access Neo4j programmatically, you can do so with one of the many integrated HTTP APIs, which allow you to:
 
-* POST one or more cypher statements with parameters per request to the server
+* POST one or more Cypher statements with parameters per request to the server
 * Keep transactions open over multiple requests
 * Choose different result formats
 
@@ -146,8 +146,8 @@ curl -i -H accept:application/json -H content-type:application/json \
 {"results":[{"columns":["p"],"data":[{"row":[{"name":"Daniel"}]}]}],"errors":[]}
 ----
 
-In most cases you don't want to connect to Neo4j manually, but with a driver or connector library designed for your stack or programming language.
-Thanks to the Neo4j community, there are drivers for Neo4j for almost every popular programming language, most of which mimic existing database driver idioms and approaches.
+In most cases you don't want to connect to Neo4j manually, but with a driver or connector library designed for your stack or programing language.
+Thanks to the Neo4j community, there are drivers for Neo4j for almost every popular programing language, most of which mimic existing database driver idioms and approaches.
 
 For instance, the Neo4j JDBC driver would be used like this:
 
@@ -177,7 +177,7 @@ try (PreparedStatement stmt = con.prepareStatement(QUERY)) {
 
 === Importing Data from a Relational Database
 
-If you have a good understanding what your graph model should look like, i.e. what data will be represented as nodes or relationships and how the labels, relationship-types, and attributes are named, you're ready to go.
+If you have a good understanding of what your graph model should look like, i.e. what data will be represented as nodes or relationships and how the labels, relationship-types, and attributes are named, you're ready to go.
 
 The easiest way to import data from your relational database is to create a CSV dump of either individual tables and JOIN-tables or of a JOINed, denormalized representation.
 
@@ -189,7 +189,7 @@ Then you can take the CSV file and use Cypher's `LOAD CSV` power tool to:
 * `MATCH` nodes based on attribute lookups
 * `CREATE` or `MERGE` nodes and relationships with labels and attributes from the row data
 
-For Example:
+For example:
 
 .persons.csv
 [source,csv]

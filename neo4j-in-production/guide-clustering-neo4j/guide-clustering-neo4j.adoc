@@ -10,7 +10,7 @@
 .Goals
 [abstract]
 This guide describes how to configure clustering in an Enterprise Neo4J installation.
-This includes topics such as data synchronization, mending procedures, configuring an arbiter and slave-only mode configuration.
+This includes topics such as data synchronization, mending procedures, configuring an arbiter, and slave-only mode configuration.
 
 .Prerequisites
 [abstract]
@@ -38,9 +38,9 @@ Any data (graph or index) created on the master is propagated to the slaves depe
 === Configuring a Two-Slave Cluster with an Arbiter
 
 There's a {manual}/ha-setup-tutorial.html[step-by-step tutorial for setting up a HA cluster].
-For a 2 node cluster, you'll actually want to run three separate machines, and use the Neo4j arbiter on the third.
+For a two-node cluster, you'll actually want to run three separate machines, and use the Neo4j arbiter on the third.
 Details on the arbiter are available in the {manual}/arbiter-instances.html[Neo4j Manual].
-The configuration for the arbiter is identical to that of a regular instance, with the exception of anything relating to the actual graph db itself (since an arbiter doesn't hold any data).
+The configuration for the arbiter is identical to that of a regular instance, with the exception of anything relating to the actual graph database itself (since an arbiter doesn't hold any data).
 
 The `ha.initial_hosts` property should be the same on all the instances, including the arbiter.
 The arbiter should have a unique `ha.server_id` (`3` is fine).
@@ -49,8 +49,7 @@ The arbiter should have a unique `ha.server_id` (`3` is fine).
 
 See the {manual}/ha-configuration.html[documentation] on `ha.slave_only`.
 
-You might want to configure a machine with that setting if it’s acting as a reporting instance but you need to make sure that two members don’t have that setting.
-Otherwise you won’t have any failover in the cluster.
+You might want to configure a machine with that setting if it’s acting as a reporting instance but you need to make sure that two members don’t have that setting, or you won’t have any failover in the cluster.
 
 === Backing Up a Cluster Server
 
@@ -69,10 +68,10 @@ image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/neo4j-log
 === Mending Procedure for Master
 
 * Shut down all members of the cluster and stop any load against the cluster
-* On the master instance, copy the data/graph.db folder as a backup
-* Modify neo4j-server.properties, set the org.neo4j.server.database.mode to "STANDALONE"
+* On the master instance, copy the `data/graph.db` folder as a backup
+* Modify neo4j-server.properties, setting the org.neo4j.server.database.mode to "STANDALONE"
 * Start the database and, once it's running, stop it again (this is to ensure he database is cleanly shut down)
-* Remove all files named nioneo_logical.log.vXX in data/graph.db, being careful to not remove any files without the "v", like `nioneo_logical.log.1` or `nioneo_logical.log.active`
+* Remove all files named nioneo_logical.log.vXX in data/graph.db, being careful not to remove any files without the "v", like `nioneo_logical.log.1` or `nioneo_logical.log.active`
 * Start the server and use either neo4j-shell or the neo4j browser to issue the following two queries:
 
 . First query. Note the id returned here
@@ -96,7 +95,7 @@ MATCH (n) WHERE id(n) = <your node id> DELETE n
 ===  Mending Procedure for Slaves
 
 * On each slave, remove the `data/graph.db` folder
-* Start the slave, watch `data/graph.db` for it to copy the store from the master
+* Start the slave, and watch `data/graph.db` for it to copy the store from the master
 * Once copying is done, move to do the same thing on the second slave
 
 [role=side-nav]

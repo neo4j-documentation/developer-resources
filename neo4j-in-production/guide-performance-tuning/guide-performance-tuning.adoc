@@ -32,10 +32,10 @@ toc::[]
 
 Also see: {manual}/configuration-caches.html
 
-3 types of memory to consider::
-. OS memory for non-neo4j usage
+There are three types of memory to consider:
+. OS memory for non-Neo4j usage
 . Mapped memory is all the neostore.*.db.*_mapped_memory, mapped from disk files
-. Heap is used for node & relationship caches + java memory management (old gen, new gen, garbage collection, etc.)
+. Heap is used for node and relationship caches plus Java memory management (old gen, new gen, garbage collection, and so on)
 
 Memory Calculations::
 . First, decide how much memory should be left for the OS.
@@ -57,14 +57,14 @@ Memory Calculations::
 . In neo4j-wrapper.conf, set wrapper.java.initmemory and wrapper.java.maxmemory to H. NOTE: "M" is not specified in the value since it is already in MB
     .. wrapper.java.initmemory = `H / (1024 * 1024)`
     .. wrapper.java.maxmemory = `H / (1024 * 1024)`
-. Next decide on the size of caches that are stored in memory in the heap.
-    .. Heap consists of "new generation" and "old generation" memory. New generation is for short-lived objects and takes about 1/3 of the heap by default (specified by -XX:NewRatio=3). If an object survives long enough, it is moved to the old generation which takes about 2/3 of the heap by default. The caches live in the old generation. The old generation needs about 30-40% of its space for CMS gc and another amount for the working set, which tends to remain fairly constant. The remaining old generation is where the caches live and this amount should not exceed 35-40% of the old generation (although if we know the working set and lots of RAM, we could use more). So if the new gen ratio is 1/3, allocate roughly 1/3 of the heap for caches. If it's 1/2, allocate roughly 1/4 of the heap for caches. Adjust this accordingly to available RAM so there is enough space for GC & the working set.
+. Next, decide on the size of caches that are stored in memory in the heap.
+    .. Heap consists of "new generation" and "old generation" memory. New generation is for short-lived objects and takes about one third of the heap by default (specified by -XX:NewRatio=3). If an object survives long enough, it is moved to the old generation which takes about two thirds of the heap by default. The caches live in the old generation. The old generation needs about 30-40% of its space for CMS gc and another amount for the working set, which tends to remain fairly constant. The remaining old generation is where the caches live and this amount should not exceed 35-40% of the old generation (although if we know the working set and have lots of RAM, we could use more). So if the new gen ratio is one third, allocate roughly one third of the heap for caches. If it's one half, allocate roughly one quarter of the heap for caches. Adjust this accordingly to available RAM so there is enough space for GC and the working set.
     .. node_cache_size + relationship_cache_size = (.25 to .33) * Heap
 
 Graph traversals to consider::
-. If you're using queries that will have a relatively large working set (ie. will be traversing long paths, looking at lots of properties, or collecting large sets of results in order to do sorting, etc) then you'll need a more working heap. If you have small queries, that do very limited traversal and return small amounts of data, you need less. Assume 1-2GB to start and tune from there
+. If you're using queries that will have a relatively large working set (ie. will be traversing long paths, looking at lots of properties, or collecting large sets of results in order to do sorting, etc) then you'll need a larger working heap. If you have small queries that do very limited traversals and return small amounts of data, you need less. Assume 1-2GB to start and tune from there
 
-. Fraction of the heap to use for nodes & relationships when using gcr. OK to leave at default (5% or 10%?). Acceptable values are 1-10%
+. The fraction of the heap to use for nodes & relationships when using gcr is OK to leave at default (5% or 10%). Acceptable values are 1-10%.
     .. #node_cache_array_fraction=10
     .. #relationship_cache_array_fraction=10
 
@@ -94,11 +94,11 @@ Config for c3.2xlarge instances (15 GB RAM)
 
 === Cache Sizing
 
-The node_cache_size and relationship_cache_size should not be more than 1/3 of the total heap size.
-The JVM typically uses 1/3 of the heap for the "new generation", leaving 2/3 for the old generation.
+The node_cache_size and relationship_cache_size should not be more than one third of the total heap size.
+The JVM typically uses 1/3 of the heap for the "new generation", leaving two thirds for the old generation.
 This is where the caches will live, along with any other longer term memory use.
-This space also needs additional headroom to all the garbage collector to operate correctly.
-Note that we also often suggest changing that initial ratio so that the "new generation" uses 1/2 the heap, rather than only 1/3, as Neo4j (and especially Cypher) often has high requirements for temporary memory use, especially when many concurrent threads are accessing it.
+This space also needs additional headroom to allow the garbage collector to operate correctly.
+Note that we also often suggest changing that initial ratio so that the "new generation" uses a half the heap, rather than only a third, as Neo4j (and especially Cypher) often has high requirements for temporary memory use, particularly when many concurrent threads are accessing it.
 However, that reduces the size available for the caches accordingly.
 
 === Specifying JVM tuning properties
@@ -106,14 +106,16 @@ However, that reduces the size available for the caches accordingly.
 Tuning the standalone server is achieved by editing the `neo4j-wrapper.conf` file in the conf directory of NEO4J_HOME.
 
 The heap space parameter is the most important one for Neo4j, since this governs how many objects you can allocate.
-When it comes to heap space the general rule is: the larger heap space you have the better, but make sure the heap fits in the RAM memory of the computer.
+When it comes to heap space the general rule is the larger heap space you have the better, but make sure the heap fits in the RAM memory of the computer.
 If the heap is paged out to disk performance will degrade rapidly.
-Having a heap that is much larger than what your application needs is not good either, since this means that the JVM will accumulate a lot of dead objects before the garbage collector is executed, this leads to long garbage collection pauses and undesired performance behavior.
+Having a heap that is much larger than your application needs is not good either, since this means that the JVM will accumulate a lot of dead objects before the garbage collector is executed.
+This leads to long garbage collection pauses and undesired performance behavior.
 
 Typically we aim to have those memory_mappings cover the entire size of the on-disk store, to ensure all the graph content is cached into memory.
-The remaining memory can then be split between the Neo4j heap and the rest of the operating system (& other processes).
+The remaining memory can then be split between the Neo4j heap and the rest of the operating system (and other processes).
 
-Edit your `neo4j-wrapper` file to set the heap size. It is recommended that the initmemory and the maxmemory properties be set to the same number.
+Edit your `neo4j-wrapper` file to set the heap size.
+It is recommended that the initmemory and the maxmemory properties be set to the same number.
 
 For example:
 
@@ -123,7 +125,7 @@ wrapper.java.maxmemory=24512
 ----
 
 Finally make sure that the OS has some memory left to manage proper file system caches.
-This means, if your server has 8GB of RAM don't use all of that RAM for heap (unless you have turned off memory mapped buffers), but leave a good part of it to the OS.
+This means if your server has 8GB of RAM don't use all of that RAM for heap (unless you have turned off memory mapped buffers), but leave a good part of it to the OS.
 
 [role=side-nav]
 === Recommended
@@ -140,7 +142,7 @@ The main configuration file for the server can be found at `conf/neo4j-server.pr
 === Logical Logs
 
 Logical logs in Neo4j are the source of truth in scenarios where the database needs to be recovered after a crash or similar.
-Logs are rotated every now and then (defaults to when they surpass 25 Mb in size) and the amount of legacy logs to keep can be configured.
+Logs are rotated every now and then (defaults to when they surpass 25 Mb in size) and the number of legacy logs to keep can be configured.
 
 It is recommended that the `keep_logical_logs` parameter be set to `7 days`
 
@@ -148,5 +150,5 @@ It is recommended that the `keep_logical_logs` parameter be set to `7 days`
 
 The usual default of `1024` is often not enough, especially when many indexes are used or a server installation sees too many connections (network sockets count against that limit as well).
 Users are therefore encouraged to increase that limit to a healthy value of `40000` or more, depending on usage patterns.
-Setting this value via the ulimit command is possible only for the root user and that for that session only.
+Setting this value via the ulimit command is possible only for the root user and for that session only.
 To set the value system wide you have to follow the instructions for your platform ({manual}/linux-performance-guide.html#_setting_the_number_of_open_files[Linux]).

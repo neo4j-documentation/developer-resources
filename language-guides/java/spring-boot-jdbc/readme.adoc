@@ -1,9 +1,10 @@
 == Spring Boot Neo4j JDBC - Movies Example Application
 
-Even if http://neo4j.org[Neo4j] is all about graphs, its graph query language http://neo4j.org/learn/cypher[Cypher] is well suited to be used with JDBC (Java Database Connectivity). As you probably know JDBC is a common way to connect to a datastore, especially since there
-is a lot of tooling and connectors written around it in the Business Intelligence, Data Migration and ETL world.
+Even if http://neo4j.org[Neo4j] is all about graphs, its graph query language http://neo4j.org/learn/cypher[Cypher] is well suited to be used with JDBC (Java Database Connectivity).
+As you probably know, JDBC is a common way to connect to a datastore, especially since there
+are a lot of tooling and connectors written around it in the Business Intelligence, Data Migration, and ETL world.
 
-The Neo4j JDBC driver works with Neo4j server in version 1.9.x and 2.x and with embedded and in-memory databases.
+The Neo4j JDBC driver works with Neo4j Server in version 1.9.x and 2.x and with embedded and in-memory databases.
 It allows you to (transactionally) execute parametrized Cypher statements against your Neo4j database to either create,
 query or update data.
 
@@ -12,7 +13,7 @@ Here we integrate Neo4j-JDBC with Spring-Boot and the traditional Spring-JDBC (J
 
 === The Stack
 
-These are the components of our min- Web Application:
+These are the components of our mini Web Application:
 
 * Application Type:         Java-Web Application
 * Web framework:            Spring-Boot with Spring-WebMVC
@@ -38,9 +39,9 @@ curl http://neo4j-movies.herokuapp.com/graph
 
 === Setup
 
-Spring Boot is a rapid application development enviroment, bundling necessary Spring modules into easy to use `-starter` packages.
+Spring Boot is a rapid application development environment, bundling necessary Spring modules into easy-to-use `starter` packages.
 
-It is based on annotation based Java config and pre-configuring the packages with sensible defaults.
+It is based on annotation-based Java config and pre-configuring the packages with sensible defaults.
 You can adapt them in a single `application.properties` config file.
 
 You add the dependency to the JDBC driver and Spring-Boot-Starters to your `pom.xml`:
@@ -52,16 +53,18 @@ include::pom.xml[tags=dependencies]
 
 For the backend we use a Spring-WebMVC `@RestController` whose service methods access an autowired `JdbcTemplate`.
 
-Currently we get the `NEO4J_URL` from a system-property, but it should be equally simple to get it from an entry in `application.properties`.
+Currently we get the `NEO4J_URL` from a system property, but it should be equally simple to get it from an entry in `application.properties`.
 
-Using the JDBC-template with Cypher is easy, here is an example from the `/movie` endpoint.
+Using the JDBC-template with Cypher is easy. 
+Here is an example from the `/movie` endpoint:
 
 [source,java]
 ----
 include::src/main/java/movies/spring/jdbc/SampleMovieApplication.java[tags=jdbctemplate]
 ----
 
-You would then set parameters on your statement, please note that only numeric parameter-names are possible, _starting from 1_.
+You would then set parameters on your statement.
+Please note that only numeric parameter names are possible, _starting from 1_.
 
 You can use all known `JdbcTemplate` methods, like `queryForObjects`, `queryForMap` and `RowMapper` or `ResultSetCallBack` as you're used to.
 
@@ -79,7 +82,7 @@ mvn spring-boot:run
 
 Go to http://localhost:8080
 
-You can search for movies by title or and click on any entry .
+You can search for movies by title and/or click on any entry.
 
 ////
 === Deploy to CloudFoundry
