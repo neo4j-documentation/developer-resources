@@ -41,11 +41,13 @@ There are three popular gems for Neo4j:
 
 ==== Feature Comparison
 
-Each gem fills a different need, so the choice of a gem should be based on the plans for your app and its hosting. You may also want to consider frequency of updates, versions of Neo4j supported, and size of the community. Here's a comparison chart of the these three gems to help make your decision.
+Each gem fills a different need, so the choice of a gem should be based on the plans for your app and its hosting. You may also want to review frequency of updates, versions of Neo4j supported, and size of the community. Here's a comparison chart of the these three gems to help make your decision.
 
 |===
 
 | Feature | Neography | Neo4j-core | Neo4j (Neo4j.rb)
+
+| Summary | Thin wrapper for the REST API. Fewest dependencies. | Provides simple communication with DB, Cypher DSL. | Full-featured ORM similar to ActiveRecord.
 
 | Neo4j Embedded/Java API | No | Yes | Yes
 
@@ -55,15 +57,13 @@ Each gem fills a different need, so the choice of a gem should be based on the p
 
 | Cypher DSL | No | Yes | Yes, plus advanced query builder (QueryProxy)
 
-| ActiveModel-complaint (Drop-in use with Ruby on Rails) | No | Yes | Yes
+| ActiveModel-complaint (Drop-in use with Ruby on Rails) | No | No | Yes
 
 | Legacy Indexing Support | Yes | No | No
 
-| Github Commits (11/25/2014) | 609 | 606 | 1974
+| Neo4j 1.X Support | Yes | No | No
 
-| Github Stars (11/25/2014) | 538 | 45 | 757
-
-| Github Contributors (11/25/2014) | 52 | 20 | 44
+| Neo4j 2.X Support | Yes | Yes | Yes
 
 |===
 
@@ -81,8 +81,6 @@ include::../_includes/sample_project.adoc[]
 
 === Neography
 
-To install: `gem install neography`
-
 Written by our own Max De Marzi, Neography feels very familiar if you’re already used to Neo4j: it’s designed as a thin wrapper above our database APIs.
 It supports the Neo4j transactional Cypher endpoint as well as the existing REST API and even supports Neo4j-Spatial.
 
@@ -97,7 +95,7 @@ Compared to Neo4j-core, it is notable for its smaller footprint, fewer dependenc
 
 Andreas Ronge is one of our Swedish friends from Malmö and has been writing the https://github.com/neo4jrb[canonical Neo4j driver] since before we hit 1.0.
 
-The http://twitter.com/neo4jrb[Neo4j.rb team] (Andreas Ronge, Brian Underwood, Chris Grigg) continued the effort and just http://neo4j.com/blog/neo4j-rb-3-0-released/[released version 3.0] in September 2014, with version 4.0 expected in late 2014. Neo4j.rb 3.0 won a Neo4j Graphie award for "Best Community Contribution" at the 2014 GraphConnect Conference.
+The http://twitter.com/neo4jrb[Neo4j.rb team] (Andreas Ronge, Brian Underwood, Chris Grigg) continued the effort and just http://neo4j.com/blog/neo4j-rb-3-0-released/[released version 3.0] in September 2014. Neo4j.rb 3.0 won a Neo4j Graphie award for "Best Community Contribution" at the 2014 GraphConnect Conference.
 
 In addition to working actively on the https://github.com/neo4jrb[Neo4jrb project], Brian and Chris are very active community members, both online on Stack Overflow and Twitter as well as in person at meetups and Neo4j events.
 
@@ -105,13 +103,10 @@ Both projects support accessing Neo4j in embedded mode via JRuby and server mode
 
 ==== Neo4j-core
 
-To install Neo4j-core: `gem install neo4j-core`
 
 Similar to Neography, Neo4j-core is a gem that provides low-level communication to a Neo4j server. In addition to basic database communicaton and node/relationship CRUD, Neo4j-core provides strong support for Neo4j 2.0's schema indexes, constraints, labels, and a strong Cypher DSL.
 
 ==== Neo4j.rb
-
-To install Neo4j.rb: `gem install neo4j`
 
 The Neo4j gem, Neo4j.rb, uses Neo4j-core as an API to connect to the server and provides an ActiveRecord-like experience for use in frameworks. It adds modules allowing the creation of models that look and feel very similar to those found in vanilla Ruby on Rails. The gem builds on Neo4j-core's foundation to streamline all aspects of node and relationship CRUD and provides an extremely advanced, intuitive, flexible DSL for generating Cypher.
 
