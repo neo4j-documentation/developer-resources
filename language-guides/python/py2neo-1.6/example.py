@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 
-from json import dumps
+import json
 
 from bottle import get, run, request, response, static_file
 from py2neo.neo4j import GraphDatabaseService, CypherQuery
@@ -12,7 +12,7 @@ graph = GraphDatabaseService()
 
 @get("/")
 def get_index():
-    return static_file("index.html",root="static")
+    return static_file("index.html", root="static")
 
 
 @get("/graph")
@@ -52,7 +52,7 @@ def get_search():
                                    "RETURN movie")
         results = query.execute(title="(?i).*" + q + ".*")
         response.content_type = "application/json"
-        return dumps([{"movie": row["movie"].get_cached_properties()} for row in results.data])
+        return json.dumps([{"movie": row["movie"].get_cached_properties()} for row in results.data])
 
 
 @get("/movie/<title>")
@@ -64,7 +64,8 @@ def get_movie(title):
                                "LIMIT 1")
     results = query.execute(title=title)
     row = results.data[0]
-    return {"title": row["title"], "cast": [dict(zip(("name", "job", "role"), member)) for member in row["cast"]]}
+    return {"title": row["title"],
+            "cast": [dict(zip(("name", "job", "role"), member)) for member in row["cast"]]}
 
 
 if __name__ == "__main__":
