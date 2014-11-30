@@ -6,7 +6,7 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>Using Neo4j from PHP | Developer Resources | Neo4j Graph Database</title>
+         <title>Untitled | Developer Resources | Neo4j Graph Database</title>
          <script type="text/javascript">
             var _kmq = _kmq || [];
             var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
@@ -219,269 +219,881 @@
                         <div class="columns large-12" style="padding:10px 0 0;">
                            <ul class="breadcrumbs">
                               <li><a href="/developer-resources">Developer Guides</a></li>
-                              <li><a href="../">Develop with Neo4j</a></li>
-                              <li class="current"><a href="#">Using Neo4j from PHP</a></li>
+                              <li><a href="../">Guide</a></li>
+                              <li class="current"><a href="#">Untitled</a></li>
                            </ul>
                         </div>
                      </div>
                      <!-- <div class="row">
                         <div class="columns large-12">
-                           <h1 style="font-size:2.1rem;">Using Neo4j from PHP</h1>
+                           <h1 style="font-size:2.1rem;">Untitled</h1>
                         </div>
                      </div> -->
                      <section class="row" style="padding:10px 0;">
                         <div class="large-12 columns" style="padding-top:0;">
                            <div id="content">
-                              <div id="preamble">
-<div class="sectionbody">
-<div class="quoteblock abstract">
-<div class="title">Goals</div>
-<blockquote style="padding-left: 0;">
+                              
+
+<div class="paragraph">
+<p>&lt;!doctype html&gt; &lt;!--[if IE 9]&gt;
+&lt;html class="no-js ie9" lang="en"&gt;
+   &lt;![endif]-&#8594;
+   &lt;html class="no-js" lang="en"&gt;
+      &lt;head&gt;
+         &lt;meta charset="utf-8"/&gt;
+         &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"/&gt;
+         &lt;link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/&gt;
+         &lt;title&gt;Using Neo4j from PHP | Developer Resources | Neo4j Graph Database&lt;/title&gt;
+         &lt;script type="text/javascript"&gt;
+            var _kmq = _kmq || [];
+            var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
+            function _kms(u){
+                setTimeout(function(){
+                    var d = document, f = d.getElementsByTagName('script')[0],
+                        s = d.createElement('script');
+                    s.type = 'text/javascript'; s.async = true; s.src = u;
+                    f.parentNode.insertBefore(s, f);
+                }, 1);
+            }
+            _kms('//i.kissmetrics.com/i.js');
+            _kms('//doug1izaerwt3.cloudfront.net/' + _kmk + '.1.js');
+         &lt;/script&gt; &lt;script type="text/javascript"&gt;
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');</p>
+</div>
+
+<div class="literalblock">
+<div class="content">
+<pre>//Allow Linker
+ga('create', 'UA-1192232-34','auto', {'allowLinker': true});
+ga('send', 'pageview');</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>// Load the plugin.
+ga('require', 'linker');</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>      // Define which domains to autoLink.
+      ga('linker:autoLink', ['neo4j.org','neo4j.com','neotechnology.com','graphdatabases.com','graphconnect.com']);
+   &lt;/script&gt;
+   &lt;link rel="canonical" href="http://neo4j.com/guides/basic-data-modeling/"/&gt;
+   &lt;meta property="og:locale" content="en_US"/&gt;
+   &lt;meta property="og:type" content="article"/&gt;
+   &lt;meta property="og:title" content="Basic Data Modeling - Neo4j Graph Database"/&gt;
+   &lt;meta property="og:description" content="Please refer to the Neo4j Manual"/&gt;
+   &lt;meta property="og:url" content="http://neo4j.com/guides/basic-data-modeling/"/&gt;
+   &lt;meta property="og:site_name" content="Neo4j Graph Database"/&gt;
+   &lt;link rel="alternate" type="application/rss+xml" title="Neo4j Graph Database &amp;raquo; Feed" href="http://neo4j.com/feed/"/&gt;
+   &lt;link rel="alternate" type="application/rss+xml" title="Neo4j Graph Database &amp;raquo; Comments Feed" href="http://neo4j.com/comments/feed/"/&gt;
+   &lt;link rel="alternate" type="application/rss+xml" title="Neo4j Graph Database &amp;raquo; Basic Data Modeling Comments Feed" href="http://neo4j.com/guides/basic-data-modeling/feed/"/&gt;
+   &lt;link rel='stylesheet' id='font-awesome-four-css' href="http://neo4j.com/wp-content/plugins/font-awesome-4-menus/css/font-awesome.min.css?ver=4.1.0" type='text/css' media='all'/&gt;
+   &lt;link rel='stylesheet' id='foundation-css' href="http://neo4j.com/wp-content/themes/neo4jzurb/assets/css/app.css?ver=4.0.0" type='text/css' media='screen'/&gt;
+   &lt;link rel='stylesheet' id='neo-codemirror-css' href="http://neo4j.com/wp-content/themes/neo4jzurb/assets/css/codemirror-neo.css?ver=4.0.0" type='text/css' media='screen'/&gt;
+   &lt;script type='text/javascript'&gt;
+      /* &lt;![CDATA[ */
+      var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
+      /* ]]&gt; */
+   &lt;/script&gt; &lt;script type='text/javascript' src='http://neo4j.com/wp-content/plugins/neo4j-download/js/download.js?ver=4.0.0'&gt;&lt;/script&gt; &lt;script type='text/javascript' src='http://neo4j.com/wp-content/plugins/jquery-updater/js/jquery-2.1.0.min.js?ver=2.1.0'&gt;&lt;/script&gt; &lt;script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jzurb/assets/js/vendor/modernizr.min.js?ver=4.0.0'&gt;&lt;/script&gt; &lt;script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jzurb/assets/js/foundation.min.js?ver=4.0.0'&gt;&lt;/script&gt; &lt;script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jzurb/assets/js/vendor/codemirror.min.js?ver=4.0.0'&gt;&lt;/script&gt; &lt;script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jzurb/assets/js/neo_codemirror.js?ver=4.0.0'&gt;&lt;/script&gt; &lt;script type='text/javascript' src='//use.typekit.net/rdt4xku.js?ver=4.0.0'&gt;&lt;/script&gt; &lt;script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jzurb/assets/js/misc.js?ver=4.0.0'&gt;&lt;/script&gt; &lt;script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jzurb/assets/js/neo_calculator_v3.js?ver=4.0.0'&gt;&lt;/script&gt;
+   &lt;link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://neo4j.com/xmlrpc.php?rsd"/&gt;
+   &lt;link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://neo4j.com/wp-includes/wlwmanifest.xml"/&gt;
+   &lt;meta name="generator" content="WordPress 3.9.2"/&gt;
+   &lt;link rel='shortlink' href="http://neo4j.com/?p=32079"/&gt;
+   &lt;style type="text/css"&gt;.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+   &lt;div class="off-canvas-wrap"&gt;
+      &lt;div class="inner-wrap"&gt;
+         &lt;aside class="left-off-canvas-menu"&gt;
+            &lt;ul class="off-canvas-list"&gt;
+               &lt;li&gt;&lt;a href="http://neo4j.com/use-cases/"&gt;Use Cases&lt;/a&gt;&lt;/li&gt;
+               &lt;li&gt;&lt;a href="http://neo4j.com/customers/"&gt;Customers&lt;/a&gt;&lt;/li&gt;
+               &lt;li&gt;&lt;a href="http://neo4j.com/community/"&gt;Community&lt;/a&gt;&lt;/li&gt;
+               &lt;li&gt;&lt;a href="http://neo4j.com/docs/"&gt;Docs&lt;/a&gt;&lt;/li&gt;
+               &lt;li&gt;
+                  &lt;div class="medium-3 columns headspace-20"&gt;
+                     &lt;div class="row collapse"&gt;
+                        &lt;div class="small-10 columns"&gt;
+                           &lt;form role="search" method="get" id="searchform" class="searchform" action="http://neo4j.com/"&gt;
+                              &lt;input type="text" name="s" id="s"/&gt;
+                        &lt;/div&gt;
+                        &lt;div class="small-2 columns"&gt; &lt;div class="button postfix"&gt; &lt;input type="image" id="searchsubmit" src="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/searchicon.png" style="vertical-align:middle;"/&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt;
+                     &lt;/div&gt;
+                  &lt;/div&gt;
+               &lt;/li&gt;
+            &lt;/ul&gt;
+         &lt;/aside&gt;
+         &lt;div class="marquee"&gt;
+            &lt;div class="navigation"&gt;
+               &lt;div class="navigation-large hide-for-small"&gt;
+                  &lt;div class="row"&gt;
+                     &lt;div class="medium-9 large-7 columns nav-list"&gt;
+                        &lt;ul class="inline-list"&gt;
+                           &lt;li&gt;&lt;a href="http://neo4j.com/index.php"&gt;&lt;img src="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/logo-neo4j.svg" class="logo" alt="neo4j"&gt;&lt;/a&gt;&lt;/li&gt;
+                           &lt;li class="nav-link"&gt;&lt;a href="http://neo4j.com/use-cases/"&gt;Use Cases&lt;/a&gt;&lt;/li&gt;
+                           &lt;li class="nav-link"&gt;&lt;a href="http://neo4j.com/customers/"&gt;Customers&lt;/a&gt;&lt;/li&gt;
+                           &lt;li class="nav-link"&gt;&lt;a href="http://neo4j.com/community/"&gt;Community&lt;/a&gt;&lt;/li&gt;
+                           &lt;li class="nav-link"&gt;&lt;a href="http://neo4j.com/docs/"&gt;Docs&lt;/a&gt;&lt;/li&gt;
+                        &lt;/ul&gt;
+                     &lt;/div&gt;
+                     &lt;div class="medium-3 large-3 columns nav-search"&gt;
+                        &lt;div class="row collapse"&gt;
+                           &lt;div class="small-10 columns"&gt;
+                              &lt;form role="search" method="get" id="searchform" class="searchform" action="http://neo4j.com/"&gt;
+                                 &lt;input type="text" name="s" id="s"/&gt;
+                           &lt;/div&gt;
+                           &lt;div class="small-2 columns"&gt; &lt;div class="button postfix"&gt; &lt;input type="image" id="searchsubmit" src="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/searchicon.png" style="vertical-align:middle;"/&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt;
+                        &lt;/div&gt;
+                     &lt;/div&gt;
+                     &lt;div class="large-2 columns show-for-large-up"&gt; &lt;a href="http://neo4j.com/download/" class="tiny small button right"&gt;Download&lt;/a&gt; &lt;/div&gt;
+                  &lt;/div&gt;
+               &lt;/div&gt;
+               &lt;nav class="tab-bar show-for-small"&gt;
+                  &lt;section class="left-small"&gt; &lt;a class="left-off-canvas-toggle menu-icon"&gt;&lt;span&gt;&lt;/span&gt;&lt;/a&gt; &lt;/section&gt;
+                  &lt;section class="middle tab-bar-section"&gt; &lt;img src="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/logo-neo4j.svg" class="logo" alt="neo4j" &lt;/section&gt;
+               &lt;/nav&gt;
+            &lt;/div&gt;
+            &lt;div class="row text-center"&gt;
+               &lt;div class="medium-10 small-centered columns"&gt;
+                  &lt;h1 class="hero-title"&gt;Developer Resources&lt;/h1&gt;
+                  &lt;h2 class="subheader"&gt;&lt;/h2&gt;
+               &lt;/div&gt;
+            &lt;/div&gt;
+         &lt;/div&gt;
+         &lt;article id="content" role="main"&gt;
+            &lt;style&gt;
+              .row { max-width: 62.5rem !important; }
+               .lead
+               {
+               display: none;
+               }
+               section.row
+               {
+               padding: 0;
+               }
+               #content section.row
+               {
+               padding-left: .5em;
+               padding-right: .5em;
+               }
+               .row
+               {
+               }
+               #content section.row .accordion-navigation &gt; a {
+               background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+               padding: 0 !important;
+               }
+               .accordion .content { padding: 0; }
+               .row .row { margin: auto; }
+               .columns.medium-12
+               {
+               padding-left: 0;
+               }
+            &lt;/style&gt;
+            &lt;style&gt; .lead { display: none; } section.row { padding: 0; } #content section.row { max-width: 62.5rem; padding-left: .5em; padding-right: .5em; } .row { max-width: 80em; } #content section.row .accordion-navigation &gt; a { padding: 0 !important; } .accordion .content { padding: 0; } .row .row { margin: auto; } .columns.medium-12 { padding-left: 0; } .fa-stack.fa-lg { color: #0f5788; display: block; float: left; height: 70px; margin-right: 1em; padding-right: 2em; width: 50px; } h3 { font-weight: normal; } strong, b { font-weight:600; font-color:#333; } .calloutsection { padding: 20px 0; } section { padding: 40px 0 0 0; } .marquee { height: auto; margin-top: 1em; } #main-content .entry-title { display: none; } #main-content .subheader { display: none; } .marquee h1, .marquee h2 { padding-top: 0; } #main-content .next-steps h5 { font-size: 12px; } #main-content .next-steps h3 { margin-bottom: 1em; } #main-content .content.active { display: block; } #main-content .content { display: none; } #main-content { padding-top: 0; } .use-case .tab-container .content.active { border-top: 1px solid rgba(15, 87, 136, 0.7); padding: 2em 1em 1em; } .tabs dd &gt; a:hover { color: #3d5360; } .breadcrumbs &gt; * a, .breadcrumbs &gt; * span { color: #0f5788; text-transform: none; } .breadcrumbs &gt; * { text-transform: none; } .top-bar { height: 80px; } #main-content .top-bar-section ul { margin-top: 1em; } .panel-pod p { font-size: 14px; font-weight: normal; line-height: 26px; } .panel-pod &gt; a { display: block; margin-bottom: 1em; } .panel-pod p a { display: block; margin-top: 1em; } .panel-pod { text-align: left; } .tab-container { margin-bottom: 2em; } .panel-pod img { display: block; margin: auto; } #content h3 { font-weight: 100; } #content ul {}
+            #content section.row .accordion-navigation &gt; a {
+                background: url("http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/collapse.png") no-repeat scroll 100% 50% transparent;
+                border-bottom: 1px dashed #ddd;
+                padding: 0 !important;
+            }
+            .accordion-navigation.active &gt; a {
+                background: url("http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/roll-up.png") no-repeat scroll 100% 50% transparent !important;
+            }</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>.accordion-navigation h5 {
+    font-weight: 100;
+    height: 2em;
+    line-height: 2em;
+    margin: 0;
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>.content ul {
+margin-top: 1em;
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>.breadcrumbs&gt;*:before {
+   content: "→";
+   color: #aaa;
+   margin: 0 0.75rem;
+   position: relative;
+   top: 0;
+   }</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>#content code
+{
+ font-weight: 100;
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>#content h3
+{
+ margin-bottom: .5em;
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>#content h5
+{
+ font-weight: 100;
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>#content h4
+{
+ font-weight: 400;
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>#content strong
+{
+ font-weight: 400;
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>#content h4
+{
+ margin-bottom: 1em;
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>#content .title {
+    font-size: 20px;
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>                  #content .breadcrumbs { margin-bottom: 0; }
+                  &lt;/style&gt;
+                  &lt;div style="padding-left: 1em; padding-right: 1em;"&gt;
+                     &lt;div class="row" style="padding: 10px;"&gt;
+                        &lt;div class="columns large-12" style="padding:10px 0 0;"&gt;
+                           &lt;ul class="breadcrumbs"&gt;
+                              &lt;li&gt;&lt;a href="/developer-resources"&gt;Developer Guides&lt;/a&gt;&lt;/li&gt;
+                              &lt;li&gt;&lt;a href="../"&gt;Develop with Neo4j&lt;/a&gt;&lt;/li&gt;
+                              &lt;li class="current"&gt;&lt;a href="#"&gt;Using Neo4j from PHP&lt;/a&gt;&lt;/li&gt;
+                           &lt;/ul&gt;
+                        &lt;/div&gt;
+                     &lt;/div&gt;
+                     &lt;!-- &lt;div class="row"&gt;
+                        &lt;div class="columns large-12"&gt;
+                           &lt;h1 style="font-size:2.1rem;"&gt;Using Neo4j from PHP&lt;/h1&gt;
+                        &lt;/div&gt;
+                     &lt;/div&gt; --&gt;
+                     &lt;section class="row" style="padding:10px 0;"&gt;
+                        &lt;div class="large-12 columns" style="padding-top:0;"&gt;
+                           &lt;div id="content"&gt;
+                              &lt;div id="preamble"&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="quoteblock abstract"&gt;
+&lt;div class="title"&gt;Goals&lt;/div&gt;
+&lt;blockquote style="padding-left: 0;"&gt;
 If you are a PHP developer, you should find enough information to get you started with Neo4j.
 While this guide is not comprehensive it will introduce the different drivers and link to the relevant resources.
-</blockquote>
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;div class="quoteblock abstract"&gt;
+&lt;div class="title"&gt;Prerequisites&lt;/div&gt;
+&lt;blockquote style="padding-left: 0;"&gt;
+You should be familiar with &lt;a href="../../what-is-neo4j/graph-database"&gt;graph database concepts&lt;/a&gt; and the property graph model.
+You should have &lt;a href="/download"&gt;installed Neo4j&lt;/a&gt; and made yourself familiar with our &lt;a href="../../cypher-query-language"&gt;Cypher Query language&lt;/a&gt;.
+&lt;/blockquote&gt;
+&lt;/div&gt;</pre>
 </div>
-<div class="quoteblock abstract">
-<div class="title">Prerequisites</div>
-<blockquote style="padding-left: 0;">
-You should be familiar with <a href="../../what-is-neo4j/graph-database">graph database concepts</a> and the property graph model.
-You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="../../cypher-query-language">Cypher Query language</a>.
-</blockquote>
-</div>
-
-
-<div class="label">Intermediate</div>
-<hr/>
-
-<div class="toc">
-<h3 class="title">Overview</h3>
-
-<ul class="sectlevel2">
-<li><a href="#_neo4j_for_php_developers">Neo4j for PHP Developers</a></li>
-<li><a href="#_the_example_project">The Example Project</a></li>
-<li><a href="#_neo4jphp">Neo4jPHP</a></li>
-
-<li><a href="#_other_drivers">Other Drivers</a></li>
-</ul>
-
-<hr>
-</div>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_neo4j_for_php_developers">Neo4j for PHP Developers</h4>
-
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/php-2.png" alt="php 2">
-</p>
 </div>
 
 
 <div class="paragraph">
-<p>Neo4j might be developed in Java, but don&#8217;t assume that you need to use a Java client.
-PHP drivers came along quite early and have enabled many interesting use-cases for Neo4j.</p>
+<p>&lt;div class="label"&gt;Intermediate&lt;/div&gt;
+&lt;hr/&gt;</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>There’s a number of of ways to access Neo4j from PHP.
-Drivers for the different PHP stacks enable you to use Neo4j from your familiar environment.</p>
+<p>&lt;div class="toc"&gt;
+&lt;h3 class="title"&gt;Overview&lt;/h3&gt;</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Members of the PHP community have invested a lot of time and love to develop all these drivers, so please if you use them provide feedback to the authors.</p>
-</div>
-
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_the_example_project">The Example Project</h4>
-
-
-
-<div class="paragraph">
-<p>You can find out more about our example projects for many different languages <a href="../example-project">here</a>, you can also access it via the <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/">GitHub repository</a> for the Neo4j developer resources.
-Feel free to check them out.</p>
+<p>&lt;ul class="sectlevel2"&gt;
+&lt;li&gt;&lt;a href="#_neo4j_for_php_developers"&gt;Neo4j for PHP Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#_the_example_project"&gt;The Example Project&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#_neo4jphp"&gt;Neo4jPHP&lt;/a&gt;&lt;/li&gt;</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>It is a small one page webapp for our movies database.
-The front-end is the same for all drivers, just the backends show you how to connect to Neo4j from the different languages and drivers.</p>
+<p>&lt;li&gt;&lt;a href="#_other_drivers"&gt;Other Drivers&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</p>
 </div>
 
 
 
 <div class="paragraph">
-<p><a href="../example-project">Read More</a></p>
-</div>
-
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_neo4jphp">Neo4jPHP</h4>
-
-
-
-<div class="paragraph">
-<p>Neo4jPHP provides an API that is both intuitive and flexible, and it takes advantage of ‘under-the -hood’ performance enhancements, such as caching and lazy-loading.</p>
-</div>
-
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
-<h2 id="_sidebar">Sidebar</h2>
-</li>
-<div class="ulist">
-
-
-<ul>
-<li>
-Author: <a href="http://twitter.com/josh_adell">Josh Adell</a>
-</li>
-<li>
-<a href="neo4jphp">Example Project with Neo4jPHP</a>
-</li>
-<li>
-<a href="http://github.com/jadell/neo4jphp/wiki/Introduction">GitHub</a>
-</li>
-</ul>
-
-</div>
-<div class="sect3 "  >
-    
-<h5 id="_neoclient">NeoClient</h5>
-
-
-
-<div class="paragraph">
-<p>An actively developed PHP HttpClient for the Neo4j REST and Cypher API with Multi DB Support.</p>
-</div>
-
-<div class="ulist">
-
-
-<ul>
-<li>
-Author: <a href="http://twitter.com/ikwattro">Christophe Willemsen</a>
-</li>
-<li>
-<a href="https://github.com/neoxygen/neo4j-neoclient">GitHub</a>
-</li>
-<li>
-<a href="neoclient">Example Project with NeoClient</a>
-</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_other_drivers">Other Drivers</h4>
-
-<div class="sect3 "  >
-    
-<h5 id="_neo4j_pdo">neo4j-pdo</h5>
-
-
-
-<div class="paragraph">
-<p>This is a PHP Data Objects driver for the Neo4j graph database, it allows you to connect to a Neo4j server from PHP using the standard PDO API. The project currently only implements a “vanilla” PHP implementation, which means you need to use a special constructor to create your PDO connection. PHP extensions to register the driver with PDO in HHVM and Zend VM are planned future wor</p>
-</div>
-
-<div class="ulist">
-
-
-<ul>
-<li>
-Author: <a href="http://twitter.com/jakewins">Jacob Hansson</a>
-</li>
-<li>
-<a href="http://github.com/jakewins/neo4j-pdo">GitHub</a>
-</li>
-</ul>
-
-</div>
-</div>
-<div class="sect3 "  >
-    
-<h5 id="_php_cypher">PHP Cypher</h5>
-
-
-
-<div class="paragraph">
-<p>A PHP adapter for Neo4j ReST API cypher endpoint. PHP Cypher aims to take the pain out of sending cypher query to Neo4j server. I believe that cypher will be a major part of Neo4j in near future. In short, this library focus solely on sending query to Neo4j database. For those looking for adapter on all the Neo4j ReST API can try this great library.</p>
-</div>
-
-<div class="ulist">
-
-
-<ul>
-<li>
-Author: <a href="https://github.com/endyjasmi">Endy Jasmi</a>
-</li>
-<li>
-<a href="http://github.com/endyjasmi/cypher">GitHub</a>
-</li>
-</ul>
-
-</div>
-</div>
-<div class="sect3 "  >
-    
-<h5 id="_neoeloquent">NeoEloquent</h5>
-
-
-
-<div class="paragraph">
-<p>Neo4j Graph Eloquent Driver for Laravel 4</p>
-</div>
-
-<div class="ulist">
-
-
-<ul>
-<li>
-<a href="https://github.com/Vinelab/NeoEloquent">GitHub</a>
-</li>
-</ul>
-
-</div>
-</div>
-<div class="sect3 "  >
-    
-<h5 id="_neo4laravel">Neo4Laravel</h5>
-
-
-
-<div class="paragraph">
-<p>Author: <a href="https://github.com/lrezek">Lukas Rezek</a></p>
+<p>&lt;hr&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect2 columns medium-12" style='padding-left: 0;' &gt;</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>A Neo4j Laravel 4.1 OGM Provider.</p>
+<p>&lt;h4 id="_neo4j_for_php_developers"&gt;Neo4j for PHP Developers&lt;/h4&gt;</p>
 </div>
 
-<div class="ulist">
 
 
-<ul>
-<li>
-<a href="https://github.com/lrezek/Neo4Laravel">GitHub</a>
-</li>
-</ul>
+<div class="paragraph">
+<p>&lt;div class="imageblock"&gt;
+&lt;p class="content"&gt;
+&lt;img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/php-2.png" alt="php 2"&gt;
+&lt;/p&gt;
+&lt;/div&gt;</p>
+</div>
 
+
+
+<div class="paragraph">
+<p>&lt;div class="paragraph"&gt;
+&lt;p&gt;Neo4j might be developed in Java, but don&#8217;t assume that you need to use a Java client.
+PHP drivers came along quite early and have enabled many interesting use-cases for Neo4j.&lt;/p&gt;
+&lt;/div&gt;</p>
 </div>
+
+
+
+<div class="paragraph">
+<p>&lt;div class="paragraph"&gt;
+&lt;p&gt;There’s a number of of ways to access Neo4j from PHP.
+Drivers for the different PHP stacks enable you to use Neo4j from your familiar environment.&lt;/p&gt;
+&lt;/div&gt;</p>
 </div>
+
+
+
+<div class="paragraph">
+<p>&lt;div class="paragraph"&gt;
+&lt;p&gt;Members of the PHP community have invested a lot of time and love to develop all these drivers, so please if you use them provide feedback to the authors.&lt;/p&gt;
+&lt;/div&gt;</p>
 </div>
+
+
+
+<div class="paragraph">
+<p>&lt;/div&gt;
+&lt;div class="sect2 columns medium-12" style='padding-left: 0;' &gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;h4 id="_the_example_project"&gt;The Example Project&lt;/h4&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;div class="paragraph"&gt;
+&lt;p&gt;You can find out more about our example projects for many different languages &lt;a href="../example-project"&gt;here&lt;/a&gt;, you can also access it via the &lt;a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/"&gt;GitHub repository&lt;/a&gt; for the Neo4j developer resources.
+Feel free to check them out.&lt;/p&gt;
+&lt;/div&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;div class="paragraph"&gt;
+&lt;p&gt;It is a small one page webapp for our movies database.
+The front-end is the same for all drivers, just the backends show you how to connect to Neo4j from the different languages and drivers.&lt;/p&gt;
+&lt;/div&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;div class="paragraph"&gt;
+&lt;p&gt;&lt;a href="../example-project"&gt;Read More&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;/div&gt;
+&lt;div class="sect2 columns medium-12" style='padding-left: 0;' &gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;h4 id="_neo4jphp"&gt;Neo4jPHP&lt;/h4&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;div class="paragraph"&gt;
+&lt;p&gt;Neo4jPHP provides an API that is both intuitive and flexible, and it takes advantage of ‘under-the -hood’ performance enhancements, such as caching and lazy-loading.&lt;/p&gt;
+&lt;/div&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;/div&gt;
+&lt;div class="sect2 side-nav columns medium-12" style='padding-left: 0;' &gt;
+    &lt;ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'&gt;&lt;li&gt;
+&lt;h2 id="_sidebar"&gt;Sidebar&lt;/h2&gt;
+&lt;/li&gt;
+&lt;div class="ulist"&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;ul&gt;
+&lt;li&gt;
+Author: &lt;a href="http://twitter.com/josh_adell"&gt;Josh Adell&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="neo4jphp"&gt;Example Project with Neo4jPHP&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="http://github.com/jadell/neo4jphp/wiki/Introduction"&gt;GitHub&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;/div&gt;
+&lt;div class="sect3 "  &gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;h5 id="_neoclient"&gt;NeoClient&lt;/h5&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;div class="paragraph"&gt;
+&lt;p&gt;An actively developed PHP HttpClient for the Neo4j REST and Cypher API with Multi DB Support.&lt;/p&gt;
+&lt;/div&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;div class="ulist"&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;ul&gt;
+&lt;li&gt;
+Author: &lt;a href="http://twitter.com/ikwattro"&gt;Christophe Willemsen&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="https://github.com/neoxygen/neo4j-neoclient"&gt;GitHub&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="neoclient"&gt;Example Project with NeoClient&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect2 columns medium-12" style='padding-left: 0;' &gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;h4 id="_other_drivers"&gt;Other Drivers&lt;/h4&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;div class="sect3 "  &gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;h5 id="_neo4j_pdo"&gt;neo4j-pdo&lt;/h5&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;div class="paragraph"&gt;
+&lt;p&gt;This is a PHP Data Objects driver for the Neo4j graph database, it allows you to connect to a Neo4j server from PHP using the standard PDO API. The project currently only implements a “vanilla” PHP implementation, which means you need to use a special constructor to create your PDO connection. PHP extensions to register the driver with PDO in HHVM and Zend VM are planned future wor&lt;/p&gt;
+&lt;/div&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;div class="ulist"&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;ul&gt;
+&lt;li&gt;
+Author: &lt;a href="http://twitter.com/jakewins"&gt;Jacob Hansson&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="http://github.com/jakewins/neo4j-pdo"&gt;GitHub&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect3 "  &gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;h5 id="_php_cypher"&gt;PHP Cypher&lt;/h5&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;div class="paragraph"&gt;
+&lt;p&gt;A PHP adapter for Neo4j ReST API cypher endpoint. PHP Cypher aims to take the pain out of sending cypher query to Neo4j server. I believe that cypher will be a major part of Neo4j in near future. In short, this library focus solely on sending query to Neo4j database. For those looking for adapter on all the Neo4j ReST API can try this great library.&lt;/p&gt;
+&lt;/div&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;div class="ulist"&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;ul&gt;
+&lt;li&gt;
+Author: &lt;a href="https://github.com/endyjasmi"&gt;Endy Jasmi&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="http://github.com/endyjasmi/cypher"&gt;GitHub&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect3 "  &gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;h5 id="_neoeloquent"&gt;NeoEloquent&lt;/h5&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;div class="paragraph"&gt;
+&lt;p&gt;Neo4j Graph Eloquent Driver for Laravel 4&lt;/p&gt;
+&lt;/div&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;div class="ulist"&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="https://github.com/Vinelab/NeoEloquent"&gt;GitHub&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect3 "  &gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;h5 id="_neo4laravel"&gt;Neo4Laravel&lt;/h5&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;div class="paragraph"&gt;
+&lt;p&gt;Author: &lt;a href="https://github.com/lrezek"&gt;Lukas Rezek&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;div class="paragraph"&gt;
+&lt;p&gt;A Neo4j Laravel 4.1 OGM Provider.&lt;/p&gt;
+&lt;/div&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;div class="ulist"&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="https://github.com/lrezek/Neo4Laravel"&gt;GitHub&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+                           &lt;/div&gt;
+                        &lt;/div&gt;
+                     &lt;/section&gt;
+                  &lt;/div&gt;
+               &lt;/article&gt;
+               &lt;div class="row text-center hide-for-small hr-style"&gt;
+                  &lt;div class="medium-5 columns"&gt;
+                     &lt;hr&gt;
+                  &lt;/div&gt;
+                  &lt;div class="medium-2 columns"&gt; &lt;object height="100%" width="100%" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg" type="image/svg+xml"&gt;&lt;/object&gt; &lt;/div&gt;
+                  &lt;div class="medium-5 columns"&gt;
+                     &lt;hr&gt;
+                  &lt;/div&gt;
+               &lt;/div&gt;
+               &lt;div class="row text-center show-for-small"&gt;
+                  &lt;div class="medium-12 columns"&gt;
+                     &lt;hr&gt;
+                  &lt;/div&gt;
+               &lt;/div&gt;
+               &lt;/article&gt;
+               &lt;div class="calloutsection"&gt;
+                  &lt;div class="row"&gt;
+                     &lt;div class="medium-8 small-centered columns text-center"&gt;
+                        &lt;h3&gt;Stay Connected&lt;/h3&gt;
+                        &lt;p&gt;Sign up to find out more about Neo4j&#8217;s upcoming events &amp; meetups.&lt;/p&gt;
+                     &lt;/div&gt;
+                  &lt;/div&gt;
+                  &lt;div class="row"&gt;
+                     &lt;div class="medium-6 small-centered columns"&gt;
+                        &lt;div class="row collapse"&gt;
+                           &lt;div class="small-8 columns"&gt;
+                              &lt;script src="//app-sjl.marketo.com/js/forms2/js/forms2.js"&gt;&lt;/script&gt;
+                              &lt;form id="mktoForm_519"&gt;&lt;/form&gt;
+                              &lt;script&gt;MktoForms2.loadForm("//app-sjl.marketo.com", "773-GON-065", 519);&lt;/script&gt;
+                           &lt;/div&gt;
+                           &lt;div class="small-4 columns"&gt; &lt;a href="<mark>" id="signupbody" class="button postfix"&gt;Keep Me Connected &rsaquo;&lt;/a&gt; &lt;/div&gt;
+                        &lt;/div&gt;
+                     &lt;/div&gt;
+                  &lt;/div&gt;
+               &lt;/div&gt;
+               &lt;style&gt; .mktoButtonWrap {display:none;} &lt;/style&gt;
+               &lt;script&gt;
+                  var btn = document.getElementById("signupbody");
+                  btn.onclick = function(){
+                  MktoForms2.getForm(519).submit();
+                  };
+               &lt;/script&gt;
+               &lt;div class="row text-center hide-for-small hr-style"&gt;
+                  &lt;div class="medium-5 columns"&gt;
+                     &lt;hr&gt;
+                  &lt;/div&gt;
+                  &lt;div class="medium-2 columns"&gt; &lt;object height="100%" width="100%" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg" type="image/svg+xml"&gt;&lt;/object&gt; &lt;/div&gt;
+                  &lt;div class="medium-5 columns"&gt;
+                     &lt;hr&gt;
+                  &lt;/div&gt;
+               &lt;/div&gt;
+               &lt;div class="row text-center show-for-small"&gt;
+                  &lt;div class="medium-12 columns"&gt;
+                     &lt;hr&gt;
+                  &lt;/div&gt;
+               &lt;/div&gt;
+               &lt;footer id="footer"&gt;
+                  &lt;div class="row"&gt;
+                     &lt;div class="small-6 medium-3 columns"&gt;
+                        &lt;h5&gt;Learn &amp; Try&lt;/h5&gt;
+                        &lt;ul&gt;
+                           &lt;li&gt;&lt;a href="../about-neo4j"&gt;About Neo4j&lt;/a&gt;&lt;/li&gt;
+                           &lt;li&gt;&lt;a href="../graph-concepts/"&gt;Graph Concepts&lt;/a&gt;&lt;/li&gt;
+                           &lt;li&gt;&lt;a href="http://neo4j.com/use-cases/"&gt;Use Cases&lt;/a&gt;&lt;/li&gt;
+                           &lt;li&gt;&lt;a href="http://neo4j.com/customers/"&gt;Our Customers&lt;/a&gt;&lt;/li&gt;
+                           &lt;li&gt;&lt;a href="http://neo4j.com/download/"&gt;Download Neo4j&lt;/a&gt;&lt;/li&gt;
+                           &lt;li&gt;&lt;a href="http://console.neo4j.org/"&gt;Live Neo4j Console&lt;/a&gt;&lt;/li&gt;
+                           &lt;li&gt;&lt;a href="working-with-data/guide-neo4j-browser/"&gt;Neo4j Browser&lt;/a&gt;&lt;/li&gt;
+                           &lt;li&gt;&lt;a href="http://gist.neo4j.org"&gt;Graph Gists&lt;/a&gt;&lt;/li&gt;
+                        &lt;/ul&gt;
+                     &lt;/div&gt;
+                     &lt;div class="small-6 medium-3 columns"&gt;
+                        &lt;h5&gt;Develop&lt;/h5&gt;
+                        &lt;ul&gt;
+                           &lt;li&gt;&lt;a href="http://neo4j.com/docs/"&gt;Docs&lt;/a&gt;&lt;/li&gt;
+                           &lt;li&gt;&lt;a href="../"&gt;Neo4j Guides&lt;/a&gt;&lt;/li&gt;
+                           &lt;li&gt;&lt;a href="working-with-data/guide-importing-data-and-etl"&gt;Import Data&lt;/a&gt;&lt;/li&gt;
+                           &lt;li&gt;&lt;a href="http://neo4j.com/contrib/"&gt;Select a Driver&lt;/a&gt;&lt;/li&gt;
+                           &lt;li&gt;&lt;a href="cypher-query-language/guide-cypher-basics"&gt;Cypher Query Language&lt;/a&gt;&lt;/li&gt;
+                           &lt;li&gt;&lt;a href="build-a-graph-data-model/guide-intro-to-graph-modeling"&gt;Data Modeling&lt;/a&gt;&lt;/li&gt;
+                        &lt;/ul&gt;
+                     &lt;/div&gt;
+                     &lt;div class="small-6 medium-3 columns"&gt;
+                        &lt;h5&gt;Connect with Neo4j&lt;/h5&gt;
+                        &lt;ul&gt;
+                           &lt;li&gt;&lt;a href="http://neo4j.com/training/"&gt;Training&lt;/a&gt;&lt;/li&gt;
+                           &lt;li&gt;&lt;a href="http://neo4j.com/events/"&gt;Events&lt;/a&gt;&lt;/li&gt;
+                           &lt;li&gt;&lt;a href="http://neo4j.com/blog/"&gt;Blog&lt;/a&gt;&lt;/li&gt;
+                           &lt;li&gt;&lt;a href="http://neo4j.com/community/#support"&gt;Support&lt;/a&gt;&lt;/li&gt;
+                           &lt;li&gt;&lt;a href="http://neo4j.com/neo4j-partner-program/"&gt;Neo4j Partner Program&lt;/a&gt;&lt;/li&gt;
+                           &lt;li&gt;&lt;a href="http://neotechnology.com/about/"&gt;About Neo Technology&lt;/a&gt;&lt;/li&gt;
+                        &lt;/ul&gt;
+                     &lt;/div&gt;
+                     &lt;div class="small-12 medium-3 columns"&gt;
+                        &lt;h5&gt;&lt;a href="http://neo4j.com/contact-us"&gt;Contact Us &rarr;&lt;/a&gt;&lt;/h5&gt;
+                        &lt;p&gt;1-855-636-4532 &lt;a href="mailto:info@neotechnology.com"&gt;US &lt;i class="fi-mail"&gt;&lt;/i&gt;&lt;/a&gt;&lt;br/&gt; +44 808 189 0493 &lt;a href="mailto:uk@neotechnology.com"&gt;UK &lt;i class="fi-mail"&gt;&lt;/i&gt;&lt;/a&gt;&lt;br/&gt; +49 800 723 6231 &lt;a href="mailto:vertrieb@neotechnology.com"&gt;Germany &lt;i class="fi-mail"&gt;&lt;/i&gt;&lt;/a&gt;&lt;br/&gt; +33 (0)8 05 08 03 44 &lt;a href="mailto:ventes@neotechnology.com"&gt;France &lt;i class="fi-mail"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/p&gt;
+                        &lt;h5&gt;Get Neo4j News&lt;/h5&gt;
+                        &lt;p&gt;Keep up with the latest graph database trends, tips &amp; events.&lt;/p&gt;
+                        &lt;div class="row collapse"&gt;
+                           &lt;div class="small-9 columns"&gt;
+                              &lt;script src="//app-sjl.marketo.com/js/forms2/js/forms2.js"&gt;&lt;/script&gt;
+                              &lt;form id="mktoForm_477"&gt;&lt;/form&gt;
+                              &lt;script&gt;MktoForms2.loadForm("//app-sjl.marketo.com", "773-GON-065", 477);&lt;/script&gt;
+                           &lt;/div&gt;
+                           &lt;div class="small-3 columns"&gt; &lt;a href="</mark>" id="signup" class="button postfix"&gt;Go &rsaquo;&lt;/a&gt; &lt;/div&gt;
+                        &lt;/div&gt;
+                     &lt;/div&gt;
+                  &lt;/div&gt;
+               &lt;/footer&gt;
+               &lt;style&gt; #mktoForm_477 button {display:none;} #mktoForm_477 {margin-left:-20px;} &lt;/style&gt;
+               &lt;script&gt;
+                  var btn = document.getElementById("signup");
+                  btn.onclick = function(){
+                    MktoForms2.getForm(477).submit();
+                  };
+               &lt;/script&gt;
+               &lt;div class="row text-center hide-for-small hr-style"&gt;
+                  &lt;div class="medium-5 columns"&gt;
+                     &lt;hr&gt;
+                  &lt;/div&gt;
+                  &lt;div class="medium-2 columns"&gt; &lt;object height="100%" width="100%" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg" type="image/svg+xml"&gt;&lt;/object&gt; &lt;/div&gt;
+                  &lt;div class="medium-5 columns"&gt;
+                     &lt;hr&gt;
+                  &lt;/div&gt;
+               &lt;/div&gt;
+               &lt;div class="row text-center show-for-small"&gt;
+                  &lt;div class="medium-12 columns"&gt;
+                     &lt;hr&gt;
+                  &lt;/div&gt;
+               &lt;/div&gt;
+               &lt;div class="row collapse copyright"&gt;
+                  &lt;div class="small-12 medium-3 columns text-center"&gt;
+                     &lt;p&gt;&copy; 2014 &lt;a href="http://neotechnology.com/"&gt;Neo Technology, Inc.&lt;/a&gt;&lt;/p&gt;
+                  &lt;/div&gt;
+                  &lt;div class="small-12 medium-6 columns text-center"&gt;
+                     &lt;code&gt;&#40;graphs&#41;-&#91;&#58;ARE&#93;-&rsaquo;&#40;everywhere&#41;&lt;/code&gt;
+                     &lt;p&gt;With &hearts; from Sweden &amp; the &lt;a href="http://neo4j.com/community/"&gt;Neo4j&lt;/a&gt; Community&lt;/p&gt;
+                  &lt;/div&gt;
+                  &lt;div class="small-12 medium-3 columns text-center"&gt;
+                     &lt;ul&gt;
+                        &lt;li&gt;&lt;a href="http://neo4j.com/terms"&gt;Terms&lt;/a&gt;&lt;/li&gt;
+                        &lt;li&gt;&lt;a href="http://neo4j.com/privacy-policy/"&gt;Privacy Policy&lt;/a&gt;&lt;/li&gt;
+                     &lt;/ul&gt;
+                  &lt;/div&gt;
+               &lt;/div&gt;
+               &lt;a class="exit-off-canvas"&gt;&lt;/a&gt;
+            &lt;/div&gt;
+         &lt;/div&gt;
+         &lt;script src="http://munchkin.marketo.net/munchkin.js" type="text/javascript"&gt;&lt;/script&gt; &lt;script type="text/javascript"&gt;mktoMunchkin("773-GON-065");&lt;/script&gt; &lt;script type='text/javascript' src='http://neo4j.com/wp-content/plugins/akismet/_inc/form.js?ver=3.0.1'&gt;&lt;/script&gt; &lt;script type='text/javascript' src='http://neo4j.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'&gt;&lt;/script&gt; &lt;script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.2/d3.min.js?ver=3.9.2'&gt;&lt;/script&gt; &lt;script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/json3/3.3.0/json3.min.js?ver=3.9.2'&gt;&lt;/script&gt; &lt;script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jzurb/assets/js/neo_d3.js?ver=3.9.2'&gt;&lt;/script&gt; &lt;script type='text/javascript' src='http://neo4j.com/wp-includes/js/comment-reply.min.js?ver=3.9.2'&gt;&lt;/script&gt; &lt;script&gt;
+            jQuery(document).foundation({
+              tab: {
+                callback : function (tab) {
+                  $(window).trigger('resize');
+                }
+              }
+            });
+         &lt;/script&gt; &lt;script src="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/js/foundation/foundation.equalizer.js"&gt;&lt;/script&gt;
+      &lt;/body&gt;
+      &lt;script type="text/javascript" src="http://munchkin.marketo.net/munchkin.js"&gt;&lt;/script&gt; &lt;script type="text/javascript"&gt;
+         mktoMunchkin("773-GON-065");
+      &lt;/script&gt;
+   &lt;/html&gt;</p>
+</div>
+
                            </div>
                         </div>
                      </section>
