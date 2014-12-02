@@ -1,0 +1,202 @@
+= Importing CSV Data into Neo4j
+:level: Intermediate
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 1
+:section: Working with Data
+:section-link: working-with-data
+
+.Goals
+[abstract]
+This article demonstrates how to import CSV data into Neo4j and solutions to potential issues that might arise during this process.
+
+.Prerequisites
+[abstract]
+Before importing data you should have modeled the first iteration of your domain in the link:/developer/guide-intro-to-graph-modeling[property graph model]. And to use `LOAD CSV` efficiently it pays off to be comfortable with our link:/developer/cypher[query language Cypher].
+
+[role=expertise]
+{level}
+
+toc::[]
+
+=== CSV Data Quality
+
+==== Real World Data Considerations
+
+Real world data is messy. 
+Don't assume what someone told you is in a CSV file is actually, in there, don't rely on format descriptions, consistency or correct quoting.
+Only trust data validity that you checked yourself.
+
+==== Common Pitfalls
+
+* BOM byte order mark (2 UTF-8) bytes at the beginning of a file - remove them
+* Binary zeros or other non-text-characters dispersed throughout the file - remove them
+* Inconsisent line breaks - mixed Windows and Unix linebreaks - make sure they are consistent, best Unix style
+* Header inconsistent with data (missing, too many columns, different delimeter in header)
+* Special Character in non-quoted text - make sure unusual text is always quoted
+* Unexpected newlines in quoted and unquoted text-fields
+* stray quotes are standalone double or single quote in the middle of non-quoted text, or non-escaped quotes in quoted text - escape them, remove them
+
+==== Tools
+
+There are a number of tools that help you check and validate your CSV data files.
+
+The simplest are hexdump, and the hex-mode of editors like vi, emacs, UltraEdit and Notepad++.
+
+===== CSVKit
+
+http://csvkit.readthedocs.org/en/0.9.0/[CSVKit] is a set of Python tools that provide statistics (csvstat), search (csvgrep), ... and more for your CSV files.
+Especially `csvstat` is very helpful to get an overview and statistic over your file, if you know your domain and data you can immediately spot inaccuracies.
+Field length is important as excess field length indicates stray quotes.
+
+===== CSVLint
+
+TODO http://http://csvlint.io/[CSVLint]
+
+===== Cypher
+
+What Cypher sees is what will be imported, so you can use that to your advantage.
+
+[source,cypher]
+----
+// assert correct line count
+LOAD CSV WITH HEADERS FROM "file-url" AS line
+RETURN count(*);
+
+// check first few raw lines 
+LOAD CSV FROM "file-url" AS line WITH line
+RETURN line
+LIMIT 5;
+
+// check first few lines with header-mapping
+LOAD CSV WITH HEADERS FROM "file-url" AS line WITH line
+RETURN line
+LIMIT 5;
+----
+
+=== LOAD CSV for Medium Datasets
+
+==== The real secret of LOAD CSV.
+
+It is not just a basic data ingestion mechanism but actually **an ETL Power Tool**. Why?
+
+* it combines multiple aspects in a single operation
+* supports loading / ingesting CSV data from an URI
+* direct mapping of input data into complex graph/domain structure
+* data conversion
+* supports complex computations
+* create or merge data, relationships and structure
+
+==== Important Tips for LOAD CSV
+
+* Always use the latest version of Neo4j, it will most probably be faster than the previous ones.
+
+* See the data quality section above
+* Empty fields have to be skipped or replaced with default values during `LOAD CSV`
+* All cell-data from the CSV is a string, you have to use `toInt`, `toFloat`, `split` or similar functions to convert
+* Split arrays in a cell by delimiter
+* Check your Cypher import statement for typos, labels, property names and relationship-types are case-sensitive
+
+* Make sure to have indexes and constraints declared and ONLINE for entities you want to merge on
+* Always `MATCH` and `MERGE` on a single label and the indexed primary-key property
+* Prefix your queries with `USING PERIODIC COMMIT 10000`
+* If possible separate node creation from relationship creation into separate statements +
+  If your import is slow or runs into memory issues, see 
+  http://www.markhneedham.com/blog/2014/10/23/neo4j-cypher-avoiding-the-eager/[Mark's blog post on Eager loading].
+
+* Make sure to have the enough memory (at least 4G heap in `neo4j-wrapper.conf`) reserved for your Neo4j-Server or Neo4j-Shell (`export JAVA_OPTS="-Xmx4G"`)
+* Configure the memory mapping settings (Neo4j 2.1) according to your expected file sizes +
+  (Neo4j 2.1 `neo4j.properties` keep these ratios: `nodestore=100M, relationshipstore=2G, propertystore=500M, stringstore=500M`)
+
+* Make sure to use the right URLs esp. file URLs.+
+  On OSX and Unix use `file:///path/to/data.csv`, on Windows, please use `file:c:/path/to/data.csv`
+* Use the `bin/neo4j-shell` instead of the browser for better error messages and control+
+  by default it connects to a running server, but you can also use `bin/neo4j-shell -path import.db -config conf/neo4j.properties` for direct file access.
+
+==== Step by Step Example for LOAD CSV
+
+In our guide on link:/developer/guide-importing-data-and-etl[ETL import from a relational database] we explain how to import CSV data step by step, from data modeling, creating indexes to writing the individual LOAD CSV statements.
+
+// todo should we show how to import the customers, orders, products here ??
+
+TODO
+
+==== Webinar "LOAD CSV in the Real World"
+
+In this very hands-on webinar hhttps://twitter.com/_nicolemargaret[Nicole White], Neo Technology's Data Scientist, shows how to use `LOAD CSV` to import a real dataset (consumer complaints from https://data.consumerfinance.gov/dataset/Consumer-Complaints/x94z-ydhh?[consumerfinance.gov]) into Neo4j.
+
+After a quick modeling discussion she walks through the steps of preparing indexes and constraints and then imports one part of the dataset at a time into Neo4j.
+
+++++
+<iframe src="//player.vimeo.com/video/112447027?byline=0&amp;portrait=0" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+++++
+
+You can find all scripts and data on https://github.com/nicolewhite/consumer_complaints[her GitHub account].
+
+[role=side-nav]
+=== Sidebar
+* link:/developer/guide-importing-data-and-etl[Importing Northwind] using LOAD CSV
+* LOAD CSV in the http://neo4j.com/docs/stable/query-load-csv.html[Neo4j Manual]
+* LOAD CSV with Sucess http://jexp.de/blog/2014/06/load-csv-into-neo4j-quickly-and-successfully/[Part 1], http://jexp.de/blog/2014/10/load-cvs-with-success/[Part 2]
+* http://www.markhneedham.com/blog/?s=load+csv+neo4j[LOAD CSV Tips] by Mark Needham
+// * Example Northwind Dataset on https://github.com/neo4j-contrib/northwind-neo4j[GitHub]
+* Blog Post: http://jexp.de/blog/2014/06/using-load-csv-to-import-git-history-into-neo4j/[Import git-log data into Neo4j]
+
+=== Super Fast Batch Importer For Huge Datasets
+
+As part of Neo4j 2.2 a new, massively parallel and scalable csv importer was released as part of the product.
+
+The tool is located in `path/to/neo4j/bin/neo4j-import` and is used as shown:
+
+.Importing Order Data into Neo4j
+[source]
+----
+bin/neo4j-import --into import.db --id-type string \ 
+                 --nodes products.csv --nodes orders.csv --nodes customers.csv \ 
+                 --relationships product_orders.csv --relationships customer_orders.csv
+----
+
+The CSV files would look like this:
+// todo use asciidoc tables
+
+.Node CSV Files
+[source,csv]
+----
+include::products.csv[lines=0..5]
+include::orders.csv[lines=0..5]
+include::customers.csv[lines=0..5]
+----
+
+.Relationship CSV Files
+[source,csv]
+----
+include::product_orders.csv[lines=0..5]
+include::customer_orders.csv[lines=0..5]
+----
+
+And the resulting output would look like this:
+
+[source,shell]
+----
+[INPUT------|ENCODER--------|WRITER: W:24.59 MB/s--------------------------]  4M
+Calculate dense nodes
+[INPU|CALCULATOR-----------------------------------------------------------]  3M
+Relationships
+[INPU|ENCODER-----------------------------------------------------------|WR]  4M
+Node first rel
+
+Relationship back link
+[LINKER--------------------------------------------------------------------]  3M
+Node counts
+
+Relationship counts
+
+IMPORT DONE. Took: 58s 124ms
+----
+
+[role=side-nav]
+=== Sidebar
+
+* Parallel Importer in the http://neo4j.com/docs/snapshot/import-tool.html[Neo4j Manual]
+* link:/developer/guide-intro-to-graph-modeling[Intro to Graph Modeling]
