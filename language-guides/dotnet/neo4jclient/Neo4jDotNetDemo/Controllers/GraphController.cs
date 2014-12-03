@@ -1,9 +1,8 @@
 ﻿using Neo4jClient.Cypher;
-using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace Neo4jDotNetDemo.Controllers
@@ -31,8 +30,39 @@ namespace Neo4jDotNetDemo.Controllers
             //You can see the cypher query here when debugging
             var data = query.Results.ToList();
 
-            return Ok(data);
+            var nodes = new List<NodeResult>();
+            var rels = new List<object>();
+            int i = 0, target;
+            foreach (var item in data)
+            {
+                nodes.Add(new NodeResult { title = item.movie, label = "movie" });
+                target = i;
+                i++;
+                if (!string.IsNullOrEmpty(item.cast))
+                {
+                    var casts = JsonConvert.DeserializeObject<JArray>(item.cast);
+                    foreach (var cast in casts)
+                    {
+                        var source = nodes.FindIndex(c => c.title == cast.Value<string>());
+                        if (source == -1)
+                        {
+                            nodes.Add(new NodeResult { title = cast.Value<string>(), label = "actor" });
+                            source = i;
+                            i += 1;
+                        }
+                        rels.Add(new { source = source, target = target });
+                    }
+                }
+            }
+
+            return Ok(new { nodes = nodes, links = rels });
         }
+    }
+
+    public class NodeResult
+    {
+        public string title { get; set; }
+        public string label { get; set; }
     }
 
     public class Movie
