@@ -1,0 +1,418 @@
+= From SQL to Cypher - A hands-on Guide
+:level: Beginner
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 1
+:section: Cypher Query Language
+:section-link: cypher
+
+.Goals
+[abstract]
+This guide teaches anyone familiar with SQL how to write the equivalent, efficient Cypher statements. We'll use the well-known Northwind database to explain the concepts and work through the queries from simple to advanced.
+
+.Prerequisites
+[abstract]
+You should have a basic understanding of the link:/developer/graph-database#property-graph[property graph model]. Having link:/download[downloaded] and installed the Neo4j server helps you code along with the examples. Importing the data is covered in our link:/developer/working-with-data/guide-importing-data-and-etl[data import guide].
+
+[role=expertise]
+{level}
+
+toc::[]
+
+=== A few words about Cypher
+
+Cypher is like SQL a declarative, textual query language.
+
+It consists of link:/docs/stable/query-general.html[clauses], keywords and link:docs/stable/cypher-expressions.html[expressions] like predicates and functions, many of which will be familiar (like `WHERE`, `ORDER BY`, `SKIP LIMIT`, `AND`, `p.UnitPrice > 10`).
+
+As Cypher is all about expressing patterns, we added a special clause link:/docs/stable/query-match.html[`MATCH`] for matching those patterns in your graph.
+These patterns are what you would usually draw on a whiteboard just converted into text using ASCII-art symbols.
+
+We represent the circles of nodes with round parentheses, like this: `(p:Product)`.
+
+And the arrows of relationships are drawn as such `-->`, you can add the relationship-type and other information in square brackets `-[:ORDERED]->`.
+
+Bringing both together gives us a first hint at the expressiveness of graph patterns: `(cust:Customer)-[:ISSUED]->(o:Order)-[:CONTAINS]->(prod:Product)`.
+
+There is more to these patterns, you'll see that in an instant.
+
+Other highlights of Cypher are graph concepts like paths, variable length paths, shortest-path functions;
+the support of many collection functions, operations and predicates and the ability to chain query parts.
+
+You can use Cypher as well to update the graph structure and data and even ingest large amounts of CVS data.
+
+The Cypher language documentation is available in the link:/docs/stable/cypher-query-lang.html[Neo4j manual] together with a complete link:/docs/stable/cypher-refcard/[Reference Card].
+
+
+=== Data Model Comparison
+
+A well normalized relational model, which was not yet denormalized for performance reasons can be translated into the equivalent graph model.
+Graph model shapes are mostly driven by use-cases, so there will be opportunity for optimization and model evolution afterwards.
+
+A good, normalized Entity-Relationship diagram often already represents a decent graph model. 
+So if you still have the orignal ER diagram available, try to use it as a guide.
+
+Here are some tips that help you with the transformation:
+
+- Each entity table is represented by a label on nodes
+- Each row in a table is a node
+- Columns on those tables become node properties.
+- Remove technical primary keys, keep business primary keys
+- Add unique constraints for business primary keys, add indexes for frequent lookup attributes
+- Replace foreign keys with relationships to the other table, remove them afterwards
+- Remove data with default values, no need to store those
+- Data in tables that is denormalized and duplicated might have to be pulled out into separate nodes to get a cleaner model.
+- Indexed column names, might indicate an array property (like email1, email2, email3)
+- JOIN tables are transformed into relationships, columns on those tables become relationship properties
+
+It is important to have an understanding of the graph model before you start to import data, then it just becomes the task of hydrating that model.
+
+=== Data Import
+
+Most relational databases allow an easy export of tables to CSV, which then can be imported by only uis
+
+If you are a developer you can also just connect to the relational database using your regular driver, load the data from there with SQL and create the graph data
+
+////
+ match (n) return head(labels(n)) as l, count(*) order by l asc;                                                                                  +------------------------------+ 
+| l                 | count(*) |
++------------------------------+
+| "Customer"        | 91       |
+| "Employee"        | 9        |
+| "Order"           | 830      |
+| "Product"         | 77       |
+| "ProductCategory" | 8        |
+| "Region"          | 4        |
+| "Shipper"         | 3        |
+| "Supplier"        | 29       |
+| "Territory"       | 53       |
++------------------------------+
+
+
+transform northwind database
+[source,cypher]
+----
+match (p:Product)<-[r1:PRODUCT]-(oi:OrderItem)<-[r2:CONTAINS]-(o:Order) 
+create unique (o)-[r:PRODUCT]->(p) 
+set r=oi with oi,r1,r2 
+order by id(oi) 
+delete oi,r1,r2 
+return count(*);
+----
+//// 
+=== Cypher is all about Patterns
+
+3-4 sentences
+
+=== Northwind Example Model
+
+==== Relational model
+
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/Northwind_diagram.jpg[]
+
+=== Graph Model
+
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/northwind_graph_simple.png[width=800]
+
+=== Querying the Data Step by Step
+
+==== Find all Products
+
+Easy in SQL just select everything from the `Product` table.
+
+[source,plsql]
+----
+SELECT p.* 
+FROM products as p;
+----
+
+//sqltable
+
+Similar in Cypher, you just match a simple pattern _all nodes with the label `:Product`_, and return them.
+
+[source,cypher]
+----
+MATCH (p:Product)
+RETURN p;
+----
+
+//table
+
+More efficient is to return only a subset of attributes, like `ProductName` and `UnitPrice`.
+And while we're on it, let's also order by price and only return the 10 most expensive items.
+
+[source,plsql]
+----
+SELECT p.ProductName, p.UnitPrice
+FROM products as p
+ORDER BY p.UnitPrice DESC
+LIMIT 10;
+----
+
+//sqltable
+
+You can copy and paste the changes from SQL to Cypher, it's thankfully unsurprising.
+
+[source,cypher]
+----
+MATCH (p:Product)
+RETURN p.productName, p.unitPrice
+ORDER BY p.unitPrice DESC
+LIMIT 10;
+----
+
+// table
+
+==== Find single Product by Name
+
+If we only want to look at a single Product, for instance delicious _Chocolade_, we filter in SQL with a `WHERE` clause.
+
+[source,plsql]
+----
+SELECT p.ProductName, p.UnitPrice
+FROM products as p
+WHERE p.ProductName = 'Chocolade';
+----
+
+//sqltable
+
+Same in Cypher, here the `WHERE` belongs to the `MATCH` statement. Boring.
+
+[source,cypher]
+----
+MATCH (p:Product)
+WHERE p.productName = "Chocolade"
+RETURN p.productName, p.unitPrice;
+----
+
+// table
+
+There is a shortcut in Cypher if you match for a labeled node with a certain attribute.
+
+[source,cypher]
+----
+MATCH (p:Product {productName:"Chocolade"})
+RETURN p.productName, p.unitPrice;
+----
+
+// table
+
+If you want to match quickly by this node-label and attribute combination, it makes sense to create an index for that pair, if you haven't during the link:/developer/working-with-data/guide-importing-data-and-etl[import].
+
+[source,cypher]
+----
+CREATE INDEX ON :Product(productName);
+----
+
+==== Filter Products
+
+Filtering can go further, let's try to find some expensive things starting with "C".
+
+[source,plsql]
+----
+SELECT p.ProductName, p.UnitPrice
+FROM products as p
+WHERE p.ProductName LIKE 'C%' AND p.UnitPrice > 100;
+----
+
+//sqltable
+
+The `LIKE` operator is replaced by a regular expression, but http://neo4j.com/docs/stable/query-functions-mathematical.html[math operations] are widely supported in Cypher.
+
+[source,cypher]
+----
+MATCH (p:Product)
+WHERE p.productName =~ "C.*" AND p.unitPrice > 100
+RETURN p.productName, p.unitPrice;
+----
+
+// table
+
+==== Joining Products with Customers
+
+We want to see who bought Chocolade.
+Let's join the four tables together, refer to the model (ER-diagram) when you're unsure.
+
+[source,plsql]
+----
+SELECT distinct c.CompanyName 
+FROM customers AS c 
+JOIN orders AS o ON (c.CustomerID = o.CustomerID)
+JOIN order_details AS od ON (o.OrderID = od.OrderID)
+JOIN products as p ON (od.ProductID = p.ProductID)
+WHERE p.ProductName = 'Chocolade';
+----
+
+//sqltable
+
+The graph model (have a look) is much simpler as we don't need join tables, and expressing connections as graph patterns, is easier to read too.
+
+[source,cypher]
+----
+MATCH (p:Product {productName:"Chocolade"})<-[:PRODUCT]-(:Order)<-[:PURCHASED]-(c:Customer)
+RETURN distinct c.companyName;
+----
+
+// table
+
+==== New Customers without Orders
+
+If we turn the question around and ask what have I bought, the JOIN stays the same, only the filter changes.
+Except if we have customers without any orders and still want to return them.
+
+[source,plsql]
+----
+SELECT p.ProductName, sum(od.UnitPrice * od.Quantity) as Volume
+FROM customers AS c 
+LEFT OUTER JOIN orders AS o ON (c.CustomerID = o.CustomerID)
+LEFT OUTER JOIN order_details AS od ON (o.OrderID = od.OrderID)
+LEFT OUTER JOIN products as p ON (od.ProductID = p.ProductID)
+WHERE c.CompanyName = 'Drachenblut Delikatessen'
+GROUP BY p.ProductName
+ORDER BY Volume DESC;
+----
+
+//sqltable
+
+In our Cypher query, the MATCH between customer and order becomes an OPTIONAL MATCH, which is the equivalent of an OUTER JOIN.
+
+[source,cypher]
+----
+MATCH (c:Customer {companyName:"Drachenblut Delikatessen"})
+OPTIONAL MATCH (p:Product)<-[pu:PRODUCT]-(:Order)<-[:PURCHASED]-(c)
+RETURN p.productName, toInt(sum(pu.unitPrice * pu.quantity)) as volume
+ORDER BY volume DESC;
+----
+
+// table
+
+=== Aggregation, Top-Sellers
+
+In the previous query we already sneaked in a bit of aggregation.
+By summing up product prices and ordered quantities, we provided an aggregated view per product for this customer.
+
+You can use aggregation functions like `sum, count, avg, max` both in SQL and Cypher.
+In SQL aggregation is explicit so you have to provide all grouping keys in the `GROUP BY` clause.
+If we want to see our top-selling employees.
+
+[source,plsql]
+----
+SELECT e.EmployeeID, count(*) as Count
+FROM Employee as e
+JOIN Order AS o ON (o.EmployeeID = e.EmployeeID)
+GROUP BY e.EmployeeID
+ORDER BY Count DESC LIMIT 10
+;
+----
+
+//sqltable
+
+In Cypher grouping for aggregation is implicit.
+As soon as you use the first aggregation function, all non-aggregated columns automatically become grouping keys.
+
+[source,cypher]
+----
+MATCH (:Order)<-[:SOLD]-(e:Employee)
+RETURN e.name, count(*) as cnt
+ORDER BY cnt DESC LIMIT 10
+----
+
+//table
+
+=== Collecting Master-Detail Queries
+
+In SQL there is one dreaded kind of query - master detail information.
+You have one main entity (master, head, parent) and many dependent ones (detail, position, child).
+Usually you either query it by joining both and returning the master data multiple times (once for each detail), or by only fetching the primary key of the master and then pulling all detail rows via that foreign key.
+
+For instance if we look at the employees per territory, then the territory information is returned for each employee.
+
+[source,plsql]
+----
+SELECT e.LastName, et.Description
+FROM Employee as e
+JOIN EmployeeTerritory AS et ON (et.EmployeeID = e.EmployeeID)
+JOIN Territory AS t ON (et.TerritoryID = t.TerritoryID)
+;
+----
+
+//sqltable
+
+In Cypher we can return the structure as in SQL. 
+Or we can choose to use the `collect` aggregation function, which aggregates values into a collection (list,array).
+So we only return one row per parent, containing an inlined collection of child values.
+This also works for nested values.
+
+[source,cypher]
+----
+MATCH (t:Territory)<-[:IN_TERRITORY]-(e:Employee)
+RETURN t.description, collect(e.lastName);
+----
+
+//table
+
+=== Hierarchies and Trees - Variable Length Paths
+
+If you have to express category-, territory- or organizational hierarchies in SQL then you model it usually with a self-join via a foreign key from child to parent.
+Adding data is not problematic, as are single level queries (get all children for this parent).
+As soon as you get into multi-level queries, the number of joins explodes, especially if your level depth is variable.
+
+Taking the example of the product categories, we have to decide upfront up to how many levels of categories we want to query.
+We will tackle only three potential levels here (which means 1+2+3 = 6 self-joins of the ProductCategory table).
+
+// TODO check
+
+[source,plsql]
+----
+SELECT p.ProductName
+FROM Product as p 
+JOIN ProductCategory pc ON (p.CategoryID = pc.CategoryID AND pc.CategoryName = "Dairy Products")
+
+JOIN ProductCategory pc1 ON (p.CategoryID = pc1.CategoryID
+JOIN ProductCategory pc2 ON (pc2.ParentID = pc2.CategoryID AND pc2.CategoryName = "Dairy Products")
+
+JOIN ProductCategory pc3 ON (p.CategoryID = pc3.CategoryID
+JOIN ProductCategory pc4 ON (pc3.ParentID = pc4.CategoryID)
+JOIN ProductCategory pc5 ON (pc4.ParentID = pc5.CategoryID AND pc5.CategoryName = "Dairy Products")
+;
+----
+
+//sqltable
+
+Cypher is able to express single or fixed level hierarchies just with the appropriate relationships.
+Variable levels are represented by variable length paths, which are denoted by a star after the relationship-type and optional limits (min..max).
+
+[source,cypher]
+----
+MATCH (p:Product)-[:CATEGORY]->(l:ProductCategory)-[:PARENT*0..]-(:ProductCategory {name:"Dairy Products"})
+RETURN p.name
+----
+
+//table
+
+
+MATCH (choc:Product {ProductName:'Chocolade'})<-[:PRODUCT]-(:Order)<-[:SOLD]-(employee),
+      (employee)-[:SOLD]->()-[:PRODUCT]->(other:Product)
+RETURN employee.EmployeeID, other.ProductName, count(*) as count
+ORDER BY count DESC
+LIMIT 5
+
+also introduce order by, limit
+
+
+==== Find all Products in Category X
+
+discuss graph patterns with relationships
+
+
+==== Hierarchy
+
+==== Varlength path
+
+==== With
+
+
+=== Create a new product
+
+=== create an order
