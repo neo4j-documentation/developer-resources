@@ -6,6 +6,7 @@
 :toclevels: 1
 :section: Data Import
 :section-link: working-with-data
+:northwind: ../../data/northwind
 
 .Goals
 [abstract]
@@ -50,18 +51,13 @@ image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/northwind
 === Exporting the Data to CSV
 
 Now that we know what we'd like our graph to look like, we need to extract the data from PostgreSQL so we can create it as a graph.
-The easiest way to do that is to export the appropriate tables in CSV format. The PostgreSQL 'copy' command lets us execute a SQL query and write the result to a CSV file:
+The easiest way to do that is to export the appropriate tables in CSV format. 
+The PostgreSQL 'copy' command lets us execute a SQL query and write the result to a CSV file, e.g. with `psql -d northwind < export_csv.sql`:
 
+.export_csv.sql
 [source, sql]
 ----
-COPY (SELECT * FROM customers) TO '/tmp/customers.csv' WITH CSV header;
-COPY (SELECT * FROM suppliers) TO '/tmp/suppliers.csv' WITH CSV header;
-COPY (SELECT * FROM products)  TO '/tmp/products.csv' WITH CSV header;
-COPY (SELECT * FROM employees) TO '/tmp/employees.csv' WITH CSV header;
-COPY (SELECT * FROM categories) TO '/tmp/categories.csv' WITH CSV header;
-
-COPY (SELECT * FROM orders
-      LEFT OUTER JOIN order_details ON order_details."OrderID" = orders."OrderID") TO '/tmp/orders.csv' WITH CSV header;
+include::{northwind}/export_csv.sql[]
 ----
 
 ////
@@ -79,90 +75,54 @@ After we've exported our data from PostgreSQL, we'll use Cypher's link:{manual}/
 
 First, create the nodes:
 
+.import_csv.cypher
 [source, cypher]
 ----
-# Create customers
-LOAD CSV WITH HEADERS FROM "file:/tmp/customers.csv" AS row
-CREATE (:Customer {CompanyName: row.CompanyName, CustomerID: row.CustomerID, Fax: row.Fax, Phone: row.Phone});
-
-# Create products
-LOAD CSV WITH HEADERS FROM "file:/tmp/products.csv" AS row
-CREATE (:Product {ProductName: row.ProductName, ProductID: row.ProductID, UnitPrice: row.UnitPrice});
-
-# Create suppliers
-LOAD CSV WITH HEADERS FROM "file:/tmp/suppliers.csv" AS row
-CREATE (:Supplier {CompanyName: row.CompanyName, SupplierID: row.SupplierID});
-
-# Create employees
-LOAD CSV WITH HEADERS FROM "file:/tmp/employees.csv" AS row
-CREATE (:Employee {EmployeeID:row.EmployeeID,  FirstName: row.FirstName, LastName: row.LastName, Title: row.Title});
-
-# Create categories
-LOAD CSV WITH HEADERS FROM "file:/tmp/categories.csv" AS row
-CREATE (:Category {CategoryID: row.CategoryID, CategoryName: row.CategoryName, Description: row.Description});
+include::{northwind}/import_csv.cypher[tags=nodes]
 ----
 
 Next, we'll create indexes on the just-created nodes to ensure their quick lookup when creating relationships in the next step.
 
 [source, cypher]
 ----
-CREATE INDEX ON :Product(ProductID);
-CREATE INDEX ON :Category(CategoryID);
-CREATE INDEX ON :Employee(EmployeeID);
-CREATE INDEX ON :Supplier(SupplierID);
-CREATE INDEX ON :Customer(CustomerID);
+include::{northwind}/import_csv.cypher[tags=indexes]
 ----
 
-Initial nodes and indices in place, we can now create relationships orders and their relationships to products and employees:
+Initial nodes and indices in place, we can now create relationships of orders to products and employees:
 
 [source, cypher]
 ----
-LOAD CSV WITH HEADERS FROM "file:/tmp/orders.csv" AS row
-CREATE (order:Order {OrderID: row.OrderID, ShipName: row.ShipName})
-
-WITH *
-MATCH (product:Product {ProductID: row.ProductID})
-MATCH (employee:Employee {EmployeeID: row.EmployeeID})
-
-MERGE (employee)-[:SOLD]->(order)
-MERGE (order)-[:PRODUCT]->(product);
+include::{northwind}/import_csv.cypher[tags=rels_orders]
 ----
 
 Next, create relationships between products, suppliers, and categories:
 
 [source, cypher]
 ----
-LOAD CSV WITH HEADERS FROM "file:/tmp/products.csv" AS row
-MATCH (product:Product {ProductID: row.ProductID})
-MATCH (supplier:Supplier {SupplierID: row.SupplierID})
-MATCH (category:Category {CategoryID: row.CategoryID})
-
-MERGE (supplier)-[:SUPPLIES]->(product)
-MERGE (product)-[:PART_OF]->(category);
+include::{northwind}/import_csv.cypher[tags=rels_products]
 ----
 
 Finally we'll create the 'REPORTS_TO' relationship between employees to represent the reporting structure:
 
 [source, cypher]
 ----
-LOAD CSV WITH HEADERS FROM "file:/tmp/employees.csv" AS row
-MATCH (employee:Employee {EmployeeID: row.EmployeeID})
-MATCH (manager:Employee {EmployeeID: row.ReportsTo})
-MERGE (employee)-[:REPORTS_TO]->(manager);
+include::{northwind}/import_csv.cypher[tags=rels_employees]
 ----
 
-For completeness and optimal query speed, create an index on orders:
+For completeness and optimal query speed, create an unique constraint on orders:
 
 [source, cypher]
 ----
-CREATE INDEX ON :Order(OrderId);
+include::{northwind}/import_csv.cypher[tags=constraints]
 ----
+
+You can also run the whole script at once using `bin/neo4j-shell -path northwind.db -file import_csv.cypher`.
 
 The resulting graph should look like this:
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/northwind_graph_sample.png[]
 
-We can now query the graph.
+We can now query the resulting graph.
 
 === Querying the Graph
 
@@ -172,23 +132,23 @@ One question we might be interested in is:
 
 [source,cypher]
 ----
-MATCH (choc:Product {ProductName:'Chocolade'})<-[:PRODUCT]-(:Order)<-[:SOLD]-(employee),
-      (employee)-[:SOLD]->()-[:PRODUCT]->(other:Product)
-RETURN employee.EmployeeID, other.ProductName, count(*) as count
+MATCH (choc:Product {productName:'Chocolade'})<-[:PRODUCT]-(:Order)<-[:SOLD]-(employee),
+      (employee)-[:SOLD]->(o2)-[:PRODUCT]->(other:Product)
+RETURN employee.employeeID, other.productName, count(distinct o2) as count
 ORDER BY count DESC
-LIMIT 5
+LIMIT 5;
 ----
 
 Looks like employee #1 was very busy!
 
 [format="csv", options="header"]
 |===
-employee.employeeId,other.name,count
-1,Flotemysost,24
-1,Gorgonzola Telino,22
-1,Pavlova,22
-1,Camembert Pierrot,22
-1,Ikura,20
+employee.employeeId,other.productName,count
+1,Pavlova,56
+1,Camembert Pierrot,56
+1,Ikura,55
+1,Chang,47
+1,Pâté chinois,45
 |===
 
 We might also like to answer the following question:
@@ -198,7 +158,7 @@ We might also like to answer the following question:
 [source, cypher]
 ----
 MATCH path = (e:Employee)<-[:REPORTS_TO]-(sub)
-RETURN e.EmployeeID AS manager, sub.EmployeeID AS employee
+RETURN e.employeeID AS manager, sub.employeeID AS employee;
 ----
 
 [format="csv", options="header"]
@@ -223,57 +183,53 @@ Let's investigate that a bit more:
 [source, cypher]
 ----
 MATCH path = (e:Employee)<-[:REPORTS_TO*]-(sub)
-WITH e, sub, [person in NODES(path) | person.EmployeeID][1..-1] AS path
-RETURN e.EmployeeID AS manager, sub.EmployeeID AS employee, CASE WHEN LENGTH(path) = 0 THEN "Direct Report" ELSE path END AS via
-ORDER BY LENGTH(path)
+WITH e, sub, [person in NODES(path) | person.employeeID][1..-1] AS path
+RETURN e.employeeID AS manager, sub.employeeID AS employee, CASE WHEN LENGTH(path) = 0 THEN "Direct Report" ELSE path END AS via
+ORDER BY LENGTH(path);
 ----
 
-[format="csv", options="header"]
+[format="dsv", options="header"]
 |===
-e.EmployeeID,sub.EmployeeID,via
-2,1,Direct Report
-2,3,Direct Report
-2,4,Direct Report
-2,5,Direct Report
-2,8,Direct Report
-5,6,Direct Report
-5,7,Direct Report
-5,9,Direct Report
-2,6,"[""5""]"
-2,7,"[""5""]"
-2,9,"[""5""]"
+e.EmployeeID:sub.EmployeeID:via
+2:1:Direct Report
+2:3:Direct Report
+2:4:Direct Report
+2:5:Direct Report
+2:8:Direct Report
+5:6:Direct Report
+5:7:Direct Report
+5:9:Direct Report
+2:6:[5]
+2:7:[5]
+2:9:[5]
 |===
-
 
 ==== How Many Orders were Made by Each Part of the Hierarchy?
 
 [source, cypher]
 ----
 MATCH (e:Employee)
-OPTIONAL MATCH (e)<-[:REPORTS_TO*0..]-(sub)-[:SOLD]->()
-RETURN e.EmployeeID, [x IN COLLECT(DISTINCT sub.EmployeeID) WHERE x <> e.EmployeeID] AS reports, COUNT(*) AS totalOrders
-ORDER BY totalOrders DESC
+OPTIONAL MATCH (e)<-[:REPORTS_TO*0..]-(sub)-[:SOLD]->(order)
+RETURN e.employeeID, [x IN COLLECT(DISTINCT sub.employeeID) WHERE x <> e.employeeID] AS reports, COUNT(distinct order) AS totalOrders
+ORDER BY totalOrders DESC;
 ----
 
-[format="csv", options="header"]
+[format="dsv", options="header"]
 |===
-e.EmployeeID,reports,totalOrders
-2,"[""1"",""3"",""4"",""5"",""6"",""7"",""9"",""8""]",2155
-5,"[""6"",""7"",""9""]",568
-4,[],420
-1,[],345
-3,[],321
-8,[],260
-7,[],176
-6,[],168
-9,[],107
+e.EmployeeID:reports:totalOrders
+2:[1,3,4,5,6,7,9,8]:2155
+5:[6,7,9]:568
+4:[]:420
+1:[]:345
+3:[]:321
+8:[]:260
+7:[]:176
+6:[]:168
+9:[]:107
 |===
 
-////
-[role=side-nav]
-=== Further Reading
-
-* link:/books[The Neo4j Bookshelf]
-* http://watch.neo4j.org[The Neo4j Video Library]
-* http://gist.neo4j.org/[GraphGists]
-////
+//[role=side-nav]
+* link:{github}/data/northwind[Northwind SQL, CSV and Cypher data files]
+* link:/developer/cypher-query-language/guide-sql-to-cypher[From SQL to Cypher]
+* link:/developer/working-with-data/guide-import-csv[Import CSV Guide]
+* link:/developer/build-a-graph-data-model/guide-intro-to-graph-modeling.adoc[Graph Data Modeling]
