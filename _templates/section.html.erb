@@ -29,7 +29,9 @@ else
   marginFix = ""
   if slevel == 2
     cols = "columns medium-" + (is_side_nav ? "12" : "12")
-    colOpen = (is_side_nav ? "<ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>" : "")
+# <div style="clear: right; float: right; margin: 6px 0px 0px 30px; width: 5em; padding: 1em; min-width: 16em; border: 1px solid rgb(222, 222, 222);">
+#    colOpen = (is_side_nav ? "<ul class='side-nav code-panel' style='clear: both; float: right; margin: 6px 0px 0px 30px; max-width: 20em; padding: 1em; min-width: 16em; border: 1px solid rgb(222, 222, 222);height:auto;'><li>" : "")
+    colOpen = (is_side_nav ? "<ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>" : "")
     colOpenClose = (is_side_nav ? "</li>" : "")
     colClose = (is_side_nav ? "</ul>" : "")
     marginFix = "style='padding-left: 0;'"
