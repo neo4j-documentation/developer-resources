@@ -63,7 +63,26 @@ Neo4j installation on Windows Azure can be provisioned through the VMDepot Image
 * http://www.cogno-sys.com/cloud-azure-amazon-open-stack/neo4j-azure-installation-graph-database-tutorials/[Azure AWS Open Stack – Neo4j Setup Tutorials on Ubuntu]
 * http://blog.tatham.oddie.com.au/2014/02/11/podcast-graph-databases-and-neo4j-with-richard-and-carl-from-net-rocks/[Podcast .Net Rocks with Tatham Oddie]
 
-=== Further PaaS Integrations
+=== Neo4j with Docker
+
+http://docker.com[Docker] is a lightweight virtualization mechanism to run single applications containerized and restricted on your machine.
+Docker images are pre-build in layers from configuration of services one of which would be Neo4j.
+A docker image can be started immediately after downloading, no time-consuming boot required.
+
+It is pretty easy to create a Neo4j image yourself, just any base linux container with a JDK is good enough.
+Just add Neo4j on top and you're done. 
+
+There are already a number of https://registry.hub.docker.com/search?q=neo4j[Docker Neo4j images] available on Docker Hub.
+
+Make sure when running the docker image to expose the Neo4j port `7474` and provide the database directory as external volume. E.g.
+
+`docker run –rm -i -t -d –privileged -v /home/user/neo4jdata:/var/lib/neo4j/data -p 7474:7474 tpires/neo4j`
+
+* https://registry.hub.docker.com/u/tpires/neo4j/[Neo4j by tpires]
+* https://registry.hub.docker.com/u/kbastani/docker-neo4j/[Neo4j 2.1.6 by Kenny Bastani]
+* https://registry.hub.docker.com/u/kbastani/neo4j-graph-analytics/[Neo4j Graph Analytics for MazeRunner/Spark by Kenny Bastani]
+
+=== Other PaaS Integrations
 
 * https://www.digitalocean.com/community/tutorials/how-to-install-neo4j-on-an-ubuntu-vps[Digital Ocean]
 * http://docs.pivotal.io/p1-services/Neo4j.html[Pivotal CloudFoundry]
@@ -119,6 +138,7 @@ image::https://structr.org/blog/snapshots.png[width=400]
 * Physics-based Graph Visualization
 * Managed Cloud Server
 
+////
 ==== GraphHost
 
 Neo4j graph database hosting made easy with https://graphhost.com/[GraphHost]
@@ -128,4 +148,5 @@ image::https://graphhost.com/assets/appbg-44a5e35aea32ecba2899d4a7e71ff598.png[w
 * Just needs your email address and a password
 * Offers small, medium, and large instance sizes
 * All plans come with 20GB storage and 1TB transfer as standard
-* Rull access to your graph database. API, webadmin within minutes
+* Full access to your graph database. API, webadmin within minutes
+////
