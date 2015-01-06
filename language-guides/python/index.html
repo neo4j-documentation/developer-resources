@@ -121,6 +121,9 @@
                </div>
                <article id="content" role="main">
                   <style>
+                    .side-nav li a:not(.button) { 
+                       display:inline;
+	                 }
                     .row { max-width: 62.5rem !important; }
                      .lead
                      {
@@ -237,13 +240,13 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-If you are a Pythonista, you should find enough information to get you started with Neo4j. While this guide is not comprehensive it will introduce the different drivers and link to the relevant resources.
+If you are a Pythonista, this guide provides an overview of options for connecting to Neo4j. While this guide is not comprehensive it will introduce the different drivers and link to the relevant resources.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should be familiar with <a href="../../what-is-neo4j/graph-database">graph database concepts</a> and the property graph model. You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="../../cypher-query-language">Cypher Query language</a>.
+You should be familiar with <a href="/developer/graph-database">graph database concepts</a> and the property graph model. You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="/developer/cypher-query-language">Cypher Query language</a>.
 </blockquote>
 </div>
 
@@ -321,21 +324,10 @@ The front-end is the same for all drivers, just the backends show you how to con
 <p><a href="../example-project">Read More</a></p>
 </div>
 
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="python"><code>def find_lovers(graph_db):
-    query = "MATCH (n)-[r:loves]-&gt;(m) return n, r, m"
-    # This is our awesome Cypher query language.
-    # MATCH the ones that have a LOVES relationship
-    # and RETURN the starting node, the relationship, and the end node.
-    data, metadata = graph_db.execute(query)
-    return data[0]</code></pre>
-</div>
-</div>
 
 
 <div class="paragraph">
-<p>Python and Neo4j are a well established combination, mainly thanks to the sterling efforts of top contributor Nigel Small.</p>
+<p>Python and Neo4j are a well established combination, mainly thanks to the many contributors in the community.</p>
 </div>
 
 
@@ -369,12 +361,6 @@ We also have Django support for building bigger web applications, in Neo4jDjango
 
 
 <div class="paragraph">
-<p>Author: <a href="http://twitter.com/neonige">Nigel Small</a></p>
-</div>
-
-
-
-<div class="paragraph">
 <p>Py2neo is a simple and pragmatic Python library that provides access to the popular graph database Neo4j via its HTTP-Apis.</p>
 </div>
 
@@ -386,7 +372,7 @@ We also have Django support for building bigger web applications, in Neo4jDjango
 
 </div>
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
 <h2 id="_sidebar">Sidebar</h2>
 </li>
 <div class="ulist">
@@ -394,7 +380,16 @@ We also have Django support for building bigger web applications, in Neo4jDjango
 
 <ul>
 <li>
-<a href="py2neo-1.6">Example Project with Py2Neo</a>
+<a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/python/py2neo-1.6">Example Project with Py2Neo</a>
+</li>
+<li>
+<a href="https://github.com/nigelsmall/py2neo">Py2Neo on GitHub</a>
+</li>
+<li>
+Author: <a href="http://twitter.com/neonige">Nigel Small</a>
+</li>
+<li>
+<a href="http://book.py2neo.org/en/latest/">Documentation</a>
 </li>
 <li>
 <a href="http://nigelsmall.com/load2neo">Load2Neo</a>
@@ -415,7 +410,7 @@ We also have Django support for building bigger web applications, in Neo4jDjango
 
 </div>
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
 <h2 id="_sidebar_2">Sidebar</h2>
 </li>
 <div class="ulist">
@@ -423,7 +418,7 @@ We also have Django support for building bigger web applications, in Neo4jDjango
 
 <ul>
 <li>
-<a href="neo4jrestclient">Example Project with Neo4jRestClient</a>
+<a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/python/neo4jrestclient">Example Project with Neo4jRestClient</a>
 </li>
 </ul>
 
@@ -435,13 +430,7 @@ We also have Django support for building bigger web applications, in Neo4jDjango
 
 <div class="sect3 "  >
     
-<h5 id="__a_href_http_github_com_robinedwards_neomodel_neomodel_a"><a href="http://github.com/robinedwards/neomodel">NeoModel</a></h5>
-
-
-
-<div class="paragraph">
-<p>Author: Robin Edwards</p>
-</div>
+<h5 id="_neomodel">NeoModel</h5>
 
 <div class="imageblock">
 <p class="content">
@@ -454,27 +443,47 @@ We also have Django support for building bigger web applications, in Neo4jDjango
 <p>An Object Graph Mapper (OGM) also usable for Django for the Neo4j graph database.</p>
 </div>
 
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="http://github.com/robinedwards/neomodel">NeoModel on GitHub</a>
+</li>
+<li>
+Author: Robin Edwards
+</li>
+</ul>
+
+</div>
 </div>
 <div class="sect3 "  >
     
-<h5 id="__a_href_http_github_com_jakewins_neo4jdb_python_neo4jdb_python_a"><a href="http://github.com/jakewins/neo4jdb-python">neo4jdb-python</a></h5>
+<h5 id="_neo4jdb_python">neo4jdb-python</h5>
 
 
 
 <div class="paragraph">
-<p>Author: Jacob Hansson Implements the <a href="http://legacy.python.org/dev/peps/pep-0249/">Python DB API 2.0</a> for Neo4j, compatible with python 2.6, 2.7, 3.2 and 3.3 and Neo4j &gt;= 2.0.0</p>
+<p>Implements the <a href="http://legacy.python.org/dev/peps/pep-0249/">Python DB API 2.0</a> for Neo4j, compatible with python 2.6, 2.7, 3.2 and 3.3 and Neo4j &gt;= 2.0.0</p>
 </div>
 
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="http://github.com/jakewins/neo4jdb-python">neo4jdb-python on GitHub</a>
+</li>
+<li>
+Author: Jacob Hansson
+</li>
+</ul>
+
+</div>
 </div>
 <div class="sect3 "  >
     
-<h5 id="__a_href_http_github_com_scholrly_neo4django_neo4django_a"><a href="http://github.com/scholrly/neo4django">Neo4django</a></h5>
-
-
-
-<div class="paragraph">
-<p>Author: Matt Luongo</p>
-</div>
+<h5 id="_neo4django">neo4django</h5>
 
 
 
@@ -482,10 +491,23 @@ We also have Django support for building bigger web applications, in Neo4jDjango
 <p>neo4django is an Object Graph Mapper (OGM) for Django. Use familiar Django models and queries against Neo4j.</p>
 </div>
 
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="http://github.com/scholrly/neo4django">neo4django on GitHub</a>
+</li>
+<li>
+Author: Matt Luongo
+</li>
+</ul>
+
+</div>
 </div>
 <div class="sect3 "  >
     
-<h5 id="__a_href_http_bulbflow_com_overview_bulbs_a"><a href="http://bulbflow.com/overview/">Bulbs</a></h5>
+<h5 id="_bulbs">Bulbs</h5>
 
 <div class="imageblock">
 <p class="content">
@@ -495,19 +517,26 @@ We also have Django support for building bigger web applications, in Neo4jDjango
 
 
 <div class="paragraph">
-<p>Author: James Thornton</p>
-</div>
-
-
-
-<div class="paragraph">
 <p>Bulbs is an open-source Python persistence framework for graph databases and the first piece of a larger Web-development toolkit. It’s like an ORM for graphs.</p>
 </div>
 
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="http://bulbflow.com/overview/">Bulbs on GitHub</a>
+</li>
+<li>
+Author: James Thornton
+</li>
+</ul>
+
+</div>
 </div>
 </div>
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
 <h2 id="_further_reading">Further Reading</h2>
 </li>
 <div class="ulist">

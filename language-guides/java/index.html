@@ -6,7 +6,7 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>Neo4j Java examples | Developer Resources | Neo4j Graph Database</title>
+         <title>Using Neo4j from Java | Developer Resources | Neo4j Graph Database</title>
          <script type="text/javascript">
             var _kmq = _kmq || [];
             var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
@@ -121,6 +121,9 @@
                </div>
                <article id="content" role="main">
                   <style>
+                    .side-nav li a:not(.button) { 
+                       display:inline;
+	                 }
                     .row { max-width: 62.5rem !important; }
                      .lead
                      {
@@ -219,14 +222,14 @@
                         <div class="columns large-12" style="padding:10px 0 0;">
                            <ul class="breadcrumbs">
                               <li><a href="/developer-resources">Developer Guides</a></li>
-                              <li><a href="../">Guide</a></li>
-                              <li class="current"><a href="#">Neo4j Java examples</a></li>
+                              <li><a href="../">Develop with Neo4j</a></li>
+                              <li class="current"><a href="#">Using Neo4j from Java</a></li>
                            </ul>
                         </div>
                      </div>
                      <!-- <div class="row">
                         <div class="columns large-12">
-                           <h1 style="font-size:2.1rem;">Neo4j Java examples</h1>
+                           <h1 style="font-size:2.1rem;">Using Neo4j from Java</h1>
                         </div>
                      </div> -->
                      <section class="row" style="padding:10px 0;">
@@ -237,16 +240,16 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-If you are a Java developer, you should find enough information to get you started with Neo4j.
-While this guide is not comprehensive it will introduce the different APIs and link to the relevant resources.
+If you are a Java developer, this guide provides an overview of options for connecting to Neo4j.
+While this guide is not comprehensive, it will introduce the different APIs and link to the relevant resources.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should be familiar with the <a href="../../what-is-neo4j/graph-database">graph database concepts</a> and the property graph model.
-Having <a href="/download">installed Neo4j</a> and tried out our <a href="../../cypher-query-language">Cypher Query language</a> helps too.
-For working with Neo4j please use JDK 7 and your favorite IDE.
+You should be familiar with the <a href="/developer/graph-database">graph database concepts</a> and the property graph model.
+Having <a href="/download">installed Neo4j</a> and tried out our <a href="/developer/cypher-query-language">Cypher Query language</a> helps too.
+When with Neo4j, please use JDK 7 and your favorite IDE.
 </blockquote>
 </div>
 
@@ -292,26 +295,26 @@ For working with Neo4j please use JDK 7 and your favorite IDE.
 
 
 <div class="paragraph">
-<p>Neo4j comes in two flavors.
-The standalone Neo4j-Server can be installed on any machine and then accessed via its HTTP API.
-You can use whatever REST-library you choose for any JVM language.
-The dedicated Neo4j drivers go beyond that by offering comprehensive APIs for integrating with graph based applications.</p>
+<p>There are two ways of using Neo4j from the JVM.
+The standalone Neo4j Server can be installed on any machine and then accessed via its HTTP API.
+You can use any REST library you choose for any JVM language.
+The dedicated Neo4j drivers go beyond that by offering comprehensive APIs for integrating with graph-based applications.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>But you can also run <a href="http://docs.neo4j.org/chunked/snapshot/tutorials-java-embedded.html">Neo4j embedded in your JVM process</a>, much like HSQL or Derby.
+<p>But you can also run <a href="http://neo4j.com/docs/stable/tutorials-java-embedded.html">Neo4j embedded in your JVM process</a>, much like HSQL or Derby.
 This is great for unit testing, but also for high performance / no-network setups.
-If you use Neo4j embedded you can use the Neo4j Core-Java-API directly.
-Besides an object oriented approach to the graph database, working with Nodes, Relationships and Paths, it also offers highly customizable high-speed traversal- and graph-algorithm implementations.
-You can also choose from any useful drivers wrapping that API, which exist for either for specific programming languages or that add interesting functionality.</p>
+If you use Neo4j embedded, you can use the Neo4j Core-Java-API directly.
+Besides an object-oriented approach to the graph database, working with Nodes, Relationships, and Paths, it also offers highly customizable high-speed traversal- and graph-algorithm implementations.
+You can also choose from any useful drivers wrapping that API, which exist either for specific programming languages or that add interesting functionality.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>One example is <a href="http://projects.spring.io/spring-data-neo4j/">Spring Data Neo4j</a> which integrates tightly with the <a href="http://spring.io/">SpringFramework</a> and offers Object-Graph mapping on top of Neo4j.</p>
+<p>One example is <a href="http://projects.spring.io/spring-data-neo4j/">Spring Data Neo4j</a>, which integrates tightly with the <a href="http://spring.io/">SpringFramework</a> and offers Object-Graph mapping on top of Neo4j.</p>
 </div>
 
 
@@ -335,7 +338,7 @@ With its non-transactional, low-level batch-insertion API it can ingest millions
 
 
 <div class="paragraph">
-<p>You can find out more about our example projects for Ruby (and other languages) here <a href="../" class="bare">../</a>, you can also access it via the <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/">GitHub repository</a> for the Neo4j developer resources.
+<p>You can find out more about our example projects for many different languages <a href="../example-project">here</a>, you can also access it via the <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/">GitHub repository</a> for the Neo4j developer resources.
 Feel free to check them out.</p>
 </div>
 
@@ -344,6 +347,12 @@ Feel free to check them out.</p>
 <div class="paragraph">
 <p>It is a small one page webapp for our movies database.
 The front-end is the same for all drivers, just the backends show you how to connect to Neo4j from the different languages and drivers.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><a href="../example-project">Read More</a></p>
 </div>
 
 </div>
@@ -355,15 +364,15 @@ The front-end is the same for all drivers, just the backends show you how to con
 
 <div class="paragraph">
 <p>Being a Java developer you&#8217;re probably familiar with JDBC as a way to work with relational databases, either directly or via abstractions like Spring&#8217;s <code>JDBCTemplate</code> or MyBatis.
-Also many tools for ETL, Business Intelligence and data management use JDBC drivers to interact with relational databases.</p>
+Many tools for ETL, Business Intelligence, and data management also use JDBC drivers to interact with relational databases.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>As Cypher, like SQL is a textual parametrizable query language that can return tabular results, it was possible for us to support the JDBC APIs, and make a Neo4j-JDBC driver available.
-More details on how to use it can be found with our example project for <a href="jdbc/">Java-JDBC</a>.
-There we implement the backend as minimal Java webapp that leverages Neo4j-JDBC to connect to Neo4j Server.</p>
+<p>As Cypher, like SQL, is a textual parametrizable query language that can return tabular results, it was possible for us to support the JDBC APIs and make a Neo4j-JDBC driver available.
+More details on how to use it can be found with our example project for <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/java/jdbc/">Java-JDBC</a>.
+There, we implement the backend as a minimal Java webapp that leverages Neo4j-JDBC to connect to Neo4j Server.</p>
 </div>
 
 </div>
@@ -381,7 +390,7 @@ Then you get the double benefit of easy deployment and high performance database
 
 
 <div class="paragraph">
-<p>A Server extension provides a Jersey JAX-RS REST endpoint with a protocol and granularity that you control, you use it to send and receive datastructures of your domain.</p>
+<p>A Server extension provides a Jersey JAX-RS REST endpoint with a protocol and granularity that you control, you use it to send and receive data structures of your domain.</p>
 </div>
 
 
@@ -401,7 +410,7 @@ The path-finding and traversal APIs are also available.</p>
 
 
 <div class="paragraph">
-<p>The <a href="./extension">example project</a> shows how you would do that for our movie application endpoints.</p>
+<p>The <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/java/server-extension">example project</a> shows how you would do that for our movie application endpoints.</p>
 </div>
 
 </div>
@@ -412,25 +421,25 @@ The path-finding and traversal APIs are also available.</p>
 
 
 <div class="paragraph">
-<p>Spring Boot is a rapid application development infrastructure that allows you to quickly write Spring based applications with little setup and configuration.</p>
+<p>Spring Boot is a rapid application development infrastructure that allows you to quickly write Spring-based applications with little setup and configuration.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Here we use a simple Spring-Boot WebMVC and -JDBC application to provide a backend for our movie application.</p>
+<p>Here we use a simple Spring Boot WebMVC and JDBC application to provide a backend for our movie application.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>It just uses the well known APIs of <code>@RestController</code> and <code>JdbcTemplate</code> to do the Job.</p>
+<p>It uses the well known APIs of <code>@RestController</code> and <code>JdbcTemplate</code> to do the job.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>More details can be found in the <a href="spring-boot-jdbc">example project</a>.</p>
+<p>More details can be found in the <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/java/spring-boot-jdbc">example project</a>.</p>
 </div>
 
 </div>
@@ -441,7 +450,7 @@ The path-finding and traversal APIs are also available.</p>
 
 
 <div class="paragraph">
-<p>Spring Data Neo4j was the first Spring Data project and enables convenient integration of Neo4j in your Spring based application.
+<p>Spring Data Neo4j was the first Spring Data project and enables convenient integration of Neo4j in your Spring-based application.
 It provides object-graph mapping functionality and other features common to the Spring Data projects.</p>
 </div>
 
@@ -449,8 +458,8 @@ It provides object-graph mapping functionality and other features common to the 
 
 <div class="paragraph">
 <p>To use Neo4j with Spring Data Neo4j, you just add the dependency to your build setup.
-After setting up a simple Java based Spring configuration, and annotating your <code>@Node-</code> and <code>@RelationshipEntity`s, you can use the `Neo4jTemplate</code> to access Neo4j APIs and object graph mapping functionality.
-Additionally you can leverage the convenient Spring-Data repositories to get interface based DAO implementations injected into your Spring Components.</p>
+After setting up a simple Java-based Spring configuration, and annotating your <code>@Node-</code> and <code>@RelationshipEntity</code>, you can use <code>Neo4jTemplate</code> to access Neo4j APIs and object-graph mapping functionality.
+Additionally, you can leverage the convenient Spring Data repositories to get interface-based DAO implementations injected into your Spring Components.</p>
 </div>
 
 <div class="admonitionblock note">
@@ -461,7 +470,7 @@ Additionally you can leverage the convenient Spring-Data repositories to get int
 </td>
 <td class="content">
 The current version of Spring Data Neo4j works best with an embedded Neo4j database.
-To achieve highest-performance Neo4j-Server integration move your SDN persistence layer into an Server Extension.
+To achieve highest-performance Neo4j-Server integration, move your SDN persistence layer into an Server Extension.
 </td>
 </tr>
 </table>
@@ -475,12 +484,12 @@ To achieve highest-performance Neo4j-Server integration move your SDN persistenc
 
 
 <div class="paragraph">
-<p>See the <a href="./spring-data-neo4j">example project</a> for further details.</p>
+<p>See the <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/java/./spring-data-neo4j">example project</a> for further details.</p>
 </div>
 
 </div>
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
 <h2 id="_further_reading">Further Reading</h2>
 </li>
 <div class="ulist">
@@ -488,13 +497,16 @@ To achieve highest-performance Neo4j-Server integration move your SDN persistenc
 
 <ul>
 <li>
-<a href="./spring-data-neo4j">Spring Data Neo4j Example Project</a>
-</li>
-<li>
 <a href="http://projects.spring.io/spring-data-neo4j">Spring Data Neo4j Project</a>
 </li>
 <li>
+Authors: Michael Hunger, Oliver Gierke, Nicki Watt and many contributors
+</li>
+<li>
 <a href="http://www.youtube.com/watch?v=ZfbJ1ZJdb_A" class="video">Webinar Spring Boot &amp; SDN</a>
+</li>
+<li>
+<a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/java/spring-data-neo4j">Spring Data Neo4j Example Project</a>
 </li>
 </ul>
 
@@ -543,13 +555,13 @@ To achieve highest-performance Neo4j-Server integration move your SDN persistenc
 
 
 <div class="paragraph">
-<p>Author: Michael Klishin, Rohig Aggarval</p>
+<p>Author: Michael Klishin, Rohit Aggarwal</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>An idiomatic, feature rich Clojure client which supports (almost) all Neo4J REST API features and is constantly tested against bleeding edge server changes, like the Cypher language improvements.</p>
+<p>An idiomatic, feature-rich Clojure client which supports (almost) all Neo4k REST API features and is constantly tested against bleeding edge server changes, like the Cypher language improvements.</p>
 </div>
 
 </div>
@@ -621,7 +633,7 @@ Clojure wrapper for Neo4j, a graph database, in embedded JVM mode.</p>
 
 
 <div class="paragraph">
-<p>The Neo4j Scala wrapper library allows you use Neo4j open source graph database through a domain-specific language.</p>
+<p>The Neo4j Scala wrapper library allows you use Neo4j&#8217;s open source graph database through a domain-specific language.</p>
 </div>
 
 <div class="ulist">
@@ -716,7 +728,7 @@ Clojure wrapper for Neo4j, a graph database, in embedded JVM mode.</p>
 
 
 <div class="paragraph">
-<p>Kundera is a JPA 2.0 compliant, object-datastore mapping library for NoSQL datastores.</p>
+<p>Kundera is a JPA 2.0-compliant, object-datastore mapping library for NoSQL datastores.</p>
 </div>
 
 <div class="ulist">

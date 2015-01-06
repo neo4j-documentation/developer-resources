@@ -121,6 +121,9 @@
                </div>
                <article id="content" role="main">
                   <style>
+                    .side-nav li a:not(.button) { 
+                       display:inline;
+	                 }
                     .row { max-width: 62.5rem !important; }
                      .lead
                      {
@@ -244,7 +247,7 @@ In addition, it explains how to integrate graph databases with relational databa
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should have looked into the <a href="/what-is-neo4j/property-graph">property-graph model</a> and into <a href="/build-a-graph-data-model/guide-intro-to-graph-modeling">data modeling with graphs</a>.
+You should have looked into the <a href="/developer/graph-database#property-graph">property-graph model</a> and optionally read <a href="/developer/guide-intro-to-graph-modeling">data modeling with graphs</a>.
 </blockquote>
 </div>
 
@@ -259,7 +262,7 @@ You should have looked into the <a href="/what-is-neo4j/property-graph">property
 <li><a href="#_relational_databases">Relational Databases</a></li>
 <li><a href="#_from_relational_to_graph_databases">From Relational to Graph Databases</a></li>
 
-<li><a href="#_graph_querying_with_cypher">Graph Querying with Cypher</a></li>
+<li><a href="#_working_with_neo4j">Working with Neo4j</a></li>
 
 <li><a href="#_connecting_to_neo4j">Connecting to Neo4j</a></li>
 
@@ -277,16 +280,17 @@ You should have looked into the <a href="/what-is-neo4j/property-graph">property
 
 
 <div class="paragraph">
-<p>Relational databases have been (and continue to be) the power-horse of software applications since the 80s.
-They store highly structured data in tables with predetermined columns of certain types and many rows of the same type of information, and, thanks in part to the rigidity of their organization, force developers and applications to strictly structure the data used in their applications.</p>
+<p>Relational databases have been the power-horse of software applications since the 80s, and continue so to this day.
+They store highly structured data in tables with predetermined columns of certain types and many rows of the same type of information, and, thanks in part to the rigidity of their organization, require developers and applications to strictly structure the data used in their applications.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>In relational databases, references to other rows and tables are indicated by referring to their (primary-)key attributes, enforceable with constraints only when the connection is never optional.
-Relationships are computed at query time by matching primary and foreign keys of the many (potentially indexed) rows of the to be joined tables.
-These operations are CPU and RAM intensive and with an exponential cost.</p>
+<p>In relational databases, references to other rows and tables are indicated by referring to their (primary-)key attributes via foreign-key columns.
+This is enforceable with constraints, but only when the reference is never optional.
+Joins are computed at query time by matching primary- and foreign-keys of the many (potentially indexed) rows of the to-be-joined tables.
+These operations are compute- and memory-intensive and have an exponential cost.</p>
 </div>
 
 <div class="imageblock">
@@ -297,14 +301,14 @@ These operations are CPU and RAM intensive and with an exponential cost.</p>
 
 
 <div class="paragraph">
-<p>If you use many-to-many relationships, you have to introduce a <em>JOIN</em> table that lists foreign keys of both participating tables which further increases JOIN operation costs.
-Those costly JOIN operations are usually addressed by denormalising data to reduce the number of JOINs necessary.</p>
+<p>If you use many-to-many relationships, you have to introduce a <em>JOIN</em> table (or junction table) that holds foreign keys of both participating tables which further increases join operation costs.
+Those costly join operations are usually addressed by denormalising data to reduce the number of joins necessary.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Although not every use-case is a good fit for this type of stringent data model, the lack of viable alternatives and the support for relational databases has made for the lack of well known alternatives has made it difficult for alternative models to break into the mainstream.</p>
+<p>Although not every use-case is a good fit for this type of stringent data model, in the past, the lack of viable alternatives and the great support for relational databases has made it difficult for alternative models to break into the mainstream.</p>
 </div>
 
 
@@ -321,8 +325,8 @@ Those costly JOIN operations are usually addressed by denormalising data to redu
 
 
 <div class="paragraph">
-<p>Relationships are first-class citizens of the graph data model, unlike other database management systems, which require us to infer connections between entities using contrived properties such as foreign keys, or out-of-band processing like map-reduce.
-By assembling the simple abstractions of nodes and relationships into connected structures, graph databases enable us to build arbitrarily sophisticated models that map closely to our problem domain.</p>
+<p>Relationships are first-class citizens of the graph data model, unlike other database management systems, which require us to infer connections between entities using special properties such as foreign keys, or out-of-band processing like map-reduce.
+By assembling the simple abstractions of nodes and relationships into connected structures, graph databases enable us to build sophisticated models that map closely to our problem domain.</p>
 </div>
 
 
@@ -334,14 +338,21 @@ By assembling the simple abstractions of nodes and relationships into connected 
 
 
 <div class="paragraph">
-<p>Each node (entity or attribute) in the graph database model directly contains a list of relationship-records that represent its relationships to other nodes, organized by type and direction and holding additional attributes.
-Whenever you run the equivalent of a  <em>JOIN</em> operation, the database walks this list and has direct access to the connected nodes, eliminating the need for a costly search / match computation.</p>
+<p>Each node (entity or attribute) in the graph database model directly and physically contains a list of relationship-records that represent its relationships to other nodes.
+These relationship records are organized by type and direction and may hold additional attributes.
+Whenever you run the equivalent of a  <em>JOIN</em> operation, the database just uses this list and has direct access to the connected nodes, eliminating the need for a expensive search / match computation.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>The resulting models are simpler and at the same time more expressive than those produced using traditional relational databases and the other NOSQL stores.</p>
+<p>This ability of pre-materializing relationships into database structures allows Neo4j to provide performances of several orders of magnitude, especially for join heavy queries, the <em>minutes to milliseconds</em> advantage that many users leverage.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>The resulting data models are much simpler and at the same time more expressive than those produced using traditional relational or other NoSQL databases.</p>
 </div>
 
 <div class="imageblock">
@@ -359,15 +370,16 @@ Whenever you run the equivalent of a  <em>JOIN</em> operation, the database walk
 
 <div class="paragraph">
 <p>You more or less keep the data as it is in the real world: small, normalized, yet richly connected entities.
-This allows you to query and view your data from any imaginable view point, supporting many different use-cases.</p>
+This allows you to query and view your data from any imaginable point of interest, supporting many different use-cases.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>The fine grained model also means that there is no natural boundary around aggregates, so the scope of update operations has to be provided by the application.
-The well-known and tested concept of transactions groups a set of updates of nodes and relationships into a atomic, consistent, isolated, and durable (ACID) operation.
-Graph databases like Neo4j fully support the transactional concepts including write ahead logs and recovery after abnormal termination.</p>
+<p>The fine-grained model also means that there is no fixed boundary around aggregates, so the scope of update operations is provided by the application during the read or write operation.
+The well-known and tested concept of transactions groups a set of updates of nodes and relationships into an atomic, consistent, isolated, and durable (ACID) operation.
+Graph databases like Neo4j fully support the transactional concepts including write-ahead logs and recovery after abnormal termination.
+So you never lose your data that has been comitted to the database.</p>
 </div>
 
 <div class="imageblock">
@@ -378,13 +390,14 @@ Graph databases like Neo4j fully support the transactional concepts including wr
 
 
 <div class="paragraph">
-<p>If you&#8217;re used to modeling with relational databases, try to remember the ease and beauty of good, normalized entity-relationship diagram: a simple, easy to understand model you can quickly whiteboard with your colleagues and domain experts.</p>
+<p>If you&#8217;re used to modeling with relational databases, remember the ease and beauty of a well done, normalized entity-relationship diagram: a simple, easy to understand model you can quickly whiteboard with your colleagues and domain experts.
+A graph is exactly that, a clear model of the domain, focused on the use-cases you want to efficiently support.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Let&#8217;s take a realistic model of an organizational domain and show how it would be modeled in a relational database vs. the graph database:</p>
+<p>Let&#8217;s take a model of the organizational domain and show how it would be modeled in a relational database vs. the graph database:</p>
 </div>
 
 <div class="imageblock">
@@ -394,7 +407,7 @@ Graph databases like Neo4j fully support the transactional concepts including wr
 </div>
 </div>
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
 <h2 id="_recommended">Recommended</h2>
 </li>
 <div class="ulist">
@@ -402,7 +415,7 @@ Graph databases like Neo4j fully support the transactional concepts including wr
 
 <ul>
 <li>
-<a href="../graph-database">What is a Graph Database</a>
+<a href="../graph-database">What is a Graph Database?</a>
 </li>
 <li>
 <a href="https://vimeo.com/103466968" class="webinar">Intro to Neo4j</a>
@@ -416,12 +429,12 @@ Graph databases like Neo4j fully support the transactional concepts including wr
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h4 id="_graph_querying_with_cypher">Graph Querying with Cypher</h4>
+<h4 id="_working_with_neo4j">Working with Neo4j</h4>
 
 
 
 <div class="paragraph">
-<p>Querying relational databases is easy with SQL, a declarative query language allows both for easy ad-hoc querying in a database tool as well as specifying use-case related queries in your code.
+<p>Querying relational databases is easy with SQL; a declarative query language that allows both for easy ad-hoc querying in a database tool as well as specifying use-case related queries in your code.
 Even object-relational mappers use SQL under the hood to talk to the database.</p>
 </div>
 
@@ -429,19 +442,28 @@ Even object-relational mappers use SQL under the hood to talk to the database.</
 
 <div class="paragraph">
 <p>Do graph databases have something similar?
-Cypher, Neo4j&#8217;s declarative graph query language, is built on the basic concepts and clauses of SQL but added a lot of graph-specific functionality to make it simple to work with your rich graph model without being too verbose.</p>
+Cypher, Neo4j&#8217;s declarative graph query language, is built on the basic concepts and clauses of SQL but has a lot of additional graph-specific functionality to make it simple to work with your rich graph model without being too verbose.
+It allows you to query and update the graph structures, with concise statements.
+Cypher is centered around the graph patterns that are core to your use-cases and represents them visually as part of its query syntax.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>If you have ever tried to write a SQL statement with a large number of JOINs, you know that you quickly lose sight of what the query actually does due to all the technical noise.</p>
+<p>If you have ever tried to write a SQL statement with a large number of joins, you know that you quickly lose sight of what the query actually does, due to all the technical noise.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>In the organizational domain described in the image above, what would a SQL statement that lists the <em>employees in the "IT Department"</em> look like, and how does that statement compare to a Cypher statement?</p>
+<p>In Cypher the syntax stays clean and focused on domain concepts as the structural connections to find or create are expressed visually.
+The other clauses besides the pattern matching should be very familiar for everyone who has used SQL before.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>In the organizational domain depicted in the model above - what would a SQL statement that lists the <em>employees in the "IT Department"</em> look like, and how does that statement compare to a Cypher statement?</p>
 </div>
 
 <div class="listingblock">
@@ -458,13 +480,14 @@ WHERE Department.name = "IT Department"</code></pre>
 <div class="listingblock">
 <div class="title">Cypher Statement</div>
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Person)&lt;-[:EMPLOYEE]-(d:Dept {name:"IT Department"})
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Person)&lt;-[:EMPLOYEE]-(d:Department)
+WHERE d.name = "IT Department"
 RETURN p.name</code></pre>
 </div>
 </div>
 </div>
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
 <h2 id="_recommended_2">Recommended</h2>
 </li>
 <div class="ulist">
@@ -472,16 +495,19 @@ RETURN p.name</code></pre>
 
 <ul>
 <li>
-<a href="/online-training">Online Training</a>
+<a href="/graphacademy/online-course">Online Training</a>
 </li>
 <li>
-<a href="../../cypher-query-language">Quick Cypher Intro</a>
+<a href="/developer/cypher-query-language">Quick Cypher Intro</a>
 </li>
 <li>
 <a href="/use-cases">Use-Case Examples</a>
 </li>
 <li>
-<a href="http://docs.neo4j.org/chunked/milestone/examples-from-sql-to-cypher.html">Manual: From SQL to Cypher</a>
+<a href="../../cypher-query-language/guide-sql-to-cypher">From SQL to Cypher</a>
+</li>
+<li>
+<a href="http://neo4j.com/docs/stable/examples-from-sql-to-cypher.html">Manual: From SQL to Cypher</a>
 </li>
 </ul>
 
@@ -494,13 +520,17 @@ RETURN p.name</code></pre>
 
 
 <div class="paragraph">
-<p>If you&#8217;ve installed and started Neo4j as a server on your system, you can interact with the database with the built-in Neo4j browser application.</p>
+<p>If you&#8217;ve installed and started Neo4j as a server on your system, you can interact with the database with the built-in Neo4j browser application (like sql-plus on steroids).</p>
 </div>
+
+<div class="sect3 "  >
+    
+<h5 id="_http_api">HTTP-API</h5>
 
 
 
 <div class="paragraph">
-<p>If you want to access Neo4j programmatically, you can do so with one of the many integrated HTTP APIs, which allow you to:</p>
+<p>If you want to access Neo4j programmatically, you would do so with the integrated HTTP API, which allow you to:</p>
 </div>
 
 <div class="ulist">
@@ -508,7 +538,7 @@ RETURN p.name</code></pre>
 
 <ul>
 <li>
-POST one or more cypher statements with parameters per request to the server
+POST one or more Cypher statements with parameters per request to the server
 </li>
 <li>
 Keep transactions open over multiple requests
@@ -522,30 +552,36 @@ Choose different result formats
 
 
 <div class="paragraph">
-<p>A sample HTTP request would look like:</p>
+<p>A sample HTTP request that executes Cypher to create a <em>Person</em> would look like this.
+You can run it directly from the Neo4j browser, here shown with the plain JSON response.</p>
 </div>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="json"><code>curl -i -H accept:application/json -H content-type:application/json \
--XPOST http://localhost:7474/db/data/transaction/commit \
-  -d '{"statements":[{"statement":"CREATE (p:Person {name:{name}}) RETURN p",
-       "parameters":{"name":"Daniel"}}]}'
-
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="json"><code>:POST http://localhost:7474/db/data/transaction/commit
+  {"statements":[
+    {"statement":"CREATE (p:Person {name:{name}}) RETURN p", "parameters":{"name":"Daniel"}}
+   ]}
+-&gt;
 {"results":[{"columns":["p"],"data":[{"row":[{"name":"Daniel"}]}]}],"errors":[]}</code></pre>
 </div>
 </div>
+</div>
+<div class="sect3 "  >
+    
+<h5 id="_language_drivers">Language Drivers</h5>
+
 
 
 <div class="paragraph">
-<p>In most cases you don&#8217;t want to connect to Neo4j manually, but with a driver or connector library designed for your stack or programming language.
-Thanks to the Neo4j community, there are drivers for Neo4j for almost every popular programming language, most of which mimic existing database driver idioms and approaches.</p>
+<p>Of course, you don&#8217;t want to connect to Neo4j manually, but with a driver or connector library designed for your stack or programing language.
+Thanks to the Neo4j community, there are drivers for Neo4j for almost all popular programing languages, most of which mimic existing database driver idioms and approaches.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>For instance, the Neo4j JDBC driver would be used like this:</p>
+<p>For instance, the Neo4j JDBC driver would be used like this to query the database for <em>Johns departments</em>:</p>
 </div>
 
 <div class="listingblock">
@@ -553,7 +589,7 @@ Thanks to the Neo4j community, there are drivers for Neo4j for almost every popu
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>Connection con = DriverManager.getConnection("jdbc:neo4j://localhost:7474/");
 
 String query =
-    "MATCH (:Person {name:{1}})-[:EMPLOYEE]-(d:Dept) RETURN d.name as dept";
+    "MATCH (:Person {name:{1}})-[:EMPLOYEE]-(d:Department) RETURN d.name as dept";
 try (PreparedStatement stmt = con.prepareStatement(QUERY)) {
     stmt.setString(1,"John");
     ResultSet rs = stmt.executeQuery();
@@ -565,8 +601,9 @@ try (PreparedStatement stmt = con.prepareStatement(QUERY)) {
 </div>
 </div>
 </div>
+</div>
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
 <h2 id="_recommended_3">Recommended</h2>
 </li>
 <div class="ulist">
@@ -577,16 +614,13 @@ try (PreparedStatement stmt = con.prepareStatement(QUERY)) {
 <a href="/download">Install Neo4j</a>
 </li>
 <li>
-<a href="../../language-guides">Develop with Neo4j</a>
+<a href="../../language-guides">Neo4j Language Drivers</a>
 </li>
 <li>
-<a href="../../language-guides/java/jdbc">JDBC example</a>
+<a href="/developer/java/#_using_neo4j_server_with_jdbc">JDBC example</a>
 </li>
 <li>
-<a href="http://docs.neo4j.org/chunked/milestone/rest-api-transactional.html" class="docs">Cypher HTTP Endpoint</a>
-</li>
-<li>
-<a href="/contrib">Neo4j Drivers List</a>
+<a href="http://neo4j.com/docs/stable/rest-api-transactional.html" class="docs">Cypher HTTP Endpoint</a>
 </li>
 </ul>
 
@@ -599,19 +633,19 @@ try (PreparedStatement stmt = con.prepareStatement(QUERY)) {
 
 
 <div class="paragraph">
-<p>If you have a good understanding what your graph model should look like, i.e. what data will be represented as nodes or relationships and how the labels, relationship-types, and attributes are named, you&#8217;re ready to go.</p>
+<p>When you have a good enough understanding of the shape of your graph model, i.e. what data will be represented as nodes or relationships and how the labels, relationship-types, and attributes are named, you&#8217;re ready to go.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>The easiest way to import data from your relational database is to create a CSV dump of either individual tables and JOIN-tables or of a JOINed, denormalized representation.</p>
+<p>The easiest way to import data from your relational database is to create a CSV dump of either individual entity-tables and join-tables or of a joined, denormalized representation.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Then you can take the CSV file and use Cypher&#8217;s <code>LOAD CSV</code> power tool to:</p>
+<p>Then you can take the CSV file(s) and use Cypher&#8217;s <code>LOAD CSV</code> power tool to:</p>
 </div>
 
 <div class="ulist">
@@ -625,13 +659,16 @@ Ingest the data, accessing columns by header name or offset
 Convert values from strings to different formats and structures (<code>toFloat</code>, <code>split</code>, &#8230;&#8203;)
 </li>
 <li>
-Skip rows to ignore
+Skip rows to be ignored
 </li>
 <li>
-<code>MATCH</code> nodes based on attribute lookups
+<code>MATCH</code> existing nodes based on attribute lookups
 </li>
 <li>
 <code>CREATE</code> or <code>MERGE</code> nodes and relationships with labels and attributes from the row data
+</li>
+<li>
+<code>SET</code> new labels and properties or <code>REMOVE</code> outdated ones
 </li>
 </ul>
 
@@ -639,7 +676,7 @@ Skip rows to ignore
 
 
 <div class="paragraph">
-<p>For Example:</p>
+<p>For example:</p>
 </div>
 
 <div class="listingblock">
@@ -665,9 +702,15 @@ CREATE (person)-[:EMPLOYEE]-&gt;(dept)</code></pre>
 <p>You can import multiple CSV files from one or more data sources to enrich your core domain model with other information that might add interesting insights and capabilities.</p>
 </div>
 
+
+
+<div class="paragraph">
+<p>Other, dedicated import tools, help you importing larger volumes (10M+ rows) of data efficiently, as described in the <a href="../../working-with-data/guide-import-csv">csv-import guide</a>.</p>
+</div>
+
 </div>
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
 <h2 id="_recommended_4">Recommended</h2>
 </li>
 <div class="ulist">
@@ -675,19 +718,16 @@ CREATE (person)-[:EMPLOYEE]-&gt;(dept)</code></pre>
 
 <ul>
 <li>
-<a href="../../working-with-data/guide-importing-data-and-etl" class="guide">Data Import</a>
+<a href="/developer/guide-importing-data-and-etl" class="guide">Guide: Data Import</a>
 </li>
 <li>
-<a href="http://docs.neo4j.org/chunked/milestone/query-load-csv.html" class="docs">LOAD CSV</a>
+<a href="http://neo4j.com/docs/stable/query-load-csv.html" class="docs">Manual: LOAD CSV</a>
 </li>
 <li>
-<a href="http://watch.neo4j.org/video/90358900" class="video">Data Import Webinar</a>
+<a href="http://watch.neo4j.org/video/112447027" class="video">Webinar: Data Import</a>
 </li>
 <li>
-<a href="http://jexp.de/blog/2014/06/load-csv-into-neo4j-quickly-and-successfully/" class="blog">LOAD CSV Tips</a>
-</li>
-<li>
-<a href="http://worldcup.neo4j.org/the-world-cup-graph-domain-model/" class="blog">World Cup Dataset</a>
+<a href="../../working-with-data/guide-import-csv">csv-import guide</a>
 </li>
 </ul>
 

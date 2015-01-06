@@ -121,6 +121,9 @@
                </div>
                <article id="content" role="main">
                   <style>
+                    .side-nav li a:not(.button) { 
+                       display:inline;
+	                 }
                     .row { max-width: 62.5rem !important; }
                      .lead
                      {
@@ -293,27 +296,20 @@ Use SSDs or other fast I/O if possible
 
 
 <div class="paragraph">
-<p>Also see: <a href="http://docs.neo4j.org/chunked/stable/configuration-caches.html" class="bare">http://docs.neo4j.org/chunked/stable/configuration-caches.html</a></p>
+<p>Also see: <a href="http://neo4j.com/docs/stable/configuration-caches.html" class="bare">http://neo4j.com/docs/stable/configuration-caches.html</a></p>
+</div>
+
+
+
+<div class="paragraph">
+<p>There are three types of memory to consider:
+. OS memory for non-Neo4j usage
+. Mapped memory is all the neostore.*.db.*_mapped_memory, mapped from disk files
+. Heap is used for node and relationship caches plus Java memory management (old gen, new gen, garbage collection, and so on)</p>
 </div>
 
 <div class="dlist">
 <dl>
-<dt class="hdlist1">3 types of memory to consider</dt>
-<dd>
-<div class="olist arabic">
-<ol style="margin-left: 2.4rem;" class="arabic">
-<li>
-<p style="margin-bottom: 0.75rem;">OS memory for non-neo4j usage</p>
-</li>
-<li>
-<p style="margin-bottom: 0.75rem;">Mapped memory is all the neostore.*.db.*_mapped_memory, mapped from disk files</p>
-</li>
-<li>
-<p style="margin-bottom: 0.75rem;">Heap is used for node &amp; relationship caches + java memory management (old gen, new gen, garbage collection, etc.)</p>
-</li>
-</ol>
-</div>
-</dd>
 <dt class="hdlist1">Memory Calculations</dt>
 <dd>
 <div class="olist arabic">
@@ -358,19 +354,19 @@ Use SSDs or other fast I/O if possible
 <div class="olist loweralpha">
 <ol style="margin-left: 2.4rem;" class="loweralpha" type="a">
 <li>
-<p style="margin-bottom: 0.75rem;">neostore.nodestore.db.mapped_memory= (14 * N) / (1024 * 1024)M</p>
+<p style="margin-bottom: 0.75rem;">neostore.nodestore.db.mapped_memory = <code>(14 * N) / (1024 * 1024)M</code></p>
 </li>
 <li>
-<p style="margin-bottom: 0.75rem;">neostore.relationshipstore.db.mapped_memory= (34 * R) / (1024 * 1024)M</p>
+<p style="margin-bottom: 0.75rem;">neostore.relationshipstore.db.mapped_memory = <code>(34 * R) / (1024 * 1024)M</code></p>
 </li>
 <li>
-<p style="margin-bottom: 0.75rem;">neostore.propertystore.db.mapped_memory= (41 * P) / (1024 * 1024)M</p>
+<p style="margin-bottom: 0.75rem;">neostore.propertystore.db.mapped_memory = <code>(41 * P) / (1024 * 1024)M</code></p>
 </li>
 <li>
-<p style="margin-bottom: 0.75rem;">neostore.propertystore.db.strings.mapped_memory = (128 * P) / (1024 * 1024)M</p>
+<p style="margin-bottom: 0.75rem;">neostore.propertystore.db.strings.mapped_memory = <code>(128 * P) / (1024 * 1024)M</code></p>
 </li>
 <li>
-<p style="margin-bottom: 0.75rem;">neostore.propertystore.db.arrays.mapped_memory = (128 * P) / (1024 * 1024)M</p>
+<p style="margin-bottom: 0.75rem;">neostore.propertystore.db.arrays.mapped_memory = <code>(128 * P) / (1024 * 1024)M</code></p>
 </li>
 <li>
 <p style="margin-bottom: 0.75rem;">Determine how much is left for the heap:</p>
@@ -386,20 +382,20 @@ Use SSDs or other fast I/O if possible
 <div class="olist loweralpha">
 <ol style="margin-left: 2.4rem;" class="loweralpha" type="a">
 <li>
-<p style="margin-bottom: 0.75rem;">wrapper.java.initmemory=H / (1024 * 1024)</p>
+<p style="margin-bottom: 0.75rem;">wrapper.java.initmemory = <code>H / (1024 * 1024)</code></p>
 </li>
 <li>
-<p style="margin-bottom: 0.75rem;">wrapper.java.maxmemory=H / (1024 * 1024)</p>
+<p style="margin-bottom: 0.75rem;">wrapper.java.maxmemory = <code>H / (1024 * 1024)</code></p>
 </li>
 </ol>
 </div>
 </li>
 <li>
-<p style="margin-bottom: 0.75rem;">Next decide on the size of caches that are stored in memory in the heap.</p>
+<p style="margin-bottom: 0.75rem;">Next, decide on the size of caches that are stored in memory in the heap.</p>
 <div class="olist loweralpha">
 <ol style="margin-left: 2.4rem;" class="loweralpha" type="a">
 <li>
-<p style="margin-bottom: 0.75rem;">Heap consists of "new generation" and "old generation" memory. New generation is for short-lived objects and takes about 1/3 of the heap by default (specified by -XX:NewRatio=3). If an object survives long enough, it is moved to the old generation which takes about 2/3 of the heap by default. The caches live in the old generation. The old generation needs about 30-40% of its space for CMS gc and another amount for the working set, which tends to remain fairly constant. The remaining old generation is where the caches live and this amount should not exceed 35-40% of the old generation (although if we know the working set and lots of RAM, we could use more). So if the new gen ratio is 1/3, allocate roughly 1/3 of the heap for caches. If it&#8217;s 1/2, allocate roughly 1/4 of the heap for caches. Adjust this accordingly to available RAM so there is enough space for GC &amp; the working set.</p>
+<p style="margin-bottom: 0.75rem;">Heap consists of "new generation" and "old generation" memory. New generation is for short-lived objects and takes about one third of the heap by default (specified by -XX:NewRatio=3). If an object survives long enough, it is moved to the old generation which takes about two thirds of the heap by default. The caches live in the old generation. The old generation needs about 30-40% of its space for CMS gc and another amount for the working set, which tends to remain fairly constant. The remaining old generation is where the caches live and this amount should not exceed 35-40% of the old generation (although if we know the working set and have lots of RAM, we could use more). So if the new gen ratio is one third, allocate roughly one third of the heap for caches. If it&#8217;s one half, allocate roughly one quarter of the heap for caches. Adjust this accordingly to available RAM so there is enough space for GC and the working set.</p>
 </li>
 <li>
 <p style="margin-bottom: 0.75rem;">node_cache_size + relationship_cache_size = (.25 to .33) * Heap</p>
@@ -415,10 +411,10 @@ Use SSDs or other fast I/O if possible
 <div class="olist arabic">
 <ol style="margin-left: 2.4rem;" class="arabic">
 <li>
-<p style="margin-bottom: 0.75rem;">If you&#8217;re using queries that will have a relatively large working set (ie. will be traversing long paths, looking at lots of properties, or collecting large sets of results in order to do sorting, etc) then you&#8217;ll need a more working heap. If you have small queries, that do very limited traversal and return small amounts of data, you need less. Assume 1-2GB to start and tune from there</p>
+<p style="margin-bottom: 0.75rem;">If you&#8217;re using queries that will have a relatively large working set (ie. will be traversing long paths, looking at lots of properties, or collecting large sets of results in order to do sorting, etc) then you&#8217;ll need a larger working heap. If you have small queries that do very limited traversals and return small amounts of data, you need less. Assume 1-2GB to start and tune from there</p>
 </li>
 <li>
-<p style="margin-bottom: 0.75rem;">Fraction of the heap to use for nodes &amp; relationships when using gcr. OK to leave at default (5% or 10%?). Acceptable values are 1-10%</p>
+<p style="margin-bottom: 0.75rem;">The fraction of the heap to use for nodes &amp; relationships when using gcr is OK to leave at default (5% or 10%). Acceptable values are 1-10%.</p>
 <div class="olist loweralpha">
 <ol style="margin-left: 2.4rem;" class="loweralpha" type="a">
 <li>
@@ -433,9 +429,9 @@ Use SSDs or other fast I/O if possible
 <li>
 <p style="margin-bottom: 0.75rem;">Current configs are based on these arbitrary estimates with massive growth
 Values approximated and rounded up
-c3.large   = 2 CPU, 3.75 GB RAM
-c3.2xlarge = 8 CPU, 15 GB RAM
-1G for OS memory</p>
+<code>c3.large   = 2 CPU, 3.75 GB RAM</code>
+<code>c3.2xlarge = 8 CPU, 15 GB RAM</code>
+<code>1G for OS memory</code></p>
 <div class="literalblock">
 <div class="content">
 <pre>~5 M nodes                         80M
@@ -477,11 +473,11 @@ Total Heap used by cache          4000M
 
 
 <div class="paragraph">
-<p>The node_cache_size and relationship_cache_size should not be more than 1/3 of the total heap size.
-The JVM typically uses 1/3 of the heap for the "new generation", leaving 2/3 for the old generation.
+<p>The node_cache_size and relationship_cache_size should not be more than one third of the total heap size.
+The JVM typically uses 1/3 of the heap for the "new generation", leaving two thirds for the old generation.
 This is where the caches will live, along with any other longer term memory use.
-This space also needs additional headroom to all the garbage collector to operate correctly.
-Note that we also often suggest changing that initial ratio so that the "new generation" uses 1/2 the heap, rather than only 1/3, as Neo4j (and especially Cypher) often has high requirements for temporary memory use, especially when many concurrent threads are accessing it.
+This space also needs additional headroom to allow the garbage collector to operate correctly.
+Note that we also often suggest changing that initial ratio so that the "new generation" uses a half the heap, rather than only a third, as Neo4j (and especially Cypher) often has high requirements for temporary memory use, particularly when many concurrent threads are accessing it.
 However, that reduces the size available for the caches accordingly.</p>
 </div>
 
@@ -500,22 +496,24 @@ However, that reduces the size available for the caches accordingly.</p>
 
 <div class="paragraph">
 <p>The heap space parameter is the most important one for Neo4j, since this governs how many objects you can allocate.
-When it comes to heap space the general rule is: the larger heap space you have the better, but make sure the heap fits in the RAM memory of the computer.
+When it comes to heap space the general rule is the larger heap space you have the better, but make sure the heap fits in the RAM memory of the computer.
 If the heap is paged out to disk performance will degrade rapidly.
-Having a heap that is much larger than what your application needs is not good either, since this means that the JVM will accumulate a lot of dead objects before the garbage collector is executed, this leads to long garbage collection pauses and undesired performance behavior.</p>
+Having a heap that is much larger than your application needs is not good either, since this means that the JVM will accumulate a lot of dead objects before the garbage collector is executed.
+This leads to long garbage collection pauses and undesired performance behavior.</p>
 </div>
 
 
 
 <div class="paragraph">
 <p>Typically we aim to have those memory_mappings cover the entire size of the on-disk store, to ensure all the graph content is cached into memory.
-The remaining memory can then be split between the Neo4j heap and the rest of the operating system (&amp; other processes).</p>
+The remaining memory can then be split between the Neo4j heap and the rest of the operating system (and other processes).</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Edit your <code>neo4j-wrapper</code> file to set the heap size. It is recommended that the initmemory and the maxmemory properties be set to the same number.</p>
+<p>Edit your <code>neo4j-wrapper</code> file to set the heap size.
+It is recommended that the initmemory and the maxmemory properties be set to the same number.</p>
 </div>
 
 
@@ -534,12 +532,12 @@ wrapper.java.maxmemory=24512</pre>
 
 <div class="paragraph">
 <p>Finally make sure that the OS has some memory left to manage proper file system caches.
-This means, if your server has 8GB of RAM don&#8217;t use all of that RAM for heap (unless you have turned off memory mapped buffers), but leave a good part of it to the OS.</p>
+This means if your server has 8GB of RAM don&#8217;t use all of that RAM for heap (unless you have turned off memory mapped buffers), but leave a good part of it to the OS.</p>
 </div>
 
 </div>
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
 <h2 id="_recommended">Recommended</h2>
 </li>
 <div class="ulist">
@@ -547,10 +545,10 @@ This means, if your server has 8GB of RAM don&#8217;t use all of that RAM for he
 
 <ul>
 <li>
-<a href="http://docs.neo4j.org/chunked/stable/operations.html" class="manual">Operations</a>
+<a href="http://neo4j.com/docs/stable/operations.html" class="manual">Operations</a>
 </li>
 <li>
-<a href="http://docs.neo4j.org/chunked/stable/configuration.html" class="manual">Configuration &amp; Performance</a>
+<a href="http://neo4j.com/docs/stable/configuration.html" class="manual">Configuration &amp; Performance</a>
 </li>
 <li>
 <a href="http://maxdemarzi.com/2013/11/25/scaling-up/" class="blog">Scaling Up Neo4j</a>
@@ -581,7 +579,7 @@ This means, if your server has 8GB of RAM don&#8217;t use all of that RAM for he
 
 <div class="paragraph">
 <p>Logical logs in Neo4j are the source of truth in scenarios where the database needs to be recovered after a crash or similar.
-Logs are rotated every now and then (defaults to when they surpass 25 Mb in size) and the amount of legacy logs to keep can be configured.</p>
+Logs are rotated every now and then (defaults to when they surpass 25 Mb in size) and the number of legacy logs to keep can be configured.</p>
 </div>
 
 
@@ -600,8 +598,8 @@ Logs are rotated every now and then (defaults to when they surpass 25 Mb in size
 <div class="paragraph">
 <p>The usual default of <code>1024</code> is often not enough, especially when many indexes are used or a server installation sees too many connections (network sockets count against that limit as well).
 Users are therefore encouraged to increase that limit to a healthy value of <code>40000</code> or more, depending on usage patterns.
-Setting this value via the ulimit command is possible only for the root user and that for that session only.
-To set the value system wide you have to follow the instructions for your platform (<a href="http://docs.neo4j.org/chunked/stable/linux-performance-guide.html#_setting_the_number_of_open_files">Linux</a>).</p>
+Setting this value via the ulimit command is possible only for the root user and for that session only.
+To set the value system wide you have to follow the instructions for your platform (<a href="http://neo4j.com/docs/stable/linux-performance-guide.html#_setting_the_number_of_open_files">Linux</a>).</p>
 </div>
 
 </div>

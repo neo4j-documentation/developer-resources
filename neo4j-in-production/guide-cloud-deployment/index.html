@@ -121,6 +121,9 @@
                </div>
                <article id="content" role="main">
                   <style>
+                    .side-nav li a:not(.button) { 
+                       display:inline;
+	                 }
                     .row { max-width: 62.5rem !important; }
                      .lead
                      {
@@ -237,13 +240,16 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-This guide highlights the different options for setting up Neo4j in the cloud. It will setting up a template on ec2 on AWS, expalin the setup on Azure and introduce the different Neo4j cloud hosting parters.
+This guide highlights the different options for setting up Neo4j in the cloud.
+It includes setting up a template on EC2 on AWS, explain the setup on Azure, and introduce the different Neo4j cloud-hosting partners.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should know how to run and operate Neo4j locally. Knowledge of remote drivers to access Neo4j from your application helps you to connect to your cloud hosted database. For the self service hosting you should bring along enough sysops experience that a linux system doesn&#8217;t freak you out.
+You should know how to run and operate Neo4j locally.
+Knowledge of remote drivers to access Neo4j from your application helps you connect to your cloud-hosted database.
+For self-service hosting you should bring along enough sysops experience that a Linux system doesn&#8217;t freak you out.
 </blockquote>
 </div>
 
@@ -259,7 +265,8 @@ You should know how to run and operate Neo4j locally. Knowledge of remote driver
 
 <li><a href="#_neo4j_provisioning_solutions">Neo4j Provisioning Solutions</a></li>
 <li><a href="#_windows_azure">Windows Azure</a></li>
-
+<li><a href="#_neo4j_with_docker">Neo4j with Docker</a></li>
+<li><a href="#_other_paas_integrations">Other PaaS Integrations</a></li>
 <li><a href="#_neo4j_cloud_hosting_providers">Neo4j Cloud Hosting Providers</a></li>
 </ul>
 
@@ -280,19 +287,18 @@ You should know how to run and operate Neo4j locally. Knowledge of remote driver
 
 <div class="paragraph">
 <p>This template creates a complete Neo4j installation, including Amazon AWS server, fixed IP address and backup storage.
-It&#8217;s intended to help application developers get up and running quickly with Neo4j,
-without in-depth experience of Linux servers, AWS, or installing databases like Neo4j.</p>
+It&#8217;s intended to help application developers get up and running quickly with Neo4j without in-depth experience of Linux servers, AWS, or installing databases like Neo4j.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>If you are proficient, setting up AWS instances, you can also install Neo4j on any provisioned Linux instance</p>
+<p>If you are proficient at setting up AWS instances, you can also install Neo4j on any provisioned Linux instance</p>
 </div>
 
 </div>
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
 <h2 id="_recommended">Recommended</h2>
 </li>
 <div class="ulist">
@@ -303,13 +309,13 @@ without in-depth experience of Linux servers, AWS, or installing databases like 
 <a href="https://github.com/neo4j-contrib/neo4j-puppet/blob/master/README.CLOUDFORMATION.md">Neo4j Cloud Formation Template</a>
 </li>
 <li>
-<a href="https://github.com/neo4j-contrib/neo4j-puppet/blob/master/README.md">Manual ec2 Setup with Puppet</a>
+<a href="https://github.com/neo4j-contrib/neo4j-puppet/blob/master/README.md">Manual EC2 Setup with Puppet</a>
 </li>
 <li>
 <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html">AWS EC2 Getting Started Guide</a>
 </li>
 <li>
-<a href="http://blogs.mindspew-age.com/2012/12/04/another-great-example-of-aws-fidelity-neo4j-cloud-init-and-eucalyptus/">Neo4j, Cloud-Init and Eucalyptus</a>
+<a href="http://blogs.mindspew-age.com/2012/12/04/another-great-example-of-aws-fidelity-neo4j-cloud-init-and-eucalyptus/">Neo4j, Cloud-Init, and Eucalyptus</a>
 </li>
 </ul>
 
@@ -327,7 +333,7 @@ without in-depth experience of Linux servers, AWS, or installing databases like 
 <a href="https://github.com/michaelklishin/neo4j-server-chef-cookbook">Neo4j Server Chef Cookbook</a>
 </li>
 <li>
-<a href="https://github.com/maxehmookau/neo4j-ansible">Ansible Playbooks</a> for booting a server running the neo4j graph database system
+<a href="https://github.com/maxehmookau/neo4j-ansible">Ansible Playbooks</a> for booting a server running the Neo4j graph database system
 </li>
 <li>
 <a href="https://github.com/julienroubieu/ansible-neo4j">Ansible role to install Neo4j</a>, with Vagrant support
@@ -378,7 +384,61 @@ How to deploy Neo4j to Azure with Visual Studio 2012 - <a href="http://blog.jong
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h4 id="_further_paas_integrations">Further PaaS Integrations</h4>
+<h4 id="_neo4j_with_docker">Neo4j with Docker</h4>
+
+
+
+<div class="paragraph">
+<p><a href="http://docker.com">Docker</a> is a lightweight virtualization mechanism to run single applications containerized and restricted on your machine.
+Docker images are pre-build in layers from configuration of services one of which would be Neo4j.
+A docker image can be started immediately after downloading, no time-consuming boot required.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>It is pretty easy to create a Neo4j image yourself, just any base linux container with a JDK is good enough.
+Just add Neo4j on top and you&#8217;re done.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>There are already a number of <a href="https://registry.hub.docker.com/search?q=neo4j">Docker Neo4j images</a> available on Docker Hub.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Make sure when running the docker image to expose the Neo4j port <code>7474</code> and provide the database directory as external volume. E.g.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><code>docker run –rm -i -t -d –privileged -v /home/user/neo4jdata:/var/lib/neo4j/data -p 7474:7474 tpires/neo4j</code></p>
+</div>
+
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="https://registry.hub.docker.com/u/tpires/neo4j/">Neo4j by tpires</a>
+</li>
+<li>
+<a href="https://registry.hub.docker.com/u/kbastani/docker-neo4j/">Neo4j 2.1.6 by Kenny Bastani</a>
+</li>
+<li>
+<a href="https://registry.hub.docker.com/u/kbastani/neo4j-graph-analytics/">Neo4j Graph Analytics for MazeRunner/Spark by Kenny Bastani</a>
+</li>
+</ul>
+
+</div>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_other_paas_integrations">Other PaaS Integrations</h4>
 
 <div class="ulist">
 
@@ -391,10 +451,10 @@ How to deploy Neo4j to Azure with Visual Studio 2012 - <a href="http://blog.jong
 <a href="http://docs.pivotal.io/p1-services/Neo4j.html">Pivotal CloudFoundry</a>
 </li>
 <li>
-<a href="http://blog.jelastic.com/2013/03/21/neo4j-in-the-cloud/">Jelastx</a>
+<a href="http://blog.jelastic.com/2013/03/21/neo4j-in-the-cloud/">Jelastic</a>
 </li>
 <li>
-<a href="https://github.com/jelastic-public-cartridges/openshift-origin-cartridge-neo4j-v21">Jelastx OpenShift Cartridge</a>
+<a href="https://github.com/jelastic-public-cartridges/openshift-origin-cartridge-neo4j-v21">Jelastic OpenShift Cartridge</a>
 </li>
 <li>
 <a href="http://tomasmuller.com.br/2012/03/29/10-steps-to-run-neo4j-at-redhat-openshift-cloud/">OpenShift in 10 Steps</a>
@@ -425,7 +485,7 @@ If you provision databases via their offering, you enter a contract with those p
 
 <div class="paragraph">
 <p><a href="http://graphenedb.com/">GrapheneDB</a> offers comprehensive hosting plans for Neo4j, taking care of the operational aspects of running a graph database.
-GrapheneDB is also available Heroku Add-On with free and tiered plans</p>
+GrapheneDB is also available as a Heroku Add-On with free and tiered plans.</p>
 </div>
 
 <div class="imageblock">
@@ -444,7 +504,7 @@ GrapheneDB is also available Heroku Add-On with free and tiered plans</p>
 
 <ul>
 <li>
-Paid plans are dedicated instances running on Amazon with following features:
+Paid plans are dedicated instances running on Amazon with the following features:
 </li>
 <li>
 Hosting in any AWS region
@@ -491,13 +551,13 @@ Support for provided and custom plugins and extensions
 Staging and Production in one package
 </li>
 <li>
-Graph Sample Apps &amp; Data
+Graph Sample Apps and Data
 </li>
 <li>
 Scheduled backups
 </li>
 <li>
-Get your graph-backed application up &amp; running within minutes
+Get your graph-backed application up and running within minutes
 </li>
 <li>
 Secure access to your graph database and graph management tools
@@ -513,7 +573,8 @@ Secure access to your graph database and graph management tools
 
 
 <div class="paragraph">
-<p>On <a href="http://structr.com" class="bare">http://structr.com</a> you can host both <a href="http://structr.org">structr</a> and Neo4j instances. It offers:</p>
+<p>On <a href="http://structr.com" class="bare">http://structr.com</a> you can host both <a href="http://structr.org">structr</a> and Neo4j instances.
+It offers:</p>
 </div>
 
 <div class="imageblock">
@@ -539,41 +600,6 @@ Physics-based Graph Visualization
 </li>
 <li>
 Managed Cloud Server
-</li>
-</ul>
-
-</div>
-</div>
-<div class="sect3 "  >
-    
-<h5 id="_graphhost">GraphHost</h5>
-
-
-
-<div class="paragraph">
-<p>Neo4j graph database hosting made easy with <a href="https://graphhost.com/">GraphHost</a></p>
-</div>
-
-<div class="imageblock">
-<p class="content">
-<img src="https://graphhost.com/assets/appbg-44a5e35aea32ecba2899d4a7e71ff598.png" alt="appbg 44a5e35aea32ecba2899d4a7e71ff598" width="400">
-</p>
-</div>
-<div class="ulist">
-
-
-<ul>
-<li>
-We just need your email address and a password.
-</li>
-<li>
-Pick an instance size. We offer small, medium large.
-</li>
-<li>
-All plans come with 20GB storage and 1TB transfer as standard.
-</li>
-<li>
-You then have full access to your graph database. API, webadmin within minutes.
 </li>
 </ul>
 

@@ -121,6 +121,9 @@
                </div>
                <article id="content" role="main">
                   <style>
+                    .side-nav li a:not(.button) { 
+                       display:inline;
+	                 }
                     .row { max-width: 62.5rem !important; }
                      .lead
                      {
@@ -238,7 +241,7 @@
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
 This guide describes how to configure clustering in an Enterprise Neo4J installation.
-This includes topics such as data synchronization, mending procedures, configuring an arbiter and slave-only mode configuration.
+This includes topics such as data synchronization, mending procedures, configuring an arbiter, and slave-only mode configuration.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
@@ -284,7 +287,7 @@ Any data (graph or index) created on the master is propagated to the slaves depe
 
 </div>
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
 <h2 id="_recommended">Recommended</h2>
 </li>
 <div class="ulist">
@@ -295,10 +298,10 @@ Any data (graph or index) created on the master is propagated to the slaves depe
 <a href="http://jimwebber.org/2011/03/strategies-for-scaling-neo4j/" class="blog">Strategies for Scaling Neo4j</a>
 </li>
 <li>
-<a href="http://docs.neo4j.org/chunked/stable/ha.html" class="docs">Neo4j High Availability</a>
+<a href="http://neo4j.com/docs/stable/ha.html" class="docs">Neo4j High Availability</a>
 </li>
 <li>
-<a href="http://docs.neo4j.org/chunked/stable/ha-setup-tutorial.html" class="docs">Tutorial Cluster Setup</a>
+<a href="http://neo4j.com/docs/stable/ha-setup-tutorial.html" class="docs">Tutorial Cluster Setup</a>
 </li>
 </ul>
 
@@ -311,10 +314,10 @@ Any data (graph or index) created on the master is propagated to the slaves depe
 
 
 <div class="paragraph">
-<p>There&#8217;s a <a href="http://docs.neo4j.org/chunked/stable/ha-setup-tutorial.html">step-by-step tutorial for setting up a HA cluster</a>.
-For a 2 node cluster, you&#8217;ll actually want to run three separate machines, and use the Neo4j arbiter on the third.
-Details on the arbiter are available in the <a href="http://docs.neo4j.org/chunked/stable/arbiter-instances.html">Neo4j Manual</a>.
-The configuration for the arbiter is identical to that of a regular instance, with the exception of anything relating to the actual graph db itself (since an arbiter doesn&#8217;t hold any data).</p>
+<p>There&#8217;s a <a href="http://neo4j.com/docs/stable/ha-setup-tutorial.html">step-by-step tutorial for setting up a HA cluster</a>.
+For a two-node cluster, you&#8217;ll actually want to run three separate machines, and use the Neo4j arbiter on the third.
+Details on the arbiter are available in the <a href="http://neo4j.com/docs/stable/arbiter-instances.html">Neo4j Manual</a>.
+The configuration for the arbiter is identical to that of a regular instance, with the exception of anything relating to the actual graph database itself (since an arbiter doesn&#8217;t hold any data).</p>
 </div>
 
 
@@ -332,14 +335,13 @@ The arbiter should have a unique <code>ha.server_id</code> (<code>3</code> is fi
 
 
 <div class="paragraph">
-<p>See the <a href="http://docs.neo4j.org/chunked/stable/ha-configuration.html">documentation</a> on <code>ha.slave_only</code>.</p>
+<p>See the <a href="http://neo4j.com/docs/stable/ha-configuration.html">documentation</a> on <code>ha.slave_only</code>.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>You might want to configure a machine with that setting if it’s acting as a reporting instance but you need to make sure that two members don’t have that setting.
-Otherwise you won’t have any failover in the cluster.</p>
+<p>You might want to configure a machine with that setting if it’s acting as a reporting instance but you need to make sure that two members don’t have that setting, or you won’t have any failover in the cluster.</p>
 </div>
 
 </div>
@@ -366,7 +368,7 @@ It can also be configured to listen on all interfaces by setting <code>online_ba
 
 
 <div class="paragraph">
-<p>Additional details can be found <a href="http://docs.neo4j.org/chunked/stable/backup-introduction.html">in the manual</a>.</p>
+<p>Additional details can be found <a href="http://neo4j.com/docs/stable/backup-introduction.html">in the manual</a>.</p>
 </div>
 
 <div class="imageblock">
@@ -387,16 +389,16 @@ It can also be configured to listen on all interfaces by setting <code>online_ba
 Shut down all members of the cluster and stop any load against the cluster
 </li>
 <li>
-On the master instance, copy the data/graph.db folder as a backup
+On the master instance, copy the <code>data/graph.db</code> folder as a backup
 </li>
 <li>
-Modify neo4j-server.properties, set the org.neo4j.server.database.mode to "STANDALONE"
+Modify neo4j-server.properties, setting the org.neo4j.server.database.mode to "STANDALONE"
 </li>
 <li>
 Start the database and, once it&#8217;s running, stop it again (this is to ensure he database is cleanly shut down)
 </li>
 <li>
-Remove all files named nioneo_logical.log.vXX in data/graph.db, being careful to not remove any files without the "v", like <code>nioneo_logical.log.1</code> or <code>nioneo_logical.log.active</code>
+Remove all files named nioneo_logical.log.vXX in data/graph.db, being careful not to remove any files without the "v", like <code>nioneo_logical.log.1</code> or <code>nioneo_logical.log.active</code>
 </li>
 <li>
 Start the server and use either neo4j-shell or the neo4j browser to issue the following two queries:
@@ -457,7 +459,7 @@ Start the server
 On each slave, remove the <code>data/graph.db</code> folder
 </li>
 <li>
-Start the slave, watch <code>data/graph.db</code> for it to copy the store from the master
+Start the slave, and watch <code>data/graph.db</code> for it to copy the store from the master
 </li>
 <li>
 Once copying is done, move to do the same thing on the second slave
@@ -467,7 +469,7 @@ Once copying is done, move to do the same thing on the second slave
 </div>
 </div>
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
 <h2 id="_further_reading">Further Reading</h2>
 </li>
 <div class="ulist">

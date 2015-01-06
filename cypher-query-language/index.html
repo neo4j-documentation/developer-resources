@@ -121,6 +121,9 @@
                </div>
                <article id="content" role="main">
                   <style>
+                    .side-nav li a:not(.button) { 
+                       display:inline;
+	                 }
                     .row { max-width: 62.5rem !important; }
                      .lead
                      {
@@ -244,9 +247,14 @@ You should be able to read Cypher queries after finishing this guide.
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-This is a guide for Beginner. You should have familiarized yourself with <a href="../what-is-neo4j/graph-database">Graph Databases</a> and the <a href="../what-is-neo4j/property-graph">Property Graph Model</a>.
+This is a guide for Beginners. You should have familiarized yourself with <a href="/developer/graph-database">Graph Databases</a> and the <a href="/developer/graph-database#property-graph">Property Graph Model</a>.
 </blockquote>
 </div>
+
+
+<div class="label">Beginner</div>
+<hr/>
+
 <div class="toc">
 <h3 class="title">Overview</h3>
 
@@ -256,7 +264,6 @@ This is a guide for Beginner. You should have familiarized yourself with <a href
 <li><a href="#_nodes">Nodes</a></li>
 
 <li><a href="#_relationships">Relationships</a></li>
-
 <li><a href="#_labels">Labels</a></li>
 </ul>
 </li>
@@ -284,7 +291,7 @@ This is a guide for Beginner. You should have familiarized yourself with <a href
 
 
 <div class="paragraph">
-<p>Cypher is a declarative, SQL inspired language for describing patterns in graphs.
+<p>Cypher is a declarative, SQL-inspired language for describing patterns in graphs.
 It allows us to describe <strong>what</strong> we want to select, insert, update or delete from a graph database without requiring us to describe exactly <strong>how</strong> to do it.</p>
 </div>
 
@@ -303,13 +310,13 @@ It allows us to describe <strong>what</strong> we want to select, insert, update
 <p>Cypher uses ASCII-Art to represent patterns.
 We surround nodes with parentheses which look like circles, e.g. <code>(node)</code>.
 If we later want to refer to the node, we&#8217;ll give it an identifier like <code>(p)</code> for person or <code>(t)</code> for thing.
-In real world queries, we&#8217;ll probably use longer, more expressive variable names like <code>(person)</code> or <code>(thing)</code>.</p>
+In real-world queries, we&#8217;ll probably use longer, more expressive variable names like <code>(person)</code> or <code>(thing)</code>.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>So for example, if we want to find all the <strong>persons</strong> and the <strong>things</strong> they like, the query will include the identifiers <strong>person</strong> and <strong>thing</strong>, e.g. in a pattern like <code>(person)-&#8594;(thing)</code> so we can refer to them later, e.g. to access properties like <code>person.name</code> and <code>thing.quality</code>.</p>
+<p>To illustrate, if we want to find all the <strong>persons</strong> and the <strong>things</strong> they like, the query will include the identifiers <strong>person</strong> and <strong>thing</strong>. We might use a pattern like <code>(person)-&#8594;(thing)</code> so we can refer to them later, for example, to access properties like <code>person.name</code> and <code>thing.quality</code>.</p>
 </div>
 
 
@@ -328,24 +335,21 @@ RETURN node2.propertyA, node2.propertyB</code></pre>
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
-<h2 id="_sidebar">Sidebar</h2>
-</li>
+    
+<h4 id="_further_reading">Further Reading</h4>
+
 <div class="ulist">
 
 
 <ul>
 <li>
-<a href="./guide-cypher-basics">Cypher Guide</a>
+<a href="/developer/guide-cypher-basics">Cypher Guide</a>
 </li>
 <li>
-<a href="/online-training">Online Training</a>
+<a href="/graphacademy/online-course">Online Training</a>
 </li>
 <li>
-<a href="http://docs.neo4j.org/">Cypher Manual</a>
-</li>
-<li>
-<a href="http://docs.neo4j.org/refcard/2.1.4/">Cypher Reference Card</a>
+<a href="http://neo4j.com/docs/stable/cypher-refcard">Cypher Reference Card</a>
 </li>
 </ul>
 
@@ -364,7 +368,7 @@ RETURN node2.propertyA, node2.propertyB</code></pre>
 
 
 <div class="paragraph">
-<p>If we wanted to retrieve everyone who likes a thing, we would describe the pattern <code>(person)-[:LIKE]&#8594;(thing)</code> to retrieve only nodes that had a relationship typed <strong>LIKE</strong> with other nodes (<strong>thing</strong>). Those nodes would the be <strong>persons</strong> as implied by the <strong>LIKE</strong> relationship.</p>
+<p>If we wanted to retrieve everyone who likes a thing, we would describe the pattern <code>(person)-[:LIKE]&#8594;(thing)</code> to retrieve only nodes that had a relationship typed <strong>LIKE</strong> with other nodes (<strong>thing</strong>). Those nodes would then be <strong>persons</strong> as implied by the <strong>LIKE</strong> relationship.</p>
 </div>
 
 
@@ -381,7 +385,7 @@ RETURN node2.propertyA, node2.propertyB</code></pre>
 
 
 <div class="paragraph">
-<p>Sometimes we need access to information about a relationship (e.g. its type or properties). For example, we might want to output the <strong>rating</strong> that an <strong>person</strong> gave in a <strong>thing</strong> and that <strong>rating</strong> would probably be a property of the <strong>like</strong> relationship. As with nodes, we can use identifiers for relationships (in front of the <strong>:TYPE</strong>). If we tried to match <code>(person)-[like:LIKE]&#8594;(thing)</code>, we would be able to output the <code>like.rating</code> for each of the persons and all the things that they like.</p>
+<p>Sometimes we need access to information about a relationship (e.g. its type or properties). For example, we might want to output the <strong>rating</strong> that a <strong>person</strong> gave a <strong>thing</strong> and that <strong>rating</strong> would probably be a property of the <strong>like</strong> relationship. As with nodes, we can use identifiers for relationships (in front of the <strong>:TYPE</strong>). If we tried to match <code>(person)-[like:LIKE]&#8594;(thing)</code>, we would be able to output the <code>like.rating</code> for each of the persons and all the things that they like.</p>
 </div>
 
 <div class="listingblock">
@@ -389,27 +393,6 @@ RETURN node2.propertyA, node2.propertyB</code></pre>
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (node1)-[rel:TYPE]-&gt;(node2)
 RETURN rel.property</code></pre>
 </div>
-</div>
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
-<h2 id="_recommended">Recommended</h2>
-</li>
-<div class="ulist">
-
-
-<ul>
-<li>
-<a href="http://neo4j.com/docs">The Neo4j Docs</a>
-</li>
-<li>
-<a href="/blog">The Neo4j Blog</a>
-</li>
-<li>
-<a href="/build-a-graph-data-model/guide-intro-to-graph-modeling">Intro to Graph Modeling</a>
-</li>
-</ul>
-
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
@@ -452,7 +435,7 @@ RETURN node1, node2</code></pre>
 
 
 <div class="paragraph">
-<p>Let&#8217;s try it out what we&#8217;ve learned.</p>
+<p>Let&#8217;s try out what we&#8217;ve learned.</p>
 </div>
 
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
@@ -515,8 +498,8 @@ RETURN p,db</code></pre>
 </div>
 </div>
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
-<h2 id="_further_reading">Further Reading</h2>
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
+<h2 id="_further_reading_2">Further Reading</h2>
 </li>
 <div class="ulist">
 

@@ -121,6 +121,9 @@
                </div>
                <article id="content" role="main">
                   <style>
+                    .side-nav li a:not(.button) { 
+                       display:inline;
+	                 }
                     .row { max-width: 62.5rem !important; }
                      .lead
                      {
@@ -237,14 +240,14 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-This guide will show you how to design a graph model and you can then apply the lessons to your own data set.
+This guide will show you how to design a graph model. You can apply these lessons to your own data set.
 We&#8217;ll be following Ian Robinson&#8217;s <strong>Design for Queryability</strong> modeling approach.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should be familiar with the guide on <a href="../../what-is-neo4j/graph-database">graph databases</a> and our <a href="../../cypher-query-language">Cypher query language</a>.
+You should be familiar with the guide on <a href="/developer/graph-database">graph databases</a> and our <a href="/developer/cypher-query-language">Cypher query language</a>.
 </blockquote>
 </div>
 
@@ -259,7 +262,6 @@ You should be familiar with the guide on <a href="../../what-is-neo4j/graph-data
 <li><a href="#_application_end_user_goals">Application/End User Goals</a></li>
 <li><a href="#_questions_to_ask_of_the_domain">Questions to ask of the domain</a></li>
 <li><a href="#_identity_entities">Identity Entities</a></li>
-
 <li><a href="#_identity_relationships">Identity Relationships</a></li>
 
 </ul>
@@ -374,7 +376,7 @@ So that we can exchange knowledge</p>
 
 
 <div class="paragraph">
-<p>The first thing we need to do is identify entities or nouns. These will become the nodes in our model. e.g.</p>
+<p>The first thing we need to do is identify entities or nouns. These will become the nodes in our model. For example:</p>
 </div>
 
 <div class="quoteblock" style="margin: auto; width: 95%;">
@@ -409,27 +411,6 @@ skill</p>
       <hr>
    </div>
 </div>
-</div>
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
-<h2 id="_recommended">Recommended</h2>
-</li>
-<div class="ulist">
-
-
-<ul>
-<li>
-<a href="http://neo4j.com/docs">The Neo4j Docs</a>
-</li>
-<li>
-<a href="/blog">The Neo4j Blog</a>
-</li>
-<li>
-<a href="/build-a-graph-data-model/guide-intro-to-graph-modeling">Intro to Graph Modeling</a>
-</li>
-</ul>
-
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
@@ -485,7 +466,7 @@ In addition, using actual data rather than the type names tends to make system p
 
 
 <div class="paragraph">
-<p>WIth actual data, our model might look like this:</p>
+<p>With actual data, our model might look like this:</p>
 </div>
 
 
@@ -503,13 +484,13 @@ In addition, using actual data rather than the type names tends to make system p
 
 
 <div class="paragraph">
-<p>Although models used in production are much more complex than this simple example, keeping in mind that a good model is made up of both components that are both necessary and sufficient.
-In other words, although our model has to be detailed enough answer our questions, we don&#8217;t need to model every detail of the system in question.</p>
+<p>Although models used in production are much more complex than this simple example, keep in mind that a good model is made up of components that are both necessary and sufficient.
+In other words, although our model has to be detailed enough to answer our questions, we don&#8217;t need to model every detail of the system in question.</p>
 </div>
 
 </div>
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
 <h2 id="_further_reading">Further Reading</h2>
 </li>
 <div class="ulist">
@@ -517,7 +498,7 @@ In other words, although our model has to be detailed enough answer our question
 
 <ul>
 <li>
-<a href="http://docs.neo4j.org/chunked/stable/data-modeling-examples.html" class="docs">Data Modelling Examples</a>
+<a href="http://neo4j.com/docs/stable/data-modeling-examples.html" class="docs">Data Modeling Examples</a>
 </li>
 <li>
 <a href="../../working-with-data/gists-and-example">Graph Gists</a>

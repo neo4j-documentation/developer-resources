@@ -121,6 +121,9 @@
                </div>
                <article id="content" role="main">
                   <style>
+                    .side-nav li a:not(.button) { 
+                       display:inline;
+	                 }
                     .row { max-width: 62.5rem !important; }
                      .lead
                      {
@@ -244,7 +247,7 @@ You will be introduced to the basic process of designing a graph data model that
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should have a firm understanding of the Neo4j&#8217;s <a href="./property-graph">property graph data model</a>, and its query language, <a href="./cypher">Cypher</a>.
+You should have a firm understanding of the Neo4j&#8217;s <a href="./graph-database#property-graph">property graph data model</a>, and its query language, <a href="./cypher">Cypher</a>.
 </blockquote>
 </div>
 
@@ -383,7 +386,7 @@ Apart from properties and relationships, nodes can also be labeled with zero or 
 </div>
 <div class="imageblock">
 <p class="content">
-<img src="http://docs.neo4j.org/chunked/stable/images/graphdb-nodes-overview.svg" alt="Nodes">
+<img src="http://neo4j.com/docs/stable/images/graphdb-nodes-overview.svg" alt="Nodes">
 </p>
 </div>
 
@@ -445,7 +448,7 @@ Two people, <strong>John</strong> and <strong>Sally</strong>, are friends. Both 
 </div>
 </div>
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
 <h2 id="_recommended">Recommended</h2>
 </li>
 <div class="ulist recommended">
@@ -456,7 +459,7 @@ Two people, <strong>John</strong> and <strong>Sally</strong>, are friends. Both 
 <strong>Neo4j Docs:</strong>
 </li>
 <li style='list-style: none outside none;'>
-<a href="http://docs.neo4j.org/chunked/stable/graphdb-neo4j-nodes.html">3.1. Nodes</a>
+<a href="http://neo4j.com/docs/stable/graphdb-neo4j-nodes.html">3.1. Nodes</a>
 </li>
 </ul>
 
@@ -505,7 +508,7 @@ A node may be labeled with any number of labels, including none, making labels a
 </div>
 <div class="imageblock">
 <p class="content">
-<img src="http://docs.neo4j.org/chunked/stable/images/graphdb-labels.svg" alt="Labels">
+<img src="http://neo4j.com/docs/stable/images/graphdb-labels.svg" alt="Labels">
 </p>
 </div>
 
@@ -578,7 +581,7 @@ For <strong>Graph Databases</strong> we apply the role <em>Book</em>.</p>
 </div>
 </div>
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
 <h2 id="_recommended_2">Recommended</h2>
 </li>
 <div class="ulist recommended">
@@ -589,7 +592,7 @@ For <strong>Graph Databases</strong> we apply the role <em>Book</em>.</p>
 <strong>Neo4j Docs:</strong>
 </li>
 <li style='list-style: none outside none;'>
-<a href="http://docs.neo4j.org/chunked/stable/graphdb-neo4j-labels.html">3.4. Labels</a>
+<a href="http://neo4j.com/docs/stable/graphdb-neo4j-labels.html">3.4. Labels</a>
 </li>
 </ul>
 
@@ -727,7 +730,7 @@ Who read the book <em>Graph Databases</em> first, Sally or John?
 </div>
 </div>
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
 <h2 id="_recommended_3">Recommended</h2>
 </li>
 <div class="ulist recommended">
@@ -735,7 +738,7 @@ Who read the book <em>Graph Databases</em> first, Sally or John?
 
 <ul style='margin-left: 0;'>
 <li style='list-style: none outside none;'>
-<a href="http://docs.neo4j.org/chunked/stable/data-modeling-examples.html">Data Modeling Examples</a>
+<a href="http://neo4j.com/docs/stable/data-modeling-examples.html">Data Modeling Examples</a>
 </li>
 <li style='list-style: none outside none;'>
 <a href="https://github.com/neo4j-contrib/graphgist/wiki">GraphGist Project</a>
@@ -760,7 +763,7 @@ Who read the book <em>Graph Databases</em> first, Sally or John?
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>// Create Sally
-CREATE (sally:Person { name: 'Sally', age: 29 })
+CREATE (sally:Person { name: 'Sally', age: 32 })
 
 // Create John
 CREATE (john:Person { name: 'John', age: 27 })
@@ -879,7 +882,7 @@ LIMIT 1</code></pre>
 </div>
 </div>
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
 <h2 id="_further_reading">Further Reading</h2>
 </li>
 <div class="ulist">

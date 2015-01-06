@@ -6,7 +6,7 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>Guide: Example Dataset | Developer Resources | Neo4j Graph Database</title>
+         <title>From SQL to Cypher - A hands-on Guide | Developer Resources | Neo4j Graph Database</title>
          <script type="text/javascript">
             var _kmq = _kmq || [];
             var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
@@ -222,14 +222,14 @@
                         <div class="columns large-12" style="padding:10px 0 0;">
                            <ul class="breadcrumbs">
                               <li><a href="/developer-resources">Developer Guides</a></li>
-                              <li><a href="../">Data Import</a></li>
-                              <li class="current"><a href="#">Guide: Example Dataset</a></li>
+                              <li><a href="../">Cypher Query Language</a></li>
+                              <li class="current"><a href="#">From SQL to Cypher - A hands-on Guide</a></li>
                            </ul>
                         </div>
                      </div>
                      <!-- <div class="row">
                         <div class="columns large-12">
-                           <h1 style="font-size:2.1rem;">Guide: Example Dataset</h1>
+                           <h1 style="font-size:2.1rem;">From SQL to Cypher - A hands-on Guide</h1>
                         </div>
                      </div> -->
                      <section class="row" style="padding:10px 0;">
@@ -240,13 +240,13 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-There&#8217;s lots of example datasets for Neo4j.  This guide outlines some of them.
+This guide teaches anyone familiar with SQL how to write the equivalent, efficient Cypher statements. We&#8217;ll use the well-known Northwind database to explain the concepts and work through the queries from simple to advanced.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should have installed Neo4j and be comfortable importing data.
+You should have a basic understanding of the <a href="/developer/graph-database#property-graph">property graph model</a>. Having <a href="/download">downloaded</a> and installed the Neo4j server helps you code along with the examples. Importing the data is covered in our <a href="/developer/working-with-data/guide-importing-data-and-etl">data import guide</a>.
 </blockquote>
 </div>
 
@@ -258,8 +258,18 @@ You should have installed Neo4j and be comfortable importing data.
 <h3 class="title">Overview</h3>
 
 <ul class="sectlevel2">
-<li><a href="#_importing_data_sets">Importing Data Sets</a></li>
-<li><a href="#_the_data_sets">The Data Sets</a></li>
+<li><a href="#_a_few_words_about_cypher">A few words about Cypher</a></li>
+<li><a href="#_data_model_comparison">Data Model Comparison</a></li>
+<li><a href="#_data_import">Data Import</a></li>
+<li><a href="#_cypher_is_all_about_patterns">Cypher is all about Patterns</a></li>
+<li><a href="#_northwind_example_model">Northwind Example Model</a></li>
+<li><a href="#_graph_model">Graph Model</a></li>
+<li><a href="#_querying_the_data_step_by_step">Querying the Data Step by Step</a></li>
+<li><a href="#_aggregation_top_sellers">Aggregation, Top-Sellers</a></li>
+<li><a href="#_collecting_master_detail_queries">Collecting Master-Detail Queries</a></li>
+<li><a href="#_hierarchies_and_trees_variable_length_paths">Hierarchies and Trees - Variable Length Paths</a></li>
+<li><a href="#_create_a_new_product">Create a new product</a></li>
+<li><a href="#_create_an_order">create an order</a></li>
 </ul>
 
 <hr>
@@ -267,12 +277,93 @@ You should have installed Neo4j and be comfortable importing data.
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h4 id="_importing_data_sets">Importing Data Sets</h4>
+<h4 id="_a_few_words_about_cypher">A few words about Cypher</h4>
 
 
 
 <div class="paragraph">
-<p>The Zip files contain the contents of a Neo4j graph.db directory. To use them:</p>
+<p>Cypher is like SQL a declarative, textual query language.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>It consists of <a href="/docs/stable/query-general.html">clauses</a>, keywords and <a href="docs/stable/cypher-expressions.html">expressions</a> like predicates and functions, many of which will be familiar (like <code>WHERE</code>, <code>ORDER BY</code>, <code>SKIP LIMIT</code>, <code>AND</code>, <code>p.UnitPrice &gt; 10</code>).</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>As Cypher is all about expressing patterns, we added a special clause <a href="/docs/stable/query-match.html"><code>MATCH</code></a> for matching those patterns in your graph.
+These patterns are what you would usually draw on a whiteboard just converted into text using ASCII-art symbols.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>We represent the circles of nodes with round parentheses, like this: <code>(p:Product)</code>.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>And the arrows of relationships are drawn as such <code>-&#8594;</code>, you can add the relationship-type and other information in square brackets <code>-[:ORDERED]&#8594;</code>.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Bringing both together gives us a first hint at the expressiveness of graph patterns: <code>(cust:Customer)-[:ISSUED]&#8594;(o:Order)-[:CONTAINS]&#8594;(prod:Product)</code>.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>There is more to these patterns, you&#8217;ll see that in an instant.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Other highlights of Cypher are graph concepts like paths, variable length paths, shortest-path functions;
+the support of many collection functions, operations and predicates and the ability to chain query parts.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>You can use Cypher as well to update the graph structure and data and even ingest large amounts of CVS data.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>The Cypher language documentation is available in the <a href="/docs/stable/cypher-query-lang.html">Neo4j manual</a> together with a complete <a href="/docs/stable/cypher-refcard/">Reference Card</a>.</p>
+</div>
+
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_data_model_comparison">Data Model Comparison</h4>
+
+
+
+<div class="paragraph">
+<p>A well normalized relational model, which was not yet denormalized for performance reasons can be translated into the equivalent graph model.
+Graph model shapes are mostly driven by use-cases, so there will be opportunity for optimization and model evolution afterwards.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>A good, normalized Entity-Relationship diagram often already represents a decent graph model.
+So if you still have the orignal ER diagram available, try to use it as a guide.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Here are some tips that help you with the transformation:</p>
 </div>
 
 <div class="ulist">
@@ -280,25 +371,34 @@ You should have installed Neo4j and be comfortable importing data.
 
 <ul>
 <li>
-Stop your Neo4j server
+Each entity table is represented by a label on nodes
 </li>
 <li>
-Extract the file into /path/to/neo/data/graph.db
+Each row in a table is a node
 </li>
 <li>
-Start the server again
+Columns on those tables become node properties.
 </li>
 <li>
-Open the Neo4j Web Interface
+Remove technical primary keys, keep business primary keys
 </li>
 <li>
-Read about the Cypher Query Language
+Add unique constraints for business primary keys, add indexes for frequent lookup attributes
 </li>
 <li>
-Follow the source links for some example cypher queries
+Replace foreign keys with relationships to the other table, remove them afterwards
 </li>
 <li>
-All data sets are compatible with Neo4j version 1.6 and later.
+Remove data with default values, no need to store those
+</li>
+<li>
+Data in tables that is denormalized and duplicated might have to be pulled out into separate nodes to get a cleaner model.
+</li>
+<li>
+Indexed column names, might indicate an array property (like email1, email2, email3)
+</li>
+<li>
+JOIN tables are transformed into relationships, columns on those tables become relationship properties
 </li>
 </ul>
 
@@ -306,95 +406,474 @@ All data sets are compatible with Neo4j version 1.6 and later.
 
 
 <div class="paragraph">
-<p>You can also point the neo4j-shell to the extracted directory to run cypher-queries directly:</p>
+<p>It is important to have an understanding of the graph model before you start to import data, then it just becomes the task of hydrating that model.</p>
 </div>
 
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="shell"><code>/path/to/neo/bin/neo4j-shell -path /path/to/graph.db</code></pre>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_data_import">Data Import</h4>
+
+
+
+<div class="paragraph">
+<p>Most relational databases allow an easy export of tables to CSV, which then can be imported by only uis</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>If you are a developer you can also just connect to the relational database using your regular driver, load the data from there with SQL and create the graph data</p>
+</div>
+
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_cypher_is_all_about_patterns">Cypher is all about Patterns</h4>
+
+
+
+<div class="paragraph">
+<p>3-4 sentences</p>
+</div>
+
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_northwind_example_model">Northwind Example Model</h4>
+
+<div class="sect3 "  >
+    
+<h5 id="_relational_model">Relational model</h5>
+
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/Northwind_diagram.jpg" alt="Northwind diagram">
+</p>
 </div>
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h4 id="_the_data_sets">The Data Sets</h4>
+<h4 id="_graph_model">Graph Model</h4>
+
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/northwind_graph_simple.png" alt="northwind graph simple" width="800">
+</p>
+</div>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_querying_the_data_step_by_step">Querying the Data Step by Step</h4>
+
+<div class="sect3 "  >
+    
+<h5 id="_find_all_products">Find all Products</h5>
 
 
 
 <div class="paragraph">
-<p><a href="foo">'bar'</a></p>
+<p>Easy in SQL just select everything from the <code>Product</code> table.</p>
 </div>
 
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Title</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Code</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Download</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Jim Webber&#8217;s Doctor Who Data Set (0.05MB)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Dr.Who universe of doctors, actors, enemies and props from the Neo4j Koans Tutorial.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://github.com/jimwebber/neo4j-tutorial">GitHub</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://example-data.neo4j.org/files/drwho.zip">drwho.zip</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Federal Election Commission Campaign Data - (63.91MB)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">"The 2012 presidential campaign data from our Federal Election Committee Campaign Data <a href="/blog/follow-the-data-fec-campaign-data-challenge/">Workshop</a>.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/akollegger/FEC_GRAPH">GitHub</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://example-data.neo4j.org/files/fec_data_presidential_2012.zip">fec_data_presidential_2012.zip</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Small Cineasts Movies &amp; Actors (0.14MB)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Small dataset of the Spring Data Neo4j Cineasts.net <a href="http://spring.neo4j.org/tutorial">tutorial</a>.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/SpringSource/spring-data-neo4j/tree/master/spring-data-neo4j-examples/cineasts">GitHub</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://example-data.neo4j.org/files/cineasts_39_movies_446_actors.zip">cineasts_39_movies_446_actors.zip</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Cineasts Movies &amp; Actors (12.3MB)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Full dataset (12k movies, 50k actors) of the Spring Data Neo4j Cineasts.net <a href="http://spring.neo4j.org/tutorial">tutorial</a>.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/SpringSource/spring-data-neo4j/tree/master/spring-data-neo4j-examples/cineasts">GitHub</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://example-data.neo4j.org/files/cineasts_12k_movies_50k_actors.zip">cineasts_12k_movies_50k_actors.zip</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Musicbrainz main entities - large (5.4GB)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Most of the interesting entities (800,000 Artists, 12,000,000 Tracks, 1,200,000 Releases, 75,000 Record Labels) from the <a href="http://musicbrainz.org">Musicbrainz</a> <a href="/blog/musicbrainz-in-neo4j-part-1/">dataset</a>.</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://example-data.neo4j.org/files/musicbrainz_neo_20.tar.bz2">musicbrainz_neo_20.tar.bz2</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Hubway Data Challenge (50MB)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Hubway is a bike sharing service. The challenge data consists 95 Boston stations and <a href="blog/using-spring-data-neo4j-for-the-hubway-data-challenge/">500k bike rides</a>.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/jexp/hubway-sdn"">GitHub</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://example-data.neo4j.org/files/hubway_data_challenge_boston.zip">hubway_data_challenge_boston.zip</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Neo Love (1.6MB)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Neo4j brings the love with a <a href="http://maxdemarzi.com/2013/04/19/match-making-with-neo4j/">sample dating site</a>.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/maxdemarzi/neo_love">GitHub</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://dl.dropboxusercontent.com/u/57740873/neo_love.graph.db.zip">neo_love.graph.db.zip</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ConceptNet 5 (243MB)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ConceptNet is a <a href="http://maxdemarzi.com/2013/05/13/knowledge-bases-in-neo4j/">semantic network</a> built from nodes representing concepts, and labeled relationships between them</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/maxdemarzi/neo_concept">GitHub</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://dl.dropboxusercontent.com/u/57740873/conceptnet.graph.db.zip">conceptnet.graph.db.zip</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Neo Permissions (560MB)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Check permissions from files and folders to users and groups in this <a href="http://maxdemarzi.com/?s=PERMISSION+RESOLUTION">ACL example</a>.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/maxdemarzi/neo_permissions/blob/master/performance/src/test/resources/simulations/RandomPermissions.scala">GitHub</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://dl.dropboxusercontent.com/u/57740873/datasets/neo_permissions.tar.gz">neo_permissions.tar.gz</a></p></td>
-</tr>
-</tbody>
-</table>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="plsql"><code>SELECT p.*
+FROM products as p;</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Similar in Cypher, you just match a simple pattern <em>all nodes with the label `:Product`</em>, and return them.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Product)
+RETURN p;</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>More efficient is to return only a subset of attributes, like <code>ProductName</code> and <code>UnitPrice</code>.
+And while we&#8217;re on it, let&#8217;s also order by price and only return the 10 most expensive items.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="plsql"><code>SELECT p.ProductName, p.UnitPrice
+FROM products as p
+ORDER BY p.UnitPrice DESC
+LIMIT 10;</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>You can copy and paste the changes from SQL to Cypher, it&#8217;s thankfully unsurprising.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Product)
+RETURN p.productName, p.unitPrice
+ORDER BY p.unitPrice DESC
+LIMIT 10;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3 "  >
+    
+<h5 id="_find_single_product_by_name">Find single Product by Name</h5>
+
+
+
+<div class="paragraph">
+<p>If we only want to look at a single Product, for instance delicious <em>Chocolade</em>, we filter in SQL with a <code>WHERE</code> clause.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="plsql"><code>SELECT p.ProductName, p.UnitPrice
+FROM products as p
+WHERE p.ProductName = 'Chocolade';</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Same in Cypher, here the <code>WHERE</code> belongs to the <code>MATCH</code> statement. Boring.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Product)
+WHERE p.productName = "Chocolade"
+RETURN p.productName, p.unitPrice;</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>There is a shortcut in Cypher if you match for a labeled node with a certain attribute.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Product {productName:"Chocolade"})
+RETURN p.productName, p.unitPrice;</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>If you want to match quickly by this node-label and attribute combination, it makes sense to create an index for that pair, if you haven&#8217;t during the <a href="/developer/working-with-data/guide-importing-data-and-etl">import</a>.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE INDEX ON :Product(productName);</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3 "  >
+    
+<h5 id="_filter_products">Filter Products</h5>
+
+
+
+<div class="paragraph">
+<p>Filtering can go further, let&#8217;s try to find some expensive things starting with "C".</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="plsql"><code>SELECT p.ProductName, p.UnitPrice
+FROM products as p
+WHERE p.ProductName LIKE 'C%' AND p.UnitPrice &gt; 100;</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>The <code>LIKE</code> operator is replaced by a regular expression, but <a href="http://neo4j.com/docs/stable/query-functions-mathematical.html">math operations</a> are widely supported in Cypher.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Product)
+WHERE p.productName =~ "C.*" AND p.unitPrice &gt; 100
+RETURN p.productName, p.unitPrice;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3 "  >
+    
+<h5 id="_joining_products_with_customers">Joining Products with Customers</h5>
+
+
+
+<div class="paragraph">
+<p>We want to see who bought Chocolade.
+Let&#8217;s join the four tables together, refer to the model (ER-diagram) when you&#8217;re unsure.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="plsql"><code>SELECT distinct c.CompanyName
+FROM customers AS c
+JOIN orders AS o ON (c.CustomerID = o.CustomerID)
+JOIN order_details AS od ON (o.OrderID = od.OrderID)
+JOIN products as p ON (od.ProductID = p.ProductID)
+WHERE p.ProductName = 'Chocolade';</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>The graph model (have a look) is much simpler as we don&#8217;t need join tables, and expressing connections as graph patterns, is easier to read too.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Product {productName:"Chocolade"})&lt;-[:PRODUCT]-(:Order)&lt;-[:PURCHASED]-(c:Customer)
+RETURN distinct c.companyName;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3 "  >
+    
+<h5 id="_new_customers_without_orders">New Customers without Orders</h5>
+
+
+
+<div class="paragraph">
+<p>If we turn the question around and ask what have I bought, the JOIN stays the same, only the filter changes.
+Except if we have customers without any orders and still want to return them.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="plsql"><code>SELECT p.ProductName, sum(od.UnitPrice * od.Quantity) as Volume
+FROM customers AS c
+LEFT OUTER JOIN orders AS o ON (c.CustomerID = o.CustomerID)
+LEFT OUTER JOIN order_details AS od ON (o.OrderID = od.OrderID)
+LEFT OUTER JOIN products as p ON (od.ProductID = p.ProductID)
+WHERE c.CompanyName = 'Drachenblut Delikatessen'
+GROUP BY p.ProductName
+ORDER BY Volume DESC;</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>In our Cypher query, the MATCH between customer and order becomes an OPTIONAL MATCH, which is the equivalent of an OUTER JOIN.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (c:Customer {companyName:"Drachenblut Delikatessen"})
+OPTIONAL MATCH (p:Product)&lt;-[pu:PRODUCT]-(:Order)&lt;-[:PURCHASED]-(c)
+RETURN p.productName, toInt(sum(pu.unitPrice * pu.quantity)) as volume
+ORDER BY volume DESC;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_aggregation_top_sellers">Aggregation, Top-Sellers</h4>
+
+
+
+<div class="paragraph">
+<p>In the previous query we already sneaked in a bit of aggregation.
+By summing up product prices and ordered quantities, we provided an aggregated view per product for this customer.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>You can use aggregation functions like <code>sum, count, avg, max</code> both in SQL and Cypher.
+In SQL aggregation is explicit so you have to provide all grouping keys in the <code>GROUP BY</code> clause.
+If we want to see our top-selling employees.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="plsql"><code>SELECT e.EmployeeID, count(*) as Count
+FROM Employee as e
+JOIN Order AS o ON (o.EmployeeID = e.EmployeeID)
+GROUP BY e.EmployeeID
+ORDER BY Count DESC LIMIT 10
+;</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>In Cypher grouping for aggregation is implicit.
+As soon as you use the first aggregation function, all non-aggregated columns automatically become grouping keys.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (:Order)&lt;-[:SOLD]-(e:Employee)
+RETURN e.name, count(*) as cnt
+ORDER BY cnt DESC LIMIT 10</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_collecting_master_detail_queries">Collecting Master-Detail Queries</h4>
+
+
+
+<div class="paragraph">
+<p>In SQL there is one dreaded kind of query - master detail information.
+You have one main entity (master, head, parent) and many dependent ones (detail, position, child).
+Usually you either query it by joining both and returning the master data multiple times (once for each detail), or by only fetching the primary key of the master and then pulling all detail rows via that foreign key.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>For instance if we look at the employees per territory, then the territory information is returned for each employee.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="plsql"><code>SELECT e.LastName, et.Description
+FROM Employee as e
+JOIN EmployeeTerritory AS et ON (et.EmployeeID = e.EmployeeID)
+JOIN Territory AS t ON (et.TerritoryID = t.TerritoryID)
+;</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>In Cypher we can return the structure as in SQL.
+Or we can choose to use the <code>collect</code> aggregation function, which aggregates values into a collection (list,array).
+So we only return one row per parent, containing an inlined collection of child values.
+This also works for nested values.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (t:Territory)&lt;-[:IN_TERRITORY]-(e:Employee)
+RETURN t.description, collect(e.lastName);</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_hierarchies_and_trees_variable_length_paths">Hierarchies and Trees - Variable Length Paths</h4>
+
+
+
+<div class="paragraph">
+<p>If you have to express category-, territory- or organizational hierarchies in SQL then you model it usually with a self-join via a foreign key from child to parent.
+Adding data is not problematic, as are single level queries (get all children for this parent).
+As soon as you get into multi-level queries, the number of joins explodes, especially if your level depth is variable.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Taking the example of the product categories, we have to decide upfront up to how many levels of categories we want to query.
+We will tackle only three potential levels here (which means 1+2+3 = 6 self-joins of the ProductCategory table).</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="plsql"><code>SELECT p.ProductName
+FROM Product as p
+JOIN ProductCategory pc ON (p.CategoryID = pc.CategoryID AND pc.CategoryName = "Dairy Products")
+
+JOIN ProductCategory pc1 ON (p.CategoryID = pc1.CategoryID
+JOIN ProductCategory pc2 ON (pc2.ParentID = pc2.CategoryID AND pc2.CategoryName = "Dairy Products")
+
+JOIN ProductCategory pc3 ON (p.CategoryID = pc3.CategoryID
+JOIN ProductCategory pc4 ON (pc3.ParentID = pc4.CategoryID)
+JOIN ProductCategory pc5 ON (pc4.ParentID = pc5.CategoryID AND pc5.CategoryName = "Dairy Products")
+;</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Cypher is able to express single or fixed level hierarchies just with the appropriate relationships.
+Variable levels are represented by variable length paths, which are denoted by a star after the relationship-type and optional limits (min..max).</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Product)-[:CATEGORY]-&gt;(l:ProductCategory)-[:PARENT*0..]-(:ProductCategory {name:"Dairy Products"})
+RETURN p.name</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>MATCH (choc:Product {ProductName:'Chocolade'})&#8592;[:PRODUCT]-(:Order)&#8592;[:SOLD]-(employee),
+      (employee)-[:SOLD]&#8594;()-[:PRODUCT]&#8594;(other:Product)
+RETURN employee.EmployeeID, other.ProductName, count(*) as count
+ORDER BY count DESC
+LIMIT 5</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>also introduce order by, limit</p>
+</div>
+
+<div class="sect3 "  >
+    
+<h5 id="_find_all_products_in_category_x">Find all Products in Category X</h5>
+
+
+
+<div class="paragraph">
+<p>discuss graph patterns with relationships</p>
+</div>
+
+</div>
+<div class="sect3 "  >
+    
+<h5 id="_hierarchy">Hierarchy</h5>
+
+
+</div>
+<div class="sect3 "  >
+    
+<h5 id="_varlength_path">Varlength path</h5>
+
+
+</div>
+<div class="sect3 "  >
+    
+<h5 id="_with">With</h5>
+
+
+</div>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_create_a_new_product">Create a new product</h4>
+
+
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_create_an_order">create an order</h4>
+
+
 </div>
                            </div>
                         </div>

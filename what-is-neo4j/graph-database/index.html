@@ -121,6 +121,9 @@
                </div>
                <article id="content" role="main">
                   <style>
+                    .side-nav li a:not(.button) { 
+                       display:inline;
+	                 }
                     .row { max-width: 62.5rem !important; }
                      .lead
                      {
@@ -255,8 +258,7 @@ You should have a basic understanding of what a database is.
 <h3 class="title">Overview</h3>
 
 <ul class="sectlevel2">
-<li><a href="#_the_property_graph_model">The Property Graph Model</a></li>
-
+<li><a href="#property-graph">The Property Graph Model</a></li>
 <li><a href="#_what_is_neo4j">What is Neo4j?</a></li>
 <li><a href="#_neo4j_editions">Neo4j Editions</a></li>
 <li><a href="#_neo4j_server">Neo4j Server</a></li>
@@ -285,7 +287,7 @@ Armed only with a pattern and a set of starting points, graph databases explore 
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h4 id="_the_property_graph_model">The Property Graph Model</h4>
+<h4 id="property-graph">The Property Graph Model</h4>
 
 
 
@@ -323,34 +325,13 @@ Note that although they are directed, relationships can always be navigated in b
 <div class="paragraph">
 <p>There is only one consistent rule in a graph database: "No broken links".
 Since a relationship always has a start and end node, you can’t delete a node without also deleting its associated relationships.
-You also can always assume that an existing relationship will not point to a non-existing endpoint.</p>
+You can also always assume that an existing relationship will not point to a non-existing endpoint.</p>
 </div>
 
 <div class="imageblock">
 <p class="content">
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/property_graph_model.png" alt="property graph model">
 </p>
-</div>
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
-<h2 id="_recommended">Recommended</h2>
-</li>
-<div class="ulist">
-
-
-<ul>
-<li>
-<a href="http://neo4j.com/docs">The Neo4j Docs</a>
-</li>
-<li>
-<a href="/blog">The Neo4j Blog</a>
-</li>
-<li>
-<a href="/build-a-graph-data-model/guide-intro-to-graph-modeling">Intro to Graph Modeling</a>
-</li>
-</ul>
-
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
@@ -362,9 +343,9 @@ You also can always assume that an existing relationship will not point to a non
 <div class="paragraph">
 <p>Sponsored by Neo Technology, Neo4j is an open-source NoSQL graph database implemented in Java and Scala.
 With development starting in 2003, it has been publicly available since 2007.
-The source code and issue tracking is available on <a href="https://github.com/neo4j">GitHub</a>, with support readily available on Stack Overflow and the Neo4j Google group.
+The source code and issue tracking are available on <a href="https://github.com/neo4j">GitHub</a>, with support readily available on Stack Overflow and the Neo4j Google group.
 Limited only by hardware, Neo4j is used today by hundreds of thousands of users in almost all industries.
-Use cases include match making, network management, software analytics, scientific research, routing, organizational and project management, recommendations, social networks, and more.</p>
+Use cases include matchmaking, network management, software analytics, scientific research, routing, organizational and project management, recommendations, social networks, and more.</p>
 </div>
 
 
@@ -391,10 +372,10 @@ Materializing of relationships at creation time, resulting in no penalties for r
 Constant time traversals for relationships in the graph both in depth and in breadth due to double-linking on storage level between nodes and relationships
 </li>
 <li>
-All relationships in Neoj4 are equally important and fast, making it possible to materialize and use new relationships later on to "shortcut" and speed up the domain data when new needs arise
+All relationships in Neo4j are equally important and fast, making it possible to materialize and use new relationships later on to "shortcut" and speed up the domain data when new needs arise
 </li>
 <li>
-Compact storage and memory caching for graphs, resulting in efficient scale up and billions of nodes in one database on moderate hardware
+Compact storage and memory caching for graphs, resulting in efficient scale-up and billions of nodes in one database on moderate hardware
 </li>
 <li>
 Written on top of the JVM
@@ -443,7 +424,7 @@ For high performance special cases, you can write Neo4j server extensions in any
 
 </div>
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
 <h2 id="_further_reading">Further Reading</h2>
 </li>
 <div class="ulist">

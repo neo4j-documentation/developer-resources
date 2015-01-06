@@ -6,7 +6,7 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>Neo4j&#8217;s Hardware Requirements? | Developer Resources | Neo4j Graph Database</title>
+         <title>Neo4j&#8217;s Hardware Requirements | Developer Resources | Neo4j Graph Database</title>
          <script type="text/javascript">
             var _kmq = _kmq || [];
             var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
@@ -121,6 +121,9 @@
                </div>
                <article id="content" role="main">
                   <style>
+                    .side-nav li a:not(.button) { 
+                       display:inline;
+	                 }
                     .row { max-width: 62.5rem !important; }
                      .lead
                      {
@@ -220,13 +223,13 @@
                            <ul class="breadcrumbs">
                               <li><a href="/developer-resources">Developer Guides</a></li>
                               <li><a href="../">Neo4j in Production</a></li>
-                              <li class="current"><a href="#">Neo4j&#8217;s Hardware Requirements?</a></li>
+                              <li class="current"><a href="#">Neo4j&#8217;s Hardware Requirements</a></li>
                            </ul>
                         </div>
                      </div>
                      <!-- <div class="row">
                         <div class="columns large-12">
-                           <h1 style="font-size:2.1rem;">Neo4j&#8217;s Hardware Requirements?</h1>
+                           <h1 style="font-size:2.1rem;">Neo4j&#8217;s Hardware Requirements</h1>
                         </div>
                      </div> -->
                      <section class="row" style="padding:10px 0;">
@@ -237,8 +240,8 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-This guide explains Neo4J sizing and hardware calculation tips and best practices.
-It details you need to make Neo4j fly.
+This guide explains Neo4j sizing and hardware calculation tips and best practices.
+It details what you need to make Neo4j fly.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
@@ -260,12 +263,10 @@ You should know that Neo4j employs its own persistence and caching implementatio
 <ul class="sectlevel2">
 <li><a href="#_neo4j_s_architecture">Neo4j&#8217;s Architecture</a></li>
 <li><a href="#_disk_storage">Disk Storage</a></li>
-
 <li><a href="#_low_level_cache">Low Level Cache</a></li>
 <li><a href="#_optimizing">Optimizing</a></li>
 <li><a href="#_performance_optimization">Performance Optimization</a></li>
 <li><a href="#_hardware_sizing_calculator">Hardware sizing calculator</a></li>
-
 </ul>
 
 <hr>
@@ -278,7 +279,7 @@ You should know that Neo4j employs its own persistence and caching implementatio
 
 
 <div class="paragraph">
-<p>Neo4j is a native graph database, it handles the graph data records down to the disk/filesystem level.
+<p>Neo4j is a native graph database; it handles the graph data records down to the disk/filesystem level.
 On top of the memory mapped filesystem, Neo4j employs additional caches for loaded Node and Relationship-Records.</p>
 </div>
 
@@ -290,7 +291,7 @@ On top of the memory mapped filesystem, Neo4j employs additional caches for load
 
 
 <div class="paragraph">
-<p>Neo4j&#8217;s storage is organized in record based files per data structure - nodes, relationships, properties, labels, etc.
+<p>Neo4j&#8217;s storage is organized in record-based files per data structure - nodes, relationships, properties, labels, and so on.
 Each node and relationship record block is directly addressable by its id.</p>
 </div>
 
@@ -311,7 +312,7 @@ Node records: labels, pointer to first relationship, pointer to first property b
 Relationship records: relationship-type, pointers to: start-node, end-node, first property block, next-relationship and previous relationship for both start and end-nodes
 </li>
 <li>
-Property records: up to 4 property entries, for each the property-key-id, and a encoded / compressed property value or pointer to string or array storage list
+Property records: up to four property entries, each with a property-key id, and an encoded / compressed property value or pointer to string or array storage list
 </li>
 </ul>
 
@@ -338,27 +339,6 @@ Total  is 110.2MB</pre>
 </div>
 </div>
 </div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
-<h2 id="_recommended">Recommended</h2>
-</li>
-<div class="ulist">
-
-
-<ul>
-<li>
-<a href="http://neo4j.com/docs">The Neo4j Docs</a>
-</li>
-<li>
-<a href="/blog">The Neo4j Blog</a>
-</li>
-<li>
-<a href="/build-a-graph-data-model/guide-intro-to-graph-modeling">Intro to Graph Modeling</a>
-</li>
-</ul>
-
-</div>
-</div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_low_level_cache">Low Level Cache</h4>
@@ -366,9 +346,9 @@ Total  is 110.2MB</pre>
 
 
 <div class="paragraph">
-<p>The low level cache requirements are the same as disk space.
-It&#8217;s configuration (memory mapped regions per file), is done in <code>conf/neo4j.properties</code>.
-You should try to memory map as much data as your RAM allows (allow for 6-16GB heap depending on availability and use-cases).</p>
+<p>The low level cache requirements are the same as for the disk space.
+Its configuration (memory mapped regions per file), is done in <code>conf/neo4j.properties</code>.
+You should try to memory-map as much data as your RAM allows (allow for 6 to 16GB heap depending on availability and use-cases).</p>
 </div>
 
 </div>
@@ -420,7 +400,7 @@ Consider using fast disks—SSDs or enterprise flash hardware to bring up the bo
 Keep the object cache to a reasonable size (2 to 16 GB, about 50% of the heap)
 </li>
 <li>
-Increase the file cache (from 2 GB, all the way up to 200 GB or more in exceptional circumstances)
+Increase the file cache (from 2 GB all the way up to 200 GB or more in exceptional circumstances)
 </li>
 <li>
 Increase the percentage of the store mapped into the filesystem cache
@@ -440,27 +420,6 @@ Invest in faster disks: SSDs or enterprise flash hardware
 <div class="small-4 columns">&nbsp;</div>
 <div class="small-4 columns"> <a href="/hardware-sizing" class="small button">Hardware Sizing Calculator →</a> </div>
 <div class="small-4 columns">&nbsp;</div>
-</div>
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
-<h2 id="_further_reading">Further Reading</h2>
-</li>
-<div class="ulist">
-
-
-<ul>
-<li>
-<a href="/hardware-sizing/">Hardware Sizing Calculator</a>
-</li>
-<li>
-<a href="http://docs.neo4j.org/chunked/milestone/capabilities-capacity.html" class="docs">Neo4j Capacities</a>
-</li>
-<li>
-<a href="http://watch.neo4j.org/video/46049647" class="video">Hardware Sizing</a>
-</li>
-</ul>
-
 </div>
 </div>
                            </div>

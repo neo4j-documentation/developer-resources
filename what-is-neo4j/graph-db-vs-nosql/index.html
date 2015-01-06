@@ -121,6 +121,9 @@
                </div>
                <article id="content" role="main">
                   <style>
+                    .side-nav li a:not(.button) { 
+                       display:inline;
+	                 }
                     .row { max-width: 62.5rem !important; }
                      .lead
                      {
@@ -255,33 +258,30 @@ You need no prior knowledge of other NoSQL stores, although it might be helpful 
 <h3 class="title">Overview</h3>
 
 <ul class="sectlevel2">
-
 <li><a href="#_neo4j_as_a_nosql_database">Neo4j as a NoSQL Database</a></li>
-
 <li><a href="#_uncover_the_graph_in_a_relational_database">Uncover the Graph in a Relational Database</a></li>
 <li><a href="#_relate_key_value_stores_with_graph_databases">Relate Key-Value Stores with Graph Databases</a></li>
 <li><a href="#_navigate_document_stores_with_graph_databases">Navigate Document Stores with Graph Databases</a></li>
-
 </ul>
 
 <hr>
 
 
 <div class="paragraph">
-<p>The although somewhat vaguely named, the NoSQL ("Not only SQL") space brings together many interesting solutions offering different data models and database systems, each suitable for different use cases and shapes of data.
-With the advent of the NoSQL movement, the "one-size-fits-all" proposition of large relational systems was replaced by making conscious decisions for the right tool for the job.</p>
+<p>Although somewhat vaguely named, the NoSQL ("Not only SQL") space brings together many interesting solutions offering different data models and database systems, each suitable for different use cases and shapes of data.
+With the advent of the NoSQL movement, the "one-size-fits-all" proposition of large relational systems was replaced by making conscious decisions about finding the right tool for the job.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>With this larger toolbox, developers have to gain the insight necessary to make informed decisions about which approaches are best suited for their particular applications.</p>
+<p>With this larger toolbox, developers have to gain the insight necessary to make informed decisions about which approaches are best suited to their particular applications.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Most NoSQL systems are aggregate oriented, providing only atomic operations within their natural aggregate to which forms only one dedicated view of your data.
+<p>Most NoSQL systems are aggregate oriented, providing only atomic operations within their natural aggregate, which forms only one dedicated view of your data.
 Other projections have to be computed crunching your data.
 Focusing on one aggregate at a time allows for easy sharding of bucketed data across a network of machines along the aggregate dimension, for instance the <strong>Document</strong> in Document Databases.</p>
 </div>
@@ -289,7 +289,7 @@ Focusing on one aggregate at a time allows for easy sharding of bucketed data ac
 
 
 <div class="paragraph">
-<p>Graph databases handle fine grained networks of information providing any perspective on your data, fitting your use-cases.
+<p>Graph databases handle fine-grained networks of information providing any perspective on your data that fits your use-cases.
 Known and trusted from relational systems, transactional guarantees protect updates of that web of data conforming to ACID standards.</p>
 </div>
 
@@ -306,7 +306,7 @@ Known and trusted from relational systems, transactional guarantees protect upda
 
 <div class="title">NoSQL databases lack relationships</div>
 <blockquote>
-Most NO-SQL databases store sets of disconnected aggregates. <strong>This makes it difficult to use them for connected data and graphs.</strong><br>
+Most NoSQL databases store sets of disconnected aggregates. <strong>This makes it difficult to use them for connected data and graphs.</strong><br>
 One well-known strategy for adding relationships to such stores is to embed an aggregate&#8217;s identifier inside the field belonging to another aggregate — effectively introducing foreign keys.<br>
 <strong>But this requires joining aggregates at the application level, which quickly becomes prohibitively expensive.</strong>
 </blockquote>
@@ -329,27 +329,6 @@ One well-known strategy for adding relationships to such stores is to embed an a
 <div class="paragraph">
 <p>Let&#8217;s compare graph databases to other NoSQL systems.</p>
 </div>
-
-</div>
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
-<h2 id="_recommended">Recommended</h2>
-</li>
-<div class="ulist">
-
-
-<ul>
-<li>
-<a href="http://neo4j.com/docs">The Neo4j Docs</a>
-</li>
-<li>
-<a href="/blog">The Neo4j Blog</a>
-</li>
-<li>
-<a href="/build-a-graph-data-model/guide-intro-to-graph-modeling">Intro to Graph Modeling</a>
-</li>
-</ul>
 
 </div>
 </div>
@@ -377,7 +356,7 @@ Building a shopping cart? Use a <strong>key-value Store</strong>.
 Storing structured product information? Store as a <strong>document</strong>.
 </li>
 <li>
-Describing how did a user got from point A to point B? Follow a <strong>graph</strong>.
+Describing how a user got from point A to point B? Follow a <strong>graph</strong>.
 </li>
 </ul>
 
@@ -386,27 +365,6 @@ Describing how did a user got from point A to point B? Follow a <strong>graph</s
 <p class="content">
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/nosql-space.png" alt="nosql space">
 </p>
-</div>
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
-<h2 id="_recommended_2">Recommended</h2>
-</li>
-<div class="ulist recommended">
-
-
-<ul style='margin-left: 0;'>
-<li style='list-style: none outside none;'>
-<a href="http://asciidoctor.org">Links to docs</a>
-</li>
-<li style='list-style: none outside none;'>
-<a href="http://asciidoctor.org">Links to blog</a>
-</li>
-<li style='list-style: none outside none;'>
-<a href="http://asciidoctor.org">Links to guides</a>
-</li>
-</ul>
-
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
@@ -523,27 +481,6 @@ A graph data model lets more than one natural representation emerge dynamically 
 <p class="content">
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/as-document.png" alt="as document">
 </p>
-</div>
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
-<h2 id="_further_reading">Further Reading</h2>
-</li>
-<div class="ulist">
-
-
-<ul>
-<li>
-<a href="/books">The Neo4j Bookshelf</a>
-</li>
-<li>
-<a href="http://watch.neo4j.org">The Neo4j Video Library</a>
-</li>
-<li>
-<a href="http://gist.neo4j.org/">GraphGists</a>
-</li>
-</ul>
-
 </div>
 </div>
                            </div>

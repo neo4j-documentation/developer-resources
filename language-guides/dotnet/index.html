@@ -6,7 +6,7 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>Using Neo4j from .Net | Developer Resources | Neo4j Graph Database</title>
+         <title>Using Neo4j from .NET | Developer Resources | Neo4j Graph Database</title>
          <script type="text/javascript">
             var _kmq = _kmq || [];
             var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
@@ -121,6 +121,9 @@
                </div>
                <article id="content" role="main">
                   <style>
+                    .side-nav li a:not(.button) { 
+                       display:inline;
+	                 }
                     .row { max-width: 62.5rem !important; }
                      .lead
                      {
@@ -220,13 +223,13 @@
                            <ul class="breadcrumbs">
                               <li><a href="/developer-resources">Developer Guides</a></li>
                               <li><a href="../">Develop with Neo4j</a></li>
-                              <li class="current"><a href="#">Using Neo4j from .Net</a></li>
+                              <li class="current"><a href="#">Using Neo4j from .NET</a></li>
                            </ul>
                         </div>
                      </div>
                      <!-- <div class="row">
                         <div class="columns large-12">
-                           <h1 style="font-size:2.1rem;">Using Neo4j from .Net</h1>
+                           <h1 style="font-size:2.1rem;">Using Neo4j from .NET</h1>
                         </div>
                      </div> -->
                      <section class="row" style="padding:10px 0;">
@@ -237,15 +240,15 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-If you are a .Net developer, you should find enough information to get you started with Neo4j.
+If you are a .NET developer, this guide provides an overview of options for connecting to Neo4j.
 While this guide is not comprehensive it will introduce the different drivers and link to the relevant resources.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should be familiar with <a href="../../what-is-neo4j/graph-database">graph database concepts</a> and the property graph model.
-You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="../../cypher-query-language">Cypher Query language</a>.
+You should be familiar with <a href="/developer/graph-database">graph database concepts</a> and the property graph model.
+You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="/developer/cypher-query-language">Cypher Query language</a>.
 </blockquote>
 </div>
 
@@ -257,9 +260,9 @@ You should have <a href="/download">installed Neo4j</a> and made yourself famili
 <h3 class="title">Overview</h3>
 
 <ul class="sectlevel2">
-<li><a href="#_neo4j_for_net_developers">Neo4j for .Net Developers</a></li>
+<li><a href="#_neo4j_for_net_developers">Neo4j for .NET Developers</a></li>
 <li><a href="#_the_example_project">The Example Project</a></li>
-<li><a href="#__a_href_http_www_nuget_org_packages_neo4jclient_neo4jclient_a"><a href="http://www.nuget.org/packages/Neo4jClient">Neo4jClient</a></a></li>
+<li><a href="#_neo4jclient">Neo4jClient</a></li>
 
 <li><a href="#_other_drivers">Other Drivers</a></li>
 </ul>
@@ -269,7 +272,7 @@ You should have <a href="/download">installed Neo4j</a> and made yourself famili
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h4 id="_neo4j_for_net_developers">Neo4j for .Net Developers</h4>
+<h4 id="_neo4j_for_net_developers">Neo4j for .NET Developers</h4>
 
 <div class="imageblock">
 <p class="content">
@@ -279,14 +282,19 @@ You should have <a href="/download">installed Neo4j</a> and made yourself famili
 
 
 <div class="paragraph">
-<p>Neo4j might be developed in Java, but don&#8217;t assume that you need to use a Java client.
-Powerful .Net drivers like <code>Neo4jClient</code> from Tatham Oddie showed early on, how easy it is to connect to Neo4j from .Net</p>
+<p>The .NET platform allows many developers to create fascinating applications utilizing graph concepts.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Members of the .Net community have invested a lot of time and love to develop all these drivers, so please if you use them provide feedback to the authors.</p>
+<p>Powerful drivers like <code>Neo4jClient</code> from Tatham Oddie showed early on, how easy it is to connect to Neo4j from .NET</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Members of the .NET community have invested a lot of time and love to develop all these drivers, so if you use them please provide feedback to the authors.</p>
 </div>
 
 </div>
@@ -317,17 +325,18 @@ The front-end is the same for all drivers, just the backends show you how to con
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h4 id="__a_href_http_www_nuget_org_packages_neo4jclient_neo4jclient_a"><a href="http://www.nuget.org/packages/Neo4jClient">Neo4jClient</a></h4>
+<h4 id="_neo4jclient">Neo4jClient</h4>
 
 
 
 <div class="paragraph">
-<p>A .NET client for Neo4j, which makes it easy to write Cypher queries in C# with IntelliSense. Also supports basic CRUD and legacy indexing.</p>
+<p>A .NET client for Neo4j, which makes it easy to write Cypher queries in C# with IntelliSense.
+It also supports basic CRUD and legacy indexing.</p>
 </div>
 
 </div>
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
 <h2 id="_sidebar">Sidebar</h2>
 </li>
 <div class="ulist">
@@ -335,7 +344,7 @@ The front-end is the same for all drivers, just the backends show you how to con
 
 <ul>
 <li>
-<a href="https://github.com/Readify/Neo4jClient">GitHub</a>
+<a href="https://github.com/Readify/Neo4jClient">Neo4jClient on GitHub</a>
 </li>
 <li>
 Author: <a href="http://twitter.com/tathamoddie">Tatham Oddie</a> and Romiko Derbynew
@@ -345,9 +354,6 @@ Author: <a href="http://twitter.com/tathamoddie">Tatham Oddie</a> and Romiko Der
 </li>
 <li>
 <a href="https://github.com/Readify/Neo4jClient/wiki">Documentation</a>
-</li>
-<li>
-[Blog Post]
 </li>
 </ul>
 
@@ -359,12 +365,12 @@ Author: <a href="http://twitter.com/tathamoddie">Tatham Oddie</a> and Romiko Der
 
 <div class="sect3 "  >
     
-<h5 id="__a_href_http_mtranter_com_2013_09_21_cypher_net_a_neo4j_cypher_api_cypher_net_a"><a href="http://mtranter.com/2013/09/21/cypher-net-a-neo4j-cypher-api/">Cypher.Net</a></h5>
+<h5 id="_cypher_net">Cypher.NET</h5>
 
 
 
 <div class="paragraph">
-<p>A .Net API for the Neo4j HTTP Transactional Endpoint. (v2.0.0) Exposes strongly typed Graph Query API based on the Neo4j Cypher Query Language.</p>
+<p>A .NET API for the Neo4j HTTP Transactional Endpoint (v2.0.0) exposes a strongly-typed Graph Query API based on the Neo4j Cypher query language.</p>
 </div>
 
 <div class="ulist">
@@ -376,6 +382,9 @@ Author: <a href="http://twitter.com/tathamoddie">Tatham Oddie</a> and Romiko Der
 </li>
 <li>
 Author: Matthew Tranter
+</li>
+<li>
+<a href="http://mtranter.com/2013/09/21/cypher-net-a-neo4j-cypher-api/">Blog Post</a>
 </li>
 </ul>
 

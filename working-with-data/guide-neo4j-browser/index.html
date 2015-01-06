@@ -121,6 +121,9 @@
                </div>
                <article id="content" role="main">
                   <style>
+                    .side-nav li a:not(.button) { 
+                       display:inline;
+	                 }
                     .row { max-width: 62.5rem !important; }
                      .lead
                      {
@@ -232,9 +235,7 @@
                      <section class="row" style="padding:10px 0;">
                         <div class="large-12 columns" style="padding-top:0;">
                            <div id="content">
-                              <div id="preamble">
-<div class="sectionbody">
-<div class="quoteblock abstract">
+                              <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
 This article demonstrates how to style graph visualizations in the Neo4j browser using a <strong>Graph Style Sheet</strong> (GRASS).
@@ -243,7 +244,7 @@ This article demonstrates how to style graph visualizations in the Neo4j browser
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should have familiarized yourself with <a href="../what-is-neo4j/graph-database">Graph Databases</a> and the <a href="../what-is-neo4j/property-graph">Property Graph Model</a>.
+You should have familiarized yourself with <a href="/developer/graph-database">Graph Databases</a> and the <a href="/developer/graph-database#property-graph">Property Graph Model</a>.
 </blockquote>
 </div>
 
@@ -283,7 +284,7 @@ http://localhost:7474/ is ready.</code></pre>
 
 
 <div class="paragraph">
-<p>If you want to learn more first, click on any of the helpful links show after startup, these are quick slide shows that introduce the different concepts quickly.</p>
+<p>If you want to learn more first, click on any of the helpful links shown after startup: these are quick slide shows that introduce the different concepts.</p>
 </div>
 
 <div class="ulist">
@@ -315,31 +316,9 @@ http://localhost:7474/ is ready.</code></pre>
 
 <div class="paragraph">
 <p>After a few seconds the data is imported, but we&#8217;ll see only a lonely <em>Matrix</em> node.
-In order to practice visualization on more nodes and relationships, go to the favorites tab on the left&#8212;&#8203;indicated by a star&#8212;&#8203;and click on the <strong>Get Some Data</strong> entry, and hit run.</p>
+In order to practice visualization on more nodes and relationships, go to the Favorites tab on the left&#8212;&#8203;indicated by a star&#8212;&#8203;and click on the <strong>Get Some Data</strong> entry, and hit run.</p>
 </div>
 
-</div>
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
-<h2 id="_recommended">Recommended</h2>
-</li>
-<div class="ulist">
-
-
-<ul>
-<li>
-<a href="http://neo4j.com/docs">The Neo4j Docs</a>
-</li>
-<li>
-<a href="/blog">The Neo4j Blog</a>
-</li>
-<li>
-<a href="/build-a-graph-data-model/guide-intro-to-graph-modeling">Intro to Graph Modeling</a>
-</li>
-</ul>
-
-</div>
 
 
 <div class="paragraph">
@@ -359,7 +338,7 @@ In the tab on the right, denoted with an "eye", you can set the styling paramete
 
 <div class="paragraph">
 <p>Play a bit with the styling options and do the same for the other nodes (labeled Person).
-The next step is styling relationships, just click on one (e.g. DIRECTED) and try it out.</p>
+The next step is styling relationships. Click on one (for example, DIRECTED) and try it out.</p>
 </div>
 
 <div class="imageblock">
@@ -377,7 +356,7 @@ You can access the style sheet with the link at the bottom of the styling pop-up
 
 
 <div class="paragraph">
-<p>The resulting style renderer allows you to look at the style-sheet, download it, or update it via drag-and-drop.
+<p>The resulting style renderer allows you to look at the stylesheet, download it, or update it via drag-and-drop.
 You can also reset all styling by clicking the "fire extinguisher".</p>
 </div>
 
@@ -392,35 +371,13 @@ You can also reset all styling by clicking the "fire extinguisher".</p>
 <p>See Michael perform some graph visualization in real time on the following screencast:</p>
 </div>
 
-<iframe src="//player.vimeo.com/video/97204829?color=ff9933" width="1000" height="600" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<iframe src="//player.vimeo.com/video/97204829?color=ff9933" width="685" height="500" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
 
 <div class="paragraph">
 <p>Enjoy!</p>
 </div>
 
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
-<h2 id="_further_reading">Further Reading</h2>
-</li>
-<div class="ulist">
-
-
-<ul>
-<li>
-<a href="/books">The Neo4j Bookshelf</a>
-</li>
-<li>
-<a href="http://watch.neo4j.org">The Neo4j Video Library</a>
-</li>
-<li>
-<a href="http://gist.neo4j.org/">GraphGists</a>
-</li>
-</ul>
-
-</div>
-</div>
                            </div>
                         </div>
                      </section>

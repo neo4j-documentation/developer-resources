@@ -121,6 +121,9 @@
                </div>
                <article id="content" role="main">
                   <style>
+                    .side-nav li a:not(.button) { 
+                       display:inline;
+	                 }
                     .row { max-width: 62.5rem !important; }
                      .lead
                      {
@@ -237,15 +240,15 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-If you are a Perl developer, you should find enough information to get you started with Neo4j.
+If you are a Perl developer, this guide provides an overview of options for connecting to Neo4j.
 While this guide is not comprehensive it will introduce the different drivers and link to the relevant resources.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should be familiar with <a href="../../what-is-neo4j/graph-database">graph database concepts</a> and the property graph model.
-You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="../../cypher-query-language">Cypher Query language</a>.
+You should be familiar with <a href="/developer/graph-database">graph database concepts</a> and the property graph model.
+You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="/developer/cypher-query-language">Cypher Query language</a>.
 </blockquote>
 </div>
 
@@ -259,8 +262,8 @@ You should have <a href="/download">installed Neo4j</a> and made yourself famili
 <ul class="sectlevel2">
 <li><a href="#_neo4j_for_perl_developers">Neo4j for Perl Developers</a></li>
 <li><a href="#_the_example_project">The Example Project</a></li>
-<li><a href="#__a_href_http_metacpan_org_release_rest_neo4p_rest_neo4p_a"><a href="http://metacpan.org/release/REST-Neo4p">REST::Neo4p</a></a></li>
-<li><a href="#_furhter_reading">Furhter Reading</a></li>
+<li><a href="#_rest_neo4p">REST::Neo4p</a></li>
+
 </ul>
 
 <hr>
@@ -278,15 +281,7 @@ You should have <a href="/download">installed Neo4j</a> and made yourself famili
 
 
 <div class="paragraph">
-<p>Neo4j might be developed in Java, but don&#8217;t assume that you need to use a Java client.
-Perl drivers came along quite early and have enabled many interesting use-cases for Neo4j.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>There’s a number of of ways to access Neo4j from Perl.
-Drivers for the different Perl stacks enable you to use Neo4j from your familiar environment.</p>
+<p>The Perl driver from Mark Jensen was always up to date with the latest Neo4j API developments, and it&#8217;s fun to use too.</p>
 </div>
 
 
@@ -323,13 +318,7 @@ The front-end is the same for all drivers, just the backends show you how to con
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h4 id="__a_href_http_metacpan_org_release_rest_neo4p_rest_neo4p_a"><a href="http://metacpan.org/release/REST-Neo4p">REST::Neo4p</a></h4>
-
-
-
-<div class="paragraph">
-<p>Author: Mark A. Jensen</p>
-</div>
+<h4 id="_rest_neo4p">REST::Neo4p</h4>
 
 
 
@@ -339,15 +328,25 @@ The front-end is the same for all drivers, just the backends show you how to con
 
 </div>
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
-<h2 id="_furhter_reading">Furhter Reading</h2>
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
+<h2 id="_sidebar">Sidebar</h2>
 </li>
+<div class="ulist">
 
 
-<div class="paragraph">
-<p>*</p>
+<ul>
+<li>
+<a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/perl/neo4p">Example project with REST::Neo4p</a>
+</li>
+<li>
+<a href="http://metacpan.org/release/REST-Neo4p">REST::Neo4p on GitHub</a>
+</li>
+<li>
+Author: Mark A. Jensen
+</li>
+</ul>
+
 </div>
-
 </div>
                            </div>
                         </div>

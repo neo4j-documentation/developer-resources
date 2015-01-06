@@ -121,6 +121,9 @@
                </div>
                <article id="content" role="main">
                   <style>
+                    .side-nav li a:not(.button) { 
+                       display:inline;
+	                 }
                     .row { max-width: 62.5rem !important; }
                      .lead
                      {
@@ -237,13 +240,13 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-If you are a Clojure developer, you should find enough information to get you started with Neo4j. While this guide is not comprehensive it will introduce the different drivers and link to the relevant resources.
+If you are a Clojure developer, this guide provides an overview of options for connecting to Neo4j. While this guide is not comprehensive it will introduce the different drivers and link to the relevant resources.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should be familiar with <a href="../../what-is-neo4j/graph-database">graph database concepts</a> and the property graph model. You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="../../cypher-query-language">Cypher Query language</a>.
+You should be familiar with <a href="/developer/graph-database">graph database concepts</a> and the property graph model. You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="/developer/cypher-query-language">Cypher Query language</a>.
 </blockquote>
 </div>
 
@@ -257,7 +260,7 @@ You should be familiar with <a href="../../what-is-neo4j/graph-database">graph d
 <ul class="sectlevel2">
 <li><a href="#_neo4j_for_clojure_developers">Neo4j for Clojure Developers</a></li>
 <li><a href="#_the_example_project">The Example Project</a></li>
-<li><a href="#__a_href_http_clojureneo4j_info_neocons_a"><a href="http://clojureneo4j.info/">Neocons</a></a></li>
+<li><a href="#_neocons">Neocons</a></li>
 
 </ul>
 
@@ -282,7 +285,7 @@ You should be familiar with <a href="../../what-is-neo4j/graph-database">graph d
 
 
 <div class="paragraph">
-<p>Members of the Clojure community have invested a lot of time and love to develop all these drivers, so please if you use them provide feedback to the authors.</p>
+<p>Members of the Clojure community have invested a lot of time and love to develop all these drivers, so if you use them please provide feedback to the authors.</p>
 </div>
 
 </div>
@@ -313,17 +316,17 @@ The front-end is the same for all drivers, just the backends show you how to con
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h4 id="__a_href_http_clojureneo4j_info_neocons_a"><a href="http://clojureneo4j.info/">Neocons</a></h4>
+<h4 id="_neocons">Neocons</h4>
 
 
 
 <div class="paragraph">
-<p>An idiomatic, feature rich Clojure client which supports (almost) all Neo4J REST API features and is constantly tested against bleeding edge server changes, like the Cypher language improvements.</p>
+<p>An idiomatic, feature-rich Clojure client which supports (almost) all Neo4j REST API features and is constantly tested against bleeding-edge server changes, like the Cypher language improvements.</p>
 </div>
 
 </div>
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
 <h2 id="_sidebar">Sidebar</h2>
 </li>
 <div class="ulist">
@@ -331,13 +334,13 @@ The front-end is the same for all drivers, just the backends show you how to con
 
 <ul>
 <li>
-<a href="https://github.com/michaelklishin/neocons">GitHub</a>
+<a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/clojure/neocons">Example Project with neocons</a>
+</li>
+<li>
+<a href="https://github.com/michaelklishin/neocons">neocons on GitHub</a>
 </li>
 <li>
 Authors: Michael Klishin, Rohit Aggarwal
-</li>
-<li>
-<a href="neocons">Example Project with neocons</a>
 </li>
 <li>
 <a href="http://clojureneo4j.info/">Documentation</a>
@@ -347,15 +350,27 @@ Authors: Michael Klishin, Rohit Aggarwal
 </div>
 <div class="sect3 "  >
     
-<h5 id="__a_href_http_github_com_wagjo_borneo_borneo_a"><a href="http://github.com/wagjo/borneo">Borneo</a></h5>
+<h5 id="_borneo">Borneo</h5>
 
 
 
 <div class="paragraph">
-<p>Author: Jozef Wagner
-Clojure wrapper for Neo4j, a graph database, in embedded JVM mode.</p>
+<p>Clojure wrapper for Neo4j, a graph database, in embedded JVM mode.</p>
 </div>
 
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="http://github.com/wagjo/borneo">Borneo on GitHub</a>
+</li>
+<li>
+Author: Jozef Wagner
+</li>
+</ul>
+
+</div>
 </div>
 </div>
                            </div>

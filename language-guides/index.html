@@ -121,6 +121,9 @@
                </div>
                <article id="content" role="main">
                   <style>
+                    .side-nav li a:not(.button) { 
+                       display:inline;
+	                 }
                     .row { max-width: 62.5rem !important; }
                      .lead
                      {
@@ -238,13 +241,13 @@
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
 You can use Neo4j with a lot of different programming languages. Here we provide an introduction and a consistent example application with several languages and Neo4j drivers.<br>
-This section explains the basic concepts for interacting with Neo4j and explains the sample Movie Application.
+This section explains the basic concepts for interacting with Neo4j and demonstrates the sample Movie Application.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should be familiar with <a href="../../what-is-neo4j/graph-database">graph database concepts</a> and the property graph model. You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="../../cypher-query-language">Cypher Query language</a>. And you should have whatever you need for development with your stack up and running.
+You should be familiar with <a href="/developer/graph-database">graph database concepts</a> and the property graph model. You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="/developer/cypher-query-language">Cypher Query language</a>. And you should have whatever you need for development with your stack up and running.
 </blockquote>
 </div>
 
@@ -266,7 +269,7 @@ You should be familiar with <a href="../../what-is-neo4j/graph-database">graph d
 <li><a href="#_using_neo4j_from_your_programming_language">Using Neo4j from your Programming Language</a>
 <ul class="sectlevel2">
 <li><a href="#_neo4j_for_java_developers">Neo4j for Java Developers</a></li>
-<li><a href="#_neo4j_for_net_developers">Neo4j for .Net Developers</a></li>
+<li><a href="#_neo4j_for_net_developers">Neo4j for .NET Developers</a></li>
 <li><a href="#_neo4j_for_javascript_developers">Neo4j for JavaScript Developers</a></li>
 <li><a href="#_neo4j_for_rubyists">Neo4j for Rubyists</a></li>
 <li><a href="#_neo4j_from_python">Neo4j from Python</a></li>
@@ -290,7 +293,7 @@ You should be familiar with <a href="../../what-is-neo4j/graph-database">graph d
 
 
 <div class="paragraph">
-<p>You probably also wonder how you would connect from your programming language to a Neo4j Database?
+<p>You probably also wonder how you would connect from your programming language to a Neo4j Database.
 If you&#8217;ve installed and started Neo4j as a server on your system, you can interact with the database with the built-in Neo4j browser application.</p>
 </div>
 
@@ -335,7 +338,7 @@ Choose different result formats
 
 
 <div class="paragraph">
-<p>In most cases you don&#8217;t want to connect to Neo4j manually but you a driver or connector library for your stack or programming language.
+<p>In most cases you don&#8217;t want to connect to Neo4j manually but instead use a driver or connector library for your stack or programming language.
 Thanks to the Neo4j community, there are drivers for Neo4j for almost every popular programming language, most of which mimic existing database driver idioms and approaches.</p>
 </div>
 
@@ -397,7 +400,7 @@ graph visualization of the domain
 
 
 <div class="paragraph">
-<p><a href="example-project/">Read More</a></p>
+<p><a href="example-project">Read More</a></p>
 </div>
 
 </div>
@@ -429,10 +432,10 @@ graph visualization of the domain
 
 
 <div class="paragraph">
-<p>Neo4j comes in two flavors.
-The standalone Neo4j-Server can be installed on any machine and then accessed via its HTTP API.
-You can use whatever REST-library you choose for any JVM language.
-The dedicated Neo4j drivers go beyond that by offering comprehensive APIs for integrating with graph based applications.</p>
+<p>There are two ways of using Neo4j from the JVM.
+The standalone Neo4j Server can be installed on any machine and then accessed via its HTTP API.
+You can use any REST library you choose for any JVM language.
+The dedicated Neo4j drivers go beyond that by offering comprehensive APIs for integrating with graph-based applications.</p>
 </div>
 
 
@@ -444,7 +447,7 @@ The dedicated Neo4j drivers go beyond that by offering comprehensive APIs for in
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h4 id="_neo4j_for_net_developers">Neo4j for .Net Developers</h4>
+<h4 id="_neo4j_for_net_developers">Neo4j for .NET Developers</h4>
 
 <div class="imageblock">
 <p class="content">
@@ -454,8 +457,13 @@ The dedicated Neo4j drivers go beyond that by offering comprehensive APIs for in
 
 
 <div class="paragraph">
-<p>Neo4j might be developed in Java, but don&#8217;t assume that you need to use a Java client.
-Powerful .Net drivers like <code>Neo4jClient</code> from Tatham Oddie showed early on, how easy it is to connect to Neo4j from .Net</p>
+<p>The .NET platform allows many developers to create fascinating applications utilizing graph concepts.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Powerful drivers like <code>Neo4jClient</code> from Tatham Oddie showed early on, how easy it is to connect to Neo4j from .NET</p>
 </div>
 
 
@@ -511,15 +519,13 @@ Powerful .Net drivers like <code>Neo4jClient</code> from Tatham Oddie showed ear
 
 
 <div class="paragraph">
-<p>Neo4j might be developed in Java, but don&#8217;t assume that you need to use a Java client.
-We&#8217;ve got a long association with Ruby bindings for Neo4j.</p>
+<p>The Ruby programming language, released publicly in 1995, is a dynamic, object-oriented language. Its friendly syntax, aimed at making developers happy and feeling "natural, not simple," has made it extremely popular, particularly with web startups. It has a very large community, sophisticated but friendly package management system, dozens of powerful web frameworks, and an endless stream of blogs, webcasts, forums, books, and reference material for developers of all skill levels.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>There’s a wide choice of ways to access Neo4j from Ruby: from low-level access to the core Java API with jRuby, to access via our HTTP API, to hooking into Rails ActiveModel.
-The Ruby community has developed all these drivers because of their desire to use Neo4j.</p>
+<p>Ruby, the language with a focus on natural syntax so developers can be happier, is a perfect pairing with Neo4j, the graph database that provides the most natural way to persist data. Much like the Ruby community as a whole, Neo4j&#8217;s Rubyists are active and passionate developers who have created a broad range of mature Neo4j drivers. Whether you&#8217;re looking for low-level access to the core Java API with JRuby, access via our HTTP API, or ActiveModel-complaint models for a framework like Ruby on Rails, there is something for everyone.</p>
 </div>
 
 
@@ -564,21 +570,26 @@ Python drivers were there all from the beginning and a strong and driving force 
 
 <div class="imageblock">
 <p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/php-2.png" alt="php 2">
+<img src="http://i.imgur.com/eTLVfHM.png" alt="eTLVfHM">
 </p>
 </div>
 
 
 <div class="paragraph">
-<p>Neo4j might be developed in Java, but don&#8217;t assume that you need to use a Java client.
-PHP drivers came along quite early and have enabled many interesting use-cases for Neo4j.</p>
+<p>You&#8217;re a PHP developer and want to start with Neo4j?
+You&#8217;re in the right place!</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>There’s a number of of ways to access Neo4j from PHP.
-Drivers for the different PHP stacks enable you to use Neo4j from your familiar environment.</p>
+<p>Whether you&#8217;re using frameworks like Symfony and Laravel or you&#8217;re developing without frameworks, you&#8217;ll find an adequate library for your use case.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>If you have any questions, you can always find a community member around on Twitter or StackOverflow by tagging your subjects with #neo4j-php.</p>
 </div>
 
 
@@ -600,8 +611,7 @@ Drivers for the different PHP stacks enable you to use Neo4j from your familiar 
 
 
 <div class="paragraph">
-<p>Neo4j might be developed in Java, but don&#8217;t assume that you need to use a Java client.
-Go drivers have been around for a while and especially with the excellent <code>cq</code> driver from Wes Freeman it got a lot of traction.</p>
+<p>Go drivers have been around for a while and, especially with the excellent <code>cq</code> driver from Wes Freeman, have gotten a lot of traction.</p>
 </div>
 
 
@@ -645,15 +655,7 @@ Go drivers have been around for a while and especially with the excellent <code>
 
 
 <div class="paragraph">
-<p>Neo4j might be developed in Java, but don&#8217;t assume that you need to use a Java client.
-Perl drivers came along quite early and have enabled many interesting use-cases for Neo4j.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>There’s a number of of ways to access Neo4j from Perl.
-Drivers for the different Perl stacks enable you to use Neo4j from your familiar environment.</p>
+<p>The Perl driver from Mark Jensen was always up to date with the latest Neo4j API developments, and it&#8217;s fun to use too.</p>
 </div>
 
 
@@ -674,13 +676,7 @@ Drivers for the different Perl stacks enable you to use Neo4j from your familiar
 </div>
 <div class="sect3 "  >
     
-<h5 id="__a_href_http_github_com_nicolewhite_rneo4j_rneo4j_a"><a href="http://github.com/nicolewhite/Rneo4j">RNeo4j</a></h5>
-
-
-
-<div class="paragraph">
-<p>Author: Nicole White</p>
-</div>
+<h5 id="_rneo4j">RNeo4j</h5>
 
 
 
@@ -694,6 +690,22 @@ Drivers for the different Perl stacks enable you to use Neo4j from your familiar
 <p>Compatible with Neo4j &gt;= 2.0.</p>
 </div>
 
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="http://github.com/nicolewhite/Rneo4j">Rneo4j on GitHub</a>
+</li>
+<li>
+Author: Nicole White
+</li>
+<li>
+<a href="http://nicolewhite.github.io/">Blog</a>
+</li>
+</ul>
+
+</div>
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
@@ -707,21 +719,28 @@ Drivers for the different Perl stacks enable you to use Neo4j from your familiar
 </div>
 <div class="sect3 "  >
     
-<h5 id="__a_href_http_neo4j_com_contrib_haskell_cypher_haskell_cypher_a"><a href="http://neo4j.com/contrib/haskell-cypher/">Haskell Cypher</a></h5>
+<h5 id="_haskell_cypher">Haskell-Cypher</h5>
 
 
 
 <div class="paragraph">
-<p>Author: Sam Anklesaria</p>
+<p>haskell-Cypher makes it easy to send Cypher commands to Neo4j servers over their REST API.
+Additionally, it allows users to parse Haskell datatypes from Cypher queries.</p>
 </div>
 
+<div class="ulist">
 
 
-<div class="paragraph">
-<p>haskell-cypher makes it easy to send cypher commands to neo4j servers over their REST API.
-Additionally, it allows users to parse haskell datatypes from cypher queries.</p>
+<ul>
+<li>
+<a href="http://neo4j.com/contrib/haskell-cypher/">Haskell-Cypher on GitHub</a>
+</li>
+<li>
+Author: Sam Anklesaria
+</li>
+</ul>
+
 </div>
-
 </div>
 </div>
 </div>

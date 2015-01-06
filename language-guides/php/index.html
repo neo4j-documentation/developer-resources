@@ -121,6 +121,9 @@
                </div>
                <article id="content" role="main">
                   <style>
+                    .side-nav li a:not(.button) { 
+                       display:inline;
+	                 }
                     .row { max-width: 62.5rem !important; }
                      .lead
                      {
@@ -237,15 +240,15 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-If you are a PHP developer, you should find enough information to get you started with Neo4j.
+If you are a PHP developer, this guide provides an overview of options for connecting to Neo4j.
 While this guide is not comprehensive it will introduce the different drivers and link to the relevant resources.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should be familiar with <a href="../../what-is-neo4j/graph-database">graph database concepts</a> and the property graph model.
-You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="../../cypher-query-language">Cypher Query language</a>.
+You should be familiar with <a href="/developer/graph-database">graph database concepts</a> and the property graph model.
+You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="/developer/cypher-query-language">Cypher Query language</a>.
 </blockquote>
 </div>
 
@@ -259,8 +262,17 @@ You should have <a href="/download">installed Neo4j</a> and made yourself famili
 <ul class="sectlevel2">
 <li><a href="#_neo4j_for_php_developers">Neo4j for PHP Developers</a></li>
 <li><a href="#_the_example_project">The Example Project</a></li>
+<li><a href="#_using_neo4j_in_a_standalone_php_environment">Using Neo4j in a standalone PHP environment</a></li>
 <li><a href="#_neo4jphp">Neo4jPHP</a></li>
 
+<li><a href="#_neoclient">NeoClient</a></li>
+<li><a href="#_neo4j_ogm_php">Neo4j-OGM-PHP</a></li>
+<li><a href="#_you_use_the_symfony_framework">You use the Symfony framework</a></li>
+<li><a href="#_neo4jogmbundle">Neo4jOGMBundle</a></li>
+<li><a href="#_you_use_the_laravel_framework">You use the Laravel framework</a></li>
+<li><a href="#_applications_built_with_php_and_neo4j">Applications built with PHP and Neo4j</a></li>
+<li><a href="#_omnomhub">Omnomhub</a></li>
+<li><a href="#_thesaurus_manager">Thesaurus Manager</a></li>
 <li><a href="#_other_drivers">Other Drivers</a></li>
 </ul>
 
@@ -273,21 +285,26 @@ You should have <a href="/download">installed Neo4j</a> and made yourself famili
 
 <div class="imageblock">
 <p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/php-2.png" alt="php 2">
+<img src="http://i.imgur.com/eTLVfHM.png" alt="eTLVfHM">
 </p>
 </div>
 
 
 <div class="paragraph">
-<p>Neo4j might be developed in Java, but don&#8217;t assume that you need to use a Java client.
-PHP drivers came along quite early and have enabled many interesting use-cases for Neo4j.</p>
+<p>You&#8217;re a PHP developer and want to start with Neo4j?
+You&#8217;re in the right place!</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>There’s a number of of ways to access Neo4j from PHP.
-Drivers for the different PHP stacks enable you to use Neo4j from your familiar environment.</p>
+<p>Whether you&#8217;re using frameworks like Symfony and Laravel or you&#8217;re developing without frameworks, you&#8217;ll find an adequate library for your use case.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>If you have any questions, you can always find a community member around on Twitter or StackOverflow by tagging your subjects with #neo4j-php.</p>
 </div>
 
 
@@ -324,17 +341,28 @@ The front-end is the same for all drivers, just the backends show you how to con
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
+<h4 id="_using_neo4j_in_a_standalone_php_environment">Using Neo4j in a standalone PHP environment</h4>
+
+
+
+<div class="paragraph">
+<p>If you prefer to develop without frameworks, these libraries are made for you:</p>
+</div>
+
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
 <h4 id="_neo4jphp">Neo4jPHP</h4>
 
 
 
 <div class="paragraph">
-<p>Neo4jPHP provides an API that is both intuitive and flexible, and it takes advantage of ‘under-the -hood’ performance enhancements, such as caching and lazy-loading.</p>
+<p>Neo4jPHP provides an API that is both intuitive and flexible, and it takes advantage of ‘under-the-hood’ performance enhancements, such as caching and lazy-loading.</p>
 </div>
 
 </div>
 <div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
+    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
 <h2 id="_sidebar">Sidebar</h2>
 </li>
 <div class="ulist">
@@ -342,10 +370,13 @@ The front-end is the same for all drivers, just the backends show you how to con
 
 <ul>
 <li>
-Author: <a href="http://twitter.com/josh_adell">Josh Adell</a>
+<a href="neo4jphp">Example Project with Neo4jPHP</a>
 </li>
 <li>
-<a href="neo4jphp">Example Project with Neo4jPHP</a>
+<a href="http://github.com/jadell/neo4jphp">Neo4jPHP on GitHub</a>
+</li>
+<li>
+Author: <a href="http://twitter.com/josh_adell">Josh Adell</a>
 </li>
 <li>
 <a href="http://github.com/jadell/neo4jphp/wiki/Introduction">GitHub</a>
@@ -353,86 +384,118 @@ Author: <a href="http://twitter.com/josh_adell">Josh Adell</a>
 </ul>
 
 </div>
-<div class="sect3 "  >
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h5 id="_neoclient">NeoClient</h5>
+<h4 id="_neoclient">NeoClient</h4>
 
 
 
 <div class="paragraph">
-<p>An actively developed PHP HttpClient for the Neo4j REST and Cypher API with Multi DB Support.</p>
+<p>NeoClient is a powerful and flexible PHP Client for Neo4j with MultiDB support and full High-Availibilty support for Neo4j Enterprise and a convenient object formatter for handling graph results.
+It is built on top of the Symfony components, which makes integrating it in a modern PHP framework very easy.
+The 2.0 stable release has been announced end of November 14, with the following changes and improvements:</p>
 </div>
 
 <div class="ulist">
 
 
 <ul>
+<li>
+Everything is built as an extension, meaning the core commands are an extension to the library, which makes the library very flexible and customizable.
+</li>
+<li>
+All commands are registered as lazy services, improving the library performance.
+</li>
+<li>
+The Service Container can be cached, gaining up to 300% performance when runnning in production.
+</li>
+<li>
+Full High-Availibilty support, with master re-election detection, slaves fallback built-in mechanism, and convenience methods for directing write and read queries to different databases.
+</li>
+<li>
+Minimalistic HA mechanism when running Neo4j Community Edition
+</li>
+<li>
+Full-bledged Response Graph format.
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="neoclient">Example Project with NeoClient</a>
+</li>
+<li>
+<a href="https://github.com/neoxygen/neo4j-neoclient">NeoClient GitHub</a>
+</li>
 <li>
 Author: <a href="http://twitter.com/ikwattro">Christophe Willemsen</a>
 </li>
 <li>
-<a href="https://github.com/neoxygen/neo4j-neoclient">GitHub</a>
+<a href="http://neoxygen.io">Neo4j PHP Components and libraries</a>
 </li>
 <li>
-<a href="neoclient">Example Project with NeoClient</a>
+<a href="http://graphgen.neoxygen.io">Graph Generator using NeoClient</a>
 </li>
 </ul>
 
 </div>
+</li>
+</ul>
+
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
-<h4 id="_other_drivers">Other Drivers</h4>
-
-<div class="sect3 "  >
-    
-<h5 id="_neo4j_pdo">neo4j-pdo</h5>
+<h4 id="_neo4j_ogm_php">Neo4j-OGM-PHP</h4>
 
 
 
 <div class="paragraph">
-<p>This is a PHP Data Objects driver for the Neo4j graph database, it allows you to connect to a Neo4j server from PHP using the standard PDO API. The project currently only implements a “vanilla” PHP implementation, which means you need to use a special constructor to create your PDO connection. PHP extensions to register the driver with PDO in HHVM and Zend VM are planned future wor</p>
+<p>This library provides a basic Object-Graph mapping system and is built on top of Doctrine and the Neo4jPHP library.</p>
 </div>
-
-<div class="ulist">
-
-
-<ul>
-<li>
-Author: <a href="http://twitter.com/jakewins">Jacob Hansson</a>
-</li>
-<li>
-<a href="http://github.com/jakewins/neo4j-pdo">GitHub</a>
-</li>
-</ul>
-
-</div>
-</div>
-<div class="sect3 "  >
-    
-<h5 id="_php_cypher">PHP Cypher</h5>
 
 
 
 <div class="paragraph">
-<p>A PHP adapter for Neo4j ReST API cypher endpoint. PHP Cypher aims to take the pain out of sending cypher query to Neo4j server. I believe that cypher will be a major part of Neo4j in near future. In short, this library focus solely on sending query to Neo4j database. For those looking for adapter on all the Neo4j ReST API can try this great library.</p>
+<p><a href="https://github.com/lphuberdeau/Neo4j-PHP-OGM">https://github.com/lphuberdeau/Neo4j-PHP-OGM</a></p>
 </div>
 
-<div class="ulist">
+<hr>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_you_use_the_symfony_framework">You use the Symfony framework</h4>
 
 
-<ul>
-<li>
-Author: <a href="https://github.com/endyjasmi">Endy Jasmi</a>
-</li>
-<li>
-<a href="http://github.com/endyjasmi/cypher">GitHub</a>
-</li>
-</ul>
+
+<div class="paragraph">
+<p>If you&#8217;re using the Symfony framework, these bundles are available to you:</p>
+</div>
 
 </div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_neo4jogmbundle">Neo4jOGMBundle</h4>
+
+
+
+<div class="paragraph">
+<p>This bundle is wraps the Neo4j-PHP-OGM library mentioned above.</p>
 </div>
+
+
+
+<div class="paragraph">
+<p><a href="https://github.com/klaussilveira/neo4j-ogm-bundle">https://github.com/klaussilveira/neo4j-ogm-bundle</a></p>
+</div>
+
+<hr>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_you_use_the_laravel_framework">You use the Laravel framework</h4>
+
 <div class="sect3 "  >
     
 <h5 id="_neoeloquent">NeoEloquent</h5>
@@ -448,7 +511,10 @@ Author: <a href="https://github.com/endyjasmi">Endy Jasmi</a>
 
 <ul>
 <li>
-<a href="https://github.com/Vinelab/NeoEloquent">GitHub</a>
+Author: <a href="https://github.com/Mulkave">Abed Alawi</a>
+</li>
+<li>
+link: <a href="https://github.com/Vinelab/NeoEloquent">NeoEloquent on GitHub</a>
 </li>
 </ul>
 
@@ -461,12 +527,6 @@ Author: <a href="https://github.com/endyjasmi">Endy Jasmi</a>
 
 
 <div class="paragraph">
-<p>Author: <a href="https://github.com/lrezek">Lukas Rezek</a></p>
-</div>
-
-
-
-<div class="paragraph">
 <p>A Neo4j Laravel 4.1 OGM Provider.</p>
 </div>
 
@@ -475,7 +535,128 @@ Author: <a href="https://github.com/endyjasmi">Endy Jasmi</a>
 
 <ul>
 <li>
-<a href="https://github.com/lrezek/Neo4Laravel">GitHub</a>
+Author: <a href="https://github.com/lrezek">Lukas Rezek</a>
+</li>
+<li>
+<a href="https://github.com/lrezek/Neo4Laravel">Neo4Laravel on GitHub</a>
+</li>
+</ul>
+
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_applications_built_with_php_and_neo4j">Applications built with PHP and Neo4j</h4>
+
+
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_omnomhub">Omnomhub</h4>
+
+
+
+<div class="paragraph">
+<p>Like for Github, but for recipes!</p>
+</div>
+
+<div class="ulist">
+
+
+<ul>
+<li>
+Author: <a href="https://twitter.com/michellesanver">Michelle Sanver</a>
+</li>
+</ul>
+
+</div>
+
+
+<div class="paragraph">
+<p><a href="https://github.com/Omnomhub/omnomhub">https://github.com/Omnomhub/omnomhub</a></p>
+</div>
+
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_thesaurus_manager">Thesaurus Manager</h4>
+
+
+
+<div class="paragraph">
+<p>If you want to built your own thesaurus, this app is made for you</p>
+</div>
+
+<div class="ulist">
+
+
+<ul>
+<li>
+Author: <a href="https://github.com/hasantayyar">Hasan Tayyar</a>
+</li>
+<li>
+link: <a href="http://okulbilisim.github.io/thesaurus-manager/">http://okulbilisim.github.io/thesaurus-manager/</a>
+</li>
+</ul>
+
+</div>
+<hr>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_other_drivers">Other Drivers</h4>
+
+<div class="sect3 "  >
+    
+<h5 id="_neo4j_pdo">neo4j-pdo</h5>
+
+
+
+<div class="paragraph">
+<p>This is a PHP Data Objects driver for the Neo4j graph database, it allows you to connect to a Neo4j server from PHP using the standard PDO API.
+The project currently only implements a “vanilla” PHP implementation, which means you need to use a special constructor to create your PDO connection.
+PHP extensions to register the driver with PDO in HHVM and Zend VM are planned future work.</p>
+</div>
+
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="http://github.com/jakewins/neo4j-pdo">neo4j-pdo on GitHub</a>
+</li>
+<li>
+Author: <a href="http://twitter.com/jakewins">Jacob Hansson</a>
+</li>
+</ul>
+
+</div>
+</div>
+<div class="sect3 "  >
+    
+<h5 id="_php_cypher">PHP Cypher</h5>
+
+
+
+<div class="paragraph">
+<p>A PHP adapter for Neo4j ReST API cypher endpoint.
+PHP Cypher aims to take the pain out of sending Cypher query to Neo4j server.
+I believe that Cypher will be a major part of Neo4j in near future.
+In short, this library focus solely on sending query to Neo4j database.
+Those looking for adapter on all the Neo4j ReST API can try this great library.</p>
+</div>
+
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="http://github.com/endyjasmi/cypher">PHP Cypher on GitHub</a>
+</li>
+<li>
+Author: <a href="https://github.com/endyjasmi">Endy Jasmi</a>
 </li>
 </ul>
 
