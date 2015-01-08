@@ -44,7 +44,7 @@ You can use Cypher as well to update the graph structure and data and even inges
 
 The full Cypher language documentation is available in the link:/docs/stable/cypher-query-lang.html[Neo4j Manual] together with a complete link:/docs/stable/cypher-refcard/[Reference Card].
 
-=== Data Model Comparison
+=== Data Model Transformation
 
 Relational databases store data in tables with fixed structure (schema), each column having a name, type, length, constraints etc.
 References between tables are represented by repeating the primary key of one table as column in another (foreign key).
@@ -54,12 +54,12 @@ A well normalized relational model, which was not yet denormalized for performan
 Graph model shapes are mostly driven by use-cases, so there will be opportunity for optimization and model evolution afterwards.
 
 A good, normalized Entity-Relationship diagram often already represents a decent graph model. 
-So if you still have the orignal ER diagram available, try to use it as a guide.
+So if you still have the original ER diagram available, try to use it as a guide.
 
 Here are some tips that help you with the transformation:
 
 - Each entity table is represented by a label on nodes
-- Each row in a table is a node
+- Each row in a entity table is a node
 - Columns on those tables become node properties.
 - Remove technical primary keys, keep business primary keys
 - Add unique constraints for business primary keys, add indexes for frequent lookup attributes
@@ -121,6 +121,8 @@ The intent of this guide is to introduce Cypher by comparing it with the equival
 
 ==== Find all Products
 
+_Select and Return Records_
+
 Easy in SQL, just select everything from the `products` table.
 
 [source,plsql]
@@ -140,6 +142,8 @@ RETURN p;
 ----
 
 //table
+
+_Field Access, Ordering and Paging_
 
 *More efficient is to return only a subset of attributes*, like `ProductName` and `UnitPrice`.
 And while we're on it, let's also order by price and only return the 10 most expensive items.
@@ -168,6 +172,8 @@ LIMIT 10;
 // table
 
 ==== Find single Product by Name
+
+_Filter by Equality_
 
 If we only want to look at a single Product, for instance delicious _Chocolade_, we filter in SQL with a `WHERE` clause.
 
@@ -199,6 +205,8 @@ MATCH (p:Product {productName:"Chocolade"})
 RETURN p.productName, p.unitPrice;
 ----
 
+_Idexing_
+
 // table
 
 If you want to match quickly by this node-label and attribute combination, it makes sense to create an index for that pair, if you haven't during the link:/developer/working-with-data/guide-importing-data-and-etl[import].
@@ -209,6 +217,8 @@ CREATE INDEX ON :Product(productName);
 ----
 
 ==== Filter Products
+
+_Filter by List/Range_
 
 You can also filter by multiple values.
 
@@ -241,6 +251,8 @@ WHERE ANY(name IN ['Chocolade','Chai'] WHERE p.productName = name)
 RETURN p.productName, p.unitPrice;
 ----
 
+_Filter by Multiple Numeric and Textual Predicates_
+
 Filtering can go further, let's try to find some expensive things starting with "C".
 
 [source,plsql]
@@ -264,6 +276,8 @@ RETURN p.productName, p.unitPrice;
 // table
 
 ==== Joining Products with Customers
+
+_Join Records, Distinct Results_
 
 We want to see who bought Chocolade.
 Let's join the four tables together, refer to the model (ER-diagram) when you're unsure.
@@ -291,6 +305,8 @@ RETURN distinct c.companyName;
 // table
 
 ==== New Customers without Orders yet
+
+_Outer Joins, Aggregation_
 
 If we turn the question around and ask "What have I bought and paid in total?", the JOIN stays the same, only the filter expression changes.
 Except if we have customers without any orders and still want to return them.
@@ -322,7 +338,9 @@ ORDER BY volume DESC;
 
 // table
 
-==== Aggregation of Top-Sellers
+==== Top-Selling Employees
+
+_Aggregation, Grouping_
 
 In the previous query we already sneaked in a bit of aggregation.
 By summing up product prices and ordered quantities, we provided an aggregated view per product for this customer.
@@ -354,7 +372,9 @@ ORDER BY cnt DESC LIMIT 10
 
 //table
 
-==== Collecting Master-Detail Queries
+==== Employee Territories
+
+_Collecting Master-Detail Queries_
 
 In SQL there is one dreaded kind of query - master detail information.
 You have one main entity (master, head, parent) and many dependent ones (detail, position, child).
@@ -385,7 +405,9 @@ RETURN t.description, collect(e.lastName);
 
 //table
 
-==== Product Categories - Hierarchies and Trees
+==== Product Categories
+
+_Hierarchies and Trees, Variable Length Joins_
 
 If you have to express category-, territory- or organizational hierarchies in SQL then you model it usually with a self-join via a foreign key from child to parent.
 Adding data is not problematic, as are single level queries (get all children for this parent).
