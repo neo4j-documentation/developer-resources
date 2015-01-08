@@ -41,7 +41,7 @@ WITH line
 WHERE line.job = "ACTED_IN"
 MERGE (m:Movie {title:line.title}) ON CREATE SET m.released = toInt(line.released), m.tagline = line.tagline
 MERGE (p:Person {name:line.name}) ON CREATE SET p.born = toInt(line.born)
-MERGE (p)-[:ACTED_IN {roles:split(line.roles,";")}]->(m);
+MERGE (p)-[:ACTED_IN {roles:split(line.roles,";")}]->(m)
 RETURN count(*);
 ----
 
