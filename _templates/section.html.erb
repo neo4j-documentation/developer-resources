@@ -4,48 +4,25 @@ anchor = link_start = link_end = nil
 if @id
   if @document.attr? :sectanchors
     anchor = %(<a class="anchor" href="##{@id}"></a>)
-  elsif @document.attr? :sectlinks && role != "side-nav"
+  elsif @document.attr? :sectlinks
     link_start = %(<a class="link" href="##{@id}">)
     link_end = '</a>'
   end
 end
-if slevel == 0
+if slevel.zero?
   %><h1<%= @id && %( id="#{@id}") %> class="sect0"><%= %(#{anchor}#{link_start}#{title}#{link_end}) %></h1>
 <div class="title"><%= title %></div>
 <%= content %><%
 else
   snum = @numbered && @caption.nil? && slevel <= (@document.attr 'sectnumlevels', 3).to_i ? %(#{sectnum} ) : nil
-  is_side_nav = captioned_title == 'Sidebar' || role == 'side-nav'
-
   hlevel = slevel == 1 ? 3 : slevel + 1
-  hlevel = slevel == 2 && !is_side_nav ? 4 : hlevel
-  hlevel = slevel == 3 && !is_side_nav ? 5 : hlevel
-  hlevel = hlevel == 3 && is_side_nav ? 2 : hlevel
+  cols = slevel == 2 ? "columns medium-12" : ""
+  marginFix = slevel == 2 ? "style='padding-left: 0;'" : ""
 
-  cols = ""
-  colOpen = ""
-  colClose = ""
-  colOpenClose = ""
-  marginFix = ""
-  if slevel == 2
-    cols = "columns medium-" + (is_side_nav ? "12" : "12")
-# <div style="clear: right; float: right; margin: 6px 0px 0px 30px; width: 5em; padding: 1em; min-width: 16em; border: 1px solid rgb(222, 222, 222);">
-#    colOpen = (is_side_nav ? "<ul class='side-nav code-panel' style='clear: both; float: right; margin: 6px 0px 0px 30px; max-width: 20em; padding: 1em; min-width: 16em; border: 1px solid rgb(222, 222, 222);height:auto;'><li>" : "")
-    colOpen = (is_side_nav ? "<ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>" : "")
-    colOpenClose = (is_side_nav ? "</li>" : "")
-    colClose = (is_side_nav ? "</ul>" : "")
-    marginFix = "style='padding-left: 0;'"
-  end
   %><div class="<%= [%(sect#{slevel}),role].compact * ' ' %> <%= cols %>" <%= marginFix %> >
-    <%= colOpen %>
-<h<%= hlevel %><%= @id && %( id="#{@id}") %>><%= %(#{anchor}#{link_start}#{snum}#{captioned_title}#{link_end}) %></h<%= hlevel %>>
-<%= colOpenClose %><%
+<h<%= hlevel %><%= @id && %( id="#{@id}") %>><%= %(#{anchor}#{link_start}#{snum}#{captioned_title}#{link_end}) %></h<%= hlevel %>><%
   if slevel == 1 %>
-<div class="sectionbody row">
-<div class="columns medium-12">
 <%= content %>
-</div>
-</div>
 <%
   else %>
 <%= content %><%

@@ -17,22 +17,9 @@ end %><div<%= @id && %( id="#{@id}") %> class="<%= ['ulist',checklist,@style,rol
 if title? %>
 <div class="title"><%= title %></div><%
 end %>
-<%
-colOpen = ""
-colClose = ""
-listStyleNone = ""
-ulMarginNone = ""
-
-   colOpen = (captioned_title == 'Sidebar' || role == 'side-nav' ? "<ul class='side-nav'><li>Sidebar</li>" : "")
-   colClose = (captioned_title == 'Sidebar' || role == 'side-nav' ? "</ul>" : "")
-   listStyleNone = (role == "recommended" ? " style='list-style: none outside none;'" : "")
-   ulMarginNone = (role == "recommended" ? " style='margin-left: 0;'" : "")
-
-%>
-<%= colOpen %>
-<ul<%=ulMarginNone%><%= (style_class = checklist || @style) ? %( class="#{style_class}") : nil %>><%
+<ul<%= (style_class = checklist || @style) ? %( class="#{style_class}") : nil %>><%
 items.each do |item| %>
-<li<%= listStyleNone %>>
+<li>
 <%
   if checklist && (item.attr? :checkbox) %><%= %(#{(item.attr? :checked) ? marker_checked : marker_unchecked} #{item.text}) %><%
   else %><%= item.text %><%
@@ -43,5 +30,4 @@ items.each do |item| %>
 </li><%
 end %>
 </ul>
-<%= colClose %>
 </div>
