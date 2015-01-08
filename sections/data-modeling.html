@@ -1,0 +1,189 @@
+<style> .lead { display: none; } section.row { padding: 0; } #content section.row { max-width: 1024px; padding-left: .5em; padding-right: .5em; } .row { } #content section.row .accordion-navigation > a { padding: 0 !important; } .accordion .content { padding: 0; } .row .row { margin: auto; } .columns.medium-12 { padding-left: 0; } .fa-stack.fa-lg { color: #0f5788; display: block; float: left; height: 70px; margin-right: 1em; padding-right: 2em; width: 50px; } h3 { font-weight: normal; } strong, b { font-weight:600; font-color:#333; } .calloutsection { padding: 20px 0; } section { padding: 40px 0 0 0; } .marquee { height: auto; margin-top: 1em; } #main-content .entry-title { display: none; } #main-content .subheader { display: none; } .marquee h1, .marquee h2 { padding-top: 0; } #main-content .next-steps h5 { font-size: 12px; } #main-content .next-steps h3 { margin-bottom: 1em; } #main-content .content.active { display: block; } #main-content .content { display: none; } #main-content { padding-top: 0; } .use-case .tab-container .content.active { border-top: 1px solid rgba(15, 87, 136, 0.7); padding: 2em 1em 1em; } .tabs dd > a:hover { color: #3d5360; } .breadcrumbs > * a, .breadcrumbs > * span { color: #0f5788; text-transform: none; } .breadcrumbs > * { text-transform: none; } .top-bar { height: 80px; } #main-content .top-bar-section ul { margin-top: 1em; } .panel-pod p { font-size: 14px; font-weight: normal; line-height: 26px; } .panel-pod > a { display: block; margin-bottom: 1em; } .panel-pod p a { display: block; margin-top: 1em; } .panel-pod { text-align: left; } .tab-container { margin-bottom: 2em; } .panel-pod img { display: block; margin: auto; } #content h3 { font-weight: 100; color: #0f5788; } #content ul { margin-left: 0; list-style: none; }
+   #content .guide-section-content .large-12.columns > ul {
+   list-style: circle outside none !important;
+   margin-left: 1em !important;
+   }
+   .breadcrumbs>*:before {
+   content: "→";
+   color: #aaa;
+   margin: 0 0.75rem;
+   position: relative;
+   top: 0;
+   }
+   #content section.row .accordion-navigation > a {
+   background: url("http://developer.android.com/assets/images/styles/disclosure_down.png") no-repeat scroll 100% 50% transparent;
+   border-bottom: 1px dashed #ddd;
+   padding: 0 !important;
+   }
+   .accordion-navigation.active > a {
+   background: url("http://developer.android.com/assets/images/styles/disclosure_up.png") no-repeat scroll 100% 50% transparent !important;
+   }
+   .accordion-navigation h5 {
+   font-weight: 100;
+   height: 2em;
+   line-height: 2em;
+   margin: 0;
+   }
+   .content ul {
+   margin-top: 1em;
+   }
+img.icon {
+    height: 1.4em;
+    margin-right: 0.25em;
+    width: auto;
+}
+.accordion ul {
+    list-style: circle outside none !important;
+    margin-left: 1.5em !important;
+}
+.accordion h5 {
+    color: #0f5788;
+    padding-left: .5em;
+}
+
+.accordion .active h5
+{
+   background: url("http://developer.android.com/assets/images/styles/disclosure_up.png") no-repeat scroll 100% 50% #f9f9f9 !important;
+   color: #555;
+   font-weight: 300;
+}
+</style>
+<div>
+   <div class="row" style="padding-left: 0; padding-right: 0;">
+      <div class="large-9 large-push-3 columns guide-section-content">
+         <div style="padding-bottom: 1em;" class="row">
+            <div class="columns large-12">
+               <h1><img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/10/icon-example-graph.png" class="icon">Data Modeling</h1>
+               <hr>
+               <p>These guides and tutorials are designed to provide you with the confidence to build graph-based applications with rich data models. The focus of this section is to provide you the necessary best practices and guidelines to help you model your domain as a graph.</p>
+               <p>Topics include:</p>
+<ul>
+<li>Data Modeling Guidelines</li>
+<li>Translating a RDBMS Schema to Graph</li>
+<li>Optimizing Data Models for Performance</li>
+<li>Optimizing Data Models for Queryability</li>
+</ul>
+            </div>
+         </div>
+         <div style="padding-bottom: 1em" class="row">
+            <div class="large-12 columns">
+               <a href="developer/guide-data-modeling/">
+                  <h3><span style="top: -3px; margin-right: 5px" class="label">Guide →</span>Intro to Data Modeling</h3>
+               </a>
+               <hr>
+<p>
+This guide is designed to walk you through the graph data modeling lifecycle of Neo4j. You will be introduced to the basic process of designing a graph data model that can answer a wide range of business questions across a variety of domains.
+</p>
+               <h5>From the Neo4j Manual:</h5>
+               <ul>
+                  <li><a href="http://docs.neo4j.org/chunked/stable/data-modeling-examples.html">Data Modeling Examples</a></li>
+               </ul>
+            </div>
+         </div>
+         </div>
+      <div class="large-3 large-pull-9 columns">
+         <ul class="side-nav" style="padding-top: 0;">
+            <ul>
+               <dl class="accordion">
+                  <dd class="accordion-navigation inactive">
+                     <a href="/developer/get-started">
+                        <h5>Get Started</h5>
+                     </a>
+                     <div id="panel1" class="content inactive">
+                        <ul>
+                           <li><a href="developer/what-is-a-graph-database">What is a GraphDB?</a></li>
+                           <li><a href="developer/graph-databases-versus-relational-databases">GraphDB vs RDBMS</a></li>
+                           <li><a href="developer/graph-database-vs-other-nosql-databases/">GraphDB vs NOSQL</a></li>
+                        </ul>
+                     </div>
+                  </dd>
+               </dl>
+               <ul>
+                  <dl class="accordion">
+                     <dd class="accordion-navigation inactive">
+                        <a href="/developer/cypher">
+                           <h5>Cypher</h5>
+                        </a>
+                        <div id="panel2" class="content inactive">
+                           <ul>
+                              <li><a href="developer/guide-to-cypher-basics">Cypher Basics</a></li>
+                              <li><a href="developer/building-a-recommendation-engine-with-cypher-in-two-minutes">Build a Recommendation Engine</a></li>
+                              <li><a target="_blank" href="http://docs.neo4j.org/refcard/2.1.5">Cypher Refcard</a></li>
+                           </ul>
+                        </div>
+                     </dd>
+                  </dl>
+<dl class="accordion">
+                     <dd class="accordion-navigation active">
+                        <a href="../data-modeling">
+                           <h5>Data Modeling</h5>
+                        </a>
+                        <div id="panel5" class="content active">
+                           <ul>
+                              <li><a href="developer/guide-data-modeling/">Intro to Data Modeling</a></li>
+                           </ul>
+                        </div>
+                     </dd>
+                  </dl>
+                  <dl class="accordion">
+                     <dd class="accordion-navigation inactive">
+                        <a href="developer/working-with-data">
+                           <h5>Working with Data</h5>
+                        </a>
+                        <div id="panel3" class="content inactive">
+                           <ul>
+                              <li><a href="developer/styling-graph-visualizations-neo4j-browser/">Neo4j Browser Visualization</a></li>
+                              <li><a href="developer/importing-data-into-neo4j/">Importing Data into Neo4j</a></li>
+                              <li><a href="developer/graph-visualization-for-neo4j/">Graph Visualization for Neo4j</a></li>
+                           </ul>
+                        </div>
+                     </dd>
+                  </dl>
+                  <dl class="accordion">
+                     <dd class="accordion-navigation inactive">
+                        <a href="../language-guides">
+                           <h5>Language Guides</h5>
+                        </a>
+                        <div id="panel4" class="content inactive">
+                           <ul>
+                              <li><a href="developer/neo4j-java-examples">Java</a></li>
+                              <li><a href="/contrib">All Neo4j Drivers</a></li>
+                           </ul>
+                        </div>
+                     </dd>
+                  </dl>
+
+                  <dl class="accordion">
+                     <dd class="accordion-navigation inactive">
+                        <a href="../ecosystem">
+                           <h5>Ecosystem</h5>
+                        </a>
+                        <div id="panel6" class="content inactive">
+                           <ul>
+                              <li><a href="http://docs.neo4j.org/chunked/stable">Documentation</a></li>
+                              <li><a href="http://stackoverflow.com/questions/tagged/neo4j">Ask Questions / Stackoverflow </a></li>
+                           </ul>
+                        </div>
+                     </dd>
+                  </dl>
+                  <dl class="accordion">
+                     <dd class="accordion-navigation inactive">
+                        <a href="/developer/in-production">
+                           <h5>Neo4j In Production</h5>
+                        </a>
+                        <div id="panel7" class="content inactive">
+                           <ul>
+                              <li><a href="developer/sizing-hardware-calculator">Sizing + Hardware Calculator</a></li>
+                              <li><a href="developer/neo4j-performance-tuning">Performance Tuning</a></li>
+                              <li><a href="developer/how-to-set-up-a-neo4j-cluster">Clustering Neo4j </a></li>
+                           </ul>
+                        </div>
+                     </dd>
+                  </dl>
+               </ul>
+<div class="accordion-navigation"> <h5>Reference &amp; Manuals</h5> <ul> <ul> <li><a href="http://docs.neo4j.org/chunked/stable" target="_blank">Neo4j 2.1.x</a></li> <li><a href="http://docs.neo4j.org/chunked/2.0.4" target="_blank">Neo4j 2.0.x</a></li> </ul> </ul> <ul> <ul> <li><a href="http://docs.neo4j.org/chunked/1.9.8" target="_blank">Neo4j 1.9.x</a></li> </ul> </ul> </div>
+            </ul>
+         </ul>
+      </div>
+   </div>
+</div>
