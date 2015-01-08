@@ -7,41 +7,9 @@
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
          <title>Guide to Cypher Basics | Developer Resources | Neo4j Graph Database</title>
-         <script type="text/javascript">
-            var _kmq = _kmq || [];
-            var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
-            function _kms(u){
-                setTimeout(function(){
-                    var d = document, f = d.getElementsByTagName('script')[0],
-                        s = d.createElement('script');
-                    s.type = 'text/javascript'; s.async = true; s.src = u;
-                    f.parentNode.insertBefore(s, f);
-                }, 1);
-            }
-            _kms('//i.kissmetrics.com/i.js');
-            _kms('//doug1izaerwt3.cloudfront.net/' + _kmk + '.1.js');
-         </script> <script type="text/javascript">
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-            //Allow Linker
-            ga('create', 'UA-1192232-34','auto', {'allowLinker': true});
-            ga('send', 'pageview');
-
-            // Load the plugin.
-            ga('require', 'linker');
-
-            // Define which domains to autoLink.
-            ga('linker:autoLink', ['neo4j.org','neo4j.com','neotechnology.com','graphdatabases.com','graphconnect.com']);
-         </script>
          <link rel="canonical" href="http://neo4j.com/guides/basic-data-modeling/"/>
          <meta property="og:locale" content="en_US"/>
          <meta property="og:type" content="article"/>
-         <meta property="og:title" content="Basic Data Modeling - Neo4j Graph Database"/>
-         <meta property="og:description" content="Please refer to the Neo4j Manual"/>
-         <meta property="og:url" content="http://neo4j.com/guides/basic-data-modeling/"/>
          <meta property="og:site_name" content="Neo4j Graph Database"/>
          <link rel="alternate" type="application/rss+xml" title="Neo4j Graph Database &raquo; Feed" href="http://neo4j.com/feed/"/>
          <link rel="alternate" type="application/rss+xml" title="Neo4j Graph Database &raquo; Comments Feed" href="http://neo4j.com/comments/feed/"/>
@@ -151,6 +119,9 @@
                      {
                      padding-left: 0;
                      }
+                     div.side-nav {
+                        clear: right; float: right; margin-bottom: 1em; margin-top: 1em; width: 5em; padding: 1em; min-width: 16em; border: 1px solid rgb(222, 222, 222); height:auto;
+                     }
                   </style>
                   <style> .lead { display: none; } section.row { padding: 0; } #content section.row { max-width: 62.5rem; padding-left: .5em; padding-right: .5em; } .row { max-width: 80em; } #content section.row .accordion-navigation > a { padding: 0 !important; } .accordion .content { padding: 0; } .row .row { margin: auto; } .columns.medium-12 { padding-left: 0; } .fa-stack.fa-lg { color: #0f5788; display: block; float: left; height: 70px; margin-right: 1em; padding-right: 2em; width: 50px; } h3 { font-weight: normal; } strong, b { font-weight:600; font-color:#333; } .calloutsection { padding: 20px 0; } section { padding: 40px 0 0 0; } .marquee { height: auto; margin-top: 1em; } #main-content .entry-title { display: none; } #main-content .subheader { display: none; } .marquee h1, .marquee h2 { padding-top: 0; } #main-content .next-steps h5 { font-size: 12px; } #main-content .next-steps h3 { margin-bottom: 1em; } #main-content .content.active { display: block; } #main-content .content { display: none; } #main-content { padding-top: 0; } .use-case .tab-container .content.active { border-top: 1px solid rgba(15, 87, 136, 0.7); padding: 2em 1em 1em; } .tabs dd > a:hover { color: #3d5360; } .breadcrumbs > * a, .breadcrumbs > * span { color: #0f5788; text-transform: none; } .breadcrumbs > * { text-transform: none; } .top-bar { height: 80px; } #main-content .top-bar-section ul { margin-top: 1em; } .panel-pod p { font-size: 14px; font-weight: normal; line-height: 26px; } .panel-pod > a { display: block; margin-bottom: 1em; } .panel-pod p a { display: block; margin-top: 1em; } .panel-pod { text-align: left; } .tab-container { margin-bottom: 2em; } .panel-pod img { display: block; margin: auto; } #content h3 { font-weight: 100; } #content ul {}
                   #content section.row .accordion-navigation > a {
@@ -235,7 +206,7 @@
                      <section class="row" style="padding:10px 0;">
                         <div class="large-12 columns" style="padding-top:0;">
                            <div id="content">
-                              <div id="preamble">
+                              <div id="preamble columns medium-12">
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
@@ -265,16 +236,14 @@ This is a guide for Beginners. You should have familiarized yourself with <a hre
 <li><a href="#_query">Query</a></li>
 <li><a href="#_solve">Solve</a></li>
 <li><a href="#_clean_up">Clean Up</a></li>
-
 </ul>
 
+</div>
 <hr>
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_pop_cultural_connections">Pop-Cultural Connections</h4>
-
+<h3 id="_pop_cultural_connections">Pop-Cultural Connections</h3>
 
 
 <div class="paragraph">
@@ -305,9 +274,7 @@ This is a guide for Beginners. You should have familiarized yourself with <a hre
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_create">Create</h4>
-
+<h3 id="_create">Create</h3>
 
 
 <div class="paragraph">
@@ -329,9 +296,7 @@ This will create the movie graph.</p>
 
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_find">Find</h4>
-
+<h3 id="_find">Find</h3>
 
 
 <div class="paragraph">
@@ -361,9 +326,7 @@ This will create the movie graph.</p>
 </div>
 
 <div class="sect3 "  >
-    
-<h5 id="_find_the_actor_named_tom_hanks">Find the Actor Named "Tom Hanks"&#8230;&#8203;</h5>
-
+<h4 id="_find_the_actor_named_tom_hanks">Find the Actor Named "Tom Hanks"&#8230;&#8203;</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom {name: "Tom Hanks"})
@@ -372,9 +335,7 @@ RETURN tom</code></pre>
 </div>
 </div>
 <div class="sect3 "  >
-    
-<h5 id="_find_the_movie_titled_cloud_atlas">Find the Movie Titled "Cloud Atlas"&#8230;&#8203;</h5>
-
+<h4 id="_find_the_movie_titled_cloud_atlas">Find the Movie Titled "Cloud Atlas"&#8230;&#8203;</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (cloudAtlas {title: "Cloud Atlas"})
@@ -383,9 +344,7 @@ RETURN cloudAtlas</code></pre>
 </div>
 </div>
 <div class="sect3 "  >
-    
-<h5 id="_find_10_people">Find 10 People&#8230;&#8203;</h5>
-
+<h4 id="_find_10_people">Find 10 People&#8230;&#8203;</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (people:Person)
@@ -394,9 +353,7 @@ RETURN people.name LIMIT 10</code></pre>
 </div>
 </div>
 <div class="sect3 "  >
-    
-<h5 id="_find_movies_released_in_the_1990s">Find Movies Released in the 1990s&#8230;&#8203;</h5>
-
+<h4 id="_find_movies_released_in_the_1990s">Find Movies Released in the 1990s&#8230;&#8203;</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (nineties:Movie)
@@ -407,9 +364,7 @@ RETURN nineties.title</code></pre>
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_query">Query</h4>
-
+<h3 id="_query">Query</h3>
 
 
 <div class="paragraph">
@@ -436,9 +391,7 @@ RETURN nineties.title</code></pre>
 </div>
 
 <div class="sect3 "  >
-    
-<h5 id="_list_all_tom_hanks_movies">List All Tom Hanks Movies&#8230;&#8203;</h5>
-
+<h4 id="_list_all_tom_hanks_movies">List All Tom Hanks Movies&#8230;&#8203;</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name: "Tom Hanks"})-[:ACTED_IN]-&gt;(tomHanksMovies)
@@ -447,9 +400,7 @@ RETURN tom,tomHanksMovies</code></pre>
 </div>
 </div>
 <div class="sect3 "  >
-    
-<h5 id="_who_directed_cloud_atlas">Who Directed "Cloud Atlas"?</h5>
-
+<h4 id="_who_directed_cloud_atlas">Who Directed "Cloud Atlas"?</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (cloudAtlas {title: "Cloud Atlas"})&lt;-[:DIRECTED]-(directors)
@@ -458,9 +409,7 @@ RETURN directors.name</code></pre>
 </div>
 </div>
 <div class="sect3 "  >
-    
-<h5 id="_tom_hanks_co_actors">Tom Hanks' Co-Actors&#8230;&#8203;</h5>
-
+<h4 id="_tom_hanks_co_actors">Tom Hanks' Co-Actors&#8230;&#8203;</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]-&gt;(m)&lt;-[:ACTED_IN]-(coActors)
@@ -469,9 +418,7 @@ RETURN tom, m, coActors</code></pre>
 </div>
 </div>
 <div class="sect3 "  >
-    
-<h5 id="_how_people_are_related_to_cloud_atlas">How People are Related to "Cloud Atlas"&#8230;&#8203;</h5>
-
+<h4 id="_how_people_are_related_to_cloud_atlas">How People are Related to "Cloud Atlas"&#8230;&#8203;</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (people:Person)-[relatedTo]-(:Movie {title: "Cloud Atlas"})
@@ -481,9 +428,7 @@ RETURN people.name, Type(relatedTo), relatedTo</code></pre>
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_solve">Solve</h4>
-
+<h3 id="_solve">Solve</h3>
 
 
 <div class="paragraph">
@@ -508,9 +453,7 @@ RETURN people.name, Type(relatedTo), relatedTo</code></pre>
 </div>
 
 <div class="sect3 "  >
-    
-<h5 id="_movies_and_actors_up_to_three_hops_away_from_kevin_bacon">Movies and Actors up to Three Hops Away from Kevin Bacon</h5>
-
+<h4 id="_movies_and_actors_up_to_three_hops_away_from_kevin_bacon">Movies and Actors up to Three Hops Away from Kevin Bacon</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (bacon:Person {name:"Kevin Bacon"})-[*1..3]-(hollywood)
@@ -519,9 +462,7 @@ RETURN DISTINCT hollywood</code></pre>
 </div>
 </div>
 <div class="sect3 "  >
-    
-<h5 id="_the_bacon_path_to_meg_ryan">The Bacon Path to Meg Ryan</h5>
-
+<h4 id="_the_bacon_path_to_meg_ryan">The Bacon Path to Meg Ryan</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH p=shortestPath(
@@ -533,9 +474,7 @@ RETURN p</code></pre>
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_clean_up">Clean Up</h4>
-
+<h3 id="_clean_up">Clean Up</h3>
 
 
 <div class="paragraph">
@@ -571,9 +510,7 @@ This will remove all Person and Movie nodes!
 </div>
 
 <div class="sect3 "  >
-    
-<h5 id="_delete_all_movie_and_person_nodes_and_their_relationships">Delete All Movie and Person Nodes and their Relationships</h5>
-
+<h4 id="_delete_all_movie_and_person_nodes_and_their_relationships">Delete All Movie and Person Nodes and their Relationships</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (a:Person),(m:Movie)
@@ -583,24 +520,14 @@ DELETE a,r1,m,r2</code></pre>
 </div>
 </div>
 <div class="sect3 "  >
-    
-<h5 id="_prove_that_the_movie_graph_is_gone">Prove that the Movie Graph is Gone</h5>
-
+<h4 id="_prove_that_the_movie_graph_is_gone">Prove that the Movie Graph is Gone</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (n)
 RETURN count(*)</code></pre>
 </div>
 </div>
-</div>
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
-<h2 id="_further_reading">Further Reading</h2>
-</li>
-<div class="ulist">
-
-
+<div class="ulist side-nav">
 <ul>
 <li>
 <a href="/books">The Neo4j Bookshelf</a>
@@ -612,7 +539,7 @@ RETURN count(*)</code></pre>
 <a href="http://gist.neo4j.org/">GraphGists</a>
 </li>
 </ul>
-
+</div>
 </div>
 </div>
                            </div>

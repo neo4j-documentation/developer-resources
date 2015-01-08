@@ -7,41 +7,9 @@
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
          <title>Using Neo4j from PHP | Developer Resources | Neo4j Graph Database</title>
-         <script type="text/javascript">
-            var _kmq = _kmq || [];
-            var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
-            function _kms(u){
-                setTimeout(function(){
-                    var d = document, f = d.getElementsByTagName('script')[0],
-                        s = d.createElement('script');
-                    s.type = 'text/javascript'; s.async = true; s.src = u;
-                    f.parentNode.insertBefore(s, f);
-                }, 1);
-            }
-            _kms('//i.kissmetrics.com/i.js');
-            _kms('//doug1izaerwt3.cloudfront.net/' + _kmk + '.1.js');
-         </script> <script type="text/javascript">
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-            //Allow Linker
-            ga('create', 'UA-1192232-34','auto', {'allowLinker': true});
-            ga('send', 'pageview');
-
-            // Load the plugin.
-            ga('require', 'linker');
-
-            // Define which domains to autoLink.
-            ga('linker:autoLink', ['neo4j.org','neo4j.com','neotechnology.com','graphdatabases.com','graphconnect.com']);
-         </script>
          <link rel="canonical" href="http://neo4j.com/guides/basic-data-modeling/"/>
          <meta property="og:locale" content="en_US"/>
          <meta property="og:type" content="article"/>
-         <meta property="og:title" content="Basic Data Modeling - Neo4j Graph Database"/>
-         <meta property="og:description" content="Please refer to the Neo4j Manual"/>
-         <meta property="og:url" content="http://neo4j.com/guides/basic-data-modeling/"/>
          <meta property="og:site_name" content="Neo4j Graph Database"/>
          <link rel="alternate" type="application/rss+xml" title="Neo4j Graph Database &raquo; Feed" href="http://neo4j.com/feed/"/>
          <link rel="alternate" type="application/rss+xml" title="Neo4j Graph Database &raquo; Comments Feed" href="http://neo4j.com/comments/feed/"/>
@@ -151,6 +119,9 @@
                      {
                      padding-left: 0;
                      }
+                     div.side-nav {
+                        clear: right; float: right; margin-bottom: 1em; margin-top: 1em; width: 5em; padding: 1em; min-width: 16em; border: 1px solid rgb(222, 222, 222); height:auto;
+                     }
                   </style>
                   <style> .lead { display: none; } section.row { padding: 0; } #content section.row { max-width: 62.5rem; padding-left: .5em; padding-right: .5em; } .row { max-width: 80em; } #content section.row .accordion-navigation > a { padding: 0 !important; } .accordion .content { padding: 0; } .row .row { margin: auto; } .columns.medium-12 { padding-left: 0; } .fa-stack.fa-lg { color: #0f5788; display: block; float: left; height: 70px; margin-right: 1em; padding-right: 2em; width: 50px; } h3 { font-weight: normal; } strong, b { font-weight:600; font-color:#333; } .calloutsection { padding: 20px 0; } section { padding: 40px 0 0 0; } .marquee { height: auto; margin-top: 1em; } #main-content .entry-title { display: none; } #main-content .subheader { display: none; } .marquee h1, .marquee h2 { padding-top: 0; } #main-content .next-steps h5 { font-size: 12px; } #main-content .next-steps h3 { margin-bottom: 1em; } #main-content .content.active { display: block; } #main-content .content { display: none; } #main-content { padding-top: 0; } .use-case .tab-container .content.active { border-top: 1px solid rgba(15, 87, 136, 0.7); padding: 2em 1em 1em; } .tabs dd > a:hover { color: #3d5360; } .breadcrumbs > * a, .breadcrumbs > * span { color: #0f5788; text-transform: none; } .breadcrumbs > * { text-transform: none; } .top-bar { height: 80px; } #main-content .top-bar-section ul { margin-top: 1em; } .panel-pod p { font-size: 14px; font-weight: normal; line-height: 26px; } .panel-pod > a { display: block; margin-bottom: 1em; } .panel-pod p a { display: block; margin-top: 1em; } .panel-pod { text-align: left; } .tab-container { margin-bottom: 2em; } .panel-pod img { display: block; margin: auto; } #content h3 { font-weight: 100; } #content ul {}
                   #content section.row .accordion-navigation > a {
@@ -235,7 +206,7 @@
                      <section class="row" style="padding:10px 0;">
                         <div class="large-12 columns" style="padding-top:0;">
                            <div id="content">
-                              <div id="preamble">
+                              <div id="preamble columns medium-12">
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
@@ -264,28 +235,23 @@ You should have <a href="/download">installed Neo4j</a> and made yourself famili
 <li><a href="#_the_example_project">The Example Project</a></li>
 <li><a href="#_using_neo4j_in_a_standalone_php_environment">Using Neo4j in a standalone PHP environment</a></li>
 <li><a href="#_neo4jphp">Neo4jPHP</a></li>
-
 <li><a href="#_neoclient">NeoClient</a></li>
 <li><a href="#_neo4j_ogm_php">Neo4j-OGM-PHP</a></li>
 <li><a href="#_you_use_the_symfony_framework">You use the Symfony framework</a></li>
 <li><a href="#_neo4jogmbundle">Neo4jOGMBundle</a></li>
-<li><a href="#_you_use_the_laravel_framework">You use the Laravel framework</a></li>
-<li><a href="#_applications_built_with_php_and_neo4j">Applications built with PHP and Neo4j</a></li>
-<li><a href="#_omnomhub">Omnomhub</a></li>
-<li><a href="#_thesaurus_manager">Thesaurus Manager</a></li>
 <li><a href="#_other_drivers">Other Drivers</a></li>
+<li><a href="#_applications_built_with_php_and_neo4j">Applications built with PHP and Neo4j</a></li>
 </ul>
 
+</div>
 <hr>
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_neo4j_for_php_developers">Neo4j for PHP Developers</h4>
-
+<h3 id="_neo4j_for_php_developers">Neo4j for PHP Developers</h3>
 <div class="imageblock">
 <p class="content">
-<img src="http://i.imgur.com/eTLVfHM.png" alt="eTLVfHM">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/neo4j-loves-php.png" alt="neo4j loves php">
 </p>
 </div>
 
@@ -315,9 +281,7 @@ You&#8217;re in the right place!</p>
 
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_the_example_project">The Example Project</h4>
-
+<h3 id="_the_example_project">The Example Project</h3>
 
 
 <div class="paragraph">
@@ -340,9 +304,7 @@ The front-end is the same for all drivers, just the backends show you how to con
 
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_using_neo4j_in_a_standalone_php_environment">Using Neo4j in a standalone PHP environment</h4>
-
+<h3 id="_using_neo4j_in_a_standalone_php_environment">Using Neo4j in a standalone PHP environment</h3>
 
 
 <div class="paragraph">
@@ -351,23 +313,14 @@ The front-end is the same for all drivers, just the backends show you how to con
 
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_neo4jphp">Neo4jPHP</h4>
-
+<h3 id="_neo4jphp">Neo4jPHP</h3>
 
 
 <div class="paragraph">
 <p>Neo4jPHP provides an API that is both intuitive and flexible, and it takes advantage of ‘under-the-hood’ performance enhancements, such as caching and lazy-loading.</p>
 </div>
 
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
-<h2 id="_sidebar">Sidebar</h2>
-</li>
-<div class="ulist">
-
-
+<div class="ulist side-nav">
 <ul>
 <li>
 <a href="neo4jphp">Example Project with Neo4jPHP</a>
@@ -382,13 +335,10 @@ Author: <a href="http://twitter.com/josh_adell">Josh Adell</a>
 <a href="http://github.com/jadell/neo4jphp/wiki/Introduction">GitHub</a>
 </li>
 </ul>
-
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_neoclient">NeoClient</h4>
-
+<h3 id="_neoclient">NeoClient</h3>
 
 
 <div class="paragraph">
@@ -398,8 +348,6 @@ The 2.0 stable release has been announced end of November 14, with the following
 </div>
 
 <div class="ulist">
-
-
 <ul>
 <li>
 Everything is built as an extension, meaning the core commands are an extension to the library, which makes the library very flexible and customizable.
@@ -418,9 +366,10 @@ Minimalistic HA mechanism when running Neo4j Community Edition
 </li>
 <li>
 Full-bledged Response Graph format.
-<div class="ulist">
-
-
+</li>
+</ul>
+</div>
+<div class="ulist side-nav">
 <ul>
 <li>
 <a href="neoclient">Example Project with NeoClient</a>
@@ -438,17 +387,10 @@ Author: <a href="http://twitter.com/ikwattro">Christophe Willemsen</a>
 <a href="http://graphgen.neoxygen.io">Graph Generator using NeoClient</a>
 </li>
 </ul>
-
-</div>
-</li>
-</ul>
-
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_neo4j_ogm_php">Neo4j-OGM-PHP</h4>
-
+<h3 id="_neo4j_ogm_php">Neo4j-OGM-PHP</h3>
 
 
 <div class="paragraph">
@@ -464,9 +406,7 @@ Author: <a href="http://twitter.com/ikwattro">Christophe Willemsen</a>
 <hr>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_you_use_the_symfony_framework">You use the Symfony framework</h4>
-
+<h3 id="_you_use_the_symfony_framework">You use the Symfony framework</h3>
 
 
 <div class="paragraph">
@@ -475,9 +415,7 @@ Author: <a href="http://twitter.com/ikwattro">Christophe Willemsen</a>
 
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_neo4jogmbundle">Neo4jOGMBundle</h4>
-
+<h3 id="_neo4jogmbundle">Neo4jOGMBundle</h3>
 
 
 <div class="paragraph">
@@ -491,127 +429,50 @@ Author: <a href="http://twitter.com/ikwattro">Christophe Willemsen</a>
 </div>
 
 <hr>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_you_use_the_laravel_framework">You use the Laravel framework</h4>
-
 <div class="sect3 "  >
-    
-<h5 id="_neoeloquent">NeoEloquent</h5>
-
+<h4 id="_neoeloquent_for_laravel">NeoEloquent for Laravel</h4>
 
 
 <div class="paragraph">
 <p>Neo4j Graph Eloquent Driver for Laravel 4</p>
 </div>
 
-<div class="ulist">
-
-
+<div class="ulist side-nav">
 <ul>
-<li>
-Author: <a href="https://github.com/Mulkave">Abed Alawi</a>
-</li>
 <li>
 link: <a href="https://github.com/Vinelab/NeoEloquent">NeoEloquent on GitHub</a>
 </li>
+<li>
+Author: <a href="https://github.com/Mulkave">Abed Alawi</a>
+</li>
 </ul>
-
 </div>
 </div>
 <div class="sect3 "  >
-    
-<h5 id="_neo4laravel">Neo4Laravel</h5>
-
+<h4 id="_neo4laravel">Neo4Laravel</h4>
 
 
 <div class="paragraph">
 <p>A Neo4j Laravel 4.1 OGM Provider.</p>
 </div>
 
-<div class="ulist">
-
-
+<div class="ulist side-nav">
 <ul>
-<li>
-Author: <a href="https://github.com/lrezek">Lukas Rezek</a>
-</li>
 <li>
 <a href="https://github.com/lrezek/Neo4Laravel">Neo4Laravel on GitHub</a>
 </li>
+<li>
+Author: <a href="https://github.com/lrezek">Lukas Rezek</a>
+</li>
 </ul>
-
 </div>
 <hr>
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_applications_built_with_php_and_neo4j">Applications built with PHP and Neo4j</h4>
-
-
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_omnomhub">Omnomhub</h4>
-
-
-
-<div class="paragraph">
-<p>Like for Github, but for recipes!</p>
-</div>
-
-<div class="ulist">
-
-
-<ul>
-<li>
-Author: <a href="https://twitter.com/michellesanver">Michelle Sanver</a>
-</li>
-</ul>
-
-</div>
-
-
-<div class="paragraph">
-<p><a href="https://github.com/Omnomhub/omnomhub">https://github.com/Omnomhub/omnomhub</a></p>
-</div>
-
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_thesaurus_manager">Thesaurus Manager</h4>
-
-
-
-<div class="paragraph">
-<p>If you want to built your own thesaurus, this app is made for you</p>
-</div>
-
-<div class="ulist">
-
-
-<ul>
-<li>
-Author: <a href="https://github.com/hasantayyar">Hasan Tayyar</a>
-</li>
-<li>
-link: <a href="http://okulbilisim.github.io/thesaurus-manager/">http://okulbilisim.github.io/thesaurus-manager/</a>
-</li>
-</ul>
-
-</div>
-<hr>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_other_drivers">Other Drivers</h4>
-
+<h3 id="_other_drivers">Other Drivers</h3>
 <div class="sect3 "  >
-    
-<h5 id="_neo4j_pdo">neo4j-pdo</h5>
-
+<h4 id="_neo4j_pdo">neo4j-pdo</h4>
 
 
 <div class="paragraph">
@@ -620,9 +481,7 @@ The project currently only implements a “vanilla” PHP implementation, which 
 PHP extensions to register the driver with PDO in HHVM and Zend VM are planned future work.</p>
 </div>
 
-<div class="ulist">
-
-
+<div class="ulist side-nav">
 <ul>
 <li>
 <a href="http://github.com/jakewins/neo4j-pdo">neo4j-pdo on GitHub</a>
@@ -631,13 +490,10 @@ PHP extensions to register the driver with PDO in HHVM and Zend VM are planned f
 Author: <a href="http://twitter.com/jakewins">Jacob Hansson</a>
 </li>
 </ul>
-
 </div>
 </div>
 <div class="sect3 "  >
-    
-<h5 id="_php_cypher">PHP Cypher</h5>
-
+<h4 id="_php_cypher">PHP Cypher</h4>
 
 
 <div class="paragraph">
@@ -648,9 +504,7 @@ In short, this library focus solely on sending query to Neo4j database.
 Those looking for adapter on all the Neo4j ReST API can try this great library.</p>
 </div>
 
-<div class="ulist">
-
-
+<div class="ulist side-nav">
 <ul>
 <li>
 <a href="http://github.com/endyjasmi/cypher">PHP Cypher on GitHub</a>
@@ -659,7 +513,48 @@ Those looking for adapter on all the Neo4j ReST API can try this great library.<
 Author: <a href="https://github.com/endyjasmi">Endy Jasmi</a>
 </li>
 </ul>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3 id="_applications_built_with_php_and_neo4j">Applications built with PHP and Neo4j</h3>
+<div class="sect3 "  >
+<h4 id="_omnomhub">Omnomhub</h4>
 
+
+<div class="paragraph">
+<p>Like for Github, but for recipes!</p>
+</div>
+
+<div class="ulist side-nav">
+<ul>
+<li>
+<a href="https://github.com/Omnomhub/omnomhub">Omnomhub on Github</a>
+</li>
+<li>
+Author: <a href="https://twitter.com/michellesanver">Michelle Sanver</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3 "  >
+<h4 id="_thesaurus_manager">Thesaurus Manager</h4>
+
+
+<div class="paragraph">
+<p>If you want to built your own thesaurus, this app is made for you</p>
+</div>
+
+<div class="ulist side-nav">
+<ul>
+<li>
+link: <a href="http://okulbilisim.github.io/thesaurus-manager/">Thesaurus Manager on Github</a>
+</li>
+<li>
+Author: <a href="https://github.com/hasantayyar">Hasan Tayyar</a>
+</li>
+</ul>
 </div>
 </div>
 </div>

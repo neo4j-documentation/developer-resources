@@ -7,41 +7,9 @@
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
          <title>Building a Recommendation Engine with Cypher in Two Minutes | Developer Resources | Neo4j Graph Database</title>
-         <script type="text/javascript">
-            var _kmq = _kmq || [];
-            var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
-            function _kms(u){
-                setTimeout(function(){
-                    var d = document, f = d.getElementsByTagName('script')[0],
-                        s = d.createElement('script');
-                    s.type = 'text/javascript'; s.async = true; s.src = u;
-                    f.parentNode.insertBefore(s, f);
-                }, 1);
-            }
-            _kms('//i.kissmetrics.com/i.js');
-            _kms('//doug1izaerwt3.cloudfront.net/' + _kmk + '.1.js');
-         </script> <script type="text/javascript">
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-            //Allow Linker
-            ga('create', 'UA-1192232-34','auto', {'allowLinker': true});
-            ga('send', 'pageview');
-
-            // Load the plugin.
-            ga('require', 'linker');
-
-            // Define which domains to autoLink.
-            ga('linker:autoLink', ['neo4j.org','neo4j.com','neotechnology.com','graphdatabases.com','graphconnect.com']);
-         </script>
          <link rel="canonical" href="http://neo4j.com/guides/basic-data-modeling/"/>
          <meta property="og:locale" content="en_US"/>
          <meta property="og:type" content="article"/>
-         <meta property="og:title" content="Basic Data Modeling - Neo4j Graph Database"/>
-         <meta property="og:description" content="Please refer to the Neo4j Manual"/>
-         <meta property="og:url" content="http://neo4j.com/guides/basic-data-modeling/"/>
          <meta property="og:site_name" content="Neo4j Graph Database"/>
          <link rel="alternate" type="application/rss+xml" title="Neo4j Graph Database &raquo; Feed" href="http://neo4j.com/feed/"/>
          <link rel="alternate" type="application/rss+xml" title="Neo4j Graph Database &raquo; Comments Feed" href="http://neo4j.com/comments/feed/"/>
@@ -151,6 +119,9 @@
                      {
                      padding-left: 0;
                      }
+                     div.side-nav {
+                        clear: right; float: right; margin-bottom: 1em; margin-top: 1em; width: 5em; padding: 1em; min-width: 16em; border: 1px solid rgb(222, 222, 222); height:auto;
+                     }
                   </style>
                   <style> .lead { display: none; } section.row { padding: 0; } #content section.row { max-width: 62.5rem; padding-left: .5em; padding-right: .5em; } .row { max-width: 80em; } #content section.row .accordion-navigation > a { padding: 0 !important; } .accordion .content { padding: 0; } .row .row { margin: auto; } .columns.medium-12 { padding-left: 0; } .fa-stack.fa-lg { color: #0f5788; display: block; float: left; height: 70px; margin-right: 1em; padding-right: 2em; width: 50px; } h3 { font-weight: normal; } strong, b { font-weight:600; font-color:#333; } .calloutsection { padding: 20px 0; } section { padding: 40px 0 0 0; } .marquee { height: auto; margin-top: 1em; } #main-content .entry-title { display: none; } #main-content .subheader { display: none; } .marquee h1, .marquee h2 { padding-top: 0; } #main-content .next-steps h5 { font-size: 12px; } #main-content .next-steps h3 { margin-bottom: 1em; } #main-content .content.active { display: block; } #main-content .content { display: none; } #main-content { padding-top: 0; } .use-case .tab-container .content.active { border-top: 1px solid rgba(15, 87, 136, 0.7); padding: 2em 1em 1em; } .tabs dd > a:hover { color: #3d5360; } .breadcrumbs > * a, .breadcrumbs > * span { color: #0f5788; text-transform: none; } .breadcrumbs > * { text-transform: none; } .top-bar { height: 80px; } #main-content .top-bar-section ul { margin-top: 1em; } .panel-pod p { font-size: 14px; font-weight: normal; line-height: 26px; } .panel-pod > a { display: block; margin-bottom: 1em; } .panel-pod p a { display: block; margin-top: 1em; } .panel-pod { text-align: left; } .tab-container { margin-bottom: 2em; } .panel-pod img { display: block; margin: auto; } #content h3 { font-weight: 100; } #content ul {}
                   #content section.row .accordion-navigation > a {
@@ -235,7 +206,7 @@
                      <section class="row" style="padding:10px 0;">
                         <div class="large-12 columns" style="padding-top:0;">
                            <div id="content">
-                              <div id="preamble">
+                              <div id="preamble columns medium-12">
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
@@ -259,15 +230,13 @@ You should have a basic understanding of the <a href="/developer/graph-database#
 
 <ul class="sectlevel2">
 <li><a href="#_recommendation_for_collaboration_of_actors">Recommendation for Collaboration of Actors</a></li>
-
 <li><a href="#_basic_queries">Basic Queries</a></li>
 <li><a href="#_collaborative_filtering">Collaborative Filtering</a></li>
-
 <li><a href="#_connection_paths">Connection Paths</a></li>
 <li><a href="#_restaurant_recommendation">Restaurant Recommendation</a></li>
-
 </ul>
 
+</div>
 <hr>
 
 
@@ -285,9 +254,7 @@ This is the basis for many recommendation engines.</p>
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_recommendation_for_collaboration_of_actors">Recommendation for Collaboration of Actors</h4>
-
+<h3 id="_recommendation_for_collaboration_of_actors">Recommendation for Collaboration of Actors</h3>
 
 
 <div class="paragraph">
@@ -308,18 +275,11 @@ WITH line
 WHERE line.job = "ACTED_IN"
 MERGE (m:Movie {title:line.title}) ON CREATE SET m.released = toInt(line.released), m.tagline = line.tagline
 MERGE (p:Person {name:line.name}) ON CREATE SET p.born = toInt(line.born)
-MERGE (p)-[:ACTED_IN {roles:split(line.roles,";")}]-&gt;(m);
+MERGE (p)-[:ACTED_IN {roles:split(line.roles,";")}]-&gt;(m)
 RETURN count(*);</code></pre>
 </div>
 </div>
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
-<h2 id="_recommended">Recommended</h2>
-</li>
-<div class="ulist">
-
-
+<div class="ulist side-nav">
 <ul>
 <li>
 <a href="/graphacademy/online-course">Online Cypher Training</a>
@@ -331,13 +291,10 @@ RETURN count(*);</code></pre>
 <a href="/developer/guide-intro-to-graph-modeling">Intro to Graph Modeling</a>
 </li>
 </ul>
-
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_basic_queries">Basic Queries</h4>
-
+<h3 id="_basic_queries">Basic Queries</h3>
 
 
 <div class="paragraph">
@@ -377,9 +334,7 @@ RETURN coActor.name</code></pre>
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_collaborative_filtering">Collaborative Filtering</h4>
-
+<h3 id="_collaborative_filtering">Collaborative Filtering</h3>
 
 
 <div class="paragraph">
@@ -420,14 +375,7 @@ LIMIT 5</code></pre>
 Now let&#8217;s see which movies and actors are between the two Toms.</p>
 </div>
 
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
-<h2 id="_recommended_2">Recommended</h2>
-</li>
-<div class="ulist">
-
-
+<div class="ulist side-nav">
 <ul>
 <li>
 <a href="http://neo4j.com/docs">The Neo4j Docs</a>
@@ -439,13 +387,10 @@ Now let&#8217;s see which movies and actors are between the two Toms.</p>
 <a href="/developer/guide-intro-to-graph-modeling">Intro to Graph Modeling</a>
 </li>
 </ul>
-
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_connection_paths">Connection Paths</h4>
-
+<h3 id="_connection_paths">Connection Paths</h3>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
@@ -476,9 +421,7 @@ RETURN tom, movie1, coActor, movie2, cruise</code></pre>
 <iframe width="640" height="480" src="//www.youtube.com/embed/qbZ_Q-YnHYo" frameborder="0" allowfullscreen></iframe>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_restaurant_recommendation">Restaurant Recommendation</h4>
-
+<h3 id="_restaurant_recommendation">Restaurant Recommendation</h3>
 
 
 <div class="paragraph">
@@ -529,20 +472,12 @@ LIMIT 5</code></pre>
 <p>Other factors that can be easily integrated in this query are favorites, allergies, ratings and closeness to my current position.</p>
 </div>
 
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
-<h2 id="_recommended_3">Recommended</h2>
-</li>
-<div class="ulist">
-
-
+<div class="ulist side-nav">
 <ul>
 <li>
 <a href="http://maxdemarzi.com/2014/01/31/neo4j-spatial-part-1/">Restaurant Recommendation (mdm)</a>
 </li>
 </ul>
-
 </div>
 </div>
                            </div>

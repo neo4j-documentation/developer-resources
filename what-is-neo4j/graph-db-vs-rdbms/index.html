@@ -6,42 +6,10 @@
          <meta charset="utf-8"/>
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
-         <title>Graph Databases versus Relational Databases | Developer Resources | Neo4j Graph Database</title>
-         <script type="text/javascript">
-            var _kmq = _kmq || [];
-            var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
-            function _kms(u){
-                setTimeout(function(){
-                    var d = document, f = d.getElementsByTagName('script')[0],
-                        s = d.createElement('script');
-                    s.type = 'text/javascript'; s.async = true; s.src = u;
-                    f.parentNode.insertBefore(s, f);
-                }, 1);
-            }
-            _kms('//i.kissmetrics.com/i.js');
-            _kms('//doug1izaerwt3.cloudfront.net/' + _kmk + '.1.js');
-         </script> <script type="text/javascript">
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-            //Allow Linker
-            ga('create', 'UA-1192232-34','auto', {'allowLinker': true});
-            ga('send', 'pageview');
-
-            // Load the plugin.
-            ga('require', 'linker');
-
-            // Define which domains to autoLink.
-            ga('linker:autoLink', ['neo4j.org','neo4j.com','neotechnology.com','graphdatabases.com','graphconnect.com']);
-         </script>
+         <title>From Relational to Neo4j | Developer Resources | Neo4j Graph Database</title>
          <link rel="canonical" href="http://neo4j.com/guides/basic-data-modeling/"/>
          <meta property="og:locale" content="en_US"/>
          <meta property="og:type" content="article"/>
-         <meta property="og:title" content="Basic Data Modeling - Neo4j Graph Database"/>
-         <meta property="og:description" content="Please refer to the Neo4j Manual"/>
-         <meta property="og:url" content="http://neo4j.com/guides/basic-data-modeling/"/>
          <meta property="og:site_name" content="Neo4j Graph Database"/>
          <link rel="alternate" type="application/rss+xml" title="Neo4j Graph Database &raquo; Feed" href="http://neo4j.com/feed/"/>
          <link rel="alternate" type="application/rss+xml" title="Neo4j Graph Database &raquo; Comments Feed" href="http://neo4j.com/comments/feed/"/>
@@ -151,6 +119,9 @@
                      {
                      padding-left: 0;
                      }
+                     div.side-nav {
+                        clear: right; float: right; margin-bottom: 1em; margin-top: 1em; width: 5em; padding: 1em; min-width: 16em; border: 1px solid rgb(222, 222, 222); height:auto;
+                     }
                   </style>
                   <style> .lead { display: none; } section.row { padding: 0; } #content section.row { max-width: 62.5rem; padding-left: .5em; padding-right: .5em; } .row { max-width: 80em; } #content section.row .accordion-navigation > a { padding: 0 !important; } .accordion .content { padding: 0; } .row .row { margin: auto; } .columns.medium-12 { padding-left: 0; } .fa-stack.fa-lg { color: #0f5788; display: block; float: left; height: 70px; margin-right: 1em; padding-right: 2em; width: 50px; } h3 { font-weight: normal; } strong, b { font-weight:600; font-color:#333; } .calloutsection { padding: 20px 0; } section { padding: 40px 0 0 0; } .marquee { height: auto; margin-top: 1em; } #main-content .entry-title { display: none; } #main-content .subheader { display: none; } .marquee h1, .marquee h2 { padding-top: 0; } #main-content .next-steps h5 { font-size: 12px; } #main-content .next-steps h3 { margin-bottom: 1em; } #main-content .content.active { display: block; } #main-content .content { display: none; } #main-content { padding-top: 0; } .use-case .tab-container .content.active { border-top: 1px solid rgba(15, 87, 136, 0.7); padding: 2em 1em 1em; } .tabs dd > a:hover { color: #3d5360; } .breadcrumbs > * a, .breadcrumbs > * span { color: #0f5788; text-transform: none; } .breadcrumbs > * { text-transform: none; } .top-bar { height: 80px; } #main-content .top-bar-section ul { margin-top: 1em; } .panel-pod p { font-size: 14px; font-weight: normal; line-height: 26px; } .panel-pod > a { display: block; margin-bottom: 1em; } .panel-pod p a { display: block; margin-top: 1em; } .panel-pod { text-align: left; } .tab-container { margin-bottom: 2em; } .panel-pod img { display: block; margin: auto; } #content h3 { font-weight: 100; } #content ul {}
                   #content section.row .accordion-navigation > a {
@@ -223,19 +194,19 @@
                            <ul class="breadcrumbs">
                               <li><a href="/developer-resources">Developer Guides</a></li>
                               <li><a href="../">What is Neo4j</a></li>
-                              <li class="current"><a href="#">Graph Databases versus Relational Databases</a></li>
+                              <li class="current"><a href="#">From Relational to Neo4j</a></li>
                            </ul>
                         </div>
                      </div>
                      <!-- <div class="row">
                         <div class="columns large-12">
-                           <h1 style="font-size:2.1rem;">Graph Databases versus Relational Databases</h1>
+                           <h1 style="font-size:2.1rem;">From Relational to Neo4j</h1>
                         </div>
                      </div> -->
                      <section class="row" style="padding:10px 0;">
                         <div class="large-12 columns" style="padding-top:0;">
                            <div id="content">
-                              <div id="preamble">
+                              <div id="preamble columns medium-12">
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
@@ -261,22 +232,17 @@ You should have looked into the <a href="/developer/graph-database#property-grap
 <ul class="sectlevel2">
 <li><a href="#_relational_databases">Relational Databases</a></li>
 <li><a href="#_from_relational_to_graph_databases">From Relational to Graph Databases</a></li>
-
 <li><a href="#_working_with_neo4j">Working with Neo4j</a></li>
-
 <li><a href="#_connecting_to_neo4j">Connecting to Neo4j</a></li>
-
 <li><a href="#_importing_data_from_a_relational_database">Importing Data from a Relational Database</a></li>
-
 </ul>
 
+</div>
 <hr>
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_relational_databases">Relational Databases</h4>
-
+<h3 id="_relational_databases">Relational Databases</h3>
 
 
 <div class="paragraph">
@@ -319,9 +285,7 @@ Those costly join operations are usually addressed by denormalising data to redu
 
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_from_relational_to_graph_databases">From Relational to Graph Databases</h4>
-
+<h3 id="_from_relational_to_graph_databases">From Relational to Graph Databases</h3>
 
 
 <div class="paragraph">
@@ -405,14 +369,7 @@ A graph is exactly that, a clear model of the domain, focused on the use-cases y
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/domain.png" alt="domain">
 </p>
 </div>
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
-<h2 id="_recommended">Recommended</h2>
-</li>
-<div class="ulist">
-
-
+<div class="ulist side-nav">
 <ul>
 <li>
 <a href="../graph-database">What is a Graph Database?</a>
@@ -424,13 +381,10 @@ A graph is exactly that, a clear model of the domain, focused on the use-cases y
 <a href="http://neo4j.com/events?type=Training" class="event">Neo4j Training</a>
 </li>
 </ul>
-
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_working_with_neo4j">Working with Neo4j</h4>
-
+<h3 id="_working_with_neo4j">Working with Neo4j</h3>
 
 
 <div class="paragraph">
@@ -485,14 +439,7 @@ WHERE d.name = "IT Department"
 RETURN p.name</code></pre>
 </div>
 </div>
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
-<h2 id="_recommended_2">Recommended</h2>
-</li>
-<div class="ulist">
-
-
+<div class="ulist side-nav">
 <ul>
 <li>
 <a href="/graphacademy/online-course">Online Training</a>
@@ -510,13 +457,10 @@ RETURN p.name</code></pre>
 <a href="http://neo4j.com/docs/stable/examples-from-sql-to-cypher.html">Manual: From SQL to Cypher</a>
 </li>
 </ul>
-
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_connecting_to_neo4j">Connecting to Neo4j</h4>
-
+<h3 id="_connecting_to_neo4j">Connecting to Neo4j</h3>
 
 
 <div class="paragraph">
@@ -524,9 +468,7 @@ RETURN p.name</code></pre>
 </div>
 
 <div class="sect3 "  >
-    
-<h5 id="_http_api">HTTP-API</h5>
-
+<h4 id="_http_api">HTTP-API</h4>
 
 
 <div class="paragraph">
@@ -534,8 +476,6 @@ RETURN p.name</code></pre>
 </div>
 
 <div class="ulist">
-
-
 <ul>
 <li>
 POST one or more Cypher statements with parameters per request to the server
@@ -547,7 +487,6 @@ Keep transactions open over multiple requests
 Choose different result formats
 </li>
 </ul>
-
 </div>
 
 
@@ -568,9 +507,7 @@ You can run it directly from the Neo4j browser, here shown with the plain JSON r
 </div>
 </div>
 <div class="sect3 "  >
-    
-<h5 id="_language_drivers">Language Drivers</h5>
-
+<h4 id="_language_drivers">Language Drivers</h4>
 
 
 <div class="paragraph">
@@ -600,15 +537,7 @@ try (PreparedStatement stmt = con.prepareStatement(QUERY)) {
 }</code></pre>
 </div>
 </div>
-</div>
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
-<h2 id="_recommended_3">Recommended</h2>
-</li>
-<div class="ulist">
-
-
+<div class="ulist side-nav">
 <ul>
 <li>
 <a href="/download">Install Neo4j</a>
@@ -623,13 +552,11 @@ try (PreparedStatement stmt = con.prepareStatement(QUERY)) {
 <a href="http://neo4j.com/docs/stable/rest-api-transactional.html" class="docs">Cypher HTTP Endpoint</a>
 </li>
 </ul>
-
+</div>
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_importing_data_from_a_relational_database">Importing Data from a Relational Database</h4>
-
+<h3 id="_importing_data_from_a_relational_database">Importing Data from a Relational Database</h3>
 
 
 <div class="paragraph">
@@ -649,8 +576,6 @@ try (PreparedStatement stmt = con.prepareStatement(QUERY)) {
 </div>
 
 <div class="ulist">
-
-
 <ul>
 <li>
 Ingest the data, accessing columns by header name or offset
@@ -671,7 +596,6 @@ Skip rows to be ignored
 <code>SET</code> new labels and properties or <code>REMOVE</code> outdated ones
 </li>
 </ul>
-
 </div>
 
 
@@ -708,14 +632,7 @@ CREATE (person)-[:EMPLOYEE]-&gt;(dept)</code></pre>
 <p>Other, dedicated import tools, help you importing larger volumes (10M+ rows) of data efficiently, as described in the <a href="../../working-with-data/guide-import-csv">csv-import guide</a>.</p>
 </div>
 
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
-<h2 id="_recommended_4">Recommended</h2>
-</li>
 <div class="ulist">
-
-
 <ul>
 <li>
 <a href="/developer/guide-importing-data-and-etl" class="guide">Guide: Data Import</a>
@@ -727,10 +644,9 @@ CREATE (person)-[:EMPLOYEE]-&gt;(dept)</code></pre>
 <a href="http://watch.neo4j.org/video/112447027" class="video">Webinar: Data Import</a>
 </li>
 <li>
-<a href="../../working-with-data/guide-import-csv">csv-import guide</a>
+<a href="../../working-with-data/guide-import-csv">Guide CSV Import</a>
 </li>
 </ul>
-
 </div>
 </div>
                            </div>

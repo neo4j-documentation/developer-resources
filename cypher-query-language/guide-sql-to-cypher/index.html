@@ -119,6 +119,9 @@
                      {
                      padding-left: 0;
                      }
+                     div.side-nav {
+                        clear: right; float: right; margin-bottom: 1em; margin-top: 1em; width: 5em; padding: 1em; min-width: 16em; border: 1px solid rgb(222, 222, 222); height:auto;
+                     }
                   </style>
                   <style> .lead { display: none; } section.row { padding: 0; } #content section.row { max-width: 62.5rem; padding-left: .5em; padding-right: .5em; } .row { max-width: 80em; } #content section.row .accordion-navigation > a { padding: 0 !important; } .accordion .content { padding: 0; } .row .row { margin: auto; } .columns.medium-12 { padding-left: 0; } .fa-stack.fa-lg { color: #0f5788; display: block; float: left; height: 70px; margin-right: 1em; padding-right: 2em; width: 50px; } h3 { font-weight: normal; } strong, b { font-weight:600; font-color:#333; } .calloutsection { padding: 20px 0; } section { padding: 40px 0 0 0; } .marquee { height: auto; margin-top: 1em; } #main-content .entry-title { display: none; } #main-content .subheader { display: none; } .marquee h1, .marquee h2 { padding-top: 0; } #main-content .next-steps h5 { font-size: 12px; } #main-content .next-steps h3 { margin-bottom: 1em; } #main-content .content.active { display: block; } #main-content .content { display: none; } #main-content { padding-top: 0; } .use-case .tab-container .content.active { border-top: 1px solid rgba(15, 87, 136, 0.7); padding: 2em 1em 1em; } .tabs dd > a:hover { color: #3d5360; } .breadcrumbs > * a, .breadcrumbs > * span { color: #0f5788; text-transform: none; } .breadcrumbs > * { text-transform: none; } .top-bar { height: 80px; } #main-content .top-bar-section ul { margin-top: 1em; } .panel-pod p { font-size: 14px; font-weight: normal; line-height: 26px; } .panel-pod > a { display: block; margin-bottom: 1em; } .panel-pod p a { display: block; margin-top: 1em; } .panel-pod { text-align: left; } .tab-container { margin-bottom: 2em; } .panel-pod img { display: block; margin: auto; } #content h3 { font-weight: 100; } #content ul {}
                   #content section.row .accordion-navigation > a {
@@ -203,7 +206,7 @@
                      <section class="row" style="padding:10px 0;">
                         <div class="large-12 columns" style="padding-top:0;">
                            <div id="content">
-                              <div id="preamble">
+                              <div id="preamble columns medium-12">
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
@@ -227,20 +230,19 @@ You should have a basic understanding of the <a href="/developer/graph-database#
 
 <ul class="sectlevel2">
 <li><a href="#_a_few_words_about_cypher">A few words about Cypher</a></li>
-<li><a href="#_data_model_comparison">Data Model Comparison</a></li>
+<li><a href="#_data_model_transformation">Data Model Transformation</a></li>
 <li><a href="#_data_import">Data Import</a></li>
 <li><a href="#_cypher_is_all_about_patterns">Cypher is all about Patterns</a></li>
 <li><a href="#_northwind_example_model">Northwind Example Model</a></li>
 <li><a href="#_querying_the_data_step_by_step">Querying the Data Step by Step</a></li>
 </ul>
 
+</div>
 <hr>
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_a_few_words_about_cypher">A few words about Cypher</h4>
-
+<h3 id="_a_few_words_about_cypher">A few words about Cypher</h3>
 
 
 <div class="paragraph">
@@ -305,9 +307,7 @@ the support of many collection functions, operations and predicates and the abil
 
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_data_model_comparison">Data Model Comparison</h4>
-
+<h3 id="_data_model_transformation">Data Model Transformation</h3>
 
 
 <div class="paragraph">
@@ -327,7 +327,7 @@ Graph model shapes are mostly driven by use-cases, so there will be opportunity 
 
 <div class="paragraph">
 <p>A good, normalized Entity-Relationship diagram often already represents a decent graph model.
-So if you still have the orignal ER diagram available, try to use it as a guide.</p>
+So if you still have the original ER diagram available, try to use it as a guide.</p>
 </div>
 
 
@@ -337,14 +337,12 @@ So if you still have the orignal ER diagram available, try to use it as a guide.
 </div>
 
 <div class="ulist">
-
-
 <ul>
 <li>
 Each entity table is represented by a label on nodes
 </li>
 <li>
-Each row in a table is a node
+Each row in a entity table is a node
 </li>
 <li>
 Columns on those tables become node properties.
@@ -371,7 +369,6 @@ Indexed column names, might indicate an array property (like email1, email2, ema
 Join tables are transformed into relationships, columns on those tables become relationship properties
 </li>
 </ul>
-
 </div>
 
 
@@ -381,9 +378,7 @@ Join tables are transformed into relationships, columns on those tables become r
 
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_data_import">Data Import</h4>
-
+<h3 id="_data_import">Data Import</h3>
 
 
 <div class="paragraph">
@@ -397,8 +392,6 @@ Join tables are transformed into relationships, columns on those tables become r
 </div>
 
 <div class="ulist">
-
-
 <ul>
 <li>
 <a href="../../guide-importing-data-and-etl" class="guide">Guide: Data Import</a>
@@ -410,7 +403,6 @@ Join tables are transformed into relationships, columns on those tables become r
 <a href="../../working-with-data/guide-import-csv" class="guide">Guide CSV Import</a>
 </li>
 </ul>
-
 </div>
 
 
@@ -421,9 +413,7 @@ And directly create the graph structure by using a Neo4j driver for your stack t
 
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_cypher_is_all_about_patterns">Cypher is all about Patterns</h4>
-
+<h3 id="_cypher_is_all_about_patterns">Cypher is all about Patterns</h3>
 
 
 <div class="paragraph">
@@ -464,9 +454,7 @@ That&#8217;s especially helpful when making sure that certain patterns shouldn&#
 
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_northwind_example_model">Northwind Example Model</h4>
-
+<h3 id="_northwind_example_model">Northwind Example Model</h3>
 
 
 <div class="paragraph">
@@ -481,9 +469,7 @@ You&#8217;ll find customers, products, orders, employees, shippers and categorie
 </div>
 
 <div class="sect3 "  >
-    
-<h5 id="_relational_model">Relational model</h5>
-
+<h4 id="_relational_model">Relational model</h4>
 <div class="imageblock">
 <p class="content">
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/Northwind_diagram.jpg" alt="Northwind diagram">
@@ -491,9 +477,7 @@ You&#8217;ll find customers, products, orders, employees, shippers and categorie
 </div>
 </div>
 <div class="sect3 "  >
-    
-<h5 id="_graph_model">Graph Model</h5>
-
+<h4 id="_graph_model">Graph Model</h4>
 <div class="imageblock">
 <p class="content">
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/northwind_graph_simple.png" alt="northwind graph simple" width="800">
@@ -502,9 +486,7 @@ You&#8217;ll find customers, products, orders, employees, shippers and categorie
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_querying_the_data_step_by_step">Querying the Data Step by Step</h4>
-
+<h3 id="_querying_the_data_step_by_step">Querying the Data Step by Step</h3>
 
 
 <div class="paragraph">
@@ -512,8 +494,12 @@ You&#8217;ll find customers, products, orders, employees, shippers and categorie
 </div>
 
 <div class="sect3 "  >
-    
-<h5 id="_find_all_products">Find all Products</h5>
+<h4 id="_find_all_products">Find all Products</h4>
+
+
+<div class="paragraph">
+<p><em>Select and Return Records</em></p>
+</div>
 
 
 
@@ -539,6 +525,12 @@ FROM products as p;</code></pre>
 RETURN p;</code></pre>
 </div>
 </div>
+
+
+<div class="paragraph">
+<p><em>Field Access, Ordering and Paging</em></p>
+</div>
+
 
 
 <div class="paragraph">
@@ -571,8 +563,12 @@ LIMIT 10;</code></pre>
 </div>
 </div>
 <div class="sect3 "  >
-    
-<h5 id="_find_single_product_by_name">Find single Product by Name</h5>
+<h4 id="_find_single_product_by_name">Find single Product by Name</h4>
+
+
+<div class="paragraph">
+<p><em>Filter by Equality</em></p>
+</div>
 
 
 
@@ -615,6 +611,12 @@ RETURN p.productName, p.unitPrice;</code></pre>
 
 
 <div class="paragraph">
+<p><em>Idexing</em></p>
+</div>
+
+
+
+<div class="paragraph">
 <p>If you want to match quickly by this node-label and attribute combination, it makes sense to create an index for that pair, if you haven&#8217;t during the <a href="/developer/working-with-data/guide-importing-data-and-etl">import</a>.</p>
 </div>
 
@@ -625,8 +627,12 @@ RETURN p.productName, p.unitPrice;</code></pre>
 </div>
 </div>
 <div class="sect3 "  >
-    
-<h5 id="_filter_products">Filter Products</h5>
+<h4 id="_filter_products">Filter Products</h4>
+
+
+<div class="paragraph">
+<p><em>Filter by List/Range</em></p>
+</div>
 
 
 
@@ -670,6 +676,12 @@ RETURN p.productName, p.unitPrice;</code></pre>
 
 
 <div class="paragraph">
+<p><em>Filter by Multiple Numeric and Textual Predicates</em></p>
+</div>
+
+
+
+<div class="paragraph">
 <p>Filtering can go further, let&#8217;s try to find some expensive things starting with "C".</p>
 </div>
 
@@ -695,8 +707,12 @@ RETURN p.productName, p.unitPrice;</code></pre>
 </div>
 </div>
 <div class="sect3 "  >
-    
-<h5 id="_joining_products_with_customers">Joining Products with Customers</h5>
+<h4 id="_joining_products_with_customers">Joining Products with Customers</h4>
+
+
+<div class="paragraph">
+<p><em>Join Records, Distinct Results</em></p>
+</div>
 
 
 
@@ -729,8 +745,12 @@ RETURN distinct c.companyName;</code></pre>
 </div>
 </div>
 <div class="sect3 "  >
-    
-<h5 id="_new_customers_without_orders_yet">New Customers without Orders yet</h5>
+<h4 id="_new_customers_without_orders_yet">New Customers without Orders yet</h4>
+
+
+<div class="paragraph">
+<p><em>Outer Joins, Aggregation</em></p>
+</div>
 
 
 
@@ -768,8 +788,12 @@ ORDER BY volume DESC;</code></pre>
 </div>
 </div>
 <div class="sect3 "  >
-    
-<h5 id="_aggregation_of_top_sellers">Aggregation of Top-Sellers</h5>
+<h4 id="_top_selling_employees">Top-Selling Employees</h4>
+
+
+<div class="paragraph">
+<p><em>Aggregation, Grouping</em></p>
+</div>
 
 
 
@@ -811,8 +835,12 @@ ORDER BY cnt DESC LIMIT 10</code></pre>
 </div>
 </div>
 <div class="sect3 "  >
-    
-<h5 id="_collecting_master_detail_queries">Collecting Master-Detail Queries</h5>
+<h4 id="_employee_territories">Employee Territories</h4>
+
+
+<div class="paragraph">
+<p><em>Collecting Master-Detail Queries</em></p>
+</div>
 
 
 
@@ -853,8 +881,12 @@ RETURN t.description, collect(e.lastName);</code></pre>
 </div>
 </div>
 <div class="sect3 "  >
-    
-<h5 id="_product_categories_hierarchies_and_trees">Product Categories - Hierarchies and Trees</h5>
+<h4 id="_product_categories">Product Categories</h4>
+
+
+<div class="paragraph">
+<p><em>Hierarchies and Trees, Variable Length Joins</em></p>
+</div>
 
 
 
@@ -914,8 +946,6 @@ If you are intrigued by the possibilities and want to try and learn more, just <
 </div>
 
 <div class="ulist">
-
-
 <ul>
 <li>
 <a href="../../cypher-query-language/guide-cypher-basics">Cypher Intro Guide</a>
@@ -930,7 +960,6 @@ If you are intrigued by the possibilities and want to try and learn more, just <
 <a href="http://neo4j.com/docs/stable/cypher-refcard/">Reference Card</a>
 </li>
 </ul>
-
 </div>
 </div>
 </div>

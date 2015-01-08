@@ -7,41 +7,9 @@
          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
          <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jzurb/favicon.ico"/>
          <title>Hosting Neo4j in the Cloud | Developer Resources | Neo4j Graph Database</title>
-         <script type="text/javascript">
-            var _kmq = _kmq || [];
-            var _kmk = _kmk || 'a6a57b4b368caf34f5a6f2042eb075f9e559d779';
-            function _kms(u){
-                setTimeout(function(){
-                    var d = document, f = d.getElementsByTagName('script')[0],
-                        s = d.createElement('script');
-                    s.type = 'text/javascript'; s.async = true; s.src = u;
-                    f.parentNode.insertBefore(s, f);
-                }, 1);
-            }
-            _kms('//i.kissmetrics.com/i.js');
-            _kms('//doug1izaerwt3.cloudfront.net/' + _kmk + '.1.js');
-         </script> <script type="text/javascript">
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-            //Allow Linker
-            ga('create', 'UA-1192232-34','auto', {'allowLinker': true});
-            ga('send', 'pageview');
-
-            // Load the plugin.
-            ga('require', 'linker');
-
-            // Define which domains to autoLink.
-            ga('linker:autoLink', ['neo4j.org','neo4j.com','neotechnology.com','graphdatabases.com','graphconnect.com']);
-         </script>
          <link rel="canonical" href="http://neo4j.com/guides/basic-data-modeling/"/>
          <meta property="og:locale" content="en_US"/>
          <meta property="og:type" content="article"/>
-         <meta property="og:title" content="Basic Data Modeling - Neo4j Graph Database"/>
-         <meta property="og:description" content="Please refer to the Neo4j Manual"/>
-         <meta property="og:url" content="http://neo4j.com/guides/basic-data-modeling/"/>
          <meta property="og:site_name" content="Neo4j Graph Database"/>
          <link rel="alternate" type="application/rss+xml" title="Neo4j Graph Database &raquo; Feed" href="http://neo4j.com/feed/"/>
          <link rel="alternate" type="application/rss+xml" title="Neo4j Graph Database &raquo; Comments Feed" href="http://neo4j.com/comments/feed/"/>
@@ -151,6 +119,9 @@
                      {
                      padding-left: 0;
                      }
+                     div.side-nav {
+                        clear: right; float: right; margin-bottom: 1em; margin-top: 1em; width: 5em; padding: 1em; min-width: 16em; border: 1px solid rgb(222, 222, 222); height:auto;
+                     }
                   </style>
                   <style> .lead { display: none; } section.row { padding: 0; } #content section.row { max-width: 62.5rem; padding-left: .5em; padding-right: .5em; } .row { max-width: 80em; } #content section.row .accordion-navigation > a { padding: 0 !important; } .accordion .content { padding: 0; } .row .row { margin: auto; } .columns.medium-12 { padding-left: 0; } .fa-stack.fa-lg { color: #0f5788; display: block; float: left; height: 70px; margin-right: 1em; padding-right: 2em; width: 50px; } h3 { font-weight: normal; } strong, b { font-weight:600; font-color:#333; } .calloutsection { padding: 20px 0; } section { padding: 40px 0 0 0; } .marquee { height: auto; margin-top: 1em; } #main-content .entry-title { display: none; } #main-content .subheader { display: none; } .marquee h1, .marquee h2 { padding-top: 0; } #main-content .next-steps h5 { font-size: 12px; } #main-content .next-steps h3 { margin-bottom: 1em; } #main-content .content.active { display: block; } #main-content .content { display: none; } #main-content { padding-top: 0; } .use-case .tab-container .content.active { border-top: 1px solid rgba(15, 87, 136, 0.7); padding: 2em 1em 1em; } .tabs dd > a:hover { color: #3d5360; } .breadcrumbs > * a, .breadcrumbs > * span { color: #0f5788; text-transform: none; } .breadcrumbs > * { text-transform: none; } .top-bar { height: 80px; } #main-content .top-bar-section ul { margin-top: 1em; } .panel-pod p { font-size: 14px; font-weight: normal; line-height: 26px; } .panel-pod > a { display: block; margin-bottom: 1em; } .panel-pod p a { display: block; margin-top: 1em; } .panel-pod { text-align: left; } .tab-container { margin-bottom: 2em; } .panel-pod img { display: block; margin: auto; } #content h3 { font-weight: 100; } #content ul {}
                   #content section.row .accordion-navigation > a {
@@ -235,7 +206,7 @@
                      <section class="row" style="padding:10px 0;">
                         <div class="large-12 columns" style="padding-top:0;">
                            <div id="content">
-                              <div id="preamble">
+                              <div id="preamble columns medium-12">
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
@@ -262,7 +233,6 @@ For self-service hosting you should bring along enough sysops experience that a 
 
 <ul class="sectlevel2">
 <li><a href="#_hosting_on_aws_ec2">Hosting on AWS / EC2</a></li>
-
 <li><a href="#_neo4j_provisioning_solutions">Neo4j Provisioning Solutions</a></li>
 <li><a href="#_windows_azure">Windows Azure</a></li>
 <li><a href="#_neo4j_with_docker">Neo4j with Docker</a></li>
@@ -270,13 +240,12 @@ For self-service hosting you should bring along enough sysops experience that a 
 <li><a href="#_neo4j_cloud_hosting_providers">Neo4j Cloud Hosting Providers</a></li>
 </ul>
 
+</div>
 <hr>
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_hosting_on_aws_ec2">Hosting on AWS / EC2</h4>
-
+<h3 id="_hosting_on_aws_ec2">Hosting on AWS / EC2</h3>
 
 
 <div class="paragraph">
@@ -296,14 +265,7 @@ It&#8217;s intended to help application developers get up and running quickly wi
 <p>If you are proficient at setting up AWS instances, you can also install Neo4j on any provisioned Linux instance</p>
 </div>
 
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;height:auto;'><li>
-<h2 id="_recommended">Recommended</h2>
-</li>
-<div class="ulist">
-
-
+<div class="ulist side-nav">
 <ul>
 <li>
 <a href="https://github.com/neo4j-contrib/neo4j-puppet/blob/master/README.CLOUDFORMATION.md">Neo4j Cloud Formation Template</a>
@@ -318,16 +280,11 @@ It&#8217;s intended to help application developers get up and running quickly wi
 <a href="http://blogs.mindspew-age.com/2012/12/04/another-great-example-of-aws-fidelity-neo4j-cloud-init-and-eucalyptus/">Neo4j, Cloud-Init, and Eucalyptus</a>
 </li>
 </ul>
-
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_neo4j_provisioning_solutions">Neo4j Provisioning Solutions</h4>
-
+<h3 id="_neo4j_provisioning_solutions">Neo4j Provisioning Solutions</h3>
 <div class="ulist">
-
-
 <ul>
 <li>
 <a href="https://github.com/michaelklishin/neo4j-server-chef-cookbook">Neo4j Server Chef Cookbook</a>
@@ -339,13 +296,10 @@ It&#8217;s intended to help application developers get up and running quickly wi
 <a href="https://github.com/julienroubieu/ansible-neo4j">Ansible role to install Neo4j</a>, with Vagrant support
 </li>
 </ul>
-
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_windows_azure">Windows Azure</h4>
-
+<h3 id="_windows_azure">Windows Azure</h3>
 
 
 <div class="paragraph">
@@ -360,8 +314,6 @@ It&#8217;s intended to help application developers get up and running quickly wi
 
 <iframe src="//www.slideshare.net/slideshow/embed_code/32462907" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/neo4j/neo4j-201-windows-azure-vm-release" title="Neo4j 2.0.1 Windows Azure VM Release" target="_blank">Neo4j 2.0.1 Windows Azure VM Release</a> </strong> from <strong><a href="//www.slideshare.net/neo4j" target="_blank">Neo4j - The Open Source Graph Database </a></strong> </div>
 <div class="ulist">
-
-
 <ul>
 <li>
 <a href="http://neo4j.com/blog/neo4j-2-0-1-community-released-on-windows-azure-vm-depot/">Azure VMDepot Image Blog Post</a>
@@ -379,13 +331,10 @@ How to deploy Neo4j to Azure with Visual Studio 2012 - <a href="http://blog.jong
 <a href="http://blog.tatham.oddie.com.au/2014/02/11/podcast-graph-databases-and-neo4j-with-richard-and-carl-from-net-rocks/">Podcast .Net Rocks with Tatham Oddie</a>
 </li>
 </ul>
-
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_neo4j_with_docker">Neo4j with Docker</h4>
-
+<h3 id="_neo4j_with_docker">Neo4j with Docker</h3>
 
 
 <div class="paragraph">
@@ -419,9 +368,13 @@ Just add Neo4j on top and you&#8217;re done.</p>
 <p><code>docker run –rm -i -t -d –privileged -v /home/user/neo4jdata:/var/lib/neo4j/data -p 7474:7474 tpires/neo4j</code></p>
 </div>
 
+
+
+<div class="paragraph">
+<p>Some of the more widely used images:</p>
+</div>
+
 <div class="ulist">
-
-
 <ul>
 <li>
 <a href="https://registry.hub.docker.com/u/tpires/neo4j/">Neo4j by tpires</a>
@@ -433,16 +386,11 @@ Just add Neo4j on top and you&#8217;re done.</p>
 <a href="https://registry.hub.docker.com/u/kbastani/neo4j-graph-analytics/">Neo4j Graph Analytics for MazeRunner/Spark by Kenny Bastani</a>
 </li>
 </ul>
-
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_other_paas_integrations">Other PaaS Integrations</h4>
-
+<h3 id="_other_paas_integrations">Other PaaS Integrations</h3>
 <div class="ulist">
-
-
 <ul>
 <li>
 <a href="https://www.digitalocean.com/community/tutorials/how-to-install-neo4j-on-an-ubuntu-vps">Digital Ocean</a>
@@ -463,13 +411,10 @@ Just add Neo4j on top and you&#8217;re done.</p>
 <a href="https://github.com/hannelita/neo4j-openshift">Neo4j-Openshift</a>
 </li>
 </ul>
-
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_neo4j_cloud_hosting_providers">Neo4j Cloud Hosting Providers</h4>
-
+<h3 id="_neo4j_cloud_hosting_providers">Neo4j Cloud Hosting Providers</h3>
 
 
 <div class="paragraph">
@@ -478,9 +423,7 @@ If you provision databases via their offering, you enter a contract with those p
 </div>
 
 <div class="sect3 "  >
-    
-<h5 id="_graphenedb">GrapheneDB</h5>
-
+<h4 id="_graphenedb">GrapheneDB</h4>
 
 
 <div class="paragraph">
@@ -500,8 +443,6 @@ GrapheneDB is also available as a Heroku Add-On with free and tiered plans.</p>
 </div>
 
 <div class="ulist">
-
-
 <ul>
 <li>
 Paid plans are dedicated instances running on Amazon with the following features:
@@ -519,13 +460,10 @@ Online, automated daily backups and manual snapshots
 Support for provided and custom plugins and extensions
 </li>
 </ul>
-
 </div>
 </div>
 <div class="sect3 "  >
-    
-<h5 id="_graphstory">GraphStory</h5>
-
+<h4 id="_graphstory">GraphStory</h4>
 
 
 <div class="paragraph">
@@ -544,8 +482,6 @@ Support for provided and custom plugins and extensions
 </div>
 
 <div class="ulist">
-
-
 <ul>
 <li>
 Staging and Production in one package
@@ -563,13 +499,10 @@ Get your graph-backed application up and running within minutes
 Secure access to your graph database and graph management tools
 </li>
 </ul>
-
 </div>
 </div>
 <div class="sect3 "  >
-    
-<h5 id="_structr_com">Structr.com</h5>
-
+<h4 id="_structr_com">Structr.com</h4>
 
 
 <div class="paragraph">
@@ -583,8 +516,6 @@ It offers:</p>
 </p>
 </div>
 <div class="ulist">
-
-
 <ul>
 <li>
 Embedded Graph Databases
@@ -602,7 +533,6 @@ Physics-based Graph Visualization
 Managed Cloud Server
 </li>
 </ul>
-
 </div>
 </div>
 </div>
