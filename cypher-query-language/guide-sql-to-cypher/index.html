@@ -271,7 +271,8 @@ These patterns are what you would usually draw on a whiteboard, just converted i
 
 
 <div class="paragraph">
-<p>And arrows of relationships are drawn as such <code>--&gt;</code>, you can add the relationship-type and other information in square brackets <code>-[:ORDERED]-&gt;</code>.</p>
+<p>And arrows of relationships are drawn as such <code>--&gt;</code>, you can add the relationship-type and other information in square brackets<br>
+<code>-[:ORDERED]-&gt;</code>.</p>
 </div>
 
 
@@ -333,49 +334,23 @@ So if you still have the original ER diagram available, try to use it as a guide
 
 
 <div class="paragraph">
-<p>Here are some tips that help you with the transformation:</p>
+<p>For such a good relational model, the transformation is not too hard.
+Entity table rows are converted into nodes and foreign-key relationships and join tables into relationships.</p>
 </div>
 
-<div class="ulist">
-<ul>
-<li>
-Each entity table is represented by a label on nodes
-</li>
-<li>
-Each row in a entity table is a node
-</li>
-<li>
-Columns on those tables become node properties.
-</li>
-<li>
-Remove technical primary keys, keep business primary keys
-</li>
-<li>
-Add unique constraints for business primary keys, add indexes for frequent lookup attributes
-</li>
-<li>
-Replace foreign keys with relationships to the other table, remove them afterwards
-</li>
-<li>
-Remove data with default values, no need to store those
-</li>
-<li>
-Data in tables that is denormalized and duplicated might have to be pulled out into separate nodes to get a cleaner model.
-</li>
-<li>
-Indexed column names, might indicate an array property (like email1, email2, email3)
-</li>
-<li>
-Join tables are transformed into relationships, columns on those tables become relationship properties
-</li>
-</ul>
-</div>
 
 
 <div class="paragraph">
 <p>It is important to have an understanding of the graph model before you start to import data, then it just becomes the task of hydrating that model.</p>
 </div>
 
+<div class="ulist side-nav">
+<ul>
+<li>
+<a href="../../what-is-neo4j/graph-db-vs-rdbms" class="guide">Data Model Transformation</a>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
 <h3 id="_data_import">Data Import</h3>
@@ -391,10 +366,10 @@ Join tables are transformed into relationships, columns on those tables become r
 <p>Those files can be then imported by using Cypher&#8217;s <code>LOAD CSV</code> capability, which we explain in detail in our guides.</p>
 </div>
 
-<div class="ulist">
+<div class="ulist side-nav">
 <ul>
 <li>
-<a href="../../guide-importing-data-and-etl" class="guide">Guide: Data Import</a>
+<a href="../../working-with-data/guide-importing-data-and-etl" class="guide">Guide: Data Import</a>
 </li>
 <li>
 <a href="http://watch.neo4j.org/video/112447027" class="video">Webinar: Data Import</a>

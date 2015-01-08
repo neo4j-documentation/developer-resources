@@ -31,7 +31,8 @@ These patterns are what you would usually draw on a whiteboard, just converted i
 
 We represent the circles of nodes with round parentheses, like this: `(p:Product)`.
 
-And arrows of relationships are drawn as such `+-->+`, you can add the relationship-type and other information in square brackets `+-[:ORDERED]->+`.
+And arrows of relationships are drawn as such `+-->+`, you can add the relationship-type and other information in square brackets +
+`+-[:ORDERED]->+`.
 
 Bringing both together `+()-->()<--()+` looks almost like the original diagram and gives us a first hint at the expressiveness of graph patterns: `+(cust:Customer)-[:ISSUED]->(o:Order)-[:CONTAINS]->(prod:Product)+`.
 
@@ -56,20 +57,13 @@ Graph model shapes are mostly driven by use-cases, so there will be opportunity 
 A good, normalized Entity-Relationship diagram often already represents a decent graph model. 
 So if you still have the original ER diagram available, try to use it as a guide.
 
-Here are some tips that help you with the transformation:
-
-- Each entity table is represented by a label on nodes
-- Each row in a entity table is a node
-- Columns on those tables become node properties.
-- Remove technical primary keys, keep business primary keys
-- Add unique constraints for business primary keys, add indexes for frequent lookup attributes
-- Replace foreign keys with relationships to the other table, remove them afterwards
-- Remove data with default values, no need to store those
-- Data in tables that is denormalized and duplicated might have to be pulled out into separate nodes to get a cleaner model.
-- Indexed column names, might indicate an array property (like email1, email2, email3)
-- Join tables are transformed into relationships, columns on those tables become relationship properties
+For such a good relational model, the transformation is not too hard.
+Entity table rows are converted into nodes and foreign-key relationships and join tables into relationships.
 
 It is important to have an understanding of the graph model before you start to import data, then it just becomes the task of hydrating that model.
+
+[role=side-nav]
+* link:../../what-is-neo4j/graph-db-vs-rdbms["Data Model Transformation",role=guide]
 
 === Data Import
 
@@ -77,7 +71,8 @@ Most relational databases allow an easy export of tables to CSV files, e.g. in P
 
 Those files can be then imported by using Cypher's `LOAD CSV` capability, which we explain in detail in our guides.
 
-* link:../../guide-importing-data-and-etl["Guide: Data Import",role=guide]
+[role=side-nav]
+* link:../../working-with-data/guide-importing-data-and-etl["Guide: Data Import",role=guide]
 * http://watch.neo4j.org/video/112447027["Webinar: Data Import",role=video]
 * link:../../working-with-data/guide-import-csv["Guide CSV Import",role=guide]
 

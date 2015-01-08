@@ -38,7 +38,7 @@ This is enforceable with constraints, but only when the reference is never optio
 Joins are computed at query time by matching primary- and foreign-keys of the many (potentially indexed) rows of the to-be-joined tables.
 These operations are compute- and memory-intensive and have an exponential cost.
 
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/rel_graph4.jpg[]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/from_relational_model.png[]
 
 If you use many-to-many relationships, you have to introduce a _JOIN_ table (or junction table) that holds foreign keys of both participating tables which further increases join operation costs.
 Those costly join operations are usually addressed by denormalising data to reduce the number of joins necessary.
@@ -62,7 +62,7 @@ This ability of pre-materializing relationships into database structures allows 
 
 The resulting data models are much simpler and at the same time more expressive than those produced using traditional relational or other NoSQL databases.
 
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/rel_graph5.jpg[]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/relational_to_graph.png[]
 
 Unlike other NoSQL databases, graph databases support a very flexible and fine-grained data model that allows you to model and manage rich domains in an easy and intuitive way.
 
@@ -74,14 +74,35 @@ The well-known and tested concept of transactions groups a set of updates of nod
 Graph databases like Neo4j fully support the transactional concepts including write-ahead logs and recovery after abnormal termination.
 So you never lose your data that has been comitted to the database.
 
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/rel_graph9.jpg[]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/to_graph_model.png[]
 
 If you're used to modeling with relational databases, remember the ease and beauty of a well done, normalized entity-relationship diagram: a simple, easy to understand model you can quickly whiteboard with your colleagues and domain experts.
 A graph is exactly that, a clear model of the domain, focused on the use-cases you want to efficiently support.
 
 Let's take a model of the organizational domain and show how it would be modeled in a relational database vs. the graph database:
 
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/domain.png[]
+[.float-group]
+--
+image:http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/organization_relational.png[width=45%]
+image:http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/organization_graph.png[width=45%]
+--
+
+=== Data Model Transformation
+
+Here are some tips that help you with the transformation:
+
+- Each entity table is represented by a label on nodes
+- Each row in a entity table is a node
+- Columns on those tables become node properties.
+- Remove technical primary keys, keep business primary keys
+- Add unique constraints for business primary keys, add indexes for frequent lookup attributes
+- Replace foreign keys with relationships to the other table, remove them afterwards
+- Remove data with default values, no need to store those
+- Data in tables that is denormalized and duplicated might have to be pulled out into separate nodes to get a cleaner model.
+- Indexed column names, might indicate an array property (like email1, email2, email3)
+- Join tables are transformed into relationships, columns on those tables become relationship properties
+
+It is important to have an understanding of the graph model before you start to import data, then it just becomes the task of hydrating that model.
 
 [role=side-nav]
 * link:../graph-database["What is a Graph Database?"]
