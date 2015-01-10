@@ -258,7 +258,7 @@
 <div class="marquee blue">
     <div class="row text-center">
         <div class="medium-10 small-centered columns">
-            <h1 class="entry-title">Using Neo4j from Ruby</h1>
+            <h1 class="entry-title">Graph Data Modeling Guidelines</h1>
         </div>
     </div>
 </div>
@@ -271,7 +271,7 @@
                     <ul class="breadcrumbs">
                         <li><a href="/developer-resources">Developer Guides</a></li>
                         
-                        <li class="current"><a href="#">Using Neo4j from Ruby</a></li>
+                        <li class="current"><a href="#">Graph Data Modeling Guidelines</a></li>
                     </ul>
                 </div>
             </div>
@@ -568,13 +568,14 @@ hr {
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-This guide provides an overview of options for connecting to Neo4j using Ruby. It will introduce the different drivers and link to relevant resources.
+This guide is designed to walk you through the graph data modeling lifecycle of Neo4j.
+You will be introduced to the basic process of designing a graph data model that can answer a wide range of business questions across a variety of domains.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should be familiar with <a href="/developer/graph-database">graph database concepts</a> and the property graph model. You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="/developer/cypher">Cypher Query language</a>.
+You should have a firm understanding of the Neo4j&#8217;s <a href="./graph-database#property-graph">property graph data model</a>, and its query language, <a href="./cypher">Cypher</a>.
 </blockquote>
 </div>
 
@@ -585,330 +586,528 @@ You should be familiar with <a href="/developer/graph-database">graph database c
 <div class="toc">
 <h3 class="title">Overview</h3>
 
+<ul class="sectlevel1">
+<li><a href="#_introduction">Introduction</a></li>
+<li><a href="#_describing_a_domain">Describing a Domain</a>
 <ul class="sectlevel2">
-<li><a href="#_neo4j_for_rubyists">Neo4j for Rubyists</a></li>
-<li><a href="#_driver_options">Driver Options</a></li>
-<li><a href="#_deployment_considerations">Deployment Considerations</a></li>
-<li><a href="#_the_example_project">The Example Project</a></li>
-<li><a href="#_neography">Neography</a></li>
-<li><a href="#_neo4j_core_and_neo4j_rb">Neo4j-core and Neo4j.rb</a></li>
-<li><a href="#_other_drivers">Other Drivers</a></li>
+<li><a href="#_nodes">Nodes</a></li>
+<li><a href="#_labels">Labels</a></li>
+<li><a href="#_relationships">Relationships</a></li>
+<li><a href="#_draw_the_data_model">Draw the Data Model</a></li>
+</ul>
+</li>
+<li><a href="#_answering_questions">Answering Questions</a>
+<ul class="sectlevel2">
+<li><a href="#_list_your_questions">List your Questions</a></li>
+<li><a href="#_create_a_sample_dataset">Create a Sample Dataset</a></li>
+<li><a href="#_translate_questions_to_cypher_queries">Translate Questions to Cypher Queries</a></li>
+</ul>
+</li>
 </ul>
 
 </div>
 <hr>
 </div>
 </div>
+<div class="sect1 "  >
+<h3 id="_introduction">Introduction</h3>
+
+
+<div class="paragraph">
+<p>Graph data modeling is the process in which a Neo4j user describes an arbitrary domain as a connected graph of nodes and relationships.
+From this description, a graph data model is designed to answer questions in the form of Cypher queries.</p>
+</div>
+
+</div>
+<div class="sect1 "  >
+<h3 id="_describing_a_domain">Describing a Domain</h3>
+
+
+<div class="paragraph">
+<p>Consider the following description of the connection between two people, Sally and John.</p>
+</div>
+
+<div class="quoteblock" style="margin: auto; width: 95%;">
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+</div>
+
+<blockquote>
+Two <em>people</em>, <strong>John</strong> and <strong>Sally</strong>, are <u>friends</u>. Both <strong>John</strong> and <strong>Sally</strong> have <u>read</u> the <em>book</em>, <strong>Graph Databases</strong>.
+</blockquote>
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>We can take this statement, identify components such as labels, nodes, and relationships, and use these to build our model.</p>
+</div>
+
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_neo4j_for_rubyists">Neo4j for Rubyists</h3>
+<h3 id="_nodes">Nodes</h3>
+
+
+<div class="paragraph">
+<p>The first entity that we&#8217;ll identify in our domain are the nodes.</p>
+</div>
+
+<div class="quoteblock" style="margin: auto; width: 95%;">
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+</div>
+
+<blockquote>
+The fundamental units that form a graph are nodes and relationships.
+In Neo4j, both nodes and relationships can contain properties.
+Nodes are often used to represent entities, but depending on the domain relationships may be used for that purpose as well.
+Apart from properties and relationships, nodes can also be labeled with zero or more labels.
+</blockquote>
+<div class="attribution">
+<cite>docs.neo4j.org</cite><br>
+&#8212; 3.1 Nodes
+</div>
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+</div>
+</div>
 <div class="imageblock">
 <p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/ruby.png" alt="ruby">
+<img src="http://neo4j.com/docs/stable/images/graphdb-nodes-overview.svg" alt="Nodes">
 </p>
 </div>
 
 
 <div class="paragraph">
-<p>The Ruby programming language, released publicly in 1995, is a dynamic, object-oriented language. Its friendly syntax, aimed at making developers happy and feeling "natural, not simple," has made it extremely popular, particularly with web startups. It has a very large community, sophisticated but friendly package management system, dozens of powerful web frameworks, and an endless stream of blogs, webcasts, forums, books, and reference material for developers of all skill levels.</p>
+<p>We can identify nodes as entities with a unique conceptual identity. In this case, these entities are outlined below in bold.</p>
 </div>
 
+<div class="quoteblock" style="margin: auto; width: 95%;">
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+</div>
+
+<blockquote>
+Two people, <strong>John</strong> and <strong>Sally</strong>, are friends. Both <strong>John</strong> and <strong>Sally</strong> have read the book, <strong>Graph Databases</strong>.
+</blockquote>
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+</div>
+</div>
 
 
 <div class="paragraph">
-<p>Ruby, the language with a focus on natural syntax so developers can be happier, is a perfect pairing with Neo4j, the graph database that provides the most natural way to persist data. Much like the Ruby community as a whole, Neo4j&#8217;s Rubyists are active and passionate developers who have created a broad range of mature Neo4j drivers. Whether you&#8217;re looking for low-level access to the core Java API with JRuby, access via our HTTP API, or ActiveModel-complaint models for a framework like Ruby on Rails, there is something for everyone.</p>
-</div>
-
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_driver_options">Driver Options</h3>
-
-
-<div class="paragraph">
-<p>There are three popular gems for Neo4j:</p>
+<p>Extracting the nodes:</p>
 </div>
 
 <div class="ulist">
 <ul>
 <li>
-<a href="https://github.com/maxdemarzi/neography">Neography</a>, a thin wrapper for the REST API that also provides additional methods to simplify node and relationship CRUD. It is compatible with Neo4j Server 1.8 through 2.X.
+<strong>John</strong>
 </li>
 <li>
-<a href="https://github.com/neo4jrb/neo4j-core">Neo4j-core</a>, a slightly heavier wrapper that provides a full Cypher DSL in addition to methods to simplify CRUD. It is compatible with Neo4j 2+ in both Server and Embedded modes.
+<strong>Sally</strong>
 </li>
 <li>
-<a href="https://github.com/neo4jrb/neo4j">Neo4j</a>, usually referred to as "Neo4j.rb," an OGM based on ActiveRecord that provides app-building tools that will make any Ruby on Rails user happy. It relies on neo4j-core and, as a result, is compatible with Neo4j 2+ in both Server and Embedded modes.
+<strong>Graph Databases</strong>
 </li>
 </ul>
 </div>
-<div class="sect3 "  >
-<h4 id="_feature_comparison">Feature Comparison</h4>
-
-
-<div class="paragraph">
-<p>Each gem fills a different need, so the choice of a gem should be based on the plans for your app and its hosting. You may also want to review frequency of updates, versions of Neo4j supported, and size of the community. Here&#8217;s a comparison chart of the these three gems to help make your decision.</p>
-</div>
-
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Feature</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Neography</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Neo4j-core</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Neo4j (Neo4j.rb)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Thin wrapper for the REST API. Fewest dependencies.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Provides simple communication with DB, Cypher DSL.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Full-featured ORM similar to ActiveRecord.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Neo4j Embedded/Java API</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Neo4j Server</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Heroku-compatible</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes (with Server/MRI)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes (with Server/MRI)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Cypher DSL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes, plus advanced query builder (QueryProxy)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ActiveModel-complaint (Drop-in use with Ruby on Rails)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Legacy Indexing Support</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Neo4j 1.X Support</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Neo4j 2.X Support</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
-</tr>
-</tbody>
-</table>
-
-
-<div class="paragraph">
-<p>All of the gems provide full support for Neo4j transactions.</p>
-</div>
-
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/data-modeling-3.png" alt="Extract Nodes">
+</p>
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_deployment_considerations">Deployment Considerations</h3>
+<h3 id="_labels">Labels</h3>
 
 
 <div class="paragraph">
-<p>Very often, your gem choice may come down to how you want to deploy: "classic" deployment using Ruby MRI and a separate Neo4j Server over the HTTP API or a self-contained Neo4j Embedded app using JRuby and an app server such as JBoss/Torquebox?</p>
+<p>Now that we have an idea of what our nodes will be, we decide what labels (if any) to assign our nodes.</p>
+</div>
+
+<div class="quoteblock" style="margin: auto; width: 95%;">
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+</div>
+
+<blockquote>
+A label is a named graph construct that is used to group nodes into sets.
+All nodes labeled with the same label belongs to the same set.
+Many database queries can work with these sets instead of the whole graph, making queries easier to write and more efficient.
+A node may be labeled with any number of labels, including none, making labels an optional addition to the graph.
+</blockquote>
+<div class="attribution">
+<cite>docs.neo4j.org</cite><br>
+&#8212; 3.4 Labels
+</div>
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+</div>
+</div>
+<div class="imageblock">
+<p class="content">
+<img src="http://neo4j.com/docs/stable/images/graphdb-labels.svg" alt="Labels">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>First we&#8217;ll start by identifying the roles of objects (John, Sally, Graph Databases) mentioned in the statement.
+We know that this statement is about two different types of objects:</p>
+</div>
+
+<div class="quoteblock" style="margin: auto; width: 95%;">
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+</div>
+
+<blockquote>
+Two <em>people</em>, John and Sally, are friends. Both John and Sally have read the <em>book</em>, Graph Databases.
+</blockquote>
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Extracting the labels:</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<em>Person</em>
+</li>
+<li>
+<em>Book</em>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/data-modeling-2.png" alt="Extract labels">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>Now that we have identified both our nodes and labels, we can assign the labels to the nodes they describe.
+For <strong>John</strong> and <strong>Sally</strong> we apply the role <em>Person</em>.
+For <strong>Graph Databases</strong> we apply the role <em>Book</em>.</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/data-modeling-4.png" alt="Apply labels">
+</p>
+</div>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3 id="_relationships">Relationships</h3>
+
+
+<div class="paragraph">
+<p>Further, we can identify the interactions between these subjects:</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<strong>John</strong> is a <u>friend</u> of <strong>Sally</strong>
+</li>
+<li>
+<strong>Sally</strong> is a <u>friend</u> of <strong>John</strong>
+</li>
+<li>
+<strong>John</strong> has <u>read</u> <strong>Graph Databases</strong>
+</li>
+<li>
+<strong>Sally</strong> has <u>read</u> <strong>Graph Databases</strong>
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>Now that we have described the kinds of things in our domain as nodes with their labels, we can connect the nodes together to describe their interactions.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Ruby MRI with Neo4j server is go-to choice for most developers, especially if they are used to other relational or NoSQL databases in frameworks such as Ruby on Rails. It allows you to have separate web and database servers and allows compatibility with popular PaaSes such as Heroku. If this sounds good to you, any of the popular gems are solid choices and you are free to consider whether you want a thin wrapper or the full framework experience.</p>
+<p>Pairs of nodes labeled <em>Person</em> can be connected to each other by the <u>friend of</u> relationship.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>JRuby and Neo4j Embedded is less common but offers blazing fast performance and access to our core Java API. The downside is that JRuby has its own configuration and compatibility demands and hosting a Java app can be difficult. Thankfully, modern app servers such as Torquebox and a strong community provide far more options and resources now than ever before. If this is right for you, the Neo4j-core and Neo4j gems will offer what you need.</p>
+<p>Pairs of nodes labeled <em>Book</em> and <em>Person</em> can be connected to each other by a <u>has read</u> relationship.</p>
 </div>
 
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_the_example_project">The Example Project</h3>
+<h3 id="_draw_the_data_model">Draw the Data Model</h3>
 
 
 <div class="paragraph">
-<p>You can find out more about our example projects for many different languages <a href="../example-project">here</a>, you can also access it via the <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/">GitHub repository</a> for the Neo4j developer resources.
-Feel free to check them out.</p>
+<p>Now that we have identified the kinds of relationships that can exist between labels of nodes, we can complete our graph data model.</p>
 </div>
 
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/data-modeling-1.png" alt="Graph data model">
+</p>
+</div>
+</div>
+</div>
+<div class="sect1 "  >
+<h3 id="_answering_questions">Answering Questions</h3>
 
 
 <div class="paragraph">
-<p>It is a small one page webapp for our movies database.
-The front-end is the same for all drivers, just the backends show you how to connect to Neo4j from the different languages and drivers.</p>
+<p>We have gone through the process of creating a basic graph data model for the interactions between people and books.
+We can take this data model further by defining attributes of these entities as key-value properties.</p>
 </div>
 
-
-
-<div class="paragraph">
-<p><a href="../example-project">Read More</a></p>
-</div>
-
-</div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_neography">Neography</h3>
+<h3 id="_list_your_questions">List your Questions</h3>
 
 
 <div class="paragraph">
-<p>Written by our own Max De Marzi, Neography feels very familiar if you’re already used to Neo4j: it’s designed as a thin wrapper above our database APIs.
-It supports the Neo4j transactional Cypher endpoint as well as the existing REST API and even supports Neo4j-Spatial.</p>
+<p>First, start by listing your questions that you want to answer about your data.</p>
 </div>
 
+<div class="ulist">
+<ul>
+<li>
+When did John and Sally become friends?
+</li>
+<li>
+What is the average rating of the book Graph Databases?
+</li>
+<li>
+Who is the author of the book Graph Databases?
+</li>
+<li>
+How old is Sally?
+</li>
+<li>
+How old is John?
+</li>
+<li>
+Who is older, Sally or John?
+</li>
+<li>
+Who read the book <em>Graph Databases</em> first, Sally or John?
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>From these list of questions, you can identify the attributes that must belong to entities within your data model.</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/data-modeling-5.png" alt="Graph data model with properties">
+</p>
+</div>
 <div class="ulist side-nav">
 <ul>
 <li>
-<a href="http://github.com/maxdemarzi/neography/">Neography on GitHub</a>
+<a href="http://neo4j.com/docs/stable/graphdb-neo4j-nodes.html">Manual: Nodes</a>
 </li>
 <li>
-Author: <a href="http://twitter.com/maxdemarzi">Max De Marzi</a>
+<a href="http://neo4j.com/docs/stable/graphdb-neo4j-labels.html">Manual: Labels</a>
 </li>
 <li>
-<a href="http://github.com/maxdemarzi/neography/">Documentation</a>
+<a href="http://neo4j.com/docs/stable/data-modeling-examples.html">Manual:Data Modeling Examples</a>
 </li>
 <li>
-<a href="http://maxdemarzi.com">Many Blog posts with examples</a>
+<a href="https://github.com/neo4j-contrib/graphgist/wiki">GraphGist Project</a>
+</li>
+<li>
+<a href="http://vimeo.com/89075703">Video: New Opportunities for Connected Data</a>
 </li>
 </ul>
 </div>
-
-
-<div class="paragraph">
-<p>Compared to Neo4j-core, it is notable for its smaller footprint, fewer dependencies, and support for extensions to the REST API. It is the perfect choice for basic communication with a database or as a backend for a custom OGM.</p>
-</div>
-
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_neo4j_core_and_neo4j_rb">Neo4j-core and Neo4j.rb</h3>
+<h3 id="_create_a_sample_dataset">Create a Sample Dataset</h3>
 
 
 <div class="paragraph">
-<p>Andreas Ronge is one of our Swedish friends from Malmö and has been writing the <a href="https://github.com/neo4jrb">canonical Neo4j driver</a> since before we hit 1.0.</p>
+<p>Now that we have a complete graph data model for our domain that sufficiently answers our questions, we can go about creating a sample dataset using Cypher.</p>
 </div>
 
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>// Create Sally
+CREATE (sally:Person { name: 'Sally', age: 32 })
 
+// Create John
+CREATE (john:Person { name: 'John', age: 27 })
 
-<div class="paragraph">
-<p>The <a href="http://twitter.com/neo4jrb">Neo4j.rb team</a> (Brian Underwood, Chris Grigg, Andreas Ronge) continued the effort and just <a href="http://neo4j.com/blog/neo4j-rb-3-0-released/">released version 3.0</a> in September 2014. Neo4j.rb 3.0 won a Neo4j Graphie award for "Best Community Contribution" at the 2014 GraphConnect Conference.</p>
-</div>
+// Create Graph Databases book
+CREATE (gdb:Book { title: 'Graph Databases',
+                   authors: ['Ian Robinson', 'Jim Webber'] })
 
+// Connect Sally and John as friends
+CREATE (sally)-[:FRIEND_OF { since: 1357718400 }]-&gt;(john)
 
+// Connect Sally to Graph Databases book
+CREATE (sally)-[:HAS_READ { rating: 4, on: 1360396800 }]-&gt;(gdb)
 
-<div class="paragraph">
-<p>In addition to working actively on the <a href="http://neo4jrb.io/">Neo4jrb project</a>, Brian and Chris are very active community members, you can find them online on Stack Overflow and Twitter as well as in person at meetups and Neo4j events.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Both projects support accessing Neo4j in embedded mode via JRuby and server mode via MRI.</p>
-</div>
-
-<div class="sect3 "  >
-<h4 id="_neo4j_core">Neo4j-core</h4>
-
-
-<div class="paragraph">
-<p>Similar to Neography, Neo4j-core is a gem that provides low-level communication to a Neo4j server. In addition to basic database communicaton and node/relationship CRUD, Neo4j-core provides strong support for Neo4j 2.0&#8217;s schema indexes, constraints, labels, and a strong Cypher DSL.</p>
-</div>
-
-</div>
-<div class="sect3 "  >
-<h4 id="_neo4j_rb">Neo4j.rb</h4>
-
-
-<div class="paragraph">
-<p>The Neo4j gem, Neo4j.rb, uses Neo4j-core as an API to connect to the server and provides an ActiveRecord-like experience for use in frameworks. It adds modules allowing the creation of models that look and feel very similar to those found in vanilla Ruby on Rails. The gem builds on Neo4j-core&#8217;s foundation to streamline all aspects of node and relationship CRUD and provides an extremely advanced, intuitive, flexible DSL for generating Cypher.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Thanks to the Neo4jrb team, we can provide example projects for both neo4j-core and Neo4j.rb itself.</p>
-</div>
-
-<div class="ulist side-nav">
-<ul>
-<li>
-<a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/ruby/neo4jrb">Example project with Neo4j.rb &amp; Rails</a>
-</li>
-<li>
-<a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/ruby/neo4j-core">Example project with Neo4j-Core using Neo4j &amp; Cypher</a>
-</li>
-<li>
-<a href="http://neo4jrb.io/">Neo4j.rb Project Page</a>
-</li>
-<li>
-<a href="https://github.com/neo4jrb/neo4j-core">Neo4j-core on Github</a>
-</li>
-<li>
-<a href="https://github.com/neo4jrb/neo4j">Neo4j on Github</a>
-</li>
-<li>
-Authors: <a href="http://twitter.com/neo4jrb">Neo4j.rb team</a> (Andreas Ronge, Brian Underwood, Chris Grigg)
-</li>
-<li>
-<a href="https://github.com/neo4jrb/neo4j/wiki/Neo4j.rb-v3-Introduction">Documentation</a>
-</li>
-<li>
-<a href="http://neo4j.com/blog/neo4j-rb-3-0-released/">Neo4j.rb 3.0 release blog post</a>
-</li>
-<li>
-<a href="http://blog.brian-underwood.codes/ruby/neo4j/announcements/2014/11/03/neo4apis/">Neo4j-APIs Analytics Gem(s)</a>
-</li>
-</ul>
+// Connect John to Graph Databases book
+CREATE (john)-[:HAS_READ { rating: 5, on: 1359878400 }]-&gt;(gdb)</code></pre>
 </div>
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_other_drivers">Other Drivers</h3>
+<h3 id="_translate_questions_to_cypher_queries">Translate Questions to Cypher Queries</h3>
+
+
+<div class="paragraph">
+<p>Now that we have a sample dataset of our graph data model, we can translate our questions from earlier into queries.</p>
+</div>
+
 <div class="sect3 "  >
-<h4 id="_pacer">Pacer</h4>
-
-
-<div class="paragraph">
-<p>To install: <code>gem install pacer</code></p>
+<h4 id="_when_did_john_and_sally_become_friends">When did John and Sally become Friends?</h4>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (sally:Person { name: 'Sally' })
+MATCH (john:Person { name: 'John' })
+MATCH (sally)-[r:FRIEND_OF]-(john)
+RETURN r.since as friends_since</code></pre>
 </div>
-
-
-
-<div class="paragraph">
-<p>Express yourself clearly and model your application in terms you understand with Pacer – a JRuby gem for building embedded Neo4j applications. Pacer supports Neo4j 1.8 and 1.9 only.</p>
 </div>
-
-<div class="ulist side-nav">
-<ul>
-<li>
-<a href="http://github.com/pangloss/pacer">Pacer on GitHub</a>
-</li>
-<li>
-Author: Darrick Wiebe
-</li>
-</ul>
+</div>
+<div class="sect3 "  >
+<h4 id="_what_is_the_average_rating_of_em_graph_databases_em">What is the average rating of <em>Graph Databases</em>?</h4>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (gdb:Book { title: 'Graph Databases' })
+MATCH (gdb)&lt;-[r:HAS_READ]-()
+RETURN avg(r.rating) as average_rating</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3 "  >
+<h4 id="_who_are_the_authors_of_em_graph_databases_em">Who are the authors of <em>Graph Databases</em>?</h4>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (gdb:Book { title: 'Graph Databases' })
+RETURN gdb.authors as authors</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3 "  >
+<h4 id="_how_old_is_sally">How old is Sally?</h4>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (sally:Person { name: 'Sally' })
+RETURN sally.age as sally_age</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3 "  >
+<h4 id="_how_old_is_john">How old is John?</h4>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (john:Person { name: 'John' })
+RETURN john.age as john_age</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3 "  >
+<h4 id="_who_is_older_sally_or_john">Who is older, Sally or John?</h4>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (people:Person)
+WHERE people.name = 'John' OR people.name = 'Sally'
+RETURN people.name as oldest
+ORDER BY people.age DESC
+LIMIT 1</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3 "  >
+<h4 id="_who_read_em_graph_databases_em_first_sally_or_john">Who Read <em>Graph Databases</em> First, Sally or John?</h4>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (people:Person)
+WHERE people.name = 'John' OR people.name = 'Sally'
+MATCH (people)-[r:HAS_READ]-&gt;(gdb:Book { title: 'Graph Databases' })
+RETURN people.name as first_reader
+ORDER BY r.on
+LIMIT 1</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -945,11 +1144,11 @@ Author: Darrick Wiebe
                </dd>
             </dl>
             <dl class="accordion">
-               <dd class="accordion-navigation inactive">
+               <dd class="accordion-navigation active">
                   <a href="/developer/data-modeling">
                      <h5>Data Modeling</h5>
                   </a>
-                  <div class="content inactive" id="panel5">
+                  <div class="content active" id="panel5">
                      <ul>
                         <li><a href="/developer/guide-data-modeling">Graph Data Modeling Guidelines</a></li>
                      </ul>
@@ -972,11 +1171,11 @@ Author: Darrick Wiebe
                </dd>
             </dl>
             <dl class="accordion">
-               <dd class="accordion-navigation active">
+               <dd class="accordion-navigation inactive">
                   <a href="/developer/language-guides">
                      <h5>Language Guides</h5>
                   </a>
-                  <div class="content active" id="panel4">
+                  <div class="content inactive" id="panel4">
                      <ul>
                         <li><a href="/developer/java">Java</a></li>
                         <li><a href="/developer/dotnet">.NET</a></li>
