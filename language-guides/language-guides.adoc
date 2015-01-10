@@ -31,7 +31,8 @@ A simple HTTP Cypher request, executable in the Neo4j Browser would look like:
 [source,json]
 ----
 :POST /db/data/transaction/commit {"statements":[
-      {"statement":"CREATE (p:Person {firstName:{name}}) RETURN p", "parameters":{"name":"Daniel"}}
+      {"statement":"CREATE (p:Person {firstName:{name}}) RETURN p",
+       "parameters":{"name":"Daniel"}}
     ]}
 ----
 
@@ -39,21 +40,22 @@ The drivers use the same APIs under the hood, but make them available in a conve
 Thanks to the Neo4j community, there are drivers for Neo4j for almost every popular programming language,
 most of which mimic existing database driver idioms and approaches.
 
-include::example-project/example-project.adoc[tags=intro]
-
-link:example-project[Read More]
-
-
 == Neo4j Drivers
 - - -
 Looking for your language driver?
+
 * link:java[Java]
 * link:dotnet[.NET]
 * link:javascript[JavaScript]
 * link:python[Python]
-* link:[Ruby]
-* link:[PHP]
+* link:ruby[Ruby]
+* link:php[PHP]
 * and link:r[R], link:go[Go], link:clojure[Clojure], link:perl[Perl], link:haskell[Haskell]
+
+include::example-project/example-project.adoc[tags=intro]
+
+link:example-project[Read More]
+
 
 ////
 == [.label]#Guide →# link:java[Neo4j Java Examples]
@@ -66,30 +68,4 @@ From the Neo4j Manual:
 * {manual}/tutorials-cypher-java.html[Execute Cypher Queries from Java]
 * {manual}/tutorials-java-embedded.html[Using Neo4j embedded in Java applications]
 
-=== Neo4j from R
-
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/06/Rlogo.jpg[]
-
-==== RNeo4j
-
-An R package that allows you to easily populate a Neo4j graph database from your R environment.
-
-Compatible with Neo4j >= 2.0.
-
-* http://github.com/nicolewhite/Rneo4j[Rneo4j on GitHub]
-* Author: Nicole White
-* http://nicolewhite.github.io/[Blog]
-
-=== Neo4j for Haskell Developers
-
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/haskell.png[]
-
-==== Haskell-Cypher
-
-haskell-Cypher makes it easy to send Cypher commands to Neo4j servers over their REST API. 
-Additionally, it allows users to parse Haskell datatypes from Cypher queries.
-
-* http://neo4j.com/contrib/haskell-cypher/[Haskell-Cypher on GitHub]
-* Author: Sam Anklesaria
-
-
+////
