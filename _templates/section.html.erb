@@ -11,7 +11,7 @@ if @id
 end
 if slevel.zero?
   %><h1<%= @id && %( id="#{@id}") %> class="sect0"><%= %(#{anchor}#{link_start}#{title}#{link_end}) %></h1>
-<div class="title"><%= title %></div>
+<!--div class="title"><%= title %></div-->
 <%= content %><%
 else
   snum = @numbered && @caption.nil? && slevel <= (@document.attr 'sectnumlevels', 3).to_i ? %(#{sectnum} ) : nil
@@ -20,12 +20,7 @@ else
   marginFix = slevel == 2 ? "style='padding-left: 0;'" : ""
 
   %><div class="<%= [%(sect#{slevel}),role].compact * ' ' %> <%= cols %>" <%= marginFix %> >
-<h<%= hlevel %><%= @id && %( id="#{@id}") %>><%= %(#{anchor}#{link_start}#{snum}#{captioned_title}#{link_end}) %></h<%= hlevel %>><%
-  if slevel == 1 %>
+<h<%= hlevel %><%= @id && %( id="#{@id}") %>><%= %(#{anchor}#{link_start}#{snum}#{captioned_title}#{link_end}) %></h<%= hlevel %>>
 <%= content %>
-<%
-  else %>
-<%= content %><%
-  end %>
 </div><%
 end %>
