@@ -1,0 +1,95 @@
+= Language Guides
+:level: Intermediate
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 2
+:section: Develop with Neo4j
+:section-link: language-guides
+:section-level: 2
+
+
+= image:http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/10/icon-mdm.png[] Language Guides
+- - -
+
+These guides and tutorials are designed to provide detailed examples of how to integrate Neo4j with your preferred programming language.
+Neo4j supports drivers for all major programming languages. In this section, we provide an introduction and a consistent example application for several languages and Neo4j drivers.
+
+== How to connect to Neo4j?
+- - -
+You probably also wonder how you would connect from your programming language to a Neo4j Database.
+If you've link:/download[installed] and started Neo4j as a server on your system, you can interact with the database via the built-in Neo4j Browser application on http://localhost:7474[localhost:7474].
+
+If you want to access Neo4j programmatically, you can do so with one of the many integrated HTTP-APIs, which allow you to:
+
+* POST one or more cypher statements with parameters per request to the server
+* Keep transactions open over multiple requests
+* Choose different result formats
+
+A simple HTTP Cypher request, executable in the Neo4j Browser would look like:
+
+[source,json]
+----
+:POST /db/data/transaction/commit {"statements":[
+      {"statement":"CREATE (p:Person {firstName:{name}}) RETURN p", "parameters":{"name":"Daniel"}}
+    ]}
+----
+
+The drivers use the same APIs under the hood, but make them available in a convenient way.
+Thanks to the Neo4j community, there are drivers for Neo4j for almost every popular programming language,
+most of which mimic existing database driver idioms and approaches.
+
+include::example-project/example-project.adoc[tags=intro]
+
+link:example-project[Read More]
+
+
+== Neo4j Drivers
+- - -
+Looking for your language driver?
+* link:java[Java]
+* link:dotnet[.NET]
+* link:javascript[JavaScript]
+* link:python[Python]
+* link:[Ruby]
+* link:[PHP]
+* and link:r[R], link:go[Go], link:clojure[Clojure], link:perl[Perl], link:haskell[Haskell]
+
+////
+== [.label]#Guide →# link:java[Neo4j Java Examples]
+
+Are you a Java developer? Neo4j provides two ways to connect using Java. Since Neo4j is written in Java, you can reference it as a dependency in your Java projects. You can also connect to the Neo4j server’s HTTP API. These guides help you get the most out of Neo4j with the Java programming language.
+
+From the Neo4j Manual:
+
+* {manual}/server-java-rest-client-example.html[How to use the REST API from Java]
+* {manual}/tutorials-cypher-java.html[Execute Cypher Queries from Java]
+* {manual}/tutorials-java-embedded.html[Using Neo4j embedded in Java applications]
+
+=== Neo4j from R
+
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/06/Rlogo.jpg[]
+
+==== RNeo4j
+
+An R package that allows you to easily populate a Neo4j graph database from your R environment.
+
+Compatible with Neo4j >= 2.0.
+
+* http://github.com/nicolewhite/Rneo4j[Rneo4j on GitHub]
+* Author: Nicole White
+* http://nicolewhite.github.io/[Blog]
+
+=== Neo4j for Haskell Developers
+
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/haskell.png[]
+
+==== Haskell-Cypher
+
+haskell-Cypher makes it easy to send Cypher commands to Neo4j servers over their REST API. 
+Additionally, it allows users to parse Haskell datatypes from Cypher queries.
+
+* http://neo4j.com/contrib/haskell-cypher/[Haskell-Cypher on GitHub]
+* Author: Sam Anklesaria
+
+
