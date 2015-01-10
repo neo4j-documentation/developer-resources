@@ -19,7 +19,10 @@ author = get_value(lines)
 email = get_value(lines)
 developer_section_name = get_value(lines)
 developer_section_slug = get_value(lines)
+optional_slug = get_value(lines)
 header = lines.shift
+
+post_name = optional_slug unless optional_slug.empty?
 
 html =  lines.join.gsub(/href="(?:(?:\.\.|[a-zA-Z0-9_-]+)\/)*([^#:]+?)"/,'href="/developer/\1"')
 html =  lines.join.gsub("/developer/developer",'/developer')
