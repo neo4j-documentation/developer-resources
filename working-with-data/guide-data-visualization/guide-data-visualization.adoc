@@ -22,10 +22,98 @@ toc::[]
 
 Graph visualisations are a powerful tool to convey the content of a graph.
 They can highlight patterns, and show clusters and connections.
-There are many excellent options for graph visualization, such as http://d3js.org/[the D3.js], http://threejs.org/[three.js] and http://sigmajs.org/[sigma.js].
+There are many excellent options for graph visualization, such as http://d3js.org/[D3.js], http://threejs.org/[three.js], http://sigmajs.org/[sigma.js] and http://graphalchemist.github.io/Alchemy[Alchemy.js].
+A few of the more popular graph-visualization methods are discussed below.
+
 In all cases, the visualizer request JSON data for all or part of the graph data then dynamically creates an in-memory JavaScript visualization on the client side.
 
-A few of the more popular graph-visualization methods are discussed below.
+=== HowTo: Graph Visualization
+
+If you want to get started directly, here are the few steps you have to take to convert Neo4j's graph query results into the format typically needed by the visualization libraries.
+This approach is also used in the link:/developer/language-guides/example-project[example project] which we implemented for each of the link:/developer/language-guides[languages and drivers] listed.
+You can find the appropriate transformation code for your language and stack there.
+
+They visualization toolkits usually expect a JSON list of node objects (their id, label(s) and properties) and a list of relationships (their properties, start- and end-node-id (or node-array-index for d3) and optionally relationship-id) like this.
+Here we see 3 nodes (2 people, one database) and 3 relationships in the datastructure.
+
+// create (p:Person {name:"Peter"}),(m:Person {name:"Michael"}),(n:Database {name:"Neo4j"}),(p)-[:KNOWS]->(m),(p)-[:FOUNDED]->(n),(m)-[:WORKS_ON]->(n) return *
+
+[source,javascript]
+----
+{"nodes":[{name:"Peter",label:"Person",id:1},{name:"Michael",label:"Person",id:2},
+          {name:"Neo4j",label:"Database",id:3}],
+ "links":[{start:0, end:1, type:"KNOWS", since:2010},{start:0, end:2, type:"FOUNDED"},
+          {start:1, end:2, type:"WORKS_ON"}]}
+----
+
+To render this list with D3, you just need the d3.js library dependency and a few lines of javascript.
+
+[source,javascript,indent=0]
+----
+include::../../language-guides/assets/index.html[tags=d3]
+----
+
+To generate the expected format from Neo4j you convert the results returned from the HTTP Cypher API endpoint.
+That endpoint already has an option (`{"resultDataContents":["graph"]}`) to return graph only results.
+
+For instance executing this request:
+
+[source,javascript]
+----
+:POST /db/data/transaction/commit
+  {"statements":[{"statement":"MATCH path = (n)-[r]->(m) RETURN path",
+                  "resultDataContents":["graph"]}]}
+----
+
+results in:
+
+[source,javascript]
+----
+var res  =
+{ "results": [
+    {
+      "columns": ["path"],
+      "data"   : [{
+          "graph": {
+            "nodes": [
+              {"id": "1", "labels": ["Person"], "properties": {"name": "Peter"}},
+              {"id": "2", "labels": ["Person"], "properties": {"name": "Michael"}}
+             ],
+            "relationships": [
+              {"id": "0", "type": "KNOWS", "startNode": "1", "endNode": "2", "properties": {}}
+             ]
+          } // , {"graph": ...}, ...
+      }]}
+  ], "errors": []
+}
+----
+
+Which can be converted to our visualization format by collecting the nodes and relationships of the different rows into two lists.
+Just make sure that each node is unique in the list and that the relationships refer to the array-index (not the id) of the node.
+
+[source,javascript]
+----
+function idIndex(a,id) {
+  for (var i=0;i<a.length;i++) {
+    if (a[i].id == id) return i;}
+  return null;
+}
+var nodes=[], links=[];
+res.results[0].data.forEach(function (row) {
+   row.graph.nodes.forEach(function (n) {
+     if (idIndex(nodes,n.id) == null)
+       nodes.push({id:n.id,label:n.labels[0],title:n.properties.name});
+   });
+   links = links.concat( row.graph.relationships.map(function(r) {
+     return {start:idIndex(nodes,r.startNode),end:idIndex(nodes,r.endNode),type:r.type};
+   }));
+});
+viz = {nodes:nodes, links:links};
+----
+
+Bringing all of this together - querying Neo4j and converting the result and rendering the graph with D3 into an interactive SVG based graph layout results in a visualization like this.
+
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/movie_application.png[]
 
 === The Neo4j Browser
 
@@ -66,7 +154,7 @@ You bind to these events to customize what happens, and, most importantly, your 
 <iframe width="560" height="315" src="//www.youtube.com/embed/NcYJhzFKyfw?rel=0" frameborder="0" allowfullscreen></iframe>
 ++++
 
-http://keylines.com/network-visualization/visualize-neo4j-time-graph[Integrating KeyLines Time Bar with Neo4j]
+* http://keylines.com/network-visualization/visualize-neo4j-time-graph[Integrating KeyLines Time Bar with Neo4j]
 
 === Tom Sawyer Perspectives
 
