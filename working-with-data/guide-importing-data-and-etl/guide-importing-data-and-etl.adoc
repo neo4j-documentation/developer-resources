@@ -6,7 +6,7 @@
 :toclevels: 1
 :section: Data Import
 :section-link: working-with-data
-:northwind: ../../data/northwind
+:northwind: /developer/data/northwind
 
 .Goals
 [abstract]
@@ -14,7 +14,7 @@ This guide explores how to export data from a PostgreSQL database (RDBMS) for im
 
 .Prerequisites
 [abstract]
-You should have a basic understanding of the link:/developer/graph-database#property-graph[property graph model] and have completed the link:/developer/guide-data-modeling[modeling guide].
+You should have a basic understanding of the link:/developer/get-started/graph-database#property-graph[property graph model] and have completed the link:/developer/data-modeling/guide-data-modeling[modeling guide].
 If you link:/download[download] and install the Neo4j server you'll be able to follow along with the examples.
 
 [role=expertise]
@@ -59,13 +59,6 @@ The PostgreSQL 'copy' command lets us execute a SQL query and write the result t
 ----
 include::{northwind}/export_csv.sql[]
 ----
-
-////
-[role=side-nav]
-* http://neo4j.com/docs[The Neo4j Docs]
-* link:/blog[The Neo4j Blog]
-* link:/developer/guide-intro-to-graph-modeling[Intro to Graph Modeling]
-////
 
 === Importing the Data using Cypher
 
@@ -230,4 +223,4 @@ e.EmployeeID:reports:totalOrders
 * link:{github}/data/northwind[Northwind SQL, CSV and Cypher data files]
 * link:/developer/cypher/guide-sql-to-cypher[From SQL to Cypher]
 * link:/developer/working-with-data/guide-import-csv[Import CSV Guide]
-* link:/developer/build-a-graph-data-model/guide-intro-to-graph-modeling.adoc[Graph Data Modeling]
+* link:/developer/data-modeling/guide-data-modeling[Graph Data Modeling]

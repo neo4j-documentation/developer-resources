@@ -14,7 +14,7 @@ In addition, it explains how to integrate graph databases with relational databa
 
 .Prerequisites
 [abstract]
-You should have looked into the link:/developer/graph-database#property-graph[property-graph model] and optionally read link:/developer/guide-intro-to-graph-modeling[data modeling with graphs].
+You should have looked into the link:/developer/get-started/graph-database#property-graph[property-graph model] and optionally read link:/developer/data-modeling/guide-data-modeling[data modeling with graphs].
 
 [role=expertise]
 {level}
@@ -105,7 +105,7 @@ Here are some tips that help you with the transformation:
 It is important to have an understanding of the graph model before you start to import data, then it just becomes the task of hydrating that model.
 
 [role=side-nav]
-* link:../graph-database["What is a Graph Database?"]
+* link:/developer/get-started/graph-database["What is a Graph Database?"]
 * https://vimeo.com/103466968["Intro to Neo4j"^,role=webinar]
 * http://neo4j.com/events?type=Training["Neo4j Training",role=event]
 
@@ -151,7 +151,7 @@ RETURN p.name
 * link:/graphacademy/online-course[Online Training]
 * link:/developer/cypher[Quick Cypher Intro]
 * link:/use-cases[Use-Case Examples]
-* link:../../cypher/guide-sql-to-cypher["From SQL to Cypher"]
+* link:/developer/cypher/guide-sql-to-cypher["From SQL to Cypher"]
 * {manual}/examples-from-sql-to-cypher.html[Manual: From SQL to Cypher]
 
 === Connecting to Neo4j
@@ -205,8 +205,8 @@ try (PreparedStatement stmt = con.prepareStatement(QUERY)) {
 
 [role=side-nav]
 * link:/download[Install Neo4j]
-* link:../../language-guides[Neo4j Language Drivers]
-* link:/developer/java/#_using_neo4j_server_with_jdbc[JDBC example]
+* link:/developer/language-guides[Neo4j Language Drivers]
+* link:/developer/language-guides/java/#_using_neo4j_server_with_jdbc[JDBC example]
 * {manual}/rest-api-transactional.html[Cypher HTTP Endpoint,role=docs]
 
 === Importing Data from a Relational Database
@@ -245,14 +245,14 @@ CREATE (person)-[:EMPLOYEE]->(dept)
 
 You can import multiple CSV files from one or more data sources to enrich your core domain model with other information that might add interesting insights and capabilities.
 
-Other, dedicated import tools, help you importing larger volumes (10M+ rows) of data efficiently, as described in the link:../../working-with-data/guide-import-csv[csv-import guide].
+Other, dedicated import tools, help you importing larger volumes (10M+ rows) of data efficiently, as described in the link:/developer/working-with-data/guide-import-csv[csv-import guide].
 
 //[role=side-nav]
 
-* link:/developer/guide-importing-data-and-etl["Guide: Data Import",role=guide]
+* link:/developer/working-with-data/guide-importing-data-and-etl["Guide: Data Import",role=guide]
 * {manual}/query-load-csv.html["Manual: LOAD CSV",role=docs]
 * http://watch.neo4j.org/video/112447027["Webinar: Data Import",role=video]
-* link:../../working-with-data/guide-import-csv[Guide CSV Import]
+* link:/developer/working-with-data/guide-import-csv[Guide CSV Import]
 //* http://jexp.de/blog/2014/06/load-csv-into-neo4j-quickly-and-successfully/["",role=blog]
 //* http://worldcup.neo4j.org/the-world-cup-graph-domain-model/["World Cup Dataset",role=blog]
 

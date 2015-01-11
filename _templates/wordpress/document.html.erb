@@ -7,9 +7,9 @@ developer_section_name: <%= attr :section %>
 developer_section_slug: <%= attr "section-link" %>
 slug: <%= attr("slug","") %>
 -->
-<% active= {"what-is-neo4j"=>:inactive, "cypher"=>:inactive, "data-modeling"=>:inactive,"working-with-data"=>:inactive,"language-guides"=>:inactive,
+<% active= {"get-started"=>:inactive, "cypher"=>:inactive, "data-modeling"=>:inactive,"working-with-data"=>:inactive,"language-guides"=>:inactive,
 "ecosystem"=>:inactive,"in-production"=>:inactive}
-active[(@document.attr "section-link", "what-is-neo4j")]=:active;
+active[(@document.attr "section-link", "get-started")]=:active;
 %>
 <%=  File.new("_templates/style_partial.erb").read %>
 <div class="row" style="padding-left: 0; padding-right: 0; padding-top: 1em;">

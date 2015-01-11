@@ -13,7 +13,7 @@ This guide teaches anyone familiar with SQL how to write the equivalent, efficie
 
 .Prerequisites
 [abstract]
-You should have a basic understanding of the link:/developer/graph-database#property-graph[property graph model]. Having link:/download[downloaded] and installed the Neo4j server helps you code along with the examples. Importing the data is covered in our link:/developer/working-with-data/guide-importing-data-and-etl[data import guide].
+You should have a basic understanding of the link:/developer/get-started/graph-database#property-graph[property graph model]. Having link:/download[downloaded] and installed the Neo4j server helps you code along with the examples. Importing the data is covered in our link:/developer/working-with-data/guide-importing-data-and-etl[data import guide].
 
 [role=expertise]
 {level}
@@ -24,7 +24,7 @@ toc::[]
 
 Cypher is like SQL a declarative, textual query language.
 
-It consists of link:/docs/stable/query-general.html[clauses], keywords and link:docs/stable/cypher-expressions.html[expressions] like predicates and functions, many of which will be familiar (like `WHERE`, `ORDER BY`, `SKIP LIMIT`, `AND`, `p.unitPrice > 10`).
+It consists of link:/docs/stable/query-general.html[clauses], keywords and link:{manual}/cypher-expressions.html[expressions] like predicates and functions, many of which will be familiar (like `WHERE`, `ORDER BY`, `SKIP LIMIT`, `AND`, `p.unitPrice > 10`).
 
 As Cypher is all about expressing patterns, we added a special clause link:/docs/stable/query-match.html[`MATCH`] for *matching* those patterns in your graph.
 These patterns are what you would usually draw on a whiteboard, just converted into text using ASCII-art symbols.
@@ -63,7 +63,7 @@ Entity table rows are converted into nodes and foreign-key relationships and joi
 It is important to have an understanding of the graph model before you start to import data, then it just becomes the task of hydrating that model.
 
 [role=side-nav]
-* link:../../get-started/graph-db-vs-rdbms["Data Model Transformation",role=guide]
+* link:/developer/get-started/graph-db-vs-rdbms["Data Model Transformation",role=guide]
 
 === Data Import
 
@@ -72,9 +72,9 @@ Most relational databases allow an easy export of tables to CSV files, e.g. in P
 Those files can be then imported by using Cypher's `LOAD CSV` capability, which we explain in detail in our guides.
 
 [role=side-nav]
-* link:../../working-with-data/guide-importing-data-and-etl["Guide: Data Import",role=guide]
+* link:/developer/working-with-data/guide-importing-data-and-etl["Guide: Data Import",role=guide]
 * http://watch.neo4j.org/video/112447027["Webinar: Data Import",role=video]
-* link:../../working-with-data/guide-import-csv["Guide CSV Import",role=guide]
+* link:/developer/working-with-data/guide-import-csv["Guide CSV Import",role=guide]
 
 If you are a developer you can also just connect to the relational database with your regular driver, load the data from there with SQL. 
 And directly create the graph structure by using a Neo4j driver for your stack to send the equivalent, parametrized Cypher update statements to Neo4j.
@@ -448,7 +448,7 @@ If you are intrigued by the possibilities and want to try and learn more, just l
 
 Learn Cypher:
 
-* link:../../cypher/cypher-query-language[Cypher Intro Guide]
+* link:/developer/cypher/cypher-query-language[Cypher Intro Guide]
 * link:/online-course[Interactive Online Course]
 * link:{manual}/cypher-query-lang.html[Cypher in Neo4j Manual]
 * link:{manual}/cypher-refcard/[Reference Card]

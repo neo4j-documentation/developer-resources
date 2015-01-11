@@ -13,7 +13,7 @@ This article demonstrates how to import CSV data into Neo4j and solutions to pot
 
 .Prerequisites
 [abstract]
-Before importing data you should have modeled the first iteration of your domain in the link:/developer/guide-intro-to-graph-modeling[property graph model]. 
+Before importing data you should have modeled the first iteration of your domain in the link:/developer/data-modeling/guide-data-modeling[property graph model].
 And to use `LOAD CSV` efficiently it pays off to be comfortable with our link:/developer/cypher[query language, Cypher].
 
 [role=expertise]
@@ -138,7 +138,7 @@ It combines multiple aspects in a single operation:
 
 ==== Step by Step Example for LOAD CSV
 
-In our guide on link:/developer/guide-importing-data-and-etl[ETL import from a relational database] we explain how to import CSV data step by step, from data modeling, creating indexes to writing the individual LOAD CSV statements.
+In our guide on link:/developer/working-with-data/guide-importing-data-and-etl[ETL import from a relational database] we explain how to import CSV data step by step, from data modeling, creating indexes to writing the individual LOAD CSV statements.
 
 // TODO should we show how to import the customers, orders, products here ??
 
@@ -155,7 +155,7 @@ After a quick modeling discussion she walks through the steps of preparing index
 You can find all scripts and data on https://github.com/nicolewhite/consumer_complaints[her GitHub account].
 
 [role=side-nav]
-* link:/developer/guide-importing-data-and-etl[Importing Northwind] using LOAD CSV
+* link:/developer/working-with-data/guide-importing-data-and-etl[Importing Northwind] using LOAD CSV
 * LOAD CSV in the http://neo4j.com/docs/stable/query-load-csv.html[Neo4j Manual]
 * Blog Series on LOAD CSV http://jexp.de/blog/2014/06/load-csv-into-neo4j-quickly-and-successfully/[Part 1], http://jexp.de/blog/2014/10/load-cvs-with-success/[Part 2]
 * http://www.markhneedham.com/blog/?s=load+csv+neo4j[LOAD CSV Tips] by Mark Needham
@@ -249,5 +249,5 @@ IMPORT DONE. Took: 58s 124ms
 
 [role=side-nav]
 * link:/docs/milestone/import-tool.html["Neo4j Manual: Import Tool",role=docs]
-* link:../../build-a-graph-data-model/guide-intro-to-graph-modeling[Intro to Graph Modeling]
+* link:/developer/data-modeling/guide-data-modeling[Intro to Graph Modeling]
 * http://www.intelliwareness.org/?p=583["Importing Medicare Provider and Payment Data",role=blog]
