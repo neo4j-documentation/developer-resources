@@ -9,13 +9,13 @@
   <title>Developer: Get started - Neo4j Graph Database</title>
   <meta name="description"
         content="This is where you’ll find step-by-step Neo4j tutorials and developer guides that cover all areas of the development life-cycle to help you get started."/>
-  <link rel="canonical" href="http://neo4j.com/developer/get-started/"/>
+  <link rel="canonical" href="http://neo4j.com/developer-resources/get-started/"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:type" content="article"/>
   <meta property="og:title" content="Developer: Get started - Neo4j Graph Database"/>
   <meta property="og:description"
         content="This is where you’ll find step-by-step Neo4j tutorials and developer guides that cover all areas of the development life-cycle to help you get started."/>
-  <meta property="og:url" content="http://neo4j.com/developer/get-started/"/>
+  <meta property="og:url" content="http://neo4j.com/developer-resources/get-started/"/>
   <meta property="og:site_name" content="Neo4j Graph Database"/>
   <meta property="og:image"
         content="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/10/icon-guide-theory.png"/>
@@ -258,7 +258,7 @@
 <div class="marquee blue">
     <div class="row text-center">
         <div class="medium-10 small-centered columns">
-            <h1 class="entry-title">Intro to Cypher</h1>
+            <h1 class="entry-title">Cypher Query Language</h1>
         </div>
     </div>
 </div>
@@ -271,7 +271,7 @@
                     <ul class="breadcrumbs">
                         <li><a href="/developer-resources">Developer Guides</a></li>
                         
-                        <li class="current"><a href="#">Intro to Cypher</a></li>
+                        <li class="current"><a href="#">Cypher Query Language</a></li>
                     </ul>
                 </div>
             </div>
@@ -281,6 +281,11 @@
 
 section.row {
     padding: 0;
+}
+
+ol li {
+    padding: 0;
+    margin: 0;
 }
 
 #content section.row {
@@ -557,6 +562,9 @@ span.label {
 .bgblue {
 	background-color: #0f5788;
 }
+.bgorange {
+	background-color: #f58220;
+}
 hr {
 	margin-top: 0.5rem;
 }
@@ -565,244 +573,118 @@ hr {
             <div>
                 <div class="row" style="padding-left: 0; padding-right: 0;">
                     <div class="large-9 large-push-3 columns guide-section-content">
-                        <div id="preamble columns medium-12">
-<div class="sectionbody">
-<div class="quoteblock abstract">
-<div class="title">Goals</div>
-<blockquote style="padding-left: 0;">
-This guide explains the basic concepts of Cypher, Neo4j&#8217;s query language.
-You should be able to read Cypher queries after finishing this guide.
-</blockquote>
-</div>
-<div class="quoteblock abstract">
-<div class="title">Prerequisites</div>
-<blockquote style="padding-left: 0;">
-This is a guide for Beginners. You should have familiarized yourself with <a href="/developer/graph-database">Graph Databases</a> and the <a href="/developer/graph-database#property-graph">Property Graph Model</a>.
-</blockquote>
-</div>
-
-
-<div class="label">Beginner</div>
-<hr/>
-
-<div class="toc">
-<h3 class="title">Overview</h3>
-
-<ul class="sectlevel1">
-<li><a href="#_about_cypher">About Cypher</a>
-<ul class="sectlevel2">
-<li><a href="#_nodes">Nodes</a></li>
-<li><a href="#_relationships">Relationships</a></li>
-<li><a href="#_labels">Labels</a></li>
-</ul>
-</li>
-<li><a href="#_practical_example">Practical Example</a>
-<ul class="sectlevel2">
-<li><a href="#_create_a_record_for_yourself">Create a Record for Yourself</a></li>
-<li><a href="#_create_your_friends">Create Your Friends</a></li>
-<li><a href="#_find_your_friends">Find Your Friends</a></li>
-<li><a href="#_create_second_degree_friends_and_expertise">Create Second Degree Friends and Expertise</a></li>
-<li><a href="#_find_someone_who_can_help_you_learn_neo4j">Find Someone Who Can Help You Learn Neo4j</a></li>
-</ul>
-</li>
-</ul>
-
-</div>
+                        <h1 id="__span_class_image_img_src_http_dev_assets_neo4j_com_s3_amazonaws_com_wp_content_uploads_2014_10_feature_cypher_png_alt_feature_cypher_span_cypher_query_language" class="sect0"><span class="image"><img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/10/feature-cypher.png" alt="feature-cypher"></span> Cypher Query Language</h1>
+<!--div class="title"><span class="image"><img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/10/feature-cypher.png" alt="feature-cypher"></span> Cypher Query Language</div-->
 <hr>
+
+
+<div class="paragraph">
+<p>Cypher is Neo4j’s graph query language.
+Cypher’s syntax provides a familiar way to match patterns of nodes and relationships in the graph.
+These developer guides and tutorials show you how to query Neo4j using Cypher.</p>
 </div>
-</div>
+
 <div class="sect1 "  >
-<h3 id="_about_cypher">About Cypher</h3>
+<h3 id="__span_class_label_guide_span_introduction_to_cypher"><span class="label">Guide →</span> Introduction to Cypher</h3>
+<hr>
 
 
 <div class="paragraph">
-<p>Cypher is a declarative, SQL-inspired language for describing patterns in graphs.
-It allows us to describe <strong>what</strong> we want to select, insert, update or delete from a graph database without requiring us to describe exactly <strong>how</strong> to do it.</p>
+<p>These guides explain the basic concepts of Cypher, including how to create and query data.
+You should be able to read, understand and write Cypher queries after completing them.</p>
 </div>
 
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/cypher_pattern_simple.png" alt="cypher pattern simple">
-</p>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_nodes">Nodes</h3>
-
-
-<div class="paragraph">
-<p>Cypher uses ASCII-Art to represent patterns.
-We surround nodes with parentheses which look like circles, e.g. <code>(node)</code>.
-If we later want to refer to the node, we&#8217;ll give it an identifier like <code>(p)</code> for person or <code>(t)</code> for thing.
-In real-world queries, we&#8217;ll probably use longer, more expressive variable names like <code>(person)</code> or <code>(thing)</code>.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>To illustrate, if we want to find all the <strong>persons</strong> and the <strong>things</strong> they like, the query will include the identifiers <strong>person</strong> and <strong>thing</strong>. We might use a pattern like <code>(person)-&#8594;(thing)</code> so we can refer to them later, for example, to access properties like <code>person.name</code> and <code>thing.quality</code>.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>The more general structure is:</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (node) RETURN node.property
-
-MATCH (node1)--&gt;(node2)
-RETURN node2.propertyA, node2.propertyB</code></pre>
-</div>
-</div>
-<div class="ulist side-nav">
+<div class="ulist">
 <ul>
 <li>
-<a href="/developer/guide-cypher-basics">Cypher Guide</a>
+<a href="/developer-resources/cypher/cypher-query-language">Introduction to Cypher</a>
 </li>
 <li>
-<a href="/graphacademy/online-course">Online Training</a>
+<a href="/developer-resources/cypher/guide-sql-to-cypher">From SQL to Cypher</a>
 </li>
 <li>
-<a href="http://neo4j.com/docs/stable/cypher-refcard">Cypher Reference Card</a>
+<a href="/online-training">Interactive Cypher Online Training</a>
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>From the Neo4j Manual:</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="http://neo4j.com/docs/stable/cypher-introduction.html">What is Cypher?</a>
+</li>
+<li>
+<a href="http://neo4j.com/docs/stable/cypher-query-lang.html">Cypher Reference</a>
+</li>
+<li>
+<a href="http://neo4j.com/docs/stable/tutorials-cypher.html">Cypher Movies Tutorial</a>
 </li>
 </ul>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_relationships">Relationships</h3>
-
-
-<div class="paragraph">
-<p>The problem with the Cypher snippets we saw above is that they didn&#8217;t say anything about the relationship between the nodes, so even though we used the identifier <strong>person</strong>, we may well have gotten back <strong>suppliers</strong> and <strong>sellers</strong> of our <strong>things</strong>. So we need to be able to describe the types of relationships in our Cypher queries.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>If we wanted to retrieve everyone who likes a thing, we would describe the pattern <code>(person)-[:LIKE]&#8594;(thing)</code> to retrieve only nodes that had a relationship typed <strong>LIKE</strong> with other nodes (<strong>thing</strong>). Those nodes would then be <strong>persons</strong> as implied by the <strong>LIKE</strong> relationship.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Or generally:</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (node1)-[:REL_TYPE]-&gt;(node2)</code></pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>Sometimes we need access to information about a relationship (e.g. its type or properties). For example, we might want to output the <strong>rating</strong> that a <strong>person</strong> gave a <strong>thing</strong> and that <strong>rating</strong> would probably be a property of the <strong>like</strong> relationship. As with nodes, we can use identifiers for relationships (in front of the <strong>:TYPE</strong>). If we tried to match <code>(person)-[like:LIKE]&#8594;(thing)</code>, we would be able to output the <code>like.rating</code> for each of the persons and all the things that they like.</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (node1)-[rel:TYPE]-&gt;(node2)
-RETURN rel.property</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_labels">Labels</h3>
-
-
-<div class="paragraph">
-<p>Labels allow us to group our nodes.
-For example, we might want to distinguish <strong>things</strong> from <strong>persons</strong> or companies (both deal with things).
-By matching for <code>(person:Person)-[:LIKE]&#8594;(thing)</code>, it will return <strong>John</strong>, but not <strong>ACME Inc</strong>--a well known manufacturer.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Labels are usually used like this:</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (node:Label) RETURN node
-
-MATCH (node1:Label1)-[:REL_TYPE]-&gt;(node2:Label2)
-RETURN node1, node2</code></pre>
-</div>
-</div>
-</div>
-</div>
 <div class="sect1 "  >
-<h3 id="_practical_example">Practical Example</h3>
+<h3 id="__span_class_label_guide_span_build_a_recommendation_engine"><span class="label">Guide →</span> Build a Recommendation Engine</h3>
 
 
 <div class="paragraph">
-<p>Let&#8217;s try out what we&#8217;ve learned.</p>
+<p>This guide explains how to leverage connections in your data to gather insights and start recommending currently unrelated but relevant facts to your nodes in focus.</p>
 </div>
 
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_create_a_record_for_yourself">Create a Record for Yourself</h3>
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (you:Person {name:"You"})-[like:LIKE]-&gt;(neo:Database:NoSql:Graph {name:"Neo4j" })
-RETURN you,like,neo</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_create_your_friends">Create Your Friends</h3>
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you:Person {name:"You"})
-FOREACH (name in ["Johan","Rajesh","Anna","Julia","Andrew"] |
-  CREATE (you)-[:FRIEND]-&gt;(:Person {name:name}))</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_find_your_friends">Find Your Friends</h3>
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you {name:"You"})-[:FRIEND]-&gt;(yourFriends)
-RETURN you, yourFriends</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_create_second_degree_friends_and_expertise">Create Second Degree Friends and Expertise</h3>
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (neo:Database {name:"Neo4j"})
-FOREACH (pair in [{friend:"Anna",expert:"Amanda"},{friend:"Johan",expert:"Max"}] |
-  MERGE (friend:Person {name:pair.friend})
-  CREATE (friend)-[:FRIEND]-&gt;(:Person:Expert {name:pair.expert})-[:WORKED_WITH]-&gt;(neo))</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_find_someone_who_can_help_you_learn_neo4j">Find Someone Who Can Help You Learn Neo4j</h3>
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you {name:"You"}), (expert)-[:WORKED_WITH]-&gt;(db:Database {name:"Neo4j" }),
-  p = shortestPath( (you)-[:FRIEND*..5]-(expert) )
-RETURN p,db</code></pre>
-</div>
-</div>
-<div class="ulist side-nav">
+<div class="ulist">
 <ul>
 <li>
-<a href="/books">The Neo4j Bookshelf</a>
+<a href="/developer-resources/cypher/guide-build-a-recommendation-engine">Build a Recommendation Engine</a>
 </li>
 <li>
-<a href="http://watch.neo4j.org">The Neo4j Video Library</a>
-</li>
-<li>
-<a href="http://gist.neo4j.org/">GraphGists</a>
+<a href="http://watch.neo4j.org/video/109169965">Webinar: Build Recommendation Engines with Neo4j by Nicole White</a>
 </li>
 </ul>
 </div>
+</div>
+<div class="sect1 "  >
+<h3 id="__span_class_label_bgorange_refcard_span_cypher_reference_card"><span class="label bgorange">Refcard →</span> Cypher Reference Card</h3>
+<hr>
+
+
+<div class="paragraph">
+<p>The <a href="http://neo4j.com/docs/stable/cypher-refcard"><strong>Cypher Reference Card</strong></a> is an invaluable resource for the Neo4j developer.
+It details every clause, function and keyword in Cypher with short examples to help you understand the concepts.
+You should keep a <a href="http://neo4j.com/docs/stable">printed variant</a> handy at all times.</p>
+</div>
+
+</div>
+<div class="sect1 "  >
+<h3 id="__span_class_label_bgblue_external_span_blogs_screencasts_video_tutorials"><span class="label bgblue">External →</span> Blogs, Screencasts &amp; Video Tutorials</h3>
+<hr>
+<div class="ulist">
+<ul>
+<li>
+<a href="http://graphgist.neo4j.com">Neo4j GraphGist Portal</a>
+</li>
+<li>
+<a href="http://nigelsmall.com/zen">The Zen of Cypher by Nigel Small</a>
+</li>
+<li>
+<a href="http://www.markhneedham.com/blog/?s=cypher">Mark Needhams Blog on Cypher</a>
+</li>
+<li>
+<a href="http://maxdemarzi.com/?s=cypher">Max de Marzi&#8217;s Blog on Cypher</a>
+</li>
+<li>
+<a href="http://blog.bruggen.com/search?q=cypher&amp;view=magazine">Rik van Bruggens Blog on Cypher</a>
+</li>
+<li>
+<a href="http://jexp.de/blog/?s=cypher">Michael Hungers Blog on Cypher</a>
+</li>
+<li>
+<a href="http://wes.skeweredrook.com/cypher/">Wes Freeman on Cypher</a>
+</li>
+</ul>
 </div>
 </div>
                     </div>
@@ -810,101 +692,104 @@ RETURN p,db</code></pre>
                            <ul style="padding-top: 0;" class="side-nav">
          <dl class="accordion">
             <dd class="accordion-navigation inactive">
-               <a href="/developer/get-started">
+               <a href="/developer-resources/get-started">
                   <h5>Get Started</h5>
                </a>
                <div class="content inactive" id="panel1">
                   <ul>
-                     <li><a href="/developer/graph-database">What is a GraphDB?</a></li>
-                     <li><a href="/developer/graph-db-vs-rdbms">GraphDB vs RDBMS</a></li>
-                     <li><a href="/developer/graph-db-vs-nosql">GraphDB vs NOSQL</a></li>
-                     <li><a href="/developer/language-guides">Language Drivers</a></li>
+                     <li><a href="/developer-resources/what-is-neo4j/graph-database">What is a GraphDB?</a></li>
+                     <li><a href="/developer-resources/what-is-neo4j/graph-db-vs-rdbms">GraphDB vs RDBMS</a></li>
+                     <li><a href="/developer-resources/what-is-neo4j/graph-db-vs-nosql">GraphDB vs NOSQL</a></li>
+                     <!--<li><a href="/developer-resources/language-guides">Language Drivers</a></li>-->
                   </ul>
                </div>
             </dd>
          </dl>
             <dl class="accordion">
                <dd class="accordion-navigation active">
-                  <a href="/developer/cypher">
+                  <a href="/developer-resources/cypher">
                      <h5>Cypher</h5>
                   </a>
                   <div class="content active" id="panel2">
                      <ul>
-                        <li><a href="/developer/guide-cypher-basics">Cypher Basics</a></li>
-                        <li><a href="/developer/guide-build-a-recommendation-engine">Build a Recommendation Engine</a></li>
-                        <li><a href="/docs/stable/cypher-refcard">Cypher Refcard</a></li>
+                        <li><a href="/developer-resources/cypher/guide-cypher-basics">Cypher Basics</a></li>
+                        <li><a href="/developer-resources/cypher/guide-sql-to-cypher">From SQL to Cypher</a></li>
+                        <li><a href="/developer-resources/cypher/guide-build-a-recommendation-engine">Build a Recommendation Engine</a></li>
+                        <li><a href="{manual}/cypher-refcard">Cypher Refcard</a></li>
                      </ul>
                   </div>
                </dd>
             </dl>
             <dl class="accordion">
                <dd class="accordion-navigation inactive">
-                  <a href="/developer/data-modeling">
+                  <a href="/developer-resources/data-modeling">
                      <h5>Data Modeling</h5>
                   </a>
                   <div class="content inactive" id="panel5">
                      <ul>
-                        <li><a href="/developer/guide-data-modeling">Graph Data Modeling Guidelines</a></li>
+                        <li><a href="/developer-resources/data-modeling/guide-data-modeling">Graph Data Modeling Guidelines</a></li>
+                        <li><a href="/developer-resources/data-modeling/graphgist">Interactive Graph Models - GraphGist</a></li>
                      </ul>
                   </div>
                </dd>
             </dl>
             <dl class="accordion">
                <dd class="accordion-navigation inactive">
-                  <a href="/developer/working-with-data">
+                  <a href="/developer-resources/working-with-data">
                      <h5>Working with Data</h5>
                   </a>
                   <div class="content inactive" id="panel3">
                      <ul>
-                        <li><a href="/developer/guide-neo4j-browser">Neo4j Browser Visualization</a></li>
-                        <li><a href="/developer/guide-importing-data-and-etl">Importing Data into Neo4j</a></li>
-                        <li><a href="/developer/guide-data-visualization">Graph Visualization for Neo4j</a></li>
-                        <li><a href="/developer/guide-example-data">Example Datasets</a></li>
+                        <li><a href="/developer-resources/working-with-data/guide-neo4j-browser">Neo4j Browser Intro</a></li>
+                        <li><a href="/developer-resources/working-with-data/guide-data-visualization">Graph Visualization for Neo4j</a></li>
+                        <li><a href="/developer-resources/working-with-data/guide-importing-data-and-etl">Importing Data into Neo4j</a></li>
+                        <li><a href="/developer-resources/working-with-data/guide-import-csv">Importing CSV</a></li>
+                        <li><a href="/developer-resources/working-with-data/example-data">Example Datasets</a></li>
                      </ul>
                   </div>
                </dd>
             </dl>
             <dl class="accordion">
                <dd class="accordion-navigation inactive">
-                  <a href="/developer/language-guides">
+                  <a href="/developer-resources/language-guides">
                      <h5>Language Guides</h5>
                   </a>
                   <div class="content inactive" id="panel4">
                      <ul>
-                        <li><a href="/developer/java">Java</a></li>
-                        <li><a href="/developer/dotnet">.NET</a></li>
-                        <li><a href="/developer/javascript">JavaScript</a></li>
-                        <li><a href="/developer/python">Python</a></li>
-                        <li><a href="/developer/ruby">Ruby</a></li>
-                        <li><a href="/developer/php">PHP</a></li>
-                        <li><a href="/developer/language-guides">All Neo4j Drivers</a></li>
+                        <li><a href="/developer-resources/language-guides/java">Java</a></li>
+                        <li><a href="/developer-resources/language-guides/dotnet">.NET</a></li>
+                        <li><a href="/developer-resources/language-guides/javascript">JavaScript</a></li>
+                        <li><a href="/developer-resources/language-guides/python">Python</a></li>
+                        <li><a href="/developer-resources/language-guides/ruby">Ruby</a></li>
+                        <li><a href="/developer-resources/language-guides/php">PHP</a></li>
+                        <li><a href="/developer-resources/language-guides">All Neo4j Drivers</a></li>
                      </ul>
                   </div>
                </dd>
             </dl>
             <dl class="accordion">
                <dd class="accordion-navigation inactive">
-                  <a href="/developer/ecosystem">
+                  <a href="/developer-resources/ecosystem">
                      <h5>Ecosystem</h5>
                   </a>
-                  <div class="content inactive" id="panel6">
+                  <!--div class="content inactive" id="panel6">
                      <ul>
-                        <li><a href="/docs/stable">Documentation</a></li>
-                        <li><a href="http://stackoverflow.com/questions/tagged/neo4j">Ask Questions / Stackoverflow </a></li>
+                        <li><a href="/docs/stable">Ecosystem</a></li>
                      </ul>
-                  </div>
+                  </div-->
                </dd>
             </dl>
             <dl class="accordion">
                <dd class="accordion-navigation inactive">
-                  <a href="/developer/in-production">
+                  <a href="/developer-resources/in-production">
                      <h5>Neo4j In Production</h5>
                   </a>
                   <div class="content inactive" id="panel7">
                      <ul>
-                        <li><a href="/developer/guide-sizing-and-hardware-calculator">Sizing + Hardware Calculator</a></li>
-                        <li><a href="/developer/guide-performance-tuning">Performance Tuning</a></li>
-                        <li><a href="/developer/guide-clustering-neo4j">Clustering Neo4j </a></li>
+                        <li><a href="/developer-resources/in-production/guide-cloud-deployment">Guide: Cloud Deployment</a></li>
+                        <li><a href="/developer-resources/in-production/guide-sizing-and-hardware-calculator">Sizing + Hardware Calculator</a></li>
+                        <li><a href="/developer-resources/in-production/guide-performance-tuning">Performance Tuning</a></li>
+                        <li><a href="/developer-resources/in-production/guide-clustering-neo4j">Clustering Neo4j </a></li>
                      </ul>
                   </div>
                </dd>
@@ -919,6 +804,11 @@ RETURN p,db</code></pre>
             </ul>
             <ul>
                   <li><a href="/docs/1.9.9">Neo4j 1.9.x</a></li>
+            </ul>
+            <ul>
+               <li><a href="/developer-resources/resources">All Learning Resources</a></li>
+               <li><a href="http://stackoverflow.com/questions/tagged/neo4j">Neo4j on Stackoverflow </a></li>
+               <li><a href="https://groups.google.com/forum/#!forum/neo4j">Neo4j Google Group </a></li>
             </ul>
          </div>
 

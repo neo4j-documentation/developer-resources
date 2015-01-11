@@ -5,7 +5,7 @@ end %>
 <ol style="margin-left: 2.4rem;" class="<%= @style %>"<%= (attr? :start) ? %( start="#{attr :start}") : nil %><%= (keyword = list_marker_keyword) && %( type="#{keyword}") %>><%
 items.each do |item| %>
 <li>
-<p style="margin-bottom: 0.75rem;"><%= item.text %></p><%
+<%= item.text %><%
   if item.blocks? %>
 <%= item.content %><%
   end %>

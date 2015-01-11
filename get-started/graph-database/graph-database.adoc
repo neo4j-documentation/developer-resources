@@ -1,0 +1,106 @@
+= What is a Graph Database?
+:level: Beginner
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 1
+:section: What is Neo4j
+:section-link: get-started
+
+.Goals
+[abstract]
+This article is an introduction to graph databases in general and Neo4j in particular.
+
+.Prerequisites
+[abstract]
+You should have a basic understanding of what a database is.
+
+[role=expertise]
+{level}
+
+toc::[]
+
+We live in a connected world.
+There are no isolated pieces of information, but rich, connected domains all around us.
+Only a database that embraces relationships as a core aspect of its data model is able to store, process, and query connections efficiently.
+While other databases compute relationships expensively at query time, a graph database stores connections as first level citizens, readily available for any "join-like" navigation operation.
+Accessing those already persistent connections is an efficient, constant-time operation and allows you to quickly traverse millions of connections per second.
+
+Independent of the size of the total dataset, graph databases excel at managing highly connected data and complex queries.
+Armed only with a pattern and a set of starting points, graph databases explore the larger neighborhood around their initial points--collecting and aggregating information from millions of nodes and relationships--leaving the billions outside the search perimeter untouched.
+
+[[property-graph]]
+=== The Property Graph Model
+
+If you’ve ever worked with an object model or entity relationship diagram, the labeled property graph model will seem familiar.
+The property graph contains connected entities (the _nodes_) which can hold arbitrary types and numbers of properties (key-value-pairs).
+Nodes can be tagged with zero to many labels representing their different roles in the domain.
+In addition to contextualizing node and relationship properties, labels may also serve to attach metadata--index or constraint information, for example--to nodes.
+
+_Relationships_ provide directed, named semantic connections between two nodes.
+A relationship always has a direction, a type, a _start node_, and an __end node__.
+Like nodes, relationships can have arbitrary properties.
+In most cases, relationships have quantitative properties, such as weights, distances, ratings, time intervals, or strengths.
+As relationships are stored efficiently, two nodes can have any number or type of relationships between them without sacrificing performance.
+Note that although they are directed, relationships can always be navigated in both directions.
+
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/graphdb-gve.png[]
+_The building blocks of the Property Graph_
+
+There is only one consistent rule in a graph database: "No broken links".
+Since a relationship always has a start and end node, you can’t delete a node without also deleting its associated relationships.
+You can also always assume that an existing relationship will not point to a non-existing endpoint.
+
+
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/property_graph_model.png[]
+
+////
+[role=side-nav]
+* http://neo4j.com/docs[The Neo4j Docs]
+* link:/blog[The Neo4j Blog]
+* link:/developer/guide-intro-to-graph-modeling[Intro to Graph Modeling]
+////
+
+=== What is Neo4j?
+
+Sponsored by Neo Technology, Neo4j is an open-source NoSQL graph database implemented in Java and Scala.
+With development starting in 2003, it has been publicly available since 2007.
+The source code and issue tracking are available on https://github.com/neo4j[GitHub], with support readily available on Stack Overflow and the Neo4j Google group.
+Limited only by hardware, Neo4j is used today by hundreds of thousands of users in almost all industries.
+Use cases include matchmaking, network management, software analytics, scientific research, routing, organizational and project management, recommendations, social networks, and more.
+
+Neo4j implements the Property Graph Model down to the storage level.
+As opposed to graph processing or in-memory libraries, Neo4j provides full database characteristics including ACID compliance, cluster support, and runtime failover, making it suitable to use graph data in production scenarios.
+
+Some particular features make Neo4j very popular among users, developers, and DBAs:
+
+- Materializing of relationships at creation time, resulting in no penalties for runtime queries
+- Constant time traversals for relationships in the graph both in depth and in breadth due to double-linking on storage level between nodes and relationships
+- All relationships in Neo4j are equally important and fast, making it possible to materialize and use new relationships later on to "shortcut" and speed up the domain data when new needs arise
+- Compact storage and memory caching for graphs, resulting in efficient scale-up and billions of nodes in one database on moderate hardware
+- Written on top of the JVM
+
+// Error in graphic: Embedded not embeded
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/neo4j-nosql.png[]
+
+=== Neo4j Editions
+
+Neo4j’s free and open-source _Community_ edition is a high-performance, fully ACID-transactional database. The _Community_ edition includes (but is not limited to) all the functionality described in this article.
+Neo4j's _Enterprise_ editions provide all of the functionality of the Community edition in addition to scalable clustering, fail-over, live backups, and comprehensive monitoring.
+_More information about the Community and Enterprise editions is available at http://neo4j.com/docs_
+// @jexp you want this link to point to http://neo4j.com/docs instead?
+
+=== Neo4j Server
+
+You can download Neo4j from `http://neo4j.com/download[http://neo4j.com/download]` and install it as a server on all operating systems.
+By default, the Neo4j Server is bundled with a web interface bound to `http://localhost:7474`.
+The simplest way of getting started is to use Neo4j's database browser to execute your graph queries (written in Cypher, the graph query language described below) in a workbench-like fashion.
+Results are presented as either intuitive graph visualizations or as easy-to-read, exportable tables.
+
+A remote Neo4j server can be accessed via its Cypher HTTP API, either directly or through one of the many available language drivers.
+For high performance special cases, you can write Neo4j server extensions in any JVM language to access Neo4j's internal database engine directly without network overhead.
+
+[role=side-nav]
+* link:/books[The Neo4j Bookshelf]
+* http://watch.neo4j.org[The Neo4j Video Library]
+* http://gist.neo4j.org/[GraphGists]

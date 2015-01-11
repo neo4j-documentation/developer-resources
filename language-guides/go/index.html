@@ -9,13 +9,13 @@
   <title>Developer: Get started - Neo4j Graph Database</title>
   <meta name="description"
         content="This is where you’ll find step-by-step Neo4j tutorials and developer guides that cover all areas of the development life-cycle to help you get started."/>
-  <link rel="canonical" href="http://neo4j.com/developer/get-started/"/>
+  <link rel="canonical" href="http://neo4j.com/developer-resources/get-started/"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:type" content="article"/>
   <meta property="og:title" content="Developer: Get started - Neo4j Graph Database"/>
   <meta property="og:description"
         content="This is where you’ll find step-by-step Neo4j tutorials and developer guides that cover all areas of the development life-cycle to help you get started."/>
-  <meta property="og:url" content="http://neo4j.com/developer/get-started/"/>
+  <meta property="og:url" content="http://neo4j.com/developer-resources/get-started/"/>
   <meta property="og:site_name" content="Neo4j Graph Database"/>
   <meta property="og:image"
         content="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/10/icon-guide-theory.png"/>
@@ -281,6 +281,11 @@
 
 section.row {
     padding: 0;
+}
+
+ol li {
+    padding: 0;
+    margin: 0;
 }
 
 #content section.row {
@@ -557,6 +562,9 @@ span.label {
 .bgblue {
 	background-color: #0f5788;
 }
+.bgorange {
+	background-color: #f58220;
+}
 hr {
 	margin-top: 0.5rem;
 }
@@ -577,8 +585,8 @@ While this guide is not comprehensive it will introduce the different drivers an
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should be familiar with <a href="/developer/graph-database">graph database concepts</a> and the property graph model.
-You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="/developer/cypher">Cypher Query language</a>.
+You should be familiar with <a href="/developer-resources/graph-database">graph database concepts</a> and the property graph model.
+You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="/developer-resources/cypher">Cypher Query language</a>.
 </blockquote>
 </div>
 
@@ -699,101 +707,104 @@ Author: <a href="https://github.com/jmcvetta">Jason McVetta</a>
                            <ul style="padding-top: 0;" class="side-nav">
          <dl class="accordion">
             <dd class="accordion-navigation inactive">
-               <a href="/developer/get-started">
+               <a href="/developer-resources/get-started">
                   <h5>Get Started</h5>
                </a>
                <div class="content inactive" id="panel1">
                   <ul>
-                     <li><a href="/developer/graph-database">What is a GraphDB?</a></li>
-                     <li><a href="/developer/graph-db-vs-rdbms">GraphDB vs RDBMS</a></li>
-                     <li><a href="/developer/graph-db-vs-nosql">GraphDB vs NOSQL</a></li>
-                     <li><a href="/developer/language-guides">Language Drivers</a></li>
+                     <li><a href="/developer-resources/what-is-neo4j/graph-database">What is a GraphDB?</a></li>
+                     <li><a href="/developer-resources/what-is-neo4j/graph-db-vs-rdbms">GraphDB vs RDBMS</a></li>
+                     <li><a href="/developer-resources/what-is-neo4j/graph-db-vs-nosql">GraphDB vs NOSQL</a></li>
+                     <!--<li><a href="/developer-resources/language-guides">Language Drivers</a></li>-->
                   </ul>
                </div>
             </dd>
          </dl>
             <dl class="accordion">
                <dd class="accordion-navigation inactive">
-                  <a href="/developer/cypher">
+                  <a href="/developer-resources/cypher">
                      <h5>Cypher</h5>
                   </a>
                   <div class="content inactive" id="panel2">
                      <ul>
-                        <li><a href="/developer/guide-cypher-basics">Cypher Basics</a></li>
-                        <li><a href="/developer/guide-build-a-recommendation-engine">Build a Recommendation Engine</a></li>
-                        <li><a href="/docs/stable/cypher-refcard">Cypher Refcard</a></li>
+                        <li><a href="/developer-resources/cypher/guide-cypher-basics">Cypher Basics</a></li>
+                        <li><a href="/developer-resources/cypher/guide-sql-to-cypher">From SQL to Cypher</a></li>
+                        <li><a href="/developer-resources/cypher/guide-build-a-recommendation-engine">Build a Recommendation Engine</a></li>
+                        <li><a href="{manual}/cypher-refcard">Cypher Refcard</a></li>
                      </ul>
                   </div>
                </dd>
             </dl>
             <dl class="accordion">
                <dd class="accordion-navigation inactive">
-                  <a href="/developer/data-modeling">
+                  <a href="/developer-resources/data-modeling">
                      <h5>Data Modeling</h5>
                   </a>
                   <div class="content inactive" id="panel5">
                      <ul>
-                        <li><a href="/developer/guide-data-modeling">Graph Data Modeling Guidelines</a></li>
+                        <li><a href="/developer-resources/data-modeling/guide-data-modeling">Graph Data Modeling Guidelines</a></li>
+                        <li><a href="/developer-resources/data-modeling/graphgist">Interactive Graph Models - GraphGist</a></li>
                      </ul>
                   </div>
                </dd>
             </dl>
             <dl class="accordion">
                <dd class="accordion-navigation inactive">
-                  <a href="/developer/working-with-data">
+                  <a href="/developer-resources/working-with-data">
                      <h5>Working with Data</h5>
                   </a>
                   <div class="content inactive" id="panel3">
                      <ul>
-                        <li><a href="/developer/guide-neo4j-browser">Neo4j Browser Visualization</a></li>
-                        <li><a href="/developer/guide-importing-data-and-etl">Importing Data into Neo4j</a></li>
-                        <li><a href="/developer/guide-data-visualization">Graph Visualization for Neo4j</a></li>
-                        <li><a href="/developer/guide-example-data">Example Datasets</a></li>
+                        <li><a href="/developer-resources/working-with-data/guide-neo4j-browser">Neo4j Browser Intro</a></li>
+                        <li><a href="/developer-resources/working-with-data/guide-data-visualization">Graph Visualization for Neo4j</a></li>
+                        <li><a href="/developer-resources/working-with-data/guide-importing-data-and-etl">Importing Data into Neo4j</a></li>
+                        <li><a href="/developer-resources/working-with-data/guide-import-csv">Importing CSV</a></li>
+                        <li><a href="/developer-resources/working-with-data/example-data">Example Datasets</a></li>
                      </ul>
                   </div>
                </dd>
             </dl>
             <dl class="accordion">
                <dd class="accordion-navigation active">
-                  <a href="/developer/language-guides">
+                  <a href="/developer-resources/language-guides">
                      <h5>Language Guides</h5>
                   </a>
                   <div class="content active" id="panel4">
                      <ul>
-                        <li><a href="/developer/java">Java</a></li>
-                        <li><a href="/developer/dotnet">.NET</a></li>
-                        <li><a href="/developer/javascript">JavaScript</a></li>
-                        <li><a href="/developer/python">Python</a></li>
-                        <li><a href="/developer/ruby">Ruby</a></li>
-                        <li><a href="/developer/php">PHP</a></li>
-                        <li><a href="/developer/language-guides">All Neo4j Drivers</a></li>
+                        <li><a href="/developer-resources/language-guides/java">Java</a></li>
+                        <li><a href="/developer-resources/language-guides/dotnet">.NET</a></li>
+                        <li><a href="/developer-resources/language-guides/javascript">JavaScript</a></li>
+                        <li><a href="/developer-resources/language-guides/python">Python</a></li>
+                        <li><a href="/developer-resources/language-guides/ruby">Ruby</a></li>
+                        <li><a href="/developer-resources/language-guides/php">PHP</a></li>
+                        <li><a href="/developer-resources/language-guides">All Neo4j Drivers</a></li>
                      </ul>
                   </div>
                </dd>
             </dl>
             <dl class="accordion">
                <dd class="accordion-navigation inactive">
-                  <a href="/developer/ecosystem">
+                  <a href="/developer-resources/ecosystem">
                      <h5>Ecosystem</h5>
                   </a>
-                  <div class="content inactive" id="panel6">
+                  <!--div class="content inactive" id="panel6">
                      <ul>
-                        <li><a href="/docs/stable">Documentation</a></li>
-                        <li><a href="http://stackoverflow.com/questions/tagged/neo4j">Ask Questions / Stackoverflow </a></li>
+                        <li><a href="/docs/stable">Ecosystem</a></li>
                      </ul>
-                  </div>
+                  </div-->
                </dd>
             </dl>
             <dl class="accordion">
                <dd class="accordion-navigation inactive">
-                  <a href="/developer/in-production">
+                  <a href="/developer-resources/in-production">
                      <h5>Neo4j In Production</h5>
                   </a>
                   <div class="content inactive" id="panel7">
                      <ul>
-                        <li><a href="/developer/guide-sizing-and-hardware-calculator">Sizing + Hardware Calculator</a></li>
-                        <li><a href="/developer/guide-performance-tuning">Performance Tuning</a></li>
-                        <li><a href="/developer/guide-clustering-neo4j">Clustering Neo4j </a></li>
+                        <li><a href="/developer-resources/in-production/guide-cloud-deployment">Guide: Cloud Deployment</a></li>
+                        <li><a href="/developer-resources/in-production/guide-sizing-and-hardware-calculator">Sizing + Hardware Calculator</a></li>
+                        <li><a href="/developer-resources/in-production/guide-performance-tuning">Performance Tuning</a></li>
+                        <li><a href="/developer-resources/in-production/guide-clustering-neo4j">Clustering Neo4j </a></li>
                      </ul>
                   </div>
                </dd>
@@ -808,6 +819,11 @@ Author: <a href="https://github.com/jmcvetta">Jason McVetta</a>
             </ul>
             <ul>
                   <li><a href="/docs/1.9.9">Neo4j 1.9.x</a></li>
+            </ul>
+            <ul>
+               <li><a href="/developer-resources/resources">All Learning Resources</a></li>
+               <li><a href="http://stackoverflow.com/questions/tagged/neo4j">Neo4j on Stackoverflow </a></li>
+               <li><a href="https://groups.google.com/forum/#!forum/neo4j">Neo4j Google Group </a></li>
             </ul>
          </div>
 

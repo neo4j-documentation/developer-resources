@@ -38,7 +38,7 @@ active[(@document.attr "section-link", "what-is-neo4j")]=:active;
                         <%= content %>
                     </div>
                     <div class="large-3 large-pull-9 columns">
-                        <%= File.new("_templates/menu_partial.erb").read.gsub(/[\w-]+-activate/) { |m| active[m.gsub(/-activate/,"")].to_s } %>
+                        <%= File.new("_templates/menu_partial.erb").read.gsub("/developer/","/developer-resources/").gsub(/[\w-]+-activate/) { |m| active[m.gsub(/-activate/,"")].to_s } %>
                     </div>
                 </div>
             </div>

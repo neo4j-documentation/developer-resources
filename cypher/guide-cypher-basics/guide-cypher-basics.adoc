@@ -10,11 +10,12 @@
 .Goals
 [abstract]
 This guide explains the basic concepts of Cypher, Neo4j's query language, including how to create and query graphs.
-You should be able to read Cypher queries after finishing this guide.
+You should be able to read and understand Cypher queries after finishing this guide.
 
 .Prerequisites
 [abstract]
-This is a guide for {level}s. You should have familiarized yourself with link:/developer/graph-database[Graph Databases] and the link:/developer/graph-database#property-graph[Property Graph Model].
+You should have familiarized yourself with link:/developer/graph-database[Graph Databases] and the link:/developer/graph-database#property-graph[Property Graph Model].
+
 [role=expertise]
 {level}
 
@@ -22,6 +23,8 @@ toc::[]
 
 === Pop-Cultural Connections
 _The Movie Graph_ is a mini graph application containing actors and directors that are related through the movies they've collaborated on.
+It is available in your Neo4j Browser if you execute `:play movie-graph`.
+It is helpful if you run the queries as you go along, but you should understand them even so.
 
 This guide will show you how to:
 
@@ -57,11 +60,12 @@ Example queries for finding individual nodes.
 
 <<MATCH,+:help MATCH+>>, <<WHERE,+:help WHERE+>>, <<RETURN,+:help RETURN+>>
 
-==== Find the Actor Named "Tom Hanks"...
+==== Find the Person Named "Tom Hanks"...
 
 [source,cypher]
 ----
-MATCH (tom {name: "Tom Hanks"})
+MATCH (tom:Person)
+WHERE tom.name = "Tom Hanks"
 RETURN tom
 ----
 
@@ -72,7 +76,7 @@ RETURN tom
 
 [source,cypher]
 ----
-MATCH (cloudAtlas {title: "Cloud Atlas"})
+MATCH (cloudAtlas:Movie {title: "Cloud Atlas"})
 RETURN cloudAtlas
 ----
 
@@ -127,7 +131,7 @@ RETURN tom,tomHanksMovies
 
 [source,cypher]
 ----
-MATCH (cloudAtlas {title: "Cloud Atlas"})<-[:DIRECTED]-(directors)
+MATCH (cloudAtlas:Movie {title: "Cloud Atlas"})<-[:DIRECTED]-(directors)
 RETURN directors.name
 ----
 
@@ -155,7 +159,7 @@ RETURN people.name, Type(relatedTo), relatedTo
 
 //table
 
-=== Solve
+=== Solve the Six Degrees Question
 
 You've heard of the classic "Six Degrees of Kevin Bacon"? That is simply a shortest path query called the "Bacon Path".
 
@@ -202,7 +206,7 @@ When you're done experimenting, you can remove the movie data set.
 [WARNING]
 This will remove all Person and Movie nodes!
 
-<<DELETE,+:help DELETE+>>
+* <<DELETE,+:help DELETE+>>
 
 ==== Delete All Movie and Person Nodes and their Relationships
 
@@ -224,7 +228,9 @@ RETURN count(*)
 
 //table
 
+////
 [role=side-nav]
-* link:/books[The Neo4j Bookshelf]
+* link:/online-training[Cypher Online Training]
 * http://watch.neo4j.org[The Neo4j Video Library]
 * http://gist.neo4j.org/[GraphGists]
+////
