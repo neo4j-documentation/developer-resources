@@ -432,9 +432,16 @@ section {
     margin: auto;
 }
 
+#content h4 {
+    font-weight: 100;
+    color: #0f5788;
+    font-size:1.2em;
+}
+
 #content h3 {
     font-weight: 100;
     color: #0f5788;
+    font-size:1.5em;
 }
 
 #content ul {
@@ -510,7 +517,7 @@ img.icon {
 }
 
 #content h4 {
-    font-weight:400
+    font-weight:100
 }
 
 #content strong {
@@ -596,11 +603,13 @@ You should have familiarized yourself with <a href="/developer-resources/get-sta
 <h3 class="title">Overview</h3>
 
 <ul class="sectlevel2">
-<li><a href="#_howto_graph_visualization">HowTo: Graph Visualization</a></li>
-<li><a href="#_the_neo4j_browser">The Neo4j Browser</a></li>
-<li><a href="#_svg_based_graph_interaction">SVG-Based Graph Interaction</a></li>
-<li><a href="#_keylines_neo4j_graph_visualization">Keylines Neo4j Graph Visualization</a></li>
-<li><a href="#_tom_sawyer_perspectives">Tom Sawyer Perspectives</a></li>
+<li><a href="#_screencast_the_neo4j_browser">Screencast: The Neo4j Browser</a></li>
+<li><a href="#_presentation_svg_based_graph_interaction">Presentation: SVG-Based Graph Interaction</a></li>
+<li><a href="#_howto_graph_visualization_step_by_step">HowTo: Graph Visualization Step By Step</a></li>
+<li><a href="#_library_alchemy_js_open_source_graph_visualization">Library: Alchemy.js Open Source Graph Visualization</a></li>
+<li><a href="#_product_keylines_neo4j_graph_visualization">Product: Keylines Neo4j Graph Visualization</a></li>
+<li><a href="#_product_tom_sawyer_perspectives">Product: Tom Sawyer Perspectives</a></li>
+<li><a href="#_product_linkurious_graph_visualization">Product: Linkurious Graph Visualization</a></li>
 </ul>
 
 </div>
@@ -620,10 +629,67 @@ A few of the more popular graph-visualization methods are discussed below.</p>
 <p>In all cases, the visualizer request JSON data for all or part of the graph data then dynamically creates an in-memory JavaScript visualization on the client side.</p>
 </div>
 
+<div class="ulist side-nav">
+<ul>
+<li>
+<a href="http://maxdemarzi.com/?s=visuali">Blog: Max de Marzi on Visualization</a>
+</li>
+<li>
+<a href="http://watch.neo4j.org/video/53205761">Video: Visualizing Graphs by Max de Marzi</a>
+</li>
+<li>
+<a href="http://watch.neo4j.org/video/77039000">Video: Graph Visual Analysis</a>
+</li>
+<li>
+<a href="http://www.popotojs.com/">Popoto.js visualization based graph search toolkit</a>
+</li>
+<li>
+<a href="http://www.coppelia.io/2014/07/an-a-to-z-of-extra-features-for-the-d3-force-layout/">Article: A-Z features for D3 force layout</a>
+</li>
+<li>
+<a href="https://twitter.com/hashtag/showmeyourgraph?f=realtime&amp;src=hash">ShowMeYourGraph Visualization Contest</a>
+</li>
+<li>
+<a href="http://jexp.de/blog/2014/06/rendering-a-neo4j-database-in-ubigraph/">Article: Rendering Neo4j with UbiGraph</a>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_howto_graph_visualization">HowTo: Graph Visualization</h3>
+<h3 id="_screencast_the_neo4j_browser">Screencast: The Neo4j Browser</h3>
+
+
+<div class="paragraph">
+<p>The default <a href="http://neo4j.com/download">Neo4j Server</a> has a powerful, customizable data visualization tool based on the built-in D3.js library.</p>
+</div>
+
+<iframe src="//player.vimeo.com/video/97204829" width="500" height="313" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+
+<div class="paragraph">
+<p>In the screencast, we demonstrate how to style nodes and relationships in the Neo4j&#8217;s Browser visualization, and how to set colors, sizes, and titles.
+We then discuss the Graph-Style-Sheet (GRASS) and how you can download, update, and reset the styling information.</p>
+</div>
+
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3 id="_presentation_svg_based_graph_interaction">Presentation: SVG-Based Graph Interaction</h3>
+
+
+<div class="paragraph">
+<p><span class="image"><a class="image" href="http://www.apcjones.com/talks/2014-03-26_Neo4j_London/#slide-0"><img src="http://assets.neo4j.org/img/still/seening_pattern_in_data.jpg" alt="seening_pattern_in_data" width="500"></a></span></p>
+</div>
+
+
+
+<div class="paragraph">
+<p>In this talk, Alistair Jones builds a very powerful graph web editing tool based on SVG, suited for easy integration into modern HTML frameworks.</p>
+</div>
+
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3 id="_howto_graph_visualization_step_by_step">HowTo: Graph Visualization Step By Step</h3>
 
 
 <div class="paragraph">
@@ -632,11 +698,13 @@ This approach is also used in the <a href="/developer-resources/language-guides/
 You can find the appropriate transformation code for your language and stack there.</p>
 </div>
 
+<div class="sect3 "  >
+<h4 id="_target_json_datastructure">Target JSON Datastructure</h4>
 
 
 <div class="paragraph">
-<p>They visualization toolkits usually expect a JSON list of node objects (their id, label(s) and properties) and a list of relationships (their properties, start- and end-node-id (or node-array-index for d3) and optionally relationship-id) like this.
-Here we see 3 nodes (2 people, one database) and 3 relationships in the datastructure.</p>
+<p>They visualization toolkits usually <strong>expect a JSON structure</strong> of node objects (their id, label(s) and properties) and a list of relationships (their properties, start- and end-node-id (or node-array-index for d3) and optionally relationship-id) like this.
+Here we see 3 nodes (2 people, one database) and 3 relationships in that datastructure.</p>
 </div>
 
 <div class="listingblock">
@@ -647,6 +715,9 @@ Here we see 3 nodes (2 people, one database) and 3 relationships in the datastru
           {start:1, end:2, type:"WORKS_ON"}]}</code></pre>
 </div>
 </div>
+</div>
+<div class="sect3 "  >
+<h4 id="_graph_rendering_javascript_code">Graph Rendering Javascript Code</h4>
 
 
 <div class="paragraph">
@@ -701,6 +772,9 @@ d3.json("/graph", function(error, graph) {
 });</code></pre>
 </div>
 </div>
+</div>
+<div class="sect3 "  >
+<h4 id="_neo4j_query_result_format">Neo4j Query Result Format</h4>
 
 
 <div class="paragraph">
@@ -748,6 +822,9 @@ That endpoint already has an option (<code>{"resultDataContents":["graph"]}</cod
 }</code></pre>
 </div>
 </div>
+</div>
+<div class="sect3 "  >
+<h4 id="_converting_neo4j_query_results_to_d3_json">Converting Neo4j Query Results to D3 JSON</h4>
 
 
 <div class="paragraph">
@@ -787,35 +864,46 @@ viz = {nodes:nodes, links:links};</code></pre>
 </p>
 </div>
 </div>
+</div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_the_neo4j_browser">The Neo4j Browser</h3>
+<h3 id="_library_alchemy_js_open_source_graph_visualization">Library: Alchemy.js Open Source Graph Visualization</h3>
 
 
 <div class="paragraph">
-<p>The default <a href="http://neo4j.com/download">Neo4j Server</a> has a powerful, customizable data visualization tool based on the built-in D3.js library.
-In the following video, we demonstrate how to style nodes and relationships in the Neo4j&#8217;s Browser visualization, and how to set colors, sizes, and titles.
-We then discuss the Graph-Style-Sheet (GRASS) and how you can download, update, and reset the styling information.</p>
-</div>
-
-<iframe src="//player.vimeo.com/video/97204829" width="500" height="313" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_svg_based_graph_interaction">SVG-Based Graph Interaction</h3>
-
-
-<div class="paragraph">
-<p><span class="image"><a class="image" href="http://www.apcjones.com/talks/2014-03-26_Neo4j_London/#slide-0"><img src="http://assets.neo4j.org/img/still/seening_pattern_in_data.jpg" alt="seening_pattern_in_data" width="500"></a></span></p>
+<p>As you&#8217;ve just seen, preparing, converting and rendering graph data with plain D3 force layout involves a bit of work.
+The open-source <a href="http://graphalchemist.github.io/Alchemy">Alchemy.js library</a> replaces this effort with a few lines of configuration.
+It uses the <a href="http://graphalchemist.github.io/Alchemy/#/docs">GraphJSON</a> format for interaction which is easier to handle than the raw D3 JSON format.
+Alchemy.js is mostly configuration based but can also be customized with javascript functions.
+It supports custom styling, highlighting, hoover effects, clustering and interactive exploration.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>In this talk, Alistair Jones builds a very powerful graph web editing tool based on SVG, suited for easy integration into modern HTML frameworks.</p>
+<p>Here is a <a href="http://graphalchemist.github.io/Alchemy/#/examples">simple example</a> of using Alchemy.js to render a simple graph:</p>
 </div>
 
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="javascript"><code>&lt;script src="http://cdn.graphalchemist.com/alchemy.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+  alchemy.begin({
+        dataSource: "actors.json",
+        nodeCaption: 'name',
+        nodeMouseOver: 'name',
+        cluster: true,
+        clusterColours: ["#1B9E77","#D95F02","#7570B3","#E7298A","#66A61E","#E6AB02"]})
+&lt;/script&gt;</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/alchemy_example.png" alt="alchemy example">
+</p>
+</div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_keylines_neo4j_graph_visualization">Keylines Neo4j Graph Visualization</h3>
+<h3 id="_product_keylines_neo4j_graph_visualization">Product: Keylines Neo4j Graph Visualization</h3>
 
 
 <div class="paragraph">
@@ -848,7 +936,7 @@ You bind to these events to customize what happens, and, most importantly, your 
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_tom_sawyer_perspectives">Tom Sawyer Perspectives</h3>
+<h3 id="_product_tom_sawyer_perspectives">Product: Tom Sawyer Perspectives</h3>
 <iframe src="//player.vimeo.com/video/90897466" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
 
@@ -857,6 +945,32 @@ You bind to these events to customize what happens, and, most importantly, your 
 Tom Sawyer Perspectives is integrated with the latest Neo4j version for easy visualization of complex results.</p>
 </div>
 
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3 id="_product_linkurious_graph_visualization">Product: Linkurious Graph Visualization</h3>
+
+
+<div class="paragraph">
+<p>Linkurious is a browser based graph exploration and navigation tool.
+It integrates with the Neo4j backend, indexes nodes and relationships for fast facetted search.
+Besides graph navigation it supports also graph editing and Cypher query execution.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Linkurious uses Neo4j’s graph database technology to offer you an easy solution to store, search and visualize graphs.
+You can start navigating inside your graph database.
+Search for properties, inspect nodes, and explore their relationships visually in your web browser.
+find any node in your database easily thanks to our built-in search engine.
+You can simply modify, add and remove nodes or relationships. You can also customize what is displayed, how the data is indexed.</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<a class="image" href="http://linkurio.us/tour/"><img src="http://linkurio.us/wp-content/uploads/2013/09/mac2-w500-vid.png?wmode=transparent" alt="mac2 w500 vid"></a>
+</p>
+</div>
 </div>
                     </div>
                     <div class="large-3 large-pull-9 columns">
