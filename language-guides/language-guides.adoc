@@ -17,16 +17,20 @@ Neo4j supports drivers for all major programming languages. In this section, we 
 
 == How to connect to Neo4j?
 - - -
-You probably also wonder how you would connect from your programming language to a Neo4j Database.
-If you've link:/download[installed] and started Neo4j as a server on your system, you can interact with the database via the built-in Neo4j Browser application on http://localhost:7474[localhost:7474].
+If you've link:/download[installed] and started Neo4j as a server on your system, 
+you can already work interactively with the database via the built-in Neo4j Browser application on http://localhost:7474[localhost:7474].
 
-If you want to access Neo4j programmatically, you can do so with one of the many integrated HTTP-APIs, which allow you to:
+If you want to access Neo4j programmatically, you can do so with one of the available HTTP-APIs, which allow you to:
 
 * POST one or more cypher statements with parameters per request to the server
 * Keep transactions open over multiple requests
 * Choose different result formats
+* Execute management operations or introspect the database
 
-A simple HTTP Cypher request, executable in the Neo4j Browser would look like:
+Let's look at one of the underlying remote API endpoints that Neo4j offers to execute queries. 
+These APIs can be then used directly via a HTTP library or a driver for your language.
+
+A simple HTTP Cypher request, executable in the Neo4j Browser would look like this:
 
 [source,json]
 ----
@@ -36,7 +40,7 @@ A simple HTTP Cypher request, executable in the Neo4j Browser would look like:
     ]}
 ----
 
-The drivers use the same APIs under the hood, but make them available in a convenient way.
+The language drivers use the same APIs under the hood, but make them available in a convenient way.
 Thanks to the Neo4j community, there are drivers for Neo4j for almost every popular programming language,
 most of which mimic existing database driver idioms and approaches.
 

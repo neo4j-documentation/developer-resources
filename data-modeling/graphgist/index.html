@@ -432,9 +432,16 @@ section {
     margin: auto;
 }
 
+#content h4 {
+    font-weight: 100;
+    color: #0f5788;
+    font-size:1.2em;
+}
+
 #content h3 {
     font-weight: 100;
     color: #0f5788;
+    font-size:1.5em;
 }
 
 #content ul {
@@ -510,7 +517,7 @@ img.icon {
 }
 
 #content h4 {
-    font-weight:400
+    font-weight:100
 }
 
 #content strong {
@@ -595,14 +602,14 @@ You should have a good understanding of the Neo4j&#8217;s <a href="/developer-re
 
 
 <div class="paragraph">
-<p><a href="http://graphgist.neo4j.com">Neo4j GraphGists</a> are an easy way to create and share documents containing not just prose, structure
+<p><a href="http://gist.neo4j.org">Neo4j Graph Gists</a> are an easy way to create and share your documents containing not just prose, structure
 and pictures but most importantly <strong>example graph models and use-cases</strong> expressed in Neo4j&#8217;s query language, <a href="/developer-resources/cypher">Cypher</a>.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>These documents are written in AsciiDoc&#8201;&#8212;&#8201;a simple, textual markup language&#8201;&#8212;&#8201;and rendered in your browser as rich and interactive web pages that you can quickly evolve from describing simple how-tos or questions to providing an extensive use-case specification.</p>
+<p>These documents are written in a simple, textual markup language (<a href="http://asciidoctor.org">AsciiDoc</a>) and rendered in your browser as rich and interactive web pages that you can quickly evolve from describing simple how-tos or questions to providing an extensive use-case specification.</p>
 </div>
 
 
@@ -618,34 +625,34 @@ and pictures but most importantly <strong>example graph models and use-cases</st
 <div class="ulist none">
 <ul class="none">
 <li>
-<strong>Finance</strong> <a href="./?github-neo4j-contrib%2Fgists%2F%2Fother%2FBankFraudDetection.adoc">Bank Fraud Detection</a> by <a href="https://twitter.com/kennybastani">@kennybastani</a>
+<strong>Finance</strong> <a href="http://gist.neo4j.org/?github-neo4j-contrib%2Fgists%2F%2Fother%2FBankFraudDetection.adoc">Bank Fraud Detection</a> by <a href="https://twitter.com/kennybastani">@kennybastani</a>
 </li>
 <li>
-<strong>Sports</strong> <a href="./?8019511">Alpine Skiing seasons</a> by <a href="https://twitter.com/pac_19">@pac_19</a>
+<strong>Sports</strong> <a href="http://gist.neo4j.org/?8019511">Alpine Skiing seasons</a> by <a href="https://twitter.com/pac_19">@pac_19</a>
 </li>
 <li>
-<strong>Life Science</strong> <a href="./?7968633">Pharmaceutical Drugs and their Targets</a> by <a href="https://twitter.com/joshkunken">@joshkunken</a>
+<strong>Life Science</strong> <a href="http://gist.neo4j.org/?7968633">Pharmaceutical Drugs and their Targets</a> by <a href="https://twitter.com/joshkunken">@joshkunken</a>
 </li>
 <li>
-<strong>Resources</strong> <a href="./?8141937">Piping Water</a> by <a href="https://twitter.com/shaundaley1">@shaundaley1</a>
+<strong>Resources</strong> <a href="http://gist.neo4j.org/?8141937">Piping Water</a> by <a href="https://twitter.com/shaundaley1">@shaundaley1</a>
 </li>
 <li>
-<strong>Retail</strong> <a href="./?8139605">Single Malt Scotch Whisky</a> by <a href="https://twitter.com/patbaumgartner">@patbaumgartner</a>
+<strong>Retail</strong> <a href="http://gist.neo4j.org/?8139605">Single Malt Scotch Whisky</a> by <a href="https://twitter.com/patbaumgartner">@patbaumgartner</a>
 </li>
 <li>
-<strong>Telecommunications</strong> <a href="./?8526106">Amazon Web Services Global Infrastructure Graph</a> by <a href="https://twitter.com/aidanjcasey">@aidanjcasey</a>
+<strong>Telecommunications</strong> <a href="http://gist.neo4j.org/?8526106">Amazon Web Services Global Infrastructure Graph</a> by <a href="https://twitter.com/aidanjcasey">@aidanjcasey</a>
 </li>
 <li>
-<strong>Infrastructure</strong> <a href="./?8635758">Roads</a> by <a href="http://www.jacqui.tk">@tekiegirl</a>
+<strong>Infrastructure</strong> <a href="http://gist.neo4j.org/?8635758">Roads, Nodes and Automobiles</a> by <a href="http://www.jacqui.tk">@tekiegirl</a>
 </li>
 <li>
-<strong>Recommendation</strong> <a href="./?8173017">Movie Recommendations with k-NN and Cosine Similarity</a> by <a href="http://twitter.com/_nicolemargaret">@_nicolemargaret</a>
+<strong>Recommendation</strong> <a href="http://gist.neo4j.org/?8173017">Movie Recommendations with k-NN and Cosine Similarity</a> by <a href="http://twitter.com/_nicolemargaret">@_nicolemargaret</a>
 </li>
 <li>
-<strong>Fun</strong> <a href="./?6506717">Chess Games and Positions</a> by <a href="https://twitter.com/wefreema">@wefreema</a>
+<strong>Fun</strong> <a href="http://gist.neo4j.org/?6506717">Chess Games and Positions</a> by <a href="https://twitter.com/wefreema">@wefreema</a>
 </li>
 <li>
-<strong>One hundred more</strong> examples can be found in the <a href="https://github.com/neo4j-contrib/graphgist/wiki">GraphGist Collection</a>
+<strong>Many more</strong> examples can be found in the <a href="https://github.com/neo4j-contrib/graphgist/wiki">GraphGist Collection</a>
 </li>
 </ul>
 </div>
@@ -666,84 +673,27 @@ and pictures but most importantly <strong>example graph models and use-cases</st
 <strong>Fork</strong> the original GraphGist into your own account and <strong>start to edit</strong> the prose, images, setup and use-case Cypher queries.
 </li>
 <li>
-<strong>Paste</strong> the Github Gist URL into the top right URL box of any GraphGist page and hit enter; your Gist will be loaded and rendered immediately.
+<strong>Paste</strong> the Github Gist URL into the top right URL box of any <a href="http://gist.neo4j.org">GraphGist</a> page; your Gist will be loaded and rendered immediately.
 </li>
 <li>
 <strong>Reload</strong> your GraphGist page whenever you update your document.
 </li>
 <li>
 <strong>Share</strong> your GraphGist with your colleagues, friends or us.
-Hit the "submit" link in the footer when you are ready to get your t-shirt reward.
+</li>
+<li>
+<strong>Submit</strong> via "submit" link in the footer.
 </li>
 </ol>
 </div>
 <iframe src="//player.vimeo.com/video/74279113" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_set_up_a_graph_to_show_you_and_your_likes">Set Up a Graph to Show You and Your Likes</h3>
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (you:Person {name:"You"})-[like:LIKE]-&gt;(us:Database:NoSql:Graph {name:"Neo4j" })
-RETURN you, like, us</code></pre>
-</div>
-</div>
 
 
 <div class="paragraph">
-<p>Render results as a graph with:</p>
+<p>Below is an example of an <a href="http://gist.neo4j.org/?f528552b7a1f9cb4fa2a">Example-GraphGist</a> and how it is rendered (<a href="https://gist.github.com/jexp/f528552b7a1f9cb4fa2a">source</a>):</p>
 </div>
 
-
-
-<div class="paragraph">
-<p><code>//graph_result</code></p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Or the full graph with:</p>
-</div>
-
-
-
-<div class="paragraph">
-<p><code>//graph</code></p>
-</div>
-
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_query_the_graph_to_show_all_the_things_you_like">Query the Graph to Show All the Things You Like</h3>
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you:Person {name:"You"})-[like:LIKE]-&gt;(liked)
-RETURN you.name AS who, type(like) AS how, liked.name AS what</code></pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>Render the results as a table with</p>
-</div>
-
-
-
-<div class="paragraph">
-<p><code>//table</code></p>
-</div>
-
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title label">Note</div>
-</td>
-<td class="content">
-This document is a GraphGist itself, so you can use the green <a href="https://github.com/neo4j-contrib/gists/blob/master/meta/Home.adoc" class="label">Page Source</a> button on top of the page to see the original AsciiDoc document.
-</td>
-</tr>
-</table>
-</div>
+<iframe src="http://gist.neo4j.org/?f528552b7a1f9cb4fa2a" width="800" height="800"></iframe>
 </div>
 </div>
                     </div>

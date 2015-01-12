@@ -9,6 +9,16 @@ Cypher is Neo4j’s graph query language.
 Cypher’s syntax provides a familiar way to match patterns of nodes and relationships in the graph.
 These developer guides and tutorials show you how to query Neo4j using Cypher.
 
+Here is a simple example of a cypher query (cast of movies starting with "T")
+
+[source,cypher]
+----
+MATCH (actor:Person)-[:ACTED_IN]->(movie:Movie)
+WHERE movie.title =~ "T.*"
+RETURN movie.title as title, collect(actor.name) as cast
+ORDER BY title ASC LIMIT 10;
+----
+
 == [.label]#Guide →# Introduction to Cypher
 - - -
 These guides explain the basic concepts of Cypher, including how to create and query data.
