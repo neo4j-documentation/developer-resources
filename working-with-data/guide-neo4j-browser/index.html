@@ -432,9 +432,16 @@ section {
     margin: auto;
 }
 
+#content h4 {
+    font-weight: 100;
+    color: #0f5788;
+    font-size:1.2em;
+}
+
 #content h3 {
     font-weight: 100;
     color: #0f5788;
+    font-size:1.5em;
 }
 
 #content ul {
@@ -510,7 +517,7 @@ img.icon {
 }
 
 #content h4 {
-    font-weight:400
+    font-weight:100
 }
 
 #content strong {
@@ -573,7 +580,9 @@ hr {
             <div>
                 <div class="row" style="padding-left: 0; padding-right: 0;">
                     <div class="large-9 large-push-3 columns guide-section-content">
-                        <div class="quoteblock abstract">
+                        <div id="preamble columns medium-12">
+<div class="sectionbody">
+<div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
 This article demonstrates how to style graph visualizations in the Neo4j browser using a <strong>Graph Style Sheet</strong> (GRASS).
@@ -582,7 +591,7 @@ This article demonstrates how to style graph visualizations in the Neo4j browser
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should have familiarized yourself with <a href="/developer-resources/get-started/graph-database">Graph Databases</a> and the <a href="/developer-resources/get-started/graph-database#property-graph">Property Graph Model</a>.
+Please have <a href="/download">Neo4j downloaded</a> and unzipped. It helps if you read the section on <a href="/developer-resources/get-started/graph-database">Graph Databases</a>.
 </blockquote>
 </div>
 
@@ -590,6 +599,21 @@ You should have familiarized yourself with <a href="/developer-resources/get-sta
 <div class="label">Beginner</div>
 <hr/>
 
+<div class="toc">
+<h3 class="title">Overview</h3>
+
+<ul class="sectlevel1">
+<li><a href="#_installing_and_starting_neo4j_browser">Installing and Starting Neo4j Browser</a></li>
+<li><a href="#_styling_neo4j_browser_visualization">Styling Neo4j Browser Visualization</a></li>
+<li><a href="#_some_tips_and_tricks_for_neo4j_browser">Some Tips and Tricks for Neo4j Browser</a></li>
+</ul>
+
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1 "  >
+<h3 id="_installing_and_starting_neo4j_browser">Installing and Starting Neo4j Browser</h3>
 <div class="imageblock">
 <p class="content">
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/howto_style.png" alt="How to style">
@@ -598,13 +622,13 @@ You should have familiarized yourself with <a href="/developer-resources/get-sta
 
 
 <div class="paragraph">
-<p>First, <a href="http://neo4j.org/download">download</a>, unzip and start Neo4j.
-If you have a JDK (Java7) installed and on the correct path, you should see the following:</p>
+<p>First, <a href="http://neo4j.org/download">download</a>, unzip, change into the directory and start Neo4j.
+If you have a JDK (Java7) installed and executed it from the correct path, you should see the following:</p>
 </div>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="bash"><code>$ cd neo4j-community-2.1.1
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="bash"><code>$ cd neo4j-community-2.1.6
 $ bin/neo4j start
 
 Using additional JVM arguments:  ....
@@ -616,7 +640,7 @@ http://localhost:7474/ is ready.</code></pre>
 
 
 <div class="paragraph">
-<p>Open the URL <a href="http://localhost:7474/">http://localhost:7474/</a> to start working with Neo4j and its query language, Cypher.</p>
+<p>Open the URL <a href="http://localhost:7474/">http://localhost:7474/</a> to start working with Neo4j and our query language, Cypher.</p>
 </div>
 
 
@@ -650,10 +674,20 @@ http://localhost:7474/ is ready.</code></pre>
 
 
 <div class="paragraph">
-<p>After a few seconds the data is imported, but we&#8217;ll see only a lonely <em>Matrix</em> node.
-In order to practice visualization on more nodes and relationships, go to the Favorites tab on the left&#8212;&#8203;indicated by a star&#8212;&#8203;and click on the <strong>Get Some Data</strong> entry, and hit run.</p>
+<p>After a few seconds the data is imported, but we&#8217;ll see only a lonely <em>Matrix</em> node.</p>
 </div>
 
+
+
+<div class="paragraph">
+<p>To see some nodes and relationships for styling, go to the Favorites tab on the left&#8212;&#8203;indicated by a star&#8212;&#8203;and click on the <strong>Get Some Data</strong> entry, and click the run icon.
+This executes the statement <code>MATCH (n) RETURN n limit 100</code> which just fetches some nodes.
+The browser also fetches and displays relationships between those nodes, even if they were not part of your query result.</p>
+</div>
+
+</div>
+<div class="sect1 "  >
+<h3 id="_styling_neo4j_browser_visualization">Styling Neo4j Browser Visualization</h3>
 
 
 <div class="paragraph">
@@ -661,7 +695,7 @@ In order to practice visualization on more nodes and relationships, go to the Fa
 Click on any red node that has ACTED_IN relationships pointing to it.
 These are Movie nodes.
 In the popup you&#8217;ll see the node label "Movie" on the top.
-In the tab on the right, denoted with an "eye", you can set the styling parameters and property chosen for the displayed title.</p>
+In the "style" tab on the right, denoted with an "eye", you can set the styling parameters and property chosen for the displayed title.</p>
 </div>
 
 <div class="imageblock">
@@ -685,14 +719,14 @@ The next step is styling relationships. Click on one (for example, DIRECTED) and
 
 <div class="paragraph">
 <p>The Neo4j browser visualization is powered by a concept called <strong>Graph Style Sheet</strong> (GRASS).
-You can access the style sheet with the link at the bottom of the styling pop-up.</p>
+You can access the style sheet viewer with the <code>&lt;/&gt; View Stylesheet</code> link at the bottom of the styling pop-up.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>The resulting style renderer allows you to look at the stylesheet, download it, or update it via drag-and-drop.
-You can also reset all styling by clicking the "fire extinguisher".</p>
+<p>The resulting style viewer allows you to look at the stylesheet, download it, or update it via drag-and-drop onto the gray area.
+You can also <strong>reset all styling</strong> by clicking the "fire extinguisher" icon.</p>
 </div>
 
 <div class="imageblock">
@@ -703,16 +737,129 @@ You can also reset all styling by clicking the "fire extinguisher".</p>
 
 
 <div class="paragraph">
-<p>See Michael perform some graph visualization in real time on the following screencast:</p>
+<p>See the styling options in action in the following screencast:</p>
 </div>
 
 <iframe src="//player.vimeo.com/video/97204829?color=ff9933" width="685" height="500" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</div>
+<div class="sect1 "  >
+<h3 id="_some_tips_and_tricks_for_neo4j_browser">Some Tips and Tricks for Neo4j Browser</h3>
 
 
 <div class="paragraph">
-<p>Enjoy!</p>
+<p>Executing Queries &amp; Commands</p>
 </div>
 
+<div class="ulist">
+<ul>
+<li>
+switch to multi-line editing mode with <code>shift+enter</code>, then <code>enter</code> will create newlines
+</li>
+<li>
+execute with <code>ctrl+enter</code>
+</li>
+<li>
+you can click on the query text above the output pane and it is added to the editor again
+</li>
+<li>
+navigate history with <code>ctrl+up</code> and <code>ctrl+down</code>, the history will be persisted across browser restarts
+</li>
+<li>
+<code>ESC</code> puts the editor in fullscreen mode, good for large queries
+</li>
+<li>
+You can switch between tabular and visual mode for results with the little icon on the lower right of each panel,
+<div class="ulist">
+<ul>
+<li>
+don&#8217;t worry if you don&#8217;t see any output, you might just be in visual mode but returned tabular/scalar data, just switch the mode to tabular
+</li>
+<li>
+query time is reported in the tabular view, but it is not the correct minimal time for your query, as the browser makes several requests and roundtrips to fetch the data
+</li>
+<li>
+you can download the results as CSV from the tabular output panel (top right download icon), and as JSON (download icon above the panel)
+</li>
+</ul>
+</div>
+</li>
+<li>
+<code>:clear</code> removes all accumulated output panels, the trashcan icon removes a single panel and the cross expands a panel into fullscreen (helpful in visual mode)
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>Favorites</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+if you want to save a snippet to your favorites (using the star button), make sure to add a comment line on top (<code>// &#8230;&#8203;</code>) which will be used as title for your snipppet
+</li>
+<li>
+you can group your favorites into folders and order them with drag and drop and remove them again
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>Configuration</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+you can retrieve the current configuration with <code>:config</code>
+</li>
+<li>
+the individual settings are configured with:
+<div class="ulist">
+<ul>
+<li>
+<code>:config maxNeighbours:100</code> - maxiumum number of neighbours for a node
+</li>
+<li>
+<code>:config maxNodes:1000</code> - maximum number of nodes for the visualization
+</li>
+<li>
+<code>:config maxNodes:1000</code> - maximum number of rows for the tabular result
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3 id="_executing_rest_requests">Executing REST requests</h3>
+
+
+<div class="paragraph">
+<p>You can also execute REST requests with the Neo4j Browser, the command-syntax is<br>
+<code>:COMMAND /a/path {"some":"data"}</code>.
+The available commands are <code>:GET</code>, <code>:POST</code>, <code>:PUT</code> and <code>:DELETE</code>.
+A simple query would inspect the available endpoints of the database <code>:GET /db/data/</code>, the results are listed as formatted JSON.
+Then you can for instance retrieve all labels in the database with <code>:GET /db/data/labels</code>.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>To execute a Cypher statement you post to the transaction Cypher endpoint like this:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="javascript"><code>:POST /db/data/transaction/commit {"statements":[
+     {"statement":"MATCH (m:Movie) WHERE m.title={title} RETURN m.title, m.released, labels(m)",
+      "parameters":{"title":"Cloud Atlas"}}]}</code></pre>
+</div>
+</div>
+</div>
+</div>
                     </div>
                     <div class="large-3 large-pull-9 columns">
                            <ul style="padding-top: 0;" class="side-nav">

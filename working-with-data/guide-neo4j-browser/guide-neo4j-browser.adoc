@@ -13,22 +13,25 @@ This article demonstrates how to style graph visualizations in the Neo4j browser
 
 .Prerequisites
 [abstract]
-You should have familiarized yourself with link:/developer/get-started/graph-database[Graph Databases] and the link:/developer/get-started/graph-database#property-graph[Property Graph Model].
+Please have link:/download[Neo4j downloaded] and unzipped. It helps if you read the section on link:/developer/get-started/graph-database[Graph Databases].
 
 [role=expertise]
 {level}
 
+toc::[]
+
 :img: .
 
-//omg there are question marks in this image!
+== Installing and Starting Neo4j Browser
+
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/howto_style.png[How to style]
 
-First, http://neo4j.org/download[download], unzip and start Neo4j.
-If you have a JDK (Java7) installed and on the correct path, you should see the following:
+First, http://neo4j.org/download[download], unzip, change into the directory and start Neo4j.
+If you have a JDK (Java7) installed and executed it from the correct path, you should see the following:
 
 [source,bash]
 ----
-$ cd neo4j-community-2.1.1
+$ cd neo4j-community-2.1.6
 $ bin/neo4j start
 
 Using additional JVM arguments:  ....
@@ -37,7 +40,18 @@ process [70299]... waiting for server to be ready...... OK.
 http://localhost:7474/ is ready.
 ----
 
-Open the URL http://localhost:7474/[http://localhost:7474/] to start working with Neo4j and its query language, Cypher.
+////
+****
+If you connect to Neo4j for the first time, you're asked to change the password for the default user account "neo4j".
+
+[NOTE]
+Please remember the password. In case you forget it, you have to remove the credentials file in `data/dbms/authorization`.
+
+Being logged in, you can also generate an auth-token, to be used as password for any library connecting to Neo4j
+****
+////
+
+Open the URL http://localhost:7474/[http://localhost:7474/] to start working with Neo4j and our query language, Cypher.
 
 If you want to learn more first, click on any of the helpful links shown after startup: these are quick slide shows that introduce the different concepts.
 
@@ -49,7 +63,12 @@ If you want to learn more first, click on any of the helpful links shown after s
 Import sample data by running `:play movies`, clicking on the huge Cypher +CREATE ...+ statement, then hitting `run`.
 
 After a few seconds the data is imported, but we'll see only a lonely _Matrix_ node.
-In order to practice visualization on more nodes and relationships, go to the Favorites tab on the left--indicated by a star--and click on the **Get Some Data** entry, and hit run.
+
+To see some nodes and relationships for styling, go to the Favorites tab on the left--indicated by a star--and click on the **Get Some Data** entry, and click the run icon.
+This executes the statement `MATCH (n) RETURN n limit 100` which just fetches some nodes. 
+The browser also fetches and displays relationships between those nodes, even if they were not part of your query result.
+
+== Styling Neo4j Browser Visualization
 
 ////
 [role=side-nav]
@@ -62,7 +81,7 @@ But those nodes only show numbers!
 Click on any red node that has +ACTED_IN+ relationships pointing to it.
 These are +Movie+ nodes.
 In the popup you'll see the node label "Movie" on the top.
-In the tab on the right, denoted with an "eye", you can set the styling parameters and property chosen for the displayed title.
+In the "style" tab on the right, denoted with an "eye", you can set the styling parameters and property chosen for the displayed title.
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/style_node.jpg[]
 
@@ -72,20 +91,76 @@ The next step is styling relationships. Click on one (for example, +DIRECTED+) a
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/style_relationship.jpg[]
 
 The Neo4j browser visualization is powered by a concept called *Graph Style Sheet* (GRASS).
-You can access the style sheet with the link at the bottom of the styling pop-up.
+You can access the style sheet viewer with the `</> View Stylesheet` link at the bottom of the styling pop-up.
 
-The resulting style renderer allows you to look at the stylesheet, download it, or update it via drag-and-drop.
-You can also reset all styling by clicking the "fire extinguisher".
+The resulting style viewer allows you to look at the stylesheet, download it, or update it via drag-and-drop onto the gray area.
+You can also *reset all styling* by clicking the "fire extinguisher" icon.
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/style_sheet_grass.jpg[]
 
-See Michael perform some graph visualization in real time on the following screencast:
+See the styling options in action in the following screencast:
 
 ++++
 <iframe src="//player.vimeo.com/video/97204829?color=ff9933" width="685" height="500" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 ++++
 
-Enjoy!
+== Some Tips and Tricks for Neo4j Browser
+
+Executing Queries & Commands
+
+* switch to multi-line editing mode with `shift+enter`, then `enter` will create newlines
+* execute with `ctrl+enter`
+* you can click on the query text above the output pane and it is added to the editor again
+* navigate history with `ctrl+up` and `ctrl+down`, the history will be persisted across browser restarts
+* `ESC` puts the editor in fullscreen mode, good for large queries
+* You can switch between tabular and visual mode for results with the little icon on the lower right of each panel, 
+** don't worry if you don't see any output, you might just be in visual mode but returned tabular/scalar data, just switch the mode to tabular
+** query time is reported in the tabular view, but it is not the correct minimal time for your query, as the browser makes several requests and roundtrips to fetch the data
+** you can download the results as CSV from the tabular output panel (top right download icon), and as JSON (download icon above the panel)
+* `:clear` removes all accumulated output panels, the trashcan icon removes a single panel and the cross expands a panel into fullscreen (helpful in visual mode)
+//* don't zoom negatively (ctrl+-) with your browser, in 2.1.x there is a bug which prevents visual output
+
+Favorites
+
+* if you want to save a snippet to your favorites (using the star button), make sure to add a comment line on top (`// ...`) which will be used as title for your snipppet
+* you can group your favorites into folders and order them with drag and drop and remove them again
+
+Configuration
+
+* you can retrieve the current configuration with `:config`
+* the individual settings are configured with:
+** `:config maxNeighbours:100` - maxiumum number of neighbours for a node
+** `:config maxNodes:1000` - maximum number of nodes for the visualization
+** `:config maxNodes:1000` - maximum number of rows for the tabular result
+
+
+
+=== Executing REST requests
+
+You can also execute REST requests with the Neo4j Browser, the command-syntax is +
+`:COMMAND /a/path {"some":"data"}`.
+The available commands are `:GET`, `:POST`, `:PUT` and `:DELETE`.
+A simple query would inspect the available endpoints of the database `:GET /db/data/`, the results are listed as formatted JSON.
+Then you can for instance retrieve all labels in the database with `:GET /db/data/labels`.
+
+To execute a Cypher statement you post to the transaction Cypher endpoint like this:
+
+[source,javascript]
+----
+:POST /db/data/transaction/commit {"statements":[
+     {"statement":"MATCH (m:Movie) WHERE m.title={title} RETURN m.title, m.released, labels(m)",
+      "parameters":{"title":"Cloud Atlas"}}]}
+----
+
+////
+* you can open the styling popup by clickin on any node or relationship
+* on the left "info" tab  you can inspect the properties
+* on the right "style" tab you can choose the property to be used as visual label, the color and size of the shape (circle, line)
+
+* you can open the style-sheet viewer by clicking the `</> View Stylesheet` link at the bottom of the styling popup
+* you can reset all styling by choosing the fire-extinguisher icon on the style-sheet (grass) editor
+* you can replace the current styling by dragging a new style (grass) file onto the grey area on the bottom of the style-sheet editor
+////
 
 ////
 [role=side-nav]
