@@ -16,7 +16,7 @@ $app->get('/', function () {
 });
 
 $app->get('/graph', function (Request $request) use ($neo4j) {
-	$limit = $request->get('limit', 50);
+	$limit = (integer)$request->get('limit', 50);
 	$queryTemplate = <<<QUERY
 MATCH (m:Movie)<-[:ACTED_IN]-(a:Person)
  RETURN m.title as movie, collect(a.name) as cast
