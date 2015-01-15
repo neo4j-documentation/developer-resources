@@ -60,14 +60,14 @@ You can upload the file or provide an URL to load it from, there is the option t
 
 ===== Papa Parse
 
-http://papaparse.com/[Papa Parse] is a comprehensive Javascript library for CSV parsing, that allows you to (streamingly) read CSV data and files even with your browser and provides good, human readable error reporting on issues.
+http://papaparse.com/[Papa Parse] is a comprehensive Javascript library for CSV parsing, that allows you to stream CSV data and files even with your browser and provides good, human readable error reporting on issues.
 In the http://papaparse.com/demo[Demo] area you can test your files yourself or use the library directly.
-There is also a http://papaparse.com/faq#nodejs[fork calls BabyParse] running on node.js.
+There is also a http://papaparse.com/faq#nodejs[fork called BabyParse] running on node.js.
 
 ===== Cypher
 
 What Cypher sees, is what will be imported, so you can use that to your advantage.
-You can use `LOAD CSV` even without creating graph structure and just output samples, counts or distributions.
+You can use `LOAD CSV` without creating graph structure and just output samples, counts or distributions.
 So it is also possible to detect incorrect header column counts, delimiters, quotes, escapes or spelling of header names.
 
 [source,cypher]
@@ -125,7 +125,7 @@ It combines multiple aspects in a single operation:
 
 ===== Memory Config
 
-* Make sure to have the enough memory (at least 4G heap in `neo4j-wrapper.conf`) reserved for your Neo4j-Server or Neo4j-Shell (`export JAVA_OPTS="-Xmx4G"`)
+* Make sure to have enough memory (at least 4G heap in `neo4j-wrapper.conf`) reserved for your Neo4j-Server or Neo4j-Shell (`export JAVA_OPTS="-Xmx4G"`)
 * Configure the memory mapping settings (Neo4j 2.1) according to your expected file sizes +
   (Neo4j 2.1 `neo4j.properties` keep these ratios: `nodestore=100M, relationshipstore=2G, propertystore=500M, stringstore=500M`)
 
@@ -251,3 +251,4 @@ IMPORT DONE. Took: 58s 124ms
 * link:/docs/milestone/import-tool.html["Manual: Import Tool",role=docs]
 * link:/developer/data-modeling/guide-data-modeling[Intro to Graph Modeling]
 * http://www.intelliwareness.org/?p=583["Article: Importing Medicare Provider and Payment Data",role=blog]
+* http://blog.graphenedb.com/blog/2015/01/13/importing-data-into-neo4j-via-csv/[Article: LOAD CSV Intro with GrapheneDB]

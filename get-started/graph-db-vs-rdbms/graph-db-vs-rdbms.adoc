@@ -64,7 +64,7 @@ The resulting data models are much simpler and at the same time more expressive 
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/relational_to_graph.png[]
 
-Unlike other NoSQL databases, graph databases support a very flexible and fine-grained data model that allows you to model and manage rich domains in an easy and intuitive way.
+Graph databases support a very flexible and fine-grained data model that allows you to model and manage rich domains in an easy and intuitive way.
 
 You more or less keep the data as it is in the real world: small, normalized, yet richly connected entities.
 This allows you to query and view your data from any imaginable point of interest, supporting many different use-cases.
@@ -213,7 +213,7 @@ try (PreparedStatement stmt = con.prepareStatement(QUERY)) {
 
 When you have a good enough understanding of the shape of your graph model, i.e. what data will be represented as nodes or relationships and how the labels, relationship-types, and attributes are named, you're ready to go.
 
-The easiest way to import data from your relational database is to create a CSV dump of either individual entity-tables and join-tables or of a joined, denormalized representation.
+The easiest way to import data from your relational database is to create a CSV dump of individual entity-tables and join-tables.
 
 Then you can take the CSV file(s) and use Cypher's `LOAD CSV` power tool to:
 

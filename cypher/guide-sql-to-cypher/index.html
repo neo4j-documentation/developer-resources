@@ -694,7 +694,7 @@ For many-to-many references, join-tables are needed as artificial construct betw
 
 
 <div class="paragraph">
-<p>A well normalized relational model, which was not yet denormalized for performance reasons can be translated into the equivalent graph model.
+<p>A well normalized relational model can be translated into the equivalent graph model.
 Graph model shapes are mostly driven by use-cases, so there will be opportunity for optimization and model evolution afterwards.</p>
 </div>
 
@@ -773,7 +773,7 @@ And directly create the graph structure by using a Neo4j driver for your stack t
 
 <div class="paragraph">
 <p>In a node pattern <code>(identifier:Label)</code> you can use an identifier and one or more labels for the node.
-Optionally you can also provide attributes as key-value structure, e.g. <code>(item:Product {name:"Chocolade"})</code>.</p>
+You can also provide attributes as key-value structure, e.g. (item:Product {name:"Chocolade"}).</p>
 </div>
 
 
@@ -960,7 +960,7 @@ RETURN p.productName, p.unitPrice;</code></pre>
 
 
 <div class="paragraph">
-<p><em>Idexing</em></p>
+<p><em>Indexing</em></p>
 </div>
 
 
@@ -1006,19 +1006,6 @@ WHERE p.ProductName IN ('Chocolade','Chai');</code></pre>
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Product)
 WHERE p.productName IN ['Chocolade','Chai']
-RETURN p.productName, p.unitPrice;</code></pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>You could for instance rewrite this into:</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (p:Product)
-WHERE ANY(name IN ['Chocolade','Chai'] WHERE p.productName = name)
 RETURN p.productName, p.unitPrice;</code></pre>
 </div>
 </div>
