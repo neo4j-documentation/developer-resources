@@ -41,7 +41,7 @@ content =         { :post_type     => POST_TYPE,
                     :post_content  => html,
                     :post_title    => title,
                     :post_name     => post_name,
-                    :post_status   => 'publish'
+                    :post_status   => 'publish',
                     :custom_fields => [{ :key => "developer_section_name", :value => developer_section_name },
                                        { :key => "developer_section_slug", :value => "" }] # was developer_section_slug
                   }
