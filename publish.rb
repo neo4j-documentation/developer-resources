@@ -37,7 +37,7 @@ password = ENV['BLOG_PASSWORD']
 
 
 content =         { :post_type     => POST_TYPE,
-                    :post_date     => Time.now-5*60,
+                    :post_date     => nil, #Time.now-5*60
                     :post_content  => html,
                     :post_title    => title,
                     :post_name     => post_name,
