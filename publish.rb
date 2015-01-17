@@ -61,12 +61,12 @@ puts "Got #{pages.length} pages matching the post_name '#{post_name}'"
 page = pages.sort_by {|hash| hash['post_id'] }.first
 
 if page
-  if page['custom_fields'] {
+  if page['custom_fields'] then
     content[:custom_fields].each{ |f|
        found = page['custom_fields'].find{ |field| field['key']==f[:key] }
        f['id']=found['id'] if found
     }
-  }
+  end
   post_id = page['post_id'].to_i
   puts "Editing #{post_id} on _#{blog_id}_ custom-field #{content[:custom_fields].inspect}"
 
