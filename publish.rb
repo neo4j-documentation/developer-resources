@@ -41,6 +41,7 @@ content =         { :post_type     => POST_TYPE,
                     :post_content  => html,
                     :post_title    => title,
                     :post_name     => post_name,
+                    :post_status   => 'publish'
                     :custom_fields => [{ :key => "developer_section_name", :value => developer_section_name },
                                        { :key => "developer_section_slug", :value => "" }] # was developer_section_slug
                   }
@@ -72,10 +73,9 @@ if page
 
   raise "edit failed" unless wp.editPost(:blog_id => blog_id,
                                          :post_id => post_id,
-                                         :content => content,
-                                         :post_status => 'published')
+                                         :content => content)
 else
   puts "Making a new post for '#{title}' on _#{blog_id}_"
   raise "publish failed" unless wp.newPost(:blog_id => blog_id,
-                                           :content => content.merge({ :post_status  => "published"}))
+                                           :content => content)
 end
