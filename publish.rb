@@ -42,7 +42,7 @@ content =         { :post_type     => POST_TYPE,
                     :post_title    => title,
                     :post_name     => post_name,
                     :custom_fields => [{ :key => "developer_section_name", :value => developer_section_name },
-                                       { :key => "developer_section_slug", :value => "" }] # was developer_section_slug
+                                       { :key => "developer_section_slug", :value => developer_section_slug }] # was developer_section_slug
                   }
 
 puts "publishing: #{post_name}"
@@ -61,7 +61,7 @@ puts "Got #{pages.length} pages matching the post_name '#{post_name}'"
 page = pages.sort_by {|hash| hash['post_id'] }.first
 
 if page
-  content[:custom_fields].each{ |f|
+  (content[:custom_fields]||[]).each{ |f|
      f['id']=page['custom_fields'].find{ |field| field['key']==f[:key] }['id']
   }
   post_id = page['post_id'].to_i
@@ -69,7 +69,8 @@ if page
 
   raise "edit failed" unless wp.editPost(:blog_id => blog_id,
                                          :post_id => post_id,
-                                         :content => content)
+                                         :content => content,
+                                         :post_status => 'publish')
 else
   puts "Making a new post for '#{title}' on _#{blog_id}_"
   raise "publish failed" unless wp.newPost(:blog_id => blog_id,
