@@ -24,7 +24,7 @@ post_name = optional_slug unless optional_slug.empty?
 
 html =  lines.join.gsub(/href="(?:\/developer\/)?(?:(?:\.\.|[a-zA-Z0-9_-]+)\/)*([^#:]+?)"/,'href="/developer/\1"')
                   .gsub(/\/developer\/+developer/,'/developer')
-                  .gsub(/\/developer\/+docs/,'/docs')
+                  .gsub(/\/developer\/+(docs|graph-academy|download|use-cases|online-course)/,'/\1')
 
 #puts "header: #{title} / #{level} / #{author} / #{email} / #{developer_section_name} / #{developer_section_slug} / #{optional_slug}"
 
