@@ -695,7 +695,14 @@ The PostgreSQL 'copy' command lets us execute a SQL query and write the result t
 <div class="listingblock">
 <div class="title">export_csv.sql</div>
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="sql"><code>Unresolved directive in guide-importing-data-and-etl.adoc - include::/developer-resources/data/northwind/export_csv.sql[]</code></pre>
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="sql"><code>COPY (SELECT * FROM customers) TO '/tmp/customers.csv' WITH CSV header;
+COPY (SELECT * FROM suppliers) TO '/tmp/suppliers.csv' WITH CSV header;
+COPY (SELECT * FROM products)  TO '/tmp/products.csv' WITH CSV header;
+COPY (SELECT * FROM employees) TO '/tmp/employees.csv' WITH CSV header;
+COPY (SELECT * FROM categories) TO '/tmp/categories.csv' WITH CSV header;
+
+COPY (SELECT * FROM orders
+      LEFT OUTER JOIN order_details ON order_details.OrderID = orders.OrderID) TO '/tmp/orders.csv' WITH CSV header;</code></pre>
 </div>
 </div>
 </div>
@@ -716,7 +723,34 @@ The PostgreSQL 'copy' command lets us execute a SQL query and write the result t
 <div class="listingblock">
 <div class="title">import_csv.cypher</div>
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>Unresolved directive in guide-importing-data-and-etl.adoc - include::/developer-resources/data/northwind/import_csv.cypher[tags=nodes]</code></pre>
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>// Create customers
+USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM "file:customers.csv" AS row
+CREATE (:Customer {companyName: row.CompanyName, customerID: row.CustomerID, fax: row.Fax, phone: row.Phone});
+
+// Create products
+USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM "file:products.csv" AS row
+CREATE (:Product {productName: row.ProductName, productID: row.ProductID, unitPrice: toFloat(row.UnitPrice)});
+
+// Create suppliers
+USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM "file:suppliers.csv" AS row
+CREATE (:Supplier {companyName: row.CompanyName, supplierID: row.SupplierID});
+
+// Create employees
+USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM "file:employees.csv" AS row
+CREATE (:Employee {employeeID:row.EmployeeID,  firstName: row.FirstName, lastName: row.LastName, title: row.Title});
+
+// Create categories
+USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM "file:categories.csv" AS row
+CREATE (:Category {categoryID: row.CategoryID, categoryName: row.CategoryName, description: row.Description});
+
+USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM "file:orders.csv" AS row
+MERGE (order:Order {orderID: row.OrderID}) ON CREATE SET order.shipName =  row.ShipName;</code></pre>
 </div>
 </div>
 
@@ -727,7 +761,13 @@ The PostgreSQL 'copy' command lets us execute a SQL query and write the result t
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>Unresolved directive in guide-importing-data-and-etl.adoc - include::/developer-resources/data/northwind/import_csv.cypher[tags=indexes]</code></pre>
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE INDEX ON :Product(productID);
+CREATE INDEX ON :Product(productName);
+CREATE INDEX ON :Category(categoryID);
+CREATE INDEX ON :Employee(employeeID);
+CREATE INDEX ON :Supplier(supplierID);
+CREATE INDEX ON :Customer(customerID);
+CREATE INDEX ON :Customer(customerName);</code></pre>
 </div>
 </div>
 
@@ -738,7 +778,24 @@ The PostgreSQL 'copy' command lets us execute a SQL query and write the result t
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>Unresolved directive in guide-importing-data-and-etl.adoc - include::/developer-resources/data/northwind/import_csv.cypher[tags=rels_orders]</code></pre>
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM "file:orders.csv" AS row
+MATCH (order:Order {orderID: row.OrderID})
+MATCH (product:Product {productID: row.ProductID})
+MERGE (order)-[pu:PRODUCT]-&gt;(product)
+ON CREATE SET pu.unitPrice = toFloat(row.UnitPrice), pu.quantity = toFloat(row.Quantity);
+
+USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM "file:orders.csv" AS row
+MATCH (order:Order {orderID: row.OrderID})
+MATCH (employee:Employee {employeeID: row.EmployeeID})
+MERGE (employee)-[:SOLD]-&gt;(order);
+
+USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM "file:orders.csv" AS row
+MATCH (order:Order {orderID: row.OrderID})
+MATCH (customer:Customer {customerID: row.CustomerID})
+MERGE (customer)-[:PURCHASED]-&gt;(order);</code></pre>
 </div>
 </div>
 
@@ -749,7 +806,17 @@ The PostgreSQL 'copy' command lets us execute a SQL query and write the result t
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>Unresolved directive in guide-importing-data-and-etl.adoc - include::/developer-resources/data/northwind/import_csv.cypher[tags=rels_products]</code></pre>
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM "file:products.csv" AS row
+MATCH (product:Product {productID: row.ProductID})
+MATCH (supplier:Supplier {supplierID: row.SupplierID})
+MERGE (supplier)-[:SUPPLIES]-&gt;(product);
+
+USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM "file:products.csv" AS row
+MATCH (product:Product {productID: row.ProductID})
+MATCH (category:Category {categoryID: row.CategoryID})
+MERGE (product)-[:PART_OF]-&gt;(category);</code></pre>
 </div>
 </div>
 
@@ -760,7 +827,11 @@ The PostgreSQL 'copy' command lets us execute a SQL query and write the result t
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>Unresolved directive in guide-importing-data-and-etl.adoc - include::/developer-resources/data/northwind/import_csv.cypher[tags=rels_employees]</code></pre>
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM "file:employees.csv" AS row
+MATCH (employee:Employee {employeeID: row.EmployeeID})
+MATCH (manager:Employee {employeeID: row.ReportsTo})
+MERGE (employee)-[:REPORTS_TO]-&gt;(manager);</code></pre>
 </div>
 </div>
 
@@ -771,7 +842,7 @@ The PostgreSQL 'copy' command lets us execute a SQL query and write the result t
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>Unresolved directive in guide-importing-data-and-etl.adoc - include::/developer-resources/data/northwind/import_csv.cypher[tags=constraints]</code></pre>
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE CONSTRAINT ON (o:Order) ASSERT o.orderID IS UNIQUE;</code></pre>
 </div>
 </div>
 
