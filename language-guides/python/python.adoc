@@ -14,8 +14,9 @@ While it is not comprehensive, it aims to introduce the available drivers and li
 
 .Prerequisites
 [abstract]
-You should be familiar with link:/developer/graph-database[graph database concepts] and the property graph model.
-You should have link:/download[installed Neo4j] and made yourself familiar with our link:/developer/cypher-query-language[Cypher Query language].
+* You should be familiar with link:/developer/graph-database[graph database concepts] and the property graph model.
+* You should have link:/download[installed Neo4j] and made yourself familiar with our link:/developer/cypher-query-language[Cypher Query language].
+* We also recommend installing and becoming familiar with both https://pip.pypa.io/[pip] and https://virtualenv.pypa.io/[virtualenv] before working on a Python project.
 
 [role=expertise]
 {level}
@@ -28,6 +29,8 @@ toc::[]
 For anyone working with https://www.python.org/[Python], the Neo4j community have contributed a range of driver options.
 These range from lightweight to comprehensive driver packages as well as libraries designed for use with web frameworks such as https://www.djangoproject.com/[Django].
 Python support is well-established for Neo4j, with REST drivers having existed since 2011 and _python-embedded_ before that.
+
+NOTE: The _python-embedded_ project is no longer maintained and supported by Neo Technology.
 
 Many Pythonistas have invested a lot of time and love to develop these libraries, so if you use them, please provide feedback to the authors and help us improve.
 
@@ -42,13 +45,15 @@ The core library has no external dependencies and has been carefully designed to
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2015/01/py2neo.200x200.png[float="right"]
 
-Author:: https://twitter.com/neonige[Nigel Small]
-Website:: http://py2neo.org/
-Source:: https://github.com/nigelsmall/py2neo
-Package:: https://pypi.python.org/pypi/py2neo
-Documentation:: http://py2neo.org/
-Python:: 2.7 / 3.3 / 3.4
-Neo4j:: 1.8 / 1.9 / 2.0 / 2.1 / 2.2
+|===
+| Author:        | https://twitter.com/neonige[Nigel Small]
+| Website:       | http://py2neo.org/
+| Source:        | https://github.com/nigelsmall/py2neo
+| Package:       | https://pypi.python.org/pypi/py2neo
+| Documentation: | http://py2neo.org/
+| Python:        | 2.7 / 3.3 / 3.4
+| Neo4j:         | 1.8 / 1.9 / 2.0 / 2.1 / 2.2
+|===
 
 === Installation
 ....
@@ -77,11 +82,13 @@ The main goal of neo4j-rest-client was to enable Python programmers already usin
 So the syntax of neo4j-rest-client’s API is fully compatible with python-embedded.
 However, a new syntax is introduced in order to reach a more pythonic style and to enrich the API with the new features the Neo4j team introduces.
 
-Author:: https://twitter.com/versae[Javier de la Rosa]
-Website:: http://neo4j-rest-client.readthedocs.org/
-Source:: https://github.com/versae/neo4j-rest-client
-Package:: https://pypi.python.org/pypi/neo4jrestclient/
-Documentation:: http://neo4j-rest-client.readthedocs.org/
+|===
+| Author:        | https://twitter.com/versae[Javier de la Rosa]
+| Website:       | http://neo4j-rest-client.readthedocs.org/
+| Source:        | https://github.com/versae/neo4j-rest-client
+| Package:       | https://pypi.python.org/pypi/neo4jrestclient/
+| Documentation: | http://neo4j-rest-client.readthedocs.org/
+|===
 
 === Installation
 Available through Python Package Index:
@@ -99,7 +106,8 @@ You can also install the development branch:
 $ pip install git+https://github.com/versae/neo4j-rest-client.git
 ....
 
-See also:: {github}/language-guides/python/neo4jrestclient[Example Project with Neo4jRestClient]
+=== See also
+* {github}/language-guides/python/neo4jrestclient[Example Project with Neo4jRestClient]
 
 '''
 
@@ -110,12 +118,14 @@ It’s like an ORM for graphs.
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2015/01/blubflow.200x200.png[float="right"]
 
-Author:: https://twitter.com/espeed[James Thornton]
-Website:: http://bulbflow.com/
-Source:: https://github.com/espeed/bulbs
-Package:: https://pypi.python.org/pypi/bulbs
-Documentation:: http://bulbflow.com/docs/
-Python:: 2.6 / 2.7 / 3.0 / 3.1 / 3.2
+|===
+| Author:        | https://twitter.com/espeed[James Thornton]
+| Website:       | http://bulbflow.com/
+| Source:        | https://github.com/espeed/bulbs
+| Package:       | https://pypi.python.org/pypi/bulbs
+| Documentation: | http://bulbflow.com/docs/
+| Python:        | 2.6 / 2.7 / 3.0 / 3.1 / 3.2
+|===
 
 === Installation
 
@@ -143,13 +153,15 @@ $ source env/bin/activate
 
 Implements the http://legacy.python.org/dev/peps/pep-0249/[Python DB API 2.0] for Neo4j.
 
-Author:: Jacob Hansson
-Website:: https://github.com/jakewins/neo4jdb-python
-Source:: https://github.com/jakewins/neo4jdb-python
-Package:: https://pypi.python.org/pypi/neo4jdb
-Documentation:: https://github.com/jakewins/neo4jdb-python/blob/master/README.rst
-Python:: 2.6 / 2.7 / 3.2 / 3.3
-Neo4j:: 2.0 / 2.1
+|===
+| Author:        | Jacob Hansson
+| Website:       | https://github.com/jakewins/neo4jdb-python
+| Source:        | https://github.com/jakewins/neo4jdb-python
+| Package:       | https://pypi.python.org/pypi/neo4jdb
+| Documentation: | https://github.com/jakewins/neo4jdb-python/blob/master/README.rst
+| Python:        | 2.6 / 2.7 / 3.2 / 3.3
+| Neo4j:         | 2.0 / 2.1
+|===
 
 === Installation
 
@@ -163,11 +175,13 @@ pip install neo4jdb
 
 Neo4django is an Object Graph Mapper (OGM) for Django. Use familiar Django models and queries against Neo4j.
 
-Author:: Matt Luongo
-Website:: https://neo4django.readthedocs.org/
-Source:: http://github.com/scholrly/neo4django
-Package:: https://pypi.python.org/pypi/neo4django
-Documentation:: https://neo4django.readthedocs.org/
+|===
+| Author:        | Matt Luongo
+| Website:       | https://neo4django.readthedocs.org/
+| Source:        | http://github.com/scholrly/neo4django
+| Package:       | https://pypi.python.org/pypi/neo4django
+| Documentation: | https://neo4django.readthedocs.org/
+|===
 
 === Installation
 
@@ -189,13 +203,15 @@ An Object Graph Mapper (OGM) also usable for Django for the Neo4j graph database
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2015/01/neomodel.200x80.png[float="right"]
 
-Author:: Robin Edwards
-Website:: http://neomodel.readthedocs.org/
-Source:: http://github.com/robinedwards/neomodel
-Package:: https://pypi.python.org/pypi/neomodel
-Documentation:: http://neomodel.readthedocs.org/
-Python:: 2.7 / 3.4 / pypy / pypy3
-Neo4j:: 2.0 / 2.1
+|===
+| Author:        | Robin Edwards
+| Website:       | http://neomodel.readthedocs.org/
+| Source:        | http://github.com/robinedwards/neomodel
+| Package:       | https://pypi.python.org/pypi/neomodel
+| Documentation: | http://neomodel.readthedocs.org/
+| Python:        | 2.7 / 3.4 / pypy / pypy3
+| Neo4j:         | 2.0 / 2.1
+|===
 
 === Installation
 

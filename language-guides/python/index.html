@@ -241,12 +241,22 @@ This guide provides an overview of how to connecting to Neo4j from Python.
 While it is not comprehensive, it aims to introduce the available drivers and links to other relevant resources.
 </blockquote>
 </div>
-<div class="quoteblock abstract">
+<div class="ulist abstract">
 <div class="title">Prerequisites</div>
-<blockquote style="padding-left: 0;">
+
+
+<ul class="abstract">
+<li>
 You should be familiar with <a href="/developer/graph-database">graph database concepts</a> and the property graph model.
+</li>
+<li>
 You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="/developer/cypher-query-language">Cypher Query language</a>.
-</blockquote>
+</li>
+<li>
+We also recommend installing and becoming familiar with both <a href="https://pip.pypa.io/">pip</a> and <a href="https://virtualenv.pypa.io/">virtualenv</a> before working on a Python project.
+</li>
+</ul>
+
 </div>
 
 
@@ -280,6 +290,18 @@ These range from lightweight to comprehensive driver packages as well as librari
 Python support is well-established for Neo4j, with REST drivers having existed since 2011 and <em>python-embedded</em> before that.</p>
 </div>
 
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title label">Note</div>
+</td>
+<td class="content">
+The <em>python-embedded</em> project is no longer maintained and supported by Neo Technology.
+</td>
+</tr>
+</table>
+</div>
 
 
 <div class="paragraph">
@@ -307,38 +329,42 @@ The core library has no external dependencies and has been carefully designed to
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2015/01/py2neo.200x200.png" alt="py2neo.200x200">
 </p>
 </div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Author</dt>
-<dd>
-<p><a href="https://twitter.com/neonige">Nigel Small</a></p>
-</dd>
-<dt class="hdlist1">Website</dt>
-<dd>
-<p><a href="http://py2neo.org/" class="bare">http://py2neo.org/</a></p>
-</dd>
-<dt class="hdlist1">Source</dt>
-<dd>
-<p><a href="https://github.com/nigelsmall/py2neo" class="bare">https://github.com/nigelsmall/py2neo</a></p>
-</dd>
-<dt class="hdlist1">Package</dt>
-<dd>
-<p><a href="https://pypi.python.org/pypi/py2neo" class="bare">https://pypi.python.org/pypi/py2neo</a></p>
-</dd>
-<dt class="hdlist1">Documentation</dt>
-<dd>
-<p><a href="http://py2neo.org/" class="bare">http://py2neo.org/</a></p>
-</dd>
-<dt class="hdlist1">Python</dt>
-<dd>
-<p>2.7 / 3.3 / 3.4</p>
-</dd>
-<dt class="hdlist1">Neo4j</dt>
-<dd>
-<p>1.8 / 1.9 / 2.0 / 2.1 / 2.2</p>
-</dd>
-</dl>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Author:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://twitter.com/neonige">Nigel Small</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Website:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://py2neo.org/" class="bare">http://py2neo.org/</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Source:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/nigelsmall/py2neo" class="bare">https://github.com/nigelsmall/py2neo</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Package:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://pypi.python.org/pypi/py2neo" class="bare">https://pypi.python.org/pypi/py2neo</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://py2neo.org/" class="bare">http://py2neo.org/</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Python:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.7 / 3.3 / 3.4</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Neo4j:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.8 / 1.9 / 2.0 / 2.1 / 2.2</p></td>
+</tr>
+</tbody>
+</table>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_installation">Installation</h4>
@@ -387,30 +413,34 @@ So the syntax of neo4j-rest-client’s API is fully compatible with python-embed
 However, a new syntax is introduced in order to reach a more pythonic style and to enrich the API with the new features the Neo4j team introduces.</p>
 </div>
 
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Author</dt>
-<dd>
-<p><a href="https://twitter.com/versae">Javier de la Rosa</a></p>
-</dd>
-<dt class="hdlist1">Website</dt>
-<dd>
-<p><a href="http://neo4j-rest-client.readthedocs.org/" class="bare">http://neo4j-rest-client.readthedocs.org/</a></p>
-</dd>
-<dt class="hdlist1">Source</dt>
-<dd>
-<p><a href="https://github.com/versae/neo4j-rest-client" class="bare">https://github.com/versae/neo4j-rest-client</a></p>
-</dd>
-<dt class="hdlist1">Package</dt>
-<dd>
-<p><a href="https://pypi.python.org/pypi/neo4jrestclient/" class="bare">https://pypi.python.org/pypi/neo4jrestclient/</a></p>
-</dd>
-<dt class="hdlist1">Documentation</dt>
-<dd>
-<p><a href="http://neo4j-rest-client.readthedocs.org/" class="bare">http://neo4j-rest-client.readthedocs.org/</a></p>
-</dd>
-</dl>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Author:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://twitter.com/versae">Javier de la Rosa</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Website:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://neo4j-rest-client.readthedocs.org/" class="bare">http://neo4j-rest-client.readthedocs.org/</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Source:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/versae/neo4j-rest-client" class="bare">https://github.com/versae/neo4j-rest-client</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Package:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://pypi.python.org/pypi/neo4jrestclient/" class="bare">https://pypi.python.org/pypi/neo4jrestclient/</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://neo4j-rest-client.readthedocs.org/" class="bare">http://neo4j-rest-client.readthedocs.org/</a></p></td>
+</tr>
+</tbody>
+</table>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_installation_2">Installation</h4>
@@ -448,13 +478,20 @@ However, a new syntax is introduced in order to reach a more pythonic style and 
 <pre>$ pip install git+https://github.com/versae/neo4j-rest-client.git</pre>
 </div>
 </div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">See also</dt>
-<dd>
-<p><a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/python/neo4jrestclient">Example Project with Neo4jRestClient</a></p>
-</dd>
-</dl>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_see_also">See also</h4>
+
+<div class="ulist">
+
+
+<ul>
+<li>
+<a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/python/neo4jrestclient">Example Project with Neo4jRestClient</a>
+</li>
+</ul>
+
 </div>
 <hr>
 </div>
@@ -480,34 +517,38 @@ It’s like an ORM for graphs.</p>
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2015/01/blubflow.200x200.png" alt="blubflow.200x200">
 </p>
 </div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Author</dt>
-<dd>
-<p><a href="https://twitter.com/espeed">James Thornton</a></p>
-</dd>
-<dt class="hdlist1">Website</dt>
-<dd>
-<p><a href="http://bulbflow.com/" class="bare">http://bulbflow.com/</a></p>
-</dd>
-<dt class="hdlist1">Source</dt>
-<dd>
-<p><a href="https://github.com/espeed/bulbs" class="bare">https://github.com/espeed/bulbs</a></p>
-</dd>
-<dt class="hdlist1">Package</dt>
-<dd>
-<p><a href="https://pypi.python.org/pypi/bulbs" class="bare">https://pypi.python.org/pypi/bulbs</a></p>
-</dd>
-<dt class="hdlist1">Documentation</dt>
-<dd>
-<p><a href="http://bulbflow.com/docs/" class="bare">http://bulbflow.com/docs/</a></p>
-</dd>
-<dt class="hdlist1">Python</dt>
-<dd>
-<p>2.6 / 2.7 / 3.0 / 3.1 / 3.2</p>
-</dd>
-</dl>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Author:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://twitter.com/espeed">James Thornton</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Website:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://bulbflow.com/" class="bare">http://bulbflow.com/</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Source:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/espeed/bulbs" class="bare">https://github.com/espeed/bulbs</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Package:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://pypi.python.org/pypi/bulbs" class="bare">https://pypi.python.org/pypi/bulbs</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://bulbflow.com/docs/" class="bare">http://bulbflow.com/docs/</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Python:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.6 / 2.7 / 3.0 / 3.1 / 3.2</p></td>
+</tr>
+</tbody>
+</table>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_installation_3">Installation</h4>
@@ -560,38 +601,42 @@ $ source env/bin/activate
 <p>Implements the <a href="http://legacy.python.org/dev/peps/pep-0249/">Python DB API 2.0</a> for Neo4j.</p>
 </div>
 
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Author</dt>
-<dd>
-<p>Jacob Hansson</p>
-</dd>
-<dt class="hdlist1">Website</dt>
-<dd>
-<p><a href="https://github.com/jakewins/neo4jdb-python" class="bare">https://github.com/jakewins/neo4jdb-python</a></p>
-</dd>
-<dt class="hdlist1">Source</dt>
-<dd>
-<p><a href="https://github.com/jakewins/neo4jdb-python" class="bare">https://github.com/jakewins/neo4jdb-python</a></p>
-</dd>
-<dt class="hdlist1">Package</dt>
-<dd>
-<p><a href="https://pypi.python.org/pypi/neo4jdb" class="bare">https://pypi.python.org/pypi/neo4jdb</a></p>
-</dd>
-<dt class="hdlist1">Documentation</dt>
-<dd>
-<p><a href="https://github.com/jakewins/neo4jdb-python/blob/master/README.rst" class="bare">https://github.com/jakewins/neo4jdb-python/blob/master/README.rst</a></p>
-</dd>
-<dt class="hdlist1">Python</dt>
-<dd>
-<p>2.6 / 2.7 / 3.2 / 3.3</p>
-</dd>
-<dt class="hdlist1">Neo4j</dt>
-<dd>
-<p>2.0 / 2.1</p>
-</dd>
-</dl>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Author:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jacob Hansson</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Website:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/jakewins/neo4jdb-python" class="bare">https://github.com/jakewins/neo4jdb-python</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Source:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/jakewins/neo4jdb-python" class="bare">https://github.com/jakewins/neo4jdb-python</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Package:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://pypi.python.org/pypi/neo4jdb" class="bare">https://pypi.python.org/pypi/neo4jdb</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/jakewins/neo4jdb-python/blob/master/README.rst" class="bare">https://github.com/jakewins/neo4jdb-python/blob/master/README.rst</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Python:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.6 / 2.7 / 3.2 / 3.3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Neo4j:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0 / 2.1</p></td>
+</tr>
+</tbody>
+</table>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_installation_4">Installation</h4>
@@ -619,30 +664,34 @@ $ source env/bin/activate
 <p>Neo4django is an Object Graph Mapper (OGM) for Django. Use familiar Django models and queries against Neo4j.</p>
 </div>
 
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Author</dt>
-<dd>
-<p>Matt Luongo</p>
-</dd>
-<dt class="hdlist1">Website</dt>
-<dd>
-<p><a href="https://neo4django.readthedocs.org/" class="bare">https://neo4django.readthedocs.org/</a></p>
-</dd>
-<dt class="hdlist1">Source</dt>
-<dd>
-<p><a href="http://github.com/scholrly/neo4django" class="bare">http://github.com/scholrly/neo4django</a></p>
-</dd>
-<dt class="hdlist1">Package</dt>
-<dd>
-<p><a href="https://pypi.python.org/pypi/neo4django" class="bare">https://pypi.python.org/pypi/neo4django</a></p>
-</dd>
-<dt class="hdlist1">Documentation</dt>
-<dd>
-<p><a href="https://neo4django.readthedocs.org/" class="bare">https://neo4django.readthedocs.org/</a></p>
-</dd>
-</dl>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Author:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Matt Luongo</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Website:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://neo4django.readthedocs.org/" class="bare">https://neo4django.readthedocs.org/</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Source:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://github.com/scholrly/neo4django" class="bare">http://github.com/scholrly/neo4django</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Package:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://pypi.python.org/pypi/neo4django" class="bare">https://pypi.python.org/pypi/neo4django</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://neo4django.readthedocs.org/" class="bare">https://neo4django.readthedocs.org/</a></p></td>
+</tr>
+</tbody>
+</table>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_installation_5">Installation</h4>
@@ -692,38 +741,42 @@ $ source env/bin/activate
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2015/01/neomodel.200x80.png" alt="neomodel.200x80">
 </p>
 </div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Author</dt>
-<dd>
-<p>Robin Edwards</p>
-</dd>
-<dt class="hdlist1">Website</dt>
-<dd>
-<p><a href="http://neomodel.readthedocs.org/" class="bare">http://neomodel.readthedocs.org/</a></p>
-</dd>
-<dt class="hdlist1">Source</dt>
-<dd>
-<p><a href="http://github.com/robinedwards/neomodel" class="bare">http://github.com/robinedwards/neomodel</a></p>
-</dd>
-<dt class="hdlist1">Package</dt>
-<dd>
-<p><a href="https://pypi.python.org/pypi/neomodel" class="bare">https://pypi.python.org/pypi/neomodel</a></p>
-</dd>
-<dt class="hdlist1">Documentation</dt>
-<dd>
-<p><a href="http://neomodel.readthedocs.org/" class="bare">http://neomodel.readthedocs.org/</a></p>
-</dd>
-<dt class="hdlist1">Python</dt>
-<dd>
-<p>2.7 / 3.4 / pypy / pypy3</p>
-</dd>
-<dt class="hdlist1">Neo4j</dt>
-<dd>
-<p>2.0 / 2.1</p>
-</dd>
-</dl>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Author:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Robin Edwards</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Website:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://neomodel.readthedocs.org/" class="bare">http://neomodel.readthedocs.org/</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Source:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://github.com/robinedwards/neomodel" class="bare">http://github.com/robinedwards/neomodel</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Package:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://pypi.python.org/pypi/neomodel" class="bare">https://pypi.python.org/pypi/neomodel</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://neomodel.readthedocs.org/" class="bare">http://neomodel.readthedocs.org/</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Python:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.7 / 3.4 / pypy / pypy3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Neo4j:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0 / 2.1</p></td>
+</tr>
+</tbody>
+</table>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
     
 <h4 id="_installation_6">Installation</h4>
@@ -780,6 +833,9 @@ $ source env/bin/activate
 </li>
 <li>
 <a href="https://www.youtube.com/watch?v=ps5RtmWKwLY&amp;feature=youtu.be&amp;noredirect=1">Holger Spill: An introduction to Python and graph databases with Neo4j</a>
+</li>
+<li>
+<a href="http://www.markhneedham.com/blog/2015/01/10/python-nltkneo4j-analysing-the-transcripts-of-how-i-met-your-mother/">Python NLTK/Neo4j: Analysing the transcripts of How I Met Your Mother</a>
 </li>
 </ul>
 
