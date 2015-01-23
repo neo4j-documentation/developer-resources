@@ -237,13 +237,15 @@
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-If you are a Pythonista, you should find enough information to get you started with Neo4j. While this guide is not comprehensive it will introduce the different drivers and link to the relevant resources.
+This guide provides an overview of how to connecting to Neo4j from Python.
+While it is not comprehensive, it aims to introduce the available drivers and links to other relevant resources.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should be familiar with <a href="../../what-is-neo4j/graph-database">graph database concepts</a> and the property graph model. You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="../../cypher-query-language">Cypher Query language</a>.
+You should be familiar with <a href="/developer/graph-database">graph database concepts</a> and the property graph model.
+You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="/developer/cypher-query-language">Cypher Query language</a>.
 </blockquote>
 </div>
 
@@ -251,275 +253,540 @@ You should be familiar with <a href="../../what-is-neo4j/graph-database">graph d
 <div class="label">Intermediate</div>
 <hr/>
 
-<div class="toc">
-<h3 class="title">Overview</h3>
-
-<ul class="sectlevel2">
-<li><a href="#_neo4j_from_python">Neo4j from Python</a></li>
-<li><a href="#_the_example_project">The Example Project</a></li>
-<li><a href="#_py2neo">Py2Neo</a></li>
-
-<li><a href="#_neo4jrestclient">Neo4jRestClient</a></li>
-
-<li><a href="#_other_drivers">Other Drivers</a></li>
-
-</ul>
-
-<hr>
-</div>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_neo4j_from_python">Neo4j from Python</h4>
-
-<div class="imageblock">
+<div class="imageblock" style="float: right;">
 <p class="content">
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/06/python-logo-master-v3-TM.png" alt="python logo master v3 TM" width="300">
 </p>
 </div>
+<div class="toc">
+<h3 class="title">Overview</h3>
 
+<ul class="sectlevel1">
+<li><a href="#_py2neo">Py2neo</a></li>
+<li><a href="#_neo4jrestclient">Neo4jRestClient</a></li>
+<li><a href="#_bulbflow">Bulbflow</a></li>
+<li><a href="#_neo4jdb_python">Neo4jdb-Python</a></li>
+<li><a href="#_neo4django">Neo4django</a></li>
+<li><a href="#_neomodel">NeoModel</a></li>
 
-<div class="paragraph">
-<p>Python is an excellent dynamic language, and we&#8217;re proud to say that Neo4j works well it.
-Python drivers were there all from the beginning and a strong and driving force for adopting Neo4j in many places.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Drivers for the different Python stacks enable you to use Neo4j from your familiar environment.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Many Pythonistas have invested a lot of time and love to develop all these drivers, so please if you use them provide feedback to the authors.</p>
-</div>
-
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_the_example_project">The Example Project</h4>
-
-
-
-<div class="paragraph">
-<p>You can find out more about our example projects for many different languages <a href="../example-project">here</a>, you can also access it via the <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/">GitHub repository</a> for the Neo4j developer resources.
-Feel free to check them out.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>It is a small one page webapp for our movies database.
-The front-end is the same for all drivers, just the backends show you how to connect to Neo4j from the different languages and drivers.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p><a href="../example-project">Read More</a></p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="python"><code>def find_lovers(graph_db):
-    query = "MATCH (n)-[r:loves]-&gt;(m) return n, r, m"
-    # This is our awesome Cypher query language.
-    # MATCH the ones that have a LOVES relationship
-    # and RETURN the starting node, the relationship, and the end node.
-    data, metadata = graph_db.execute(query)
-    return data[0]</code></pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>Python and Neo4j are a well established combination, mainly thanks to the sterling efforts of top contributor Nigel Small.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>For small apps it’s feasible to connect directly to Neo4j and execute the Cypher queries that you need to.
-We also have Django support for building bigger web applications, in Neo4jDjango and Neomodel.</p>
-</div>
-
-<div class="sect3 "  >
-    
-<h5 id="_getting_started">Getting Started</h5>
-
-
-
-<div class="paragraph">
-<p>This excellent article from Nigel demonstrates how to join in the fun.</p>
-</div>
-
-</div>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_py2neo">Py2Neo</h4>
-
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/py2neo.png" alt="py2neo">
-</p>
-</div>
-
-
-<div class="paragraph">
-<p>Author: <a href="http://twitter.com/neonige">Nigel Small</a></p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Py2neo is a simple and pragmatic Python library that provides access to the popular graph database Neo4j via its HTTP-Apis.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>It has <a href="http://book.py2neo.org/en/latest/">comprehensive documentation</a> and a lof related articles by its author.</p>
-</div>
-
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
-<h2 id="_sidebar">Sidebar</h2>
-</li>
-<div class="ulist">
-
-
-<ul>
-<li>
-<a href="py2neo-1.6">Example Project with Py2Neo</a>
-</li>
-<li>
-<a href="http://nigelsmall.com/load2neo">Load2Neo</a>
-</li>
 </ul>
 
+<hr>
+
+
+<div class="paragraph">
+<p>For anyone working with <a href="https://www.python.org/">Python</a>, the Neo4j community have contributed a range of driver options.
+These range from lightweight to comprehensive driver packages as well as libraries designed for use with web frameworks such as <a href="https://www.djangoproject.com/">Django</a>.
+Python support is well-established for Neo4j, with REST drivers having existed since 2011 and <em>python-embedded</em> before that.</p>
 </div>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-    
-<h4 id="_neo4jrestclient">Neo4jRestClient</h4>
 
 
 
 <div class="paragraph">
-<p>Author: Javier De La Rosa</p>
+<p>Many Pythonistas have invested a lot of time and love to develop these libraries, so if you use them, please provide feedback to the authors and help us improve.</p>
 </div>
 
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
-<h2 id="_sidebar_2">Sidebar</h2>
-</li>
-<div class="ulist">
-
-
-<ul>
-<li>
-<a href="neo4jrestclient">Example Project with Neo4jRestClient</a>
-</li>
-</ul>
-
+<hr>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
+<div class="sect1 "  >
     
-<h4 id="_other_drivers">Other Drivers</h4>
+<h3 id="_py2neo">Py2neo</h3>
 
-<div class="sect3 "  >
-    
-<h5 id="__a_href_http_github_com_robinedwards_neomodel_neomodel_a"><a href="http://github.com/robinedwards/neomodel">NeoModel</a></h5>
-
+<div class="sectionbody row">
+<div class="columns medium-12">
 
 
 <div class="paragraph">
-<p>Author: Robin Edwards</p>
+<p>Py2neo is a client library and comprehensive toolkit for working with Neo4j from within Python applications and from the command line.
+The core library has no external dependencies and has been carefully designed to be easy and intuitive to use.</p>
 </div>
 
-<div class="imageblock">
+<div class="imageblock" style="float: right;">
 <p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/neomodel-300.png" alt="neomodel 300">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2015/01/py2neo.200x200.png" alt="py2neo.200x200">
 </p>
 </div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Author</dt>
+<dd>
+<p><a href="https://twitter.com/neonige">Nigel Small</a></p>
+</dd>
+<dt class="hdlist1">Website</dt>
+<dd>
+<p><a href="http://py2neo.org/" class="bare">http://py2neo.org/</a></p>
+</dd>
+<dt class="hdlist1">Source</dt>
+<dd>
+<p><a href="https://github.com/nigelsmall/py2neo" class="bare">https://github.com/nigelsmall/py2neo</a></p>
+</dd>
+<dt class="hdlist1">Package</dt>
+<dd>
+<p><a href="https://pypi.python.org/pypi/py2neo" class="bare">https://pypi.python.org/pypi/py2neo</a></p>
+</dd>
+<dt class="hdlist1">Documentation</dt>
+<dd>
+<p><a href="http://py2neo.org/" class="bare">http://py2neo.org/</a></p>
+</dd>
+<dt class="hdlist1">Python</dt>
+<dd>
+<p>2.7 / 3.3 / 3.4</p>
+</dd>
+<dt class="hdlist1">Neo4j</dt>
+<dd>
+<p>1.8 / 1.9 / 2.0 / 2.1 / 2.2</p>
+</dd>
+</dl>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_installation">Installation</h4>
+
+<div class="literalblock">
+<div class="content">
+<pre>pip install py2neo</pre>
+</div>
+</div>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_example">Example</h4>
+
+<div class="literalblock">
+<div class="content">
+<pre>from py2neo import Graph, Path
+graph = Graph()
+
+tx = graph.cypher.begin()
+for name in ["Alice", "Bob", "Carol"]:
+    tx.append("CREATE (person:Person {name:{name}}) RETURN person", name=name)
+alice, bob, carol = [result.one for result in tx.commit()]
+
+friends = Path(alice, "KNOWS", bob, "KNOWS", carol)
+graph.create(friends)</pre>
+</div>
+</div>
+<hr>
+</div>
+</div>
+</div>
+
+</div>
+<div class="sect1 "  >
+    
+<h3 id="_neo4jrestclient">Neo4jRestClient</h3>
+
+<div class="sectionbody row">
+<div class="columns medium-12">
+
+
+<div class="paragraph">
+<p>The main goal of neo4j-rest-client was to enable Python programmers already using Neo4j locally through python-embedded, to use the Neo4j REST server.
+So the syntax of neo4j-rest-client’s API is fully compatible with python-embedded.
+However, a new syntax is introduced in order to reach a more pythonic style and to enrich the API with the new features the Neo4j team introduces.</p>
+</div>
+
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Author</dt>
+<dd>
+<p><a href="https://twitter.com/versae">Javier de la Rosa</a></p>
+</dd>
+<dt class="hdlist1">Website</dt>
+<dd>
+<p><a href="http://neo4j-rest-client.readthedocs.org/" class="bare">http://neo4j-rest-client.readthedocs.org/</a></p>
+</dd>
+<dt class="hdlist1">Source</dt>
+<dd>
+<p><a href="https://github.com/versae/neo4j-rest-client" class="bare">https://github.com/versae/neo4j-rest-client</a></p>
+</dd>
+<dt class="hdlist1">Package</dt>
+<dd>
+<p><a href="https://pypi.python.org/pypi/neo4jrestclient/" class="bare">https://pypi.python.org/pypi/neo4jrestclient/</a></p>
+</dd>
+<dt class="hdlist1">Documentation</dt>
+<dd>
+<p><a href="http://neo4j-rest-client.readthedocs.org/" class="bare">http://neo4j-rest-client.readthedocs.org/</a></p>
+</dd>
+</dl>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_installation_2">Installation</h4>
+
+
+
+<div class="paragraph">
+<p>Available through Python Package Index:</p>
+</div>
+
+<div class="literalblock">
+<div class="content">
+<pre>$ pip install neo4jrestclient</pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Or the old way:</p>
+</div>
+
+<div class="literalblock">
+<div class="content">
+<pre>$ easy_install neo4jrestclient</pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>You can also install the development branch:</p>
+</div>
+
+<div class="literalblock">
+<div class="content">
+<pre>$ pip install git+https://github.com/versae/neo4j-rest-client.git</pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">See also</dt>
+<dd>
+<p><a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/python/neo4jrestclient">Example Project with Neo4jRestClient</a></p>
+</dd>
+</dl>
+</div>
+<hr>
+</div>
+</div>
+</div>
+
+</div>
+<div class="sect1 "  >
+    
+<h3 id="_bulbflow">Bulbflow</h3>
+
+<div class="sectionbody row">
+<div class="columns medium-12">
+
+
+<div class="paragraph">
+<p>Bulbs is an open-source Python persistence framework for graph databases and the first piece of a larger web development toolkit.
+It’s like an ORM for graphs.</p>
+</div>
+
+<div class="imageblock" style="float: right;">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2015/01/blubflow.200x200.png" alt="blubflow.200x200">
+</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Author</dt>
+<dd>
+<p><a href="https://twitter.com/espeed">James Thornton</a></p>
+</dd>
+<dt class="hdlist1">Website</dt>
+<dd>
+<p><a href="http://bulbflow.com/" class="bare">http://bulbflow.com/</a></p>
+</dd>
+<dt class="hdlist1">Source</dt>
+<dd>
+<p><a href="https://github.com/espeed/bulbs" class="bare">https://github.com/espeed/bulbs</a></p>
+</dd>
+<dt class="hdlist1">Package</dt>
+<dd>
+<p><a href="https://pypi.python.org/pypi/bulbs" class="bare">https://pypi.python.org/pypi/bulbs</a></p>
+</dd>
+<dt class="hdlist1">Documentation</dt>
+<dd>
+<p><a href="http://bulbflow.com/docs/" class="bare">http://bulbflow.com/docs/</a></p>
+</dd>
+<dt class="hdlist1">Python</dt>
+<dd>
+<p>2.6 / 2.7 / 3.0 / 3.1 / 3.2</p>
+</dd>
+</dl>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_installation_3">Installation</h4>
+
+
+
+<div class="paragraph">
+<p>You can use pip to install the latest version from GitHub into your project’s virtual environment:</p>
+</div>
+
+<div class="literalblock">
+<div class="content">
+<pre>$ mkdir example
+$ cd example
+$ virtualenv env
+$ source env/bin/activate
+(env)$ pip install https://github.com/espeed/bulbs/tarball/master</pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Or you can use pip to install a potentially slightly older version from PyPi:</p>
+</div>
+
+<div class="literalblock">
+<div class="content">
+<pre>$ mkdir example
+$ cd example
+$ virtualenv env
+$ source env/bin/activate
+(env)$ pip install bulbs</pre>
+</div>
+</div>
+<hr>
+</div>
+</div>
+</div>
+
+</div>
+<div class="sect1 "  >
+    
+<h3 id="_neo4jdb_python">Neo4jdb-Python</h3>
+
+<div class="sectionbody row">
+<div class="columns medium-12">
+
+
+<div class="paragraph">
+<p>Implements the <a href="http://legacy.python.org/dev/peps/pep-0249/">Python DB API 2.0</a> for Neo4j.</p>
+</div>
+
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Author</dt>
+<dd>
+<p>Jacob Hansson</p>
+</dd>
+<dt class="hdlist1">Website</dt>
+<dd>
+<p><a href="https://github.com/jakewins/neo4jdb-python" class="bare">https://github.com/jakewins/neo4jdb-python</a></p>
+</dd>
+<dt class="hdlist1">Source</dt>
+<dd>
+<p><a href="https://github.com/jakewins/neo4jdb-python" class="bare">https://github.com/jakewins/neo4jdb-python</a></p>
+</dd>
+<dt class="hdlist1">Package</dt>
+<dd>
+<p><a href="https://pypi.python.org/pypi/neo4jdb" class="bare">https://pypi.python.org/pypi/neo4jdb</a></p>
+</dd>
+<dt class="hdlist1">Documentation</dt>
+<dd>
+<p><a href="https://github.com/jakewins/neo4jdb-python/blob/master/README.rst" class="bare">https://github.com/jakewins/neo4jdb-python/blob/master/README.rst</a></p>
+</dd>
+<dt class="hdlist1">Python</dt>
+<dd>
+<p>2.6 / 2.7 / 3.2 / 3.3</p>
+</dd>
+<dt class="hdlist1">Neo4j</dt>
+<dd>
+<p>2.0 / 2.1</p>
+</dd>
+</dl>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_installation_4">Installation</h4>
+
+<div class="literalblock">
+<div class="content">
+<pre>pip install neo4jdb</pre>
+</div>
+</div>
+<hr>
+</div>
+</div>
+</div>
+
+</div>
+<div class="sect1 "  >
+    
+<h3 id="_neo4django">Neo4django</h3>
+
+<div class="sectionbody row">
+<div class="columns medium-12">
+
+
+<div class="paragraph">
+<p>Neo4django is an Object Graph Mapper (OGM) for Django. Use familiar Django models and queries against Neo4j.</p>
+</div>
+
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Author</dt>
+<dd>
+<p>Matt Luongo</p>
+</dd>
+<dt class="hdlist1">Website</dt>
+<dd>
+<p><a href="https://neo4django.readthedocs.org/" class="bare">https://neo4django.readthedocs.org/</a></p>
+</dd>
+<dt class="hdlist1">Source</dt>
+<dd>
+<p><a href="http://github.com/scholrly/neo4django" class="bare">http://github.com/scholrly/neo4django</a></p>
+</dd>
+<dt class="hdlist1">Package</dt>
+<dd>
+<p><a href="https://pypi.python.org/pypi/neo4django" class="bare">https://pypi.python.org/pypi/neo4django</a></p>
+</dd>
+<dt class="hdlist1">Documentation</dt>
+<dd>
+<p><a href="https://neo4django.readthedocs.org/" class="bare">https://neo4django.readthedocs.org/</a></p>
+</dd>
+</dl>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_installation_5">Installation</h4>
+
+
+
+<div class="paragraph">
+<p>Using pip, you can install from PyPi:</p>
+</div>
+
+<div class="literalblock">
+<div class="content">
+<pre>pip install neo4django</pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>or straight from GitHub:</p>
+</div>
+
+<div class="literalblock">
+<div class="content">
+<pre>pip install -e git+https://github.com/scholrly/neo4django/#egg=neo4django</pre>
+</div>
+</div>
+<hr>
+</div>
+</div>
+</div>
+
+</div>
+<div class="sect1 "  >
+    
+<h3 id="_neomodel">NeoModel</h3>
+
+<div class="sectionbody row">
+<div class="columns medium-12">
 
 
 <div class="paragraph">
 <p>An Object Graph Mapper (OGM) also usable for Django for the Neo4j graph database.</p>
 </div>
 
-</div>
-<div class="sect3 "  >
-    
-<h5 id="__a_href_http_github_com_jakewins_neo4jdb_python_neo4jdb_python_a"><a href="http://github.com/jakewins/neo4jdb-python">neo4jdb-python</a></h5>
-
-
-
-<div class="paragraph">
-<p>Author: Jacob Hansson Implements the <a href="http://legacy.python.org/dev/peps/pep-0249/">Python DB API 2.0</a> for Neo4j, compatible with python 2.6, 2.7, 3.2 and 3.3 and Neo4j &gt;= 2.0.0</p>
-</div>
-
-</div>
-<div class="sect3 "  >
-    
-<h5 id="__a_href_http_github_com_scholrly_neo4django_neo4django_a"><a href="http://github.com/scholrly/neo4django">Neo4django</a></h5>
-
-
-
-<div class="paragraph">
-<p>Author: Matt Luongo</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>neo4django is an Object Graph Mapper (OGM) for Django. Use familiar Django models and queries against Neo4j.</p>
-</div>
-
-</div>
-<div class="sect3 "  >
-    
-<h5 id="__a_href_http_bulbflow_com_overview_bulbs_a"><a href="http://bulbflow.com/overview/">Bulbs</a></h5>
-
-<div class="imageblock">
+<div class="imageblock" style="float: right;">
 <p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/bulbflow.png" alt="bulbflow">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2015/01/neomodel.200x80.png" alt="neomodel.200x80">
 </p>
 </div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Author</dt>
+<dd>
+<p>Robin Edwards</p>
+</dd>
+<dt class="hdlist1">Website</dt>
+<dd>
+<p><a href="http://neomodel.readthedocs.org/" class="bare">http://neomodel.readthedocs.org/</a></p>
+</dd>
+<dt class="hdlist1">Source</dt>
+<dd>
+<p><a href="http://github.com/robinedwards/neomodel" class="bare">http://github.com/robinedwards/neomodel</a></p>
+</dd>
+<dt class="hdlist1">Package</dt>
+<dd>
+<p><a href="https://pypi.python.org/pypi/neomodel" class="bare">https://pypi.python.org/pypi/neomodel</a></p>
+</dd>
+<dt class="hdlist1">Documentation</dt>
+<dd>
+<p><a href="http://neomodel.readthedocs.org/" class="bare">http://neomodel.readthedocs.org/</a></p>
+</dd>
+<dt class="hdlist1">Python</dt>
+<dd>
+<p>2.7 / 3.4 / pypy / pypy3</p>
+</dd>
+<dt class="hdlist1">Neo4j</dt>
+<dd>
+<p>2.0 / 2.1</p>
+</dd>
+</dl>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+    
+<h4 id="_installation_6">Installation</h4>
+
 
 
 <div class="paragraph">
-<p>Author: James Thornton</p>
+<p>Install from pypi (recommended):</p>
 </div>
 
+<div class="literalblock">
+<div class="content">
+<pre>$ pip install neomodel</pre>
+</div>
+</div>
 
 
 <div class="paragraph">
-<p>Bulbs is an open-source Python persistence framework for graph databases and the first piece of a larger Web-development toolkit. It’s like an ORM for graphs.</p>
+<p>To install from github:</p>
+</div>
+
+<div class="literalblock">
+<div class="content">
+<pre>$ pip install git+git://github.com/robinedwards/neomodel.git@HEAD#egg=neomodel-dev</pre>
+</div>
+</div>
+<hr>
+</div>
+</div>
 </div>
 
 </div>
-</div>
-<div class="sect2 side-nav columns medium-12" style='padding-left: 0;' >
-    <ul class='side-nav code-panel' style='width: auto; height:auto; margin: 0; text-align: left; padding-left: 0;  border: 0; padding-top: 0; padding-bottom: 0;'><li>
-<h2 id="_further_reading">Further Reading</h2>
-</li>
+<div class="sect1 "  >
+    
+<h3 id="_further_reading">Further Reading</h3>
+
+<div class="sectionbody row">
+<div class="columns medium-12">
 <div class="ulist">
 
 
 <ul>
 <li>
+<a href="https://blog.safaribooksonline.com/2013/07/23/using-neo4j-from-python/">Using Neo4j from Python</a>
+</li>
+<li>
 <a href="http://www.tsartsaris.gr/kivy2neo-sending-cypher-queries-from-a-kivy-app-to-a-neo4j-database">Using Neo4j from Kivy</a>
+</li>
+<li>
+<a href="https://github.com/lycofron/pysql2neo4j">A script to automatically migrate relational databases to Neo4J</a>
+</li>
+<li>
+<a href="http://tech.onefinestay.com/post/107881172672/py2neo-spatial">Py2neo Spatial</a>
+</li>
+<li>
+<a href="https://www.youtube.com/watch?v=ps5RtmWKwLY&amp;feature=youtu.be&amp;noredirect=1">Holger Spill: An introduction to Python and graph databases with Neo4j</a>
 </li>
 </ul>
 
 </div>
+</div>
+</div>
+
 </div>
                            </div>
                         </div>
