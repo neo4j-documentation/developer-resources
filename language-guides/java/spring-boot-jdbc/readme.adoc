@@ -55,6 +55,8 @@ For the backend we use a Spring-WebMVC `@RestController` whose service methods a
 
 Currently we get the `NEO4J_URL` from a system property, but it should be equally simple to get it from an entry in `application.properties`.
 
+Starting from Neo4j 2.2 _username_ and _password_ are *mandatory* to authenticate to database, that's why we also get these two other system properties: `NEO4J_USER` and `NEO4J_PASSWORD`, both with `neo4j` as default value.
+
 Using the JDBC-template with Cypher is easy. 
 Here is an example from the `/movie` endpoint:
 
