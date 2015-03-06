@@ -711,8 +711,8 @@ Here we see 3 nodes (2 people, one database) and 3 relationships in that datastr
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="javascript"><code>{"nodes":[{name:"Peter",label:"Person",id:1},{name:"Michael",label:"Person",id:2},
           {name:"Neo4j",label:"Database",id:3}],
- "links":[{start:0, end:1, type:"KNOWS", since:2010},{start:0, end:2, type:"FOUNDED"},
-          {start:1, end:2, type:"WORKS_ON"}]}</code></pre>
+ "links":[{source:0, target:1, type:"KNOWS", since:2010},{source:0, target:2, type:"FOUNDED"},
+          {source:1, target:2, type:"WORKS_ON"}]}</code></pre>
 </div>
 </div>
 </div>
@@ -993,7 +993,7 @@ You can simply modify, add and remove nodes or relationships. You can also custo
             <dl class="accordion">
                <dd class="accordion-navigation inactive">
                   <a href="/developer-resources/cypher">
-                     <h5>Cypher</h5>
+                     <h5>Cypher Query Language</h5>
                   </a>
                   <div class="content inactive" id="panel2">
                      <ul>
@@ -1086,18 +1086,17 @@ You can simply modify, add and remove nodes or relationships. You can also custo
                   <li><a href="/docs/milestone">Neo4j 2.2.x</a></li>
                   <li><a href="/docs/stable">Neo4j 2.1.x</a></li>
                   <li><a href="/docs/2.0.4">Neo4j 2.0.x</a></li>
+                  <li><a href="/docs/stable/cypher-refcard">Cypher Refcard</a></li>
+                  <li><a href="/developer-resources/resources">All Learning Resources</a></li>
             </ul>
-            <ul>
-                  <li><a href="/docs/1.9.9">Neo4j 1.9.x</a></li>
-            </ul>
-            <ul>
-               <li><a href="/developer-resources/resources">All Learning Resources</a></li>
-               <li><a href="http://stackoverflow.com/questions/tagged/neo4j">Neo4j on Stackoverflow </a></li>
-               <li><a href="https://groups.google.com/forum/#!forum/neo4j">Neo4j Google Group </a></li>
-            </ul>
+<!--            <h5><a href="http://community/">Engage in our Community</a></h5>-->
+<div style="text-align:center">
+<div><a href="http://twitter.com/neo4j" target="_blank"> <img style="width:33%" src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/twitter.png"/><br/>Follow us on Twitter</a></div>
+<div><a href="https://github.com/neo4j/neo4j" target="_blank"><img style="width:33%" src="http://neo4j.com/wp-content/themes/neo4jweb/assets/images/github.png"/><br/>Engage on GitHub </a></div>
+<div><a href="http://stackoverflow.com/questions/tagged/neo4j"  target="_blank"><img style="width:33%" src="http://neo4j.com/wp-content/themes/neo4jweb/assets/images/stackoverflow.png"/><br/>Ask on StackOverflow</a></div>
+<div><a href="https://groups.google.com/forum/#!forum/neo4j"><img style="width:33%" src="http://neo4j.com/wp-content/themes/neo4jweb/assets/images/googlegroups.png"/><br/>Discuss in our Google Group </a></div>
          </div>
-
-
+         </div>
                     </div>
                 </div>
             </div>
