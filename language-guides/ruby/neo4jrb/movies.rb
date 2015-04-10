@@ -4,14 +4,14 @@ require './models'
 
 set :public_folder, File.dirname(__FILE__) + '/static'
 
-Neo4j::Session.open
+neo4j_url = ENV['NEO4J_URL'] || 'http://localhost:7474'
+neo4j_username = ENV['NEO4J_USERNAME']
+neo4j_password = ENV['NEO4J_PASSWORD']
 
-# We need to cache the label name as a _classname property in order to get better performance
-Neo4j::Session.query("MATCH (p:Person)-[r:`ACTED_IN`]->(m:Movie) SET p._classname = 'Person', r._classname = 'Engagement', m._classname = 'Movie'")
-
+Neo4j::Session.open(:server_db, neo4j_url, basic_auth: {username: neo4j_username, password: neo4j_password})
 
 get '/' do
-  redirect '/index.html'
+  File.read(File.join(File.dirname(__FILE__), 'static/index.html'))
 end
 
 get '/graph' do
