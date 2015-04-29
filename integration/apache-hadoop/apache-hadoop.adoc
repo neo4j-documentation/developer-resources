@@ -1,0 +1,58 @@
+= Neo4j and Apache Hadoop
+:level: Intermediate
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 1
+:section: Neo4j Integrations
+:section-link: integration
+
+.Goals
+[abstract]
+Hadoop is well established as large scale data processing platform. It can easily pre-process huge datasets and information streams to extract and project the high quality data vectors that enrich your graph model with relevant new information.
+Here we want to demonstrate some approaches that used Hadoop jobs to prepare data for ingestion into Neo4j.
+
+.Prerequisites
+[abstract]
+You should have a sound understanding of both Hadoop and Neo4j, each data model, infrastructure requirements, data processing paradigm and APIs to leverage them effectively together.
+
+[role=expertise]
+{level}
+
+toc::[]
+
+== General Observations
+
+Hadoop is used everywhere to process large amounts of data.
+Graph Databases on the other hand are all combining highly connected, high quality data from a variety of sources.
+Using Hadoop to efficiently pre-process, filter and aggregate raw information to be suitable for Neo4j imports is a reasonable approach.
+
+Real world, log-, sensor-, transaction- and event data is noisy.
+Most of the data frames don't add new information but are repetetive.
+For enriching a good graph model with variant information you want to filter out the noise and project the raw data into a format that can be easily ingested in your graph.
+
+We look at a few examples that
+
+////
+todo mention GraphBuilder ??
+reliable, scale out hdfs
+pre-processing, filter, aggregating of raw data
+filter out noise
+graph data is quality data not mass data
+////
+
+[NOTE]
+In the past there were some approaches that used Hadoop to quickly generate Neo4j datastores directly.
+While this approach is performant, it is also tightly coupled to the store-format of a certain Neo4j version as it has to duplicate the functionality of writing to split-up store-files.
+With the parallel neo4j-import tool and APIs introduced in Neo4j 2.2, such a solution is no longer needed.
+The import facilities scale across a large number of CPUs to maximize import performance.
+
+== Pre-processing Graph Data with Hadoop
+
+* Dave: BitCoin
+* Dave: DocGraph
+
+* TODO: Streaming / Event-Stream Filtering, Conversion, Aggregation
+
+// == Concurrent Graph Data Ingestion
+

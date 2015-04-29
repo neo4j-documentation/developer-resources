@@ -1,0 +1,77 @@
+= Neo4j with Docker
+:level: Intermediate
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 1
+:section: Neo4j Integrations
+:section-link: integration
+
+.Goals
+[abstract]
+This overview demonstrates several ways of utilizing Docker containers to run Neo4j instances or integrate them into a bigger setup. Detailed instructions are available at the linked repositories, which we don't want to duplicate here.
+
+.Prerequisites
+[abstract]
+You should have a sound understanding of both Docker and Neo4j, to leverage them effectively together.
+
+[role=expertise]
+{level}
+
+toc::[]
+
+== General Observations
+
+http://docker.com[Docker] is a lightweight virtualization mechanism to run single applications containerized and restricted on your machine.
+Docker images are pre-build in layers from configuration of services one of which would be Neo.
+They are built using a simple textual description that describes one layer.
+A docker image can be started immediately after downloading, no time-consuming boot required.
+
+There are many ways to leverage Docker for your Neo4j deployment.
+You can create throwaway Neo4j instances of many different versions for testing and running your applications.
+You can pre-seed containers with datasets and configurations.
+
+Conflicting port and disk usage can be handled by mapping ports and volumes of multiple instances of the same container to different on the host system.
+Docker containers can be used as infrastructure layer, data containers or configuration providers.
+
+== Existing Docker Containers
+
+In the Neo4j community and ecosystem a number of containers for Neo4j have been developed, both for running individual instances, for setting up Neo4j Enterprise clusters easily and for providing integration with other tools and services.
+Here we want to list some of those examples to either be used directly or as inspiration for your own needs.
+
+== Neo4j Containers
+
+It is easy to create a Neo4j image yourself, just any base linux container with a JDK is good enough.
+Just add Neo4j (e.g. the debian package) on top and you're done. 
+
+There are already a number of https://registry.hub.docker.com/search?q=neo4j[Docker Neo4j images] available on Docker Hub.
+
+Make sure when running the docker image to expose the Neo4j port `7474` and provide the database directory as external volume. E.g.
+
+`docker run -i -t -d –privileged -v /home/user/neo4jdata:/var/lib/neo4j/data -p 7474:7474 tpires/neo4j`
+
+Some of the more widely used images:
+
+* https://registry.hub.docker.com/u/kbastani/docker-neo4j/[latest Neo4j by Kenny Bastani]
+* https://registry.hub.docker.com/u/tpires/neo4j/[Neo4j 2.1.x by tpires]
+
+== Neo4j Enterprise Cluster
+
+Our partner Ekino developed a container setup and script that allows you to spin up a Neo4j enterprise cluster quickly just with a bit of config and a single command line call, if you are on linux :
+
+[source,shell]
+----
+# start a neo4j cluster w/ 3 nodes
+curl -sSL https://raw.githubusercontent.com/ekino/docker-neo4j-cluster/master/helper.sh | bash -s run:neomaster,neoreadslave,neobackup
+----
+
+The latest version is available in ekino's https://github.com/ekino/docker-neo4j-cluster[GitHub repository].
+Please see the project documentation for more details.
+
+== Neo4j - Spark - Analytics
+
+As part of the link:../apache-spark#mazerunner[Apache Spark integration] for Neo4j-Mazerunner a default setup is provided by Kenny Bastani to install Spark, Hadoop, RabbitMQ and Neo4j with the Mazerunner extension using Docker.
+
+* http://kennybastani.com/2015/03/spark-neo4j-tutorial-docker.html[Blog Post: Introduction]
+* https://registry.hub.docker.com/u/kbastani/neo4j-graph-analytics/[Docker Image], http://github.com/kbastani/neo4j-graph-analytics/[GitHub]
+// * http://de.slideshare.net/KennyBastani/graph-analytics[Presentation: Big Graph Analytics on Neo4j with Apache Spark]

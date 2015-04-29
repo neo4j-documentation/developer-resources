@@ -1,0 +1,66 @@
+= Neo4j and ElasticSearch
+:level: Intermediate
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 1
+:section: Neo4j Integrations
+:section-link: integration
+
+.Goals
+[abstract]
+There are various ways to integrate Neo4j with ElasticSearch, here we will list some approaches and point to solutions that enable you to reuse your existing ES infrastructure with Neo4j.
+
+.Prerequisites
+[abstract]
+You should have a sound understanding of both ElasticSearch and Neo4j, each data model and APIs to leverage them effectively together.
+
+[role=expertise]
+{level}
+
+toc::[]
+
+== General Observations
+
+There are several way of integrating Neo4j with ElasticSearch.
+In the past the easiest were River plugins which have been discontinued.
+You can integrate with Neo4js TransactionEventHandler to push graph changes directly to ElasticSearch.
+Another option is to supply sources and sinks for LogStash.
+
+Another option would be to implement a full index-provider that uses ES as storage.
+This is a tight integration which might suffer from the roundtrip latencies to ElasticSearch's REST API.
+
+[NOTE]
+If you plan to connect Neo4j to ElasticSearch using the default Java driver, please be aware that there are incompatibilities between the Lucene version used by Neo4j and ElasticSearch, so you might need to go with a REST based solution like JEST.
+
+== Push to ElasticSearch
+
+Implementing a Neo4j Transaction Handler provides you with all the changes that were made within a transaction.
+With `afterCommit` notification method, we can make sure that we only send data to ElasticSearch that has been commited to the graph.
+Using labels as filtering mechanism, you can render a node's attributes as a JSON document and insert it asynchronously in bulk into ElasticSearch.
+To register the Kernel Extension, just drop the jar in Neo4j's classpath or `plugins` directory.
+
+We provided a sample implementation below, that you can use out of the box or extend for further customization and fine-tuning.
+
+* [Introduction]
+* [Documentation]
+* http://github.com/neo4j-contrib/neo4j-elastic-search[Source Code]
+
+== ElasticSearch Index Provider
+
+To our knowledge there is no Index Provider for ElasticSearch yet.
+If you plan to work on this, please let us know.
+The Neo4j index provider APIs are quite straightforward to implement, so besides the latency concern mentioned before it should be worthwile.
+
+== LogStash integration
+
+Pere Urbon who's experienced both in Neo4j and ElasticSearch, wrote open-source implementations of sinks and sources provided Neo4j.
+
+* [Introduction]
+* [Documentation]
+* [Source Code]
+
+== River Plugins
+
+There is an ElasticSearch River plugin which uses Spring Data Neo4j under the hood.
+Unfortunatly the River Plugin approach was deprecated by ElasticSearch, so that you might not want to start new projects using it.

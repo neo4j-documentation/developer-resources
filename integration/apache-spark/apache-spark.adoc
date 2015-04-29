@@ -1,0 +1,68 @@
+= Neo4j and Apache Spark
+:level: Intermediate
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 1
+:section: Neo4j Integrations
+:section-link: integration
+
+.Goals
+[abstract]
+There are various ways to beneficially use Neo4j with http://spark.apache.org[Apache Spark], here we will list some approaches and point to solutions that enable you to leverage your Spark infrastructure with Neo4j.
+
+.Prerequisites
+[abstract]
+You should have a sound understanding of both Apache Spark and Neo4j, each data model, data processing paradigm and APIs to leverage them effectively together.
+
+[role=expertise]
+{level}
+
+toc::[]
+
+== General Observations
+
+Apache Spark is a clustered, in-memory data processing solution that scales processing of large datasets easily across many machines. It also comes with GraphX an for running graph compute operations on your data.
+
+You can integrate with Spark in a variety of ways, both to pre-process (aggregate, filter, convert) your raw data to be imported into Neo4j.
+But also as external Graph Compute solution, where you export data of selected subgraphs to Spark, compute the analytic aspects and write them back to Neo4j to be used in your Neo4j operations and Cypher queries.
+A well known example of this approach is the Neo4j-Mazerunner project.
+
+[NOTE]
+Neo4j itself is capable of running graph processing on medium to large graphs quickly.
+For instance the https://github.com/maxdemarzi/graph_processing[graph-processing] project demonstrates that we can run PageRank (5 iterations) on the dbpedia dataset (10M nodes, 125M rels) in 90 seconds as a Neo4j server extension.
+
+[[mazerunner]]
+== Neo4j-Mazerunner
+
+An interest in analytical graph processing led http://twitter.com/kennybastani[Kenny Bastani] to work on an integration solution.
+It allows to export dedicated datasets, e.g. node or relationship-lists to Spark.
+After running graph processing algorithms like PageRank, Betweenness Centrality .... also on large graphs the results are written back concurrently and transactionally to Neo4j.
+
+One focus of this approach is on data safety, that's why it uses a persistent queue (RabbitMQ) to communicate data between Neo4j and Spark.
+
+The infrastructure is set up using Docker containers, there are dedicated containers for Spark, RabbitMQ, HDFS and Neo4j with the Mazerunner Extension.
+
+// TODO Kenny: should we discuss the implementation of the graph algorithms and the Pregel Program ?
+// TODO Kenny: Anything else to add ?
+
+* http://github.com/kbastani/neo4j-mazerunner[GitHub: Neo4j-Mazerunner]
+* http://www.kennybastani.com/2014/11/using-apache-spark-and-neo4j-for-big.html[Blog Post: Introduction]
+* http://kennybastani.com/2015/01/categorical-pagerank-neo4j-spark.html[Blog Post: Categorical Page Rank]
+* http://www.kennybastani.com/search/label/Mazerunner[Blog Series: Mazerunner]
+* [Presentation: Combining Neo4j and Apache Spark using Docker]
+
+[[preprocessing]]
+== Spark Preprocessing
+
+One example of pre-processing raw data (Chicago Crime dataset) into a format that's well suited for import into Neo4j, was demonstrated by http://twitter.com/markhneedham[Mark Needham]. 
+He combined a number of functions into a Spark-job that takes the existing data, cleans and aggregates it and outputs fragments which are recombined later to larger files.
+
+The approach is detailed in his blog post: http://www.markhneedham.com/blog/2015/04/14/spark-generating-csv-files-to-import-into-neo4j/["Spark: Generating CSV Files to import into Neo4j"].
+
+// todo show job fragements ???
+
+// todo Mark: anything else to add ?
+
+// * TODO == Spark Streaming
+// * TODO == Direct Spark Connector

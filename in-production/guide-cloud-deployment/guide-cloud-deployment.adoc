@@ -10,7 +10,7 @@
 .Goals
 [abstract]
 This guide highlights the different options for setting up Neo4j in the cloud.
-It includes setting up a template on EC2 on AWS, explain the setup on Azure, and introduce the different Neo4j cloud-hosting partners.
+It includes setting up Neo4j on EC2 on AWS, explain the setup on Azure, and introduce the different Neo4j cloud-hosting partners.
 
 .Prerequisites
 [abstract]
@@ -25,6 +25,7 @@ toc::[]
 
 === Hosting on AWS / EC2
 
+////
 We provide an https://github.com/neo4j-contrib/neo4j-puppet/blob/master/README.CLOUDFORMATION.md[*EC2 Cloud Formation Template*] that allows you to quickly provision an appropriate instance and install and set-up Neo4j on that machine.
 
 This template creates a complete Neo4j installation, including Amazon AWS server, fixed IP address and backup storage. 
@@ -36,6 +37,21 @@ If you are proficient at setting up AWS instances, you can also install Neo4j on
 [role=side-nav]
 * https://github.com/neo4j-contrib/neo4j-puppet/blob/master/README.CLOUDFORMATION.md[Neo4j Cloud Formation Template]
 * https://github.com/neo4j-contrib/neo4j-puppet/blob/master/README.md[Manual EC2 Setup with Puppet]
+* http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html[AWS EC2 Getting Started Guide]
+* http://blogs.mindspew-age.com/2012/12/04/another-great-example-of-aws-fidelity-neo4j-cloud-init-and-eucalyptus/[Neo4j, Cloud-Init, and Eucalyptus]
+
+////
+
+[NOTE]
+We used to provide a cloud formation template but it has not been maintained for a while, so we chose to remove it.
+
+Setting up Neo4j on any Debian or Ubuntu system should be pretty straightforward by following the instructions on http://debian.neo4j.org[our Debian Repository].
+
+For other Linux distributions, just download the http://neo4j.com/download[Neo4j binary] and unzip and start it.
+The binary distribution also provides scripts to install Neo4j as a service.
+
+[role=side-nav]
+* http://debian.neo4j.org[Neo4j Debian Repository]
 * http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html[AWS EC2 Getting Started Guide]
 * http://blogs.mindspew-age.com/2012/12/04/another-great-example-of-aws-fidelity-neo4j-cloud-init-and-eucalyptus/[Neo4j, Cloud-Init, and Eucalyptus]
 
@@ -61,6 +77,7 @@ Neo4j installation on Windows Azure can be provisioned through the VMDepot Image
 * http://www.cogno-sys.com/cloud-azure-amazon-open-stack/neo4j-azure-installation-graph-database-tutorials/[Azure AWS Open Stack – Neo4j Setup Tutorials on Ubuntu]
 * http://blog.tatham.oddie.com.au/2014/02/11/podcast-graph-databases-and-neo4j-with-richard-and-carl-from-net-rocks/[Podcast .Net Rocks with Tatham Oddie]
 
+[[docker]]
 === Neo4j with Docker
 
 http://docker.com[Docker] is a lightweight virtualization mechanism to run single applications containerized and restricted on your machine.
@@ -78,8 +95,8 @@ Make sure when running the docker image to expose the Neo4j port `7474` and prov
 
 Some of the more widely used images:
 
-* https://registry.hub.docker.com/u/tpires/neo4j/[Neo4j by tpires]
-* https://registry.hub.docker.com/u/kbastani/docker-neo4j/[Neo4j 2.1.6 by Kenny Bastani]
+* https://registry.hub.docker.com/u/tpires/neo4j/[Neo4j 2.1.x by tpires]
+* https://registry.hub.docker.com/u/kbastani/docker-neo4j/[latest Neo4j by Kenny Bastani]
 * https://registry.hub.docker.com/u/kbastani/neo4j-graph-analytics/[Neo4j Graph Analytics for MazeRunner/Spark by Kenny Bastani]
 
 === Neo4j Cloud Hosting Providers
