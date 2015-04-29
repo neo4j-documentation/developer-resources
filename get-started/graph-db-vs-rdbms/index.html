@@ -605,6 +605,7 @@ You should have looked into the <a href="/developer-resources/get-started/graph-
 
 <ul class="sectlevel2">
 <li><a href="#_relational_databases">Relational Databases</a></li>
+<li><a href="#_presentation_relational_to_big_graph">Presentation: Relational to Big Graph</a></li>
 <li><a href="#_from_relational_to_graph_databases">From Relational to Graph Databases</a></li>
 <li><a href="#_data_model_transformation">Data Model Transformation</a></li>
 <li><a href="#_working_with_neo4j">Working with Neo4j</a></li>
@@ -658,6 +659,10 @@ Those costly join operations are usually addressed by denormalising data to redu
 <p>Meet graph databases.</p>
 </div>
 
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3 id="_presentation_relational_to_big_graph">Presentation: Relational to Big Graph</h3>
+<iframe src="//slideshare.net/slideshow/embed_code/key/1ZfEin6j7lSojk" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//slideshare.net/neo4j/relational-to-big-graph" title="Relational to Big Graph" target="_blank">Relational to Big Graph</a> </strong></div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
 <h3 id="_from_relational_to_graph_databases">From Relational to Graph Databases</h3>
@@ -1077,7 +1082,16 @@ CREATE (person)-[:EMPLOYEE]-&gt;(dept)</code></pre>
 <a href="/developer-resources/working-with-data/guide-import-csv">Guide CSV Import</a>
 </li>
 <li>
+<a href="http://github.com/jexp/neo4j-rdbms-import">Tool: Direct RDBMS Import</a>
+</li>
+<li>
 <a href="http://neo4j.com/blog/loading-sql-neo4j-like-magic/">Tool: SQL to Neo4j Import</a>
+</li>
+<li>
+<a href="http://stephanefrechette.com/importing-adventureworks-data-into-neo4j/">Blog: Importing AdventureWorks data into Neo4j</a>
+</li>
+<li>
+<a href="https://www.simple-talk.com/sql/t-sql-programming/experiments-with-neo4j-using-a-graph-database-as-a-sql-server-metadata-hub/">Neo4j for relational MetaData (SQLServer)</a>
 </li>
 </ul>
 </div>
@@ -1120,7 +1134,7 @@ CREATE (person)-[:EMPLOYEE]-&gt;(dept)</code></pre>
                   <a href="/developer-resources/data-modeling">
                      <h5>Data Modeling</h5>
                   </a>
-                  <div class="content inactive" id="panel5">
+                  <div class="content inactive" id="panel3">
                      <ul>
                         <li><a href="/developer-resources/data-modeling/guide-data-modeling">Graph Data Modeling Guidelines</a></li>
                         <li><a href="/developer-resources/data-modeling/graphgist">Interactive Graph Models - GraphGist</a></li>
@@ -1133,7 +1147,7 @@ CREATE (person)-[:EMPLOYEE]-&gt;(dept)</code></pre>
                   <a href="/developer-resources/working-with-data">
                      <h5>Working with Data</h5>
                   </a>
-                  <div class="content inactive" id="panel3">
+                  <div class="content inactive" id="panel4">
                      <ul>
                         <li><a href="/developer-resources/working-with-data/guide-neo4j-browser">Neo4j Browser Intro</a></li>
                         <li><a href="/developer-resources/working-with-data/guide-data-visualization">Graph Visualization for Neo4j</a></li>
@@ -1149,7 +1163,7 @@ CREATE (person)-[:EMPLOYEE]-&gt;(dept)</code></pre>
                   <a href="/developer-resources/language-guides">
                      <h5>Language Guides</h5>
                   </a>
-                  <div class="content inactive" id="panel4">
+                  <div class="content inactive" id="panel5">
                      <ul>
                         <li><a href="/developer-resources/language-guides/java">Java</a></li>
                         <li><a href="/developer-resources/language-guides/dotnet">.NET</a></li>
@@ -1163,15 +1177,20 @@ CREATE (person)-[:EMPLOYEE]-&gt;(dept)</code></pre>
                </dd>
             </dl>
             <dl class="accordion">
-               <dd class="accordion-navigation inactive">
-                  <a href="/developer-resources/ecosystem">
-                     <h5>Ecosystem</h5>
+               <dd class="accordion-navigation ">
+                  <a href="/developer-resources/integration">
+                     <h5>Neo4j Tools &amp; Integrations</h5>
                   </a>
-                  <!--div class="content inactive" id="panel6">
+                  <div class="content " id="panel6">
                      <ul>
-                        <li><a href="/docs/stable">Ecosystem</a></li>
+                        <li><a href="/developer-resources/integration/ecosystem">Tools &amp; Libs for Neo4j</a></li>
+                        <li><a href="/developer-resources/integration/apache-spark">Apache Spark</a></li>
+                        <li><a href="/developer-resources/integration/elastic-search">Elastic-Search</a></li>
+                        <li><a href="/developer-resources/integration/apache-hadoop">Hadoop</a></li>
+                        <li><a href="/developer-resources/integration/docker">Docker</a></li>
+                        <!--li><a href="/developer-resources/integration/meteor">Integration with Meteor.js</a></li-->
                      </ul>
-                  </div-->
+                  </div>
                </dd>
             </dl>
             <dl class="accordion">
@@ -1189,17 +1208,44 @@ CREATE (person)-[:EMPLOYEE]-&gt;(dept)</code></pre>
                   </div>
                </dd>
             </dl>
+            <dl class="accordion">
+               <dd class="accordion-navigation ">
+                  <a href="/developer-resources/contribute">
+                     <h5>Contributing to Neo4j</h5>
+                  </a>
+                  <div class="content " id="panel8">
+                     <ul>
+	                    <!-- todo CLA, SO, GitHub, Building, Tools -->
+                        <!--li><a href="/developer-resources/contribution/xxx">Contributing</a></li-->
+                     </ul>
+                  </div>
+               </dd>
+            </dl>
+         <dl class="accordion">
+            <dd class="accordion-navigation ">
+               <a href="/developer-resources/resources">
+                  <h5>Documentation &amp; Resources</h5>
+               </a>
+               <div class="content " id="panel4">
+                  <ul>
+	                 <li><a href="/docs/stable">Manual: 2.2.x</a></li>
+	                 <ul>
+	                 <li><a href="/docs/stable/introduction.html">Introduction</a></li>
+	                 <li><a href="/docs/stable/tutorials.html">Tutorials</a></li>
+	                 <li><a href="/docs/stable/cypher-query-lang.html">Cypher Query Language</a></li>
+	                 <li><a href="/docs/stable/operations.html">Operations</a></li>
+	                 <li><a href="/docs/stable/tools.html">Tools</a></li>
+	                 <li><a href="/docs/stable/advanced-usage.html">Advanced Usage</a></li>
+	                 </ul>
+                     <li><a href="/docs/stable/cypher-refcard">Cypher Refcard</a></li>
+	                 <li><a href="/docs/milestone">Manual: 2.3.x Milestone</a></li>
+                     <li><a href="/docs">Older Documentation</a></li>
+                  </ul>
+               </div>
+            </dd>
+         </dl>
          </ul>
          <div class="accordion-navigation">
-            <h5>Reference &amp; Manuals</h5>
-            <ul>
-                  <li><a href="/docs/milestone">Neo4j 2.2.x</a></li>
-                  <li><a href="/docs/stable">Neo4j 2.1.x</a></li>
-                  <li><a href="/docs/2.0.4">Neo4j 2.0.x</a></li>
-                  <li><a href="/docs/stable/cypher-refcard">Cypher Refcard</a></li>
-                  <li><a href="/developer-resources/resources">All Learning Resources</a></li>
-            </ul>
-<!--            <h5><a href="http://community/">Engage in our Community</a></h5>-->
 <div style="text-align:center">
 <div><a href="http://twitter.com/neo4j" target="_blank"> <img style="width:33%" src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/twitter.png"/><br/>Follow us on Twitter</a></div>
 <div><a href="https://github.com/neo4j/neo4j" target="_blank"><img style="width:33%" src="http://neo4j.com/wp-content/themes/neo4jweb/assets/images/github.png"/><br/>Engage on GitHub </a></div>

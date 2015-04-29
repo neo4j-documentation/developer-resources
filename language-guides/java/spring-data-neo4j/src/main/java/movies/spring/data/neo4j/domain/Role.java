@@ -10,12 +10,8 @@ public class Role {
     @GraphId
     Long id;
     Collection<String> roles;
-    @Fetch
-    @StartNode
-    Person person;
-    @Fetch
-    @EndNode
-    Movie movie;
+    @Fetch @StartNode Person person;
+    @Fetch @EndNode   Movie movie;
 
     public Collection<String> getRoles() {
         return roles;

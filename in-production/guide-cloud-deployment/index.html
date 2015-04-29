@@ -586,7 +586,7 @@ hr {
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
 This guide highlights the different options for setting up Neo4j in the cloud.
-It includes setting up a template on EC2 on AWS, explain the setup on Azure, and introduce the different Neo4j cloud-hosting partners.
+It includes setting up Neo4j on EC2 on AWS, explain the setup on Azure, and introduce the different Neo4j cloud-hosting partners.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
@@ -609,7 +609,7 @@ For self-service hosting you should bring along enough sysops experience that a 
 <li><a href="#_hosting_on_aws_ec2">Hosting on AWS / EC2</a></li>
 <li><a href="#_neo4j_provisioning_solutions">Neo4j Provisioning Solutions</a></li>
 <li><a href="#_windows_azure">Windows Azure</a></li>
-<li><a href="#_neo4j_with_docker">Neo4j with Docker</a></li>
+<li><a href="#docker">Neo4j with Docker</a></li>
 <li><a href="#_neo4j_cloud_hosting_providers">Neo4j Cloud Hosting Providers</a></li>
 <li><a href="#_other_paas_integrations">Other PaaS Integrations</a></li>
 </ul>
@@ -620,32 +620,35 @@ For self-service hosting you should bring along enough sysops experience that a 
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
 <h3 id="_hosting_on_aws_ec2">Hosting on AWS / EC2</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title label">Note</div>
+</td>
+<td class="content">
+We used to provide a cloud formation template but it has not been maintained for a while, so we chose to remove it.
+</td>
+</tr>
+</table>
+</div>
 
 
 <div class="paragraph">
-<p>We provide an <a href="https://github.com/neo4j-contrib/neo4j-puppet/blob/master/README.CLOUDFORMATION.md"><strong>EC2 Cloud Formation Template</strong></a> that allows you to quickly provision an appropriate instance and install and set-up Neo4j on that machine.</p>
+<p>Setting up Neo4j on any Debian or Ubuntu system should be pretty straightforward by following the instructions on <a href="http://debian.neo4j.org">our Debian Repository</a>.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>This template creates a complete Neo4j installation, including Amazon AWS server, fixed IP address and backup storage.
-It&#8217;s intended to help application developers get up and running quickly with Neo4j without in-depth experience of Linux servers, AWS, or installing databases like Neo4j.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>If you are proficient at setting up AWS instances, you can also install Neo4j on any provisioned Linux instance</p>
+<p>For other Linux distributions, just download the <a href="http://neo4j.com/download">Neo4j binary</a> and unzip and start it.
+The binary distribution also provides scripts to install Neo4j as a service.</p>
 </div>
 
 <div class="ulist side-nav">
 <ul>
 <li>
-<a href="https://github.com/neo4j-contrib/neo4j-puppet/blob/master/README.CLOUDFORMATION.md">Neo4j Cloud Formation Template</a>
-</li>
-<li>
-<a href="https://github.com/neo4j-contrib/neo4j-puppet/blob/master/README.md">Manual EC2 Setup with Puppet</a>
+<a href="http://debian.neo4j.org">Neo4j Debian Repository</a>
 </li>
 <li>
 <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html">AWS EC2 Getting Started Guide</a>
@@ -708,7 +711,7 @@ How to deploy Neo4j to Azure with Visual Studio 2012 - <a href="http://blog.jong
 </div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_neo4j_with_docker">Neo4j with Docker</h3>
+<h3 id="docker">Neo4j with Docker</h3>
 
 
 <div class="paragraph">
@@ -751,10 +754,10 @@ Just add Neo4j on top and you&#8217;re done.</p>
 <div class="ulist">
 <ul>
 <li>
-<a href="https://registry.hub.docker.com/u/tpires/neo4j/">Neo4j by tpires</a>
+<a href="https://registry.hub.docker.com/u/tpires/neo4j/">Neo4j 2.1.x by tpires</a>
 </li>
 <li>
-<a href="https://registry.hub.docker.com/u/kbastani/docker-neo4j/">Neo4j 2.1.6 by Kenny Bastani</a>
+<a href="https://registry.hub.docker.com/u/kbastani/docker-neo4j/">latest Neo4j by Kenny Bastani</a>
 </li>
 <li>
 <a href="https://registry.hub.docker.com/u/kbastani/neo4j-graph-analytics/">Neo4j Graph Analytics for MazeRunner/Spark by Kenny Bastani</a>
@@ -950,7 +953,7 @@ Managed Cloud Server
                   <a href="/developer-resources/data-modeling">
                      <h5>Data Modeling</h5>
                   </a>
-                  <div class="content inactive" id="panel5">
+                  <div class="content inactive" id="panel3">
                      <ul>
                         <li><a href="/developer-resources/data-modeling/guide-data-modeling">Graph Data Modeling Guidelines</a></li>
                         <li><a href="/developer-resources/data-modeling/graphgist">Interactive Graph Models - GraphGist</a></li>
@@ -963,7 +966,7 @@ Managed Cloud Server
                   <a href="/developer-resources/working-with-data">
                      <h5>Working with Data</h5>
                   </a>
-                  <div class="content inactive" id="panel3">
+                  <div class="content inactive" id="panel4">
                      <ul>
                         <li><a href="/developer-resources/working-with-data/guide-neo4j-browser">Neo4j Browser Intro</a></li>
                         <li><a href="/developer-resources/working-with-data/guide-data-visualization">Graph Visualization for Neo4j</a></li>
@@ -979,7 +982,7 @@ Managed Cloud Server
                   <a href="/developer-resources/language-guides">
                      <h5>Language Guides</h5>
                   </a>
-                  <div class="content inactive" id="panel4">
+                  <div class="content inactive" id="panel5">
                      <ul>
                         <li><a href="/developer-resources/language-guides/java">Java</a></li>
                         <li><a href="/developer-resources/language-guides/dotnet">.NET</a></li>
@@ -993,15 +996,20 @@ Managed Cloud Server
                </dd>
             </dl>
             <dl class="accordion">
-               <dd class="accordion-navigation inactive">
-                  <a href="/developer-resources/ecosystem">
-                     <h5>Ecosystem</h5>
+               <dd class="accordion-navigation ">
+                  <a href="/developer-resources/integration">
+                     <h5>Neo4j Tools &amp; Integrations</h5>
                   </a>
-                  <!--div class="content inactive" id="panel6">
+                  <div class="content " id="panel6">
                      <ul>
-                        <li><a href="/docs/stable">Ecosystem</a></li>
+                        <li><a href="/developer-resources/integration/ecosystem">Tools &amp; Libs for Neo4j</a></li>
+                        <li><a href="/developer-resources/integration/apache-spark">Apache Spark</a></li>
+                        <li><a href="/developer-resources/integration/elastic-search">Elastic-Search</a></li>
+                        <li><a href="/developer-resources/integration/apache-hadoop">Hadoop</a></li>
+                        <li><a href="/developer-resources/integration/docker">Docker</a></li>
+                        <!--li><a href="/developer-resources/integration/meteor">Integration with Meteor.js</a></li-->
                      </ul>
-                  </div-->
+                  </div>
                </dd>
             </dl>
             <dl class="accordion">
@@ -1019,17 +1027,44 @@ Managed Cloud Server
                   </div>
                </dd>
             </dl>
+            <dl class="accordion">
+               <dd class="accordion-navigation ">
+                  <a href="/developer-resources/contribute">
+                     <h5>Contributing to Neo4j</h5>
+                  </a>
+                  <div class="content " id="panel8">
+                     <ul>
+	                    <!-- todo CLA, SO, GitHub, Building, Tools -->
+                        <!--li><a href="/developer-resources/contribution/xxx">Contributing</a></li-->
+                     </ul>
+                  </div>
+               </dd>
+            </dl>
+         <dl class="accordion">
+            <dd class="accordion-navigation ">
+               <a href="/developer-resources/resources">
+                  <h5>Documentation &amp; Resources</h5>
+               </a>
+               <div class="content " id="panel4">
+                  <ul>
+	                 <li><a href="/docs/stable">Manual: 2.2.x</a></li>
+	                 <ul>
+	                 <li><a href="/docs/stable/introduction.html">Introduction</a></li>
+	                 <li><a href="/docs/stable/tutorials.html">Tutorials</a></li>
+	                 <li><a href="/docs/stable/cypher-query-lang.html">Cypher Query Language</a></li>
+	                 <li><a href="/docs/stable/operations.html">Operations</a></li>
+	                 <li><a href="/docs/stable/tools.html">Tools</a></li>
+	                 <li><a href="/docs/stable/advanced-usage.html">Advanced Usage</a></li>
+	                 </ul>
+                     <li><a href="/docs/stable/cypher-refcard">Cypher Refcard</a></li>
+	                 <li><a href="/docs/milestone">Manual: 2.3.x Milestone</a></li>
+                     <li><a href="/docs">Older Documentation</a></li>
+                  </ul>
+               </div>
+            </dd>
+         </dl>
          </ul>
          <div class="accordion-navigation">
-            <h5>Reference &amp; Manuals</h5>
-            <ul>
-                  <li><a href="/docs/milestone">Neo4j 2.2.x</a></li>
-                  <li><a href="/docs/stable">Neo4j 2.1.x</a></li>
-                  <li><a href="/docs/2.0.4">Neo4j 2.0.x</a></li>
-                  <li><a href="/docs/stable/cypher-refcard">Cypher Refcard</a></li>
-                  <li><a href="/developer-resources/resources">All Learning Resources</a></li>
-            </ul>
-<!--            <h5><a href="http://community/">Engage in our Community</a></h5>-->
 <div style="text-align:center">
 <div><a href="http://twitter.com/neo4j" target="_blank"> <img style="width:33%" src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/twitter.png"/><br/>Follow us on Twitter</a></div>
 <div><a href="https://github.com/neo4j/neo4j" target="_blank"><img style="width:33%" src="http://neo4j.com/wp-content/themes/neo4jweb/assets/images/github.png"/><br/>Engage on GitHub </a></div>
