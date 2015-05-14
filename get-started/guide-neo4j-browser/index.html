@@ -585,7 +585,7 @@ hr {
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-This article demonstrates how to style graph visualizations in the Neo4j browser using a <strong>Graph Style Sheet</strong> (GRASS).
+This article demonstrates how to style graph visualizations in the Neo4j browser interactively and by using a <strong>Graph Style Sheet</strong> (GRASS).
 </blockquote>
 </div>
 <div class="quoteblock abstract">
@@ -605,6 +605,7 @@ Please have <a href="/download">Neo4j downloaded</a> and unzipped. It helps if y
 <ul class="sectlevel1">
 <li><a href="#_installing_and_starting_neo4j_browser">Installing and Starting Neo4j Browser</a></li>
 <li><a href="#_styling_neo4j_browser_visualization">Styling Neo4j Browser Visualization</a></li>
+<li><a href="#_queries_and_favorites">Queries and Favorites</a></li>
 <li><a href="#_some_tips_and_tricks_for_neo4j_browser">Some Tips and Tricks for Neo4j Browser</a></li>
 </ul>
 
@@ -614,39 +615,56 @@ Please have <a href="/download">Neo4j downloaded</a> and unzipped. It helps if y
 </div>
 <div class="sect1 "  >
 <h3 id="_installing_and_starting_neo4j_browser">Installing and Starting Neo4j Browser</h3>
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/howto_style.png" alt="How to style">
-</p>
-</div>
 
 
 <div class="paragraph">
-<p>First, <a href="http://neo4j.org/download">download</a>, unzip, change into the directory and start Neo4j.
-If you have a JDK (Java7) installed and executed it from the correct path, you should see the following:</p>
+<p>First, <a href="http://neo4j.org/download">download</a> and unzip Neo4j, change into the new directory and start the server.
+If you have a JDK (Java7) installed and executed <code>bin/neo4j start</code> from there, you should see the following:</p>
 </div>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="bash"><code>$ cd neo4j-community-2.1.6
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="bash"><code>$ cd neo4j-community-2.2.1
 $ bin/neo4j start
 
-Using additional JVM arguments:  ....
 Starting Neo4j Server...WARNING: not changing user
 process [70299]... waiting for server to be ready...... OK.
 http://localhost:7474/ is ready.</code></pre>
 </div>
 </div>
+<div class="sidebarblock">
+<div class="content">
 
 
 <div class="paragraph">
-<p>Open the URL <a href="http://localhost:7474/">http://localhost:7474/</a> to start working with Neo4j and our query language, Cypher.</p>
+<p>If you connect to Neo4j for the first time, you&#8217;re asked to change the password for the default user account "neo4j/neo4j".</p>
+</div>
+
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title label">Note</div>
+</td>
+<td class="content">
+Please remember the password.
+In case you forget it, you have to remove the credentials file in <code>data/dbms/authorization</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Open the URL <a href="http://localhost:7474" class="bare">http://localhost:7474</a> to start working with Neo4j and our query language, <a href="/developer-resources/cypher">Cypher</a>.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>If you want to learn more first, click on any of the helpful links shown after startup: these are quick slide shows that introduce the different concepts.</p>
+<p>If you want to learn more first, click on any of the helpful links shown after startup: these are quick guides that introduce the different concepts.</p>
 </div>
 
 <div class="ulist">
@@ -661,28 +679,23 @@ http://localhost:7474/ is ready.</code></pre>
 <strong>Cypher</strong> - query language <code>:play cypher</code>
 </li>
 <li>
-<strong>The Movie Graph</strong> - a mini graph app <code>:play movie graph</code>
+<strong>The Movie Graph</strong> - a mini graph model with use-cases <code>:play movie graph</code>
+</li>
+<li>
+<strong>The Northwind Database</strong> - the classic database demo import &amp; use-cases <code>:play northwind graph</code>
 </li>
 </ul>
 </div>
 
 
 <div class="paragraph">
-<p>Import sample data by running <code>:play movies</code>, clicking on the huge Cypher CREATE ... statement, then hitting <code>run</code>.</p>
+<p>Import sample data by entering <code>:play movies</code>, selecting the large Cypher CREATE ... statement, then hitting the <code>Run</code> button.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>After a few seconds the data is imported, but we&#8217;ll see only a lonely <em>Matrix</em> node.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>To see some nodes and relationships for styling, go to the Favorites tab on the left&#8212;&#8203;indicated by a star&#8212;&#8203;and click on the <strong>Get Some Data</strong> entry, and click the run icon.
-This executes the statement <code>MATCH (n) RETURN n limit 100</code> which just fetches some nodes.
-The browser also fetches and displays relationships between those nodes, even if they were not part of your query result.</p>
+<p>After a few seconds the data is imported, and we&#8217;ll see a subset of the movie graph rendered for us.</p>
 </div>
 
 </div>
@@ -691,11 +704,38 @@ The browser also fetches and displays relationships between those nodes, even if
 
 
 <div class="paragraph">
-<p>But those nodes only show numbers!
-Click on any red node that has ACTED_IN relationships pointing to it.
-These are Movie nodes.
-In the popup you&#8217;ll see the node label "Movie" on the top.
-In the "style" tab on the right, denoted with an "eye", you can set the styling parameters and property chosen for the displayed title.</p>
+<p>The nodes already have a sensible titles, this is new since Neo4j 2.2, it auto-selects a property from the property list to be rendered as label.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>If you click on any node or relationship you see the properties of that element below the visualization, larger property sets might be folded in, there is a little arrow on the right to fold them out.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>E.g. you click on one of the Movies then you can see it&#8217;s properties below the graph.
+Same for actors or the <code>ACTED_IN</code> relationships.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>If you click on any label or relationship above the graph visualization, you can then select the styling in the area below the graph.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Colors, sizes and titles are selectable from there.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>For instance click on the <code>(Movies)</code> label above the graph and change the color, size and title of nodes labeled with <code>Movie</code>.</p>
 </div>
 
 <div class="imageblock">
@@ -703,30 +743,30 @@ In the "style" tab on the right, denoted with an "eye", you can set the styling 
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/style_node.jpg" alt="style node">
 </p>
 </div>
-
-
-<div class="paragraph">
-<p>Play a bit with the styling options and do the same for the other nodes (labeled Person).
-The next step is styling relationships. Click on one (for example, DIRECTED) and try it out.</p>
-</div>
-
 <div class="imageblock">
 <p class="content">
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/style_relationship.jpg" alt="style relationship">
 </p>
 </div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3 id="_advanced_styling">Advanced Styling</h3>
 
 
 <div class="paragraph">
-<p>The Neo4j browser visualization is powered by a concept called <strong>Graph Style Sheet</strong> (GRASS).
-You can access the style sheet viewer with the <code>&lt;/&gt; View Stylesheet</code> link at the bottom of the styling pop-up.</p>
+<p>For more advanced styling you can bring up the style-viewer with <code>:style</code>, download the graph-style-sheet (GRASS), edit it offline and drag it back onto the drag-area of the viewer.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>The resulting style viewer allows you to look at the stylesheet, download it, or update it via drag-and-drop onto the gray area.
-You can also <strong>reset all styling</strong> by clicking the "fire extinguisher" icon.</p>
+<p>Within the GRASS file you can change colors, fonts, sizes, outlines and titles per node-label and relationship-type.
+It is also possible to combine multiple properties into a caption with <code>caption: '{name} of &lt;type&gt;';</code></p>
+</div>
+
+
+
+<div class="paragraph">
+<p>You can also <strong>reset all styling</strong> by clicking the "fire extinguisher" icon.</p>
 </div>
 
 <div class="imageblock">
@@ -734,6 +774,32 @@ You can also <strong>reset all styling</strong> by clicking the "fire extinguish
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/style_sheet_grass.jpg" alt="style sheet grass">
 </p>
 </div>
+</div>
+</div>
+<div class="sect1 "  >
+<h3 id="_queries_and_favorites">Queries and Favorites</h3>
+
+
+<div class="paragraph">
+<p>If you start with an empty frame, display some nodes and relationships, use the Favorites (Star) tab on the left, click on the <strong>Get Some Data</strong> entry, and run the query.
+This executes the statement <code>MATCH (n) RETURN n limit 100</code> which fetches some nodes.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>The browser also fetches and displays relationships between those nodes, even if they were not part of your query result.
+You can disable the latter behavior with the "Auto-Complete" switch in the bottom left corner.
+Then only relationships returned by the query will be shown.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>You can save your own queries as favorites by "starring" them.
+Use folders to organize the favorites.</p>
+</div>
+
 
 
 <div class="paragraph">
@@ -768,7 +834,7 @@ navigate history with <code>ctrl+up</code> and <code>ctrl+down</code>, the histo
 <code>ESC</code> puts the editor in fullscreen mode, good for large queries
 </li>
 <li>
-You can switch between tabular and visual mode for results with the little icon on the lower right of each panel,
+You can switch between tabular, visual mode and query plan mode for results with the icons on the left of each panel,
 <div class="ulist">
 <ul>
 <li>
@@ -864,15 +930,16 @@ Then you can for instance retrieve all labels in the database with <code>:GET /d
                     <div class="large-3 large-pull-9 columns">
                            <ul style="padding-top: 0;" class="side-nav">
          <dl class="accordion">
-            <dd class="accordion-navigation inactive">
+            <dd class="accordion-navigation active">
                <a href="/developer-resources/get-started">
                   <h5>Get Started</h5>
                </a>
-               <div class="content inactive" id="panel1">
+               <div class="content active" id="panel1">
                   <ul>
                      <li><a href="/developer-resources/get-started/graph-database">What is a GraphDB?</a></li>
                      <li><a href="/developer-resources/get-started/graph-db-vs-rdbms">GraphDB vs RDBMS</a></li>
                      <li><a href="/developer-resources/get-started/graph-db-vs-nosql">GraphDB vs NOSQL</a></li>
+                     <li><a href="/developer-resources/get-started/guide-neo4j-browser">Neo4j Browser Intro</a></li>
                      <!--<li><a href="/developer-resources/language-guides">Language Drivers</a></li>-->
                   </ul>
                </div>
@@ -907,13 +974,12 @@ Then you can for instance retrieve all labels in the database with <code>:GET /d
                </dd>
             </dl>
             <dl class="accordion">
-               <dd class="accordion-navigation active">
+               <dd class="accordion-navigation inactive">
                   <a href="/developer-resources/working-with-data">
                      <h5>Working with Data</h5>
                   </a>
-                  <div class="content active" id="panel4">
+                  <div class="content inactive" id="panel4">
                      <ul>
-                        <li><a href="/developer-resources/working-with-data/guide-neo4j-browser">Neo4j Browser Intro</a></li>
                         <li><a href="/developer-resources/working-with-data/guide-data-visualization">Graph Visualization for Neo4j</a></li>
                         <li><a href="/developer-resources/working-with-data/guide-importing-data-and-etl">Importing Data into Neo4j</a></li>
                         <li><a href="/developer-resources/working-with-data/guide-import-csv">Importing CSV</a></li>
@@ -950,7 +1016,7 @@ Then you can for instance retrieve all labels in the database with <code>:GET /d
                         <li><a href="/developer-resources/integration/ecosystem">Tools &amp; Libs for Neo4j</a></li>
                         <li><a href="/developer-resources/integration/apache-spark">Apache Spark</a></li>
                         <li><a href="/developer-resources/integration/elastic-search">Elastic-Search</a></li>
-                        <li><a href="/developer-resources/integration/apache-hadoop">Hadoop</a></li>
+                        <!--li><a href="/developer-resources/integration/apache-hadoop">Hadoop</a></li-->
                         <li><a href="/developer-resources/integration/docker">Docker</a></li>
                         <!--li><a href="/developer-resources/integration/meteor">Integration with Meteor.js</a></li-->
                      </ul>
@@ -992,7 +1058,7 @@ Then you can for instance retrieve all labels in the database with <code>:GET /d
                </a>
                <div class="content " id="panel4">
                   <ul>
-	                 <li><a href="/docs/stable">Manual: 2.2.x</a></li>
+	                 <li><a href="/docs/stable">Reference Manual</a></li>
 	                 <ul>
 	                 <li><a href="/docs/stable/introduction.html">Introduction</a></li>
 	                 <li><a href="/docs/stable/tutorials.html">Tutorials</a></li>
@@ -1002,7 +1068,7 @@ Then you can for instance retrieve all labels in the database with <code>:GET /d
 	                 <li><a href="/docs/stable/advanced-usage.html">Advanced Usage</a></li>
 	                 </ul>
                      <li><a href="/docs/stable/cypher-refcard">Cypher Refcard</a></li>
-	                 <li><a href="/docs/milestone">Manual: 2.3.x Milestone</a></li>
+	                 <li><a href="/docs/milestone">Manual - Milestone</a></li>
                      <li><a href="/docs">Older Documentation</a></li>
                   </ul>
                </div>

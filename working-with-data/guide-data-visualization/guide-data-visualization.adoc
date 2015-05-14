@@ -53,6 +53,79 @@ image:http://assets.neo4j.org/img/still/seening_pattern_in_data.jpg[width=500, l
 
 In this talk, Alistair Jones builds a very powerful graph web editing tool based on SVG, suited for easy integration into modern HTML frameworks.
 
+=== Library: Alchemy.js Open Source Graph Visualization
+
+As you've just seen, preparing, converting and rendering graph data with plain D3 force layout involves a bit of work.
+The open-source http://graphalchemist.github.io/Alchemy[Alchemy.js library] replaces this effort with a few lines of configuration.
+It uses the http://graphalchemist.github.io/Alchemy/#/docs[GraphJSON] format for interaction which is easier to handle than the raw D3 JSON format.
+Alchemy.js is mostly configuration based but can also be customized with javascript functions.
+It supports custom styling, highlighting, hoover effects, clustering and interactive exploration.
+
+Here is a http://graphalchemist.github.io/Alchemy/#/examples[simple example] of using Alchemy.js to render a simple graph:
+
+[source,javascript]
+----
+<script src="http://cdn.graphalchemist.com/alchemy.min.js"></script>
+<script type="text/javascript">
+  alchemy.begin({
+        dataSource: "actors.json", 
+        nodeCaption: 'name', 
+        nodeMouseOver: 'name',
+        cluster: true,
+        clusterColours: ["#1B9E77","#D95F02","#7570B3","#E7298A","#66A61E","#E6AB02"]})
+</script>
+----
+
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/alchemy_example.png[]
+
+=== Product: Linkurious Graph Visualization
+
+Linkurious is a browser based graph exploration and navigation tool.
+It integrates with the Neo4j backend, indexes nodes and relationships for fast facetted search.
+Besides graph navigation it supports also graph editing and Cypher query execution.
+
+Linkurious uses Neo4j’s graph database technology to offer you an easy solution to store, search and visualize graphs.
+You can start navigating inside your graph database. 
+Search for properties, inspect nodes, and explore their relationships visually in your web browser.
+find any node in your database easily thanks to our built-in search engine. 
+You can simply modify, add and remove nodes or relationships. You can also customize what is displayed, how the data is indexed.
+
+image::http://linkurio.us/wp-content/uploads/2013/09/mac2-w500-vid.png?wmode=transparent[link=http://linkurio.us]
+
+==== Linkurious.js Visualization Library
+
+The underlying javascript-toolkit is available as an open-source library called http://linkurio.us/toolkit/[linkurious.js]
+
+It uses Sigma.js for its graph data structure and visualization engine, which provides both Canvas, WebGL and SVG renderers for nodes and relationships. 
+The linkurious.js toolkit is made of more than 30 Sigma.js plugins, combined to work together and tested for integration into modern Web applications.
+
+=== Product: Tom Sawyer Perspectives
+
+++++
+<iframe src="//player.vimeo.com/video/90897466" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+++++
+
+https://www.tomsawyer.com/pressreleases/pressrelease.php?release_id=164&news=product[Tom Sawyer Perspectives 6.0] offers Cypher support for Neo4j graph databases and connects them to the broad visualization capabilities of the tool.
+Tom Sawyer Perspectives is integrated with the latest Neo4j version for easy visualization of complex results.
+
+=== Product: Keylines Neo4j Graph Visualization
+
+image:http://keylines.com/im/product/KeyLinesNeo4j.png[link=http://keylines.com/neo4j]
+
+KeyLines is an out-of-the-box JavaScript solution for visualizing networks.
+It works in all major browsers and all platforms, including the iPad.
+
+KeyLines integrates into existing web applications easily and with very little effort.
+How and where you get the data is up to you.
+KeyLines does the job of rendering it and responding to user interactions like clicking, touching, moving nodes, and more.
+You bind to these events to customize what happens, and, most importantly, your data stays under your control at all times: KeyLines is self-contained and needs no external connections.
+
+++++
+<iframe width="560" height="315" src="//www.youtube.com/embed/NcYJhzFKyfw?rel=0" frameborder="0" allowfullscreen></iframe>
+++++
+
+* http://keylines.com/network-visualization/visualize-neo4j-time-graph[Integrating KeyLines Time Bar with Neo4j]
+
 === HowTo: Graph Visualization Step By Step
 
 If you want to get started directly, here are the few steps you have to take to convert Neo4j's graph query results into the format typically needed by the visualization libraries.
@@ -148,72 +221,6 @@ viz = {nodes:nodes, links:links};
 Bringing all of this together - querying Neo4j and converting the result and rendering the graph with D3 into an interactive SVG based graph layout results in a visualization like this.
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/movie_application.png[]
-
-=== Library: Alchemy.js Open Source Graph Visualization
-
-As you've just seen, preparing, converting and rendering graph data with plain D3 force layout involves a bit of work.
-The open-source http://graphalchemist.github.io/Alchemy[Alchemy.js library] replaces this effort with a few lines of configuration.
-It uses the http://graphalchemist.github.io/Alchemy/#/docs[GraphJSON] format for interaction which is easier to handle than the raw D3 JSON format.
-Alchemy.js is mostly configuration based but can also be customized with javascript functions.
-It supports custom styling, highlighting, hoover effects, clustering and interactive exploration.
-
-Here is a http://graphalchemist.github.io/Alchemy/#/examples[simple example] of using Alchemy.js to render a simple graph:
-
-[source,javascript]
-----
-<script src="http://cdn.graphalchemist.com/alchemy.min.js"></script>
-<script type="text/javascript">
-  alchemy.begin({
-        dataSource: "actors.json", 
-        nodeCaption: 'name', 
-        nodeMouseOver: 'name',
-        cluster: true,
-        clusterColours: ["#1B9E77","#D95F02","#7570B3","#E7298A","#66A61E","#E6AB02"]})
-</script>
-----
-
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/alchemy_example.png[]
-
-=== Product: Keylines Neo4j Graph Visualization
-
-image:http://keylines.com/im/product/KeyLinesNeo4j.png[link=http://keylines.com/neo4j]
-
-KeyLines is an out-of-the-box JavaScript solution for visualizing networks.
-It works in all major browsers and all platforms, including the iPad.
-
-KeyLines integrates into existing web applications easily and with very little effort.
-How and where you get the data is up to you.
-KeyLines does the job of rendering it and responding to user interactions like clicking, touching, moving nodes, and more.
-You bind to these events to customize what happens, and, most importantly, your data stays under your control at all times: KeyLines is self-contained and needs no external connections.
-
-++++
-<iframe width="560" height="315" src="//www.youtube.com/embed/NcYJhzFKyfw?rel=0" frameborder="0" allowfullscreen></iframe>
-++++
-
-* http://keylines.com/network-visualization/visualize-neo4j-time-graph[Integrating KeyLines Time Bar with Neo4j]
-
-=== Product: Tom Sawyer Perspectives
-
-++++
-<iframe src="//player.vimeo.com/video/90897466" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-++++
-
-https://www.tomsawyer.com/pressreleases/pressrelease.php?release_id=164&news=product[Tom Sawyer Perspectives 6.0] offers Cypher support for Neo4j graph databases and connects them to the broad visualization capabilities of the tool.
-Tom Sawyer Perspectives is integrated with the latest Neo4j version for easy visualization of complex results.
-
-=== Product: Linkurious Graph Visualization
-
-Linkurious is a browser based graph exploration and navigation tool.
-It integrates with the Neo4j backend, indexes nodes and relationships for fast facetted search.
-Besides graph navigation it supports also graph editing and Cypher query execution.
-
-Linkurious uses Neo4j’s graph database technology to offer you an easy solution to store, search and visualize graphs.
-You can start navigating inside your graph database. 
-Search for properties, inspect nodes, and explore their relationships visually in your web browser.
-find any node in your database easily thanks to our built-in search engine. 
-You can simply modify, add and remove nodes or relationships. You can also customize what is displayed, how the data is indexed.
-
-image::http://linkurio.us/wp-content/uploads/2013/09/mac2-w500-vid.png?wmode=transparent[link=http://linkurio.us/tour/]
 
 ////
 TODO

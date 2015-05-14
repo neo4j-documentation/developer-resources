@@ -4,12 +4,12 @@
 :toc-placement!:
 :toc-title: Overview
 :toclevels: 1
-:section: Working with Data
-:section-link: working-with-data
+:section: Get Started
+:section-link: get-started
 
 .Goals
 [abstract]
-This article demonstrates how to style graph visualizations in the Neo4j browser using a *Graph Style Sheet* (GRASS).
+This article demonstrates how to style graph visualizations in the Neo4j browser interactively and by using a *Graph Style Sheet* (GRASS).
 
 .Prerequisites
 [abstract]
@@ -24,79 +24,83 @@ toc::[]
 
 == Installing and Starting Neo4j Browser
 
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/howto_style.png[How to style]
-
-First, http://neo4j.org/download[download], unzip, change into the directory and start Neo4j.
-If you have a JDK (Java7) installed and executed it from the correct path, you should see the following:
+First, http://neo4j.org/download[download] and unzip Neo4j, change into the new directory and start the server.
+If you have a JDK (Java7) installed and executed `bin/neo4j start` from there, you should see the following:
 
 [source,bash]
 ----
-$ cd neo4j-community-2.1.6
+$ cd neo4j-community-2.2.1
 $ bin/neo4j start
 
-Using additional JVM arguments:  ....
 Starting Neo4j Server...WARNING: not changing user
 process [70299]... waiting for server to be ready...... OK.
 http://localhost:7474/ is ready.
 ----
 
-////
 ****
-If you connect to Neo4j for the first time, you're asked to change the password for the default user account "neo4j".
+If you connect to Neo4j for the first time, you're asked to change the password for the default user account "neo4j/neo4j".
 
 [NOTE]
-Please remember the password. In case you forget it, you have to remove the credentials file in `data/dbms/authorization`.
-
-Being logged in, you can also generate an auth-token, to be used as password for any library connecting to Neo4j
+Please remember the password. 
+In case you forget it, you have to remove the credentials file in `data/dbms/authorization`.
 ****
-////
 
-Open the URL http://localhost:7474/[http://localhost:7474/] to start working with Neo4j and our query language, Cypher.
+Open the URL http://localhost:7474 to start working with Neo4j and our query language, link:/developer/cypher[Cypher].
 
-If you want to learn more first, click on any of the helpful links shown after startup: these are quick slide shows that introduce the different concepts.
+If you want to learn more first, click on any of the helpful links shown after startup: these are quick guides that introduce the different concepts.
 
 * **Intro** - a guided tour `:play intro`
 * **Concepts** - GraphDB 101 `:play concepts`
 * **Cypher** - query language `:play cypher`
-* **The Movie Graph** - a mini graph app `:play movie graph`
+* **The Movie Graph** - a mini graph model with use-cases `:play movie graph`
+* **The Northwind Database** - the classic database demo import & use-cases `:play northwind graph`
 
-Import sample data by running `:play movies`, clicking on the huge Cypher +CREATE ...+ statement, then hitting `run`.
+Import sample data by entering `:play movies`, selecting the large Cypher +CREATE ...+ statement, then hitting the `Run` button.
 
-After a few seconds the data is imported, but we'll see only a lonely _Matrix_ node.
-
-To see some nodes and relationships for styling, go to the Favorites tab on the left--indicated by a star--and click on the **Get Some Data** entry, and click the run icon.
-This executes the statement `MATCH (n) RETURN n limit 100` which just fetches some nodes. 
-The browser also fetches and displays relationships between those nodes, even if they were not part of your query result.
+After a few seconds the data is imported, and we'll see a subset of the movie graph rendered for us.
 
 == Styling Neo4j Browser Visualization
 
-////
-[role=side-nav]
-* http://neo4j.com/docs[The Neo4j Docs]
-* link:/blog[The Neo4j Blog]
-* link:/developer/guide-intro-to-graph-modeling[Intro to Graph Modeling]
-////
+The nodes already have a sensible titles, this is new since Neo4j 2.2, it auto-selects a property from the property list to be rendered as label.
 
-But those nodes only show numbers!
-Click on any red node that has +ACTED_IN+ relationships pointing to it.
-These are +Movie+ nodes.
-In the popup you'll see the node label "Movie" on the top.
-In the "style" tab on the right, denoted with an "eye", you can set the styling parameters and property chosen for the displayed title.
+If you click on any node or relationship you see the properties of that element below the visualization, larger property sets might be folded in, there is a little arrow on the right to fold them out.
+
+E.g. you click on one of the Movies then you can see it's properties below the graph. 
+Same for actors or the `ACTED_IN` relationships.
+
+If you click on any label or relationship above the graph visualization, you can then select the styling in the area below the graph.
+
+Colors, sizes and titles are selectable from there.
+
+For instance click on the `(Movies)` label above the graph and change the color, size and title of nodes labeled with `Movie`.
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/style_node.jpg[]
 
-Play a bit with the styling options and do the same for the other nodes (labeled +Person+).
-The next step is styling relationships. Click on one (for example, +DIRECTED+) and try it out.
-
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/style_relationship.jpg[]
 
-The Neo4j browser visualization is powered by a concept called *Graph Style Sheet* (GRASS).
-You can access the style sheet viewer with the `</> View Stylesheet` link at the bottom of the styling pop-up.
 
-The resulting style viewer allows you to look at the stylesheet, download it, or update it via drag-and-drop onto the gray area.
+=== Advanced Styling 
+
+For more advanced styling you can bring up the style-viewer with `:style`, download the graph-style-sheet (GRASS), edit it offline and drag it back onto the drag-area of the viewer.
+
+Within the GRASS file you can change colors, fonts, sizes, outlines and titles per node-label and relationship-type.
+It is also possible to combine multiple properties into a caption with `caption: '{name} of <type>';`
+
 You can also *reset all styling* by clicking the "fire extinguisher" icon.
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/style_sheet_grass.jpg[]
+
+== Queries and Favorites
+
+If you start with an empty frame, display some nodes and relationships, use the Favorites (Star) tab on the left, click on the **Get Some Data** entry, and run the query.
+This executes the statement `MATCH (n) RETURN n limit 100` which fetches some nodes. 
+
+The browser also fetches and displays relationships between those nodes, even if they were not part of your query result.
+You can disable the latter behavior with the "Auto-Complete" switch in the bottom left corner.
+Then only relationships returned by the query will be shown.
+
+You can save your own queries as favorites by "starring" them. 
+Use folders to organize the favorites.
 
 See the styling options in action in the following screencast:
 
@@ -113,12 +117,11 @@ Executing Queries & Commands
 * you can click on the query text above the output pane and it is added to the editor again
 * navigate history with `ctrl+up` and `ctrl+down`, the history will be persisted across browser restarts
 * `ESC` puts the editor in fullscreen mode, good for large queries
-* You can switch between tabular and visual mode for results with the little icon on the lower right of each panel, 
+* You can switch between tabular, visual mode and query plan mode for results with the icons on the left of each panel, 
 ** don't worry if you don't see any output, you might just be in visual mode but returned tabular/scalar data, just switch the mode to tabular
 ** query time is reported in the tabular view, but it is not the correct minimal time for your query, as the browser makes several requests and roundtrips to fetch the data
 ** you can download the results as CSV from the tabular output panel (top right download icon), and as JSON (download icon above the panel)
 * `:clear` removes all accumulated output panels, the trashcan icon removes a single panel and the cross expands a panel into fullscreen (helpful in visual mode)
-//* don't zoom negatively (ctrl+-) with your browser, in 2.1.x there is a bug which prevents visual output
 
 Favorites
 
@@ -132,7 +135,6 @@ Configuration
 ** `:config maxNeighbours:100` - maxiumum number of neighbours for a node
 ** `:config maxNodes:1000` - maximum number of nodes for the visualization
 ** `:config maxNodes:1000` - maximum number of rows for the tabular result
-
 
 
 === Executing REST requests
@@ -151,16 +153,6 @@ To execute a Cypher statement you post to the transaction Cypher endpoint like t
      {"statement":"MATCH (m:Movie) WHERE m.title={title} RETURN m.title, m.released, labels(m)",
       "parameters":{"title":"Cloud Atlas"}}]}
 ----
-
-////
-* you can open the styling popup by clickin on any node or relationship
-* on the left "info" tab  you can inspect the properties
-* on the right "style" tab you can choose the property to be used as visual label, the color and size of the shape (circle, line)
-
-* you can open the style-sheet viewer by clicking the `</> View Stylesheet` link at the bottom of the styling popup
-* you can reset all styling by choosing the fire-extinguisher icon on the style-sheet (grass) editor
-* you can replace the current styling by dragging a new style (grass) file onto the grey area on the bottom of the style-sheet editor
-////
 
 ////
 [role=side-nav]
