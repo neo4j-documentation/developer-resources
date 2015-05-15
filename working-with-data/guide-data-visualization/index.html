@@ -605,11 +605,11 @@ You should have familiarized yourself with <a href="/developer-resources/get-sta
 <ul class="sectlevel2">
 <li><a href="#_screencast_the_neo4j_browser">Screencast: The Neo4j Browser</a></li>
 <li><a href="#_presentation_svg_based_graph_interaction">Presentation: SVG-Based Graph Interaction</a></li>
-<li><a href="#_howto_graph_visualization_step_by_step">HowTo: Graph Visualization Step By Step</a></li>
 <li><a href="#_library_alchemy_js_open_source_graph_visualization">Library: Alchemy.js Open Source Graph Visualization</a></li>
-<li><a href="#_product_keylines_neo4j_graph_visualization">Product: Keylines Neo4j Graph Visualization</a></li>
-<li><a href="#_product_tom_sawyer_perspectives">Product: Tom Sawyer Perspectives</a></li>
 <li><a href="#_product_linkurious_graph_visualization">Product: Linkurious Graph Visualization</a></li>
+<li><a href="#_product_tom_sawyer_perspectives">Product: Tom Sawyer Perspectives</a></li>
+<li><a href="#_product_keylines_neo4j_graph_visualization">Product: Keylines Neo4j Graph Visualization</a></li>
+<li><a href="#_howto_graph_visualization_step_by_step">HowTo: Graph Visualization Step By Step</a></li>
 </ul>
 
 </div>
@@ -687,6 +687,129 @@ We then discuss the Graph-Style-Sheet (GRASS) and how you can download, update, 
 <p>In this talk, Alistair Jones builds a very powerful graph web editing tool based on SVG, suited for easy integration into modern HTML frameworks.</p>
 </div>
 
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3 id="_library_alchemy_js_open_source_graph_visualization">Library: Alchemy.js Open Source Graph Visualization</h3>
+
+
+<div class="paragraph">
+<p>As you&#8217;ve just seen, preparing, converting and rendering graph data with plain D3 force layout involves a bit of work.
+The open-source <a href="http://graphalchemist.github.io/Alchemy">Alchemy.js library</a> replaces this effort with a few lines of configuration.
+It uses the <a href="http://graphalchemist.github.io/Alchemy/#/docs">GraphJSON</a> format for interaction which is easier to handle than the raw D3 JSON format.
+Alchemy.js is mostly configuration based but can also be customized with javascript functions.
+It supports custom styling, highlighting, hoover effects, clustering and interactive exploration.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Here is a <a href="http://graphalchemist.github.io/Alchemy/#/examples">simple example</a> of using Alchemy.js to render a simple graph:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="javascript"><code>&lt;script src="http://cdn.graphalchemist.com/alchemy.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+  alchemy.begin({
+        dataSource: "actors.json",
+        nodeCaption: 'name',
+        nodeMouseOver: 'name',
+        cluster: true,
+        clusterColours: ["#1B9E77","#D95F02","#7570B3","#E7298A","#66A61E","#E6AB02"]})
+&lt;/script&gt;</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/alchemy_example.png" alt="alchemy example">
+</p>
+</div>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3 id="_product_linkurious_graph_visualization">Product: Linkurious Graph Visualization</h3>
+
+
+<div class="paragraph">
+<p>Linkurious is a browser based graph exploration and navigation tool.
+It integrates with the Neo4j backend, indexes nodes and relationships for fast facetted search.
+Besides graph navigation it supports also graph editing and Cypher query execution.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Linkurious uses Neo4j’s graph database technology to offer you an easy solution to store, search and visualize graphs.
+You can start navigating inside your graph database.
+Search for properties, inspect nodes, and explore their relationships visually in your web browser.
+find any node in your database easily thanks to our built-in search engine.
+You can simply modify, add and remove nodes or relationships. You can also customize what is displayed, how the data is indexed.</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<a class="image" href="http://linkurio.us"><img src="http://linkurio.us/wp-content/uploads/2013/09/mac2-w500-vid.png?wmode=transparent" alt="mac2 w500 vid"></a>
+</p>
+</div>
+<div class="sect3 "  >
+<h4 id="_linkurious_js_visualization_library">Linkurious.js Visualization Library</h4>
+
+
+<div class="paragraph">
+<p>The underlying javascript-toolkit is available as an open-source library called <a href="http://linkurio.us/toolkit/">linkurious.js</a></p>
+</div>
+
+
+
+<div class="paragraph">
+<p>It uses Sigma.js for its graph data structure and visualization engine, which provides both Canvas, WebGL and SVG renderers for nodes and relationships.
+The linkurious.js toolkit is made of more than 30 Sigma.js plugins, combined to work together and tested for integration into modern Web applications.</p>
+</div>
+
+</div>
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3 id="_product_tom_sawyer_perspectives">Product: Tom Sawyer Perspectives</h3>
+<iframe src="//player.vimeo.com/video/90897466" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+
+<div class="paragraph">
+<p><a href="https://www.tomsawyer.com/pressreleases/pressrelease.php?release_id=164&amp;news=product">Tom Sawyer Perspectives 6.0</a> offers Cypher support for Neo4j graph databases and connects them to the broad visualization capabilities of the tool.
+Tom Sawyer Perspectives is integrated with the latest Neo4j version for easy visualization of complex results.</p>
+</div>
+
+</div>
+<div class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3 id="_product_keylines_neo4j_graph_visualization">Product: Keylines Neo4j Graph Visualization</h3>
+
+
+<div class="paragraph">
+<p><span class="image"><a class="image" href="http://keylines.com/neo4j"><img src="http://keylines.com/im/product/KeyLinesNeo4j.png" alt="KeyLinesNeo4j"></a></span></p>
+</div>
+
+
+
+<div class="paragraph">
+<p>KeyLines is an out-of-the-box JavaScript solution for visualizing networks.
+It works in all major browsers and all platforms, including the iPad.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>KeyLines integrates into existing web applications easily and with very little effort.
+How and where you get the data is up to you.
+KeyLines does the job of rendering it and responding to user interactions like clicking, touching, moving nodes, and more.
+You bind to these events to customize what happens, and, most importantly, your data stays under your control at all times: KeyLines is self-contained and needs no external connections.</p>
+</div>
+
+<iframe width="560" height="315" src="//www.youtube.com/embed/NcYJhzFKyfw?rel=0" frameborder="0" allowfullscreen></iframe>
+<div class="ulist">
+<ul>
+<li>
+<a href="http://keylines.com/network-visualization/visualize-neo4j-time-graph">Integrating KeyLines Time Bar with Neo4j</a>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect2 columns medium-12" style='padding-left: 0;' >
 <h3 id="_howto_graph_visualization_step_by_step">HowTo: Graph Visualization Step By Step</h3>
@@ -865,113 +988,6 @@ viz = {nodes:nodes, links:links};</code></pre>
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_library_alchemy_js_open_source_graph_visualization">Library: Alchemy.js Open Source Graph Visualization</h3>
-
-
-<div class="paragraph">
-<p>As you&#8217;ve just seen, preparing, converting and rendering graph data with plain D3 force layout involves a bit of work.
-The open-source <a href="http://graphalchemist.github.io/Alchemy">Alchemy.js library</a> replaces this effort with a few lines of configuration.
-It uses the <a href="http://graphalchemist.github.io/Alchemy/#/docs">GraphJSON</a> format for interaction which is easier to handle than the raw D3 JSON format.
-Alchemy.js is mostly configuration based but can also be customized with javascript functions.
-It supports custom styling, highlighting, hoover effects, clustering and interactive exploration.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Here is a <a href="http://graphalchemist.github.io/Alchemy/#/examples">simple example</a> of using Alchemy.js to render a simple graph:</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="javascript"><code>&lt;script src="http://cdn.graphalchemist.com/alchemy.min.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript"&gt;
-  alchemy.begin({
-        dataSource: "actors.json",
-        nodeCaption: 'name',
-        nodeMouseOver: 'name',
-        cluster: true,
-        clusterColours: ["#1B9E77","#D95F02","#7570B3","#E7298A","#66A61E","#E6AB02"]})
-&lt;/script&gt;</code></pre>
-</div>
-</div>
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/alchemy_example.png" alt="alchemy example">
-</p>
-</div>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_product_keylines_neo4j_graph_visualization">Product: Keylines Neo4j Graph Visualization</h3>
-
-
-<div class="paragraph">
-<p><span class="image"><a class="image" href="http://keylines.com/neo4j"><img src="http://keylines.com/im/product/KeyLinesNeo4j.png" alt="KeyLinesNeo4j"></a></span></p>
-</div>
-
-
-
-<div class="paragraph">
-<p>KeyLines is an out-of-the-box JavaScript solution for visualizing networks.
-It works in all major browsers and all platforms, including the iPad.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>KeyLines integrates into existing web applications easily and with very little effort.
-How and where you get the data is up to you.
-KeyLines does the job of rendering it and responding to user interactions like clicking, touching, moving nodes, and more.
-You bind to these events to customize what happens, and, most importantly, your data stays under your control at all times: KeyLines is self-contained and needs no external connections.</p>
-</div>
-
-<iframe width="560" height="315" src="//www.youtube.com/embed/NcYJhzFKyfw?rel=0" frameborder="0" allowfullscreen></iframe>
-<div class="ulist">
-<ul>
-<li>
-<a href="http://keylines.com/network-visualization/visualize-neo4j-time-graph">Integrating KeyLines Time Bar with Neo4j</a>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_product_tom_sawyer_perspectives">Product: Tom Sawyer Perspectives</h3>
-<iframe src="//player.vimeo.com/video/90897466" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-
-
-<div class="paragraph">
-<p><a href="https://www.tomsawyer.com/pressreleases/pressrelease.php?release_id=164&amp;news=product">Tom Sawyer Perspectives 6.0</a> offers Cypher support for Neo4j graph databases and connects them to the broad visualization capabilities of the tool.
-Tom Sawyer Perspectives is integrated with the latest Neo4j version for easy visualization of complex results.</p>
-</div>
-
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_product_linkurious_graph_visualization">Product: Linkurious Graph Visualization</h3>
-
-
-<div class="paragraph">
-<p>Linkurious is a browser based graph exploration and navigation tool.
-It integrates with the Neo4j backend, indexes nodes and relationships for fast facetted search.
-Besides graph navigation it supports also graph editing and Cypher query execution.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Linkurious uses Neo4j’s graph database technology to offer you an easy solution to store, search and visualize graphs.
-You can start navigating inside your graph database.
-Search for properties, inspect nodes, and explore their relationships visually in your web browser.
-find any node in your database easily thanks to our built-in search engine.
-You can simply modify, add and remove nodes or relationships. You can also customize what is displayed, how the data is indexed.</p>
-</div>
-
-<div class="imageblock">
-<p class="content">
-<a class="image" href="http://linkurio.us/tour/"><img src="http://linkurio.us/wp-content/uploads/2013/09/mac2-w500-vid.png?wmode=transparent" alt="mac2 w500 vid"></a>
-</p>
-</div>
-</div>
                     </div>
                     <div class="large-3 large-pull-9 columns">
                            <ul style="padding-top: 0;" class="side-nav">
@@ -985,6 +1001,7 @@ You can simply modify, add and remove nodes or relationships. You can also custo
                      <li><a href="/developer-resources/get-started/graph-database">What is a GraphDB?</a></li>
                      <li><a href="/developer-resources/get-started/graph-db-vs-rdbms">GraphDB vs RDBMS</a></li>
                      <li><a href="/developer-resources/get-started/graph-db-vs-nosql">GraphDB vs NOSQL</a></li>
+                     <li><a href="/developer-resources/get-started/guide-neo4j-browser">Neo4j Browser Intro</a></li>
                      <!--<li><a href="/developer-resources/language-guides">Language Drivers</a></li>-->
                   </ul>
                </div>
@@ -1025,7 +1042,6 @@ You can simply modify, add and remove nodes or relationships. You can also custo
                   </a>
                   <div class="content active" id="panel4">
                      <ul>
-                        <li><a href="/developer-resources/working-with-data/guide-neo4j-browser">Neo4j Browser Intro</a></li>
                         <li><a href="/developer-resources/working-with-data/guide-data-visualization">Graph Visualization for Neo4j</a></li>
                         <li><a href="/developer-resources/working-with-data/guide-importing-data-and-etl">Importing Data into Neo4j</a></li>
                         <li><a href="/developer-resources/working-with-data/guide-import-csv">Importing CSV</a></li>
@@ -1062,7 +1078,7 @@ You can simply modify, add and remove nodes or relationships. You can also custo
                         <li><a href="/developer-resources/integration/ecosystem">Tools &amp; Libs for Neo4j</a></li>
                         <li><a href="/developer-resources/integration/apache-spark">Apache Spark</a></li>
                         <li><a href="/developer-resources/integration/elastic-search">Elastic-Search</a></li>
-                        <li><a href="/developer-resources/integration/apache-hadoop">Hadoop</a></li>
+                        <!--li><a href="/developer-resources/integration/apache-hadoop">Hadoop</a></li-->
                         <li><a href="/developer-resources/integration/docker">Docker</a></li>
                         <!--li><a href="/developer-resources/integration/meteor">Integration with Meteor.js</a></li-->
                      </ul>
@@ -1104,7 +1120,7 @@ You can simply modify, add and remove nodes or relationships. You can also custo
                </a>
                <div class="content " id="panel4">
                   <ul>
-	                 <li><a href="/docs/stable">Manual: 2.2.x</a></li>
+	                 <li><a href="/docs/stable">Reference Manual</a></li>
 	                 <ul>
 	                 <li><a href="/docs/stable/introduction.html">Introduction</a></li>
 	                 <li><a href="/docs/stable/tutorials.html">Tutorials</a></li>
@@ -1114,7 +1130,7 @@ You can simply modify, add and remove nodes or relationships. You can also custo
 	                 <li><a href="/docs/stable/advanced-usage.html">Advanced Usage</a></li>
 	                 </ul>
                      <li><a href="/docs/stable/cypher-refcard">Cypher Refcard</a></li>
-	                 <li><a href="/docs/milestone">Manual: 2.3.x Milestone</a></li>
+	                 <li><a href="/docs/milestone">Manual - Milestone</a></li>
                      <li><a href="/docs">Older Documentation</a></li>
                   </ul>
                </div>
