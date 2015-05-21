@@ -36,15 +36,24 @@ If you plan to connect Neo4j to ElasticSearch using the default Java driver, ple
 == Push to ElasticSearch
 
 Implementing a Neo4j Transaction Handler provides you with all the changes that were made within a transaction.
-With `afterCommit` notification method, we can make sure that we only send data to ElasticSearch that has been commited to the graph.
-Using labels as filtering mechanism, you can render a node's attributes as a JSON document and insert it asynchronously in bulk into ElasticSearch.
-To register the Kernel Extension, just drop the jar in Neo4j's classpath or `plugins` directory.
+With the `afterCommit` notification method, we can make sure that we only send data to ElasticSearch that has been committed to the graph.
+Using labels as filtering mechanism, you can render a node's properties as a JSON document and insert it asynchronously in bulk into ElasticSearch.
+
+To register the Kernel Extension, just drop the jar in Neo4j's classpath or `plugins` directory and configure the ElasticSearch-URL and the label/property combinations to trigger and render the update.
+
+.neo4j.properties
+----
+elasticsearch.host_name=http://localhost:9200
+elasticsearch.index_spec=people:Person(first_name,last_name), places:Place(name)
+----
 
 We provided a sample implementation below, that you can use out of the box or extend for further customization and fine-tuning.
 
 //* [Introduction]
 //* [Documentation]
-* http://github.com/neo4j-contrib/neo4j-elastic-search[Source Code]
+* http://github.com/neo4j-contrib/neo4j-elasticsearch[GitHub Repository]
+* https://github.com/neo4j-contrib/neo4j-elasticsearch#example[Configuration Example]
+
 
 == ElasticSearch Index Provider
 
@@ -52,7 +61,8 @@ To our knowledge there is no Index Provider for ElasticSearch yet.
 If you plan to work on this, please let us know.
 The Neo4j index provider APIs are quite straightforward to implement, so besides the latency concern mentioned before it should be worthwile.
 
-/*
+////
+
 == LogStash integration
 
 Pere Urbon who's experienced both in Neo4j and ElasticSearch, wrote open-source implementations of sinks and sources provided Neo4j.
@@ -60,7 +70,8 @@ Pere Urbon who's experienced both in Neo4j and ElasticSearch, wrote open-source 
 * [Introduction]
 * [Documentation]
 * [Source Code]
-*/
+
+////
 
 == River Plugins
 

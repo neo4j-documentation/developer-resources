@@ -606,7 +606,6 @@ You should have a sound understanding of both ElasticSearch and Neo4j, each data
 <li><a href="#_general_observations">General Observations</a></li>
 <li><a href="#_push_to_elasticsearch">Push to ElasticSearch</a></li>
 <li><a href="#_elasticsearch_index_provider">ElasticSearch Index Provider</a></li>
-<li><a href="#_logstash_integration">LogStash integration</a></li>
 <li><a href="#_river_plugins">River Plugins</a></li>
 </ul>
 
@@ -651,11 +650,23 @@ If you plan to connect Neo4j to ElasticSearch using the default Java driver, ple
 
 <div class="paragraph">
 <p>Implementing a Neo4j Transaction Handler provides you with all the changes that were made within a transaction.
-With <code>afterCommit</code> notification method, we can make sure that we only send data to ElasticSearch that has been commited to the graph.
-Using labels as filtering mechanism, you can render a node&#8217;s attributes as a JSON document and insert it asynchronously in bulk into ElasticSearch.
-To register the Kernel Extension, just drop the jar in Neo4j&#8217;s classpath or <code>plugins</code> directory.</p>
+With the <code>afterCommit</code> notification method, we can make sure that we only send data to ElasticSearch that has been committed to the graph.
+Using labels as filtering mechanism, you can render a node&#8217;s properties as a JSON document and insert it asynchronously in bulk into ElasticSearch.</p>
 </div>
 
+
+
+<div class="paragraph">
+<p>To register the Kernel Extension, just drop the jar in Neo4j&#8217;s classpath or <code>plugins</code> directory and configure the ElasticSearch-URL and the label/property combinations to trigger and render the update.</p>
+</div>
+
+<div class="listingblock">
+<div class="title">neo4j.properties</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre>elasticsearch.host_name=http://localhost:9200
+elasticsearch.index_spec=people:Person(first_name,last_name), places:Place(name)</pre>
+</div>
+</div>
 
 
 <div class="paragraph">
@@ -665,13 +676,10 @@ To register the Kernel Extension, just drop the jar in Neo4j&#8217;s classpath o
 <div class="ulist">
 <ul>
 <li>
-[Introduction]
+<a href="http://github.com/neo4j-contrib/neo4j-elasticsearch">GitHub Repository</a>
 </li>
 <li>
-[Documentation]
-</li>
-<li>
-<a href="http://github.com/neo4j-contrib/neo4j-elastic-search">Source Code</a>
+<a href="https://github.com/neo4j-contrib/neo4j-elasticsearch#example">Configuration Example</a>
 </li>
 </ul>
 </div>
@@ -686,28 +694,6 @@ If you plan to work on this, please let us know.
 The Neo4j index provider APIs are quite straightforward to implement, so besides the latency concern mentioned before it should be worthwile.</p>
 </div>
 
-</div>
-<div class="sect1 "  >
-<h3 id="_logstash_integration">LogStash integration</h3>
-
-
-<div class="paragraph">
-<p>Pere Urbon who&#8217;s experienced both in Neo4j and ElasticSearch, wrote open-source implementations of sinks and sources provided Neo4j.</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-[Introduction]
-</li>
-<li>
-[Documentation]
-</li>
-<li>
-[Source Code]
-</li>
-</ul>
-</div>
 </div>
 <div class="sect1 "  >
 <h3 id="_river_plugins">River Plugins</h3>
