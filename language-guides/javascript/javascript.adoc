@@ -144,6 +144,38 @@ Dmitriy wrapped node-neo4j to be usable with Meteor and also provided a pseudo-r
 * https://github.com/VeliovGroup/Meteor-Leaderboard-Neo4j[Leaderboard Example Project]
 * http://habrahabr.ru/post/248465/[Article:Meteor and Neo4j (ru)]
 
+=== Neo4j Dart
+
+image::https://api.dartlang.org/apidocs/channels/stable/dartdoc-viewer/static/dart-logo.png[]
+
+A Neo4j driver for Dart. Both a simple driver and an OGM (Object Graph Mapper) is provided in separate libraries.
+
+////
+.Example
+[source,dart]
+----
+import 'package:neo4j_dart/neo4j_dart.dart';
+
+main() async {
+  var db = new Neo4j();
+  var result = await db.cypher('''
+        Create (dart:Language {dart})-[:connects_to]->(neo4j:Database {neo4j})
+        Return id(dart), id(neo4j)
+      ''', {
+        'dart': { 'name': 'Dart' },
+        'neo4j': { 'name': 'Neo4j' },
+      });
+
+  print('successfully created two nodes with id ${result['data'][0]['row'].join(' and ')}');
+}
+----
+////
+
+* https://github.com/Pajn[Author: Rasmus Eneman]
+* https://pub.dartlang.org/packages/neo4j_dart[Dart Package]
+* https://github.com/Pajn/Neo4jDart[neo4j-dart on GitHub]
+* http://www.dartdocs.org/documentation/neo4j_dart/0.2.1/index.html#neo4j_dart/neo4j_dart-ogm[Neo4j Dart OGM]
+
 === Other Drivers
 
 ==== neo4j-js
