@@ -14,8 +14,8 @@ It includes setting up Neo4j on EC2 on AWS, explain the setup on Azure, and intr
 
 .Prerequisites
 [abstract]
-You should know how to run and operate Neo4j locally. 
-Knowledge of remote drivers to access Neo4j from your application helps you connect to your cloud-hosted database. 
+You should know how to run and operate Neo4j locally.
+Knowledge of remote drivers to access Neo4j from your application helps you connect to your cloud-hosted database.
 For self-service hosting you should bring along enough sysops experience that a Linux system doesn't freak you out.
 
 [role=expertise]
@@ -25,30 +25,14 @@ toc::[]
 
 === Hosting on AWS / EC2
 
-////
-We provide an https://github.com/neo4j-contrib/neo4j-puppet/blob/master/README.CLOUDFORMATION.md[*EC2 Cloud Formation Template*] that allows you to quickly provision an appropriate instance and install and set-up Neo4j on that machine.
-
-This template creates a complete Neo4j installation, including Amazon AWS server, fixed IP address and backup storage. 
+We provide a https://github.com/neo4j-contrib/ec2neo[EC2 CloudFormation Template] that creates a single server running Neo4j.  This template creates a complete Neo4j installation, including Amazon AWS server, fixed IP address and backup storage.
 It's intended to help application developers get up and running quickly with Neo4j without in-depth experience of Linux servers, AWS, or installing databases like Neo4j.
 
+This is provided on a contrib basis: we weclome Pull Requests.  Please take extra care to make sure that you're running as many Amazon machines as you want, and not more.
 
-If you are proficient at setting up AWS instances, you can also install Neo4j on any provisioned Linux instance 
+Installing Neo4j on any Debian or Ubuntu system can be accomplished by following the instructions on http://debian.neo4j.org[our Debian Repository].  We also offer an experimental http://yum.neo4j.org[Yum repository].
 
-[role=side-nav]
-* https://github.com/neo4j-contrib/neo4j-puppet/blob/master/README.CLOUDFORMATION.md[Neo4j Cloud Formation Template]
-* https://github.com/neo4j-contrib/neo4j-puppet/blob/master/README.md[Manual EC2 Setup with Puppet]
-* http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html[AWS EC2 Getting Started Guide]
-* http://blogs.mindspew-age.com/2012/12/04/another-great-example-of-aws-fidelity-neo4j-cloud-init-and-eucalyptus/[Neo4j, Cloud-Init, and Eucalyptus]
-
-////
-
-[NOTE]
-We used to provide a cloud formation template but it has not been maintained for a while, so we chose to remove it.
-
-Setting up Neo4j on any Debian or Ubuntu system should be pretty straightforward by following the instructions on http://debian.neo4j.org[our Debian Repository].
-
-For other Linux distributions, just download the http://neo4j.com/download[Neo4j binary] and unzip and start it.
-The binary distribution also provides scripts to install Neo4j as a service.
+For other Linux distributions, download the http://neo4j.com/download[Neo4j tarball]; it can be uncompressed and run interactively.  The start scripts can also be run as init scripts.
 
 [role=side-nav]
 * http://debian.neo4j.org[Neo4j Debian Repository]
@@ -58,6 +42,7 @@ The binary distribution also provides scripts to install Neo4j as a service.
 === Neo4j Provisioning Solutions
 
 * https://github.com/michaelklishin/neo4j-server-chef-cookbook[Neo4j Server Chef Cookbook]
+* https://forge.puppetlabs.com/amosjwood/neo4j[Neo4j Puppet Module]
 * https://github.com/maxehmookau/neo4j-ansible[Ansible Playbooks] for booting a server running the Neo4j graph database system
 * https://github.com/julienroubieu/ansible-neo4j[Ansible role to install Neo4j], with Vagrant support
 
@@ -85,7 +70,7 @@ Docker images are pre-build in layers from configuration of services one of whic
 A docker image can be started immediately after downloading, no time-consuming boot required.
 
 It is pretty easy to create a Neo4j image yourself, just any base linux container with a JDK is good enough.
-Just add Neo4j on top and you're done. 
+Just add Neo4j on top and you're done.
 
 There are already a number of https://registry.hub.docker.com/search?q=neo4j[Docker Neo4j images] available on Docker Hub.
 
@@ -101,7 +86,7 @@ Some of the more widely used images:
 
 === Neo4j Cloud Hosting Providers
 
-There are a number of Neo4j partners that provide hosting of Neo4j instances in the cloud. 
+There are a number of Neo4j partners that provide hosting of Neo4j instances in the cloud.
 If you provision databases via their offering, you enter a contract with those partners, not with Neo Technology.
 
 ==== GrapheneDB
