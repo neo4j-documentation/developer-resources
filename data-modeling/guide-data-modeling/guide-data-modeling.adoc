@@ -21,7 +21,7 @@ You should have a firm understanding of the Neo4j's link:/developer/get-started/
 
 toc::[]
 
-:img: http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/
+:img: http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads
 
 == Introduction
 
@@ -47,7 +47,7 @@ In Neo4j, both nodes and relationships can contain properties.
 Nodes are often used to represent entities, but depending on the domain relationships may be used for that purpose as well.
 Apart from properties and relationships, nodes can also be labeled with zero or more labels.
 
-image::{manual}/images/graphdb-nodes-overview.svg[Nodes]
+image::/docs/2.1.8/images/graphdb-nodes-overview.svg[Nodes]
 
 We can identify nodes as entities with a unique conceptual identity. In this case, these entities are outlined below in bold.
 
@@ -60,7 +60,7 @@ Extracting the nodes:
 * *Sally*
 * *Graph Databases*
 
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/data-modeling-3.png[Extract Nodes]
+image::{img}/data-modeling-3.png[Extract Nodes]
 
 
 === Labels
@@ -73,7 +73,7 @@ All nodes labeled with the same label belongs to the same set.
 Many database queries can work with these sets instead of the whole graph, making queries easier to write and more efficient.
 A node may be labeled with any number of labels, including none, making labels an optional addition to the graph.
 
-image::{manual}/images/graphdb-labels.svg[Labels]
+image::/docs/2.1.8/images/graphdb-labels.svg[Labels]
 
 First we'll start by identifying the roles of objects (John, Sally, Graph Databases) mentioned in the statement.
 We know that this statement is about two different types of objects:
@@ -86,13 +86,13 @@ Extracting the labels:
 * _Person_
 * _Book_
 
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/data-modeling-2.png[Extract labels]
+image::{img}/data-modeling-2.png[Extract labels]
 
 Now that we have identified both our nodes and labels, we can assign the labels to the nodes they describe.
 For *John* and *Sally* we apply the role _Person_.
 For *Graph Databases* we apply the role _Book_.
 
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/data-modeling-4.png[Apply labels]
+image::{img}/data-modeling-4.png[Apply labels]
 
 === Relationships
 
@@ -113,7 +113,7 @@ Pairs of nodes labeled _Book_ and _Person_ can be connected to each other by a +
 
 Now that we have identified the kinds of relationships that can exist between labels of nodes, we can complete our graph data model.
 
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/data-modeling-1.png[Graph data model]
+image::{img}/data-modeling-1.png[Graph data model]
 
 == Answering Questions
 
@@ -134,13 +134,13 @@ First, start by listing your questions that you want to answer about your data.
 
 From these list of questions, you can identify the attributes that must belong to entities within your data model.
 
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/data-modeling-5.png[Graph data model with properties]
+image::{img}/data-modeling-5.png[Graph data model with properties]
 
 [role=side-nav]
-* {manual}/graphdb-neo4j-nodes.html[Manual: Nodes]
-* {manual}/graphdb-neo4j-labels.html[Manual: Labels]
+* {manual}/graphdb-neo4j.html#graphdb-neo4j-nodes[Manual: Nodes]
+* {manual}/graphdb-neo4j.html#graphdb-neo4j-labels[Manual: Labels]
 * {manual}/data-modeling-examples.html[Manual:Data Modeling Examples]
-* https://github.com/neo4j-contrib/graphgist/wiki[GraphGist Project]
+* http://graphgist.neo4j.com[Graph Model Examples]
 * http://vimeo.com/89075703[Video: New Opportunities for Connected Data]
 
 === Create a Sample Dataset

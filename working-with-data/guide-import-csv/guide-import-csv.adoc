@@ -167,30 +167,76 @@ You can find all scripts and data on https://github.com/nicolewhite/consumer_com
 
 With Neo4j 2.2, a new, massively parallel and scalable CSV importer was released as part of the product.
 
-The tool is located in `path/to/neo4j/bin/neo4j-import` and is used as follows:
+We want to use it to import similar order data into Neo4j: _customers, orders and contained products_.
 
-Importing Order Data into Neo4j:
+The tool is located in `path/to/neo4j/bin/neo4j-import` and is used as follows:
 
 [source]
 ----
-bin/neo4j-import --into import.db --id-type string \ 
-                 --nodes products.csv --nodes customers.csv --nodes "orders_header.csv orders1.csv orders2.csv" \ 
-                 --relationships order_details.csv --relationships "customer_orders_header.csv orders1.csv orders2.csv"
+bin/neo4j-import --into retail.db --id-type string \ 
+                 --nodes:Customer customers.csv --nodes products.csv  \
+                 --nodes orders_header.csv,orders1.csv,orders2.csv \ 
+                 --relationships:CONTAINS order_details.csv \
+                 --relationships:ORDERED customer_orders_header.csv,orders1.csv,orders2.csv
 ----
 
-If you call the script without parameters it will list a comprehensive help page.
+The first few rows of data used for this import look like this:
 
-The `--into import.db` is obviously the target database, which must not contain an existing database.
+.customers.csv
+[options="header"]
+|===
+| customerId:ID(Customer) | name 
+| 23 | Delicatessen Inc
+| 42 | Delicous Bakery
+|===
 
-The repeated `--nodes` and `--relationships` parameters are groups of multiple (potentially split) files of the same entity, i.e. with the same file structure. 
+.products.csv
+[options="header"]
+|===
+| productId:ID(Product) | name | price | :LABEL
+| 11 | Chocolate | 10 | Product;Food
+|===
+
+.orders_header.csv,orders1.csv,orders2.csv
+[options="header"]
+|===
+| orderId:ID(Order) | date | total | customerId:IGNORE
+| 1041 | 2015-05-10 | 130 | 23
+| 1042 | 2015-05-12 | 20 | 42
+|===
+
+.order_details.csv
+[options="header"]
+|===
+| :START_ID(Order) | amount | price | :END_ID(Product)
+| 1041 | 13 | 130 | 11
+| 1042 | 2 | 20 | 11
+|===
+
+.customer_orders_header.csv,orders1.csv,orders2.csv
+[options="header"]
+|===
+| :END_ID(Order) | date:IGNORE | total:IGNORE | :START_ID(Customer)
+| 1041 | 2015-05-10 | 130 | 23
+| 1042 | 2015-05-12 | 20 | 42
+|===
+
+If you call the `neo4j-import` script without parameters it will list a comprehensive help page.
+
+The `--into retail.db` is obviously the target database, which must not contain an existing database.
+
+The repeated `--nodes` and `--relationships` parameters are groups of multiple (potentially split) csv-files of the same entity, i.e. with the same column structure. 
 
 All files per group are treated as if they could just be concatenated to form a single large file.
-A header row in the first file of the group is required, it might even be contained in a single-line file which might be easier to handle and edit than a multi-gigabyte text file.
+A *header row* in the first file of the group is required, it might even be contained in a single-line file which might be easier to handle and edit than a multi-gigabyte text file.
 Compressed files are supported too.
 
-In our example call we can use the orders file twice. 
-Once to create the "Order" nodes.
-And a second time to connect those order nodes with the customer nodes, we just provide a different header each time.
+. The `customers.csv` is imported directly as nodes with the `:Customer` label and the properties are taken directly from the file.
+. Same for the products, where the node-labels are taken from the `:LABEL` column.
+. The order nodes are taken from 3 files, one header and two content files.
+
+. Line item relationships typed `:CONTAINS` are created from `order_details.csv`, relating orders with the contained products via their id's.
+. Orders are connected to customers by using the orders csv files again, but this time with a different header, which :IGNORE's the non-relevant columns
 
 The `--id-type string` is indicating that all :ID-columns contain alphanumeric values (there is an optimization for numeric-only id's).
 
@@ -198,35 +244,15 @@ The column names are used for property-names of your nodes and relationships, th
 
 * `name:ID` - global id column by which the node is looked up for later reconnecting, 
 ** if property name is left off it will be not stored (temporary), this is what the `--id-type` refers to
-** currently this node-id has to be globally unique even across entities
+** if you have repeated ids across entities you have to provide the entity (id-group) in parentheses like `:ID(Order)`
+** if your ids are globally unique you can leave that off
 * `:LABEL` - label column for nodes, multiple labels can be separated by delimiter
-* `:START_ID`, `:END_ID` - relationship file columns referring to global node-lookup-id
+* `:START_ID`, `:END_ID` - relationship file columns referring to the node ids, for id-groups use `:END_ID(Order)`
 * `:TYPE` - relationship-type column
-* all other columns are treated as properties but skipped if empty
+* all other columns are treated as properties but skipped if empty or annotated with :IGNORE
 * type conversion is possible by suffixing the name, e.g. by `:INT`, `:BOOLEAN`, etc. 
 
-For more details on this header format and the tool, see the link:/docs/milestone/import-tool.html[Neo4j Manual].
-
-////
-TODO WIP
-The CSV files would look like this:
-// todo use asciidoc tables
-
-.Node CSV Files
-[source,csv]
-----
-include::products.csv[lines=0..5]
-include::orders.csv[lines=0..5]
-include::customers.csv[lines=0..5]
-----
-
-.Relationship CSV Files
-[source,csv]
-----
-include::product_orders.csv[lines=0..5]
-include::customer_orders.csv[lines=0..5]
-----
-////
+For more details on this header format and the tool, see the extensive documentation in the link:{manual}/import-tool.html[Neo4j Manual].
 
 And the resulting output would look like this:
 
@@ -249,7 +275,7 @@ IMPORT DONE. Took: 58s 124ms
 ----
 
 [role=side-nav]
-* link:/docs/milestone/import-tool.html["Manual: Import Tool",role=docs]
+* link:{manual}/import-tool.html["Manual: Import Tool",role=docs]
 * link:/developer/data-modeling/guide-data-modeling[Intro to Graph Modeling]
 * http://www.intelliwareness.org/?p=583["Article: Importing Medicare Provider and Payment Data",role=blog]
 * http://blog.graphenedb.com/blog/2015/01/13/importing-data-into-neo4j-via-csv/[Article: LOAD CSV Intro with GrapheneDB]
