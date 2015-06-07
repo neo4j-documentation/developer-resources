@@ -575,6 +575,13 @@ span.label {
 hr {
 	margin-top: 0.5rem;
 }
+td.tableblock, td p.tableblock,th.tableblock, th p.tableblock {
+	margin-bottom: 0px;
+	line-height: 1em;
+}
+th.tableblock, th p.tableblock {
+	font-weight:bold;
+}
 </style>
 
             <div>
@@ -919,56 +926,216 @@ Blog Post: <a href="http://jexp.de/blog/2014/06/using-load-csv-to-import-git-his
 
 
 <div class="paragraph">
-<p>The tool is located in <code>path/to/neo4j/bin/neo4j-import</code> and is used as follows:</p>
+<p>We want to use it to import similar order data into Neo4j: <em>customers, orders and contained products</em>.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Importing Order Data into Neo4j:</p>
+<p>The tool is located in <code>path/to/neo4j/bin/neo4j-import</code> and is used as follows:</p>
 </div>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>bin/neo4j-import --into import.db --id-type string \
-                 --nodes products.csv --nodes customers.csv --nodes "orders_header.csv orders1.csv orders2.csv" \
-                 --relationships order_details.csv --relationships "customer_orders_header.csv orders1.csv orders2.csv"</code></pre>
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>bin/neo4j-import --into retail.db --id-type string \
+                 --nodes:Customer customers.csv --nodes products.csv  \
+                 --nodes orders_header.csv,orders1.csv,orders2.csv \
+                 --relationships:CONTAINS order_details.csv \
+                 --relationships:ORDERED customer_orders_header.csv,orders1.csv,orders2.csv</code></pre>
 </div>
 </div>
 
 
 <div class="paragraph">
-<p>If you call the script without parameters it will list a comprehensive help page.</p>
+<p>The first few rows of data used for this import look like this:</p>
+</div>
+
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. customers.csv</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">customerId:ID(Customer)</th>
+<th class="tableblock halign-left valign-top">name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">23</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delicatessen Inc</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">42</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delicous Bakery</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. products.csv</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">productId:ID(Product)</th>
+<th class="tableblock halign-left valign-top">name</th>
+<th class="tableblock halign-left valign-top">price</th>
+<th class="tableblock halign-left valign-top">:LABEL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Chocolate</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Product;Food</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 3. orders_header.csv,orders1.csv,orders2.csv</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">orderId:ID(Order)</th>
+<th class="tableblock halign-left valign-top">date</th>
+<th class="tableblock halign-left valign-top">total</th>
+<th class="tableblock halign-left valign-top">customerId:IGNORE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1041</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2015-05-10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">130</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">23</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1042</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2015-05-12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">20</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">42</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 4. order_details.csv</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">:START_ID(Order)</th>
+<th class="tableblock halign-left valign-top">amount</th>
+<th class="tableblock halign-left valign-top">price</th>
+<th class="tableblock halign-left valign-top">:END_ID(Product)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1041</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">13</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">130</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1042</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">20</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 5. customer_orders_header.csv,orders1.csv,orders2.csv</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">:END_ID(Order)</th>
+<th class="tableblock halign-left valign-top">date:IGNORE</th>
+<th class="tableblock halign-left valign-top">total:IGNORE</th>
+<th class="tableblock halign-left valign-top">:START_ID(Customer)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1041</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2015-05-10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">130</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">23</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1042</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2015-05-12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">20</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">42</p></td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="paragraph">
+<p>If you call the <code>neo4j-import</code> script without parameters it will list a comprehensive help page.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>The <code>--into import.db</code> is obviously the target database, which must not contain an existing database.</p>
+<p>The <code>--into retail.db</code> is obviously the target database, which must not contain an existing database.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>The repeated <code>--nodes</code> and <code>--relationships</code> parameters are groups of multiple (potentially split) files of the same entity, i.e. with the same file structure.</p>
+<p>The repeated <code>--nodes</code> and <code>--relationships</code> parameters are groups of multiple (potentially split) csv-files of the same entity, i.e. with the same column structure.</p>
 </div>
 
 
 
 <div class="paragraph">
 <p>All files per group are treated as if they could just be concatenated to form a single large file.
-A header row in the first file of the group is required, it might even be contained in a single-line file which might be easier to handle and edit than a multi-gigabyte text file.
+A <strong>header row</strong> in the first file of the group is required, it might even be contained in a single-line file which might be easier to handle and edit than a multi-gigabyte text file.
 Compressed files are supported too.</p>
 </div>
 
-
-
-<div class="paragraph">
-<p>In our example call we can use the orders file twice.
-Once to create the "Order" nodes.
-And a second time to connect those order nodes with the customer nodes, we just provide a different header each time.</p>
+<div class="olist arabic">
+<ol style="margin-left: 2.4rem;" class="arabic">
+<li>
+The <code>customers.csv</code> is imported directly as nodes with the <code>:Customer</code> label and the properties are taken directly from the file.
+</li>
+<li>
+Same for the products, where the node-labels are taken from the <code>:LABEL</code> column.
+</li>
+<li>
+The order nodes are taken from 3 files, one header and two content files.
+</li>
+<li>
+Line item relationships typed <code>:CONTAINS</code> are created from <code>order_details.csv</code>, relating orders with the contained products via their id&#8217;s.
+</li>
+<li>
+Orders are connected to customers by using the orders csv files again, but this time with a different header, which :IGNORE&#8217;s the non-relevant columns
+</li>
+</ol>
 </div>
-
 
 
 <div class="paragraph">
@@ -991,7 +1158,10 @@ And a second time to connect those order nodes with the customer nodes, we just 
 if property name is left off it will be not stored (temporary), this is what the <code>--id-type</code> refers to
 </li>
 <li>
-currently this node-id has to be globally unique even across entities
+if you have repeated ids across entities you have to provide the entity (id-group) in parentheses like <code>:ID(Order)</code>
+</li>
+<li>
+if your ids are globally unique you can leave that off
 </li>
 </ul>
 </div>
@@ -1000,13 +1170,13 @@ currently this node-id has to be globally unique even across entities
 <code>:LABEL</code> - label column for nodes, multiple labels can be separated by delimiter
 </li>
 <li>
-<code>:START_ID</code>, <code>:END_ID</code> - relationship file columns referring to global node-lookup-id
+<code>:START_ID</code>, <code>:END_ID</code> - relationship file columns referring to the node ids, for id-groups use <code>:END_ID(Order)</code>
 </li>
 <li>
 <code>:TYPE</code> - relationship-type column
 </li>
 <li>
-all other columns are treated as properties but skipped if empty
+all other columns are treated as properties but skipped if empty or annotated with :IGNORE
 </li>
 <li>
 type conversion is possible by suffixing the name, e.g. by <code>:INT</code>, <code>:BOOLEAN</code>, etc.
@@ -1016,7 +1186,7 @@ type conversion is possible by suffixing the name, e.g. by <code>:INT</code>, <c
 
 
 <div class="paragraph">
-<p>For more details on this header format and the tool, see the <a href="/docs/milestone/import-tool.html">Neo4j Manual</a>.</p>
+<p>For more details on this header format and the tool, see the extensive documentation in the <a href="http://neo4j.com/docs/stable/import-tool.html">Neo4j Manual</a>.</p>
 </div>
 
 
@@ -1046,7 +1216,7 @@ IMPORT DONE. Took: 58s 124ms</code></pre>
 <div class="ulist side-nav">
 <ul>
 <li>
-<a href="/docs/milestone/import-tool.html" class="docs">Manual: Import Tool</a>
+<a href="http://neo4j.com/docs/stable/import-tool.html" class="docs">Manual: Import Tool</a>
 </li>
 <li>
 <a href="/developer-resources/data-modeling/guide-data-modeling">Intro to Graph Modeling</a>
