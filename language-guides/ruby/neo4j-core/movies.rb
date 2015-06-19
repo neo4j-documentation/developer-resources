@@ -1,11 +1,16 @@
 require 'sinatra'
 require 'neo4j-core'
 set :root, File.dirname(__FILE__)
+set :public_folder, File.dirname(__FILE__) + '/static'
 
-session = Neo4j::Session.open
+neo4j_url = ENV['NEO4J_URL'] || 'http://localhost:7474'
+neo4j_username = ENV['NEO4J_USERNAME'] || 'neo4j'
+neo4j_password = ENV['NEO4J_PASSWORD'] || 'neo4j'
+
+session = Neo4j::Session.open(:server_db, neo4j_url, basic_auth: {username: neo4j_username, password: neo4j_password})
 
 get '/' do
-  redirect '/index.html'
+  send_file File.expand_path('index.html', settings.public_folder)
 end
 
 get '/graph' do
@@ -80,7 +85,3 @@ get "/movie/:movie" do
 
 end
 
-
-get '/index.html' do
-  File.read(File.join(File.dirname(__FILE__), 'static/index.html'))
-end
