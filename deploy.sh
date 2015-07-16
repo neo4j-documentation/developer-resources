@@ -10,7 +10,7 @@ for file in `find . -mindepth 2 -maxdepth 3 -name "*.adoc"`; do
    echo "Rendering $file"
    filename=${file##*/}
    filename=${filename%.adoc}
-   bundle exec asciidoctor -a source-highlighter=codemirror -a linkattrs -a img=${IMAGE_BASE_URL} -a examples=${EXAMPLES} -a manual="${MANUAL}" -a github="${GITHUB}" -T _templates/wordpress $file -o deploy/${filename}.html 2>&1 | grep -v "out of sequence"
+   bundle exec asciidoctor -a allow-uri-read -a source-highlighter=codemirror -a linkattrs -a img=${IMAGE_BASE_URL} -a examples=${EXAMPLES} -a manual="${MANUAL}" -a github="${GITHUB}" -T _templates/wordpress $file -o deploy/${filename}.html 2>&1 | grep -v "out of sequence"
 done
 
 for guide in deploy/* ; do

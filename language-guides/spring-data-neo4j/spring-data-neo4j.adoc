@@ -74,6 +74,29 @@ It uses the well known APIs of `@RestController` and `JdbcTemplate` to do the jo
 
 More details can be found in the {examples}/movies-java-spring-boot-jdbc[example project].
 
+////
+==== Quickstart
+
+.Dependencies
+[source,xml]
+----
+include::https://raw.githubusercontent.com/neo4j-examples/movies-java-spring-boot-jdbc/master/pom.xml[tags=dependencies]
+----
+
+.DataSource Configuration
+[source,java]
+----
+include::https://raw.githubusercontent.com/neo4j-examples/movies-java-spring-boot-jdbc/master/src/main/java/movies/spring/jdbc/SampleMovieApplication.java[tags=config]
+----
+
+.Using JDBCTemplate with Cypher
+[source,java]
+----
+include::https://raw.githubusercontent.com/neo4j-examples/movies-java-spring-boot-jdbc/master/src/main/java/movies/spring/jdbc/SampleMovieApplication.java[tags=jdbctemplate]
+----
+
+////
+
 [[sdn4]]
 [.content]
 === Using Spring Data Neo4j 4
@@ -204,6 +227,42 @@ The current version of Spring Data Neo4j works best with an embedded Neo4j datab
 To achieve highest-performance Neo4j-Server integration, use Spring Data Neo4j 4 or move your SDN persistence layer into an Server Extension.
 
 ==== Quick-Start
+
+////
+
+:project: https://raw.githubusercontent.com/neo4j-examples/movies-java-spring-data-neo4j/master
+
+.Dependencies
+[source,xml]
+----
+include::{project}/pom.xml[tags=dependencies]
+----
+
+ Configuration
+[source,java]
+----
+include::{project}/src/main/java/movies/spring/data/neo4j/MyNeo4jConfiguration.java[tags=config]
+----
+
+.Entity
+[source,java]
+----
+include::{project}/src/main/java/movies/spring/data/neo4j/domain/Movie.java[tags=movie]
+----
+
+.Repository
+[source,java]
+----
+include::{project}/src/main/java/movies/spring/data/neo4j/repositories/MovieRepository.java[tags=repository]
+----
+
+.Controller
+[source,java]
+----
+include::{project}/src/main/java/movies/spring/data/neo4j/repositories/MovieRepository.java[tags=repository]
+----
+
+////
 
 [source,xml,subs="verbatim,attributes"]
 ----
