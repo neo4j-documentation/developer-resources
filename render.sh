@@ -1,11 +1,12 @@
 export GITHUB=https://github.com/neo4j-contrib/developer-resources/tree/gh-pages
 export MANUAL=http://neo4j.com/docs/stable
+export EXAMPLES=https://github.com/neo4j-examples
 
 function render {
    file="$1"
    to=${file%/*}/index.html
    echo "Rendering $file to $to"
-   asciidoctor -a source-highlighter=codemirror -a linkattrs -a img=./ -a manual="${MANUAL}" -a github="${GITHUB}" -T _templates $file -o $to 2>&1 | grep -v "out of sequence"
+   asciidoctor -a source-highlighter=codemirror -a linkattrs -a img=./ -a manual="${MANUAL}" -a examples=${EXAMPLES} -a github="${GITHUB}" -T _templates $file -o $to 2>&1 | grep -v "out of sequence"
    sed -e 's/\/developer\//\/developer-resources\//g' $to > /tmp/render.html
    mv /tmp/render.html $to
 }

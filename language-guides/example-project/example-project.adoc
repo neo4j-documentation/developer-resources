@@ -41,7 +41,7 @@ image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/movie_app
 
 === GitHub
 
-The source code for the different examples is available on {github}/language-guides/[GitHub].
+The source code for the different examples is available on https://github.com/neo4j-examples?query=movies[GitHub].
 // end::intro[]
 
 === Webpage
@@ -141,7 +141,7 @@ MATCH (m:Movie)<-[:ACTED_IN]-(a:Person)
 - Install the Movies dataset with `:play movies`
 - Click the `CREATE` statement and hit the triangular "Run" button to insert the data.
 
-You can also choose to use a cloud-hosted Neo4j database.
+You can also choose to use a link:/developer/in-production/guide-cloud-deployment[cloud-hosted Neo4j database].
 If you go this route, then you have to provide the URL to your Neo4j server in an environment variable `NEO4J_URL`.
 
 == Run Locally
@@ -152,8 +152,11 @@ You can search for movies by title or click on any result entry to see the detai
 
 == Deploy to Heroku
 
+Many of the mentioned https://github.com/neo4j-examples?query=movies[GitHub example repositories] feature a "Deploy to Heroku" button.
+You can either use that or follow the manual process outlined below.
+
 We want to install our application to the cloud, for instance the http://heroku.com[Heroku] PaaS.
-We will also use the https://addons.heroku.com/graphenedb[GrapheneDB Neo4j Database Hosting Add-On].
+We will also use either the https://addons.heroku.com/graphenedb[GrapheneDB] or https://addons.heroku.com/graphstory[GraphStory] Neo4j Database Hosting Add-On.
 
 Install the https://toolbelt.heroku.com/[Heroku Toolbelt] and git.
 
@@ -170,11 +173,15 @@ git commit -m"my neo4j movies app"
 export app=my-neo4j-movies-app
 heroku apps:create $app
 
-# add free graphenedb hosting
+# add free hosting database
 heroku addons:add graphenedb:chalk --app $app
+# or
+heroku addons:add graphstory --app $app
 
 # configure your app to use the add-on
 heroku config:set NEO4J_REST_URL=GRAPHENEDB_URL --app $app
+# or
+heroku config:set NEO4J_REST_URL=GRAPHSTORY_URL --app $app
 
 # deploy to heroku
 git push heroku master
@@ -184,6 +191,9 @@ heroku open --app $app
 
 # open addon admin page
 heroku addons:open graphenedb
+# or
+heroku addons:open graphstory
+
 ----
 
 In the Graphenedb-UI use "Launch Neo4j Admin UI".

@@ -16,7 +16,7 @@ While this guide is not comprehensive, it will introduce the different APIs and 
 [abstract]
 You should be familiar with the link:/developer/get-started/graph-database[graph database concepts] and the property graph model.
 Having link:/download[installed Neo4j] and tried out our link:/developer/cypher[Cypher Query language] helps too.
-When developing with Neo4j, please use JDK 7 and your favorite IDE.
+When developing with Neo4j, please use JDK 7 or 8 and your favorite IDE.
 
 [role=expertise]
 {level}
@@ -42,7 +42,7 @@ If you use Neo4j embedded, you can use the Neo4j Core-Java-API directly.
 Besides an object-oriented approach to the graph database, working with Nodes, Relationships, and Paths, it also offers highly customizable high-speed traversal- and graph-algorithm implementations.
 You can also choose from any useful drivers wrapping that API, which exist either for specific programming languages or that add interesting functionality.
 
-One example is http://projects.spring.io/spring-data-neo4j/[Spring Data Neo4j], which integrates tightly with the http://spring.io/[SpringFramework] and offers Object-Graph mapping on top of Neo4j.
+One example is link:../spring-data-neo4j[Spring Data Neo4j], which integrates tightly with the http://spring.io/[SpringFramework] and offers Object-Graph mapping on top of Neo4j.
 
 As a JVM developer you are also on the bright side when it comes to inserting large amounts of data into Neo4j.
 With its non-transactional, low-level batch-insertion API it can ingest millions of nodes and relationships in just seconds.
@@ -51,17 +51,35 @@ Follow the guides below to get you started.
 
 include::../_includes/sample_project.adoc[]
 
+[[neo4j-jdbc]]
 === Using Neo4j Server with JDBC
 
 Being a Java developer you're probably familiar with JDBC as a way to work with relational databases, either directly or via abstractions like Spring's `JDBCTemplate` or MyBatis.
 Many tools for ETL, Business Intelligence, and data management also use JDBC drivers to interact with relational databases.
 
 As Cypher, like SQL, is a textual parametrizable query language that can return tabular results, it was possible for us to support the JDBC APIs and make a Neo4j-JDBC driver available.
-More details on how to use it can be found with our example project for {github}/language-guides/java/jdbc/[Java-JDBC].
+More details on how to use it can be found with our example project for {examples}/movies-java-jdbc[Java-JDBC].
 There, we implement the backend as a minimal Java webapp that leverages Neo4j-JDBC to connect to Neo4j Server.
 
-// todo a spring boot webapp with JDBC
+* http://github.com/neo4j-contrib/neo4j-jdbc[Neo4j-JDBC on GitHub]
 
+[[neo4j-ogm]]
+=== Object-Graph-Mapping with Neo4j-OGM
+
+Developing Java Business Applications often requires mapping domain object networks to your database.
+The Neo4j-OGM library is a pure Java library that can store, read and query (annotated) domain objects using Neo4j.
+It uses Cypher statements execute those operations with Neo4j Server.
+The OGM supports tracking changes to minimize necessary updates and transitive persistence (reading and updating neighborhoods of an object).
+
+// todo quickstart
+
+* http://neo4j.com/blog/neo4j-java-object-graph-mapper-released/[Blog: Neo4j-OGM Released]
+* https://github.com/neo4j/neo4j-ogm[Neo4j-OGM on GitHub]
+* http://neo4j.com/docs/ogm/java/stable[Refereence Documentation]
+* https://github.com/neo4j-examples/neo4j-ogm-university[Example Project: University Management]
+
+
+[[server-extension]]
 === Extending Neo4j Server with a Server Extension
 
 A great way of accessing the high performance graph database directly from your Java code is to write a Neo4j Server extension.
@@ -75,42 +93,38 @@ The path-finding and traversal APIs are also available.
 
 The results of your graph operations are then collected and rendered as the format you want to expose, e.g. JSON, XML, plain text or binary.
 
-The {github}/language-guides/java/server-extension[example project] shows how you would do that for our movie application endpoints.
+The {examples}/movies-java-server-extension[example project] shows how you would do that for our movie application endpoints.
 
-=== Using Spring Boot with JDBC
+[[jcypher]]
+=== JCypher
 
-Spring Boot is a rapid application development infrastructure that allows you to quickly write Spring-based applications with little setup and configuration.
+JCypher provides seamlessly integrated Java access to Neo4j at different levels of abstraction:
 
-Here we use a simple Spring Boot WebMVC and JDBC application to provide a backend for our movie application.
+At the topmost level of abstraction, JCypher allows you to *map complex business domains* to graph databases.
+You can take an arbitrarily complex graph of domain objects or POJOs and store it in a straightforward way into Neo4j for later retrieval. 
+You do not need to modify your domain object classes in any way, there is also no need for annotations. 
+JCypher provides a default mapping out of the box.
 
-It uses the well known APIs of `@RestController` and `JdbcTemplate` to do the job.
+At the same level of abstraction, *Domain Queries* provide the power and expressiveness of queries on a graph database, 
+while being formulated on domain objects or on types of domain objects, respectively.
+The true power of Domain Queries comes from the fact, that the graph of domain objects is backed by a graph database.
 
-More details can be found in the {github}/language-guides/java/spring-boot-jdbc[example project].
+At the next lower level of abstraction – access to graph databases – is provided based on a generic graph model.
+While simple, the model allows you to easily navigate and manipulate graphs. 
 
-=== Using Spring Data Neo4j
+At the bottom level of abstraction, a *native Java DSL* in the form of a fluent Java API allows you to intuitively and comfortably formulate queries against Neo4j.
 
-Spring Data Neo4j was the first Spring Data project and enables convenient integration of Neo4j in your Spring-based application.
-It provides object-graph mapping functionality and other features common to the Spring Data projects.
+* http://neo4j.com/blog/jcypher-focus-on-your-domain-model-not-how-to-map-it-to-the-database/[Article Neo4j Blog]
+* http://github.com/Wolfgang-Schuetzelhofer/jcypher[JCypher on GitHub]
+* http://jcypher.iot-solutions.net/[JCypher HomePage]
 
-To use Neo4j with Spring Data Neo4j, you just add the dependency to your build setup.
-After setting up a simple Java-based Spring configuration, and annotating your `@Node-` and `@RelationshipEntity`, you can use `Neo4jTemplate` to access Neo4j APIs and object-graph mapping functionality.
-Additionally, you can leverage the convenient Spring Data repositories to get interface-based DAO implementations injected into your Spring Components.
+////
+=== Cypher-DSL
+////
 
-[NOTE]
-The current version of Spring Data Neo4j works best with an embedded Neo4j database.
-To achieve highest-performance Neo4j-Server integration, move your SDN persistence layer into an Server Extension.
-// Work on improving the Spring Data Neo4j performance with Neo4j server is underway.
-
-The example uses Spring-Boot with Spring-Data-Neo4j and Spring-Data-REST and an additional RestMVCController.
-
-See the {github}/language-guides/java/./spring-data-neo4j[example project] for further details.
-
-* http://projects.spring.io/spring-data-neo4j[Spring Data Neo4j Project]
-* Authors: Michael Hunger, Oliver Gierke, Nicki Watt and many contributors
-* http://www.youtube.com/watch?v=ZfbJ1ZJdb_A[Webinar Spring Boot & SDN, role=video]
-* {github}/language-guides/java/spring-data-neo4j[Spring Data Neo4j Example Project]
-
-// === Tinkerpop
+////
+=== Tinkerpop
+////
 
 ////
 === Testing Neo4j Applications
@@ -249,6 +263,7 @@ A Cypher-oriented Scala library modeled after the Play! framework's Anorm librar
 * https://github.com/AnormCypher/AnormCypher[Source]
 * https://github.com/AnormCypher/AnormCypher/blob/master/readme.md#anormcypher[Docs]
 
+////
 ==== Neo4j-Scala
 
 Author: Christopher Schmidt
@@ -256,6 +271,7 @@ Author: Christopher Schmidt
 The Neo4j Scala wrapper library allows you use Neo4j's open source graph database through a domain-specific language.
 
 * https://github.com/FaKod/neo4j-scala/[Source]
+////
 
 === JPA
 
@@ -270,6 +286,8 @@ Hibernate Object/Grid Mapper (http://hibernate.org/ogm[OGM]) with Neo4j Support.
 * http://docs.jboss.org/hibernate/ogm/4.0/reference/en-US/html_single/#ogm-neo4j[Docs]
 * https://github.com/TimmyStorms/hibernate-ogm-neo4j-example[Example]
 
+////
+
 ==== http://www.datanucleus.org/[DataNucleus Neo4j Plugin]
 
 // image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/DataNucleus16-300.jpg[]
@@ -277,6 +295,7 @@ Hibernate Object/Grid Mapper (http://hibernate.org/ogm[OGM]) with Neo4j Support.
 Author: Andy Jefferson
 
 datanucleus-neo4j provides persistence of Java objects to Neo4j. It builds on top of the basic persistence provided by datanucleus-core.
+
 
 ==== Kundera
 
@@ -288,3 +307,5 @@ Kundera is a JPA 2.0-compliant, object-datastore mapping library for NoSQL datas
 * http://groups.google.com/group/kundera-discuss[Forum]
 * https://github.com/impetus-opensource/Kundera/wiki/Graph-Database-Support[Docs]
 * http://github.com/impetus-opensource/Kundera-Examples[Examples]
+
+////

@@ -19,8 +19,8 @@ else
   cols = slevel == 2 ? "columns medium-12" : ""
   marginFix = slevel == 2 ? "style='padding-left: 0;'" : ""
 
-  %><div class="<%= [%(sect#{slevel}),role].compact * ' ' %> <%= cols %>" <%= marginFix %> >
-<h<%= hlevel %><%= @id && %( id="#{@id}") %>><%= %(#{anchor}#{link_start}#{snum}#{captioned_title}#{link_end}) %></h<%= hlevel %>>
+  %><div <%= @id && %( id="#{@id}") %> class="<%= [%(sect#{slevel}),role].compact * ' ' %> <%= cols %>" <%= marginFix %> >
+<h<%= hlevel %>><%= %(#{anchor}#{link_start}#{snum}#{captioned_title}#{link_end}) %></h<%= hlevel %>>
 <%= content %>
 </div><%
 end %>
