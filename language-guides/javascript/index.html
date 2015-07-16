@@ -575,6 +575,13 @@ span.label {
 hr {
 	margin-top: 0.5rem;
 }
+td.tableblock, td p.tableblock,th.tableblock, th p.tableblock {
+	margin-bottom: 0px;
+	line-height: 1em;
+}
+th.tableblock, th p.tableblock {
+	font-weight:bold;
+}
 </style>
 
             <div>
@@ -621,8 +628,8 @@ You should have <a href="/download">installed Neo4j</a> and made yourself famili
 <hr>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_neo4j_for_javascript_developers">Neo4j for JavaScript Developers</h3>
+<div  id="_neo4j_for_javascript_developers" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j for JavaScript Developers</h3>
 <div class="imageblock">
 <p class="content">
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/nodejs.png" alt="nodejs">
@@ -653,31 +660,26 @@ You should have <a href="/download">installed Neo4j</a> and made yourself famili
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_the_example_project">The Example Project</h3>
-
-
-<div class="paragraph">
-<p>You can find out more about our example projects for many different languages <a href="../example-project">here</a>, you can also access it via the <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/">GitHub repository</a> for the Neo4j developer resources.
-Feel free to check them out.</p>
-</div>
-
+<div  id="_the_example_project" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>The Example Project</h3>
 
 
 <div class="paragraph">
 <p>It is a small one page webapp for our movies database.
-The front-end is the same for all drivers, just the backends show you how to connect to Neo4j from the different languages and drivers.</p>
+The front-end page is the same for all drivers, it consists of a movie search, detail info and a graph visualization of actors and movies.
+Each backend implementation shows you how to connect to Neo4j from the different languages and drivers.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p><a href="../example-project">Read More</a></p>
+<p>You can learn more about our small, consistent example project across many different language drivers <a href="../example-project">here</a>.
+You find the implementations for all drivers as <a href="https://github.com/neo4j-examples?query=movies">individual GitHub repositories</a>, that you can clone and deploy directly.</p>
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_using_the_http_endpoint_directly">Using the HTTP-Endpoint directly</h3>
+<div  id="_using_the_http_endpoint_directly" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Using the HTTP-Endpoint directly</h3>
 
 
 <div class="paragraph">
@@ -723,8 +725,8 @@ cypher(query,params,cb)
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_seraph">Seraph</h3>
+<div  id="_seraph" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Seraph</h3>
 
 
 <div class="paragraph">
@@ -753,8 +755,8 @@ Author: <a href="https://github.com/jonpacker">Jon Packer via BRIK Teknologier, 
 </ul>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_cypher_stream">cypher-stream</h3>
+<div  id="_cypher_stream" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>cypher-stream</h3>
 
 
 <div class="paragraph">
@@ -788,8 +790,8 @@ Author: <a href="https://github.com/brian-gates">Brian Gates</a>
 </ul>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="node-neo4j">node-neo4j (Thingdom)</h3>
+<div  id="node-neo4j" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>node-neo4j (Thingdom)</h3>
 
 
 <div class="paragraph">
@@ -816,8 +818,8 @@ Authors: <a href="https://twitter.com/aseemk">Aseem Kishore</a> &amp; Daniel Gas
 </ul>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="node-neo4j-pk">node-neo4j (philipkueng)</h3>
+<div  id="node-neo4j-pk" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>node-neo4j (philipkueng)</h3>
 
 
 <div class="paragraph">
@@ -841,8 +843,8 @@ Author <a href="https://twitter.com/philippkueng">Philip Küng</a> and <a href="
 </ul>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_meteor_js">Meteor.js</h3>
+<div  id="_meteor_js" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Meteor.js</h3>
 <div class="imageblock">
 <p class="content">
 <img src="https://www.meteor.com/meteor-logo.png" alt="meteor logo" width="200">
@@ -886,8 +888,8 @@ Author: <a href="https://twitter.com/smart_egg">Dmitriy Aristarkhovich</a>
 </ul>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_neo4j_dart">Neo4j Dart</h3>
+<div  id="_neo4j_dart" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j Dart</h3>
 <div class="imageblock">
 <p class="content">
 <img src="https://api.dartlang.org/apidocs/channels/stable/dartdoc-viewer/static/dart-logo.png" alt="dart logo">
@@ -916,10 +918,10 @@ Author: <a href="https://twitter.com/smart_egg">Dmitriy Aristarkhovich</a>
 </ul>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_other_drivers">Other Drivers</h3>
-<div class="sect3 "  >
-<h4 id="_neo4j_js">neo4j-js</h4>
+<div  id="_other_drivers" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Other Drivers</h3>
+<div  id="_neo4j_js" class="sect3 "  >
+<h4>neo4j-js</h4>
 
 
 <div class="paragraph">
@@ -937,8 +939,8 @@ Author: Bret Copeland
 </ul>
 </div>
 </div>
-<div class="sect3 "  >
-<h4 id="_node_neo4j_embedded">node-neo4j-embedded</h4>
+<div  id="_node_neo4j_embedded" class="sect3 "  >
+<h4>node-neo4j-embedded</h4>
 
 
 <div class="paragraph">
@@ -1035,6 +1037,7 @@ Author: Jochen Weis
                   <div class="content active" id="panel5">
                      <ul>
                         <li><a href="/developer-resources/language-guides/java">Java</a></li>
+                        <li><a href="/developer-resources/language-guides/spring-data-neo4j">Spring Framework</a></li>
                         <li><a href="/developer-resources/language-guides/dotnet">.NET</a></li>
                         <li><a href="/developer-resources/language-guides/javascript">JavaScript</a></li>
                         <li><a href="/developer-resources/language-guides/python">Python</a></li>

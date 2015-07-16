@@ -575,6 +575,13 @@ span.label {
 hr {
 	margin-top: 0.5rem;
 }
+td.tableblock, td p.tableblock,th.tableblock, th p.tableblock {
+	margin-bottom: 0px;
+	line-height: 1em;
+}
+th.tableblock, th p.tableblock {
+	font-weight:bold;
+}
 </style>
 
             <div>
@@ -590,8 +597,8 @@ hr {
 Neo4j supports drivers for all major programming languages. In this section, we provide an introduction and a consistent example application for several languages and Neo4j drivers.</p>
 </div>
 
-<div class="sect1 "  >
-<h3 id="_how_to_connect_to_neo4j">How to connect to Neo4j?</h3>
+<div  id="_how_to_connect_to_neo4j" class="sect1 "  >
+<h3>How to connect to Neo4j?</h3>
 <hr>
 
 
@@ -652,8 +659,8 @@ most of which mimic existing database driver idioms and approaches.</p>
 </div>
 
 </div>
-<div class="sect1 "  >
-<h3 id="_neo4j_drivers">Neo4j Drivers</h3>
+<div  id="_neo4j_drivers" class="sect1 "  >
+<h3>Neo4j Drivers</h3>
 <hr>
 
 
@@ -687,8 +694,8 @@ and <a href="r">R</a>, <a href="go">Go</a>, <a href="clojure">Clojure</a>, <a hr
 </ul>
 </div>
 </div>
-<div class="sect1 "  >
-<h3 id="_example_project_description">Example Project Description</h3>
+<div  id="_example_project_description" class="sect1 "  >
+<h3>Example Project Description</h3>
 
 
 <div class="paragraph">
@@ -715,20 +722,20 @@ graph visualization of the domain
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/movie_application.png" alt="movie application">
 </p>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_domain_model">Domain Model</h3>
+<div  id="_domain_model" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Domain Model</h3>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre>(:Movie {title,released,tagline})&lt;-[:ACTED_IN {roles}]-(actor:Person)</pre>
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_github">GitHub</h3>
+<div  id="_github" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>GitHub</h3>
 
 
 <div class="paragraph">
-<p>The source code for the different examples is available on <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/">GitHub</a>.</p>
+<p>The source code for the different examples is available on <a href="https://github.com/neo4j-examples?query=movies">GitHub</a>.</p>
 </div>
 
 
@@ -809,6 +816,7 @@ graph visualization of the domain
                   <div class="content active" id="panel5">
                      <ul>
                         <li><a href="/developer-resources/language-guides/java">Java</a></li>
+                        <li><a href="/developer-resources/language-guides/spring-data-neo4j">Spring Framework</a></li>
                         <li><a href="/developer-resources/language-guides/dotnet">.NET</a></li>
                         <li><a href="/developer-resources/language-guides/javascript">JavaScript</a></li>
                         <li><a href="/developer-resources/language-guides/python">Python</a></li>

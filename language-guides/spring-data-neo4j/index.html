@@ -258,7 +258,7 @@
 <div class="marquee blue">
     <div class="row text-center">
         <div class="medium-10 small-centered columns">
-            <h1 class="entry-title">LOAD CSV</h1>
+            <h1 class="entry-title">Using Neo4j from Spring</h1>
         </div>
     </div>
 </div>
@@ -271,9 +271,7 @@
                     <ul class="breadcrumbs">
                         <li><a href="/developer-resources">Developer Guides</a></li>
                         
-                        <li><a href="../">Guide</a></li>
-                        
-                        <li class="current"><a href="#">LOAD CSV</a></li>
+                        <li class="current"><a href="#">Using Neo4j from Spring</a></li>
                     </ul>
                 </div>
             </div>
@@ -589,133 +587,405 @@ th.tableblock, th p.tableblock {
             <div>
                 <div class="row" style="padding-left: 0; padding-right: 0;">
                     <div class="large-9 large-push-3 columns guide-section-content">
-                        
+                        <div id="preamble columns medium-12">
+<div class="sectionbody">
+<div class="quoteblock abstract">
+<div class="title">Goals</div>
+<blockquote style="padding-left: 0;">
+For Java developers who use the Spring Framework or Spring Boot, this guide introduces Spring integration but especially the Spring Data Neo4j library.
+The library provides convenient access to Neo4j including object mapping, Spring-Data repositories, conversion, transaction handling etc.
+We cover both, the all-new Spring Data Neo4j 4 as well as the previous Spring Data Neo4j 3.
+</blockquote>
+</div>
+<div class="quoteblock abstract">
+<div class="title">Prerequisites</div>
+<blockquote style="padding-left: 0;">
+You should be familiar with the <a href="/developer-resources/get-started/graph-database">graph database concepts</a> and the property graph model.
+Having <a href="/download">installed Neo4j</a> and tried out our <a href="/developer-resources/cypher">Cypher Query language</a> helps too.
+You should also be familar with Spring. Knowing <a href="http://spring.io/projects/spring-data">Spring Data</a> helps too and Spring Boot is always a great addition to your toolbox.
+When developing with Neo4j, please use JDK 7 or 8 and your favorite IDE.
+</blockquote>
+</div>
+
+
+<div class="label">Intermediate</div>
+<hr/>
+
+</div>
+</div>
+<div  id="_neo4j_for_spring_users" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j for Spring Users</h3>
+<div class="imageblock" style="float: right;">
+<p class="content">
+<img src="http://assets.neo4j.org/img/languages/sdn.png" alt="sdn">
+</p>
+</div>
+
 
 <div class="paragraph">
-<p>Depending on the amount of data we&#8217;ll either want to use Cypher&#8217;s LOAD CSV command or the batch importer command line tool.</p>
+<p>Neo4j offers a rich set of possibilities for developers using Spring.
+If you are looking for using Neo4j on the JVM in general, check out our <a href="../java">Java Developers Guide</a>.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>LOAD CSV has a smaller learning curve - only basic knowledge of cypher is required - and should therefore be your default tool of choice for small to medium data sets (CSV files of up to 1 million rows).</p>
+<p>In general using Neo4j&#8217;s Java APIs is always possible from Spring, just configure an embedded, in-process GraphDatabase as a singleton bean to be injected.
+For embedded use, Spring Data Neo4j 3 provides great integration too.
+The integrated variant is also great for unit testing and high-performance/no-network setups.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>If you need raw performance or are working with much larger CSV files then the batch importer is a more appropriate choice.</p>
+<p>If you are rather running Neo4j as a standalone server or cluster, you can access its HTTP-APIs either with a plain RestTemplate or by combining our <strong>JDBC-Driver</strong> with Spring&#8217;s JDBCTemplate.
+If you want to benefit from full fledged Object Mapping and the other helpful support that comes with Spring Data, check out <strong>Spring Data Neo4j 4</strong>.</p>
 </div>
 
-<div  id="_load_csv" class="sect4 "  >
-<h5>LOAD CSV</h5>
 
 
 <div class="paragraph">
-<p>Here</p>
+<p>For all Neo4j drivers and integrations, we provide a small, consistent example project across all languages.</p>
 </div>
 
 </div>
-<div  id="_batch_importer" class="sect4 "  >
-<h5>Batch Importer</h5>
+<div  id="_the_example_project" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>The Example Project</h3>
 
 
 <div class="paragraph">
-<p>Two options:</p>
+<p>It is a small one page webapp for our movies database.
+The front-end page is the same for all drivers, it consists of a movie search, detail info and a graph visualization of actors and movies.
+Each backend implementation shows you how to connect to Neo4j from the different languages and drivers.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>You can learn more about our small, consistent example project across many different language drivers <a href="../example-project">here</a>.
+You find the implementations for all drivers as <a href="https://github.com/neo4j-examples?query=movies">individual GitHub repositories</a>, that you can clone and deploy directly.</p>
+</div>
+
+</div>
+<div  id="_spring_integrations" class="sect1 "  >
+<h3>Spring Integrations</h3>
+<dl class="tabs" data-tab>
+  <dd class="tab-title active"><a href="#boot-jdbc">Spring Boot with JDBC</a></dd>
+  <dd class="tab-title"><a href="#sdn4">Spring Data Neo4j 4</a></dd>
+  <dd class="tab-title"><a href="#sdn3">Spring Data Neo4j 3</a></dd>
+</dl>
+<div class="tabs-content">
+<div  id="boot-jdbc" class="sect2 content active columns medium-12" style='padding-left: 0;' >
+<h3>Using Spring Boot with JDBC</h3>
+
+
+<div class="paragraph">
+<p>Spring Boot is a rapid application development infrastructure that allows you to quickly write Spring-based applications with little setup and configuration.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Here we use a simple Spring Boot WebMVC and JDBC application to provide a backend for our movie application.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>It uses the well known APIs of <code>@RestController</code> and <code>JdbcTemplate</code> to do the job.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>More details can be found in the <a href="https://github.com/neo4j-examples/movies-java-spring-boot-jdbc">example project</a>.</p>
+</div>
+
+</div>
+<div  id="sdn4" class="sect2 content columns medium-12" style='padding-left: 0;' >
+<h3>Using Spring Data Neo4j 4</h3>
+
+
+<div class="paragraph">
+<p>Spring Data Neo4j has been around for a long time.
+Meanwhile Neo4j, it&#8217;s APIs and usage developed quickly from an embedded Java only database to a Server solution which is mostly interacted with via <a href="/developer-resources/cypher">Cypher</a>.
+That&#8217;s why we made the decision that a clean slate and reimplementation of the library from scratch is the best approach to embrace the modern Neo4j architecture.
+In a joint effort with our partner <a href="http://graphware.com">GraphAware</a> the all-new Spring Data Neoj 4 library was developed and tested by existing users.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Spring Data Neo4j integrates the <a href="../java#neo4j-ogm">Neo4j-OGM</a> library to provide fast and comprehensive object graph mapping.
+Additionallly it provides support for Spring Conversions, Transaction Handling, Spring-Data Repositories, Spring-Data REST and Spring-Boot.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>To get started, add Spring Data Neo4j 4 as a dependency, then configure the neccessary beans in your Java config
+Then you can use Neo4jTemplate to manage your entities (optionally annotated) and define Spring-Data-Repositories as convenient interfaces to your persistence layer.</p>
+</div>
+
+<div  id="_quickstart" class="sect3 "  >
+<h4>Quickstart</h4>
+<div class="listingblock">
+<div class="title">Spring-Data-Neo4j 4 Dependency</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="xml"><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.data&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-data-neo4j&lt;/artifactId&gt;
+        &lt;version&gt;4.0.0.RC1&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Spring-Config</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>@Configuration
+@EnableNeo4jRepositories("org.neo4j.cineasts.repository")
+@EnableTransactionManagement
+@ComponentScan("org.neo4j.cineasts")
+public class PersistenceContext extends Neo4jConfiguration {
+
+    @Autowired Environment env;
+
+    @Override
+    public SessionFactory getSessionFactory() {
+        return new SessionFactory("org.neo4j.cineasts.domain");
+    }
+
+    @Bean
+    public Neo4jServer neo4jServer() {
+        return new RemoteServer(env.getProperty("neo4j.url"));
+    }
+
+    @Override @Bean
+    public Session getSession() throws Exception {
+        return super.getSession();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Entities</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>@NodeEntity
+public class Movie {
+
+  @GraphId Long id;
+
+  @Indexed String title;
+
+  Person director;
+
+  @Relationship(type="ACTED_IN", direction = INCOMING)
+  Set&lt;Person&gt; actors = new HashSet&lt;&gt;();
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Declare a repository interface</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>interface MovieRepository extends GraphRepository&lt;Movie&gt; {
+
+  @Query("MATCH (m:Movie)&lt;-[rating:RATED]-(user)
+          WHERE id(m) = {movie}
+          RETURN rating")
+  Iterable&lt;Rating&gt; getRatings(Movie movie);
+
+  // Co-Actors
+  Iterable&lt;Person&gt; findByActorsMoviesActorName(name)
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Use repository</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>@Autowired MovieRepository repo;
+
+Collection&lt;Movie&gt; movie = repo.findByTitleLike("Matrix");
+
+Iterable&lt;Rating&gt; ratings = repo.getRatings(movie);</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>We provide a <a href="https://github.com/neo4j-examples?query=sdn4">number of example projects</a> using Spring Data Neo4j 4, Spring Boot and Web-Frameworks like Angular.js</p>
 </div>
 
 <div class="ulist">
 <ul>
 <li>
-Export tables in a simple way and write a pre processing script that transforms it into batch import format
+Authors: Luanne Misquitta, Vince Bickers, Andrew , Michal Bachman, Michael Hunger, Oliver Gierke and others
 </li>
 <li>
-More complicated SQL script which returns batch import appropriate files
+<a href="https://github.com/neo4j-examples?query=sdn4">Spring Data Neo4j 4 Example Projects</a>
+</li>
+<li>
+<a href="https://github.com/spring-projects/spring-data-neo4j/tree/4.0.x">Spring Data Neo4j on GitHub</a>
+</li>
+<li>
+<a href="http://docs.spring.io/spring-data/data-neo4j/docs/4.0.0.RC1/reference/html/">Reference Documentation</a>, <a href="http://docs.spring.io/spring-data/data-neo4j/docs/4.0.0.RC1/api/">JavaDoc</a>, <a href="http://docs.spring.io/spring-data/data-neo4j/docs/4.0.0.RC1/changelog.txt">ChangeLog</a>
+</li>
+<li>
+<a href="https://www.airpair.com/neo4j/posts/the-essence-of-spring-data-neo4j-4">Article: Introducing SDN4 by Luanne Misquitta</a>
+</li>
+<li>
+<a href="https://www.youtube.com/watch?v=Atz8fVxrIZ4&amp;index=20&amp;list=PL9Hl4pk2FsvXY_LSIPL6Da7PJXW33lxLy" class="video">Video: Introducing SDN 4</a>
 </li>
 </ul>
 </div>
+</div>
+</div>
+<div  id="sdn3" class="sect2 content columns medium-12" style='padding-left: 0;' >
+<h3>Using Spring Data Neo4j 3.3.x</h3>
 
 
 <div class="paragraph">
-<p>Example from MDM &#8594; <a href="http://maxdemarzi.com/2012/02/28/batch-importer-part-2/" class="bare">http://maxdemarzi.com/2012/02/28/batch-importer-part-2/</a></p>
-</div>
-
-</div>
-<div  id="_what_type_of_import_is_it" class="sect1 "  >
-<h3>What type of import is it?</h3>
-<div class="ulist">
-<ul>
-<li>
-Initial one off import (Batch)
-</li>
-<li>
-Ongoing updates (Transactional)
-</li>
-</ul>
-</div>
-</div>
-<div  id="_what_tools_can_i_use" class="sect1 "  >
-<h3>What tools can I use?</h3>
-<div class="ulist">
-<ul>
-<li>
-Cypher
-</li>
-<li>
-Java - batch importer, unmanaged extension
-</li>
-<li>
-ETL
-</li>
-<li>
-Custom e.g. load2neo
-</li>
-</ul>
-</div>
-</div>
-<div  id="_issues" class="sect1 "  >
-<h3>Issues</h3>
-<div class="ulist">
-<ul>
-<li>
-'expensive' index reads
-</li>
-<li>
-duplicate checking
-</li>
-<li>
-huge transaction sizes
-</li>
-<li>
-high volumes via Cypher
-</li>
-<li>
-Transactional mode
-</li>
-</ul>
-</div>
-
-
-<div class="paragraph">
-<p>Existing Database / Existing Service &#8594; Intermediate Format &#8594; Neo4j</p>
+<p>Spring Data Neo4j was the first Spring Data project and enables convenient integration of Neo4j in your Spring-based application.
+It provides object-graph mapping functionality and other features common to the Spring Data projects.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Generating cypher statements - works well for smaller data sets but not so well for larger ones</p>
+<p>To use Neo4j with Spring Data Neo4j, you just add the dependency to your build setup.
+After setting up a simple Java-based Spring configuration, and annotating your <code>@Node-</code> and <code>@RelationshipEntity</code>, you can use <code>Neo4jTemplate</code> to access Neo4j APIs and object-graph mapping functionality.
+Additionally, you can leverage the convenient Spring Data repositories to get interface-based DAO implementations injected into your Spring Components.</p>
 </div>
 
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title label">Note</div>
+</td>
+<td class="content">
+The current version of Spring Data Neo4j works best with an embedded Neo4j database.
+To achieve highest-performance Neo4j-Server integration, use Spring Data Neo4j 4 or move your SDN persistence layer into an Server Extension.
+</td>
+</tr>
+</table>
+</div>
+<div  id="_quick_start" class="sect3 "  >
+<h4>Quick-Start</h4>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="xml"><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.data&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-data-neo4j&lt;/artifactId&gt;
+        &lt;version&gt;3.3.1.RELEASE&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Entities</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>@NodeEntity
+public class Movie {
+
+  @GraphId Long id;
+
+  @Indexed(type = FULLTEXT, indexName = "search")
+  String title;
+
+  Person director;
+
+  @RelatedTo(type="ACTS_IN", direction = INCOMING)
+  Set&lt;Person&gt; actors;
+
+  @RelatedToVia(type = "RATED")
+  Iterable&lt;Rating&gt; ratings;
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Declare a repository interface</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>interface MovieRepository extends GraphRepository&lt;Movie&gt; {
+
+  @Query("MATCH (m:Movie)&lt;-[rating:RATED]-(user)
+          WHERE id(m) = {movie}
+          RETURN rating")
+  Iterable&lt;Rating&gt; getRatings(Movie movie);
+
+  // Co-Actors
+  Iterable&lt;Person&gt; findByActorsMoviesActorName(name)
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Use repository</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>@Autowired MovieRepository repo;
+
+Collection&lt;Movie&gt; movie = repo.findByTitleLike("Matrix");
+
+Iterable&lt;Rating&gt; ratings = repo.getRatings(movie);</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>The example uses Spring-Boot with Spring-Data-Neo4j and Spring-Data-REST and an additional RestMVCController.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>See the <a href="https://github.com/neo4j-examples/movies-java-spring-data-neo4j">example project</a> for further details.</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="http://projects.spring.io/spring-data-neo4j">Spring Data Neo4j Project Page</a>
+</li>
+<li>
+Authors: Michael Hunger, Oliver Gierke, Nicki Watt and many contributors
+</li>
+<li>
+<a href="https://github.com/neo4j-examples/movies-java-spring-data-neo4j">Spring Data Neo4j Example Project</a>
+</li>
+<li>
+<a href="http://github.com/spring-projects/spring-data-neo4j">Spring Data Neo4j on GitHub</a>
+</li>
+<li>
+<a href="https://jira.spring.io/browse/DATAGRAPH">Spring Data Neo4j JIRA</a>
+</li>
+<li>
+<a href="http://docs.spring.io/spring-data/data-neo4j/docs/3.3.1.RELEASE/reference/html/">Reference Documentation</a>, <a href="http://docs.spring.io/spring-data/data-neo4j/docs/3.3.1.RELEASE/api/">JavaDoc</a>, <a href="http://docs.spring.io/spring-data/data-neo4j/docs/3.3.1.RELEASE/changelog.txt">ChangeLog</a>
+</li>
+<li>
+<a href="/books/spring-data">Spring Data Book</a>, <a href="/books/good-relationships/">Spring Data Neo4j Guide-Book</a>
+</li>
+<li>
+<a href="https://spring.io/guides/gs/accessing-neo4j-data-rest/">SpringSource' Spring Data Neo4j + REST Guide</a>
+</li>
+<li>
+<a href="http://www.youtube.com/watch?v=ZfbJ1ZJdb_A" class="video">Webinar: Spring Boot &amp; SDN</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
 </div>
                     </div>
                     <div class="large-3 large-pull-9 columns">
                            <ul style="padding-top: 0;" class="side-nav">
          <dl class="accordion">
-            <dd class="accordion-navigation active">
+            <dd class="accordion-navigation inactive">
                <a href="/developer-resources/get-started">
                   <h5>Get Started</h5>
                </a>
-               <div class="content active" id="panel1">
+               <div class="content inactive" id="panel1">
                   <ul>
                      <li><a href="/developer-resources/get-started/graph-database">What is a GraphDB?</a></li>
                      <li><a href="/developer-resources/get-started/graph-db-vs-rdbms">GraphDB vs RDBMS</a></li>
@@ -770,11 +1040,11 @@ Transactional mode
                </dd>
             </dl>
             <dl class="accordion">
-               <dd class="accordion-navigation inactive">
+               <dd class="accordion-navigation active">
                   <a href="/developer-resources/language-guides">
                      <h5>Language Guides</h5>
                   </a>
-                  <div class="content inactive" id="panel5">
+                  <div class="content active" id="panel5">
                      <ul>
                         <li><a href="/developer-resources/language-guides/java">Java</a></li>
                         <li><a href="/developer-resources/language-guides/spring-data-neo4j">Spring Framework</a></li>

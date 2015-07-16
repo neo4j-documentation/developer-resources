@@ -575,6 +575,13 @@ span.label {
 hr {
 	margin-top: 0.5rem;
 }
+td.tableblock, td p.tableblock,th.tableblock, th p.tableblock {
+	margin-bottom: 0px;
+	line-height: 1em;
+}
+th.tableblock, th p.tableblock {
+	font-weight:bold;
+}
 </style>
 
             <div>
@@ -616,8 +623,8 @@ You should be familiar with <a href="/developer-resources/get-started/graph-data
 <hr>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_neo4j_for_rubyists">Neo4j for Rubyists</h3>
+<div  id="_neo4j_for_rubyists" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j for Rubyists</h3>
 <div class="imageblock">
 <p class="content">
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/ruby.png" alt="ruby">
@@ -636,8 +643,8 @@ You should be familiar with <a href="/developer-resources/get-started/graph-data
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_driver_options">Driver Options</h3>
+<div  id="_driver_options" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Driver Options</h3>
 
 
 <div class="paragraph">
@@ -657,8 +664,8 @@ You should be familiar with <a href="/developer-resources/get-started/graph-data
 </li>
 </ul>
 </div>
-<div class="sect3 "  >
-<h4 id="_feature_comparison">Feature Comparison</h4>
+<div  id="_feature_comparison" class="sect3 "  >
+<h4>Feature Comparison</h4>
 
 
 <div class="paragraph">
@@ -743,8 +750,8 @@ You should be familiar with <a href="/developer-resources/get-started/graph-data
 
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_deployment_considerations">Deployment Considerations</h3>
+<div  id="_deployment_considerations" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Deployment Considerations</h3>
 
 
 <div class="paragraph">
@@ -764,31 +771,26 @@ You should be familiar with <a href="/developer-resources/get-started/graph-data
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_the_example_project">The Example Project</h3>
-
-
-<div class="paragraph">
-<p>You can find out more about our example projects for many different languages <a href="../example-project">here</a>, you can also access it via the <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/">GitHub repository</a> for the Neo4j developer resources.
-Feel free to check them out.</p>
-</div>
-
+<div  id="_the_example_project" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>The Example Project</h3>
 
 
 <div class="paragraph">
 <p>It is a small one page webapp for our movies database.
-The front-end is the same for all drivers, just the backends show you how to connect to Neo4j from the different languages and drivers.</p>
+The front-end page is the same for all drivers, it consists of a movie search, detail info and a graph visualization of actors and movies.
+Each backend implementation shows you how to connect to Neo4j from the different languages and drivers.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p><a href="../example-project">Read More</a></p>
+<p>You can learn more about our small, consistent example project across many different language drivers <a href="../example-project">here</a>.
+You find the implementations for all drivers as <a href="https://github.com/neo4j-examples?query=movies">individual GitHub repositories</a>, that you can clone and deploy directly.</p>
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_neography">Neography</h3>
+<div  id="_neography" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neography</h3>
 
 
 <div class="paragraph">
@@ -819,8 +821,8 @@ Author: <a href="http://twitter.com/maxdemarzi">Max De Marzi</a>
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_neo4j_core_and_neo4j_rb">Neo4j-core and Neo4j.rb</h3>
+<div  id="_neo4j_core_and_neo4j_rb" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j-core and Neo4j.rb</h3>
 
 
 <div class="paragraph">
@@ -845,17 +847,24 @@ Author: <a href="http://twitter.com/maxdemarzi">Max De Marzi</a>
 <p>Both projects support accessing Neo4j in embedded mode via JRuby and server mode via MRI.</p>
 </div>
 
-<div class="sect3 "  >
-<h4 id="_neo4j_core">Neo4j-core</h4>
+<div  id="_neo4j_core" class="sect3 "  >
+<h4>Neo4j-core</h4>
 
 
 <div class="paragraph">
 <p>Similar to Neography, Neo4j-core is a gem that provides low-level communication to a Neo4j server. In addition to basic database communicaton and node/relationship CRUD, Neo4j-core provides strong support for Neo4j 2.0&#8217;s schema indexes, constraints, labels, and a strong Cypher DSL.</p>
 </div>
 
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/neo4j-examples/movies-ruby-neo4j-core">Example project with Neo4j-Core using Neo4j &amp; Cypher</a>
+</li>
+</ul>
 </div>
-<div class="sect3 "  >
-<h4 id="_neo4j_rb">Neo4j.rb</h4>
+</div>
+<div  id="_neo4j_rb" class="sect3 "  >
+<h4>Neo4j.rb</h4>
 
 
 <div class="paragraph">
@@ -871,10 +880,7 @@ Author: <a href="http://twitter.com/maxdemarzi">Max De Marzi</a>
 <div class="ulist">
 <ul>
 <li>
-<a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/ruby/neo4jrb">Example project with Neo4j.rb &amp; Rails</a>
-</li>
-<li>
-<a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/ruby/neo4j-core">Example project with Neo4j-Core using Neo4j &amp; Cypher</a>
+<a href="https://github.com/neo4j-examples/movies-ruby-neo4jrb">Example project with Neo4j.rb &amp; Rails</a>
 </li>
 <li>
 <a href="http://neo4jrb.io/">Neo4j.rb Project Page</a>
@@ -901,10 +907,10 @@ Authors: <a href="http://twitter.com/neo4jrb">Neo4j.rb team</a> (Andreas Ronge, 
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_other_drivers">Other Drivers</h3>
-<div class="sect3 "  >
-<h4 id="_pacer">Pacer</h4>
+<div  id="_other_drivers" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Other Drivers</h3>
+<div  id="_pacer" class="sect3 "  >
+<h4>Pacer</h4>
 
 
 <div class="paragraph">
@@ -999,6 +1005,7 @@ Author: Darrick Wiebe
                   <div class="content active" id="panel5">
                      <ul>
                         <li><a href="/developer-resources/language-guides/java">Java</a></li>
+                        <li><a href="/developer-resources/language-guides/spring-data-neo4j">Spring Framework</a></li>
                         <li><a href="/developer-resources/language-guides/dotnet">.NET</a></li>
                         <li><a href="/developer-resources/language-guides/javascript">JavaScript</a></li>
                         <li><a href="/developer-resources/language-guides/python">Python</a></li>

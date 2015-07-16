@@ -575,6 +575,13 @@ span.label {
 hr {
 	margin-top: 0.5rem;
 }
+td.tableblock, td p.tableblock,th.tableblock, th p.tableblock {
+	margin-bottom: 0px;
+	line-height: 1em;
+}
+th.tableblock, th p.tableblock {
+	font-weight:bold;
+}
 </style>
 
             <div>
@@ -622,8 +629,8 @@ You should be familiar with <a href="/developer-resources/get-started/graph-data
 <hr>
 </div>
 </div>
-<div class="sect1 "  >
-<h3 id="_example_project_description">Example Project Description</h3>
+<div  id="_example_project_description" class="sect1 "  >
+<h3>Example Project Description</h3>
 
 
 <div class="paragraph">
@@ -650,25 +657,25 @@ graph visualization of the domain
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/movie_application.png" alt="movie application">
 </p>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_domain_model">Domain Model</h3>
+<div  id="_domain_model" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Domain Model</h3>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre>(:Movie {title,released,tagline})&lt;-[:ACTED_IN {roles}]-(actor:Person)</pre>
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_github">GitHub</h3>
+<div  id="_github" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>GitHub</h3>
 
 
 <div class="paragraph">
-<p>The source code for the different examples is available on <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/">GitHub</a>.</p>
+<p>The source code for the different examples is available on <a href="https://github.com/neo4j-examples?query=movies">GitHub</a>.</p>
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_webpage">Webpage</h3>
+<div  id="_webpage" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Webpage</h3>
 
 
 <div class="paragraph">
@@ -689,8 +696,8 @@ If you click on any of the movie titles, the side-view is populated with the mov
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_graph_visualization">Graph Visualization</h3>
+<div  id="_graph_visualization" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Graph Visualization</h3>
 
 
 <div class="paragraph">
@@ -699,10 +706,10 @@ We then apply the force-layout algorithm to render nodes as circles and relation
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_endpoints">Endpoints</h3>
-<div class="sect3 "  >
-<h4 id="_get_movie">Get Movie</h4>
+<div  id="_endpoints" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Endpoints</h3>
+<div  id="_get_movie" class="sect3 "  >
+<h4>Get Movie</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre>// JSON object for single movie with cast
@@ -736,8 +743,8 @@ curl http://localhost:8080/movie/The%20Matrix
 </div>
 </div>
 </div>
-<div class="sect3 "  >
-<h4 id="_search_movies">Search Movies</h4>
+<div  id="_search_movies" class="sect3 "  >
+<h4>Search Movies</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre>// list of JSON objects for movie search results
@@ -768,8 +775,8 @@ curl http://localhost:8080/search?q=matrix
 </div>
 </div>
 </div>
-<div class="sect3 "  >
-<h4 id="_graph_visualization_2">Graph Visualization</h4>
+<div  id="_graph_visualization_2" class="sect3 "  >
+<h4>Graph Visualization</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre>// JSON object for whole graph viz (nodes, links - arrays)
@@ -807,8 +814,8 @@ A separate function then takes this result and converts it into the node- and li
 </div>
 </div>
 </div>
-<div class="sect1 "  >
-<h3 id="_data_setup">Data Setup</h3>
+<div  id="_data_setup" class="sect1 "  >
+<h3>Data Setup</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -828,13 +835,13 @@ Click the <code>CREATE</code> statement and hit the triangular "Run" button to i
 
 
 <div class="paragraph">
-<p>You can also choose to use a cloud-hosted Neo4j database.
+<p>You can also choose to use a <a href="/developer-resources/in-production/guide-cloud-deployment">cloud-hosted Neo4j database</a>.
 If you go this route, then you have to provide the URL to your Neo4j server in an environment variable <code>NEO4J_URL</code>.</p>
 </div>
 
 </div>
-<div class="sect1 "  >
-<h3 id="_run_locally">Run Locally</h3>
+<div  id="_run_locally" class="sect1 "  >
+<h3>Run Locally</h3>
 
 
 <div class="paragraph">
@@ -848,13 +855,20 @@ If you go this route, then you have to provide the URL to your Neo4j server in a
 </div>
 
 </div>
-<div class="sect1 "  >
-<h3 id="_deploy_to_heroku">Deploy to Heroku</h3>
+<div  id="_deploy_to_heroku" class="sect1 "  >
+<h3>Deploy to Heroku</h3>
+
+
+<div class="paragraph">
+<p>Many of the mentioned <a href="https://github.com/neo4j-examples?query=movies">GitHub example repositories</a> feature a "Deploy to Heroku" button.
+You can either use that or follow the manual process outlined below.</p>
+</div>
+
 
 
 <div class="paragraph">
 <p>We want to install our application to the cloud, for instance the <a href="http://heroku.com">Heroku</a> PaaS.
-We will also use the <a href="https://addons.heroku.com/graphenedb">GrapheneDB Neo4j Database Hosting Add-On</a>.</p>
+We will also use either the <a href="https://addons.heroku.com/graphenedb">GrapheneDB</a> or <a href="https://addons.heroku.com/graphstory">GraphStory</a> Neo4j Database Hosting Add-On.</p>
 </div>
 
 
@@ -880,11 +894,15 @@ git commit -m"my neo4j movies app"
 export app=my-neo4j-movies-app
 heroku apps:create $app
 
-# add free graphenedb hosting
+# add free hosting database
 heroku addons:add graphenedb:chalk --app $app
+# or
+heroku addons:add graphstory --app $app
 
 # configure your app to use the add-on
 heroku config:set NEO4J_REST_URL=GRAPHENEDB_URL --app $app
+# or
+heroku config:set NEO4J_REST_URL=GRAPHSTORY_URL --app $app
 
 # deploy to heroku
 git push heroku master
@@ -893,7 +911,9 @@ git push heroku master
 heroku open --app $app
 
 # open addon admin page
-heroku addons:open graphenedb</code></pre>
+heroku addons:open graphenedb
+# or
+heroku addons:open graphstory</code></pre>
 </div>
 </div>
 
@@ -910,8 +930,8 @@ In the Neo4j-Browser import the <code>:play movies</code> dataset as of the inst
 </div>
 
 </div>
-<div class="sect1 "  >
-<h3 id="_existing_language_driver_examples">Existing Language / Driver Examples</h3>
+<div  id="_existing_language_driver_examples" class="sect1 "  >
+<h3>Existing Language / Driver Examples</h3>
 
 
 <div class="paragraph">
@@ -1058,6 +1078,7 @@ PHP: <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages
                   <div class="content active" id="panel5">
                      <ul>
                         <li><a href="/developer-resources/language-guides/java">Java</a></li>
+                        <li><a href="/developer-resources/language-guides/spring-data-neo4j">Spring Framework</a></li>
                         <li><a href="/developer-resources/language-guides/dotnet">.NET</a></li>
                         <li><a href="/developer-resources/language-guides/javascript">JavaScript</a></li>
                         <li><a href="/developer-resources/language-guides/python">Python</a></li>

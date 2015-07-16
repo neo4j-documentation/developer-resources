@@ -575,6 +575,13 @@ span.label {
 hr {
 	margin-top: 0.5rem;
 }
+td.tableblock, td p.tableblock,th.tableblock, th p.tableblock {
+	margin-bottom: 0px;
+	line-height: 1em;
+}
+th.tableblock, th p.tableblock {
+	font-weight:bold;
+}
 </style>
 
             <div>
@@ -618,31 +625,31 @@ For self-service hosting you should bring along enough sysops experience that a 
 <hr>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_hosting_on_aws_ec2">Hosting on AWS / EC2</h3>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title label">Note</div>
-</td>
-<td class="content">
-We used to provide a cloud formation template but it has not been maintained for a while, so we chose to remove it.
-</td>
-</tr>
-</table>
-</div>
+<div  id="_hosting_on_aws_ec2" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Hosting on AWS / EC2</h3>
 
 
 <div class="paragraph">
-<p>Setting up Neo4j on any Debian or Ubuntu system should be pretty straightforward by following the instructions on <a href="http://debian.neo4j.org">our Debian Repository</a>.</p>
+<p>We provide a <a href="https://github.com/neo4j-contrib/ec2neo">EC2 CloudFormation Template</a> that creates a single server running Neo4j.  This template creates a complete Neo4j installation, including Amazon AWS server, fixed IP address and backup storage.
+It&#8217;s intended to help application developers get up and running quickly with Neo4j without in-depth experience of Linux servers, AWS, or installing databases like Neo4j.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>For other Linux distributions, just download the <a href="http://neo4j.com/download">Neo4j binary</a> and unzip and start it.
-The binary distribution also provides scripts to install Neo4j as a service.</p>
+<p>This is provided on a contrib basis: we weclome Pull Requests.  Please take extra care to make sure that you&#8217;re running as many Amazon machines as you want, and not more.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Installing Neo4j on any Debian or Ubuntu system can be accomplished by following the instructions on <a href="http://debian.neo4j.org">our Debian Repository</a>.  We also offer an experimental <a href="http://yum.neo4j.org">Yum repository</a>.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>For other Linux distributions, download the <a href="http://neo4j.com/download">Neo4j tarball</a>; it can be uncompressed and run interactively.  The start scripts can also be run as init scripts.</p>
 </div>
 
 <div class="ulist side-nav">
@@ -659,12 +666,15 @@ The binary distribution also provides scripts to install Neo4j as a service.</p>
 </ul>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_neo4j_provisioning_solutions">Neo4j Provisioning Solutions</h3>
+<div  id="_neo4j_provisioning_solutions" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j Provisioning Solutions</h3>
 <div class="ulist">
 <ul>
 <li>
 <a href="https://github.com/michaelklishin/neo4j-server-chef-cookbook">Neo4j Server Chef Cookbook</a>
+</li>
+<li>
+<a href="https://forge.puppetlabs.com/amosjwood/neo4j">Neo4j Puppet Module</a>
 </li>
 <li>
 <a href="https://github.com/maxehmookau/neo4j-ansible">Ansible Playbooks</a> for booting a server running the Neo4j graph database system
@@ -675,8 +685,8 @@ The binary distribution also provides scripts to install Neo4j as a service.</p>
 </ul>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_windows_azure">Windows Azure</h3>
+<div  id="_windows_azure" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Windows Azure</h3>
 
 
 <div class="paragraph">
@@ -710,8 +720,8 @@ How to deploy Neo4j to Azure with Visual Studio 2012 - <a href="http://blog.jong
 </ul>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="docker">Neo4j with Docker</h3>
+<div  id="docker" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j with Docker</h3>
 
 
 <div class="paragraph">
@@ -765,8 +775,8 @@ Just add Neo4j on top and you&#8217;re done.</p>
 </ul>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_neo4j_cloud_hosting_providers">Neo4j Cloud Hosting Providers</h3>
+<div  id="_neo4j_cloud_hosting_providers" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j Cloud Hosting Providers</h3>
 
 
 <div class="paragraph">
@@ -774,8 +784,8 @@ Just add Neo4j on top and you&#8217;re done.</p>
 If you provision databases via their offering, you enter a contract with those partners, not with Neo Technology.</p>
 </div>
 
-<div class="sect3 "  >
-<h4 id="_graphenedb">GrapheneDB</h4>
+<div  id="_graphenedb" class="sect3 "  >
+<h4>GrapheneDB</h4>
 
 
 <div class="paragraph">
@@ -810,8 +820,8 @@ Support for community plugins and custom extensions
 </div>
 
 </div>
-<div class="sect3 "  >
-<h4 id="_graphstory">GraphStory</h4>
+<div  id="_graphstory" class="sect3 "  >
+<h4>GraphStory</h4>
 
 
 <div class="paragraph">
@@ -855,8 +865,8 @@ Secure access to your graph database and graph management tools
 </div>
 
 </div>
-<div class="sect3 "  >
-<h4 id="_structr_com">Structr.com</h4>
+<div  id="_structr_com" class="sect3 "  >
+<h4>Structr.com</h4>
 
 
 <div class="paragraph">
@@ -890,8 +900,8 @@ Managed Cloud Server
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_other_paas_integrations">Other PaaS Integrations</h3>
+<div  id="_other_paas_integrations" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Other PaaS Integrations</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -985,6 +995,7 @@ Managed Cloud Server
                   <div class="content inactive" id="panel5">
                      <ul>
                         <li><a href="/developer-resources/language-guides/java">Java</a></li>
+                        <li><a href="/developer-resources/language-guides/spring-data-neo4j">Spring Framework</a></li>
                         <li><a href="/developer-resources/language-guides/dotnet">.NET</a></li>
                         <li><a href="/developer-resources/language-guides/javascript">JavaScript</a></li>
                         <li><a href="/developer-resources/language-guides/python">Python</a></li>

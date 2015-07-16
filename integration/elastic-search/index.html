@@ -575,6 +575,13 @@ span.label {
 hr {
 	margin-top: 0.5rem;
 }
+td.tableblock, td p.tableblock,th.tableblock, th p.tableblock {
+	margin-bottom: 0px;
+	line-height: 1em;
+}
+th.tableblock, th p.tableblock {
+	font-weight:bold;
+}
 </style>
 
             <div>
@@ -613,8 +620,8 @@ You should have a sound understanding of both ElasticSearch and Neo4j, each data
 <hr>
 </div>
 </div>
-<div class="sect1 "  >
-<h3 id="_general_observations">General Observations</h3>
+<div  id="_general_observations" class="sect1 "  >
+<h3>General Observations</h3>
 
 
 <div class="paragraph">
@@ -644,8 +651,8 @@ If you plan to connect Neo4j to ElasticSearch using the default Java driver, ple
 </table>
 </div>
 </div>
-<div class="sect1 "  >
-<h3 id="_push_to_elasticsearch">Push to ElasticSearch</h3>
+<div  id="_push_to_elasticsearch" class="sect1 "  >
+<h3>Push to ElasticSearch</h3>
 
 
 <div class="paragraph">
@@ -684,8 +691,8 @@ elasticsearch.index_spec=people:Person(first_name,last_name), places:Place(name)
 </ul>
 </div>
 </div>
-<div class="sect1 "  >
-<h3 id="_elasticsearch_index_provider">ElasticSearch Index Provider</h3>
+<div  id="_elasticsearch_index_provider" class="sect1 "  >
+<h3>ElasticSearch Index Provider</h3>
 
 
 <div class="paragraph">
@@ -695,8 +702,8 @@ The Neo4j index provider APIs are quite straightforward to implement, so besides
 </div>
 
 </div>
-<div class="sect1 "  >
-<h3 id="_river_plugins">River Plugins</h3>
+<div  id="_river_plugins" class="sect1 "  >
+<h3>River Plugins</h3>
 
 
 <div class="paragraph">
@@ -775,6 +782,7 @@ Unfortunatly the River Plugin approach was deprecated by ElasticSearch, so that 
                   <div class="content inactive" id="panel5">
                      <ul>
                         <li><a href="/developer-resources/language-guides/java">Java</a></li>
+                        <li><a href="/developer-resources/language-guides/spring-data-neo4j">Spring Framework</a></li>
                         <li><a href="/developer-resources/language-guides/dotnet">.NET</a></li>
                         <li><a href="/developer-resources/language-guides/javascript">JavaScript</a></li>
                         <li><a href="/developer-resources/language-guides/python">Python</a></li>

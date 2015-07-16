@@ -575,6 +575,13 @@ span.label {
 hr {
 	margin-top: 0.5rem;
 }
+td.tableblock, td p.tableblock,th.tableblock, th p.tableblock {
+	margin-bottom: 0px;
+	line-height: 1em;
+}
+th.tableblock, th p.tableblock {
+	font-weight:bold;
+}
 </style>
 
             <div>
@@ -607,6 +614,7 @@ You should have <a href="/download">installed Neo4j</a> and made yourself famili
 <ul class="sectlevel2">
 <li><a href="#_neo4j_for_php_developers">Neo4j for PHP Developers</a></li>
 <li><a href="#_the_example_project">The Example Project</a></li>
+<li><a href="#_getting_started_tutorials">Getting started tutorials</a></li>
 <li><a href="#_using_neo4j_in_a_standalone_php_environment">Using Neo4j in a standalone PHP environment</a></li>
 <li><a href="#_neo4jphp">Neo4jPHP</a></li>
 <li><a href="#_neoclient">NeoClient</a></li>
@@ -621,8 +629,8 @@ You should have <a href="/download">installed Neo4j</a> and made yourself famili
 <hr>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_neo4j_for_php_developers">Neo4j for PHP Developers</h3>
+<div  id="_neo4j_for_php_developers" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j for PHP Developers</h3>
 <div class="imageblock">
 <p class="content">
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/neo4j-loves-php.png" alt="neo4j loves php">
@@ -654,31 +662,42 @@ You&#8217;re in the right place!</p>
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_the_example_project">The Example Project</h3>
-
-
-<div class="paragraph">
-<p>You can find out more about our example projects for many different languages <a href="../example-project">here</a>, you can also access it via the <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/">GitHub repository</a> for the Neo4j developer resources.
-Feel free to check them out.</p>
-</div>
-
+<div  id="_the_example_project" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>The Example Project</h3>
 
 
 <div class="paragraph">
 <p>It is a small one page webapp for our movies database.
-The front-end is the same for all drivers, just the backends show you how to connect to Neo4j from the different languages and drivers.</p>
+The front-end page is the same for all drivers, it consists of a movie search, detail info and a graph visualization of actors and movies.
+Each backend implementation shows you how to connect to Neo4j from the different languages and drivers.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p><a href="../example-project">Read More</a></p>
+<p>You can learn more about our small, consistent example project across many different language drivers <a href="../example-project">here</a>.
+You find the implementations for all drivers as <a href="https://github.com/neo4j-examples?query=movies">individual GitHub repositories</a>, that you can clone and deploy directly.</p>
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_using_neo4j_in_a_standalone_php_environment">Using Neo4j in a standalone PHP environment</h3>
+<div  id="_getting_started_tutorials" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Getting started tutorials</h3>
+<div class="ulist">
+<ul>
+<li>
+<a href="http://www.sitepoint.com/discover-graph-databases-neo4j-php/">Discover Graph Database with Neo4j and PHP (Sitepoint)</a>
+</li>
+<li>
+<a href="http://www.sitepoint.com/adding-social-network-features-php-app-neo4j/">Adding social newtork features to a PHP application with Neo4j (Sitepoint)</a>
+</li>
+<li>
+<a href="http://www.sitepoint.com/efficient-user-timelines-php-application-neo4j/">Efficient User timelines in a PHP application with Neo4j (Sitepoint)</a>
+</li>
+</ul>
+</div>
+</div>
+<div  id="_using_neo4j_in_a_standalone_php_environment" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Using Neo4j in a standalone PHP environment</h3>
 
 
 <div class="paragraph">
@@ -686,8 +705,8 @@ The front-end is the same for all drivers, just the backends show you how to con
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_neo4jphp">Neo4jPHP</h3>
+<div  id="_neo4jphp" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4jPHP</h3>
 
 
 <div class="paragraph">
@@ -697,7 +716,7 @@ The front-end is the same for all drivers, just the backends show you how to con
 <div class="ulist">
 <ul>
 <li>
-<a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/php/neo4jphp">Example Project with Neo4jPHP</a>
+<a href="https://github.com/neo4j-examples/movies-php-neo4jphp">Example Project with Neo4jPHP</a>
 </li>
 <li>
 <a href="http://github.com/jadell/neo4jphp">Neo4jPHP on GitHub</a>
@@ -711,8 +730,8 @@ Author: <a href="http://twitter.com/josh_adell">Josh Adell</a>
 </ul>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_neoclient">NeoClient</h3>
+<div  id="_neoclient" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>NeoClient</h3>
 
 
 <div class="paragraph">
@@ -739,11 +758,14 @@ Full High-Availability support, with master re-election detection, slaves fallba
 Minimalistic HA mechanism when running Neo4j Community Edition
 </li>
 <li>
-Full-fledged Response Graph format.
+Full-fledged Response Graph format
+</li>
+<li>
+Enterprise support by <a href="http://graphaware.com">GraphAware</a>
 <div class="ulist">
 <ul>
 <li>
-<a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/php/neoclient">Example Project with NeoClient</a>
+<a href="https://github.com/neo4j-examples/movies-php-neoclient">Example Project with NeoClient</a>
 </li>
 <li>
 <a href="https://github.com/neoxygen/neo4j-neoclient">NeoClient GitHub</a>
@@ -763,8 +785,8 @@ Author: <a href="http://twitter.com/ikwattro">Christophe Willemsen</a>
 </ul>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_neo4j_ogm_php">Neo4j-OGM-PHP</h3>
+<div  id="_neo4j_ogm_php" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j-OGM-PHP</h3>
 
 
 <div class="paragraph">
@@ -779,8 +801,8 @@ Author: <a href="http://twitter.com/ikwattro">Christophe Willemsen</a>
 
 <hr>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_with_the_symfony_framework">With the Symfony framework</h3>
+<div  id="_with_the_symfony_framework" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>With the Symfony framework</h3>
 
 
 <div class="paragraph">
@@ -788,8 +810,8 @@ Author: <a href="http://twitter.com/ikwattro">Christophe Willemsen</a>
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_neo4jogmbundle">Neo4jOGMBundle</h3>
+<div  id="_neo4jogmbundle" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4jOGMBundle</h3>
 
 
 <div class="paragraph">
@@ -803,8 +825,8 @@ Author: <a href="http://twitter.com/ikwattro">Christophe Willemsen</a>
 </div>
 
 <hr>
-<div class="sect3 "  >
-<h4 id="_neoeloquent_for_laravel">NeoEloquent for Laravel</h4>
+<div  id="_neoeloquent_for_laravel" class="sect3 "  >
+<h4>NeoEloquent for Laravel</h4>
 
 
 <div class="paragraph">
@@ -814,7 +836,7 @@ Author: <a href="http://twitter.com/ikwattro">Christophe Willemsen</a>
 <div class="ulist">
 <ul>
 <li>
-link: <a href="https://github.com/Vinelab/NeoEloquent">NeoEloquent on GitHub</a>
+<a href="https://github.com/Vinelab/NeoEloquent">NeoEloquent on GitHub</a>
 </li>
 <li>
 Author: <a href="https://github.com/Mulkave">Abed Halawi</a>
@@ -822,8 +844,8 @@ Author: <a href="https://github.com/Mulkave">Abed Halawi</a>
 </ul>
 </div>
 </div>
-<div class="sect3 "  >
-<h4 id="_neo4laravel">Neo4Laravel</h4>
+<div  id="_neo4laravel" class="sect3 "  >
+<h4>Neo4Laravel</h4>
 
 
 <div class="paragraph">
@@ -843,10 +865,10 @@ Author: <a href="https://github.com/lrezek">Lukas Rezek</a>
 <hr>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_other_drivers">Other Drivers</h3>
-<div class="sect3 "  >
-<h4 id="_neo4j_pdo">neo4j-pdo</h4>
+<div  id="_other_drivers" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Other Drivers</h3>
+<div  id="_neo4j_pdo" class="sect3 "  >
+<h4>neo4j-pdo</h4>
 
 
 <div class="paragraph">
@@ -866,8 +888,8 @@ Author: <a href="http://twitter.com/jakewins">Jacob Hansson</a>
 </ul>
 </div>
 </div>
-<div class="sect3 "  >
-<h4 id="_php_cypher">PHP Cypher</h4>
+<div  id="_php_cypher" class="sect3 "  >
+<h4>PHP Cypher</h4>
 
 
 <div class="paragraph">
@@ -887,10 +909,10 @@ Author: <a href="https://github.com/endyjasmi">Endy Jasmi</a>
 <hr>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_applications_built_with_php_and_neo4j">Applications built with PHP and Neo4j</h3>
-<div class="sect3 "  >
-<h4 id="_omnomhub">Omnomhub</h4>
+<div  id="_applications_built_with_php_and_neo4j" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Applications built with PHP and Neo4j</h3>
+<div  id="_omnomhub" class="sect3 "  >
+<h4>Omnomhub</h4>
 
 
 <div class="paragraph">
@@ -908,8 +930,8 @@ Author: <a href="https://twitter.com/michellesanver">Michelle Sanver</a>
 </ul>
 </div>
 </div>
-<div class="sect3 "  >
-<h4 id="_thesaurus_manager">Thesaurus Manager</h4>
+<div  id="_thesaurus_manager" class="sect3 "  >
+<h4>Thesaurus Manager</h4>
 
 
 <div class="paragraph">
@@ -919,10 +941,32 @@ Author: <a href="https://twitter.com/michellesanver">Michelle Sanver</a>
 <div class="ulist">
 <ul>
 <li>
-link: <a href="http://okulbilisim.github.io/thesaurus-manager/">Thesaurus Manager on Github</a>
+<a href="http://okulbilisim.github.io/thesaurus-manager/">Thesaurus Manager on Github</a>
 </li>
 <li>
 Author: <a href="https://github.com/hasantayyar">Hasan Tayyar</a>
+</li>
+</ul>
+</div>
+</div>
+<div  id="_graphgen" class="sect3 "  >
+<h4>Graphgen</h4>
+
+
+<div class="paragraph">
+<p>Graph generation engine based on the Cypher DSL</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="http://graphgen.neoxygen.io">Graphgen website</a>
+</li>
+<li>
+<a href="https://github.com/neoxygen/graphgen">Graphgen on Github</a>
+</li>
+<li>
+Author: <a href="https://github.com/ikwattro">Christophe Willemsen</a>
 </li>
 </ul>
 </div>
@@ -998,6 +1042,7 @@ Author: <a href="https://github.com/hasantayyar">Hasan Tayyar</a>
                   <div class="content active" id="panel5">
                      <ul>
                         <li><a href="/developer-resources/language-guides/java">Java</a></li>
+                        <li><a href="/developer-resources/language-guides/spring-data-neo4j">Spring Framework</a></li>
                         <li><a href="/developer-resources/language-guides/dotnet">.NET</a></li>
                         <li><a href="/developer-resources/language-guides/javascript">JavaScript</a></li>
                         <li><a href="/developer-resources/language-guides/python">Python</a></li>

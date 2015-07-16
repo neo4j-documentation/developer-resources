@@ -575,6 +575,13 @@ span.label {
 hr {
 	margin-top: 0.5rem;
 }
+td.tableblock, td p.tableblock,th.tableblock, th p.tableblock {
+	margin-bottom: 0px;
+	line-height: 1em;
+}
+th.tableblock, th p.tableblock {
+	font-weight:bold;
+}
 </style>
 
             <div>
@@ -594,7 +601,7 @@ While this guide is not comprehensive, it will introduce the different APIs and 
 <blockquote style="padding-left: 0;">
 You should be familiar with the <a href="/developer-resources/get-started/graph-database">graph database concepts</a> and the property graph model.
 Having <a href="/download">installed Neo4j</a> and tried out our <a href="/developer-resources/cypher">Cypher Query language</a> helps too.
-When with Neo4j, please use JDK 7 and your favorite IDE.
+When developing with Neo4j, please use JDK 7 or 8 and your favorite IDE.
 </blockquote>
 </div>
 
@@ -608,10 +615,10 @@ When with Neo4j, please use JDK 7 and your favorite IDE.
 <ul class="sectlevel2">
 <li><a href="#_neo4j_for_java_developers">Neo4j for Java Developers</a></li>
 <li><a href="#_the_example_project">The Example Project</a></li>
-<li><a href="#_using_neo4j_server_with_jdbc">Using Neo4j Server with JDBC</a></li>
-<li><a href="#_extending_neo4j_server_with_a_server_extension">Extending Neo4j Server with a Server Extension</a></li>
-<li><a href="#_using_spring_boot_with_jdbc">Using Spring Boot with JDBC</a></li>
-<li><a href="#_using_spring_data_neo4j">Using Spring Data Neo4j</a></li>
+<li><a href="#neo4j-jdbc">Using Neo4j Server with JDBC</a></li>
+<li><a href="#neo4j-ogm">Object-Graph-Mapping with Neo4j-OGM</a></li>
+<li><a href="#server-extension">Extending Neo4j Server with a Server Extension</a></li>
+<li><a href="#jcypher">JCypher</a></li>
 <li><a href="#_groovy">Groovy</a></li>
 <li><a href="#_clojure">Clojure</a></li>
 <li><a href="#_scala">Scala</a></li>
@@ -622,8 +629,8 @@ When with Neo4j, please use JDK 7 and your favorite IDE.
 <hr>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_neo4j_for_java_developers">Neo4j for Java Developers</h3>
+<div  id="_neo4j_for_java_developers" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j for Java Developers</h3>
 <div class="imageblock">
 <p class="content">
 <img src="http://assets.neo4j.org/img/languages/java.jpg" alt="java">
@@ -657,7 +664,7 @@ You can also choose from any useful drivers wrapping that API, which exist eithe
 
 
 <div class="paragraph">
-<p>One example is <a href="http://projects.spring.io/spring-data-neo4j/">Spring Data Neo4j</a>, which integrates tightly with the <a href="http://spring.io/">SpringFramework</a> and offers Object-Graph mapping on top of Neo4j.</p>
+<p>One example is <a href="../spring-data-neo4j">Spring Data Neo4j</a>, which integrates tightly with the <a href="http://spring.io/">SpringFramework</a> and offers Object-Graph mapping on top of Neo4j.</p>
 </div>
 
 
@@ -674,31 +681,26 @@ With its non-transactional, low-level batch-insertion API it can ingest millions
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_the_example_project">The Example Project</h3>
-
-
-<div class="paragraph">
-<p>You can find out more about our example projects for many different languages <a href="../example-project">here</a>, you can also access it via the <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/">GitHub repository</a> for the Neo4j developer resources.
-Feel free to check them out.</p>
-</div>
-
+<div  id="_the_example_project" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>The Example Project</h3>
 
 
 <div class="paragraph">
 <p>It is a small one page webapp for our movies database.
-The front-end is the same for all drivers, just the backends show you how to connect to Neo4j from the different languages and drivers.</p>
+The front-end page is the same for all drivers, it consists of a movie search, detail info and a graph visualization of actors and movies.
+Each backend implementation shows you how to connect to Neo4j from the different languages and drivers.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p><a href="../example-project">Read More</a></p>
+<p>You can learn more about our small, consistent example project across many different language drivers <a href="../example-project">here</a>.
+You find the implementations for all drivers as <a href="https://github.com/neo4j-examples?query=movies">individual GitHub repositories</a>, that you can clone and deploy directly.</p>
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_using_neo4j_server_with_jdbc">Using Neo4j Server with JDBC</h3>
+<div  id="neo4j-jdbc" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Using Neo4j Server with JDBC</h3>
 
 
 <div class="paragraph">
@@ -710,13 +712,48 @@ Many tools for ETL, Business Intelligence, and data management also use JDBC dri
 
 <div class="paragraph">
 <p>As Cypher, like SQL, is a textual parametrizable query language that can return tabular results, it was possible for us to support the JDBC APIs and make a Neo4j-JDBC driver available.
-More details on how to use it can be found with our example project for <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/java/jdbc/">Java-JDBC</a>.
+More details on how to use it can be found with our example project for <a href="https://github.com/neo4j-examples/movies-java-jdbc">Java-JDBC</a>.
 There, we implement the backend as a minimal Java webapp that leverages Neo4j-JDBC to connect to Neo4j Server.</p>
 </div>
 
+<div class="ulist">
+<ul>
+<li>
+<a href="http://github.com/neo4j-contrib/neo4j-jdbc">Neo4j-JDBC on GitHub</a>
+</li>
+</ul>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_extending_neo4j_server_with_a_server_extension">Extending Neo4j Server with a Server Extension</h3>
+</div>
+<div  id="neo4j-ogm" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Object-Graph-Mapping with Neo4j-OGM</h3>
+
+
+<div class="paragraph">
+<p>Developing Java Business Applications often requires mapping domain object networks to your database.
+The Neo4j-OGM library is a pure Java library that can store, read and query (annotated) domain objects using Neo4j.
+It uses Cypher statements execute those operations with Neo4j Server.
+The OGM supports tracking changes to minimize necessary updates and transitive persistence (reading and updating neighborhoods of an object).</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="http://neo4j.com/blog/neo4j-java-object-graph-mapper-released/">Blog: Neo4j-OGM Released</a>
+</li>
+<li>
+<a href="https://github.com/neo4j/neo4j-ogm">Neo4j-OGM on GitHub</a>
+</li>
+<li>
+<a href="http://neo4j.com/docs/ogm/java/stable">Refereence Documentation</a>
+</li>
+<li>
+<a href="https://github.com/neo4j-examples/neo4j-ogm-university">Example Project: University Management</a>
+</li>
+</ul>
+</div>
+</div>
+<div  id="server-extension" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Extending Neo4j Server with a Server Extension</h3>
 
 
 <div class="paragraph">
@@ -747,105 +784,71 @@ The path-finding and traversal APIs are also available.</p>
 
 
 <div class="paragraph">
-<p>The <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/java/server-extension">example project</a> shows how you would do that for our movie application endpoints.</p>
+<p>The <a href="https://github.com/neo4j-examples/movies-java-server-extension">example project</a> shows how you would do that for our movie application endpoints.</p>
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_using_spring_boot_with_jdbc">Using Spring Boot with JDBC</h3>
+<div  id="jcypher" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>JCypher</h3>
 
 
 <div class="paragraph">
-<p>Spring Boot is a rapid application development infrastructure that allows you to quickly write Spring-based applications with little setup and configuration.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Here we use a simple Spring Boot WebMVC and JDBC application to provide a backend for our movie application.</p>
+<p>JCypher provides seamlessly integrated Java access to Neo4j at different levels of abstraction:</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>It uses the well known APIs of <code>@RestController</code> and <code>JdbcTemplate</code> to do the job.</p>
+<p>At the topmost level of abstraction, JCypher allows you to <strong>map complex business domains</strong> to graph databases.
+You can take an arbitrarily complex graph of domain objects or POJOs and store it in a straightforward way into Neo4j for later retrieval.
+You do not need to modify your domain object classes in any way, there is also no need for annotations.
+JCypher provides a default mapping out of the box.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>More details can be found in the <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/java/spring-boot-jdbc">example project</a>.</p>
-</div>
-
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_using_spring_data_neo4j">Using Spring Data Neo4j</h3>
-
-
-<div class="paragraph">
-<p>Spring Data Neo4j was the first Spring Data project and enables convenient integration of Neo4j in your Spring-based application.
-It provides object-graph mapping functionality and other features common to the Spring Data projects.</p>
+<p>At the same level of abstraction, <strong>Domain Queries</strong> provide the power and expressiveness of queries on a graph database,
+while being formulated on domain objects or on types of domain objects, respectively.
+The true power of Domain Queries comes from the fact, that the graph of domain objects is backed by a graph database.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>To use Neo4j with Spring Data Neo4j, you just add the dependency to your build setup.
-After setting up a simple Java-based Spring configuration, and annotating your <code>@Node-</code> and <code>@RelationshipEntity</code>, you can use <code>Neo4jTemplate</code> to access Neo4j APIs and object-graph mapping functionality.
-Additionally, you can leverage the convenient Spring Data repositories to get interface-based DAO implementations injected into your Spring Components.</p>
-</div>
-
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title label">Note</div>
-</td>
-<td class="content">
-The current version of Spring Data Neo4j works best with an embedded Neo4j database.
-To achieve highest-performance Neo4j-Server integration, move your SDN persistence layer into an Server Extension.
-</td>
-</tr>
-</table>
-</div>
-
-
-<div class="paragraph">
-<p>The example uses Spring-Boot with Spring-Data-Neo4j and Spring-Data-REST and an additional RestMVCController.</p>
+<p>At the next lower level of abstraction – access to graph databases – is provided based on a generic graph model.
+While simple, the model allows you to easily navigate and manipulate graphs.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>See the <a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/java/./spring-data-neo4j">example project</a> for further details.</p>
+<p>At the bottom level of abstraction, a <strong>native Java DSL</strong> in the form of a fluent Java API allows you to intuitively and comfortably formulate queries against Neo4j.</p>
 </div>
 
 <div class="ulist">
 <ul>
 <li>
-<a href="http://projects.spring.io/spring-data-neo4j">Spring Data Neo4j Project</a>
+<a href="http://neo4j.com/blog/jcypher-focus-on-your-domain-model-not-how-to-map-it-to-the-database/">Article Neo4j Blog</a>
 </li>
 <li>
-Authors: Michael Hunger, Oliver Gierke, Nicki Watt and many contributors
+<a href="http://github.com/Wolfgang-Schuetzelhofer/jcypher">JCypher on GitHub</a>
 </li>
 <li>
-<a href="http://www.youtube.com/watch?v=ZfbJ1ZJdb_A" class="video">Webinar Spring Boot &amp; SDN</a>
-</li>
-<li>
-<a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/java/spring-data-neo4j">Spring Data Neo4j Example Project</a>
+<a href="http://jcypher.iot-solutions.net/">JCypher HomePage</a>
 </li>
 </ul>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_groovy">Groovy</h3>
+<div  id="_groovy" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Groovy</h3>
 <div class="imageblock">
 <p class="content">
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/grails.png" alt="grails" width="200">
 </p>
 </div>
-<div class="sect3 "  >
-<h4 id="__a_href_http_www_grails_org_plugin_neo4j_neo4j_grails_plugin_a"><a href="http://www.grails.org/plugin/neo4j">Neo4j Grails Plugin</a></h4>
+<div  id="__a_href_http_www_grails_org_plugin_neo4j_neo4j_grails_plugin_a" class="sect3 "  >
+<h4><a href="http://www.grails.org/plugin/neo4j">Neo4j Grails Plugin</a></h4>
 
 
 <div class="paragraph">
@@ -860,15 +863,15 @@ Authors: Michael Hunger, Oliver Gierke, Nicki Watt and many contributors
 
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_clojure">Clojure</h3>
+<div  id="_clojure" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Clojure</h3>
 <div class="imageblock">
 <p class="content">
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/clojure.png" alt="clojure">
 </p>
 </div>
-<div class="sect3 "  >
-<h4 id="__a_href_http_clojureneo4j_info_neocons_a"><a href="http://clojureneo4j.info/">Neocons</a></h4>
+<div  id="__a_href_http_clojureneo4j_info_neocons_a" class="sect3 "  >
+<h4><a href="http://clojureneo4j.info/">Neocons</a></h4>
 
 
 <div class="paragraph">
@@ -882,8 +885,8 @@ Authors: Michael Hunger, Oliver Gierke, Nicki Watt and many contributors
 </div>
 
 </div>
-<div class="sect3 "  >
-<h4 id="__a_href_http_github_com_wagjo_borneo_borneo_a"><a href="http://github.com/wagjo/borneo">Borneo</a></h4>
+<div  id="__a_href_http_github_com_wagjo_borneo_borneo_a" class="sect3 "  >
+<h4><a href="http://github.com/wagjo/borneo">Borneo</a></h4>
 
 
 <div class="paragraph">
@@ -893,15 +896,15 @@ Clojure wrapper for Neo4j, a graph database, in embedded JVM mode.</p>
 
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_scala">Scala</h3>
+<div  id="_scala" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Scala</h3>
 <div class="imageblock">
 <p class="content">
 <img src="http://assets.neo4j.org/img/languages/scala.png" alt="scala" width="200">
 </p>
 </div>
-<div class="sect3 "  >
-<h4 id="_anormcypher">AnormCypher</h4>
+<div  id="_anormcypher" class="sect3 "  >
+<h4>AnormCypher</h4>
 
 
 <div class="paragraph">
@@ -928,33 +931,11 @@ Clojure wrapper for Neo4j, a graph database, in embedded JVM mode.</p>
 </ul>
 </div>
 </div>
-<div class="sect3 "  >
-<h4 id="_neo4j_scala">Neo4j-Scala</h4>
-
-
-<div class="paragraph">
-<p>Author: Christopher Schmidt</p>
 </div>
-
-
-
-<div class="paragraph">
-<p>The Neo4j Scala wrapper library allows you use Neo4j&#8217;s open source graph database through a domain-specific language.</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-<a href="https://github.com/FaKod/neo4j-scala/">Source</a>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_jpa">JPA</h3>
-<div class="sect3 "  >
-<h4 id="_hibernate_ogm">Hibernate OGM</h4>
+<div  id="_jpa" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>JPA</h3>
+<div  id="_hibernate_ogm" class="sect3 "  >
+<h4>Hibernate OGM</h4>
 
 
 <div class="paragraph">
@@ -980,52 +961,6 @@ Clojure wrapper for Neo4j, a graph database, in embedded JVM mode.</p>
 </li>
 <li>
 <a href="https://github.com/TimmyStorms/hibernate-ogm-neo4j-example">Example</a>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3 "  >
-<h4 id="__a_href_http_www_datanucleus_org_datanucleus_neo4j_plugin_a"><a href="http://www.datanucleus.org/">DataNucleus Neo4j Plugin</a></h4>
-
-
-<div class="paragraph">
-<p>Author: Andy Jefferson</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>datanucleus-neo4j provides persistence of Java objects to Neo4j. It builds on top of the basic persistence provided by datanucleus-core.</p>
-</div>
-
-</div>
-<div class="sect3 "  >
-<h4 id="_kundera">Kundera</h4>
-
-
-<div class="paragraph">
-<p>Author: Amresh Amry</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Kundera is a JPA 2.0-compliant, object-datastore mapping library for NoSQL datastores.</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-<a href="https://github.com/impetus-opensource/Kundera">Source</a>
-</li>
-<li>
-<a href="http://groups.google.com/group/kundera-discuss">Forum</a>
-</li>
-<li>
-<a href="https://github.com/impetus-opensource/Kundera/wiki/Graph-Database-Support">Docs</a>
-</li>
-<li>
-<a href="http://github.com/impetus-opensource/Kundera-Examples">Examples</a>
 </li>
 </ul>
 </div>
@@ -1101,6 +1036,7 @@ Clojure wrapper for Neo4j, a graph database, in embedded JVM mode.</p>
                   <div class="content active" id="panel5">
                      <ul>
                         <li><a href="/developer-resources/language-guides/java">Java</a></li>
+                        <li><a href="/developer-resources/language-guides/spring-data-neo4j">Spring Framework</a></li>
                         <li><a href="/developer-resources/language-guides/dotnet">.NET</a></li>
                         <li><a href="/developer-resources/language-guides/javascript">JavaScript</a></li>
                         <li><a href="/developer-resources/language-guides/python">Python</a></li>

@@ -575,6 +575,13 @@ span.label {
 hr {
 	margin-top: 0.5rem;
 }
+td.tableblock, td p.tableblock,th.tableblock, th p.tableblock {
+	margin-bottom: 0px;
+	line-height: 1em;
+}
+th.tableblock, th p.tableblock {
+	font-weight:bold;
+}
 </style>
 
             <div>
@@ -617,8 +624,8 @@ You should have looked into the <a href="/developer-resources/get-started/graph-
 <hr>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_relational_databases">Relational Databases</h3>
+<div  id="_relational_databases" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Relational Databases</h3>
 
 
 <div class="paragraph">
@@ -660,12 +667,12 @@ Those costly join operations are usually addressed by denormalising data to redu
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_presentation_relational_to_big_graph">Presentation: Relational to Big Graph</h3>
+<div  id="_presentation_relational_to_big_graph" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Presentation: Relational to Big Graph</h3>
 <iframe src="//slideshare.net/slideshow/embed_code/key/1ZfEin6j7lSojk" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//slideshare.net/neo4j/relational-to-big-graph" title="Relational to Big Graph" target="_blank">Relational to Big Graph</a> </strong></div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_from_relational_to_graph_databases">From Relational to Graph Databases</h3>
+<div  id="_from_relational_to_graph_databases" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>From Relational to Graph Databases</h3>
 
 
 <div class="paragraph">
@@ -756,8 +763,8 @@ A graph is exactly that, a clear model of the domain, focused on the use-cases y
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_data_model_transformation">Data Model Transformation</h3>
+<div  id="_data_model_transformation" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Data Model Transformation</h3>
 
 
 <div class="paragraph">
@@ -818,8 +825,8 @@ Join tables are transformed into relationships, columns on those tables become r
 </ul>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_working_with_neo4j">Working with Neo4j</h3>
+<div  id="_working_with_neo4j" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Working with Neo4j</h3>
 
 
 <div class="paragraph">
@@ -894,16 +901,16 @@ RETURN p.name</code></pre>
 </ul>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_connecting_to_neo4j">Connecting to Neo4j</h3>
+<div  id="_connecting_to_neo4j" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Connecting to Neo4j</h3>
 
 
 <div class="paragraph">
 <p>If you&#8217;ve installed and started Neo4j as a server on your system, you can interact with the database with the built-in Neo4j browser application (like sql-plus on steroids).</p>
 </div>
 
-<div class="sect3 "  >
-<h4 id="_http_api">HTTP-API</h4>
+<div  id="_http_api" class="sect3 "  >
+<h4>HTTP-API</h4>
 
 
 <div class="paragraph">
@@ -941,8 +948,8 @@ You can run it directly from the Neo4j browser, here shown with the plain JSON r
 </div>
 </div>
 </div>
-<div class="sect3 "  >
-<h4 id="_language_drivers">Language Drivers</h4>
+<div  id="_language_drivers" class="sect3 "  >
+<h4>Language Drivers</h4>
 
 
 <div class="paragraph">
@@ -990,8 +997,8 @@ try (PreparedStatement stmt = con.prepareStatement(QUERY)) {
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_importing_data_from_a_relational_database">Importing Data from a Relational Database</h3>
+<div  id="_importing_data_from_a_relational_database" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Importing Data from a Relational Database</h3>
 
 
 <div class="paragraph">
@@ -1166,6 +1173,7 @@ CREATE (person)-[:EMPLOYEE]-&gt;(dept)</code></pre>
                   <div class="content inactive" id="panel5">
                      <ul>
                         <li><a href="/developer-resources/language-guides/java">Java</a></li>
+                        <li><a href="/developer-resources/language-guides/spring-data-neo4j">Spring Framework</a></li>
                         <li><a href="/developer-resources/language-guides/dotnet">.NET</a></li>
                         <li><a href="/developer-resources/language-guides/javascript">JavaScript</a></li>
                         <li><a href="/developer-resources/language-guides/python">Python</a></li>

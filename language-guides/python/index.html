@@ -575,6 +575,13 @@ span.label {
 hr {
 	margin-top: 0.5rem;
 }
+td.tableblock, td p.tableblock,th.tableblock, th p.tableblock {
+	margin-bottom: 0px;
+	line-height: 1em;
+}
+th.tableblock, th p.tableblock {
+	font-weight:bold;
+}
 </style>
 
             <div>
@@ -664,8 +671,8 @@ While we do not provide a specific web framework recommendation, both the lightw
 <hr>
 </div>
 </div>
-<div class="sect1 "  >
-<h3 id="_py2neo">Py2neo</h3>
+<div  id="_py2neo" class="sect1 "  >
+<h3>Py2neo</h3>
 
 
 <div class="paragraph">
@@ -705,6 +712,10 @@ The core library has no external dependencies and has been carefully designed to
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://py2neo.org/" class="bare">http://py2neo.org/</a></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example Project:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/neo4j-examples/movies-python-py2neo-2.0" class="bare">https://github.com/neo4j-examples/movies-python-py2neo-2.0</a></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Python:</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2.7 / 3.3 / 3.4</p></td>
 </tr>
@@ -714,16 +725,16 @@ The core library has no external dependencies and has been carefully designed to
 </tr>
 </tbody>
 </table>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_installation">Installation</h3>
+<div  id="_installation" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Installation</h3>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="bash"><code>pip install py2neo</code></pre>
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_example">Example</h3>
+<div  id="_example" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Example</h3>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="python"><code>from py2neo import Graph, Path
@@ -741,8 +752,8 @@ graph.create(friends)</code></pre>
 <hr>
 </div>
 </div>
-<div class="sect1 "  >
-<h3 id="_neo4jrestclient">Neo4jRestClient</h3>
+<div  id="_neo4jrestclient" class="sect1 "  >
+<h3>Neo4jRestClient</h3>
 
 
 <div class="paragraph">
@@ -777,10 +788,14 @@ However, a new syntax is introduced in order to reach a more pythonic style and 
 <td class="tableblock halign-left valign-top"><p class="tableblock">Documentation:</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://neo4j-rest-client.readthedocs.org/" class="bare">http://neo4j-rest-client.readthedocs.org/</a></p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example Project:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/neo4j-examples/movies-python-neo4jrestclient" class="bare">https://github.com/neo4j-examples/movies-python-neo4jrestclient</a></p></td>
+</tr>
 </tbody>
 </table>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_installation_2">Installation</h3>
+<div  id="_installation_2" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Installation</h3>
 
 
 <div class="paragraph">
@@ -814,21 +829,11 @@ However, a new syntax is introduced in order to reach a more pythonic style and 
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="bash"><code>$ pip install git+https://github.com/versae/neo4j-rest-client.git</code></pre>
 </div>
 </div>
-</div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_see_also">See also</h3>
-<div class="ulist">
-<ul>
-<li>
-<a href="https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/python/neo4jrestclient">Example Project with Neo4jRestClient</a>
-</li>
-</ul>
-</div>
 <hr>
 </div>
 </div>
-<div class="sect1 "  >
-<h3 id="_bulbflow">Bulbflow</h3>
+<div  id="_bulbflow" class="sect1 "  >
+<h3>Bulbflow</h3>
 
 
 <div class="paragraph">
@@ -873,8 +878,8 @@ It’s like an ORM for graphs.</p>
 </tr>
 </tbody>
 </table>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_installation_3">Installation</h3>
+<div  id="_installation_3" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Installation</h3>
 
 
 <div class="paragraph">
@@ -908,8 +913,8 @@ $ source env/bin/activate
 <hr>
 </div>
 </div>
-<div class="sect1 "  >
-<h3 id="_neo4jdb_python">Neo4jdb-Python</h3>
+<div  id="_neo4jdb_python" class="sect1 "  >
+<h3>Neo4jdb-Python</h3>
 
 
 <div class="paragraph">
@@ -952,8 +957,8 @@ $ source env/bin/activate
 </tr>
 </tbody>
 </table>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_installation_4">Installation</h3>
+<div  id="_installation_4" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Installation</h3>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="bash"><code>pip install neo4jdb</code></pre>
@@ -962,8 +967,8 @@ $ source env/bin/activate
 <hr>
 </div>
 </div>
-<div class="sect1 "  >
-<h3 id="_neo4django">Neo4django</h3>
+<div  id="_neo4django" class="sect1 "  >
+<h3>Neo4django</h3>
 
 
 <div class="paragraph">
@@ -998,8 +1003,8 @@ $ source env/bin/activate
 </tr>
 </tbody>
 </table>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_installation_5">Installation</h3>
+<div  id="_installation_5" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Installation</h3>
 
 
 <div class="paragraph">
@@ -1025,8 +1030,8 @@ $ source env/bin/activate
 <hr>
 </div>
 </div>
-<div class="sect1 "  >
-<h3 id="_neomodel">NeoModel</h3>
+<div  id="_neomodel" class="sect1 "  >
+<h3>NeoModel</h3>
 
 
 <div class="paragraph">
@@ -1074,8 +1079,8 @@ $ source env/bin/activate
 </tr>
 </tbody>
 </table>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_installation_6">Installation</h3>
+<div  id="_installation_6" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Installation</h3>
 
 
 <div class="paragraph">
@@ -1101,8 +1106,8 @@ $ source env/bin/activate
 <hr>
 </div>
 </div>
-<div class="sect1 "  >
-<h3 id="_further_reading">Further Reading</h3>
+<div  id="_further_reading" class="sect1 "  >
+<h3>Further Reading</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1199,6 +1204,7 @@ $ source env/bin/activate
                   <div class="content active" id="panel5">
                      <ul>
                         <li><a href="/developer-resources/language-guides/java">Java</a></li>
+                        <li><a href="/developer-resources/language-guides/spring-data-neo4j">Spring Framework</a></li>
                         <li><a href="/developer-resources/language-guides/dotnet">.NET</a></li>
                         <li><a href="/developer-resources/language-guides/javascript">JavaScript</a></li>
                         <li><a href="/developer-resources/language-guides/python">Python</a></li>

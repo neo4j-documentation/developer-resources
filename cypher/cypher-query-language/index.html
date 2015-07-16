@@ -575,6 +575,13 @@ span.label {
 hr {
 	margin-top: 0.5rem;
 }
+td.tableblock, td p.tableblock,th.tableblock, th p.tableblock {
+	margin-bottom: 0px;
+	line-height: 1em;
+}
+th.tableblock, th p.tableblock {
+	font-weight:bold;
+}
 </style>
 
             <div>
@@ -626,8 +633,8 @@ You should have familiarized yourself with <a href="/developer-resources/get-sta
 <hr>
 </div>
 </div>
-<div class="sect1 "  >
-<h3 id="_about_cypher">About Cypher</h3>
+<div  id="_about_cypher" class="sect1 "  >
+<h3>About Cypher</h3>
 
 
 <div class="paragraph">
@@ -640,8 +647,8 @@ It allows us to describe <strong>what</strong> we want to select, insert, update
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/cypher_pattern_simple.png" alt="cypher pattern simple">
 </p>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_nodes">Nodes</h3>
+<div  id="_nodes" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Nodes</h3>
 
 
 <div class="paragraph">
@@ -689,8 +696,8 @@ RETURN node2.propertyA, node2.propertyB</code></pre>
 </ul>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_relationships">Relationships</h3>
+<div  id="_relationships" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Relationships</h3>
 
 
 <div class="paragraph">
@@ -732,8 +739,8 @@ RETURN rel.property</code></pre>
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_labels">Labels</h3>
+<div  id="_labels" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Labels</h3>
 
 
 <div class="paragraph">
@@ -760,16 +767,16 @@ RETURN node1, node2</code></pre>
 </div>
 </div>
 </div>
-<div class="sect1 "  >
-<h3 id="_practical_example">Practical Example</h3>
+<div  id="_practical_example" class="sect1 "  >
+<h3>Practical Example</h3>
 
 
 <div class="paragraph">
 <p>Let&#8217;s try out what we&#8217;ve learned.</p>
 </div>
 
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_create_a_record_for_yourself">Create a Record for Yourself</h3>
+<div  id="_create_a_record_for_yourself" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Create a Record for Yourself</h3>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (you:Person {name:"You"})
@@ -802,8 +809,8 @@ RETURN you,like,neo</code></pre>
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_create_your_friends">Create Your Friends</h3>
+<div  id="_create_your_friends" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Create Your Friends</h3>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you:Person {name:"You"})
@@ -818,8 +825,8 @@ FOREACH (name in ["Johan","Rajesh","Anna","Julia","Andrew"] |
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_find_your_friends">Find Your Friends</h3>
+<div  id="_find_your_friends" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Find Your Friends</h3>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you {name:"You"})-[:FRIEND]-&gt;(yourFriends)
@@ -827,8 +834,8 @@ RETURN you, yourFriends</code></pre>
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_create_second_degree_friends_and_expertise">Create Second Degree Friends and Expertise</h3>
+<div  id="_create_second_degree_friends_and_expertise" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Create Second Degree Friends and Expertise</h3>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (neo:Database {name:"Neo4j"})
@@ -844,8 +851,8 @@ CREATE (johan)-[:FRIEND]-&gt;(:Person:Expert {name:"Max"})-[:WORKED_WITH]-&gt;(n
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_find_someone_who_can_help_you_learn_neo4j">Find Someone Who Can Help You Learn Neo4j</h3>
+<div  id="_find_someone_who_can_help_you_learn_neo4j" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Find Someone Who Can Help You Learn Neo4j</h3>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you {name:"You"}), (expert)-[:WORKED_WITH]-&gt;(db:Database {name:"Neo4j"}),
@@ -941,6 +948,7 @@ RETURN p,db</code></pre>
                   <div class="content inactive" id="panel5">
                      <ul>
                         <li><a href="/developer-resources/language-guides/java">Java</a></li>
+                        <li><a href="/developer-resources/language-guides/spring-data-neo4j">Spring Framework</a></li>
                         <li><a href="/developer-resources/language-guides/dotnet">.NET</a></li>
                         <li><a href="/developer-resources/language-guides/javascript">JavaScript</a></li>
                         <li><a href="/developer-resources/language-guides/python">Python</a></li>

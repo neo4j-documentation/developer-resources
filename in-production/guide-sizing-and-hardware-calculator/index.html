@@ -575,6 +575,13 @@ span.label {
 hr {
 	margin-top: 0.5rem;
 }
+td.tableblock, td p.tableblock,th.tableblock, th p.tableblock {
+	margin-bottom: 0px;
+	line-height: 1em;
+}
+th.tableblock, th p.tableblock {
+	font-weight:bold;
+}
 </style>
 
             <div>
@@ -618,8 +625,8 @@ You should know that Neo4j employs its own persistence and caching implementatio
 <hr>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_neo4j_s_architecture">Neo4j&#8217;s Architecture</h3>
+<div  id="_neo4j_s_architecture" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j&#8217;s Architecture</h3>
 
 
 <div class="paragraph">
@@ -628,8 +635,8 @@ On top of the memory mapped filesystem, Neo4j employs additional caches for load
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_disk_storage">Disk Storage</h3>
+<div  id="_disk_storage" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Disk Storage</h3>
 
 
 <div class="paragraph">
@@ -678,8 +685,8 @@ Total  is 110.2MB</pre>
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_low_level_cache">Low Level Cache</h3>
+<div  id="_low_level_cache" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Low Level Cache</h3>
 
 
 <div class="paragraph">
@@ -689,8 +696,8 @@ You should try to memory-map as much data as your RAM allows (allow for 6 to 16G
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_optimizing">Optimizing</h3>
+<div  id="_optimizing" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Optimizing</h3>
 
 
 <div class="paragraph">
@@ -714,8 +721,8 @@ Consider using fast disks—SSDs or enterprise flash hardware to bring up the bo
 </ul>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_performance_optimization">Performance Optimization</h3>
+<div  id="_performance_optimization" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Performance Optimization</h3>
 
 
 <div class="paragraph">
@@ -739,8 +746,8 @@ Invest in faster disks: SSDs or enterprise flash hardware
 </ul>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_hardware_sizing_calculator">Hardware sizing calculator</h3>
+<div  id="_hardware_sizing_calculator" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Hardware sizing calculator</h3>
 <div class="row">
 <div class="small-4 columns">&nbsp;</div>
 <div class="small-4 columns"> <a href="/hardware-sizing" class="small button">Hardware Sizing Calculator →</a> </div>
@@ -817,6 +824,7 @@ Invest in faster disks: SSDs or enterprise flash hardware
                   <div class="content inactive" id="panel5">
                      <ul>
                         <li><a href="/developer-resources/language-guides/java">Java</a></li>
+                        <li><a href="/developer-resources/language-guides/spring-data-neo4j">Spring Framework</a></li>
                         <li><a href="/developer-resources/language-guides/dotnet">.NET</a></li>
                         <li><a href="/developer-resources/language-guides/javascript">JavaScript</a></li>
                         <li><a href="/developer-resources/language-guides/python">Python</a></li>

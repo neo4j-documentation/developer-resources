@@ -575,6 +575,13 @@ span.label {
 hr {
 	margin-top: 0.5rem;
 }
+td.tableblock, td p.tableblock,th.tableblock, th p.tableblock {
+	margin-bottom: 0px;
+	line-height: 1em;
+}
+th.tableblock, th p.tableblock {
+	font-weight:bold;
+}
 </style>
 
             <div>
@@ -615,8 +622,8 @@ You should have a basic understanding of the <a href="/developer-resources/get-s
 <hr>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_a_few_words_about_cypher">A few words about Cypher</h3>
+<div  id="_a_few_words_about_cypher" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>A few words about Cypher</h3>
 
 
 <div class="paragraph">
@@ -681,8 +688,8 @@ the support of many collection functions, operations and predicates and the abil
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_data_model_transformation">Data Model Transformation</h3>
+<div  id="_data_model_transformation" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Data Model Transformation</h3>
 
 
 <div class="paragraph">
@@ -726,8 +733,8 @@ Entity table rows are converted into nodes and foreign-key relationships and joi
 </ul>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_data_import">Data Import</h3>
+<div  id="_data_import" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Data Import</h3>
 
 
 <div class="paragraph">
@@ -761,8 +768,8 @@ And directly create the graph structure by using a Neo4j driver for your stack t
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_cypher_is_all_about_patterns">Cypher is all about Patterns</h3>
+<div  id="_cypher_is_all_about_patterns" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Cypher is all about Patterns</h3>
 
 
 <div class="paragraph">
@@ -802,8 +809,8 @@ That&#8217;s especially helpful when making sure that certain patterns shouldn&#
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_northwind_example_model">Northwind Example Model</h3>
+<div  id="_northwind_example_model" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Northwind Example Model</h3>
 
 
 <div class="paragraph">
@@ -817,16 +824,16 @@ You&#8217;ll find customers, products, orders, employees, shippers and categorie
 <p>Please refer to the relational and graph model below when considering the data structures in the following queries.</p>
 </div>
 
-<div class="sect3 "  >
-<h4 id="_relational_model">Relational model</h4>
+<div  id="_relational_model" class="sect3 "  >
+<h4>Relational model</h4>
 <div class="imageblock">
 <p class="content">
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/Northwind_diagram.jpg" alt="Northwind diagram">
 </p>
 </div>
 </div>
-<div class="sect3 "  >
-<h4 id="_graph_model">Graph Model</h4>
+<div  id="_graph_model" class="sect3 "  >
+<h4>Graph Model</h4>
 <div class="imageblock">
 <p class="content">
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/northwind_graph_simple.png" alt="northwind graph simple" width="800">
@@ -834,16 +841,16 @@ You&#8217;ll find customers, products, orders, employees, shippers and categorie
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_querying_the_data_step_by_step">Querying the Data Step by Step</h3>
+<div  id="_querying_the_data_step_by_step" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Querying the Data Step by Step</h3>
 
 
 <div class="paragraph">
 <p>The intent of this guide is to introduce Cypher by comparing it with the equivalent SQL statements, so that your existing SQL knowledge allows your to understand it immediately.</p>
 </div>
 
-<div class="sect3 "  >
-<h4 id="_find_all_products">Find all Products</h4>
+<div  id="_find_all_products" class="sect3 "  >
+<h4>Find all Products</h4>
 
 
 <div class="paragraph">
@@ -911,8 +918,8 @@ LIMIT 10;</code></pre>
 </div>
 </div>
 </div>
-<div class="sect3 "  >
-<h4 id="_find_single_product_by_name">Find single Product by Name</h4>
+<div  id="_find_single_product_by_name" class="sect3 "  >
+<h4>Find single Product by Name</h4>
 
 
 <div class="paragraph">
@@ -975,8 +982,8 @@ RETURN p.productName, p.unitPrice;</code></pre>
 </div>
 </div>
 </div>
-<div class="sect3 "  >
-<h4 id="_filter_products">Filter Products</h4>
+<div  id="_filter_products" class="sect3 "  >
+<h4>Filter Products</h4>
 
 
 <div class="paragraph">
@@ -1042,8 +1049,8 @@ RETURN p.productName, p.unitPrice;</code></pre>
 </div>
 </div>
 </div>
-<div class="sect3 "  >
-<h4 id="_joining_products_with_customers">Joining Products with Customers</h4>
+<div  id="_joining_products_with_customers" class="sect3 "  >
+<h4>Joining Products with Customers</h4>
 
 
 <div class="paragraph">
@@ -1080,8 +1087,8 @@ RETURN distinct c.companyName;</code></pre>
 </div>
 </div>
 </div>
-<div class="sect3 "  >
-<h4 id="_new_customers_without_orders_yet">New Customers without Orders yet</h4>
+<div  id="_new_customers_without_orders_yet" class="sect3 "  >
+<h4>New Customers without Orders yet</h4>
 
 
 <div class="paragraph">
@@ -1123,8 +1130,8 @@ ORDER BY volume DESC;</code></pre>
 </div>
 </div>
 </div>
-<div class="sect3 "  >
-<h4 id="_top_selling_employees">Top-Selling Employees</h4>
+<div  id="_top_selling_employees" class="sect3 "  >
+<h4>Top-Selling Employees</h4>
 
 
 <div class="paragraph">
@@ -1170,8 +1177,8 @@ ORDER BY cnt DESC LIMIT 10</code></pre>
 </div>
 </div>
 </div>
-<div class="sect3 "  >
-<h4 id="_employee_territories">Employee Territories</h4>
+<div  id="_employee_territories" class="sect3 "  >
+<h4>Employee Territories</h4>
 
 
 <div class="paragraph">
@@ -1216,8 +1223,8 @@ RETURN t.description, collect(e.lastName);</code></pre>
 </div>
 </div>
 </div>
-<div class="sect3 "  >
-<h4 id="_product_categories">Product Categories</h4>
+<div  id="_product_categories" class="sect3 "  >
+<h4>Product Categories</h4>
 
 
 <div class="paragraph">
@@ -1369,6 +1376,7 @@ If you are intrigued by the possibilities and want to try and learn more, just <
                   <div class="content inactive" id="panel5">
                      <ul>
                         <li><a href="/developer-resources/language-guides/java">Java</a></li>
+                        <li><a href="/developer-resources/language-guides/spring-data-neo4j">Spring Framework</a></li>
                         <li><a href="/developer-resources/language-guides/dotnet">.NET</a></li>
                         <li><a href="/developer-resources/language-guides/javascript">JavaScript</a></li>
                         <li><a href="/developer-resources/language-guides/python">Python</a></li>

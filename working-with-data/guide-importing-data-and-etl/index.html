@@ -575,6 +575,13 @@ span.label {
 hr {
 	margin-top: 0.5rem;
 }
+td.tableblock, td p.tableblock,th.tableblock, th p.tableblock {
+	margin-bottom: 0px;
+	line-height: 1em;
+}
+th.tableblock, th p.tableblock {
+	font-weight:bold;
+}
 </style>
 
             <div>
@@ -615,8 +622,8 @@ If you <a href="/download">download</a> and install the Neo4j server you&#8217;l
 <hr>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_northwind_introduction">NorthWind Introduction</h3>
+<div  id="_northwind_introduction" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>NorthWind Introduction</h3>
 
 
 <div class="paragraph">
@@ -636,8 +643,8 @@ Although the NorthWind dataset is often used to demonstrate SQL and relational d
 </p>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_developing_a_graph_model">Developing a Graph Model</h3>
+<div  id="_developing_a_graph_model" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Developing a Graph Model</h3>
 
 
 <div class="paragraph">
@@ -665,8 +672,8 @@ A <em>table name</em> is a <em>label name</em>
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/northwind_graph_simple.png" alt="northwind graph simple" width="800">
 </p>
 </div>
-<div class="sect3 "  >
-<h4 id="_how_does_the_graph_model_differ_from_the_relational_model">How does the Graph Model Differ from the Relational Model?</h4>
+<div  id="_how_does_the_graph_model_differ_from_the_relational_model" class="sect3 "  >
+<h4>How does the Graph Model Differ from the Relational Model?</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -682,8 +689,8 @@ It will often be more normalised. For example, addresses have been denormalised 
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_exporting_the_data_to_csv">Exporting the Data to CSV</h3>
+<div  id="_exporting_the_data_to_csv" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Exporting the Data to CSV</h3>
 
 
 <div class="paragraph">
@@ -706,8 +713,8 @@ COPY (SELECT * FROM orders
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_importing_the_data_using_cypher">Importing the Data using Cypher</h3>
+<div  id="_importing_the_data_using_cypher" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Importing the Data using Cypher</h3>
 
 
 <div class="paragraph">
@@ -869,16 +876,16 @@ MERGE (employee)-[:REPORTS_TO]-&gt;(manager);</code></pre>
 </div>
 
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_querying_the_graph">Querying the Graph</h3>
+<div  id="_querying_the_graph" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Querying the Graph</h3>
 
 
 <div class="paragraph">
 <p>One question we might be interested in is:</p>
 </div>
 
-<div class="sect3 "  >
-<h4 id="_which_employee_had_the_highest_cross_selling_count_of_chocolade_and_which_product">Which Employee had the Highest Cross-Selling Count of 'Chocolade' and Which Product?</h4>
+<div  id="_which_employee_had_the_highest_cross_selling_count_of_chocolade_and_which_product" class="sect3 "  >
+<h4>Which Employee had the Highest Cross-Selling Count of 'Chocolade' and Which Product?</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (choc:Product {productName:'Chocolade'})&lt;-[:PRODUCT]-(:Order)&lt;-[:SOLD]-(employee),
@@ -942,8 +949,8 @@ LIMIT 5;</code></pre>
 </div>
 
 </div>
-<div class="sect3 "  >
-<h4 id="_how_are_employees_organized_who_reports_to_whom">How are Employees Organized? Who Reports to Whom?</h4>
+<div  id="_how_are_employees_organized_who_reports_to_whom" class="sect3 "  >
+<h4>How are Employees Organized? Who Reports to Whom?</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH path = (e:Employee)&lt;-[:REPORTS_TO]-(sub)
@@ -1009,8 +1016,8 @@ RETURN e.employeeID AS manager, sub.employeeID AS employee;</code></pre>
 </div>
 
 </div>
-<div class="sect3 "  >
-<h4 id="_which_employees_report_to_each_other_indirectly">Which Employees Report to Each Other Indirectly?</h4>
+<div  id="_which_employees_report_to_each_other_indirectly" class="sect3 "  >
+<h4>Which Employees Report to Each Other Indirectly?</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH path = (e:Employee)&lt;-[:REPORTS_TO*]-(sub)
@@ -1091,8 +1098,8 @@ ORDER BY LENGTH(path);</code></pre>
 </tbody>
 </table>
 </div>
-<div class="sect3 "  >
-<h4 id="_how_many_orders_were_made_by_each_part_of_the_hierarchy">How Many Orders were Made by Each Part of the Hierarchy?</h4>
+<div  id="_how_many_orders_were_made_by_each_part_of_the_hierarchy" class="sect3 "  >
+<h4>How Many Orders were Made by Each Part of the Hierarchy?</h4>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (e:Employee)
@@ -1253,6 +1260,7 @@ ORDER BY totalOrders DESC;</code></pre>
                   <div class="content inactive" id="panel5">
                      <ul>
                         <li><a href="/developer-resources/language-guides/java">Java</a></li>
+                        <li><a href="/developer-resources/language-guides/spring-data-neo4j">Spring Framework</a></li>
                         <li><a href="/developer-resources/language-guides/dotnet">.NET</a></li>
                         <li><a href="/developer-resources/language-guides/javascript">JavaScript</a></li>
                         <li><a href="/developer-resources/language-guides/python">Python</a></li>

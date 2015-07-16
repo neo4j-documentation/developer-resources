@@ -575,6 +575,13 @@ span.label {
 hr {
 	margin-top: 0.5rem;
 }
+td.tableblock, td p.tableblock,th.tableblock, th p.tableblock {
+	margin-bottom: 0px;
+	line-height: 1em;
+}
+th.tableblock, th p.tableblock {
+	font-weight:bold;
+}
 </style>
 
             <div>
@@ -627,8 +634,8 @@ This is the basis for many recommendation engines.</p>
 
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_recommendation_for_collaboration_of_actors">Recommendation for Collaboration of Actors</h3>
+<div  id="_recommendation_for_collaboration_of_actors" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Recommendation for Collaboration of Actors</h3>
 
 
 <div class="paragraph">
@@ -667,8 +674,8 @@ RETURN count(*);</code></pre>
 </ul>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_basic_queries">Basic Queries</h3>
+<div  id="_basic_queries" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Basic Queries</h3>
 
 
 <div class="paragraph">
@@ -707,8 +714,8 @@ RETURN coActor.name</code></pre>
 </div>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_collaborative_filtering">Collaborative Filtering</h3>
+<div  id="_collaborative_filtering" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Collaborative Filtering</h3>
 
 
 <div class="paragraph">
@@ -763,8 +770,8 @@ Now let&#8217;s see which movies and actors are between the two Toms.</p>
 </ul>
 </div>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_connection_paths">Connection Paths</h3>
+<div  id="_connection_paths" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Connection Paths</h3>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (tom:Person)-[:ACTED_IN]-&gt;(movie1)&lt;-[:ACTED_IN]-(coActor:Person),
@@ -794,8 +801,8 @@ RETURN tom, movie1, coActor, movie2, cruise</code></pre>
 
 <iframe width="640" height="480" src="//www.youtube.com/embed/qbZ_Q-YnHYo" frameborder="0" allowfullscreen></iframe>
 </div>
-<div class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3 id="_restaurant_recommendation">Restaurant Recommendation</h3>
+<div  id="_restaurant_recommendation" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Restaurant Recommendation</h3>
 
 
 <div class="paragraph">
@@ -930,6 +937,7 @@ LIMIT 5</code></pre>
                   <div class="content inactive" id="panel5">
                      <ul>
                         <li><a href="/developer-resources/language-guides/java">Java</a></li>
+                        <li><a href="/developer-resources/language-guides/spring-data-neo4j">Spring Framework</a></li>
                         <li><a href="/developer-resources/language-guides/dotnet">.NET</a></li>
                         <li><a href="/developer-resources/language-guides/javascript">JavaScript</a></li>
                         <li><a href="/developer-resources/language-guides/python">Python</a></li>
