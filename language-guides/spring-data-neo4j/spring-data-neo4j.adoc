@@ -104,12 +104,12 @@ include::https://raw.githubusercontent.com/neo4j-examples/movies-java-spring-boo
 Spring Data Neo4j has been around for a long time.
 Meanwhile Neo4j, it's APIs and usage developed quickly from an embedded Java only database to a Server solution which is mostly interacted with via link:/developer/cypher[Cypher].
 That's why we made the decision that a clean slate and reimplementation of the library from scratch is the best approach to embrace the modern Neo4j architecture.
-In a joint effort with our partner http://graphware.com[GraphAware] the all-new Spring Data Neoj 4 library was developed and tested by existing users.
+In a joint effort with our partner http://graphaware.com[GraphAware] the all-new Spring Data Neo4j 4 library was developed and tested by existing users.
 
 Spring Data Neo4j integrates the link:../java#neo4j-ogm[Neo4j-OGM] library to provide fast and comprehensive object graph mapping.
-Additionallly it provides support for Spring Conversions, Transaction Handling, Spring-Data Repositories, Spring-Data REST and Spring-Boot.
+Additionally it provides support for Spring Conversions, Transaction Handling, Spring-Data Repositories, Spring-Data REST and Spring-Boot.
 
-To get started, add Spring Data Neo4j 4 as a dependency, then configure the neccessary beans in your Java config
+To get started, add Spring Data Neo4j 4 as a dependency, then configure the necessary beans in your Java config.
 Then you can use Neo4jTemplate to manage your entities (optionally annotated) and define Spring-Data-Repositories as convenient interfaces to your persistence layer.
 
 ==== Quickstart
@@ -147,7 +147,9 @@ public class PersistenceContext extends Neo4jConfiguration {
         return new RemoteServer(env.getProperty("neo4j.url"));
     }
 
-    @Override @Bean
+    @Override
+    @Bean
+    @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
     public Session getSession() throws Exception {
         return super.getSession();
     }
@@ -162,11 +164,11 @@ public class Movie {
 
   @GraphId Long id;
 
-  @Indexed String title;
+  String title;
 
   Person director;
 
-  @Relationship(type="ACTED_IN", direction = INCOMING)
+  @Relationship(type="ACTED_IN", direction = "INCOMING")
   Set<Person> actors = new HashSet<>();
 }
 ----
@@ -177,12 +179,11 @@ public class Movie {
 interface MovieRepository extends GraphRepository<Movie> {
 
   @Query("MATCH (m:Movie)<-[rating:RATED]-(user)
-          WHERE id(m) = {movie}
+          WHERE id(m) = {movieId}
           RETURN rating")
-  Iterable<Rating> getRatings(Movie movie);
+  Iterable<Rating> getRatings(Long movieId);
 
-  // Co-Actors
-  Iterable<Person> findByActorsMoviesActorName(name)
+  Collection<Movie> findByTitle(name);
 }
 ----
 
@@ -191,9 +192,9 @@ interface MovieRepository extends GraphRepository<Movie> {
 ----
 @Autowired MovieRepository repo;
 
-Collection<Movie> movie = repo.findByTitleLike("Matrix");
+Collection<Movie> movie = repo.findByTitle("The Matrix");
 
-Iterable<Rating> ratings = repo.getRatings(movie);
+Iterable<Rating> ratings = repo.getRatings(movieId);
 ----
 
 We provide a https://github.com/neo4j-examples?query=sdn4[number of example projects] using Spring Data Neo4j 4, Spring Boot and Web-Frameworks like Angular.js
@@ -203,7 +204,7 @@ We provide a https://github.com/neo4j-examples?query=sdn4[number of example proj
 // See the {examples}/movies-java-spring-data-neo4j4[example project] for further details.
 
 // * http://projects.spring.io/spring-data-neo4j[Spring Data Neo4j Project]
-* Authors: Luanne Misquitta, Vince Bickers, Andrew , Michal Bachman, Michael Hunger, Oliver Gierke and others
+* Authors: Adam George, Luanne Misquitta, Michal Bachman, Vince Bickers, Michael Hunger, Oliver Gierke and others
 * https://github.com/neo4j-examples?query=sdn4[Spring Data Neo4j 4 Example Projects]
 * https://github.com/spring-projects/spring-data-neo4j/tree/4.0.x[Spring Data Neo4j on GitHub]
 * http://docs.spring.io/spring-data/data-neo4j/docs/{SDN4}/reference/html/[Reference Documentation], http://docs.spring.io/spring-data/data-neo4j/docs/{SDN4}/api/[JavaDoc], http://docs.spring.io/spring-data/data-neo4j/docs/{SDN4}/changelog.txt[ChangeLog]

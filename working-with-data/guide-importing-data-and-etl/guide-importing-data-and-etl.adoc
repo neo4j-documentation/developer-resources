@@ -44,7 +44,9 @@ image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/northwind
 
 ==== How does the Graph Model Differ from the Relational Model?
 
-* There are no nulls. In the relational version, to track the employee hierarchy we have a null entry in the 'ReportsTo' column if they don't report to anybody. In the graph version we just don't define a relationship.
+* There are no nulls.
+** In the relational version, to track the employee hierarchy we have a null entry in the 'ReportsTo' column if they don't report to anybody. In the graph version we just don't define a relationship.
+** Non existing value entries (properties) are just not present.
 * It describes the relationships in more detail. For example, we know that an employee SOLD an order rather than having a foreign key relationship between the Orders and Employees tables. We could also choose to add more metadata about that relationship should we wish.
 * It will often be more normalised. For example, addresses have been denormalised in several of the tables but in a future version of the graph model we might choose to make addresses nodes in their own rights. 
 
