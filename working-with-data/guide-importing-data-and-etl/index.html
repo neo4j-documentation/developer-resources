@@ -677,7 +677,17 @@ A <em>table name</em> is a <em>label name</em>
 <div class="ulist">
 <ul>
 <li>
-There are no nulls. In the relational version, to track the employee hierarchy we have a null entry in the 'ReportsTo' column if they don&#8217;t report to anybody. In the graph version we just don&#8217;t define a relationship.
+There are no nulls.
+<div class="ulist">
+<ul>
+<li>
+In the relational version, to track the employee hierarchy we have a null entry in the 'ReportsTo' column if they don&#8217;t report to anybody. In the graph version we just don&#8217;t define a relationship.
+</li>
+<li>
+Non existing value entries (properties) are just not present.
+</li>
+</ul>
+</div>
 </li>
 <li>
 It describes the relationships in more detail. For example, we know that an employee SOLD an order rather than having a foreign key relationship between the Orders and Employees tables. We could also choose to add more metadata about that relationship should we wish.

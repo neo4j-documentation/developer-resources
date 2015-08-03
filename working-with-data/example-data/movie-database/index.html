@@ -258,7 +258,7 @@
 <div class="marquee blue">
     <div class="row text-center">
         <div class="medium-10 small-centered columns">
-            <h1 class="entry-title">Using Neo4j from Spring</h1>
+            <h1 class="entry-title">Dataset: Movie Database</h1>
         </div>
     </div>
 </div>
@@ -271,7 +271,7 @@
                     <ul class="breadcrumbs">
                         <li><a href="/developer-resources">Developer Guides</a></li>
                         
-                        <li class="current"><a href="#">Using Neo4j from Spring</a></li>
+                        <li class="current"><a href="#">Dataset: Movie Database</a></li>
                     </ul>
                 </div>
             </div>
@@ -592,18 +592,14 @@ th.tableblock, th p.tableblock {
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-For Java developers who use the Spring Framework or Spring Boot, this guide introduces Spring integration but especially the Spring Data Neo4j library.
-The library provides convenient access to Neo4j including object mapping, Spring-Data repositories, conversion, transaction handling etc.
-We cover both, the all-new Spring Data Neo4j 4 as well as the previous Spring Data Neo4j 3.
+There&#8217;s lots of example datasets for Neo4j.
+This guide outlines some of them.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should be familiar with the <a href="/developer-resources/get-started/graph-database">graph database concepts</a> and the property graph model.
-Having <a href="/download">installed Neo4j</a> and tried out our <a href="/developer-resources/cypher">Cypher Query language</a> helps too.
-You should also be familar with Spring. Knowing <a href="http://spring.io/projects/spring-data">Spring Data</a> helps too and Spring Boot is always a great addition to your toolbox.
-When developing with Neo4j, please use JDK 7 or 8 and your favorite IDE.
+You should be comfortable installing and importing data into Neo4j.
 </blockquote>
 </div>
 
@@ -611,252 +607,27 @@ When developing with Neo4j, please use JDK 7 or 8 and your favorite IDE.
 <div class="label">Intermediate</div>
 <hr/>
 
-</div>
-</div>
-<div  id="_neo4j_for_spring_users" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Neo4j for Spring Users</h3>
-<div class="imageblock" style="float: right;">
-<p class="content">
-<img src="http://assets.neo4j.org/img/languages/sdn.png" alt="sdn">
-</p>
-</div>
+<div class="toc">
+<h3 class="title">Overview</h3>
 
-
-<div class="paragraph">
-<p>Neo4j offers a rich set of possibilities for developers using Spring.
-If you are looking for using Neo4j on the JVM in general, check out our <a href="../java">Java Developers Guide</a>.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>In general using Neo4j&#8217;s Java APIs is always possible from Spring, just configure an embedded, in-process GraphDatabase as a singleton bean to be injected.
-For embedded use, Spring Data Neo4j 3 provides great integration too.
-The integrated variant is also great for unit testing and high-performance/no-network setups.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>If you are rather running Neo4j as a standalone server or cluster, you can access its HTTP-APIs either with a plain RestTemplate or by combining our <strong>JDBC-Driver</strong> with Spring&#8217;s JDBCTemplate.
-If you want to benefit from full fledged Object Mapping and the other helpful support that comes with Spring Data, check out <strong>Spring Data Neo4j 4</strong>.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>For all Neo4j drivers and integrations, we provide a small, consistent example project across all languages.</p>
-</div>
-
-</div>
-<div  id="_the_example_project" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>The Example Project</h3>
-
-
-<div class="paragraph">
-<p>It is a small one page webapp for our movies database.
-The front-end page is the same for all drivers, it consists of a movie search, detail info and a graph visualization of actors and movies.
-Each backend implementation shows you how to connect to Neo4j from the different languages and drivers.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>You can learn more about our small, consistent example project across many different language drivers <a href="../example-project">here</a>.
-You find the implementations for all drivers as <a href="https://github.com/neo4j-examples?query=movies">individual GitHub repositories</a>, that you can clone and deploy directly.</p>
-</div>
-
-</div>
-<div  id="_spring_integrations" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Spring Integrations</h3>
-<dl class="tabs" data-tab>
-  <dd class="tab-title active"><a href="#boot-jdbc">Spring Boot with JDBC</a></dd>
-  <dd class="tab-title"><a href="#sdn4">Spring Data Neo4j 4</a></dd>
-  <dd class="tab-title"><a href="#sdn3">Spring Data Neo4j 3</a></dd>
-</dl>
-<div class="tabs-content">
-<div  id="boot-jdbc" class="sect2 content active columns medium-12" style='padding-left: 0;' >
-<h3>Using Spring Boot with JDBC</h3>
-
-
-<div class="paragraph">
-<p>Spring Boot is a rapid application development infrastructure that allows you to quickly write Spring-based applications with little setup and configuration.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Here we use a simple Spring Boot WebMVC and JDBC application to provide a backend for our movie application.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>It uses the well known APIs of <code>@RestController</code> and <code>JdbcTemplate</code> to do the job.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>More details can be found in the <a href="https://github.com/neo4j-examples/movies-java-spring-boot-jdbc">example project</a>.</p>
-</div>
-
-</div>
-<div  id="sdn4" class="sect2 content columns medium-12" style='padding-left: 0;' >
-<h3>Using Spring Data Neo4j 4</h3>
-
-
-<div class="paragraph">
-<p>Spring Data Neo4j has been around for a long time.
-Meanwhile Neo4j, it&#8217;s APIs and usage developed quickly from an embedded Java only database to a Server solution which is mostly interacted with via <a href="/developer-resources/cypher">Cypher</a>.
-That&#8217;s why we made the decision that a clean slate and reimplementation of the library from scratch is the best approach to embrace the modern Neo4j architecture.
-In a joint effort with our partner <a href="http://graphaware.com">GraphAware</a> the all-new Spring Data Neo4j 4 library was developed and tested by existing users.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Spring Data Neo4j integrates the <a href="../java#neo4j-ogm">Neo4j-OGM</a> library to provide fast and comprehensive object graph mapping.
-Additionally it provides support for Spring Conversions, Transaction Handling, Spring-Data Repositories, Spring-Data REST and Spring-Boot.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>To get started, add Spring Data Neo4j 4 as a dependency, then configure the necessary beans in your Java config.
-Then you can use Neo4jTemplate to manage your entities (optionally annotated) and define Spring-Data-Repositories as convenient interfaces to your persistence layer.</p>
-</div>
-
-<div  id="_quickstart" class="sect3 "  >
-<h4>Quickstart</h4>
-<div class="listingblock">
-<div class="title">Spring-Data-Neo4j 4 Dependency</div>
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="xml"><code>&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.springframework.data&lt;/groupId&gt;
-        &lt;artifactId&gt;spring-data-neo4j&lt;/artifactId&gt;
-        &lt;version&gt;4.0.0.RC1&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Spring-Config</div>
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>@Configuration
-@EnableNeo4jRepositories("org.neo4j.cineasts.repository")
-@EnableTransactionManagement
-@ComponentScan("org.neo4j.cineasts")
-public class PersistenceContext extends Neo4jConfiguration {
-
-    @Autowired Environment env;
-
-    @Override
-    public SessionFactory getSessionFactory() {
-        return new SessionFactory("org.neo4j.cineasts.domain");
-    }
-
-    @Bean
-    public Neo4jServer neo4jServer() {
-        return new RemoteServer(env.getProperty("neo4j.url"));
-    }
-
-    @Override
-    @Bean
-    @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-    public Session getSession() throws Exception {
-        return super.getSession();
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Entities</div>
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>@NodeEntity
-public class Movie {
-
-  @GraphId Long id;
-
-  String title;
-
-  Person director;
-
-  @Relationship(type="ACTED_IN", direction = "INCOMING")
-  Set&lt;Person&gt; actors = new HashSet&lt;&gt;();
-}</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Declare a repository interface</div>
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>interface MovieRepository extends GraphRepository&lt;Movie&gt; {
-
-  @Query("MATCH (m:Movie)&lt;-[rating:RATED]-(user)
-          WHERE id(m) = {movieId}
-          RETURN rating")
-  Iterable&lt;Rating&gt; getRatings(Long movieId);
-
-  Collection&lt;Movie&gt; findByTitle(name);
-}</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Use repository</div>
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>@Autowired MovieRepository repo;
-
-Collection&lt;Movie&gt; movie = repo.findByTitle("The Matrix");
-
-Iterable&lt;Rating&gt; ratings = repo.getRatings(movieId);</code></pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>We provide a <a href="https://github.com/neo4j-examples?query=sdn4">number of example projects</a> using Spring Data Neo4j 4, Spring Boot and Web-Frameworks like Angular.js</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-Authors: Adam George, Luanne Misquitta, Michal Bachman, Vince Bickers, Michael Hunger, Oliver Gierke and others
-</li>
-<li>
-<a href="https://github.com/neo4j-examples?query=sdn4">Spring Data Neo4j 4 Example Projects</a>
-</li>
-<li>
-<a href="https://github.com/spring-projects/spring-data-neo4j/tree/4.0.x">Spring Data Neo4j on GitHub</a>
-</li>
-<li>
-<a href="http://docs.spring.io/spring-data/data-neo4j/docs/4.0.0.RC1/reference/html/">Reference Documentation</a>, <a href="http://docs.spring.io/spring-data/data-neo4j/docs/4.0.0.RC1/api/">JavaDoc</a>, <a href="http://docs.spring.io/spring-data/data-neo4j/docs/4.0.0.RC1/changelog.txt">ChangeLog</a>
-</li>
-<li>
-<a href="https://www.airpair.com/neo4j/posts/the-essence-of-spring-data-neo4j-4">Article: Introducing SDN4 by Luanne Misquitta</a>
-</li>
-<li>
-<a href="https://www.youtube.com/watch?v=Atz8fVxrIZ4&amp;index=20&amp;list=PL9Hl4pk2FsvXY_LSIPL6Da7PJXW33lxLy" class="video">Video: Introducing SDN 4</a>
-</li>
+<ul class="sectlevel2">
+<li><a href="#_the_dataset">The Dataset</a></li>
+<li><a href="#_download">Download</a></li>
+<li><a href="#_example_queries">Example Queries</a></li>
+<li><a href="#_import_instructions">Import Instructions</a></li>
 </ul>
+
+</div>
+<hr>
 </div>
 </div>
-</div>
-<div  id="sdn3" class="sect2 content columns medium-12" style='padding-left: 0;' >
-<h3>Using Spring Data Neo4j 3.3.x</h3>
+<div  id="_the_dataset" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>The Dataset</h3>
 
 
 <div class="paragraph">
-<p>Spring Data Neo4j was the first Spring Data project and enables convenient integration of Neo4j in your Spring-based application.
-It provides object-graph mapping functionality and other features common to the Spring Data projects.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>To use Neo4j with Spring Data Neo4j, you just add the dependency to your build setup.
-After setting up a simple Java-based Spring configuration, and annotating your <code>@Node-</code> and <code>@RelationshipEntity</code>, you can use <code>Neo4jTemplate</code> to access Neo4j APIs and object-graph mapping functionality.
-Additionally, you can leverage the convenient Spring Data repositories to get interface-based DAO implementations injected into your Spring Components.</p>
+<p>The movie database is a traditional dataset for graph databases, similiar to IMDB it contains movies and actors, directors, producers etc.
+It could be extended with Genres, Publishers, Ratings and more.</p>
 </div>
 
 <div class="admonitionblock note">
@@ -866,117 +637,327 @@ Additionally, you can leverage the convenient Spring Data repositories to get in
 <div class="title label">Note</div>
 </td>
 <td class="content">
-The current version of Spring Data Neo4j works best with an embedded Neo4j database.
-To achieve highest-performance Neo4j-Server integration, use Spring Data Neo4j 4 or move your SDN persistence layer into an Server Extension.
+You find a similar, but smaller dataset in the Neo4j-Browser of your Neo4j installation by entering <code>:play movie graph</code> in the commandline.
 </td>
 </tr>
 </table>
 </div>
-<div  id="_quick_start" class="sect3 "  >
-<h4>Quick-Start</h4>
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="xml"><code>&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.springframework.data&lt;/groupId&gt;
-        &lt;artifactId&gt;spring-data-neo4j&lt;/artifactId&gt;
-        &lt;version&gt;3.3.1.RELEASE&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Entities</div>
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>@NodeEntity
-public class Movie {
-
-  @GraphId Long id;
-
-  @Indexed(type = FULLTEXT, indexName = "search")
-  String title;
-
-  Person director;
-
-  @RelatedTo(type="ACTS_IN", direction = INCOMING)
-  Set&lt;Person&gt; actors;
-
-  @RelatedToVia(type = "RATED")
-  Iterable&lt;Rating&gt; ratings;
-}</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Declare a repository interface</div>
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>interface MovieRepository extends GraphRepository&lt;Movie&gt; {
-
-  @Query("MATCH (m:Movie)&lt;-[rating:RATED]-(user)
-          WHERE id(m) = {movie}
-          RETURN rating")
-  Iterable&lt;Rating&gt; getRatings(Movie movie);
-
-  // Co-Actors
-  Iterable&lt;Person&gt; findByActorsMoviesActorName(name)
-}</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Use repository</div>
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>@Autowired MovieRepository repo;
-
-Collection&lt;Movie&gt; movie = repo.findByTitleLike("Matrix");
-
-Iterable&lt;Rating&gt; ratings = repo.getRatings(movie);</code></pre>
-</div>
-</div>
 
 
 <div class="paragraph">
-<p>The example uses Spring-Boot with Spring-Data-Neo4j and Spring-Data-REST and an additional RestMVCController.</p>
+<p>This dataset was sourced from link:TheMovieDB.org.
+Thanks so much to them for allowing us to use it for educational purposes.
+It was originally used for the <a href="/developer-resources/language-guides/spring-data-neo4j">Spring Data Neo4j</a> tutorial project Cineasts.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>See the <a href="https://github.com/neo4j-examples/movies-java-spring-data-neo4j">example project</a> for further details.</p>
+<p>The data model is straightforward:</p>
 </div>
 
 <div class="ulist">
 <ul>
 <li>
-<a href="http://projects.spring.io/spring-data-neo4j">Spring Data Neo4j Project Page</a>
+(:Movie {title, released, &#8230;&#8203; })
 </li>
 <li>
-Authors: Michael Hunger, Oliver Gierke, Nicki Watt and many contributors
+(:Person {name, born, &#8230;&#8203;})
 </li>
 <li>
-<a href="https://github.com/neo4j-examples/movies-java-spring-data-neo4j">Spring Data Neo4j Example Project</a>
-</li>
-<li>
-<a href="http://github.com/spring-projects/spring-data-neo4j">Spring Data Neo4j on GitHub</a>
-</li>
-<li>
-<a href="https://jira.spring.io/browse/DATAGRAPH">Spring Data Neo4j JIRA</a>
-</li>
-<li>
-<a href="http://docs.spring.io/spring-data/data-neo4j/docs/3.3.1.RELEASE/reference/html/">Reference Documentation</a>, <a href="http://docs.spring.io/spring-data/data-neo4j/docs/3.3.1.RELEASE/api/">JavaDoc</a>, <a href="http://docs.spring.io/spring-data/data-neo4j/docs/3.3.1.RELEASE/changelog.txt">ChangeLog</a>
-</li>
-<li>
-<a href="/books/spring-data">Spring Data Book</a>, <a href="/books/good-relationships/">Spring Data Neo4j Guide-Book</a>
-</li>
-<li>
-<a href="https://spring.io/guides/gs/accessing-neo4j-data-rest/">SpringSource' Spring Data Neo4j + REST Guide</a>
-</li>
-<li>
-<a href="http://www.youtube.com/watch?v=ZfbJ1ZJdb_A" class="video">Webinar: Spring Boot &amp; SDN</a>
+(:Person)-[:ACTED_IN|:DIRECTED|:PRODUCED]&#8594;(:Movie)
 </li>
 </ul>
 </div>
+<div class="imageblock">
+<p class="content">
+<img src="https://dl.dropboxusercontent.com/u/14493611/data_modeling_movies_actors.png" alt="data modeling movies actors">
+</p>
+</div>
+</div>
+<div  id="_download" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Download</h3>
+
+
+<div class="paragraph">
+<p>The dataset consists of 12862 movies, and 50179 people (44943 actors, 6037 directors).</p>
+</div>
+
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title label">Note</div>
+</td>
+<td class="content">
+Make sure to download the correct version of the dataset for your Neo4j installation.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<a href="http://example-data.neo4j.org/files/cineasts_12k_movies_50k_actors_2.1.6.zip">Download for Neo4j 2.1 (12.3 MB)</a>
+</li>
+<li>
+Download for Neo4j 2.2
+</li>
+<li>
+Download for Neo4j 2.3
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>Unzip the dataset after the download and move the <code>graph.db</code> folder to your <code>/path/to/neo4j/data</code> directory and override the <code>graph.db</code> folder that was previously there.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Installation in Detail:</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+Stop your Neo4j server with <code>bin/neo4j stop</code> or your control app
+</li>
+<li>
+Unzip the downloaded file
+</li>
+<li>
+Override <code>graph.db</code> in <code>/path/to/neo/data</code>
+</li>
+<li>
+Start the server again with <code>bin/neo4j start</code>
+</li>
+<li>
+Open the Neo4j Web Interface on <a href="http://localhost:7474" class="bare">http://localhost:7474</a>
+</li>
+<li>
+Read about the Cypher Query Language
+</li>
+<li>
+Follow the source links for some example Cypher queries
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>You can also point the neo4j-shell to the extracted directory to run Cypher queries directly:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="shell"><code>/path/to/neo/bin/neo4j-shell -path /path/to/graph.db</code></pre>
 </div>
 </div>
 </div>
+<div  id="_example_queries" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Example Queries</h3>
+<div class="listingblock">
+<div class="title">Actors who played in some movie</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (m:Movie {title: 'Forrest Gump'})&lt;-[:ACTS_IN]-(a:Actor)
+RETURN a.name, a.birthplace</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Find the most prolific actors</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (a:Actor)-[:ACTS_IN]-&gt;(m:Movie)
+RETURN a, count(*)
+ORDER BY count(*) DESC LIMIT 10;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Find actors who have been in less than 3 movies</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (a:Actor)-[:ACTS_IN]-&gt;(m:Movie)
+WITH a, count(m) AS movie_count
+WHERE movie_count &lt; 3
+RETURN a, movie_count
+ORDER BY movie_count DESC LIMIT 5;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Find the actors with 20+ movies, and the movies in which they acted</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (a:Actor)-[:ACTS_IN]-&gt;(m:Movie)
+WITH a, collect(m.title) AS movies
+WHERE length(movies) &gt;= 20
+RETURN a, movies
+ORDER BY length(movies) DESC LIMIT 10;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Find prolific actors (10+) who have directed at least two films, count films acted in and list films directed</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (a:Actor)-[:ACTS_IN]-&gt;(m:Movie)
+WITH a, count(m) AS acted
+WHERE acted &gt;= 10
+WITH a, acted
+MATCH (a:Director)-[:DIRECTED]-&gt;(m:Movie)
+WITH a, acted, collect(m.title) AS directed
+WHERE length(directed) &gt;= 2
+RETURN a.name, acted, directed
+ORDER BY length(directed) DESC, acted DESC;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Rewritten to filter both :Actor and :Director labels up front</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (a:Actor:Director)-[:ACTS_IN]-&gt;(m:Movie)
+WITH a, count(1) AS acted
+WHERE acted &gt;= 10
+WITH a, acted
+MATCH (a:Actor:Director)-[:DIRECTED]-&gt;(m:Movie)
+WITH a, acted, collect(m.title) AS directed
+WHERE length(directed) &gt;= 2
+RETURN a.name, acted, directed
+ORDER BY length(directed) DESC, acted DESC;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Using the lowest cardinality label, :Director</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (a:Director)-[:ACTS_IN]-&gt;(m)
+WITH a, count(m) AS acted
+WHERE acted &gt;= 10
+WITH a, acted
+MATCH (a)-[:DIRECTED]-&gt;(m)
+WITH a, acted, collect(m.title) AS directed
+WHERE length(directed) &gt;= 2
+RETURN a.name, acted, directed
+ORDER BY length(directed) DESC, acted DESC;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">User-Ratings</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (u:User {login: 'Michael'})-[r:RATED]-&gt;(m:Movie)
+WHERE r.stars &gt; 3
+RETURN m.title, r.stars, r.comment</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Recommendations including counts, grouping and sorting</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (u:User {login: 'Michael'})-[:FRIEND]-()-[r:RATED]-&gt;(m:Movie)
+RETURN m.title, avg(r.stars), count(*)
+ORDER BY AVG(r.stars) DESC, count(*) DESC</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Ratings by like-minded people</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (u:User)-[r:RATED]-&gt;(m:Movie)&lt;-[r2:RATED]-(likeminded), u-[:FRIEND]-(friend)
+WHERE r.stars &gt; 3 AND r2.stars &gt;= 3
+RETURN likeminded, count(*)
+ORDER BY count(*) desc LIMIT 10;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Mutual Friend recommendations</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (u:User {login: 'Michael'})-[:FRIEND]-(f:Person)-[r:RATED]-&gt;(m:Movie)
+WHERE r.stars &gt; 3
+RETURN f.name, m.title, r.stars, r.comment</code></pre>
+</div>
+</div>
+</div>
+<div  id="_import_instructions" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Import Instructions</h3>
+
+
+<div class="paragraph">
+<p>TheMovieDB.org offers a JSON API to access, movies, and their cast.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>We use that API with a ruby script to turn each movie-json object into a cypher statement.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>require 'rubygems'
+require 'rest-client'
+require 'json'
+
+URL = "http://api.themoviedb.org/3"
+KEY = "926d2a79e82920b62f03b1cb57e532e6"
+
+
+puts setup
+puts "BEGIN"
+[19995 , 194, 600, 601, 602, 603, 604, 605, 606, 607, 608, 609, 13, 20526, 11, 1893, 1892,
+ 1894, 168, 193, 200, 157, 152, 201, 154, 12155, 58, 285, 118, 22, 392, 5255, 568, 9800, 497, 101, 120, 121, 122].each do |id|
+ puts create_movie(movie(id))
+end
+puts "COMMIT"
+
+def get(type,id)
+  url = "#{URL}/#{type}/#{id}?api_key=#{KEY}&amp;append_to_response=casts"
+  res = RestClient.get url
+  File.open("json/#{id}.json", 'w') {|f| f.write(res.to_str) }
+  JSON.parse(res.to_str)
+end
+
+def person(id)
+  get("person",id)
+end
+
+def clean(name)
+  name.to_s.gsub(/['"]/,"")
+end
+def movie(id)
+  parse_movie(get("movie",id),id)
+end
+
+def parse_movie(res,id)
+#  puts res.inspect
+  movie = [:tagline,:released,:genres].reduce({:movie_id =&gt; id}) { |r, prop| r[prop] = res[prop.to_s] if res[prop.to_s] &amp;&amp; res[prop.to_s].length&gt;0; r }
+  movie[:title] = res["title"]
+  movie[:genres] = movie[:genres].collect { |g| g["name"] }
+  movie[:actors] = res["casts"]["cast"].collect { |g| { :id =&gt; g["id"], :name =&gt; clean(g["name"]) , :role =&gt; clean(g["character"]) }}
+  movie[:directors] = res["casts"]["crew"].find_all {|a| a["job"]=="Director" } .collect { |g| { :id =&gt; g["id"], :name =&gt; clean(g["name"]) }}
+  movie
+end
+
+def setup
+  ["CREATE INDEX ON :Movie(title)",
+  "CREATE INDEX ON :Movie(movie_id)",
+  "CREATE INDEX ON :Person(id)",
+  "CREATE INDEX ON :Person(name)",
+  "CREATE INDEX ON :Genre(genre)",""].join(";\n")
+end
+
+# node auto-index for movie_id, id, name, title, genre, type
+def create_movie(movie)
+  props=[:movie_id, :title,:tagline,:released].find_all{ |p| movie[p] }.collect { |p| "#{p}:'#{clean(movie[p])}'" }.join(', ')
+  actors = movie[:actors].collect { |a| "CREATE UNIQUE (movie)&lt;-[:ACTS_IN {role:'#{clean(a[:role])}'}]-(:Person:Actor {id:'#{a[:id]}', name: '#{a[:name]}'})-[:PERSON]-&gt;(people) "}.join(" \n") + "\n"
+  directors = movie[:directors].collect { |a| "CREATE UNIQUE (movie)&lt;-[:DIRECTED]-(:Person:Director {id:'#{a[:id]}', name:'#{a[:name]}'})-[:PERSON]-&gt;(people) "}.join(" \n") + "\n"
+  genres = movie[:genres].collect { |g| "CREATE UNIQUE (movie)-[:GENRE]-&gt;(:Genre {genre:'#{g}'})-[:GENRE]-&gt;(genres) "}.join(" \n") + "\n"
+  " MERGE (genres:Genres)
+    MERGE (movies:Movies)
+    MERGE (people:People)
+    CREATE (movie:Movie {#{props}})
+   " + genres + actors + directors + ";"
+end</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>It outputs the Cypher statements on stdout and can be piped to the neo4j-shell or a file, which then can be read by the neo4j-shell.</p>
+</div>
+
 </div>
                     </div>
                     <div class="large-3 large-pull-9 columns">
@@ -1041,11 +1022,11 @@ Authors: Michael Hunger, Oliver Gierke, Nicki Watt and many contributors
                </dd>
             </dl>
             <dl class="accordion">
-               <dd class="accordion-navigation active">
+               <dd class="accordion-navigation inactive">
                   <a href="/developer-resources/language-guides">
                      <h5>Language Guides</h5>
                   </a>
-                  <div class="content active" id="panel5">
+                  <div class="content inactive" id="panel5">
                      <ul>
                         <li><a href="/developer-resources/language-guides/java">Java</a></li>
                         <li><a href="/developer-resources/language-guides/spring-data-neo4j">Spring Framework</a></li>
