@@ -11,15 +11,15 @@
 
 .Goals
 [abstract]
-For Java developers who use the Spring Framework or Spring Boot, this guide introduces Spring integration but especially the Spring Data Neo4j library.
-The library provides convenient access to Neo4j including object mapping, Spring-Data repositories, conversion, transaction handling etc.
-We cover both, the all-new Spring Data Neo4j 4 as well as the previous Spring Data Neo4j 3.
+For Java developers who use the Spring Framework or Spring Boot, this guide introduces Spring integration but emphasizes the Spring Data Neo4j library.
+The library provides convenient access to Neo4j including object mapping, Spring Data repositories, conversion, transaction handling, etc.
+We cover both the all-new Spring Data Neo4j 4 as well as the previous Spring Data Neo4j 3.
 
 .Prerequisites
 [abstract]
-You should be familiar with the link:/developer/get-started/graph-database[graph database concepts] and the property graph model.
-Having link:/download[installed Neo4j] and tried out our link:/developer/cypher[Cypher Query language] helps too.
-You should also be familar with Spring. Knowing http://spring.io/projects/spring-data[Spring Data] helps too and Spring Boot is always a great addition to your toolbox.
+You should be familiar with link:/developer/get-started/graph-database[graph database concepts] and the property graph model.
+Having link:/download[installed Neo4j] and tried out the link:/developer/cypher[Cypher query language] helps too.
+You should also be familar with Spring. Knowing http://spring.io/projects/spring-data[Spring Data] and Spring Boot are both great additions to your toolbox as well.
 When developing with Neo4j, please use JDK 7 or 8 and your favorite IDE.
 
 [role=expertise]
@@ -34,13 +34,13 @@ When developing with Neo4j, please use JDK 7 or 8 and your favorite IDE.
 image::http://assets.neo4j.org/img/languages/sdn.png[float="right"]
 
 Neo4j offers a rich set of possibilities for developers using Spring.
-If you are looking for using Neo4j on the JVM in general, check out our link:../java[Java Developers Guide].
+If you are looking for using Neo4j on the JVM in general, check out our link:../java[Java Developer's Guide].
 
-In general using Neo4j's Java APIs is always possible from Spring, just configure an embedded, in-process GraphDatabase as a singleton bean to be injected.
+In general, using Neo4j's Java API is always possible from Spring. Just configure an embedded, in-process GraphDatabase as a singleton bean to be injected.
 For embedded use, Spring Data Neo4j 3 provides great integration too.
 The integrated variant is also great for unit testing and high-performance/no-network setups.
 
-If you are rather running Neo4j as a standalone server or cluster, you can access its HTTP-APIs either with a plain RestTemplate or by combining our *JDBC-Driver* with Spring's JDBCTemplate.
+If you are running Neo4j as a standalone server or cluster, you can access its HTTP-APIs either with a plain RestTemplate or by combining our *JDBC-Driver* with Spring's JDBCTemplate.
 If you want to benefit from full fledged Object Mapping and the other helpful support that comes with Spring Data, check out *Spring Data Neo4j 4*.
 // end::intro[]
 
