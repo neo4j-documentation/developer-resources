@@ -610,12 +610,11 @@ You should be familiar with <a href="/developer-resources/get-started/graph-data
 <h3 class="title">Overview</h3>
 
 <ul class="sectlevel2">
-<li><a href="#_neo4j_for_rubyists">Neo4j for Rubyists</a></li>
-<li><a href="#_driver_options">Driver Options</a></li>
-<li><a href="#_deployment_considerations">Deployment Considerations</a></li>
 <li><a href="#_the_example_project">The Example Project</a></li>
+<li><a href="#_neo4j_for_rubyists">Neo4j for Rubyists</a></li>
+<li><a href="#_deployment_considerations">Deployment Considerations</a></li>
 <li><a href="#_neography">Neography</a></li>
-<li><a href="#_neo4j_core_and_neo4j_rb">Neo4j-core and Neo4j.rb</a></li>
+<li><a href="#_neo4j_core_and_neo4j_collectively_the_neo4j_rb_project">Neo4j-core and Neo4j (collectively the Neo4j.rb project)</a></li>
 <li><a href="#_other_drivers">Other Drivers</a></li>
 </ul>
 
@@ -623,46 +622,47 @@ You should be familiar with <a href="/developer-resources/get-started/graph-data
 <hr>
 </div>
 </div>
+<div  id="_the_example_project" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>The Example Project</h3>
+
+
+<div class="paragraph">
+<p>It is a small one page webapp for our movies database.
+The front-end page is the same for all drivers, it consists of a movie search, detail info and a graph visualization of actors and movies.
+Each backend implementation shows you how to connect to Neo4j from the different languages and drivers.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>You can learn more about our small, consistent example project across many different language drivers <a href="../example-project">here</a>.
+You find the implementations for all drivers as <a href="https://github.com/neo4j-examples?query=movies">individual GitHub repositories</a>, that you can clone and deploy directly.</p>
+</div>
+
+</div>
 <div  id="_neo4j_for_rubyists" class="sect2 columns medium-12" style='padding-left: 0;' >
 <h3>Neo4j for Rubyists</h3>
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/ruby.png" alt="ruby">
-</p>
-</div>
-
-
-<div class="paragraph">
-<p>The Ruby programming language, released publicly in 1995, is a dynamic, object-oriented language. Its friendly syntax, aimed at making developers happy and feeling "natural, not simple," has made it extremely popular, particularly with web startups. It has a very large community, sophisticated but friendly package management system, dozens of powerful web frameworks, and an endless stream of blogs, webcasts, forums, books, and reference material for developers of all skill levels.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Ruby, the language with a focus on natural syntax so developers can be happier, is a perfect pairing with Neo4j, the graph database that provides the most natural way to persist data. Much like the Ruby community as a whole, Neo4j&#8217;s Rubyists are active and passionate developers who have created a broad range of mature Neo4j drivers. Whether you&#8217;re looking for low-level access to the core Java API with JRuby, access via our HTTP API, or ActiveModel-complaint models for a framework like Ruby on Rails, there is something for everyone.</p>
-</div>
-
-</div>
-<div  id="_driver_options" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Driver Options</h3>
 
 
 <div class="paragraph">
 <p>There are three popular gems for Neo4j:</p>
 </div>
 
-<div class="ulist">
-<ul>
-<li>
-<a href="https://github.com/maxdemarzi/neography">Neography</a>, a thin wrapper for the REST API that also provides additional methods to simplify node and relationship CRUD. It is compatible with Neo4j Server 1.8 through 2.X.
-</li>
-<li>
-<a href="https://github.com/neo4jrb/neo4j-core">Neo4j-core</a>, a slightly heavier wrapper that provides a full Cypher DSL in addition to methods to simplify CRUD. It is compatible with Neo4j 2+ in both Server and Embedded modes.
-</li>
-<li>
-<a href="https://github.com/neo4jrb/neo4j">Neo4j</a>, usually referred to as "Neo4j.rb," an OGM based on ActiveRecord that provides app-building tools that will make any Ruby on Rails user happy. It relies on neo4j-core and, as a result, is compatible with Neo4j 2+ in both Server and Embedded modes.
-</li>
-</ul>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">neography (<strong><a href="https://github.com/maxdemarzi/neography">GitHub</a></strong>)</dt>
+<dd>
+<p>A thin wrapper for the REST API that also provides additional methods to simplify node and relationship CRUD. It is compatible with Neo4j Server 1.8 through 2.X.</p>
+</dd>
+<dt class="hdlist1">neo4j-core (<strong><a href="https://github.com/neo4jrb/neo4j-core">GitHub</a></strong>)</dt>
+<dd>
+<p>A slightly heavier wrapper that provides a full Cypher DSL in addition to methods to simplify CRUD. It is compatible with Neo4j 2+ in both Server and Embedded modes.</p>
+</dd>
+<dt class="hdlist1">neo4j (<strong><a href="https://github.com/neo4jrb/neo4j">GitHub</a></strong>)</dt>
+<dd>
+<p>An OGM based on the ideas of ActiveRecord that provides app-building tools that will make any Ruby on Rails user happy. It relies on neo4j-core and, as a result, is compatible with Neo4j 2+ in both Server and Embedded modes.</p>
+</dd>
+</dl>
 </div>
 <div  id="_feature_comparison" class="sect3 "  >
 <h4>Feature Comparison</h4>
@@ -672,20 +672,22 @@ You should be familiar with <a href="/developer-resources/get-started/graph-data
 <p>Each gem fills a different need, so the choice of a gem should be based on the plans for your app and its hosting. You may also want to review frequency of updates, versions of Neo4j supported, and size of the community. Here&#8217;s a comparison chart of the these three gems to help make your decision.</p>
 </div>
 
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-topbot grid-all spread">
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
 <col style="width: 25%;">
 <col style="width: 25%;">
 </colgroup>
-<tbody>
+<thead>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Feature</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Neography</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Neo4j-core</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Neo4j (Neo4j.rb)</p></td>
+<th class="tableblock halign-left valign-top">Feature</th>
+<th class="tableblock halign-left valign-top">neography</th>
+<th class="tableblock halign-left valign-top">neo4j-core</th>
+<th class="tableblock halign-left valign-top">neo4j</th>
 </tr>
+</thead>
+<tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Thin wrapper for the REST API. Fewest dependencies.</p></td>
@@ -694,7 +696,7 @@ You should be familiar with <a href="/developer-resources/get-started/graph-data
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Neo4j Embedded/Java API</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
 </tr>
@@ -707,32 +709,32 @@ You should be familiar with <a href="/developer-resources/get-started/graph-data
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Heroku-compatible</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes (with Server/MRI)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes (with Server/MRI)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cypher DSL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes, plus advanced query builder (QueryProxy)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes + association chaining</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ActiveModel-complaint (Drop-in use with Ruby on Rails)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Legacy Indexing Support</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Neo4j 1.X Support</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Neo4j 2.X Support</p></td>
@@ -755,37 +757,31 @@ You should be familiar with <a href="/developer-resources/get-started/graph-data
 
 
 <div class="paragraph">
-<p>Very often, your gem choice may come down to how you want to deploy: "classic" deployment using Ruby MRI and a separate Neo4j Server over the HTTP API or a self-contained Neo4j Embedded app using JRuby and an app server such as JBoss/Torquebox?</p>
+<p>Very often, your gem choice may come down to how you want to deploy:</p>
+</div>
+
+<div class="dlist">
+<dl>
+<dt class="hdlist1">server</dt>
+<dd>
+<p>Using Ruby with a separate Neo4j Server over the HTTP API</p>
+</dd>
+<dt class="hdlist1">embedded</dt>
+<dd>
+<p>Connecting directly to the Neo4j database files from within your Ruby process (this requires JRuby)</p>
+</dd>
+</dl>
+</div>
+
+
+<div class="paragraph">
+<p>A separate Neo4j server is go-to choice for most developers, especially if they are used to other relational or NoSQL databases in frameworks such as Ruby on Rails. It allows you to have separate web and database servers and allows compatibility with popular PaaSes such as Heroku. If this sounds good to you, any of the popular gems are solid choices and you are free to consider whether you want a thin wrapper or the full framework experience.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Ruby MRI with Neo4j server is go-to choice for most developers, especially if they are used to other relational or NoSQL databases in frameworks such as Ruby on Rails. It allows you to have separate web and database servers and allows compatibility with popular PaaSes such as Heroku. If this sounds good to you, any of the popular gems are solid choices and you are free to consider whether you want a thin wrapper or the full framework experience.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>JRuby and Neo4j Embedded is less common but offers blazing fast performance and access to our core Java API. The downside is that JRuby has its own configuration and compatibility demands and hosting a Java app can be difficult. Thankfully, modern app servers such as Torquebox and a strong community provide far more options and resources now than ever before. If this is right for you, the Neo4j-core and Neo4j gems will offer what you need.</p>
-</div>
-
-</div>
-<div  id="_the_example_project" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>The Example Project</h3>
-
-
-<div class="paragraph">
-<p>It is a small one page webapp for our movies database.
-The front-end page is the same for all drivers, it consists of a movie search, detail info and a graph visualization of actors and movies.
-Each backend implementation shows you how to connect to Neo4j from the different languages and drivers.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>You can learn more about our small, consistent example project across many different language drivers <a href="../example-project">here</a>.
-You find the implementations for all drivers as <a href="https://github.com/neo4j-examples?query=movies">individual GitHub repositories</a>, that you can clone and deploy directly.</p>
+<p>Neo4j Embedded and JRuby is less common but offers blazing fast performance and access to our core Java API. The downside is that JRuby has its own configuration and compatibility demands and hosting a Java app can be difficult. Thankfully, modern app servers such as Torquebox and a strong community provide far more options and resources now than ever before. If this is right for you, the Neo4j-core and Neo4j gems will offer what you need.</p>
 </div>
 
 </div>
@@ -794,23 +790,25 @@ You find the implementations for all drivers as <a href="https://github.com/neo4
 
 
 <div class="paragraph">
-<p>Written by our own Max De Marzi, Neography feels very familiar if you’re already used to Neo4j: it’s designed as a thin wrapper above our database APIs.
-It supports the Neo4j transactional Cypher endpoint as well as the existing REST API and even supports Neo4j-Spatial.</p>
+<p>Written by our own <a href="http://twitter.com/maxdemarzi">Max De Marzi</a>, Neography feels very familiar if you’re already used to Neo4j: it’s designed as a thin wrapper above our database APIs.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>It supports the Neo4j transactional Cypher endpoint as well as the existing REST API and even supports Neo4j-Spatial.</p>
 </div>
 
 <div class="ulist">
 <ul>
 <li>
-<a href="http://github.com/maxdemarzi/neography/">Neography on GitHub</a>
+<a href="http://github.com/maxdemarzi/neography/">GitHub</a>
 </li>
 <li>
-Author: <a href="http://twitter.com/maxdemarzi">Max De Marzi</a>
+<a href="https://github.com/maxdemarzi/neography/wiki">Documentation</a>
 </li>
 <li>
-<a href="http://github.com/maxdemarzi/neography/">Documentation</a>
-</li>
-<li>
-<a href="http://maxdemarzi.com">Many Blog posts with examples</a>
+<a href="http://maxdemarzi.com/category/neography/">Many blog posts with examples</a>
 </li>
 </ul>
 </div>
@@ -820,25 +818,34 @@ Author: <a href="http://twitter.com/maxdemarzi">Max De Marzi</a>
 <p>Compared to Neo4j-core, it is notable for its smaller footprint, fewer dependencies, and support for extensions to the REST API. It is the perfect choice for basic communication with a database or as a backend for a custom OGM.</p>
 </div>
 
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>neo = Neography::Rest.new("http://neo4j:swordfish@localhost:7474")
+
+neo.execute_query("MATCH (person:Person) RETURN person LIMIT 10")
+
+node = neo.create_node("age" =&gt; 31, "name" =&gt; "Max")</code></pre>
 </div>
-<div  id="_neo4j_core_and_neo4j_rb" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Neo4j-core and Neo4j.rb</h3>
+</div>
+</div>
+<div  id="_neo4j_core_and_neo4j_collectively_the_neo4j_rb_project" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j-core and Neo4j (collectively the Neo4j.rb project)</h3>
 
 
 <div class="paragraph">
-<p>Andreas Ronge is one of our Swedish friends from Malmö and has been writing the <a href="https://github.com/neo4jrb">canonical Neo4j driver</a> since before we hit 1.0.</p>
+<p><a href="https://github.com/andreasronge">Andreas Ronge</a> is one of our Swedish friends from Malmö and started writing his canonical Neo4j Ruby driver since before we hit 1.0.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>The <a href="http://twitter.com/neo4jrb">Neo4j.rb team</a> (Brian Underwood, Chris Grigg, Andreas Ronge) continued the effort and just <a href="http://neo4j.com/blog/neo4j-rb-3-0-released/">released version 3.0</a> in September 2014. Neo4j.rb 3.0 won a Neo4j Graphie award for "Best Community Contribution" at the 2014 GraphConnect Conference.</p>
+<p><a href="https://github.com/cheerfulstoic">Brian Underwood</a> and <a href="https://github.com/subvertallchris">Chris Grigg</a> joined the project and together released <a href="http://neo4j.com/blog/neo4j-rb-3-0-released/">version 3.0</a> in September 2014. Neo4j.rb 3.0 won a Neo4j Graphie award for "Best Community Contribution" at the 2014 GraphConnect Conference.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>In addition to working actively on the <a href="http://neo4jrb.io/">Neo4jrb project</a>, Brian and Chris are very active community members, you can find them online on Stack Overflow and Twitter as well as in person at meetups and Neo4j events.</p>
+<p>Since then Brian and Chris have continued the effort to build new features, improve the API, and increase performance.  In addition to working actively on the <a href="http://neo4jrb.io/">Neo4jrb project</a>, Brian and Chris are very active community members, you can find them online on Stack Overflow and Twitter as well as in person at meetups and Neo4j events.</p>
 </div>
 
 
@@ -847,6 +854,16 @@ Author: <a href="http://twitter.com/maxdemarzi">Max De Marzi</a>
 <p>Both projects support accessing Neo4j in embedded mode via JRuby and server mode via MRI.</p>
 </div>
 
+<div class="ulist">
+<ul>
+<li>
+<a href="http://neo4jrb.io/">Neo4j.rb Project Page</a>
+</li>
+<li>
+<a href="http://neo4jrb.readthedocs.org/en/latest/">ReadTheDocs documentation</a>
+</li>
+</ul>
+</div>
 <div  id="_neo4j_core" class="sect3 "  >
 <h4>Neo4j-core</h4>
 
@@ -858,52 +875,80 @@ Author: <a href="http://twitter.com/maxdemarzi">Max De Marzi</a>
 <div class="ulist">
 <ul>
 <li>
-<a href="https://github.com/neo4j-examples/movies-ruby-neo4j-core">Example project with Neo4j-Core using Neo4j &amp; Cypher</a>
+<a href="https://github.com/neo4jrb/neo4j-core">Github</a>
+</li>
+<li>
+<a href="https://github.com/neo4j-examples/movies-ruby-neo4j-core">Example project</a>
 </li>
 </ul>
 </div>
-</div>
-<div  id="_neo4j_rb" class="sect3 "  >
-<h4>Neo4j.rb</h4>
 
 
 <div class="paragraph">
-<p>The Neo4j gem, Neo4j.rb, uses Neo4j-core as an API to connect to the server and provides an ActiveRecord-like experience for use in frameworks. It adds modules allowing the creation of models that look and feel very similar to those found in vanilla Ruby on Rails. The gem builds on Neo4j-core&#8217;s foundation to streamline all aspects of node and relationship CRUD and provides an extremely advanced, intuitive, flexible DSL for generating Cypher.</p>
+<p>How to get running:</p>
 </div>
 
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>session = Neo4j::Session.open(:server_db,
+                              "http://neo4j:your-password@localhost:7474")
+
+session.query("MATCH (person:Person) RETURN person LIMIT 10")
+
+
+# alternatively you can use the query chaining API:
+session.query.match(person: :Person).return(:person).limit(10).to_a</code></pre>
+</div>
+</div>
+</div>
+<div  id="_neo4j" class="sect3 "  >
+<h4>Neo4j</h4>
 
 
 <div class="paragraph">
-<p>Thanks to the Neo4jrb team, we can provide example projects for both neo4j-core and Neo4j.rb itself.</p>
+<p>The neo4j gem uses neo4j-core as an API to connect to the server and provides an ActiveRecord-like experience for use in frameworks. It adds modules allowing the creation of models that look and feel very similar to those found in vanilla Ruby on Rails. The gem builds on Neo4j-core&#8217;s foundation to streamline all aspects of node and relationship CRUD and provides an extremely advanced, intuitive, flexible DSL for generating Cypher.</p>
 </div>
 
 <div class="ulist">
 <ul>
 <li>
-<a href="https://github.com/neo4j-examples/movies-ruby-neo4jrb">Example project with Neo4j.rb &amp; Rails</a>
+<a href="https://github.com/neo4jrb/neo4j">Github</a>
 </li>
 <li>
-<a href="http://neo4jrb.io/">Neo4j.rb Project Page</a>
+<a href="https://github.com/neo4j-examples/movies-ruby-neo4jrb">Example project</a>
 </li>
 <li>
-<a href="https://github.com/neo4jrb/neo4j-core">Neo4j-core on Github</a>
+Twitter: <a href="http://twitter.com/neo4jrb">@neo4jrb</a>, <a href="http://twitter.com/cheerfulstoic">Brian</a>, <a href="http://twitter.com/subvertallchris">Chris</a>, <a href="http://twitter.com/ronge">Andreas</a>
 </li>
 <li>
-<a href="https://github.com/neo4jrb/neo4j">Neo4j on Github</a>
-</li>
-<li>
-Authors: <a href="http://twitter.com/neo4jrb">Neo4j.rb team</a> (Andreas Ronge, Brian Underwood, Chris Grigg)
-</li>
-<li>
-<a href="https://github.com/neo4jrb/neo4j/wiki/Neo4j.rb-v3-Introduction">Documentation</a>
-</li>
-<li>
-<a href="http://neo4j.com/blog/neo4j-rb-3-0-released/">Neo4j.rb 3.0 release blog post</a>
-</li>
-<li>
-<a href="http://blog.brian-underwood.codes/ruby/neo4j/announcements/2014/11/03/neo4apis/">Neo4j-APIs Analytics Gem(s)</a>
+<a href="http://blog.brian-underwood.codes/">Many blog posts with examples</a>
 </li>
 </ul>
+</div>
+
+
+<div class="paragraph">
+<p>How to get running:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code># See the documentation for setup instructions
+
+class Person
+  include Neo4j::ActiveNode
+
+  property :name
+
+  has_many :out, :books, type: :OWNS_BOOK
+  has_many :both, :friends, type: :HAS_FRIEND
+end
+
+person = Person.find_by(name: 'Jim')
+
+# Get the books owned by Jim's friends:
+person.friends.books.to_a</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -923,7 +968,7 @@ Authors: <a href="http://twitter.com/neo4jrb">Neo4j.rb team</a> (Andreas Ronge, 
 <p>Express yourself clearly and model your application in terms you understand with Pacer – a JRuby gem for building embedded Neo4j applications. Pacer supports Neo4j 1.8 and 1.9 only.</p>
 </div>
 
-<div class="ulist side-nav">
+<div class="ulist">
 <ul>
 <li>
 <a href="http://github.com/pangloss/pacer">Pacer on GitHub</a>
