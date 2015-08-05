@@ -73,6 +73,26 @@ A separate Neo4j server is go-to choice for most developers, especially if they 
 
 Neo4j Embedded and JRuby is less common but offers blazing fast performance and access to our core Java API. The downside is that JRuby has its own configuration and compatibility demands and hosting a Java app can be difficult. Thankfully, modern app servers such as Torquebox and a strong community provide far more options and resources now than ever before. If this is right for you, the Neo4j-core and Neo4j gems will offer what you need.
 
+=== Neography
+
+Written by our own http://twitter.com/maxdemarzi[Max De Marzi], Neography feels very familiar if you’re already used to Neo4j: it’s designed as a thin wrapper above our database APIs.
+
+It supports the Neo4j transactional Cypher endpoint as well as the existing REST API and even supports Neo4j-Spatial.
+
+* http://github.com/maxdemarzi/neography/[GitHub]
+* https://github.com/maxdemarzi/neography/wiki[Documentation]
+* http://maxdemarzi.com/category/neography/[Many blog posts with examples]
+
+Compared to Neo4j-core, it is notable for its smaller footprint, fewer dependencies, and support for extensions to the REST API. It is the perfect choice for basic communication with a database or as a backend for a custom OGM.
+
+[source,ruby]
+----
+neo = Neography::Rest.new("http://neo4j:swordfish@localhost:7474")
+
+neo.execute_query("MATCH (person:Person) RETURN person LIMIT 10")
+
+node = neo.create_node("age" => 31, "name" => "Max")
+----
 
 === Neo4j-core and Neo4j (collectively the Neo4j.rb project)
 
@@ -140,27 +160,6 @@ person.friends.books.to_a
 ----
 
 
-=== Neography
-
-Written by our own http://twitter.com/maxdemarzi[Max De Marzi], Neography feels very familiar if you’re already used to Neo4j: it’s designed as a thin wrapper above our database APIs.
-
-It supports the Neo4j transactional Cypher endpoint as well as the existing REST API and even supports Neo4j-Spatial.
-
-* http://github.com/maxdemarzi/neography/[GitHub]
-* https://github.com/maxdemarzi/neography/wiki[Documentation]
-* http://maxdemarzi.com/category/neography/[Many blog posts with examples]
-
-Compared to Neo4j-core, it is notable for its smaller footprint, fewer dependencies, and support for extensions to the REST API. It is the perfect choice for basic communication with a database or as a backend for a custom OGM.
-
-
-[source,ruby]
-----
-neo = Neography::Rest.new("http://neo4j:swordfish@localhost:7474")
-
-neo.execute_query("MATCH (person:Person) RETURN person LIMIT 10")
-
-node = neo.create_node("age" => 31, "name" => "Max")
-----
 === Other Drivers
 
 ==== Pacer
