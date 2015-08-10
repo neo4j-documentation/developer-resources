@@ -60,7 +60,11 @@ You can mount it with the `-v` option.
 Access then http://localhost:8474 (or whatever port you exposed) on your machine to use Neo4j.
 
 [NOTE]
-On OSX you have to use `boot2docker` and make the bootdocker environment variables available in your current shell session to have Docker connect correctly to the virtual machine.
+On OSX, you have to use http://boot2docker.io/[boot2docker] and make the bootdocker environment variables available in your current shell session to have Docker connect correctly to the virtual machine.
+For accessing Neo4j you have to use the IP of the `$DOCKERHOST` environment variable.
+
+[NOTE]
+On Microsoft Windows, you have to use http://boot2docker.io/[boot2docker]. You'll need to run `boot2docker` as an Administrator, or grant specific permissions in order for a symbolic link to be created on the filesystem.  See http://serverfault.com/questions/476610/virtualbox-issue-with-symlinks-in-shared-folders[serverfault post].
 For accessing Neo4j you have to use the IP of the `$DOCKERHOST` environment variable.
 
 There are several tags available:
