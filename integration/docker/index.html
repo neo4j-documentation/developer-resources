@@ -700,7 +700,20 @@ You can mount it with the <code>-v</code> option.</p>
 <div class="title label">Note</div>
 </td>
 <td class="content">
-On OSX you have to use <code>boot2docker</code> and make the bootdocker environment variables available in your current shell session to have Docker connect correctly to the virtual machine.
+On OSX, you have to use <a href="http://boot2docker.io/">boot2docker</a> and make the bootdocker environment variables available in your current shell session to have Docker connect correctly to the virtual machine.
+For accessing Neo4j you have to use the IP of the <code>$DOCKERHOST</code> environment variable.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title label">Note</div>
+</td>
+<td class="content">
+On Microsoft Windows, you have to use <a href="http://boot2docker.io/">boot2docker</a>. You&#8217;ll need to run <code>boot2docker</code> as an Administrator, or grant specific permissions in order for a symbolic link to be created on the filesystem.  See <a href="http://serverfault.com/questions/476610/virtualbox-issue-with-symlinks-in-shared-folders">serverfault post</a>.
 For accessing Neo4j you have to use the IP of the <code>$DOCKERHOST</code> environment variable.
 </td>
 </tr>
