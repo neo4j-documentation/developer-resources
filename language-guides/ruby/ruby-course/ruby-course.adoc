@@ -37,12 +37,12 @@ The property graph model consists of:
 
 **Nodes** which have _properties_ and _labels_.
 
- * _properties_ are a schemaless key/value pair
+ * _properties_ are schemaless key/value pairs
  * _labels_ describe and group nodes much like tables group rows, but nodes can have multiple labels
 
 **Relationships** which connect two nodes directionally have _properties_ and a _type_.
 
- * _properties_ are the same as described above
+ * _properties_ are schemaless key/value pairs
  * The relationship's _type_ gives a description of how it connects the two nodes
  * While relationships are directional, querying relationships in either direction has no associated performance cost
 
@@ -83,13 +83,13 @@ Get more information on our link:/developer/working-with-data/[Working With Data
 image::neo4jrb_logo.png[]
 --
 
-The link:http://neo4jrb.io/[Neo4j.rb project] is made up of the follow Ruby gems:
+The link:http://neo4jrb.io/[Neo4j.rb project] is made up of the following Ruby gems:
 
  * link:https://github.com/neo4jrb/neo4j[neo4j] A Object-Graph-Mapper (OGM) for the Neo4j graph database. It tries to follow API conventions established by ActiveRecord but with a Neo4j flavor.
  * link:https://github.com/neo4jrb/neo4j-core[neo4j-core] A low level driver for connecting to Neo4j. Used by the neo4j gem.
  * link:https://github.com/neo4jrb/neo4j-rake_tasks[neo4j-rake_tasks] A set of rake tasks for installing and managing a Neo4j database within your project. Used by the neo4j-core gem.
 
-Using the Neo4j.rb project you can connect to a remote Neo4j server with any version of ruby or use JRuby to take advantage of Neo4j's Java APIs directly.
+Using the Neo4j.rb project you can connect to a remote Neo4j server with any implementation of Ruby or use JRuby to take advantage of Neo4j's Java APIs directly.
 
 === Setup
 
@@ -100,7 +100,7 @@ First you should choose and download the edition of Neo4j which is right for you
 
 If you are using Neo4j Enterprise edition you may want to consult link:http://neo4j.com/developer/guide-clustering-neo4j/[this guide] on configuring a high availability cluster.
 
-As you are setting up your server to run Neo4j you should also consult this link:http://neo4j.com/developer/guide-sizing-and-hardware-calculator/[hardware requirements guide].
+If you are going to run Neo4j with large data sets you should also consult this link:http://neo4j.com/developer/guide-sizing-and-hardware-calculator/[hardware requirements guide].
 
 ==== Ruby Web Application Frameworks
 
@@ -188,8 +188,14 @@ There are many common gems that you'll want to use with your Neo4j database.  Ma
 
  * link:https://github.com/neo4jrb/neo4jrb_spatial[neo4jrb_spatial]
 
+===== Ruby Object Manager
+
+ * link:https://github.com/rom-rb/rom-neo4j[rom-neo4j]
+
 ++++
 </td>
 </tr>
 </table>
 ++++
+
+INCLUDE link:https://github.com/subvertallchris/neo4j-even_easier_id[NEO4J-EVEN_EASIER_ID] IF IT IS WORKING
