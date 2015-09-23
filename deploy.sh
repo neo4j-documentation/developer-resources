@@ -14,7 +14,7 @@ for file in `find . -mindepth 2 -maxdepth 3 -name "*.adoc"`; do
 done
 
 for guide in deploy/* ; do
-  ./publish.rb $guide
+  #./publish.rb $guide
 done
 
 
