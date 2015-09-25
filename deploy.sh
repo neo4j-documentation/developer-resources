@@ -16,8 +16,3 @@ done
 for guide in deploy/* ; do
   ./publish.rb $guide
 done
-
-
-#git add .
-#git commit -m "content-update for github-pages"
-#git push origin gh-pages

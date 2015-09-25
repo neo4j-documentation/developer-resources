@@ -4,3 +4,5 @@ gem 'rubypress'
 gem 'tilt'
 gem 'thread_safe'
 gem 'guard'
+gem 'rspec'
+

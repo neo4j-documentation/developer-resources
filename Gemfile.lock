@@ -1,8 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    asciidoctor (1.5.1)
+    asciidoctor (1.5.2)
     coderay (1.1.0)
+    diff-lcs (1.2.5)
     ffi (1.9.10)
     formatador (0.2.5)
     guard (2.13.0)
@@ -23,7 +24,7 @@ GEM
     notiffany (0.0.8)
       nenv (~> 0.1)
       shellany (~> 0.0)
-    pry (0.10.1)
+    pry (0.10.2)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
@@ -31,13 +32,26 @@ GEM
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
     retryable-rb (1.1.0)
-    rubypress (1.0.8)
+    rspec (3.3.0)
+      rspec-core (~> 3.3.0)
+      rspec-expectations (~> 3.3.0)
+      rspec-mocks (~> 3.3.0)
+    rspec-core (3.3.2)
+      rspec-support (~> 3.3.0)
+    rspec-expectations (3.3.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.3.0)
+    rspec-mocks (3.3.2)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.3.0)
+    rspec-support (3.3.0)
+    rubypress (1.1.1)
       retryable-rb
     shellany (0.0.1)
     slop (3.6.0)
     thor (0.19.1)
-    thread_safe (0.3.4)
-    tilt (1.4.1)
+    thread_safe (0.3.5)
+    tilt (2.0.1)
 
 PLATFORMS
   ruby
@@ -45,6 +59,7 @@ PLATFORMS
 DEPENDENCIES
   asciidoctor (~> 1.5.1)
   guard
+  rspec
   rubypress
   thread_safe
   tilt
