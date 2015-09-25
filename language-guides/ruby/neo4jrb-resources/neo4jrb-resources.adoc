@@ -1,10 +1,10 @@
-= Neo4j Application Development With Ruby
+= Resources for Neo4j.rb
 :level: Intermediate
 :toc:
 :toc-placement!: manual
 :toc-title: Overview
 :toclevels: 3
-:section: Develop with Neo4j
+:section: Using Neo4j from Ruby
 :section-link: language-guides
 
 [role="pull-right"]
@@ -21,45 +21,6 @@ This course provides an overview on everything that you need to build a Neo4j ap
 You should have Ruby installed on your system.
 
 
-=== Introduction to Neo4j
-
-Connected information is everywhere in our world.
-Neo4j was built to efficiently store, handle and query highly connected elements in your data model.
-With a powerful and flexible data model you can represent your real-world, variably structured information without a loss of fidelity.
-The property graph model is easy to understand and handle, especially for object oriented and relational developers.
-
-[role="pull-right"]
---
-image::simple_graph.png[]
---
-
-The property graph model consists of:
-
-**Nodes** which have _properties_ and _labels_.
-
- * _properties_ are schemaless key/value pairs
- * _labels_ describe and group nodes much like tables group rows, but nodes can have multiple labels
-
-**Relationships** which connect two nodes directionally have _properties_ and a _type_.
-
- * _properties_ are schemaless key/value pairs
- * The relationship's _type_ gives a description of how it connects the two nodes
- * While relationships are directional, querying relationships in either direction has no associated performance cost
-
-==== Cypher
-
-Cypher is Neo4j's built-in query language.  Cypher queries look like:
-
-[source,cypher]
-----
-MATCH (p:Person)-[:ACTED_IN]->(m:Movie)
-WHERE m.name =~ '.*Matrix.*'
-RETURN p, m.title
-----
-
-While it's possible to get started using the Neo4j.rb without learning Cypher, it is a very powerful way to query a Neo4j database and is worth learning.
-Also since the Neo4j.rb project works by making Cypher queries to Neo4j it is good to understand Cypher as your queries get more complex.
-There is also a link:/developer/cypher[Cypher tutorial] if you would like to learn more.
 
 === Importing data
 
@@ -85,9 +46,17 @@ image::neo4jrb_logo.png[]
 
 The link:http://neo4jrb.io/[Neo4j.rb project] is made up of the following Ruby gems:
 
+// tag::neo4jrb-gems[]
+
+---
+
  * link:https://github.com/neo4jrb/neo4j[neo4j] A Object-Graph-Mapper (OGM) for the Neo4j graph database. It tries to follow API conventions established by ActiveRecord but with a Neo4j flavor.
  * link:https://github.com/neo4jrb/neo4j-core[neo4j-core] A low level driver for connecting to Neo4j. Used by the neo4j gem.
  * link:https://github.com/neo4jrb/neo4j-rake_tasks[neo4j-rake_tasks] A set of rake tasks for installing and managing a Neo4j database within your project. Used by the neo4j-core gem.
+
+---
+
+// end::neo4jrb-gems[]
 
 Using the Neo4j.rb project you can connect to a remote Neo4j server with any implementation of Ruby or use JRuby to take advantage of Neo4j's Java APIs directly.
 
@@ -171,14 +140,14 @@ There are many common gems that you'll want to use with your Neo4j database.  Ma
  * link:https://github.com/neo4jrb/neo4j-will_paginate_redux[neo4j-will_paginate_redux]
  * link:https://github.com/megorei/kaminari-neo4j[kaminari-neo4j]
 
+===== ElasticSearch Integration
+
+ * link:https://github.com/neo4jrb/neo4j-searchkick[neo4j-searchkick]
+
 ++++
 </td>
 <td>
 ++++
-
-===== ElasticSearch Integration
-
- * link:https://github.com/neo4jrb/neo4j-searchkick[neo4j-searchkick]
 
 ===== Admin User Interface
 
@@ -191,6 +160,10 @@ There are many common gems that you'll want to use with your Neo4j database.  Ma
 ===== Ruby Object Manager
 
  * link:https://github.com/rom-rb/rom-neo4j[rom-neo4j]
+
+===== Misc.
+
+ * link:https://github.com/subvertallchris/neo4j-even_easier_id[neo4j-even_easier_id] (BSON UUIDs)
 
 ++++
 </td>
