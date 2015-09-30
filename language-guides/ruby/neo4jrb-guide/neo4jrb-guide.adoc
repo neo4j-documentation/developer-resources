@@ -203,7 +203,7 @@ class Book < Asset
   property :year_published, type: Integer
 
   has_one :in, :author, type: :CREATED, model_class: :User
-  has_one :in, :category, type: :HAS_CATEGORY
+  has_one :out, :category, type: :HAS_CATEGORY
 end
 ----
 
@@ -257,9 +257,169 @@ open http://localhost:3000/books
 
 From there you can create, update, browse, and delete books via the scaffolding.  You can visit `/books`, `/users`, and `/categories` to get entry points into the various sections.
 
-=== Doing Something Interesting
+=== The Fun Stuff
 
 If you just wanted to do simple CRUD operations there are plenty of other databases to choose from.  How can we do something a bit more fun?
+
+
+==== Eager Loading
+
+First let's introduce a performance improvement which isn't available from `ActiveRecord`.  When you go to your list of books you should see something like this in your log:
+
+.log/development.log
+[source,log]
+----
+Started GET "/books" for ::1 at 2015-09-30 17:34:03 +1300
+Processing by BooksController#index as HTML
+ CYPHER 4ms MATCH (n:`Book`:`Asset`) RETURN n
+ Book#author 4ms MATCH (previous:`Book`:`Asset`) WHERE (ID(previous) IN {ID_previous}) OPTIONAL MATCH previous<-[rel1:`CREATED`]-(next:`User`) RETURN ID(previous), collect(next) | {:ID_previous=>[2, 5, 9, 10]}
+ Book#category 3ms MATCH (previous:`Book`:`Asset`) WHERE (ID(previous) IN {ID_previous}) OPTIONAL MATCH previous<-[rel1:`HAS_CATEGORY`]-(next:`Category`) RETURN ID(previous), collect(next) | {:ID_previous=>[2, 5, 9, 10]}
+  Rendered books/index.html.erb within layouts/application (17.1ms)
+Completed 200 OK in 110ms (Views: 109.2ms)
+----
+
+If you find that a bit hard to read then you can add the following line to your application's configuration:
+
+.config/application.rb
+[source,ruby]
+----
+config.neo4j.pretty_logged_cypher_queries = true
+----
+
+Don't forget to restart your Rails server!
+
+Once you done this your log will look more like this:
+
+.log/development.log
+[source,log]
+----
+Started GET "/books" for ::1 at 2015-09-30 17:37:34 +1300
+Processing by BooksController#index as HTML
+ CYPHER 9ms
+  MATCH (n:`Book`:`Asset`)
+  RETURN n
+ Book#author 5ms
+  MATCH (previous:`Book`:`Asset`)
+  WHERE (ID(previous) IN {ID_previous})
+  OPTIONAL MATCH previous<-[rel1:`CREATED`]-(next:`User`)
+  RETURN
+    ID(previous),
+    collect(next) | {:ID_previous=>[2, 5, 9, 10]}
+ Book#category 4ms
+  MATCH (previous:`Book`:`Asset`)
+  WHERE (ID(previous) IN {ID_previous})
+  OPTIONAL MATCH previous<-[rel1:`HAS_CATEGORY`]-(next:`Category`)
+  RETURN
+    ID(previous),
+    collect(next) | {:ID_previous=>[2, 5, 9, 10]}
+  Rendered books/index.html.erb within layouts/application (24.2ms)
+Completed 200 OK in 147ms (Views: 146.0ms)
+----
+
+First the books are loaded and then separate queries are made to get all of the authors and categories for those books.
+
+With `ActiveRecord` you would need to specify an `includes` in order to make this happen rather than having each entity loaded individually.
+`ActiveNode`, on the other hand, makes the assumption that if you refer to an association from a list of items, you're almost certainly going to want that association for all of the objects.
+
+But we can do better!  Now modify the `index` action of the `BooksController` like so:
+
+.app/controllers/books_controller.rb
+[source,ruby]
+----
+def index
+  @books = Book.all.with_associations(:author, :category)
+end
+----
+
+The `with_associations` method is similar to `includes`, except that our associations are loaded *in the same query* using the `collect` function demonstrated earlier.
+
+.log/development.log
+[source,log]
+----
+Started GET "/books" for ::1 at 2015-09-30 17:54:25 +1300
+Processing by BooksController#index as HTML
+ CYPHER 9ms
+  MATCH (n:`Book`:`Asset`)
+  OPTIONAL MATCH
+    n<-[:`CREATED`]-author,
+    n<-[:`HAS_CATEGORY`]-category
+  WHERE
+    (author:User) AND
+    (category:Category)
+  RETURN
+    n,
+    [collect(author),collect(category)]
+  Rendered books/index.html.erb within layouts/application (12.0ms)
+Completed 200 OK in 62ms (Views: 61.5ms)
+----
+
+What we get is a list of `Book` objects which are pre-populated with authors and categories.
+
+==== Recommendations
+
+For this you'll need to add a new association to your `Category` model:
+
+.app/models/category.rb
+[source,ruby]
+----
+has_many :in, :books, origin: :category
+----
+
+With this it is relatively simple to get a start on querying potential recommendations.  Try running this bit of Ruby code in your Rails console:
+
+[source,ruby]
+----
+Book.all.category.books.to_a
+----
+
+It should show you the query which was made and it should look something like:
+
+[source,cypher]
+----
+MATCH (n:`Book`:`Asset`)
+MATCH n-[rel1:`HAS_CATEGORY`]->(node3:`Category`)
+MATCH node3<-[rel2:`HAS_CATEGORY`]-(result_books:`Book`:`Asset`)
+RETURN result_books
+----
+
+What this is doing is finding all of the books that share categories with all other books.  This isn't particularly useful until we start introducing some variables.  What if we wanted to find out how many books share a category with every book?
+
+[source,ruby]
+----
+Book.as(:book).category.books.pluck('book', 'count(*)')
+----
+
+What if we wanted to find out what those books are?
+
+[source,ruby]
+----
+Book.as(:book).category.books(:other_book).pluck('book', 'collect(other_book)')
+----
+
+Taking it a step further, let's create a query which finds any book which shares at least two categories (NOT POSSIBLE, WTF?)
+
+.app/controllers/books_controller.rb
+[source,ruby]
+----
+@recommendations = Book.as(:book).
+                    category(:category).
+                    books(:other_book).
+                    where('book <> other_book').
+                    query.
+                    with('book, collect(other_book) AS other_books').
+                    where('length(other_books) > 1').
+                    pluck('book.isbn', 'other_books')
+@recommendations = Hash[*@recommendations.flatten(1)]
+----
+
+.app/views/books/index.html.erb
+[source, erb]
+----
+<th>Recommendations</th>
+
+.... Further down ...
+<td><%= (@recommendations[book.isbn] || []).map(&:title).to_sentence %></td>
+----
 
 
 
