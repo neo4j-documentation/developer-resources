@@ -173,7 +173,7 @@ Once we've set up those models we can define our asset models like so:
 
 [source,bash]
 ----
-rails generate scaffold Book isbn:string year_published:integer
+rails generate scaffold Book isbn:string title:string year_published:integer author:references category:references
 ----
 
 That should generate a model which looks like this:
@@ -184,10 +184,13 @@ That should generate a model which looks like this:
 class Book 
   include Neo4j::ActiveNode
   property :isbn, type: String
+  property :title, type: String
   property :year_published, type: Integer
 
-end
+  has_one :in_or_out_or_both, :author, type: :FILL_IN_RELATIONSHIP_TYPE_HERE
+  has_one :in_or_out_or_both, :category, type: :FILL_IN_RELATIONSHIP_TYPE_HERE
 
+end
 ----
 
 You should change that to look like the following (note the `Asset` superclass definition):
@@ -198,10 +201,51 @@ You should change that to look like the following (note the `Asset` superclass d
 class Book < Asset
   id_property :isbn
   property :year_published, type: Integer
+
+  has_one :in, :author, type: :CREATED, model_class: :User
+  has_one :in, :category, type: :HAS_CATEGORY
 end
 ----
 
+NOTE: You can remove the `title` property because it is inherited from the `Asset` model.
+
+NOTE: We need to specify our Neo4j relationship directions and types here.  Additionally since `author` isn't enough for `ActiveNode` to understand that we want to reference users, we specify a `model_class` option.
+
 By inheriting from `Asset` our `Book` model will create nodes with two labels (`Book` and `Asset`).  Likewise when you query for nodes via the `Book` model it will only find nodes which have both labels.
+
+Lastly we just need to make a couple of small fixes.  Change these lines to get the names of book authors and categories:
+
+.app/views/books/index.html.erb
+[source,erb]
+----
+<td><%= book.author.try(:name) %></td>
+<td><%= book.category.try(:name) %></td>
+----
+
+And change these lines to be able to choose the author when creating or editing books:
+
+.app/views/books/_form.html.erb
+[source,erb]
+----
+<div class="field">
+  <%= f.label :author %><br>
+  <%= f.select :author, options_from_collection_for_select(User.all, :id, :name, @book.author.try(:id)), include_blank: true %>
+</div>
+<div class="field">
+  <%= f.label :category %><br>
+  <%= f.select :category, options_from_collection_for_select(Category.order(:name), :id, :name, @book.category.try(:id)), include_blank: true %>
+</div>
+----
+
+And so that you can set your associations, change the `book_params` method in the `BooksController` to remove the `_id`:
+
+.app/controllers/books_controller.rb
+[source,ruby]
+----
+def book_params
+  params.require(:book).permit(:isbn, :title, :year_published, :author, :category)
+end
+----
 
 Now that we've created our scaffolding let's start up our Rails server:
 
@@ -211,13 +255,11 @@ rails s
 open http://localhost:3000/books
 ----
 
-From there you can create, update, browse, and delete books via the scaffolding.
-
+From there you can create, update, browse, and delete books via the scaffolding.  You can visit `/books`, `/users`, and `/categories` to get entry points into the various sections.
 
 === Doing Something Interesting
 
 If you just wanted to do simple CRUD operations there are plenty of other databases to choose from.  How can we do something a bit more fun?
-
 
 
 

@@ -984,7 +984,7 @@ By default there will be a <code>uuid</code> property created on our model.  If 
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="bash"><code>rails generate scaffold Book isbn:string year_published:integer</code></pre>
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="bash"><code>rails generate scaffold Book isbn:string title:string year_published:integer author:references category:references</code></pre>
 </div>
 </div>
 
@@ -999,7 +999,11 @@ By default there will be a <code>uuid</code> property created on our model.  If 
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>class Book
   include Neo4j::ActiveNode
   property :isbn, type: String
+  property :title, type: String
   property :year_published, type: Integer
+
+  has_one :in_or_out_or_both, :author, type: :FILL_IN_RELATIONSHIP_TYPE_HERE
+  has_one :in_or_out_or_both, :category, type: :FILL_IN_RELATIONSHIP_TYPE_HERE
 
 end</code></pre>
 </div>
@@ -1016,8 +1020,35 @@ end</code></pre>
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>class Book &lt; Asset
   id_property :isbn
   property :year_published, type: Integer
+
+  has_one :in, :author, type: :CREATED, model_class: :User
+  has_one :in, :category, type: :HAS_CATEGORY
 end</code></pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title label">Note</div>
+</td>
+<td class="content">
+You can remove the <code>title</code> property because it is inherited from the <code>Asset</code> model.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title label">Note</div>
+</td>
+<td class="content">
+We need to specify our Neo4j relationship directions and types here.  Additionally since <code>author</code> isn&#8217;t enough for <code>ActiveNode</code> to understand that we want to reference users, we specify a <code>model_class</code> option.
+</td>
+</tr>
+</table>
 </div>
 
 
@@ -1025,6 +1056,52 @@ end</code></pre>
 <p>By inheriting from <code>Asset</code> our <code>Book</code> model will create nodes with two labels (<code>Book</code> and <code>Asset</code>).  Likewise when you query for nodes via the <code>Book</code> model it will only find nodes which have both labels.</p>
 </div>
 
+
+
+<div class="paragraph">
+<p>Lastly we just need to make a couple of small fixes.  Change these lines to get the names of book authors and categories:</p>
+</div>
+
+<div class="listingblock">
+<div class="title">app/views/books/index.html.erb</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="erb"><code>&lt;td&gt;&lt;%= book.author.try(:name) %&gt;&lt;/td&gt;
+&lt;td&gt;&lt;%= book.category.try(:name) %&gt;&lt;/td&gt;</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>And change these lines to be able to choose the author when creating or editing books:</p>
+</div>
+
+<div class="listingblock">
+<div class="title">app/views/books/_form.html.erb</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="erb"><code>&lt;div class="field"&gt;
+  &lt;%= f.label :author %&gt;&lt;br&gt;
+  &lt;%= f.select :author, options_from_collection_for_select(User.all, :id, :name, @book.author.try(:id)), include_blank: true %&gt;
+&lt;/div&gt;
+&lt;div class="field"&gt;
+  &lt;%= f.label :category %&gt;&lt;br&gt;
+  &lt;%= f.select :category, options_from_collection_for_select(Category.order(:name), :id, :name, @book.category.try(:id)), include_blank: true %&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>And so that you can set your associations, change the <code>book_params</code> method in the <code>BooksController</code> to remove the <code>_id</code>:</p>
+</div>
+
+<div class="listingblock">
+<div class="title">app/controllers/books_controller.rb</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>def book_params
+  params.require(:book).permit(:isbn, :title, :year_published, :author, :category)
+end</code></pre>
+</div>
+</div>
 
 
 <div class="paragraph">
@@ -1040,7 +1117,7 @@ open http://localhost:3000/books</code></pre>
 
 
 <div class="paragraph">
-<p>From there you can create, update, browse, and delete books via the scaffolding.</p>
+<p>From there you can create, update, browse, and delete books via the scaffolding.  You can visit <code>/books</code>, <code>/users</code>, and <code>/categories</code> to get entry points into the various sections.</p>
 </div>
 
 </div>
