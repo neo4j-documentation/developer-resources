@@ -617,6 +617,51 @@ th.tableblock, th p.tableblock {
 <hr>
 </div>
 </div>
+<style>
+  pre.code {
+    white-space: pre-wrap;
+  }
+</style>
+<script>
+CodeMirror.colorize = (function() {
+    var isBlock = /^(p|li|div|h\\d|pre|blockquote|td)$/;
+
+    function textContent(node, out) {
+        if (node.nodeType == 3) return out.push(node.nodeValue);
+        for (var ch = node.firstChild; ch; ch = ch.nextSibling) {
+            textContent(ch, out);
+            if (isBlock.test(node.nodeType)) out.push("\n");
+        }
+    }
+
+    return function() {
+        var collection = document.body.getElementsByTagName("pre");
+
+        for (var i = 0; i < collection.length; ++i) {
+            var theme = " cm-s-default";
+            var node = collection[i];
+            var mode = node.getAttribute("data-lang");
+            if (!mode) continue;
+            if (mode === "cypher") {
+                theme = " cm-s-neo";
+            } else if (mode === "ruby") {
+                mode = "text/x-ruby";
+            } else if (mode === "java") {
+                mode = "text/x-java";
+            } else if (mode === "sql") {
+                mode = "text/x-sql";
+            }
+
+            var text = [];
+            textContent(node, text);
+            node.innerHTML = "";
+            CodeMirror.runMode(text.join(""), mode, node);
+
+            node.className += theme;
+        }
+    };
+})();
+</script>
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
@@ -1131,7 +1176,7 @@ open http://localhost:3000/books</code></pre>
 
 
 <div class="paragraph">
-<p>If you just wanted to do simple CRUD operations there are plenty of other databases to choose from.  How can we do something a bit more fun?</p>
+<p>If you just wanted to do simple CRUD operations there are plenty of other databases to choose from.  How can we do something a bit more fun using the power of Neo4j?</p>
 </div>
 
 <div  id="_eager_loading" class="sect3 "  >
@@ -1148,8 +1193,11 @@ open http://localhost:3000/books</code></pre>
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="log"><code>Started GET "/books" for ::1 at 2015-09-30 17:34:03 +1300
 Processing by BooksController#index as HTML
  CYPHER 4ms MATCH (n:`Book`:`Asset`) RETURN n
+
  Book#author 4ms MATCH (previous:`Book`:`Asset`) WHERE (ID(previous) IN {ID_previous}) OPTIONAL MATCH previous&lt;-[rel1:`CREATED`]-(next:`User`) RETURN ID(previous), collect(next) | {:ID_previous=&gt;[2, 5, 9, 10]}
+
  Book#category 3ms MATCH (previous:`Book`:`Asset`) WHERE (ID(previous) IN {ID_previous}) OPTIONAL MATCH previous&lt;-[rel1:`HAS_CATEGORY`]-(next:`Category`) RETURN ID(previous), collect(next) | {:ID_previous=&gt;[2, 5, 9, 10]}
+
   Rendered books/index.html.erb within layouts/application (17.1ms)
 Completed 200 OK in 110ms (Views: 109.2ms)</code></pre>
 </div>
@@ -1186,6 +1234,7 @@ Processing by BooksController#index as HTML
  CYPHER 9ms
   MATCH (n:`Book`:`Asset`)
   RETURN n
+
  Book#author 5ms
   MATCH (previous:`Book`:`Asset`)
   WHERE (ID(previous) IN {ID_previous})
@@ -1193,6 +1242,7 @@ Processing by BooksController#index as HTML
   RETURN
     ID(previous),
     collect(next) | {:ID_previous=&gt;[2, 5, 9, 10]}
+
  Book#category 4ms
   MATCH (previous:`Book`:`Asset`)
   WHERE (ID(previous) IN {ID_previous})
@@ -1234,7 +1284,7 @@ end</code></pre>
 
 
 <div class="paragraph">
-<p>The <code>with_associations</code> method is similar to <code>includes</code>, except that our associations are loaded <strong>in the same query</strong> using the <code>collect</code> function demonstrated earlier.</p>
+<p>The <code>with_associations</code> method is similar to <code>includes</code>, except that our associations are loaded <strong><em>in the same query</em></strong> using the <code>collect</code> function demonstrated earlier.</p>
 </div>
 
 <div class="listingblock">
@@ -1269,24 +1319,108 @@ Completed 200 OK in 62ms (Views: 61.5ms)</code></pre>
 
 
 <div class="paragraph">
-<p>For this you&#8217;ll need to add a new association to your <code>Category</code> model:</p>
+<p>You may have heard that Neo4j makes building recommendations from your data easy.  Let&#8217;s take a look at how we might make some recommendations.  For this we&#8217;re going to introduce <code>has_many</code> associations.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>First change the <code>category</code> association for the <code>Book</code> model:</p>
 </div>
 
 <div class="listingblock">
-<div class="title">app/models/category.rb</div>
+<div class="title">app/models/book.rb</div>
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>has_many :in, :books, origin: :category</code></pre>
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>has_many :out, :categories, type: :HAS_CATEGORY</code></pre>
 </div>
 </div>
 
 
 <div class="paragraph">
-<p>With this it is relatively simple to get a start on querying potential recommendations.  Try running this bit of Ruby code in your Rails console:</p>
+<p>Then add a <code>books</code> association to the <code>Category</code> model:</p>
+</div>
+
+<div class="listingblock">
+<div class="title">app/models/category.rb</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>has_many :in, :books, origin: :categories</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Once we&#8217;ve changed the <code>has_one</code> to <code>has_many</code> for the book categories we should update our scaffold UI to match:</p>
+</div>
+
+<div class="listingblock">
+<div class="title">app/controllers/books_controller.rb</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>def index
+  @books = Book.all.with_associations(:author, :categories)
+end
+
+... Further down ...
+
+def book_params
+  params.require(:book).permit(:isbn, :title, :year_published, :author, :category_ids =&gt; [])
+end</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">app/views/books/index.html.erb</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="erb"><code>&lt;th&gt;Categories&lt;/th&gt;
+
+... Further down ...
+
+&lt;td&gt;
+  &lt;ul&gt;
+  &lt;% book.categories.each do |category| %&gt;
+    &lt;li&gt;&lt;%= link_to category.name, category %&gt;&lt;/li&gt;
+  &lt;% end %&gt;
+  &lt;/ul&gt;
+&lt;/td&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">app/views/books/_form.html.erb</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="erb"><code>&lt;div class="field"&gt;
+  &lt;%= f.label :categories %&gt;&lt;br&gt;
+  &lt;%= f.select :category_ids, options_from_collection_for_select(Category.order(:name), :id, :name, @book.categories.map(&amp;:id)), {include_blank: true}, {multiple: true, size: 5} %&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">app/views/books/show.html.erb</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="erb"><code>&lt;p&gt;
+  &lt;strong&gt;Categories:&lt;/strong&gt;
+  &lt;%= @book.categories.to_a %&gt;
+&lt;/p&gt;</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Whew!</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Now with the ability for a book to have many categories and for a category to have many books week can have a much better picture about recommending books</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>It is simple to get a start on querying potential recommendations.  Try running this bit of Ruby code in your Rails console:</p>
 </div>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>Book.all.category.books.to_a</code></pre>
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>Book.all.categories.books.to_a</code></pre>
 </div>
 </div>
 
@@ -1306,42 +1440,37 @@ RETURN result_books</code></pre>
 
 
 <div class="paragraph">
-<p>What this is doing is finding all of the books that share categories with all other books.  This isn&#8217;t particularly useful until we start introducing some variables.  What if we wanted to find out how many books share a category with every book?</p>
+<p>This query is finding all of the books that share categories with all other books.  This isn&#8217;t particularly useful until we start introducing some variables.  What if you wanted to list every book and find out, for every other book with which it shares a category, how many categories it shares?</p>
 </div>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>Book.as(:book).category.books.pluck('book', 'count(*)')</code></pre>
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>Book.as(:book).categories(:category).books(:other_book).pluck('book', 'other_book', 'count(category)')</code></pre>
 </div>
 </div>
 
 
 <div class="paragraph">
-<p>What if we wanted to find out what those books are?</p>
+<p>Notice how we&#8217;re starting to assign variables.  These eventually become the variables in the cypher query made to Neo4j.</p>
 </div>
 
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>Book.as(:book).category.books(:other_book).pluck('book', 'collect(other_book)')</code></pre>
-</div>
-</div>
 
 
 <div class="paragraph">
-<p>Taking it a step further, let&#8217;s create a query which finds any book which shares at least two categories (NOT POSSIBLE, WTF?)</p>
+<p>Taking it a step further, let&#8217;s create a query which finds, for all books, the books which share at least two categories:</p>
 </div>
 
 <div class="listingblock">
 <div class="title">app/controllers/books_controller.rb</div>
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>@recommendations = Book.as(:book).
-                    category(:category).
+                    categories(:category).
                     books(:other_book).
                     where('book &lt;&gt; other_book').
                     query.
-                    with('book, collect(other_book) AS other_books').
-                    where('length(other_books) &gt; 1').
-                    pluck('book.isbn', 'other_books')
+                    with('book, other_book, count(category) AS count').
+                    where('count &gt; 1').
+                    pluck('book.isbn', 'collect(other_book)')
 @recommendations = Hash[*@recommendations.flatten(1)]</code></pre>
 </div>
 </div>
@@ -1350,8 +1479,49 @@ RETURN result_books</code></pre>
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="erb"><code>&lt;th&gt;Recommendations&lt;/th&gt;
 
-.... Further down ...
+... Further down ...
+
 &lt;td&gt;&lt;%= (@recommendations[book.isbn] || []).map(&amp;:title).to_sentence %&gt;&lt;/td&gt;</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Of course we don&#8217;t want to put too much logic in the controller, so let&#8217;s extract this to a model class method:</p>
+</div>
+
+<div class="listingblock">
+<div class="title">app/controllers/books_controller.rb</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>Book.recommendations</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">app/controllers/books_controller.rb</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>def self.recommendations
+  recommendations = all(:book).
+                      categories(:category).
+                      books(:other_book).
+                      where('book &lt;&gt; other_book').
+                      query.
+                      with('book, other_book, count(category) AS count').
+                      where('count &gt; 1').
+                      pluck('book.isbn', 'collect(other_book)')
+
+  Hash[*recommendations.flatten(1)]
+end</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Because the <code>all</code> method starts it off we can actually add this to an existing chain rather than just calling it on the <code>Book</code> model:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>Book.recent.recommendations</code></pre>
 </div>
 </div>
 </div>

@@ -12,6 +12,54 @@
 toc::[]
 --
 
+++++
+<style>
+  pre.code {
+    white-space: pre-wrap;
+  }
+</style>
+<script>
+CodeMirror.colorize = (function() {
+    var isBlock = /^(p|li|div|h\\d|pre|blockquote|td)$/;
+
+    function textContent(node, out) {
+        if (node.nodeType == 3) return out.push(node.nodeValue);
+        for (var ch = node.firstChild; ch; ch = ch.nextSibling) {
+            textContent(ch, out);
+            if (isBlock.test(node.nodeType)) out.push("\n");
+        }
+    }
+
+    return function() {
+        var collection = document.body.getElementsByTagName("pre");
+
+        for (var i = 0; i < collection.length; ++i) {
+            var theme = " cm-s-default";
+            var node = collection[i];
+            var mode = node.getAttribute("data-lang");
+            if (!mode) continue;
+            if (mode === "cypher") {
+                theme = " cm-s-neo";
+            } else if (mode === "ruby") {
+                mode = "text/x-ruby";
+            } else if (mode === "java") {
+                mode = "text/x-java";
+            } else if (mode === "sql") {
+                mode = "text/x-sql";
+            }
+
+            var text = [];
+            textContent(node, text);
+            node.innerHTML = "";
+            CodeMirror.runMode(text.join(""), mode, node);
+
+            node.className += theme;
+        }
+    };
+})();
+</script>
+++++
+
 .Goals
 [abstract]
 This course provides an overview on everything that you need to build a Neo4j application with the link:https://www.ruby-lang.org[Ruby programming language].  Ruby on Rails is used, but any Ruby framework (or lack thereof) could also be used.
@@ -259,7 +307,7 @@ From there you can create, update, browse, and delete books via the scaffolding.
 
 === The Fun Stuff
 
-If you just wanted to do simple CRUD operations there are plenty of other databases to choose from.  How can we do something a bit more fun?
+If you just wanted to do simple CRUD operations there are plenty of other databases to choose from.  How can we do something a bit more fun using the power of Neo4j?
 
 
 ==== Eager Loading
@@ -272,8 +320,11 @@ First let's introduce a performance improvement which isn't available from `Acti
 Started GET "/books" for ::1 at 2015-09-30 17:34:03 +1300
 Processing by BooksController#index as HTML
  CYPHER 4ms MATCH (n:`Book`:`Asset`) RETURN n
+
  Book#author 4ms MATCH (previous:`Book`:`Asset`) WHERE (ID(previous) IN {ID_previous}) OPTIONAL MATCH previous<-[rel1:`CREATED`]-(next:`User`) RETURN ID(previous), collect(next) | {:ID_previous=>[2, 5, 9, 10]}
+
  Book#category 3ms MATCH (previous:`Book`:`Asset`) WHERE (ID(previous) IN {ID_previous}) OPTIONAL MATCH previous<-[rel1:`HAS_CATEGORY`]-(next:`Category`) RETURN ID(previous), collect(next) | {:ID_previous=>[2, 5, 9, 10]}
+
   Rendered books/index.html.erb within layouts/application (17.1ms)
 Completed 200 OK in 110ms (Views: 109.2ms)
 ----
@@ -298,6 +349,7 @@ Processing by BooksController#index as HTML
  CYPHER 9ms
   MATCH (n:`Book`:`Asset`)
   RETURN n
+
  Book#author 5ms
   MATCH (previous:`Book`:`Asset`)
   WHERE (ID(previous) IN {ID_previous})
@@ -305,6 +357,7 @@ Processing by BooksController#index as HTML
   RETURN
     ID(previous),
     collect(next) | {:ID_previous=>[2, 5, 9, 10]}
+
  Book#category 4ms
   MATCH (previous:`Book`:`Asset`)
   WHERE (ID(previous) IN {ID_previous})
@@ -331,7 +384,7 @@ def index
 end
 ----
 
-The `with_associations` method is similar to `includes`, except that our associations are loaded *in the same query* using the `collect` function demonstrated earlier.
+The `with_associations` method is similar to `includes`, except that our associations are loaded *_in the same query_* using the `collect` function demonstrated earlier.
 
 .log/development.log
 [source,log]
@@ -357,19 +410,83 @@ What we get is a list of `Book` objects which are pre-populated with authors and
 
 ==== Recommendations
 
-For this you'll need to add a new association to your `Category` model:
+You may have heard that Neo4j makes building recommendations from your data easy.  Let's take a look at how we might make some recommendations.  For this we're going to introduce `has_many` associations.
+
+First change the `category` association for the `Book` model:
+
+.app/models/book.rb
+[source,ruby]
+----
+has_many :out, :categories, type: :HAS_CATEGORY
+----
+
+Then add a `books` association to the `Category` model:
 
 .app/models/category.rb
 [source,ruby]
 ----
-has_many :in, :books, origin: :category
+has_many :in, :books, origin: :categories
 ----
 
-With this it is relatively simple to get a start on querying potential recommendations.  Try running this bit of Ruby code in your Rails console:
+Once we've changed the `has_one` to `has_many` for the book categories we should update our scaffold UI to match:
+
+.app/controllers/books_controller.rb
+[source,ruby]
+----
+def index
+  @books = Book.all.with_associations(:author, :categories)
+end
+
+... Further down ...
+
+def book_params
+  params.require(:book).permit(:isbn, :title, :year_published, :author, :category_ids => [])
+end
+----
+
+.app/views/books/index.html.erb
+[source,erb]
+----
+<th>Categories</th>
+
+... Further down ...
+
+<td>
+  <ul>
+  <% book.categories.each do |category| %>
+    <li><%= link_to category.name, category %></li>
+  <% end %>
+  </ul>
+</td>
+----
+
+.app/views/books/_form.html.erb
+[source,erb]
+----
+<div class="field">
+  <%= f.label :categories %><br>
+  <%= f.select :category_ids, options_from_collection_for_select(Category.order(:name), :id, :name, @book.categories.map(&:id)), {include_blank: true}, {multiple: true, size: 5} %>
+</div>
+----
+
+.app/views/books/show.html.erb
+[source,erb]
+----
+<p>
+  <strong>Categories:</strong>
+  <%= @book.categories.to_a %>
+</p>
+----
+
+Whew!
+
+Now with the ability for a book to have many categories and for a category to have many books week can have a much better picture about recommending books 
+
+It is simple to get a start on querying potential recommendations.  Try running this bit of Ruby code in your Rails console:
 
 [source,ruby]
 ----
-Book.all.category.books.to_a
+Book.all.categories.books.to_a
 ----
 
 It should show you the query which was made and it should look something like:
@@ -382,33 +499,28 @@ MATCH node3<-[rel2:`HAS_CATEGORY`]-(result_books:`Book`:`Asset`)
 RETURN result_books
 ----
 
-What this is doing is finding all of the books that share categories with all other books.  This isn't particularly useful until we start introducing some variables.  What if we wanted to find out how many books share a category with every book?
+This query is finding all of the books that share categories with all other books.  This isn't particularly useful until we start introducing some variables.  What if you wanted to list every book and find out, for every other book with which it shares a category, how many categories it shares?
 
 [source,ruby]
 ----
-Book.as(:book).category.books.pluck('book', 'count(*)')
+Book.as(:book).categories(:category).books(:other_book).pluck('book', 'other_book', 'count(category)')
 ----
 
-What if we wanted to find out what those books are?
+Notice how we're starting to assign variables.  These eventually become the variables in the cypher query made to Neo4j.
 
-[source,ruby]
-----
-Book.as(:book).category.books(:other_book).pluck('book', 'collect(other_book)')
-----
-
-Taking it a step further, let's create a query which finds any book which shares at least two categories (NOT POSSIBLE, WTF?)
+Taking it a step further, let's create a query which finds, for all books, the books which share at least two categories:
 
 .app/controllers/books_controller.rb
 [source,ruby]
 ----
 @recommendations = Book.as(:book).
-                    category(:category).
+                    categories(:category).
                     books(:other_book).
                     where('book <> other_book').
                     query.
-                    with('book, collect(other_book) AS other_books').
-                    where('length(other_books) > 1').
-                    pluck('book.isbn', 'other_books')
+                    with('book, other_book, count(category) AS count').
+                    where('count > 1').
+                    pluck('book.isbn', 'collect(other_book)')
 @recommendations = Hash[*@recommendations.flatten(1)]
 ----
 
@@ -417,9 +529,44 @@ Taking it a step further, let's create a query which finds any book which shares
 ----
 <th>Recommendations</th>
 
-.... Further down ...
+... Further down ...
+
 <td><%= (@recommendations[book.isbn] || []).map(&:title).to_sentence %></td>
 ----
+
+
+Of course we don't want to put too much logic in the controller, so let's extract this to a model class method:
+
+.app/controllers/books_controller.rb
+[source,ruby]
+----
+Book.recommendations
+----
+
+.app/controllers/books_controller.rb
+[source,ruby]
+----
+def self.recommendations
+  recommendations = all(:book).
+                      categories(:category).
+                      books(:other_book).
+                      where('book <> other_book').
+                      query.
+                      with('book, other_book, count(category) AS count').
+                      where('count > 1').
+                      pluck('book.isbn', 'collect(other_book)')
+
+  Hash[*recommendations.flatten(1)]
+end
+----
+
+Because the `all` method starts it off we can actually add this to an existing chain rather than just calling it on the `Book` model:
+
+[source,ruby]
+----
+Book.recent.recommendations
+----
+
 
 
 
