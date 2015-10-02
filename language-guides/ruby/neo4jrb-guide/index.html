@@ -610,7 +610,13 @@ th.tableblock, th p.tableblock {
 <li><a href="#_recommendations">Recommendations</a></li>
 </ul>
 </li>
-<li><a href="#_unimplemented_ideas">Unimplemented ideas:</a></li>
+<li><a href="#_doing_more">Doing More</a>
+<ul class="sectlevel3">
+<li><a href="#_the_asset_portal_application">The asset_portal application</a></li>
+<li><a href="#_getting_help">Getting Help</a></li>
+<li><a href="#_more_screencasts">More Screencasts</a></li>
+</ul>
+</li>
 </ul>
 
 </div>
@@ -625,6 +631,46 @@ th.tableblock, th p.tableblock {
 <script type='text/javascript' src='../codemirror_ruby.js'></script>
 <script type='text/javascript' src='../codemirror_multiplex.js'></script>
 <script type='text/javascript' src='../codemirror_htmlembedded.js'></script>
+<script>
+CodeMirror.colorize = (function() {
+    var isBlock = /^(p|li|div|h\\d|pre|blockquote|td)$/;
+
+    function textContent(node, out) {
+        if (node.nodeType == 3) return out.push(node.nodeValue);
+        for (var ch = node.firstChild; ch; ch = ch.nextSibling) {
+            textContent(ch, out);
+            if (isBlock.test(node.nodeType)) out.push("\n");
+        }
+    }
+
+    return function() {
+        var collection = document.body.getElementsByTagName("pre");
+
+        for (var i = 0; i < collection.length; ++i) {
+            var theme = " cm-s-default";
+            var node = collection[i];
+            var mode = node.getAttribute("data-lang");
+            if (!mode) continue;
+            if (mode === "cypher") {
+                theme = " cm-s-neo";
+            } else if (mode === "java") {
+                mode = "text/x-java";
+            } else if (mode === "erb") {
+                mode = "application/x-erb";
+            } else if (mode === "sql") {
+                mode = "text/x-sql";
+            }
+
+            var text = [];
+            textContent(node, text);
+            node.innerHTML = "";
+            CodeMirror.runMode(text.join(""), mode, node);
+
+            node.className += theme;
+        }
+    };
+})();
+</script>
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
@@ -992,6 +1038,13 @@ By default there will be a <code>uuid</code> property created on our model.  If 
 
 
 <div class="paragraph">
+<p>To learn more about properties check out this short screencast.</p>
+</div>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2pCSQkHkPC8?rel=0" frameborder="0" allowfullscreen></iframe>
+
+
+<div class="paragraph">
 <p>Once we&#8217;ve set up those models we can define our asset models like so:</p>
 </div>
 
@@ -1147,7 +1200,7 @@ open http://localhost:3000/books</code></pre>
 
 
 <div class="paragraph">
-<p>First let&#8217;s introduce a performance improvement which isn&#8217;t available from <code>ActiveRecord</code>.  When you go to your list of books you should see something like this in your log:</p>
+<p>First let&#8217;s look at a performance improvement which isn&#8217;t available from <code>ActiveRecord</code>.  When you go to your list of books you should see something like this in your log:</p>
 </div>
 
 <div class="listingblock">
@@ -1247,7 +1300,7 @@ end</code></pre>
 
 
 <div class="paragraph">
-<p>The <code>with_associations</code> method is similar to <code>includes</code>, except that our associations are loaded <strong><em>in the same query</em></strong> using the <code>collect</code> function demonstrated earlier.</p>
+<p>The <code>with_associations</code> method is similar to <code>includes</code>, except that our associations are loaded <strong><em>in the same query</em></strong> using the <code>collect()</code> function demonstrated earlier.</p>
 </div>
 
 <div class="listingblock">
@@ -1282,9 +1335,16 @@ Completed 200 OK in 62ms (Views: 61.5ms)</code></pre>
 
 
 <div class="paragraph">
-<p>You may have heard that Neo4j makes building recommendations from your data easy.  Let&#8217;s take a look at how we might make some recommendations.  For this we&#8217;re going to introduce <code>has_many</code> associations.</p>
+<p>You may have heard that Neo4j makes building recommendations from your data easy.  Let&#8217;s take a look at how we might make some recommendations.  For this we&#8217;re going to introduce <code>has_many</code> associations.  Since entities are connected via relationships in Neo4j the database doesn&#8217;t draw any distinction for when we want to have a single relationship or many to/from a node.  In our Ruby apps, however, it is often convenient to be able to draw this distinction.</p>
 </div>
 
+
+
+<div class="paragraph">
+<p>To learn more about associations check out this short screencast.</p>
+</div>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/veqIfIqtoNc?rel=0" frameborder="0" allowfullscreen></iframe>
 
 
 <div class="paragraph">
@@ -1312,7 +1372,7 @@ Completed 200 OK in 62ms (Views: 61.5ms)</code></pre>
 
 
 <div class="paragraph">
-<p>Once we&#8217;ve changed the <code>has_one</code> to <code>has_many</code> for the book categories we should update our scaffold UI to match:</p>
+<p>Since we&#8217;ve changed the <code>has_one</code> to <code>has_many</code> for the book categories we should update our scaffold UI to match:</p>
 </div>
 
 <div class="listingblock">
@@ -1359,7 +1419,7 @@ end</code></pre>
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="erb"><code>&lt;p&gt;
   &lt;strong&gt;Categories:&lt;/strong&gt;
-  &lt;%= @book.categories.to_a %&gt;
+  &lt;%= @book.categories.map(&amp;:name).to_sentence %&gt;
 &lt;/p&gt;</code></pre>
 </div>
 </div>
@@ -1372,13 +1432,13 @@ end</code></pre>
 
 
 <div class="paragraph">
-<p>Now with the ability for a book to have many categories and for a category to have many books week can have a much better picture about recommending books</p>
+<p>Now with the ability for a book to have many categories and for a category to have many books you can have a much better picture about recommending books.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>It is simple to get a start on querying potential recommendations.  Try running this bit of Ruby code in your Rails console:</p>
+<p>It is simple to get a start on querying potential recommendations.  Try running this in your Rails console:</p>
 </div>
 
 <div class="listingblock">
@@ -1403,12 +1463,22 @@ RETURN result_books</code></pre>
 
 
 <div class="paragraph">
-<p>This query is finding all of the books that share categories with all other books.  This isn&#8217;t particularly useful until we start introducing some variables.  What if you wanted to list every book and find out, for every other book with which it shares a category, how many categories it shares?</p>
+<p>This query is finding all of the books that share categories with all other books.  This isn&#8217;t particularly useful until we start introducing some variables.  In the <code>neo4j</code> gem this is called <em>association chaining</em>.  For more information about association chaining check out this short screencast:</p>
+</div>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/pUAl9ov22j4?rel=0" frameborder="0" allowfullscreen></iframe>
+
+
+<div class="paragraph">
+<p>What if you wanted to list every book and find out, for every other book with which it shares a category, how many categories it shares?</p>
 </div>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>Book.as(:book).categories(:category).books(:other_book).pluck('book', 'other_book', 'count(category)')</code></pre>
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>Book.as(:book).
+  categories(:category).
+  books(:other_book).
+  pluck('book', 'other_book', 'count(category)')</code></pre>
 </div>
 </div>
 
@@ -1420,7 +1490,7 @@ RETURN result_books</code></pre>
 
 
 <div class="paragraph">
-<p>Taking it a step further, let&#8217;s create a query which finds, for all books, the books which share at least two categories:</p>
+<p>Taking it a step further, let&#8217;s create a query which finds, for all books, the books which share at least two categories.  We can also display these recommendations in our app like so:</p>
 </div>
 
 <div class="listingblock">
@@ -1479,7 +1549,7 @@ end</code></pre>
 
 
 <div class="paragraph">
-<p>Because the <code>all</code> method starts it off we can actually add this to an existing chain rather than just calling it on the <code>Book</code> model:</p>
+<p>Because the <code>all</code> method starts it off we can actually add this to an existing chain rather than just calling it on the <code>Book</code> model.  For example if we had a <code>recent</code> scope which only gave us books from the past ten years:</p>
 </div>
 
 <div class="listingblock">
@@ -1489,79 +1559,43 @@ end</code></pre>
 </div>
 </div>
 </div>
-<div  id="_unimplemented_ideas" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Unimplemented ideas:</h3>
-<div class="ulist">
-<ul>
-<li>
-Guide should demonstrate creating a rails app to track assets (which could be any sort of entity)
-</li>
-<li>
-Use branch of asset portal app to describe simple app
-</li>
-<li>
-In the guide, point to engine gem as the latest part of this project as well as sample application
-</li>
-<li>
-Options
-<div class="ulist">
-<ul>
-<li>
-Switching entirely to Neo4j
-</li>
-<li>
-Using Neo4j and another database for separate entities
-</li>
-<li>
-Using Neo4j to replicate some or all of an existing database
-<div class="ulist">
-<ul>
-<li>
-Mongo: <a href="https://github.com/neo4j-contrib/neo4j_doc_manager" class="bare">https://github.com/neo4j-contrib/neo4j_doc_manager</a>
-</li>
-<li>
-SQL:
-<div class="ulist">
-<ul>
-<li>
-<a href="https://github.com/neo4jrb/neo4apis-activerecord" class="bare">https://github.com/neo4jrb/neo4apis-activerecord</a>
-</li>
-<li>
-WAY OUT OF DATE: <a href="https://github.com/neoid-gem/neoid" class="bare">https://github.com/neoid-gem/neoid</a>
-</li>
-</ul>
+<div  id="_doing_more" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Doing More</h3>
+<div  id="_the_asset_portal_application" class="sect3 "  >
+<h4>The asset_portal application</h4>
+
+
+<div class="paragraph">
+<p>Here you created your own application, but if you would like to play with a more developed application check out our <a href="https://github.com/neo4j-examples/asset_portal">asset_portal</a> app.  The project introduces a single <code>AssetController</code> to avoid the duplication from this guide and also uses other tools like <a href="http://semantic-ui.com/">Semantic UI</a> for a cleaner interface.</p>
 </div>
-</li>
-</ul>
+
 </div>
-</li>
-<li>
-Doesn&#8217;t matter too much as the neo4j.rb gems don&#8217;t conflict with other object mappers
-</li>
-</ul>
+<div  id="_getting_help" class="sect3 "  >
+<h4>Getting Help</h4>
+
+
+<div class="paragraph">
+<p>The maintainers of the <code>Neo4j.rb</code> project love to help!  You can ask a question on <a href="http://stackoverflow.com/questions/ask?tags=neo4j.rb+neo4j+ruby">StackOverflow</a> (make sure to use the <code>neo4j.rb</code> tag), or join us in our <a href="https://gitter.im/neo4jrb/neo4j">Gitter chat room</a>.  You can also check out the <a href="http://neo4jrb.io/">website</a> and the <a href="http://neo4jrb.readthedocs.org/">documentation</a>.</p>
 </div>
-</li>
-<li>
-Usage
-<div class="ulist">
-<ul>
-<li>
-Cool things that you can do:
-<div class="ulist">
-<ul>
-<li>
-Realize that you need to add a node / relationship (just add it to the models)
-</li>
-<li>
-Connected data query
-</li>
-</ul>
+
+
+
+<div class="paragraph">
+<p>There is also a wonderful <a href="http://neo4j.com/blog/public-neo4j-users-slack-group/">public Slack group</a> for the wider Neo4j community if you have questions about installation, configuration, Cypher, etc&#8230;&#8203;</p>
 </div>
-</li>
-</ul>
+
 </div>
-</li>
-</ul>
+<div  id="_more_screencasts" class="sect3 "  >
+<h4>More Screencasts</h4>
+
+
+<div class="paragraph">
+<p>In addition to the screencasts embedded in this guide there are two others to help you learn more about the <code>Neo4j.rb</code> project:</p>
+</div>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/f7NNGIWZ1pE?rel=0" frameborder="0" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UFiWqPdH7io?rel=0" frameborder="0" allowfullscreen></iframe>
 </div>
 </div>
                     </div>

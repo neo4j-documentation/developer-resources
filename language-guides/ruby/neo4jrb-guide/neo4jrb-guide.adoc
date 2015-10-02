@@ -21,6 +21,46 @@ toc::[]
 <script type='text/javascript' src='../codemirror_ruby.js'></script>
 <script type='text/javascript' src='../codemirror_multiplex.js'></script>
 <script type='text/javascript' src='../codemirror_htmlembedded.js'></script>
+<script>
+CodeMirror.colorize = (function() {
+    var isBlock = /^(p|li|div|h\\d|pre|blockquote|td)$/;
+
+    function textContent(node, out) {
+        if (node.nodeType == 3) return out.push(node.nodeValue);
+        for (var ch = node.firstChild; ch; ch = ch.nextSibling) {
+            textContent(ch, out);
+            if (isBlock.test(node.nodeType)) out.push("\n");
+        }
+    }
+
+    return function() {
+        var collection = document.body.getElementsByTagName("pre");
+
+        for (var i = 0; i < collection.length; ++i) {
+            var theme = " cm-s-default";
+            var node = collection[i];
+            var mode = node.getAttribute("data-lang");
+            if (!mode) continue;
+            if (mode === "cypher") {
+                theme = " cm-s-neo";
+            } else if (mode === "java") {
+                mode = "text/x-java";
+            } else if (mode === "erb") {
+                mode = "application/x-erb";
+            } else if (mode === "sql") {
+                mode = "text/x-sql";
+            }
+
+            var text = [];
+            textContent(node, text);
+            node.innerHTML = "";
+            CodeMirror.runMode(text.join(""), mode, node);
+
+            node.className += theme;
+        }
+    };
+})();
+</script>
 ++++
 
 .Goals
@@ -180,6 +220,12 @@ Since Neo4j is schemaless we need to define our properties in our model.
 
 NOTE: By default there will be a `uuid` property created on our model.  If you would like to define your own unique identifier you can use the `id_property` method.  Either can be accessed or changed via the `#id` and `#id=` methods.
 
+To learn more about properties check out this short screencast.
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2pCSQkHkPC8?rel=0" frameborder="0" allowfullscreen></iframe>
+++++
+
 Once we've set up those models we can define our asset models like so:
 
 [source,bash]
@@ -275,7 +321,7 @@ If you just wanted to do simple CRUD operations there are plenty of other databa
 
 ==== Eager Loading
 
-First let's introduce a performance improvement which isn't available from `ActiveRecord`.  When you go to your list of books you should see something like this in your log:
+First let's look at a performance improvement which isn't available from `ActiveRecord`.  When you go to your list of books you should see something like this in your log:
 
 .log/development.log
 [source,log]
@@ -347,7 +393,7 @@ def index
 end
 ----
 
-The `with_associations` method is similar to `includes`, except that our associations are loaded *_in the same query_* using the `collect` function demonstrated earlier.
+The `with_associations` method is similar to `includes`, except that our associations are loaded *_in the same query_* using the `collect()` function demonstrated earlier.
 
 .log/development.log
 [source,log]
@@ -373,7 +419,14 @@ What we get is a list of `Book` objects which are pre-populated with authors and
 
 ==== Recommendations
 
-You may have heard that Neo4j makes building recommendations from your data easy.  Let's take a look at how we might make some recommendations.  For this we're going to introduce `has_many` associations.
+You may have heard that Neo4j makes building recommendations from your data easy.  Let's take a look at how we might make some recommendations.  For this we're going to introduce `has_many` associations.  Since entities are connected via relationships in Neo4j the database doesn't draw any distinction for when we want to have a single relationship or many to/from a node.  In our Ruby apps, however, it is often convenient to be able to draw this distinction.
+
+To learn more about associations check out this short screencast.
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/veqIfIqtoNc?rel=0" frameborder="0" allowfullscreen></iframe>
+++++
+
 
 First change the `category` association for the `Book` model:
 
@@ -391,7 +444,7 @@ Then add a `books` association to the `Category` model:
 has_many :in, :books, origin: :categories
 ----
 
-Once we've changed the `has_one` to `has_many` for the book categories we should update our scaffold UI to match:
+Since we've changed the `has_one` to `has_many` for the book categories we should update our scaffold UI to match:
 
 .app/controllers/books_controller.rb
 [source,ruby]
@@ -437,15 +490,15 @@ end
 ----
 <p>
   <strong>Categories:</strong>
-  <%= @book.categories.to_a %>
+  <%= @book.categories.map(&:name).to_sentence %>
 </p>
 ----
 
 Whew!
 
-Now with the ability for a book to have many categories and for a category to have many books week can have a much better picture about recommending books 
+Now with the ability for a book to have many categories and for a category to have many books you can have a much better picture about recommending books.
 
-It is simple to get a start on querying potential recommendations.  Try running this bit of Ruby code in your Rails console:
+It is simple to get a start on querying potential recommendations.  Try running this in your Rails console:
 
 [source,ruby]
 ----
@@ -462,16 +515,25 @@ MATCH node3<-[rel2:`HAS_CATEGORY`]-(result_books:`Book`:`Asset`)
 RETURN result_books
 ----
 
-This query is finding all of the books that share categories with all other books.  This isn't particularly useful until we start introducing some variables.  What if you wanted to list every book and find out, for every other book with which it shares a category, how many categories it shares?
+This query is finding all of the books that share categories with all other books.  This isn't particularly useful until we start introducing some variables.  In the `neo4j` gem this is called _association chaining_.  For more information about association chaining check out this short screencast:
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/pUAl9ov22j4?rel=0" frameborder="0" allowfullscreen></iframe>
+++++
+
+What if you wanted to list every book and find out, for every other book with which it shares a category, how many categories it shares?
 
 [source,ruby]
 ----
-Book.as(:book).categories(:category).books(:other_book).pluck('book', 'other_book', 'count(category)')
+Book.as(:book).
+  categories(:category).
+  books(:other_book).
+  pluck('book', 'other_book', 'count(category)')
 ----
 
 Notice how we're starting to assign variables.  These eventually become the variables in the cypher query made to Neo4j.
 
-Taking it a step further, let's create a query which finds, for all books, the books which share at least two categories:
+Taking it a step further, let's create a query which finds, for all books, the books which share at least two categories.  We can also display these recommendations in our app like so:
 
 .app/controllers/books_controller.rb
 [source,ruby]
@@ -523,22 +585,42 @@ def self.recommendations
 end
 ----
 
-Because the `all` method starts it off we can actually add this to an existing chain rather than just calling it on the `Book` model:
+Because the `all` method starts it off we can actually add this to an existing chain rather than just calling it on the `Book` model.  For example if we had a `recent` scope which only gave us books from the past ten years:
 
 [source,ruby]
 ----
 Book.recent.recommendations
 ----
 
+=== Doing More
+
+
+==== The asset_portal application
+Here you created your own application, but if you would like to play with a more developed application check out our link:https://github.com/neo4j-examples/asset_portal[asset_portal] app.  The project introduces a single `AssetController` to avoid the duplication from this guide and also uses other tools like link:http://semantic-ui.com/[Semantic UI] for a cleaner interface.
+
+==== Getting Help
+
+The maintainers of the `Neo4j.rb` project love to help!  You can ask a question on link:http://stackoverflow.com/questions/ask?tags=neo4j.rb+neo4j+ruby[StackOverflow] (make sure to use the `neo4j.rb` tag), or join us in our link:https://gitter.im/neo4jrb/neo4j[Gitter chat room].  You can also check out the link:http://neo4jrb.io/[website] and the link:http://neo4jrb.readthedocs.org/[documentation].
+
+There is also a wonderful link:http://neo4j.com/blog/public-neo4j-users-slack-group/[public Slack group] for the wider Neo4j community if you have questions about installation, configuration, Cypher, etc...
+
+==== More Screencasts
+
+In addition to the screencasts embedded in this guide there are two others to help you learn more about the `Neo4j.rb` project:
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/f7NNGIWZ1pE?rel=0" frameborder="0" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UFiWqPdH7io?rel=0" frameborder="0" allowfullscreen></iframe>
+++++
 
 
 
+////
 
 == Unimplemented ideas:
 
-* Guide should demonstrate creating a rails app to track assets (which could be any sort of entity)
-* Use branch of asset portal app to describe simple app
-* In the guide, point to engine gem as the latest part of this project as well as sample application
+* When the engine gem is available, refer to that along with the `asset_portal` repo
 
 
 * Options
@@ -557,8 +639,7 @@ Book.recent.recommendations
 *** Connected data query
 
 
-
-
+////
 
 
 
