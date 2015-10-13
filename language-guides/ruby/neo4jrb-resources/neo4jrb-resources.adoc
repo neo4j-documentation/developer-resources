@@ -12,15 +12,6 @@
 toc::[]
 --
 
-.Goals
-[abstract]
-This course provides an overview on everything that you need to build a Neo4j application with the link:https://www.ruby-lang.org[Ruby programming language].
-
-.Prerequisites
-[abstract]
-You should have Ruby installed on your system.
-
-
 
 === Importing data
 
@@ -43,32 +34,10 @@ Get more information on our link:/developer/working-with-data/[Working With Data
 image::neo4jrb_logo.png[]
 --
 
-The link:http://neo4jrb.io/[Neo4j.rb project] is made up of the following Ruby gems:
-
-// tag::neo4jrb-gems[]
-
----
-
- * link:https://github.com/neo4jrb/neo4j[neo4j] A Object-Graph-Mapper (OGM) for the Neo4j graph database. It tries to follow API conventions established by ActiveRecord but with a Neo4j flavor.
- * link:https://github.com/neo4jrb/neo4j-core[neo4j-core] A low level driver for connecting to Neo4j. Used by the neo4j gem.
- * link:https://github.com/neo4jrb/neo4j-rake_tasks[neo4j-rake_tasks] A set of rake tasks for installing and managing a Neo4j database within your project. Used by the neo4j-core gem.
-
----
-
-// end::neo4jrb-gems[]
-
 Using the Neo4j.rb project you can connect to a remote Neo4j server with any implementation of Ruby or use JRuby to take advantage of Neo4j's Java APIs directly.
 
 === Setup
 
-
-==== Community vs Enterprise
-
-First you should choose and download the edition of Neo4j which is right for you.  See the link:http://neo4j.com/editions/[editions page] for more information.
-
-If you are using Neo4j Enterprise edition you may want to consult link:http://neo4j.com/developer/guide-clustering-neo4j/[this guide] on configuring a high availability cluster.
-
-If you are going to run Neo4j with large data sets you should also consult this link:http://neo4j.com/developer/guide-sizing-and-hardware-calculator/[hardware requirements guide].
 
 ==== Ruby Web Application Frameworks
 
@@ -115,58 +84,5 @@ There are two Sinatra apps which use Neo4j to implement the link:http://neo4j.co
 </div>
 ++++
 
-==== Gem integrations
 
-There are many common gems that you'll want to use with your Neo4j database.  Many are supported for the Neo4j.rb project:
-
-++++
-<table style="width: 100%">
-<tr>
-<td>
-++++
-
-===== Authentication
-
- * link:https://github.com/neo4jrb/devise-neo4j[devise-neo4j]
-
-===== File Attachment
-
- * link:https://github.com/neo4jrb/neo4jrb-paperclip[neo4jrb-paperclip]
- * link:https://github.com/neo4jrb/carrierwave-neo4j[carrierwave-neo4j]
-
-===== Pagination
-
- * link:https://github.com/neo4jrb/neo4j-will_paginate_redux[neo4j-will_paginate_redux]
- * link:https://github.com/megorei/kaminari-neo4j[kaminari-neo4j]
-
-===== ElasticSearch Integration
-
- * link:https://github.com/neo4jrb/neo4j-searchkick[neo4j-searchkick]
-
-++++
-</td>
-<td>
-++++
-
-===== Admin User Interface
-
- * link:https://github.com/cheerfulstoic/rails_admin[rails_admin]
-
-===== Integration With the link:https://github.com/neo4j-contrib/spatial[Neo4j Spatial Plugin]
-
- * link:https://github.com/neo4jrb/neo4jrb_spatial[neo4jrb_spatial]
-
-===== Ruby Object Manager
-
- * link:https://github.com/rom-rb/rom-neo4j[rom-neo4j]
-
-===== Misc.
-
- * link:https://github.com/subvertallchris/neo4j-even_easier_id[neo4j-even_easier_id] (BSON UUIDs)
-
-++++
-</td>
-</tr>
-</table>
-++++
 

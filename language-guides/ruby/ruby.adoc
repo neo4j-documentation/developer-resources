@@ -7,6 +7,17 @@
 :section: Develop with Neo4j
 :section-link: language-guides
 
+++++
+<style>
+  pre.code {
+    white-space: pre-wrap;
+  }
+</style>
+<script type='text/javascript' src='codemirror_ruby.js'></script>
+<script type='text/javascript' src='codemirror_multiplex.js'></script>
+<script type='text/javascript' src='codemirror_htmlembedded.js'></script>
+++++
+
 .Goals
 [abstract]
 This guide provides an overview of options for connecting to Neo4j using Ruby. It will introduce the different drivers and link to relevant resources.
@@ -87,16 +98,30 @@ Compared to Neo4j-core, it is notable for its smaller footprint, fewer dependenc
 
 [source,ruby]
 ----
-neo = Neography::Rest.new("http://neo4j:swordfish@localhost:7474")
+neo = Neography::Rest.new("http://neo4j:pass@localhost:7474")
 
 neo.execute_query("MATCH (person:Person) RETURN person LIMIT 10")
 
 node = neo.create_node("age" => 31, "name" => "Max")
 ----
 
-=== Neo4j-core and Neo4j (collectively the Neo4j.rb project)
+=== Neo4j.rb
 
-https://github.com/andreasronge[Andreas Ronge] is one of our Swedish friends from Malmö and started writing his canonical Neo4j Ruby driver since before we hit 1.0.
+The link:http://neo4jrb.io/[Neo4j.rb project] is made up of the following Ruby gems:
+
+// tag::neo4jrb-gems[]
+
+---
+
+ * link:https://github.com/neo4jrb/neo4j[neo4j] A Object-Graph-Mapper (OGM) for the Neo4j graph database. It tries to follow API conventions established by ActiveRecord but with a Neo4j flavor.
+ * link:https://github.com/neo4jrb/neo4j-core[neo4j-core] A low level driver for connecting to Neo4j. Used by the neo4j gem.
+ * link:https://github.com/neo4jrb/neo4j-rake_tasks[neo4j-rake_tasks] A set of rake tasks for installing and managing a Neo4j database within your project. Used by the neo4j-core gem.
+
+---
+
+// end::neo4jrb-gems[]
+
+https://github.com/andreasronge[Andreas Ronge], one of our Swedish friends from Malmö, started writing his canonical Neo4j Ruby driver since before we hit 1.0.
 
 https://github.com/cheerfulstoic[Brian Underwood] and https://github.com/subvertallchris[Chris Grigg] joined the project and together released http://neo4j.com/blog/neo4j-rb-3-0-released/[version 3.0] in September 2014. Neo4j.rb 3.0 won a Neo4j Graphie award for "Best Community Contribution" at the 2014 GraphConnect Conference.
 
@@ -121,7 +146,7 @@ How to get running:
 [source,ruby]
 ----
 session = Neo4j::Session.open(:server_db,
-                              "http://neo4j:your-password@localhost:7474")
+                              "http://neo4j:pass@localhost:7474")
 
 session.query("MATCH (person:Person) RETURN person LIMIT 10")
 
@@ -161,6 +186,64 @@ person = Person.find_by(name: 'Jim')
 person.friends.books.to_a
 ----
 
+==== Neo4j gem integrations
+
+// tag::neo4jrb-integrations[]
+
+There are many common gems that you'll want to use with your Neo4j database.  Many are supported for the Neo4j.rb project:
+
+++++
+<table style="width: 100%">
+<tr>
+<td>
+++++
+
+Authentication
+
+ * link:https://github.com/neo4jrb/devise-neo4j[devise-neo4j]
+
+File Attachment
+
+ * link:https://github.com/neo4jrb/neo4jrb-paperclip[neo4jrb-paperclip]
+ * link:https://github.com/neo4jrb/carrierwave-neo4j[carrierwave-neo4j]
+
+Pagination
+
+ * link:https://github.com/neo4jrb/neo4j-will_paginate_redux[neo4j-will_paginate_redux]
+ * link:https://github.com/megorei/kaminari-neo4j[kaminari-neo4j]
+
+ElasticSearch Integration
+
+ * link:https://github.com/neo4jrb/neo4j-searchkick[neo4j-searchkick]
+
+++++
+</td>
+<td>
+++++
+
+Admin User Interface
+
+ * link:https://github.com/cheerfulstoic/rails_admin[rails_admin]
+
+Integration With the link:https://github.com/neo4j-contrib/spatial[Neo4j Spatial Plugin]
+
+ * link:https://github.com/neo4jrb/neo4jrb_spatial[neo4jrb_spatial]
+
+Ruby Object Manager
+
+ * link:https://github.com/rom-rb/rom-neo4j[rom-neo4j]
+
+Misc.
+
+ * link:https://github.com/subvertallchris/neo4j-even_easier_id[neo4j-even_easier_id] (BSON UUIDs)
+
+++++
+</td>
+</tr>
+</table>
+++++
+
+// end::neo4jrb-integrations[]
 
 === Other Drivers
 

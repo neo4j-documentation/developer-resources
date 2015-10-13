@@ -589,6 +589,14 @@ th.tableblock, th p.tableblock {
                     <div class="large-9 large-push-3 columns guide-section-content">
                         <div id="preamble columns medium-12">
 <div class="sectionbody">
+<style>
+  pre.code {
+    white-space: pre-wrap;
+  }
+</style>
+<script type='text/javascript' src='codemirror_ruby.js'></script>
+<script type='text/javascript' src='codemirror_multiplex.js'></script>
+<script type='text/javascript' src='codemirror_htmlembedded.js'></script>
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
@@ -614,7 +622,7 @@ You should be familiar with <a href="/developer-resources/get-started/graph-data
 <li><a href="#_neo4j_for_rubyists">Neo4j for Rubyists</a></li>
 <li><a href="#_deployment_considerations">Deployment Considerations</a></li>
 <li><a href="#_neography">Neography</a></li>
-<li><a href="#_neo4j_core_and_neo4j_collectively_the_neo4j_rb_project">Neo4j-core and Neo4j (collectively the Neo4j.rb project)</a></li>
+<li><a href="#_neo4j_rb">Neo4j.rb</a></li>
 <li><a href="#_other_drivers">Other Drivers</a></li>
 </ul>
 
@@ -820,7 +828,7 @@ You will find the implementations for all drivers as <a href="https://github.com
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>neo = Neography::Rest.new("http://neo4j:swordfish@localhost:7474")
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>neo = Neography::Rest.new("http://neo4j:pass@localhost:7474")
 
 neo.execute_query("MATCH (person:Person) RETURN person LIMIT 10")
 
@@ -828,12 +836,33 @@ node = neo.create_node("age" =&gt; 31, "name" =&gt; "Max")</code></pre>
 </div>
 </div>
 </div>
-<div  id="_neo4j_core_and_neo4j_collectively_the_neo4j_rb_project" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Neo4j-core and Neo4j (collectively the Neo4j.rb project)</h3>
+<div  id="_neo4j_rb" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j.rb</h3>
 
 
 <div class="paragraph">
-<p><a href="https://github.com/andreasronge">Andreas Ronge</a> is one of our Swedish friends from Malmö and started writing his canonical Neo4j Ruby driver since before we hit 1.0.</p>
+<p>The <a href="http://neo4jrb.io/">Neo4j.rb project</a> is made up of the following Ruby gems:</p>
+</div>
+
+<hr>
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/neo4jrb/neo4j">neo4j</a> A Object-Graph-Mapper (OGM) for the Neo4j graph database. It tries to follow API conventions established by ActiveRecord but with a Neo4j flavor.
+</li>
+<li>
+<a href="https://github.com/neo4jrb/neo4j-core">neo4j-core</a> A low level driver for connecting to Neo4j. Used by the neo4j gem.
+</li>
+<li>
+<a href="https://github.com/neo4jrb/neo4j-rake_tasks">neo4j-rake_tasks</a> A set of rake tasks for installing and managing a Neo4j database within your project. Used by the neo4j-core gem.
+</li>
+</ul>
+</div>
+<hr>
+
+
+<div class="paragraph">
+<p><a href="https://github.com/andreasronge">Andreas Ronge</a>, one of our Swedish friends from Malmö, started writing his canonical Neo4j Ruby driver since before we hit 1.0.</p>
 </div>
 
 
@@ -894,7 +923,7 @@ node = neo.create_node("age" =&gt; 31, "name" =&gt; "Max")</code></pre>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>session = Neo4j::Session.open(:server_db,
-                              "http://neo4j:your-password@localhost:7474")
+                              "http://neo4j:pass@localhost:7474")
 
 session.query("MATCH (person:Person) RETURN person LIMIT 10")
 
@@ -953,6 +982,133 @@ person = Person.find_by(name: 'Jim')
 person.friends.books.to_a</code></pre>
 </div>
 </div>
+</div>
+<div  id="_neo4j_gem_integrations" class="sect3 "  >
+<h4>Neo4j gem integrations</h4>
+
+
+<div class="paragraph">
+<p>There are many common gems that you&#8217;ll want to use with your Neo4j database.  Many are supported for the Neo4j.rb project:</p>
+</div>
+
+<table style="width: 100%">
+<tr>
+<td>
+
+
+<div class="paragraph">
+<p>Authentication</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/neo4jrb/devise-neo4j">devise-neo4j</a>
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>File Attachment</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/neo4jrb/neo4jrb-paperclip">neo4jrb-paperclip</a>
+</li>
+<li>
+<a href="https://github.com/neo4jrb/carrierwave-neo4j">carrierwave-neo4j</a>
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>Pagination</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/neo4jrb/neo4j-will_paginate_redux">neo4j-will_paginate_redux</a>
+</li>
+<li>
+<a href="https://github.com/megorei/kaminari-neo4j">kaminari-neo4j</a>
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>ElasticSearch Integration</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/neo4jrb/neo4j-searchkick">neo4j-searchkick</a>
+</li>
+</ul>
+</div>
+</td>
+<td>
+
+
+<div class="paragraph">
+<p>Admin User Interface</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/cheerfulstoic/rails_admin">rails_admin</a>
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>Integration With the <a href="https://github.com/neo4j-contrib/spatial">Neo4j Spatial Plugin</a></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/neo4jrb/neo4jrb_spatial">neo4jrb_spatial</a>
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>Ruby Object Manager</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/rom-rb/rom-neo4j">rom-neo4j</a>
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>Misc.</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/subvertallchris/neo4j-even_easier_id">neo4j-even_easier_id</a> (BSON UUIDs)
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div  id="_other_drivers" class="sect2 columns medium-12" style='padding-left: 0;' >

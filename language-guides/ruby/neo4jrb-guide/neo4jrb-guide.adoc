@@ -1,4 +1,4 @@
-= Setting up Neo4j with Rails
+= Getting Started with Neo4j and Ruby
 :level: Intermediate
 :toc:
 :toc-placement!: manual
@@ -61,6 +61,10 @@ CodeMirror.colorize = (function() {
     };
 })();
 </script>
+++++
+
+++++
+<img src="screencast_screenshot.png" style="width: 450px; border: 1px solid black; border-radius: 0.5em; margin-bottom: 1em" />
 ++++
 
 .Goals
@@ -163,7 +167,7 @@ There is a link:/developer/cypher[Cypher tutorial] if you would like to learn mo
 
 For this guide we will be using the Neo4j.rb project.  The project consists of the following gems:
 
-include::../neo4jrb-resources/neo4jrb-resources.adoc[tags=neo4jrb-gems]
+include::../ruby.adoc[tags=neo4jrb-gems]
 
 Specifically in this guide we will be using the `ActiveNode` and `ActiveRel` modules from the `neo4j` gem to model nodes and relationships from our database.
 
@@ -194,6 +198,12 @@ Next you should open up your `config/application.rb` file and find the `config.n
 By default you will be configured to Neo4j in server mode on the default port (7474).  If you would like something other than the default console the link:http://neo4jrb.readthedocs.org/en/5.2.x/Setup.html#rails-configuration[documentation].
 
 WARNING: By default the `rake neo4j:install` command disables Neo4j's authentication.  It is suggested that you enable the authentication for any exposed Neo4j instances.
+
+To see an example of setting up Neo4j in Rails check out this short screencast.
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/n0P0pOP34Mw?rel=0" frameborder="0" allowfullscreen></iframe>
+++++
 
 In this guide we'll be setting up different `ActiveNode` models which will serve as assets.  This is a textbook example of where we can use class inheritance in Neo4j.rb.  First we create some basic models:
 
@@ -615,7 +625,9 @@ In addition to the screencasts embedded in this guide there are two others to he
 <iframe width="560" height="315" src="https://www.youtube.com/embed/UFiWqPdH7io?rel=0" frameborder="0" allowfullscreen></iframe>
 ++++
 
+==== Integrations with other gems
 
+include::../ruby.adoc[tags=neo4jrb-integrations]
 
 ////
 
