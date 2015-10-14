@@ -50,6 +50,8 @@ neo4j (**link:https://github.com/neo4jrb/neo4j[GitHub]**)::
 
 // end::intro[]
 
+For an introduction guide to using the Neo4j.rb project see "link:./neo4jrb-guide/index.html[Getting Started with Neo4j and Ruby]"
+
 ==== Feature Comparison
 
 Each gem fills a different need, so the choice of a gem should be based on the plans for your app and its hosting. You may also want to review frequency of updates, versions of Neo4j supported, and size of the community. Here's a comparison chart of the these three gems to help make your decision.
@@ -83,6 +85,16 @@ embedded::
 A separate Neo4j server is go-to choice for most developers, especially if they are used to other relational or NoSQL databases in frameworks such as Ruby on Rails. It allows you to have separate web and database servers and allows compatibility with popular PaaSes such as Heroku. If this sounds good to you, any of the popular gems are solid choices and you are free to consider whether you want a thin wrapper or the full framework experience.
 
 Neo4j Embedded and JRuby is less common but offers blazing fast performance and access to our core Java API. The downside is that JRuby has its own configuration and compatibility demands and hosting a Java app can be difficult. Thankfully, modern app servers such as Torquebox and a strong community provide far more options and resources now than ever before. If this is right for you, the Neo4j-core and Neo4j gems will offer what you need.
+
+=== Importing data
+
+There are many ways to import your existing data depending on how it is currently structured
+
+ * link:http://neo4j.com/docs/stable/query-load-csv.html[**LOAD CSV**] is a clause built into Cypher which allows you to build your own import scripts
+ * link:http://neo4j.com/docs/stable/import-tool.html[**neo4j-import**] is a binary command which comes with Neo4j and which takes files in a specific CSV format to import data very quickly
+ * link:https://github.com/neo4jrb/neo4apis-activerecord[**neo4apis-activerecord**] is a good choice if you already have a project using `ActiveRecord`.  However it also works to import an existing SQL database even if you don't have any models defined
+
+Get more information on our link:/developer/working-with-data/[Working With Data] page.
 
 === Neography
 
@@ -125,11 +137,9 @@ https://github.com/andreasronge[Andreas Ronge], one of our Swedish friends from 
 
 https://github.com/cheerfulstoic[Brian Underwood] and https://github.com/subvertallchris[Chris Grigg] joined the project and together released http://neo4j.com/blog/neo4j-rb-3-0-released/[version 3.0] in September 2014. Neo4j.rb 3.0 won a Neo4j Graphie award for "Best Community Contribution" at the 2014 GraphConnect Conference.
 
-Since then Brian and Chris have continued the effort to build new features, improve the API, and increase performance.  In addition to working actively on the http://neo4jrb.io/[Neo4jrb project], Brian and Chris are very active community members, you can find them online on Stack Overflow and Twitter as well as in person at meetups and Neo4j events.
+Since then Brian and Chris have continued the effort to build new features, improve the API, and increase performance.  In addition to working actively on the http://neo4jrb.io/[Neo4j.rb project], Brian and Chris are very active community members, you can find them online on link:http://stackoverflow.com/questions/ask?tags=neo4j.rb+neo4j+ruby[Stack Overflow], link:https://gitter.im/neo4jrb/neo4j[Gitter], and Twitter as well as in person at meetups and Neo4j events.
 
 Both projects support accessing Neo4j in embedded mode via JRuby and server mode via MRI.
-
-* link:./neo4jrb-resources/index.html[Neo4j.rb Resources]
 
 * http://neo4jrb.io/[Neo4j.rb Project Page]
 * http://neo4jrb.readthedocs.org/en/latest/[ReadTheDocs documentation]

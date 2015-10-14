@@ -69,13 +69,11 @@ CodeMirror.colorize = (function() {
 
 .Goals
 [abstract]
-This course provides an overview on everything that you need to build a Neo4j application with the link:https://www.ruby-lang.org[Ruby programming language].  Ruby on Rails is used, but any Ruby framework (or lack thereof) could also be used.
+This course provides an overview on everything that you need to build a Neo4j application with the link:https://www.ruby-lang.org[Ruby programming language].  Ruby on Rails and Sinatra examples are given but any web framework (or lack thereof) can be used.
 
 .Prerequisites
 [abstract]
 You should have Ruby installed on your system.  Some experience with Ruby and/or Rails is suggested.
-
-=== The Goal
 
 Let's say you would like to write a web application to track entities for yourself or your organization.  Being a good link:https://en.wikipedia.org/wiki/Don%27t_repeat_yourself[DRY] programmer you might decide that what you want is an _asset portal_: an application which gives you an GUI for browsing and editing entities while also making it easy to define new assets.  This guide will show you how you might start creating such an application using Ruby on Rails and Neo4j.
 
@@ -173,6 +171,8 @@ Specifically in this guide we will be using the `ActiveNode` and `ActiveRel` mod
 
 
 === Setup
+
+The following example is in Ruby on Rails, but there is a link:#_an_example_sinatra_application[Sinatra example] below.
 
 Here we describe how to create a fresh Rails application with Neo4j as the database.  If you have an existing Rails application you can refer to the link:http://neo4jrb.readthedocs.org/en/5.2.x/Setup.html#adding-the-gem-to-an-existing-project[Neo4j.rb documentation].
 
@@ -606,8 +606,65 @@ Book.recent.recommendations
 
 Are you getting into the idea of using Neo4j?  Great!  There are a number of resources to help you along with your journey.
 
+==== An example Sinatra application
+
+
+.app.rb
+[source,ruby]
+----
+require 'sinatra'
+require 'neo4j'
+
+neo4j_url = ENV['NEO4J_URL'] || 'http://localhost:7474'
+neo4j_username = ENV['NEO4J_USERNAME']
+neo4j_password = ENV['NEO4J_PASSWORD']
+
+Neo4j::Session.open(:server_db, neo4j_url, basic_auth: {username: neo4j_username, password: neo4j_password})
+
+class Asset 
+  include Neo4j::ActiveNode
+  property :title, type: String
+end
+
+class Book < Asset
+  id_property :isbn
+  property :year_published, type: Integer
+
+  has_one :in, :author, type: :CREATED, model_class: :User
+  has_many :out, :categories, type: :HAS_CATEGORY
+
+  def self.recommendations
+    recommendations = all(:book).
+                        categories(:category).
+                        books(:other_book).
+                        where('book <> other_book').
+                        query.
+                        with('book, other_book, count(category) AS count').
+                        where('count > 1').
+                        pluck('book.isbn', 'collect(other_book)')
+
+    Hash[*recommendations.flatten(1)]
+  end
+end
+
+get '/books' do
+  @books = Book.all.with_associations(:author, :categories)
+
+  @recommendations = Book.recommendations
+
+  erb :books_index
+end
+
+----
+
+For the example view see the one from link:https://github.com/neo4j-examples/neo4jrb_guide_asset_portal/blob/master/app/views/books/index.html.erb[the result] of the Rails example above.
+
+You can also view example Sintra example applications for the link:https://github.com/neo4j-examples/movies-ruby-neo4j-core[neo4j-core] and link:https://github.com/neo4j-examples/movies-ruby-neo4jrb[neo4j] gems.
+
+
 ==== The asset_portal application
-Here you created your own application, but if you would like to play with a more developed application check out our link:https://github.com/neo4j-examples/asset_portal[asset_portal] app.  The project introduces a single `AssetController` to avoid the duplication from this guide and also uses other tools like link:http://semantic-ui.com/[Semantic UI] for a cleaner interface.
+
+You can find the result of this guide in it's link:https://github.com/neo4j-examples/neo4jrb_guide_asset_portal[GitHub repository].  If you would like to play with a more developed application check out our link:https://github.com/neo4j-examples/asset_portal[asset_portal] app.  The project introduces a single `AssetController` to avoid the duplication from this guide and also uses other tools like link:http://semantic-ui.com/[Semantic UI] for a cleaner interface.
 
 ==== Getting Help
 

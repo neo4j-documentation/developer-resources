@@ -595,7 +595,6 @@ th.tableblock, th p.tableblock {
 <h3 class="title">Overview</h3>
 
 <ul class="sectlevel2">
-<li><a href="#_the_goal">The Goal</a></li>
 <li><a href="#_why_neo4j">Why Neo4j?</a></li>
 <li><a href="#_introduction_to_neo4j">Introduction to Neo4j</a>
 <ul class="sectlevel3">
@@ -612,6 +611,7 @@ th.tableblock, th p.tableblock {
 </li>
 <li><a href="#_doing_more">Doing More</a>
 <ul class="sectlevel3">
+<li><a href="#_an_example_sinatra_application">An example Sinatra application</a></li>
 <li><a href="#_the_asset_portal_application">The asset_portal application</a></li>
 <li><a href="#_getting_help">Getting Help</a></li>
 <li><a href="#_more_screencasts">More Screencasts</a></li>
@@ -676,7 +676,7 @@ CodeMirror.colorize = (function() {
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-This course provides an overview on everything that you need to build a Neo4j application with the <a href="https://www.ruby-lang.org">Ruby programming language</a>.  Ruby on Rails is used, but any Ruby framework (or lack thereof) could also be used.
+This course provides an overview on everything that you need to build a Neo4j application with the <a href="https://www.ruby-lang.org">Ruby programming language</a>.  Ruby on Rails and Sinatra examples are given but any web framework (or lack thereof) can be used.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
@@ -685,16 +685,13 @@ This course provides an overview on everything that you need to build a Neo4j ap
 You should have Ruby installed on your system.  Some experience with Ruby and/or Rails is suggested.
 </blockquote>
 </div>
-</div>
-</div>
-<div  id="_the_goal" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>The Goal</h3>
 
 
 <div class="paragraph">
 <p>Let&#8217;s say you would like to write a web application to track entities for yourself or your organization.  Being a good <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a> programmer you might decide that what you want is an <em>asset portal</em>: an application which gives you an GUI for browsing and editing entities while also making it easy to define new assets.  This guide will show you how you might start creating such an application using Ruby on Rails and Neo4j.</p>
 </div>
 
+</div>
 </div>
 <div  id="_why_neo4j" class="sect2 columns medium-12" style='padding-left: 0;' >
 <h3>Why Neo4j?</h3>
@@ -924,6 +921,12 @@ There is a <a href="/developer-resources/cypher">Cypher tutorial</a> if you woul
 </div>
 <div  id="_setup" class="sect2 columns medium-12" style='padding-left: 0;' >
 <h3>Setup</h3>
+
+
+<div class="paragraph">
+<p>The following example is in Ruby on Rails, but there is a <a href="#_an_example_sinatra_application">Sinatra example</a> below.</p>
+</div>
+
 
 
 <div class="paragraph">
@@ -1576,12 +1579,74 @@ end</code></pre>
 <p>Are you getting into the idea of using Neo4j?  Great!  There are a number of resources to help you along with your journey.</p>
 </div>
 
+<div  id="_an_example_sinatra_application" class="sect3 "  >
+<h4>An example Sinatra application</h4>
+<div class="listingblock">
+<div class="title">app.rb</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="ruby"><code>require 'sinatra'
+require 'neo4j'
+
+neo4j_url = ENV['NEO4J_URL'] || 'http://localhost:7474'
+neo4j_username = ENV['NEO4J_USERNAME']
+neo4j_password = ENV['NEO4J_PASSWORD']
+
+Neo4j::Session.open(:server_db, neo4j_url, basic_auth: {username: neo4j_username, password: neo4j_password})
+
+class Asset
+  include Neo4j::ActiveNode
+  property :title, type: String
+end
+
+class Book &lt; Asset
+  id_property :isbn
+  property :year_published, type: Integer
+
+  has_one :in, :author, type: :CREATED, model_class: :User
+  has_many :out, :categories, type: :HAS_CATEGORY
+
+  def self.recommendations
+    recommendations = all(:book).
+                        categories(:category).
+                        books(:other_book).
+                        where('book &lt;&gt; other_book').
+                        query.
+                        with('book, other_book, count(category) AS count').
+                        where('count &gt; 1').
+                        pluck('book.isbn', 'collect(other_book)')
+
+    Hash[*recommendations.flatten(1)]
+  end
+end
+
+get '/books' do
+  @books = Book.all.with_associations(:author, :categories)
+
+  @recommendations = Book.recommendations
+
+  erb :books_index
+end</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>For the example view see the one from <a href="https://github.com/neo4j-examples/neo4jrb_guide_asset_portal/blob/master/app/views/books/index.html.erb">the result</a> of the Rails example above.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>You can also view example Sintra example applications for the <a href="https://github.com/neo4j-examples/movies-ruby-neo4j-core">neo4j-core</a> and <a href="https://github.com/neo4j-examples/movies-ruby-neo4jrb">neo4j</a> gems.</p>
+</div>
+
+</div>
 <div  id="_the_asset_portal_application" class="sect3 "  >
 <h4>The asset_portal application</h4>
 
 
 <div class="paragraph">
-<p>Here you created your own application, but if you would like to play with a more developed application check out our <a href="https://github.com/neo4j-examples/asset_portal">asset_portal</a> app.  The project introduces a single <code>AssetController</code> to avoid the duplication from this guide and also uses other tools like <a href="http://semantic-ui.com/">Semantic UI</a> for a cleaner interface.</p>
+<p>You can find the result of this guide in it&#8217;s <a href="https://github.com/neo4j-examples/neo4jrb_guide_asset_portal">GitHub repository</a>.  If you would like to play with a more developed application check out our <a href="https://github.com/neo4j-examples/asset_portal">asset_portal</a> app.  The project introduces a single <code>AssetController</code> to avoid the duplication from this guide and also uses other tools like <a href="http://semantic-ui.com/">Semantic UI</a> for a cleaner interface.</p>
 </div>
 
 </div>

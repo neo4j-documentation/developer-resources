@@ -621,6 +621,7 @@ You should be familiar with <a href="/developer-resources/get-started/graph-data
 <li><a href="#_the_example_project">The Example Project</a></li>
 <li><a href="#_neo4j_for_rubyists">Neo4j for Rubyists</a></li>
 <li><a href="#_deployment_considerations">Deployment Considerations</a></li>
+<li><a href="#_importing_data">Importing data</a></li>
 <li><a href="#_neography">Neography</a></li>
 <li><a href="#_neo4j_rb">Neo4j.rb</a></li>
 <li><a href="#_other_drivers">Other Drivers</a></li>
@@ -672,6 +673,12 @@ You will find the implementations for all drivers as <a href="https://github.com
 </dd>
 </dl>
 </div>
+
+
+<div class="paragraph">
+<p>For an introduction guide to using the Neo4j.rb project see "<a href="./neo4jrb-guide/index.html">Getting Started with Neo4j and Ruby</a>"</p>
+</div>
+
 <div  id="_feature_comparison" class="sect3 "  >
 <h4>Feature Comparison</h4>
 
@@ -793,6 +800,34 @@ You will find the implementations for all drivers as <a href="https://github.com
 </div>
 
 </div>
+<div  id="_importing_data" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Importing data</h3>
+
+
+<div class="paragraph">
+<p>There are many ways to import your existing data depending on how it is currently structured</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="http://neo4j.com/docs/stable/query-load-csv.html"><strong>LOAD CSV</strong></a> is a clause built into Cypher which allows you to build your own import scripts
+</li>
+<li>
+<a href="http://neo4j.com/docs/stable/import-tool.html"><strong>neo4j-import</strong></a> is a binary command which comes with Neo4j and which takes files in a specific CSV format to import data very quickly
+</li>
+<li>
+<a href="https://github.com/neo4jrb/neo4apis-activerecord"><strong>neo4apis-activerecord</strong></a> is a good choice if you already have a project using <code>ActiveRecord</code>.  However it also works to import an existing SQL database even if you don&#8217;t have any models defined
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>Get more information on our <a href="/developer-resources/working-with-data/">Working With Data</a> page.</p>
+</div>
+
+</div>
 <div  id="_neography" class="sect2 columns medium-12" style='padding-left: 0;' >
 <h3>Neography</h3>
 
@@ -874,7 +909,7 @@ node = neo.create_node("age" =&gt; 31, "name" =&gt; "Max")</code></pre>
 
 
 <div class="paragraph">
-<p>Since then Brian and Chris have continued the effort to build new features, improve the API, and increase performance.  In addition to working actively on the <a href="http://neo4jrb.io/">Neo4jrb project</a>, Brian and Chris are very active community members, you can find them online on Stack Overflow and Twitter as well as in person at meetups and Neo4j events.</p>
+<p>Since then Brian and Chris have continued the effort to build new features, improve the API, and increase performance.  In addition to working actively on the <a href="http://neo4jrb.io/">Neo4j.rb project</a>, Brian and Chris are very active community members, you can find them online on <a href="http://stackoverflow.com/questions/ask?tags=neo4j.rb+neo4j+ruby">Stack Overflow</a>, <a href="https://gitter.im/neo4jrb/neo4j">Gitter</a>, and Twitter as well as in person at meetups and Neo4j events.</p>
 </div>
 
 
@@ -885,9 +920,6 @@ node = neo.create_node("age" =&gt; 31, "name" =&gt; "Max")</code></pre>
 
 <div class="ulist">
 <ul>
-<li>
-<a href="./neo4jrb-resources/index.html">Neo4j.rb Resources</a>
-</li>
 <li>
 <a href="http://neo4jrb.io/">Neo4j.rb Project Page</a>
 </li>
