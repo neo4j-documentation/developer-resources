@@ -629,9 +629,9 @@ th.tableblock, th p.tableblock {
     white-space: pre-wrap;
   }
 </style>
-<script type='text/javascript' src='../codemirror_ruby.js'></script>
-<script type='text/javascript' src='../codemirror_multiplex.js'></script>
-<script type='text/javascript' src='../codemirror_htmlembedded.js'></script>
+<script type='text/javascript' src='/developer-resources/ruby/codemirror_ruby.js'></script>
+<script type='text/javascript' src='/developer-resources/ruby/codemirror_multiplex.js'></script>
+<script type='text/javascript' src='/developer-resources/ruby/codemirror_htmlembedded.js'></script>
 <script>
 CodeMirror.colorize = (function() {
     var isBlock = /^(p|li|div|h\\d|pre|blockquote|td)$/;
@@ -672,7 +672,7 @@ CodeMirror.colorize = (function() {
     };
 })();
 </script>
-<img src="screencast_screenshot.png" style="width: 440px; border: 1px solid black; border-radius: 0.5em; margin-bottom: 1em" />
+<img src="./screencast_screenshot.png" style="width: 440px; border: 1px solid black; border-radius: 0.5em; margin-bottom: 1em" />
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
@@ -737,7 +737,7 @@ The property graph model is easy to understand and handle, especially for object
 <div class="content">
 <div class="imageblock">
 <p class="content">
-<img src="simple_graph.png" alt="simple graph">
+<img src="./simple_graph.png" alt="simple graph">
 </p>
 </div>
 </div>
@@ -809,8 +809,8 @@ RETURN p, f.name</code></pre>
 
 
 <div class="paragraph">
-<p><span class="image"><img src="cypher_match_1.png" alt="cypher_match_1" width="49%"></span>
-<span class="image"><img src="cypher_match_2.png" alt="cypher_match_2" width="49%"></span></p>
+<p><span class="image"><img src="./cypher_match_1.png" alt="cypher_match_1" width="49%"></span>
+<span class="image"><img src="./cypher_match_2.png" alt="cypher_match_2" width="49%"></span></p>
 </div>
 
 
@@ -896,21 +896,12 @@ There is a <a href="/developer-resources/cypher">Cypher tutorial</a> if you woul
 <p>For this guide we will be using the Neo4j.rb project.  The project consists of the following gems:</p>
 </div>
 
-<hr>
-<div class="ulist">
-<ul>
-<li>
-<a href="https://github.com/neo4jrb/neo4j">neo4j</a> A Object-Graph-Mapper (OGM) for the Neo4j graph database. It tries to follow API conventions established by ActiveRecord but with a Neo4j flavor.
-</li>
-<li>
-<a href="https://github.com/neo4jrb/neo4j-core">neo4j-core</a> A low level driver for connecting to Neo4j. Used by the neo4j gem.
-</li>
-<li>
-<a href="https://github.com/neo4jrb/neo4j-rake_tasks">neo4j-rake_tasks</a> A set of rake tasks for installing and managing a Neo4j database within your project. Used by the neo4j-core gem.
-</li>
-</ul>
+
+
+<div class="paragraph">
+<p>Unresolved directive in ruby-course.adoc - include::../ruby.adoc[tags=neo4jrb-gems]</p>
 </div>
-<hr>
+
 
 
 <div class="paragraph">
@@ -1682,127 +1673,9 @@ end</code></pre>
 
 
 <div class="paragraph">
-<p>There are many common gems that you&#8217;ll want to use with your Neo4j database.  Many are supported for the Neo4j.rb project:</p>
+<p>Unresolved directive in ruby-course.adoc - include::../ruby.adoc[tags=neo4jrb-integrations]</p>
 </div>
 
-<table style="width: 100%">
-<tr>
-<td>
-
-
-<div class="paragraph">
-<p>Authentication</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-<a href="https://github.com/neo4jrb/devise-neo4j">devise-neo4j</a>
-</li>
-</ul>
-</div>
-
-
-<div class="paragraph">
-<p>File Attachment</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-<a href="https://github.com/neo4jrb/neo4jrb-paperclip">neo4jrb-paperclip</a>
-</li>
-<li>
-<a href="https://github.com/neo4jrb/carrierwave-neo4j">carrierwave-neo4j</a>
-</li>
-</ul>
-</div>
-
-
-<div class="paragraph">
-<p>Pagination</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-<a href="https://github.com/neo4jrb/neo4j-will_paginate_redux">neo4j-will_paginate_redux</a>
-</li>
-<li>
-<a href="https://github.com/megorei/kaminari-neo4j">kaminari-neo4j</a>
-</li>
-</ul>
-</div>
-
-
-<div class="paragraph">
-<p>ElasticSearch Integration</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-<a href="https://github.com/neo4jrb/neo4j-searchkick">neo4j-searchkick</a>
-</li>
-</ul>
-</div>
-</td>
-<td>
-
-
-<div class="paragraph">
-<p>Admin User Interface</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-<a href="https://github.com/cheerfulstoic/rails_admin">rails_admin</a>
-</li>
-</ul>
-</div>
-
-
-<div class="paragraph">
-<p>Integration With the <a href="https://github.com/neo4j-contrib/spatial">Neo4j Spatial Plugin</a></p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-<a href="https://github.com/neo4jrb/neo4jrb_spatial">neo4jrb_spatial</a>
-</li>
-</ul>
-</div>
-
-
-<div class="paragraph">
-<p>Ruby Object Manager</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-<a href="https://github.com/rom-rb/rom-neo4j">rom-neo4j</a>
-</li>
-</ul>
-</div>
-
-
-<div class="paragraph">
-<p>Misc.</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-<a href="https://github.com/subvertallchris/neo4j-even_easier_id">neo4j-even_easier_id</a> (BSON UUIDs)
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
 </div>
 </div>
                     </div>
@@ -1819,6 +1692,7 @@ end</code></pre>
                      <li><a href="/developer-resources/get-started/graph-db-vs-rdbms/">GraphDB vs RDBMS</a></li>
                      <li><a href="/developer-resources/get-started/graph-db-vs-nosql/">GraphDB vs NOSQL</a></li>
                      <li><a href="/developer-resources/get-started/guide-neo4j-browser/">Neo4j Browser Intro</a></li>
+                     <li><a href="/graphacademy/online-course-getting-started/">Getting Started Course</a></li>
                      <!--<li><a href="/developer-resources/language-guides/">Language Drivers</a></li>-->
                   </ul>
                </div>
@@ -1834,6 +1708,7 @@ end</code></pre>
                         <li><a href="/developer-resources/cypher/cypher-query-language/">Cypher Intro</a></li>
                         <li><a href="/developer-resources/cypher/guide-sql-to-cypher/">From SQL to Cypher</a></li>
                         <li><a href="/developer-resources/cypher/guide-build-a-recommendation-engine/">Build a Recommendation Engine</a></li>
+                        <li><a href="/graphacademy/online-course-getting-started/">Getting Started Course</a></li>
                         <li><a href="/docs/stable/cypher-refcard/">Cypher Refcard</a></li>
                      </ul>
                   </div>
@@ -1868,11 +1743,11 @@ end</code></pre>
                </dd>
             </dl>
             <dl class="accordion">
-               <dd class="accordion-navigation active">
+               <dd class="accordion-navigation inactive">
                   <a href="/developer-resources/language-guides/">
-                     <h5>Language Guides</h5>
+                     <h5>Drivers &amp; Language Guides</h5>
                   </a>
-                  <div class="content active" id="panel5">
+                  <div class="content inactive" id="panel5">
                      <ul>
                         <li><a href="/developer-resources/language-guides/java/">Java</a></li>
                         <li><a href="/developer-resources/language-guides/spring-data-neo4j/">Spring Framework</a></li>
@@ -1914,30 +1789,21 @@ end</code></pre>
                         <li><a href="/developer-resources/in-production/guide-sizing-and-hardware-calculator/">Sizing + Hardware Calculator</a></li>
                         <li><a href="/developer-resources/in-production/guide-performance-tuning/">Performance Tuning</a></li>
                         <li><a href="/developer-resources/in-production/guide-clustering-neo4j/">Clustering Neo4j </a></li>
-                     </ul>
-                  </div>
-               </dd>
-            </dl>
-            <dl class="accordion">
-               <dd class="accordion-navigation ">
-                  <a href="/developer-resources/contribute/">
-                     <h5>Contributing to Neo4j</h5>
-                  </a>
-                  <div class="content " id="panel8">
-                     <ul>
-	                    <!-- todo CLA, SO, GitHub, Building, Tools -->
-                        <!--li><a href="/developer-resources/contribution/xxx">Contributing</a></li-->
+	                    <li><a href="/graphacademy/online-course-prod/">In Production Course</a></li>
                      </ul>
                   </div>
                </dd>
             </dl>
          <dl class="accordion">
-            <dd class="accordion-navigation ">
+            <dd class="accordion-navigation active">
                <a href="/developer-resources/resources/">
                   <h5>Documentation &amp; Resources</h5>
                </a>
-               <div class="content " id="panel4">
+               <div class="content active" id="panel4">
                   <ul>
+	                 <li><a href="/graphacademy/online-course-getting-started/">Getting Started Course</a></li>
+	                 <li><a href="/developer-resources/resources/ruby-course/">Ruby / Rails Course</a></li>
+	                 <li><a href="/graphacademy/online-course-prod/">In Production Course</a></li>
 	                 <li><a href="/docs/stable/">Reference Manual</a></li>
 	                 <ul>
 	                 <li><a href="/docs/stable/introduction.html">Introduction</a></li>
@@ -1950,6 +1816,19 @@ end</code></pre>
                      <li><a href="/docs/stable/cypher-refcard/">Cypher Refcard</a></li>
 	                 <li><a href="/docs/milestone/">Manual - Milestone</a></li>
                      <li><a href="/docs/">Older Documentation</a></li>
+                  </ul>
+               </div>
+            </dd>
+         </dl>
+         <dl class="accordion">
+            <dd class="accordion-navigation ">
+               <a href="/developer-resources/contribute/">
+                  <h5>Contributing to Neo4j</h5>
+               </a>
+               <div class="content " id="panel8">
+                  <ul>
+	                    <!-- todo CLA, SO, GitHub, Building, Tools -->
+                     <!--li><a href="/developer-resources/contribution/xxx">Contributing</a></li-->
                   </ul>
                </div>
             </dd>

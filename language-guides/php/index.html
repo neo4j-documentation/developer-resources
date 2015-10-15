@@ -616,8 +616,8 @@ You should have <a href="/download">installed Neo4j</a> and made yourself famili
 <li><a href="#_the_example_project">The Example Project</a></li>
 <li><a href="#_getting_started_tutorials">Getting started tutorials</a></li>
 <li><a href="#_using_neo4j_in_a_standalone_php_environment">Using Neo4j in a standalone PHP environment</a></li>
-<li><a href="#_neo4jphp">Neo4jPHP</a></li>
 <li><a href="#_neoclient">NeoClient</a></li>
+<li><a href="#_neo4jphp">Neo4jPHP</a></li>
 <li><a href="#_neo4j_ogm_php">Neo4j-OGM-PHP</a></li>
 <li><a href="#_with_the_symfony_framework">With the Symfony framework</a></li>
 <li><a href="#_neo4jogmbundle">Neo4jOGMBundle</a></li>
@@ -667,16 +667,16 @@ You&#8217;re in the right place!</p>
 
 
 <div class="paragraph">
-<p>It is a small one page webapp for our movies database.
-The front-end page is the same for all drivers, it consists of a movie search, detail info and a graph visualization of actors and movies.
-Each backend implementation shows you how to connect to Neo4j from the different languages and drivers.</p>
+<p>The Neo4j example project is a small, one page webapp for the movies database built into the Neo4j tutorial.
+The front-end page is the same for all drivers: movie search, movie details, and a graph visualization of actors and movies.
+Each backend implementation shows you how to connect to Neo4j from each of the different languages and drivers.</p>
 </div>
 
 
 
 <div class="paragraph">
 <p>You can learn more about our small, consistent example project across many different language drivers <a href="../example-project">here</a>.
-You find the implementations for all drivers as <a href="https://github.com/neo4j-examples?query=movies">individual GitHub repositories</a>, that you can clone and deploy directly.</p>
+You will find the implementations for all drivers as <a href="https://github.com/neo4j-examples?query=movies">individual GitHub repositories</a>, which you can clone and deploy directly.</p>
 </div>
 
 </div>
@@ -704,31 +704,6 @@ You find the implementations for all drivers as <a href="https://github.com/neo4
 <p>If you prefer to develop without frameworks, these libraries are made for you:</p>
 </div>
 
-</div>
-<div  id="_neo4jphp" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Neo4jPHP</h3>
-
-
-<div class="paragraph">
-<p>Neo4jPHP provides an API that is both intuitive and flexible, and it takes advantage of ‘under-the-hood’ performance enhancements, such as caching and lazy-loading.</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-<a href="https://github.com/neo4j-examples/movies-php-neo4jphp">Example Project with Neo4jPHP</a>
-</li>
-<li>
-<a href="http://github.com/jadell/neo4jphp">Neo4jPHP on GitHub</a>
-</li>
-<li>
-Author: <a href="http://twitter.com/josh_adell">Josh Adell</a>
-</li>
-<li>
-<a href="http://github.com/jadell/neo4jphp/wiki/Introduction">GitHub</a>
-</li>
-</ul>
-</div>
 </div>
 <div  id="_neoclient" class="sect2 columns medium-12" style='padding-left: 0;' >
 <h3>NeoClient</h3>
@@ -785,6 +760,62 @@ Author: <a href="http://twitter.com/ikwattro">Christophe Willemsen</a>
 </ul>
 </div>
 </div>
+<div  id="_neo4jphp" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4jPHP</h3>
+
+
+<div class="paragraph">
+<p>Neo4jPHP provides an API that is both intuitive and flexible, and it takes advantage of ‘under-the-hood’ performance enhancements, such as caching and lazy-loading.</p>
+</div>
+
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title label">Note</div>
+</td>
+<td class="content">
+This driver is currently not actively maintained.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/neo4j-examples/movies-php-neo4jphp">Example Project with Neo4jPHP</a>
+</li>
+<li>
+<a href="http://github.com/jadell/neo4jphp">Neo4jPHP on GitHub</a>
+</li>
+<li>
+Author: <a href="http://twitter.com/josh_adell">Josh Adell</a>
+</li>
+<li>
+<a href="http://github.com/jadell/neo4jphp/wiki/Introduction">GitHub</a>
+</li>
+</ul>
+</div>
+<div  id="_neoeloquent_for_laravel" class="sect3 "  >
+<h4>NeoEloquent for Laravel</h4>
+
+
+<div class="paragraph">
+<p>Neo4j Graph Eloquent Driver for Laravel 4</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/Vinelab/NeoEloquent">NeoEloquent on GitHub</a>
+</li>
+<li>
+Author: <a href="https://github.com/Mulkave">Abed Halawi</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <div  id="_neo4j_ogm_php" class="sect2 columns medium-12" style='padding-left: 0;' >
 <h3>Neo4j-OGM-PHP</h3>
 
@@ -793,6 +824,18 @@ Author: <a href="http://twitter.com/ikwattro">Christophe Willemsen</a>
 <p>This library provides a basic Object-Graph mapping system and is built on top of Doctrine and the Neo4jPHP library.</p>
 </div>
 
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title label">Note</div>
+</td>
+<td class="content">
+This driver is currently not actively maintained.
+</td>
+</tr>
+</table>
+</div>
 
 
 <div class="paragraph">
@@ -825,25 +868,6 @@ Author: <a href="http://twitter.com/ikwattro">Christophe Willemsen</a>
 </div>
 
 <hr>
-<div  id="_neoeloquent_for_laravel" class="sect3 "  >
-<h4>NeoEloquent for Laravel</h4>
-
-
-<div class="paragraph">
-<p>Neo4j Graph Eloquent Driver for Laravel 4</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-<a href="https://github.com/Vinelab/NeoEloquent">NeoEloquent on GitHub</a>
-</li>
-<li>
-Author: <a href="https://github.com/Mulkave">Abed Halawi</a>
-</li>
-</ul>
-</div>
-</div>
 <div  id="_neo4laravel" class="sect3 "  >
 <h4>Neo4Laravel</h4>
 
@@ -989,6 +1013,7 @@ Author: <a href="https://github.com/ikwattro">Christophe Willemsen</a>
                      <li><a href="/developer-resources/get-started/graph-db-vs-rdbms/">GraphDB vs RDBMS</a></li>
                      <li><a href="/developer-resources/get-started/graph-db-vs-nosql/">GraphDB vs NOSQL</a></li>
                      <li><a href="/developer-resources/get-started/guide-neo4j-browser/">Neo4j Browser Intro</a></li>
+                     <li><a href="/graphacademy/online-course-getting-started/">Getting Started Course</a></li>
                      <!--<li><a href="/developer-resources/language-guides/">Language Drivers</a></li>-->
                   </ul>
                </div>
@@ -1004,6 +1029,7 @@ Author: <a href="https://github.com/ikwattro">Christophe Willemsen</a>
                         <li><a href="/developer-resources/cypher/cypher-query-language/">Cypher Intro</a></li>
                         <li><a href="/developer-resources/cypher/guide-sql-to-cypher/">From SQL to Cypher</a></li>
                         <li><a href="/developer-resources/cypher/guide-build-a-recommendation-engine/">Build a Recommendation Engine</a></li>
+                        <li><a href="/graphacademy/online-course-getting-started/">Getting Started Course</a></li>
                         <li><a href="/docs/stable/cypher-refcard/">Cypher Refcard</a></li>
                      </ul>
                   </div>
@@ -1014,7 +1040,7 @@ Author: <a href="https://github.com/ikwattro">Christophe Willemsen</a>
                   <a href="/developer-resources/data-modeling/">
                      <h5>Data Modeling</h5>
                   </a>
-                  <div class="content inactive/" id="panel3">
+                  <div class="content inactive" id="panel3">
                      <ul>
                         <li><a href="/developer-resources/data-modeling/guide-data-modeling/">Graph Data Modeling Guidelines</a></li>
                         <li><a href="/developer-resources/data-modeling/graphgist/">Interactive Graph Models - GraphGist</a></li>
@@ -1040,7 +1066,7 @@ Author: <a href="https://github.com/ikwattro">Christophe Willemsen</a>
             <dl class="accordion">
                <dd class="accordion-navigation active">
                   <a href="/developer-resources/language-guides/">
-                     <h5>Language Guides</h5>
+                     <h5>Drivers &amp; Language Guides</h5>
                   </a>
                   <div class="content active" id="panel5">
                      <ul>
@@ -1084,19 +1110,7 @@ Author: <a href="https://github.com/ikwattro">Christophe Willemsen</a>
                         <li><a href="/developer-resources/in-production/guide-sizing-and-hardware-calculator/">Sizing + Hardware Calculator</a></li>
                         <li><a href="/developer-resources/in-production/guide-performance-tuning/">Performance Tuning</a></li>
                         <li><a href="/developer-resources/in-production/guide-clustering-neo4j/">Clustering Neo4j </a></li>
-                     </ul>
-                  </div>
-               </dd>
-            </dl>
-            <dl class="accordion">
-               <dd class="accordion-navigation ">
-                  <a href="/developer-resources/contribute/">
-                     <h5>Contributing to Neo4j</h5>
-                  </a>
-                  <div class="content " id="panel8">
-                     <ul>
-	                    <!-- todo CLA, SO, GitHub, Building, Tools -->
-                        <!--li><a href="/developer-resources/contribution/xxx">Contributing</a></li-->
+	                    <li><a href="/graphacademy/online-course-prod/">In Production Course</a></li>
                      </ul>
                   </div>
                </dd>
@@ -1108,6 +1122,9 @@ Author: <a href="https://github.com/ikwattro">Christophe Willemsen</a>
                </a>
                <div class="content " id="panel4">
                   <ul>
+	                 <li><a href="/graphacademy/online-course-getting-started/">Getting Started Course</a></li>
+	                 <li><a href="/developer-resources/resources/ruby-course/">Ruby / Rails Course</a></li>
+	                 <li><a href="/graphacademy/online-course-prod/">In Production Course</a></li>
 	                 <li><a href="/docs/stable/">Reference Manual</a></li>
 	                 <ul>
 	                 <li><a href="/docs/stable/introduction.html">Introduction</a></li>
@@ -1120,6 +1137,19 @@ Author: <a href="https://github.com/ikwattro">Christophe Willemsen</a>
                      <li><a href="/docs/stable/cypher-refcard/">Cypher Refcard</a></li>
 	                 <li><a href="/docs/milestone/">Manual - Milestone</a></li>
                      <li><a href="/docs/">Older Documentation</a></li>
+                  </ul>
+               </div>
+            </dd>
+         </dl>
+         <dl class="accordion">
+            <dd class="accordion-navigation ">
+               <a href="/developer-resources/contribute/">
+                  <h5>Contributing to Neo4j</h5>
+               </a>
+               <div class="content " id="panel8">
+                  <ul>
+	                    <!-- todo CLA, SO, GitHub, Building, Tools -->
+                     <!--li><a href="/developer-resources/contribution/xxx">Contributing</a></li-->
                   </ul>
                </div>
             </dd>
