@@ -18,9 +18,9 @@ toc::[]
     white-space: pre-wrap;
   }
 </style>
-<script type='text/javascript' src='../codemirror_ruby.js'></script>
-<script type='text/javascript' src='../codemirror_multiplex.js'></script>
-<script type='text/javascript' src='../codemirror_htmlembedded.js'></script>
+<script type='text/javascript' src='/developer/ruby/codemirror_ruby.js'></script>
+<script type='text/javascript' src='/developer/ruby/codemirror_multiplex.js'></script>
+<script type='text/javascript' src='/developer/ruby/codemirror_htmlembedded.js'></script>
 <script>
 CodeMirror.colorize = (function() {
     var isBlock = /^(p|li|div|h\\d|pre|blockquote|td)$/;
@@ -64,7 +64,7 @@ CodeMirror.colorize = (function() {
 ++++
 
 ++++
-<img src="screencast_screenshot.png" style="width: 440px; border: 1px solid black; border-radius: 0.5em; margin-bottom: 1em" />
+<img src="{img}screencast_screenshot.png" style="width: 440px; border: 1px solid black; border-radius: 0.5em; margin-bottom: 1em" />
 ++++
 
 .Goals
@@ -97,7 +97,7 @@ The property graph model is easy to understand and handle, especially for object
 
 [role="pull-right"]
 --
-image::simple_graph.png[]
+image::{img}simple_graph.png[]
 --
 
 The property graph model consists of:
@@ -126,8 +126,8 @@ RETURN p, f.name
 
 The *MATCH* clause is the most common starting point for Cypher queries.  It defines a pattern for which to search and returns one result per match.  For example we might get the following two matches:
 
-image:cypher_match_1.png[width=49%]
-image:cypher_match_2.png[width=49%]
+image:{img}cypher_match_1.png[width=49%]
+image:{img}cypher_match_2.png[width=49%]
 
 With the *RETURN* clause we would end up returning a table such as:
 
