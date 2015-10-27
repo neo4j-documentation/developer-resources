@@ -1,0 +1,103 @@
+= Neo4j and MongoDB
+:level: Intermediate
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 1
+:section: Neo4j Integrations
+:section-link: integration
+
+.Goals
+[abstract]
+Taking advantage of the strengths of multiple database technologies is the concept of polyglot persistence. For example, a product catalog application might use a document database (such as MongoDB) to power browsing / searching for products along with a graph database (such as Neo4j) to provide real time personalized product recommendations. To enable polyglot persistence the application needs to store data in multiple databases, each with its own data model (graph vs. document). Being able to connect MongoDB to Neo4j and synchronize data automatically makes this process much simpler.
+
+.Prerequisites
+[abstract]
+You should have an understanding of MongoDB, Neo4j, be famililar with both the document data model and property graph data model, and have MongoDB and Neo4j installed.
+
+[role=expertise]
+{level}
+
+toc::[]
+
+== General Observations
+
+Often it is useful to synchronize meta data or a subset of data from MongoDB to Neo4j to take advantage of realationships in the data, something that Neo4j is optimized for and is more difficult to accomplish in MongoDB. The Neo4 Doc Manager project below facilitates this process.
+
+== Neo4j Doc Manager
+
+=== Overview
+
+The developers at link:http://mongodb.com[MongoDB] have provided the link:https://github.com/mongodb-labs/mongo-connector[mongo-connector] project which provides a mechanism for listening for all update operations in MongoDB and facilitates mirroring those updates to another system.
+
+From the mongo-connector documentation:
+
+[quote]
+mongo-connector creates a pipeline from a MongoDB cluster to one or more target systems, such as Solr, Elasticsearch, or another MongoDB cluster. It synchronizes data in MongoDB to the target then tails the MongoDB oplog, keeping up with operations in MongoDB in real-time. It has been tested with Python 2.6, 2.7, 3.3, and 3.4.
+
+To facilitate synchronizing data from MongoDB to a Neo4j instance, the community has implemented a link:https://github.com/neo4j-contrib/neo4j_doc_manager[Neo4j Doc Manager] for mongo-connector. It is intended for live one-way synchronization from MongoDB to Neo4j, where you have both databases running to take advantage of each databases' strengths in your application.
+
+[NOTE]
+This project is currently beta quality and not officially supported by Neo Technology. Not for use in production.
+
+=== Installing
+
+You must have Python installed to use Neo4j Doc Manager.
+
+It is recommended to install using link:http://pip.readthedocs.org/en/stable/[pip], the Python package manager.
+
+[source]
+pip install neo4j-doc-manager --pre
+
+For alternative installation workflow, see the documentation link:https://github.com/neo4j-contrib/neo4j_doc_manager/blob/master/docs/neo4j_doc_manager_doc.adoc[here].
+
+==== Using Neo4j Doc Manager
+
+Ensure that a Neo4j instance is running. If authentication is enabled (version 2.2+) for Neo4j, set the +NEO4J_AUTH+ environment variable, containing username and password:
+
+[source]
+export NEO4J_AUTH=user:password
+
+Ensure that MongoDB is running a replica set. To initiate a replica set, start MongoDB with this command:
+
+[source]
+mongod --replSet myDevReplSet
+
+Then open mongo-shell and run:
+
+[source]
+rs.initiate()
+
+Refer to the link:https://github.com/10gen-labs/mongo-connector/wiki/FAQ[Mongo Connector FAQ] for more information.
+
+Start the mongo-connector service with the following command:
+
+[source]
+mongo-connector -m localhost:27017 -t http://localhost:7474/db/data -d neo4j_doc_manager
+
+
+* *-m* provides the MongoDB endpoint
+* *-t* specifies the Neo4j endpoint
+* *-d* specifies Neo4j Doc Manager as the doc manager
+
+To see all configuration options for Neo4j Doc Manager (including specifying which collections and fields to synchronize) see the documentation link:https://github.com/neo4j-contrib/neo4j_doc_manager/blob/master/docs/neo4j_doc_manager_doc.adoc[here].
+
+==== Data synchronization
+
+With the +neo4j_doc_manager+ service running, any documents inserted into MongoDB will be converted to a property graph structure and immediately inserted into Neo4j as well. Document keys will be turned into nodes. Nested values on each key will become properties.
+
+image::doc_to_graph.png[Document to graph]
+
+To see this in action, insert the following document into MongoDB using the mongo-shell:
+
+[source]
+db.talks.insert(  { "session": { "title": "12 Years of Spring: An Open Source Journey", "abstract": "Spring emerged as a core open source project in early 2003 and evolved to a broad portfolio of open source projects up until 2015." }, "topics":  ["keynote", "spring"], "room": "Auditorium", "timeslot": "Wed 29th, 09:30-10:30", "speaker": { "name": "Juergen Hoeller", "bio": "Juergen Hoeller is co-founder of the Spring Framework open source project.", "twitter": "https://twitter.com/springjuergen", "picture": "http://www.springio.net/wp-content/uploads/2014/11/juergen_hoeller-220x220.jpeg" } } );
+
+This document is converted to a property graph and inserted into Neo4j with this structure:
+
+image::prop_graph.png[Property graph]
+
+
+To see more examples and the full documentation, please refer to the link:https://github.com/neo4j-contrib/neo4j_doc_manager[Neo4j Doc Manager project on GitHub].
+
+

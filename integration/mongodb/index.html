@@ -258,7 +258,7 @@
 <div class="marquee blue">
     <div class="row text-center">
         <div class="medium-10 small-centered columns">
-            <h1 class="entry-title">Neo4j Integration</h1>
+            <h1 class="entry-title">Neo4j and MongoDB</h1>
         </div>
     </div>
 </div>
@@ -271,7 +271,7 @@
                     <ul class="breadcrumbs">
                         <li><a href="/developer-resources">Developer Guides</a></li>
                         
-                        <li class="current"><a href="#">Neo4j Integration</a></li>
+                        <li class="current"><a href="#">Neo4j and MongoDB</a></li>
                     </ul>
                 </div>
             </div>
@@ -587,44 +587,245 @@ th.tableblock, th p.tableblock {
             <div>
                 <div class="row" style="padding-left: 0; padding-right: 0;">
                     <div class="large-9 large-push-3 columns guide-section-content">
-                        <h1 id="__span_class_image_img_src_http_dev_assets_neo4j_com_s3_amazonaws_com_wp_content_uploads_icon_iam_png_alt_icon_iam_span_neo4j_integration" class="sect0"><span class="image"><img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/icon-iam.png" alt="icon-iam"></span> Neo4j Integration</h1>
-<!--div class="title"><span class="image"><img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/icon-iam.png" alt="icon-iam"></span> Neo4j Integration</div-->
+                        <div id="preamble columns medium-12">
+<div class="sectionbody">
+<div class="quoteblock abstract">
+<div class="title">Goals</div>
+<blockquote style="padding-left: 0;">
+Taking advantage of the strengths of multiple database technologies is the concept of polyglot persistence. For example, a product catalog application might use a document database (such as MongoDB) to power browsing / searching for products along with a graph database (such as Neo4j) to provide real time personalized product recommendations. To enable polyglot persistence, the application needs to store data in multiple database types, each with its own data model (graph / document). Being able to connect MongoDB to Neo4j and synchronize data automatically makes this process much simpler.
+</blockquote>
+</div>
+<div class="quoteblock abstract">
+<div class="title">Prerequisites</div>
+<blockquote style="padding-left: 0;">
+You should have an understanding of MongoDB, Neo4j, be famililar with both the document datamodel and graph datamodel, and have MongoDB and Neo4j installed.
+</blockquote>
+</div>
+
+
+<div class="label">Intermediate</div>
+<hr/>
+
+<div class="toc">
+<h3 class="title">Overview</h3>
+
+<ul class="sectlevel1">
+<li><a href="#_general_observations">General Observations</a></li>
+<li><a href="#_neo4j_doc_manager">Neo4j Doc Manager</a></li>
+</ul>
+
+</div>
 <hr>
-<div  id="integration" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3><span class="label">integration →</span> Neo4j Technology Integration</h3>
+</div>
+</div>
+<div  id="_general_observations" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>General Observations</h3>
+
+
+<div class="paragraph">
+<p>Often it is useful to synchronize meta data or a subset of data from MongoDB to Neo4j to take advantage of realationships in the data, something that Neo4j is optimized for and is more difficult to accomplish in MongoDB. The Neo4 Doc Manager project below facilitates this process.</p>
+</div>
+
+</div>
+<div  id="_neo4j_doc_manager" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j Doc Manager</h3>
+<div  id="_overview" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Overview</h3>
+
+
+<div class="paragraph">
+<p>The developers at <a href="http://mongodb.com">MongoDB</a> have provided the <a href="https://github.com/mongodb-labs/mongo-connector">mongo-connector</a> project which provides a mechanism for listening for all update operations in MongoDB and facilitates mirroring those updates to another system.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>From the mongo-connector documentation:</p>
+</div>
+
+<div class="quoteblock" style="margin: auto; width: 95%;">
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+</div>
+
+<blockquote>
+mongo-connector creates a pipeline from a MongoDB cluster to one or more target systems, such as Solr, Elasticsearch, or another MongoDB cluster. It synchronizes data in MongoDB to the target then tails the MongoDB oplog, keeping up with operations in MongoDB in real-time. It has been tested with Python 2.6, 2.7, 3.3, and 3.4.
+</blockquote>
+<div class="row text-center hide-for-small hr-style">
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+   <div class="medium-2 columns"> <object width="100%" height="100%" type="image/svg+xml" data="http://www.neo4j.com/wp-content/themes/neo4jzurb/assets/images/hr-image.svg"></object> </div>
+   <div class="medium-5 columns">
+      <hr>
+   </div>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>To facilitate synchronizing data from MongoDB to a Neo4j instance, the community has implemented a <a href="https://github.com/neo4j-contrib/neo4j_doc_manager">Neo4j Doc Manager</a> for mongo-connector. It is intended for live one-way synchronization from MongoDB to Neo4j, where you have both databases running to take advantage of each databases' strengths in your application.</p>
+</div>
+
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title label">Note</div>
+</td>
+<td class="content">
+This project is currently beta quality and not officially supported by Neo Technology. Not for use in production.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div  id="_installing" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Installing</h3>
+
+
+<div class="paragraph">
+<p>You must have Python installed to use Neo4j Doc Manager.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>It is recommended to install using <a href="http://pip.readthedocs.org/en/stable/">pip</a>, the Python package manager.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>pip install neo4j-doc-manager --pre</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>For alternative installation workflow, see the documentation <a href="https://github.com/neo4j-contrib/neo4j_doc_manager/blob/master/docs/neo4j_doc_manager_doc.adoc">here</a>.</p>
+</div>
+
+<div  id="_using_neo4j_doc_manager" class="sect3 "  >
+<h4>Using Neo4j Doc Manager</h4>
+
+
+<div class="paragraph">
+<p>Ensure that a Neo4j instance is running. If authentication is enabled (version 2.2+) for Neo4j, set the NEO4J_AUTH environment variable, containing username and password:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>export NEO4J_AUTH=user:password</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Ensure that MongoDB is running a replica set. To initiate a replica set, start MongoDB with this command:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>mongod --replSet myDevReplSet</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Then open mongo-shell and run:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>rs.initiate()</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Refer to the <a href="https://github.com/10gen-labs/mongo-connector/wiki/FAQ">Mongo Connector FAQ</a> for more information.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Start the mongo-connector service with the following command:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>mongo-connector -m localhost:27017 -t http://localhost:7474/db/data -d neo4j_doc_manager</code></pre>
+</div>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<a href="../integration/apache-spark">Neo4j and Apache Spark</a>
+<strong>-m</strong> provides the MongoDB endpoint
 </li>
 <li>
-<a href="../integration/elastic-search">Neo4j and Elastic{Search}</a>
+<strong>-t</strong> specifies the Neo4j endpoint
 </li>
 <li>
-<a href="../integration/mongodb">Neo4j and MongoDB</a>
-</li>
-<li>
-<a href="../integration/docker">Neo4j and Docker</a>
+<strong>-d</strong> specifies Neo4j Doc Manager as the doc manager
 </li>
 </ul>
 </div>
-</div>
-<div  id="tools" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3><span class="label bgblue">Ecosystem →</span> Tools, Libraries and Drivers</h3>
 
 
 <div class="paragraph">
-<p>Neo4j is supported by a rich ecosystem of libraries, tools, drivers and guides provided by partners, users and community contributors.
-We want to give an overview about what&#8217;s available and link to the original sources.
-We try to focus on the freely available solutions here, and provide links to commercial options were appropriate.</p>
+<p>To see all configuration options for Neo4j Doc Manager (including specifying which collections and fields to synchronize) see the documentation <a href="https://github.com/neo4j-contrib/neo4j_doc_manager/blob/master/docs/neo4j_doc_manager_doc.adoc">here</a>.</p>
 </div>
 
+</div>
+<div  id="_data_synchronization" class="sect3 "  >
+<h4>Data synchronization</h4>
 
 
 <div class="paragraph">
-<p>Check out our <a href="../integration/ecosystem">ecosystem contributions</a> to further boost your Neo4j productivity.</p>
+<p>With the neo4j_doc_manager service running, any documents inserted into MongoDB will be converted to a property graph structure and immediately inserted into Neo4j as well. Document keys will be turned into nodes. Nested values on each key will become properties.</p>
 </div>
 
+<div class="imageblock">
+<p class="content">
+<img src="doc_to_graph.png" alt="Document to graph">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>To see this in action, insert the following document into MongoDB using the mongo-shell:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.insert(  { "session": { "title": "12 Years of Spring: An Open Source Journey", "abstract": "Spring emerged as a core open source project in early 2003 and evolved to a broad portfolio of open source projects up until 2015." }, "topics":  ["keynote", "spring"], "room": "Auditorium", "timeslot": "Wed 29th, 09:30-10:30", "speaker": { "name": "Juergen Hoeller", "bio": "Juergen Hoeller is co-founder of the Spring Framework open source project.", "twitter": "https://twitter.com/springjuergen", "picture": "http://www.springio.net/wp-content/uploads/2014/11/juergen_hoeller-220x220.jpeg" } } );</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>This document is converted to a property graph and inserted into Neo4j with this structure:</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="prop_graph.png" alt="Property graph">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>To see more examples and the full documentation, please refer to the <a href="https://github.com/neo4j-contrib/neo4j_doc_manager">Neo4j Doc Manager project on GitHub</a>.</p>
+</div>
+
+</div>
+</div>
 </div>
                     </div>
                     <div class="large-3 large-pull-9 columns">
