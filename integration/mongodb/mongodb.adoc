@@ -38,7 +38,7 @@ mongo-connector creates a pipeline from a MongoDB cluster to one or more target 
 To facilitate synchronizing data from MongoDB to a Neo4j instance, the community has implemented a link:https://github.com/neo4j-contrib/neo4j_doc_manager[Neo4j Doc Manager] for mongo-connector. It is intended for live one-way synchronization from MongoDB to Neo4j, where you have both databases running to take advantage of each databases' strengths in your application.
 
 [NOTE]
-This project is currently beta quality and not officially supported by Neo Technology. Not for use in production.
+This project is currently beta quality and not officially supported by Neo Technology.
 
 === Installing
 
@@ -88,14 +88,33 @@ With the +neo4j_doc_manager+ service running, any documents inserted into MongoD
 
 image::doc_to_graph.png[Document to graph]
 
-To see this in action, insert the following document into MongoDB using the mongo-shell:
+To see this in action, let's consider the following document:
+
+[source]
+{
+  "session": {
+    "title": "12 Years of Spring: An Open Source Journey",
+    "abstract": "Spring emerged as a core open source project in early 2003 and evolved to a broad portfolio of open source projects up until 2015."
+  },
+  "topics":  ["keynote", "spring"],
+  "room": "Auditorium",
+  "timeslot": "Wed 29th, 09:30-10:30",
+  "speaker": {
+    "name": "Juergen Hoeller",
+    "bio": "Juergen Hoeller is co-founder of the Spring Framework open source project.",
+    "twitter": "https://twitter.com/springjuergen",
+    "picture": "http://www.springio.net/wp-content/uploads/2014/11/juergen_hoeller-220x220.jpeg"
+  }
+}
+
+If we insert the document into MongoDB using the mongo-shell:
 
 [source]
 db.talks.insert(  { "session": { "title": "12 Years of Spring: An Open Source Journey", "abstract": "Spring emerged as a core open source project in early 2003 and evolved to a broad portfolio of open source projects up until 2015." }, "topics":  ["keynote", "spring"], "room": "Auditorium", "timeslot": "Wed 29th, 09:30-10:30", "speaker": { "name": "Juergen Hoeller", "bio": "Juergen Hoeller is co-founder of the Spring Framework open source project.", "twitter": "https://twitter.com/springjuergen", "picture": "http://www.springio.net/wp-content/uploads/2014/11/juergen_hoeller-220x220.jpeg" } } );
 
-This document is converted to a property graph and inserted into Neo4j with this structure:
+the document is converted to a property graph and inserted into Neo4j with this structure:
 
-image::prop_graph.png[Property graph]
+image::graph1.svg[Property graph]
 
 
 To see more examples and the full documentation, please refer to the link:https://github.com/neo4j-contrib/neo4j_doc_manager[Neo4j Doc Manager project on GitHub].

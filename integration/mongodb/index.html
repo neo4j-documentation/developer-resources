@@ -592,13 +592,13 @@ th.tableblock, th p.tableblock {
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-Taking advantage of the strengths of multiple database technologies is the concept of polyglot persistence. For example, a product catalog application might use a document database (such as MongoDB) to power browsing / searching for products along with a graph database (such as Neo4j) to provide real time personalized product recommendations. To enable polyglot persistence, the application needs to store data in multiple database types, each with its own data model (graph / document). Being able to connect MongoDB to Neo4j and synchronize data automatically makes this process much simpler.
+Taking advantage of the strengths of multiple database technologies is the concept of polyglot persistence. For example, a product catalog application might use a document database (such as MongoDB) to power browsing / searching for products along with a graph database (such as Neo4j) to provide real time personalized product recommendations. To enable polyglot persistence the application needs to store data in multiple databases, each with its own data model (graph vs. document). Being able to connect MongoDB to Neo4j and synchronize data automatically makes this process much simpler.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should have an understanding of MongoDB, Neo4j, be famililar with both the document datamodel and graph datamodel, and have MongoDB and Neo4j installed.
+You should have an understanding of MongoDB, Neo4j, be famililar with both the document data model and property graph data model, and have MongoDB and Neo4j installed.
 </blockquote>
 </div>
 
@@ -680,7 +680,7 @@ mongo-connector creates a pipeline from a MongoDB cluster to one or more target 
 <div class="title label">Note</div>
 </td>
 <td class="content">
-This project is currently beta quality and not officially supported by Neo Technology. Not for use in production.
+This project is currently beta quality and not officially supported by Neo Technology.
 </td>
 </tr>
 </table>
@@ -799,7 +799,32 @@ This project is currently beta quality and not officially supported by Neo Techn
 
 
 <div class="paragraph">
-<p>To see this in action, insert the following document into MongoDB using the mongo-shell:</p>
+<p>To see this in action, let&#8217;s consider the following document:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>{
+  "session": {
+    "title": "12 Years of Spring: An Open Source Journey",
+    "abstract": "Spring emerged as a core open source project in early 2003 and evolved to a broad portfolio of open source projects up until 2015."
+  },
+  "topics":  ["keynote", "spring"],
+  "room": "Auditorium",
+  "timeslot": "Wed 29th, 09:30-10:30",
+  "speaker": {
+    "name": "Juergen Hoeller",
+    "bio": "Juergen Hoeller is co-founder of the Spring Framework open source project.",
+    "twitter": "https://twitter.com/springjuergen",
+    "picture": "http://www.springio.net/wp-content/uploads/2014/11/juergen_hoeller-220x220.jpeg"
+  }
+}</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>If we insert the document into MongoDB using the mongo-shell:</p>
 </div>
 
 <div class="listingblock">
@@ -810,12 +835,12 @@ This project is currently beta quality and not officially supported by Neo Techn
 
 
 <div class="paragraph">
-<p>This document is converted to a property graph and inserted into Neo4j with this structure:</p>
+<p>the document is converted to a property graph and inserted into Neo4j with this structure:</p>
 </div>
 
 <div class="imageblock">
 <p class="content">
-<img src="prop_graph.png" alt="Property graph">
+<img src="graph1.svg" alt="Property graph">
 </p>
 </div>
 
@@ -920,6 +945,7 @@ This project is currently beta quality and not officially supported by Neo Techn
                         <li><a href="/developer-resources/integration/ecosystem/">Tools &amp; Libs for Neo4j</a></li>
                         <li><a href="/developer-resources/integration/apache-spark/">Apache Spark</a></li>
                         <li><a href="/developer-resources/integration/elastic-search/">Elastic-Search</a></li>
+                        <li><a href="/developer-resources/integration/mongodb/">MongoDB</a></li>
                         <!--li><a href="/developer-resources/integration/apache-hadoop/">Hadoop</a></li-->
                         <li><a href="/developer-resources/integration/docker/">Docker</a></li>
                         <!--li><a href="/developer-resources/integration/meteor/">Integration with Meteor.js</a></li-->
