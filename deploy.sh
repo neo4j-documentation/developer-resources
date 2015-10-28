@@ -6,7 +6,7 @@ export GITHUB=https://github.com/neo4j-contrib/developer-resources/tree/gh-pages
 export MANUAL=http://neo4j.com/docs/stable
 export EXAMPLES=https://github.com/neo4j-examples
 
-for file in `find . -mindepth 2 -maxdepth 3 -name "*.adoc"`; do
+for file in `find . -mindepth 2 -maxdepth 4 -name "*.adoc"`; do
    echo "Rendering $file"
    filename=${file##*/}
    filename=${filename%.adoc}
