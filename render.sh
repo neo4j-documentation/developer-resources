@@ -14,7 +14,7 @@ function render {
 if [ "$1" != "" ]; then
    render "$1"	
 else
-   for file in `find . -mindepth 2 -maxdepth 3 -name "*.adoc"`; do
+   for file in `find . -mindepth 2 -maxdepth 4 -name "*.adoc"`; do
     	render "$file"
    done
 fi
