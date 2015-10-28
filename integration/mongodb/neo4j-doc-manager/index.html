@@ -1,0 +1,3049 @@
+<!doctype html> <!--[if IE 9]>
+<html class="no-js ie9" lang="en">
+   <![endif]-->
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jweb/favicon.ico"/>
+  <title>Developer: Get started - Neo4j Graph Database</title>
+  <meta name="description"
+        content="This is where you’ll find step-by-step Neo4j tutorials and developer guides that cover all areas of the development life-cycle to help you get started."/>
+  <link rel="canonical" href="http://neo4j.com/developer-resources/get-started/"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:title" content="Developer: Get started - Neo4j Graph Database"/>
+  <meta property="og:description"
+        content="This is where you’ll find step-by-step Neo4j tutorials and developer guides that cover all areas of the development life-cycle to help you get started."/>
+  <meta property="og:url" content="http://neo4j.com/developer-resources/get-started/"/>
+  <meta property="og:site_name" content="Neo4j Graph Database"/>
+  <meta property="og:image"
+        content="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/10/icon-guide-theory.png"/>
+  <link rel="alternate" type="application/rss+xml" title="Neo4j Graph Database &raquo; Feed"
+        href="http://neo4j.com/feed/"/>
+  <link rel="alternate" type="application/rss+xml" title="Neo4j Graph Database &raquo; Comments Feed"
+        href="http://neo4j.com/comments/feed/"/>
+  <link rel='stylesheet' id='font-awesome-four-css'
+        href="http://neo4j.com/wp-content/plugins/font-awesome-4-menus/css/font-awesome.min.css?ver=4.2.0"
+        type='text/css' media='all'/>
+  <link rel='stylesheet' id='foundation-css'
+        href="http://neo4j.com/wp-content/themes/neo4jweb/assets/css/app.css?ver=4.1" type='text/css' media='screen'/>
+  <link rel='stylesheet' id='neo-codemirror-css'
+        href="http://neo4j.com/wp-content/themes/neo4jweb/assets/css/codemirror-neo.css?ver=4.1" type='text/css'
+        media='screen'/>
+  <script type='text/javascript'>
+    /* <![CDATA[ */
+    var ajax_object = {"ajaxurl": "http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
+    /* ]]> */
+  </script>
+  <script type='text/javascript'
+          src='http://neo4j.com/wp-content/plugins/neo4j-download/js/download.js?ver=4.1'></script>
+  <script type='text/javascript'
+          src='http://neo4j.com/wp-content/plugins/jquery-updater/js/jquery-2.1.1.min.js?ver=2.1.1'></script>
+  <script type='text/javascript'
+          src='http://neo4j.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+  <script type='text/javascript'
+          src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/vendor/modernizr.min.js?ver=4.1'></script>
+  <script type='text/javascript'
+          src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/foundation.min.js?ver=4.1'></script>
+  <script type='text/javascript'
+          src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/vendor/codemirror.min.js?ver=4.1'></script>
+  <script type='text/javascript'
+          src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/neo_codemirror.js?ver=4.1'></script>
+  <script type='text/javascript' src='//use.typekit.net/rdt4xku.js?ver=4.1'></script>
+  <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/misc.js?ver=4.1'></script>
+  <script type='text/javascript'
+          src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/neo_calculator_v3.js?ver=4.1'></script>
+  <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://neo4j.com/xmlrpc.php?rsd"/>
+  <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://neo4j.com/wp-includes/wlwmanifest.xml"/>
+  <meta name="generator" content="WordPress 4.1"/>
+  <link rel='shortlink' href="http://neo4j.com/?p=38241"/>
+</head>
+
+<body>
+<div class="top-bar-container contain-to-grid">
+    <nav class="top-bar" data-topbar role="navigation">
+        <ul class="title-area">
+            <li class="name">
+                <h1><a href="http://neo4j.com/"><img
+                        src="http://neo4j.com/wp-content/themes/neo4jweb/assets/images/neo4j-blue-logo.png"/></a></h1>
+            </li>
+            <li class="toggle-topbar menu-icon"><a href="#"></a></li>
+        </ul>
+        <section class="top-bar-section">
+            <ul id="menu-top-nav" class="top-bar-menu right">
+                <li id="menu-item-36917"
+                    class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item active menu-item-36917">
+                    <a href="/developer-resources/get-started">Developer</a></li>
+                <li id="menu-item-38286"
+                    class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-38286">
+                    <a href="http://neo4j.com/blog/">Blog</a></li>
+                <li id="menu-item-38817"
+                    class="menu-item menu-item-type-custom menu-item-object-custom menu-item-38817"><a
+                        href="//support.neo4j.com/hc">Support</a></li>
+                <li id="menu-item-36919"
+                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36919"><a
+                        href="http://neo4j.com/contact-us/">Contact Us</a></li>
+                <li id="menu-item-36921"
+                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36921"><a
+                        href="http://neo4j.com/download/">Download Neo4j</a></li>
+            </ul>
+            <ul class="right">
+                <li class="has-form hide-for-small">
+                    <form role="search" method="get" id="searchform" class="searchform" action="http://neo4j.com/">
+                        <input type="text" name="s" id="s"/><input type="image" id="searchsubmit"
+                                                                   src="http://neo4j.com/wp-content/themes/neo4jweb/assets/images/searchicon.png"/>
+                    </form>
+                </li>
+                <li class="header-widget has-dropdown">
+                    <a href="#"><span class="show-for-small-down">Menu</span> </a>
+                    <ul class="sub-menu dropdown">
+                        <div class="row header-widgets-container">
+                            <div class="medium-3 columns">
+                                <div class="menu-product-and-services-container">
+                                    <ul id="menu-product-and-services" class="menu">
+                                        <li id="menu-item-36967"
+                                            class="menu-item menu-item-type-custom menu-item-object-custom menu-item-36967">
+                                            <a href="/product">PRODUCT AND SERVICES</a></li>
+                                        <li id="menu-item-36966"
+                                            class="menu-item menu-item-type-custom menu-item-object-custom menu-item-36966">
+                                            <a href="http://neo4j.com/product">Neo4j Graph Database</a></li>
+                                        <li id="menu-item-38756"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38756">
+                                            <a href="http://neo4j.com/subscriptions/">Subscriptions</a></li>
+                                        <li id="menu-item-36971"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36971">
+                                            <a href="http://neo4j.com/neo4j-editions/">Compare Neo4j Editions</a></li>
+                                        <li id="menu-item-36974"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36974">
+                                            <a href="http://neo4j.com/professional-services/">Professional Services</a>
+                                        </li>
+                                        <li id="menu-item-38293"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38293">
+                                            <a href="http://neo4j.com/open-source-project/">Open Source Project</a></li>
+                                    </ul>
+                                </div>
+                                <div class="menu-partners-container">
+                                    <ul id="menu-partners" class="menu">
+                                        <li id="menu-item-36965"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36965">
+                                            <a href="http://neo4j.com/partners/">PARTNER PROGRAM</a></li>
+                                        <li id="menu-item-36963"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36963">
+                                            <a href="http://neo4j.com/neo4j-partner-program/">Become a Partner</a></li>
+                                        <li id="menu-item-38558"
+                                            class="menu-item menu-item-type-custom menu-item-object-custom menu-item-38558">
+                                            <a href="/partners/#find">Find a Partner</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="medium-3 columns">
+                                <div class="menu-customers-container">
+                                    <ul id="menu-customers" class="menu">
+                                        <li id="menu-item-36955"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36955">
+                                            <a href="http://neo4j.com/customers/">CUSTOMERS</a></li>
+                                    </ul>
+                                </div>
+                                <div class="menu-use-cases-container">
+                                    <ul id="menu-use-cases" class="menu">
+                                        <li id="menu-item-38559"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38559">
+                                            <a href="http://neo4j.com/use-cases/">USE CASES</a></li>
+                                        <li id="menu-item-38548"
+                                            class="menu-item menu-item-type-post_type menu-item-object-use_case menu-item-38548">
+                                            <a href="http://neo4j.com/use-cases/network-and-data-center-management/">Network
+                                                &#038; IT Operations Mgmt</a></li>
+                                        <li id="menu-item-38551"
+                                            class="menu-item menu-item-type-post_type menu-item-object-use_case menu-item-38551">
+                                            <a href="http://neo4j.com/use-cases/master-data-management/">Master Data
+                                                Management</a></li>
+                                        <li id="menu-item-38552"
+                                            class="menu-item menu-item-type-post_type menu-item-object-use_case menu-item-38552">
+                                            <a href="http://neo4j.com/use-cases/recommendations/">Recommendations</a>
+                                        </li>
+                                        <li id="menu-item-38550"
+                                            class="menu-item menu-item-type-post_type menu-item-object-use_case menu-item-38550">
+                                            <a href="http://neo4j.com/use-cases/social/">Social Network</a></li>
+                                        <li id="menu-item-38547"
+                                            class="menu-item menu-item-type-post_type menu-item-object-use_case menu-item-38547">
+                                            <a href="http://neo4j.com/use-cases/identity-and-access-management/">Identity
+                                                and Access Mgmt</a></li>
+                                        <li id="menu-item-38549"
+                                            class="menu-item menu-item-type-post_type menu-item-object-use_case menu-item-38549">
+                                            <a href="http://neo4j.com/use-cases/digital-asset-management/">Digital Asset
+                                                Management</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="medium-3 columns">
+                                <div class="menu-graphacademy-container">
+                                    <ul id="menu-graphacademy" class="menu">
+                                        <li id="menu-item-36957"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36957">
+                                            <a href="http://neo4j.com/graphacademy/">GRAPHACADEMY</a></li>
+                                        <li id="menu-item-36959"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36959">
+                                            <a href="http://neo4j.com/graphacademy/online-course/">Online Training</a>
+                                        </li>
+                                        <li id="menu-item-39349"
+                                            class="menu-item menu-item-type-custom menu-item-object-custom menu-item-39349">
+                                            <a href="/books/">Books</a></li>
+                                        <li id="menu-item-38761"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38761">
+                                            <a href="http://neo4j.com/resources/">Resources</a></li>
+                                    </ul>
+                                </div>
+                                <div class="menu-developer-container">
+                                    <ul id="menu-developer" class="menu">
+                                        <li id="menu-item-38292"
+                                            class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item menu-item-38292">
+                                            <a href="/developer-resources/get-started">DEVELOPER</a></li>
+                                        <li id="menu-item-39699"
+                                            class="menu-item menu-item-type-custom menu-item-object-custom menu-item-39699">
+                                            <a href="/docs">Docs</a></li>
+                                    </ul>
+                                </div>
+                                <div class="menu-community-4-container">
+                                    <ul id="menu-community-4" class="menu">
+                                        <li id="menu-item-38291"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38291">
+                                            <a href="http://neo4j.com/community/">COMMUNITY</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="medium-3 columns">
+                                <div class="menu-neo4j-blog-container">
+                                    <ul id="menu-neo4j-blog" class="menu">
+                                        <li id="menu-item-38289"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-38289">
+                                            <a href="http://neo4j.com/blog/">Neo4j Blog</a></li>
+                                    </ul>
+                                </div>
+                                <div class="menu-events-container">
+                                    <ul id="menu-events" class="menu">
+                                        <li id="menu-item-36956"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36956">
+                                            <a href="http://neo4j.com/events/">EVENTS</a></li>
+                                    </ul>
+                                </div>
+                                <div class="menu-about-us-container">
+                                    <ul id="menu-about-us" class="menu">
+                                        <li id="menu-item-38561"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38561">
+                                            <a href="http://neo4j.com/company/">COMPANY</a></li>
+                                        <li id="menu-item-36950"
+                                            class="menu-item menu-item-type-custom menu-item-object-custom menu-item-36950">
+                                            <a href="http://neo4j.com/news">News</a></li>
+                                        <li id="menu-item-36951"
+                                            class="menu-item menu-item-type-custom menu-item-object-custom menu-item-36951">
+                                            <a href="http://neo4j.com/jobs">Jobs</a></li>
+                                        <li id="menu-item-38563"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38563">
+                                            <a href="http://neo4j.com/staff/">Staff</a></li>
+                                        <li id="menu-item-38288"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38288">
+                                            <a href="http://neo4j.com/contact-us/">Contact Us</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+    </nav>
+</div>
+
+<div class="marquee blue">
+    <div class="row text-center">
+        <div class="medium-10 small-centered columns">
+            <h1 class="entry-title">Neo4j Doc Manager</h1>
+        </div>
+    </div>
+</div>
+<article id="content" role="main">
+    <p class="lead">lead text</p>
+    <section class="row">
+        <div style="padding-left: 1em; padding-right: 1em;">
+            <div class="row" style="padding-top: 10px;">
+                <div class="columns large-12" style="padding-top:10px;">
+                    <ul class="breadcrumbs">
+                        <li><a href="/developer-resources">Developer Guides</a></li>
+                        
+                        <li class="current"><a href="#">Neo4j Doc Manager</a></li>
+                    </ul>
+                </div>
+            </div>
+            <style> .lead {
+    display: none;
+}
+
+section.row {
+    padding: 0;
+}
+
+ol li {
+    padding: 0;
+    margin: 0;
+}
+
+#content section.row {
+    max-width: 1024px;
+    padding-left: .5em;
+    padding-right: .5em;
+}
+
+.row {
+}
+
+#content section.row .accordion-navigation > a {
+    padding: 0 !important;
+}
+
+.accordion .content {
+    padding: 0;
+}
+
+.row .row {
+    margin: auto;
+}
+
+.columns.medium-12 {
+    padding-left: 0;
+}
+
+.fa-stack.fa-lg {
+    color: #0f5788;
+    display: block;
+    float: left;
+    height: 70px;
+    margin-right: 1em;
+    padding-right: 2em;
+    width: 50px;
+}
+
+h3 {
+    font-weight: normal;
+}
+
+strong, b {
+    font-weight: 600;
+    font-color: #333;
+}
+
+.calloutsection {
+    padding: 20px 0;
+}
+
+section {
+    padding: 40px 0 0 0;
+}
+
+.marquee {
+    height: auto;
+    margin-top: 1em;
+}
+
+#main-content .entry-title {
+    display: none;
+}
+
+#main-content .subheader {
+    display: none;
+}
+
+.marquee h1, .marquee h2 {
+    padding-top: 0;
+}
+
+#main-content .next-steps h5 {
+    font-size: 12px;
+}
+
+#main-content .next-steps h3 {
+    margin-bottom: 1em;
+}
+
+#main-content .content.active {
+    display: block;
+}
+
+#main-content .content {
+    display: none;
+}
+
+#main-content {
+    padding-top: 0;
+}
+
+.use-case .tab-container .content.active {
+    border-top: 1px solid rgba(15, 87, 136, 0.7);
+    padding: 2em 1em 1em;
+}
+
+.tabs dd > a:hover {
+    color: #3d5360;
+}
+
+.breadcrumbs > * a, .breadcrumbs > * span {
+    color: #0f5788;
+    text-transform: none;
+}
+
+.breadcrumbs > * {
+    text-transform: none;
+}
+
+.top-bar {
+    height: 80px;
+}
+
+#main-content .top-bar-section ul {
+    margin-top: 1em;
+}
+
+.panel-pod p {
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 26px;
+}
+
+.panel-pod > a {
+    display: block;
+    margin-bottom: 1em;
+}
+
+.panel-pod p a {
+    display: block;
+    margin-top: 1em;
+}
+
+.panel-pod {
+    text-align: left;
+}
+
+.tab-container {
+    margin-bottom: 2em;
+}
+
+.panel-pod img {
+    display: block;
+    margin: auto;
+}
+
+#content h4 {
+    font-weight: 100;
+    color: #0f5788;
+    font-size:1.2em;
+}
+
+#content h3 {
+    font-weight: 100;
+    color: #0f5788;
+    font-size:1.5em;
+}
+
+#content ul {
+    list-style: circle outside none;
+}
+
+#content .guide-section-content .large-12.columns > ul {
+    list-style: circle outside none !important;
+    margin-left: 1em !important;
+}
+
+.breadcrumbs > *:before {
+    content: "→";
+    color: #aaa;
+    margin: 0 0.75rem;
+    position: relative;
+    top: 0;
+}
+
+#content section.row .accordion-navigation > a {
+    background: url("http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/collapse.png") no-repeat scroll 100% 50% transparent;
+    border-bottom: 1px dashed #ddd;
+    padding: 0 !important;
+}
+
+.accordion-navigation.active > a {
+    background: url("http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/roll-up.png") no-repeat scroll 100% 50% transparent !important;
+}
+
+.accordion-navigation h5 {
+    font-weight: 100;
+    height: 2em;
+    line-height: 2em;
+    margin: 0;
+}
+
+.content ul {
+    margin-top: 1em;
+}
+
+img.icon {
+    height: 1.4em;
+    width: auto;
+    margin-right: 0.25em;
+}
+
+.accordion ul {
+    list-style: circle outside none !important;
+    margin-left: 1.5em !important;
+}
+
+.accordion h5 {
+    color: #0f5788;
+    padding-left: .5em;
+}
+
+.accordion .active h5 {
+    background: url("http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/roll-up.png") no-repeat scroll 100% 50% #f9f9f9 !important;
+    color: #555;
+    font-weight: 300;
+}
+
+#content code {
+    font-weight:bold;
+}
+
+#content h3 {
+    margin-bottom:.5em
+}
+
+#content h5 {
+    font-weight:100
+}
+
+#content h4 {
+    font-weight:100
+}
+
+#content strong {
+    font-weight:400
+}
+
+#content h4 {
+    margin-bottom:1em
+}
+
+#content .title {
+    font-size:20px
+}
+
+#content .breadcrumbs {
+    margin-bottom:1.25rem;
+}
+
+ul.breadcrumbs {
+    margin-left: 0px;
+    list-style: none !important;
+}
+
+.marquee h1, .marquee h2 {
+    padding-top: 0;
+}
+
+.marquee {
+    height: auto;
+    margin-top: 1em;
+}
+div.side-nav {
+    clear: right;
+    float: right;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    width: 5em;
+    padding: 1em;
+    min-width: 16em;
+    border: 1px solid rgb(222, 222, 222);
+    height:auto;
+    position: absolute;
+    right: -20em;
+}
+
+span.label {
+	top: -3px; margin-right: 5px;
+}
+.bgblue {
+	background-color: #0f5788;
+}
+.bgorange {
+	background-color: #f58220;
+}
+hr {
+	margin-top: 0.5rem;
+}
+td.tableblock, td p.tableblock,th.tableblock, th p.tableblock {
+	margin-bottom: 0px;
+	line-height: 1em;
+}
+th.tableblock, th p.tableblock {
+	font-weight:bold;
+}
+</style>
+
+            <div>
+                <div class="row" style="padding-left: 0; padding-right: 0;">
+                    <div class="large-9 large-push-3 columns guide-section-content">
+                        <div id="preamble columns medium-12">
+<div class="sectionbody">
+
+
+<div class="paragraph">
+<p>The Neo4j Doc Manger project facilitates real time data synchronization from MongoDB to Neo4j.</p>
+</div>
+
+</div>
+</div>
+<h1 id="_neo4j_doc_manager" class="sect0">Neo4j Doc Manager</h1>
+<!--div class="title">Neo4j Doc Manager</div-->
+
+
+<div class="paragraph">
+<p>Neo4j Team &lt;<a href="mailto:michael.hunger@neotechnology.com">michael.hunger@neotechnology.com</a>&gt;
+v1.0, 2015-08
+:toc:
+:toclevels: 6</p>
+</div>
+
+<div  id="_our_goal" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>1. Our Goal</h3>
+<div  id="_tl_dr" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>1.1. TL;DR</h3>
+
+
+<div class="paragraph">
+<p>What&#8217;s Neo4j Doc Manager? It is a tool that enables you to migrate existing documents into MongoDB to a Neo4j graph structure. You just run it in background and the information that is in MongoDB will be imported to a graph.</p>
+</div>
+
+</div>
+<div  id="_a_little_longer_explanation" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>1.2. A little longer explanation</h3>
+
+
+<div class="paragraph">
+<p>Neo4j is an OLTP graph database which excels at querying data relationships, which is a weakness of other NoSQL and SQL solutions.  We created the Neo4j Doc Manager for the Mongo Connector to allow MongoDB developers to store JSON data in Mongo while querying the relationship between the data using Neo4j.  We call this polyglot persistence - using the database best suited for the type of data and querying your application requires.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>MongoDB stores data as JSON documents, while Neo4j stores data as graphs.  In order to enable graph-based querying of Mongo data, we need to determine how to map between these two different data structures.  Our initial goal was to implement a default mapping plan, covering the most well-known cases. We wanted to follow convention instead of requiring configuration. We collected some generic Mongo Document structures based on community feedback and structured the mapping based on them. It&#8217;s important to note that we are opened for further suggestions and improvements.</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/doc_to_graph.png" alt="doc to graph">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>This project is based upon the <a href="https://github.com/10gen-labs/mongo-connector">Mongo Connector</a>. It provides a simple protocol to transfer data from MongoDB to another database. While Mongo publishes Doc Manager implementations for other databases, they did not provide an implementation for Neo4j.  You can grab more detailed information about <strong>mongo-connector</strong> into the official <a href="https://github.com/10gen-labs/mongo-connector/wiki">Project Wiki</a>.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>The Mongo Connector requires creating a MongoDB <a href="http://docs.mongodb.org/manual/tutorial/deploy-replica-set/">replica set</a>. An <strong>OplogThread</strong> thread then will listen to all CUD actions occurring in MongoDB. The <strong>mongo-connector</strong> provides an interface to collect the events caught by the OplogThread. The communication interface is implemented into a structure called <strong>DocManager</strong>, which can properly receive and handle Mongo documents and information about the database and its collections.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>By extending the <strong>DocManager</strong> class, we have created a Configuration that interacts with Neo4j. Some methods are required to be implemented to keep Mongo Connector protocol consistent. The next section describes in detail how <strong>neo4j_doc_manager</strong> handles each of these methods.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Detailed documentation for the <strong>DocManager</strong> superclass and its protocol can be found <a href="https://github.com/10gen-labs/mongo-connector/wiki/Writing-Your-Own-DocManager">here</a></p>
+</div>
+
+</div>
+</div>
+<div  id="_about_neo4j_docmanager" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>2. About Neo4j DocManager</h3>
+<div  id="_setup" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>2.1. Setup</h3>
+<div  id="_install_neo4j_doc_manager" class="sect3 "  >
+<h4>2.1.1. Install neo4j-doc-manager</h4>
+
+
+<div class="paragraph">
+<p>The preferred method of installation is with the pip package manager:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>pip install neo4j-doc-manager --pre</code></pre>
+</div>
+</div>
+<div  id="_alternate_installation" class="sect4 "  >
+<h5>Alternate installation</h5>
+
+
+<div class="paragraph">
+<p>If you experience any issues with pip you may use the following installation method:</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>First of all, install <a href="https://github.com/10gen-labs/mongo-connector">mongo-connector</a>. This can be easily done with the following command:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>pip install mongo-connector</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Now install <strong>neo4j_doc_manager</strong> by cloning this repository and setting the <code>PYTHONPATH</code> to it&#8217;s local directory:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>git clone https://github.com/neo4j-contrib/neo4j_doc_manager.git
+cd neo4j_doc_manager
+export PYTHONPATH=.</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>You also must install <strong>py2neo</strong>:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>pip install py2neo</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div  id="_start_neo4j_and_mongo" class="sect3 "  >
+<h4>2.1.2. Start Neo4j and Mongo</h4>
+
+
+<div class="paragraph">
+<p>Ensure that you have a Neo4j instance up and running.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>If you have authentication enabled for Neo4j, be sure to set <strong>NEO4J_AUTH</strong> environment variable, containing your user and password.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>export NEO4J_AUTH=&lt;user&gt;:&lt;password&gt;</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Ensure that mongo is running a <strong>replica set</strong>. To initiate a replica set start mongo with:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>mongod --replSet myDevReplSet</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Then open <a href="http://docs.mongodb.org/master/tutorial/getting-started-with-the-mongo-shell">mongo-shell</a> and run:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>rs.initiate()</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Please refer to <a href="https://github.com/10gen-labs/mongo-connector/wiki/FAQ">Mongo Connector FAQ</a> for more information.</p>
+</div>
+
+</div>
+<div  id="_start_the_neo4j_doc_manager_service" class="sect3 "  >
+<h4>2.1.3. Start the Neo4j Doc Manager service</h4>
+
+
+<div class="paragraph">
+<p>To start the service, run the following command:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>mongo-connector -m localhost:27017 -t http://localhost:7474/db/data -d neo4j_doc_manager</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<strong>-m</strong> provides Mongo endpoint
+</li>
+<li>
+<strong>-t</strong> provides Neo4j endpoint. Be sure to specify the protocol (http).
+</li>
+<li>
+<strong>-d</strong> specifies Neo4j Doc Manager.
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div  id="_methods" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>2.2. Methods</h3>
+<div  id="_constructor" class="sect3 "  >
+<h4>2.2.1. Constructor</h4>
+
+
+<div class="paragraph">
+<p>By invoking <strong>Neo4j Doc Manager</strong> initialisation command with proper parameters ( <code>mongo-connector -m [mongo_url] -t [neo4j_server_url] -d neo4j_doc_manager</code> ), the <strong>Neo4jDocManager</strong> constructor is called.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Constructor receives the following arguments:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="python"><code>(self, url, auto_commit_interval=DEFAULT_COMMIT_INTERVAL,
+                 unique_key='_id', chunk_size=DEFAULT_MAX_BULK, **kwargs)</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p><strong>url</strong> corresponds the address where a Neo4j server instance is running.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><strong>unique_key</strong> corresponds to the identifier refers to the unique key that is being used in Mongo. Default value is <strong>_id</strong> .</p>
+</div>
+
+<div  id="_authentication" class="sect4 "  >
+<h5>Authentication</h5>
+
+
+<div class="paragraph">
+<p>If you have authentication enabled for Neo4j, be sure to set <strong>NEO4J_AUTH</strong> environment variable, containing your user and password.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>export NEO4J_AUTH=&lt;user&gt;:&lt;password&gt;</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>If authentication is not enabled on Neo4j, no action is required. To disable authentication on Neo4j, go to Neo4j install directory, and then edit <em>conf/neo4j-server.properties</em> :</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>dbms.security.auth_enabled=false</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div  id="_upsert" class="sect3 "  >
+<h4>2.2.2. Upsert</h4>
+
+
+<div class="paragraph">
+<p>Upsert consists into the method that creates new nodes and relationships given a Mongo Document. The method signature is described as below:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="python"><code>upsert(self, doc, namespace, timestamp):</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Basically we <strong>translate every element of a collection into a new node</strong>. Since the elements can be composite, we have adopted some patterns to properly convert each document into a group of nodes and relationships:</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+Each new node will be receive <strong>Document</strong> Label
+</li>
+<li>
+Also the document type (the referred collection from the incoming document) will also be inserted as a node label
+</li>
+<li>
+Document id will be propagated to the node. That means node will have the same '_id' that Mongo Document has.
+</li>
+<li>
+If the document contains the elements below, they will recursively be transformed into new nodes as well
+<div class="ulist">
+<ul>
+<li>
+a nested document
+</li>
+<li>
+an array of documents
+</li>
+</ul>
+</div>
+</li>
+<li>
+All the other types of data into the document will be translated into node properties.
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>In terms of relationships, every time we find composite documents, we will stablish a relationship between the root document and the nested document.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>To clarify our scenario, let&#8217;s imagine an empty MongoDB instance.
+Let&#8217;s also consider an empty instance of Neo4j.</p>
+</div>
+
+<div  id="_simple_case" class="sect4 "  >
+<h5>Simple case</h5>
+
+
+<div class="paragraph">
+<p>We then run the following statement into <strong>mongo</strong>, to insert a talk into a collection of talks:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.insert(  { "session": { "title": "12 Years of Spring: An Open Source Journey", "abstract": "Spring emerged as a core open source project in early 2003 and evolved to a broad portfolio of open source projects up until 2015." }, "topics":  ["keynote", "spring"], "room": "Auditorium", "timeslot": "Wed 29th, 09:30-10:30", "speaker": { "name": "Juergen Hoeller", "bio": "Juergen Hoeller is co-founder of the Spring Framework open source project.", "twitter": "https://twitter.com/springjuergen", "picture": "http://www.springio.net/wp-content/uploads/2014/11/juergen_hoeller-220x220.jpeg" } } );</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>This will insert the following document into Mongo:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="json"><code>{
+  "session": {
+    "title": "12 Years of Spring: An Open Source Journey",
+    "abstract": "Spring emerged as a core open source project in early 2003 and evolved to a broad portfolio of open source projects up until 2015."
+  },
+  "topics":  ["keynote", "spring"],
+  "room": "Auditorium",
+  "timeslot": "Wed 29th, 09:30-10:30",
+  "speaker": {
+    "name": "Juergen Hoeller",
+    "bio": "Juergen Hoeller is co-founder of the Spring Framework open source project.",
+    "twitter": "https://twitter.com/springjuergen",
+    "picture": "http://www.springio.net/wp-content/uploads/2014/11/juergen_hoeller-220x220.jpeg"
+  }
+}</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>This will be reflected as follows into Neo4j:</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/neograph1.png" alt="neograph1">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>Check the detailed generated graph:</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph1.png" alt="graph1">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Created nodes:</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<em>Document:talks</em> - talks is the root node, coming from Mongo Document Collection, with an id that also comes from MongoDB. Non nested Documents are converted into regular properties, such as "room", "topics" and "timeslot" (a common String array).
+</li>
+<li>
+<em>Document:session</em> - Nested Document. Inner key/values are converted into Node properties. Note that the id incoming from root <strong>talks</strong> collection is propagated to this Node. Also, note that this node is labelled as its direct document key, in this case, <strong>session</strong>.
+</li>
+<li>
+<em>Document:speaker</em> - also nested Document.
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Created Relationships:</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+A relationship that connects <strong>talks</strong> and <strong>session</strong> nodes, called <strong>talks_session</strong>,
+</li>
+<li>
+A relationship that connects <strong>talks</strong> and <strong>speaker</strong> nodes, called <strong>talks_speaker</strong>.
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>The node chain is preserved. For example, imagine that you insert the following document in MongoDB:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.insert(  { "session": { "title": "12 Years of Spring: An Open Source Journey", "abstract": "Spring emerged as a core open source project in early 2003 and evolved to a broad portfolio of open source projects up until 2015.", "conference": { "city": "London" } }, "topics":  ["keynote", "spring"], "room": "Auditorium", "timeslot": "Wed 29th, 09:30-10:30", "speaker": { "name": "Juergen Hoeller", "bio": "Juergen Hoeller is co-founder of the Spring Framework open source project.", "twitter": "https://twitter.com/springjuergen", "picture": "http://www.springio.net/wp-content/uploads/2014/11/juergen_hoeller-220x220.jpeg" } } );</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="json"><code>{
+  "_id" : ObjectId("560dd583cf74773fae3fd001"),
+  "session" : {
+    "title" : "12 Years of Spring: An Open Source Journey",
+    "abstract" : "Spring emerged as a core open source project in early 2003 and evolved to a broad portfolio of open source projects up until 2015.",
+    "conference" : {
+      "city" : "London"
+    }
+  },
+  "topics" : [
+    "keynote",
+    "spring"
+  ],
+  "room" : "Auditorium",
+  "timeslot" : "Wed 29th, 09:30-10:30",
+  "speaker" : {
+    "name" : "Juergen Hoeller",
+    "bio" : "Juergen Hoeller is co-founder of the Spring Framework open source project.",
+    "twitter" : "https://twitter.com/springjuergen",
+    "picture" : "http://www.springio.net/wp-content/uploads/2014/11/juergen_hoeller-220x220.jpeg"
+  }
+}</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>In Neo4j, we will have:</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph2.png" alt="graph2">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Created nodes:</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<em>Document:talks</em> - talks is the root node, coming from Mongo Document Collection, with an id that also comes from MongoDB. Non nested Documents are converted into regular properties, such as "room", "topics" and "timeslot" (a common String array).
+</li>
+<li>
+<em>Document:session</em> - Nested Document. Inner key/values are converted into Node properties. Note that the id incoming from root <strong>talks</strong> collection is propagated to this Node. Also, note that this node is labelled as its direct document key, in this case, <strong>session</strong>.
+</li>
+<li>
+<em>Document:speaker</em> - also nested Document.
+</li>
+<li>
+<em>Document:conference</em> - a Node that is nested to <em>session</em>.
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Created Relationships:</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+A relationship that connects <strong>talks</strong> and <strong>session</strong> nodes, called <strong>talks_session</strong>,
+</li>
+<li>
+A relationship that connects <strong>talks</strong> and <strong>speaker</strong> nodes, called <strong>talks_speaker</strong>.
+</li>
+<li>
+A relationship that connects <strong>session</strong> and <strong>conference</strong> nodes, called <strong>session_conference</strong>.
+</li>
+</ul>
+</div>
+</div>
+<div  id="_case_containing_a_json_array" class="sect4 "  >
+<h5>Case containing a JSON Array</h5>
+
+
+<div class="paragraph">
+<p>Now let&#8217;s insert the following data. Note the nested JSON array represented by <strong>tracks</strong>:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.insert(  { "session": { "title": "12 Years of Spring: An Open Source Journey", "abstract": "Spring emerged as a core open source project in early 2003 and evolved to a broad portfolio of open source projects up until 2015." }, "topics":  ["keynote", "spring"], "tracks": [{ "main":"Java" }, { "second":"Languages" }], "room": "Auditorium", "timeslot": "Wed 29th, 09:30-10:30", "speaker": { "name": "Juergen Hoeller", "bio": "Juergen Hoeller is co-founder of the Spring Framework open source project.", "twitter": "https://twitter.com/springjuergen", "picture": "http://www.springio.net/wp-content/uploads/2014/11/juergen_hoeller-220x220.jpeg" } } );</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="javascript"><code>{
+  "session": {
+    "title": "12 Years of Spring: An Open Source Journey",
+    "abstract": "Spring emerged as a core open source project in early 2003 and evolved to a broad portfolio of open source projects up until 2015."
+  },
+  "topics":  ["keynote", "spring"],
+  "tracks": [{ "main":"Java" }, { "second":"Languages" }],
+  "room": "Auditorium",
+  "timeslot": "Wed 29th, 09:30-10:30",
+  "speaker": {
+    "name": "Juergen Hoeller",
+    "bio": "Juergen Hoeller is co-founder of the Spring Framework open source project.",
+    "twitter": "https://twitter.com/springjuergen",
+    "picture": "http://www.springio.net/wp-content/uploads/2014/11/juergen_hoeller-220x220.jpeg"
+  }
+}</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>The above document will be translated into Neo4j as follows:</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph3.png" alt="graph3">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Created nodes:</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<em>Document:talks</em> - talks is the root node, coming from Mongo Document Collection, with an id that also comes from MongoDB. Non nested Documents are converted into regular properties, such as "room", "topics" and "timeslot" (a common String array).
+</li>
+<li>
+<em>Document:tracks0</em> - A node that represents the first JSON of <strong>tracks</strong> array [at index 0]. It contains the propagated <strong>talks</strong> id, plus the properties of the nested document.
+</li>
+<li>
+<em>Document:tracks1</em> - A node that represents the second JSON of <strong>tracks</strong> array [at index 1]. It contains the propagated <strong>talks</strong> id, plus the properties of the nested document.
+</li>
+<li>
+<em>Document:session</em> - Nested Document. Inner key/values are converted into Node properties. Note that the id incoming from root <strong>talks</strong> collection is propagated to this Node. Also, note that this node is labelled as its direct document key, in this case, <strong>session</strong>.
+</li>
+<li>
+<em>Document:speaker</em> - also nested Document.
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Created Relationships:</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+A relationship that connects <strong>talks</strong> and <strong>session</strong> nodes, called <strong>talks_session</strong>,
+</li>
+<li>
+A relationship that connects <strong>talks</strong> and <strong>speaker</strong> nodes, called <strong>talks_speaker</strong>.
+</li>
+<li>
+A relationship that connects <strong>talks</strong> and the first element of <strong>tracks</strong> array (<em>tracks0</em>), called <strong>talks_tracks0</strong>
+</li>
+<li>
+A relationship that connects <strong>talks</strong> and the second element of <strong>tracks</strong> array (<em>tracks1</em>), called <strong>talks_tracks1</strong>
+</li>
+</ul>
+</div>
+</div>
+<div  id="_case_containing_mongo_documents_joined_by_an_id_reference" class="sect4 "  >
+<h5>Case containing Mongo documents joined by an _id reference</h5>
+
+
+<div class="paragraph">
+<p>Let&#8217;s imagine now an explicit <strong>_id</strong> reference between two documents, such as:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.places.insert({"_id": "32434ab234324", "name": "The cool place", "url": "cool.example.net" })</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="javascript"><code>{
+  "_id": "32434ab234324",
+  "name": "The cool place",
+  "url": "cool.example.net"
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.people.insert({ "name": "Michael", "places_id": "32434ab234324", "url": "neo4j.com/Michael" })</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="javascript"><code>{
+  "name": "Michael",
+  "places_id": "32434ab234324",
+  "url": "neo4j.com/Michael"
+}</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Note that two documents were inserted, and <strong>people</strong> references <strong>place</strong> explicitly by <strong>id</strong>. <em>Neo4j Doc Manager</em> will map every field that ends with <strong> _id </strong> into an explicit relationship. First, we run a <strong>MERGE</strong> to see if the respective node exists. In the above example, we insert a _place_, and then a <em>people</em>. When inserting the <em>people</em> type, the connector will identify an explicit <em>id</em> relationship, through <em>places\_id</em> , and will try to find the respective node. If it does exist (and it should), a relationship between the two nodes will be created.</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph4.png" alt="graph4">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Created nodes:</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<em>Document:places</em> - Simple root node, with the properties <em>name</em> and <em>url</em> and an <strong>_id</strong>.
+</li>
+<li>
+<em>Document:people</em> - Another node, that comes from an different <em>upsert</em> method call. It creates another simple node, with the properties <em>name</em> and <em>url</em>.
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Created Relationships:</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+A relationship that connects <strong>people</strong> and <strong>places</strong> nodes is created due to the property <strong>places_id</strong> on <em>people</em> node. It is called <strong>people_places</strong>.
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div  id="_bulk_upsert" class="sect3 "  >
+<h4>2.2.3. Bulk Upsert</h4>
+
+
+<div class="paragraph">
+<p>If you already have data inserted on your MongoDB, the first time you run <em>Neo4j DocManager</em> the <strong>bulk_upsert</strong> method will be called. It acts as a normal <strong>upsert</strong>, described in previous section, but all the database actions will be batched in a single transaction.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>This will avoid a massive commit into Neo4j if the current Mongo database already has several documents. This will also avoid inconsistencies on an initial import.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Keep in mind that batch_upsert tends to have more performance if you are import a huge amount of data. The key to have this method called is the absence of a file called <em>oplog.timestamp</em>. If this file is not present, the document import will happen via <em>bulk_upsert</em>.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>This can be useful if you call a <em>mongoimport</em> commmand that will bring up a huge amount of data. For this scenario, you could manually remove the <em>oplog.timestamp</em>, which is automatically created the first time you call <strong>mongo-connector</strong> command. This file usually lives on the root of your <strong>neo4j-doc-manager</strong> Python Package project.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Of course you do not have to remove the file. <strong>bulk_upsert</strong> is nor mandatory, but it can help you to achieve a better performance on situations where you have many documents to bring to Neo4j.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><em>bulk_upsert</em> has a maximum chunk size of 1000 transactions. That means any transaction block on Neo4j will have more than 1000 nested statements.</p>
+</div>
+
+</div>
+<div  id="_update" class="sect3 "  >
+<h4>2.2.4. Update</h4>
+
+
+<div class="paragraph">
+<p>Update consists into the method that will update information into a document, by modifying an existing property or adding a new one; to a single document or multiple ones. The behaviour varies according to the instruction passed to Mongo.</p>
+</div>
+
+<div  id="__set" class="sect4 "  >
+<h5>$set</h5>
+
+
+<div class="paragraph">
+<p><strong>$set</strong> clause updates a single document. For example, imagine we have inserted the <em>talks</em> previously described into <em>Upsert</em> section, and now we want to update the <strong>room</strong>, which is <strong>Auditorium</strong>, to <strong>Auditorium2</strong>. We have to run the following instruction:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.update({ "room": "Auditorium"}, { $set: { "room": "Auditorium2"} })</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>This instruction will get the first document in Mongo that matches with the specified criteria and generate an update method call into <em>Neo4j Doc Manager</em>. Considering we have a document previously inserted into Mongo by the Upsert example, we will have a single update.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><strong>Updated Nodes</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+The node with <em>room: "Auditorium"</em> now will have the property <em>room</em> with the value of <em>"Auditorium2"</em>.
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>Compare both graphs:</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><strong>Before the update</strong></p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph1.png" alt="graph1">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p><strong>After the update</strong></p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph5.png" alt="graph5">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>Let&#8217;s assume we have inserted another talk in Mongo:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.insert(  { "session": { "title": "First steps with React", "abstract": "A little about React and how helpful it can be to your projects." }, "topics":  ["keynote", "javascript"], "room": "Auditorium2", "timeslot": "Wed 29th, 10:30-11:30", "speaker": { "name": "Peter Hunt", "bio": "Senior Developer.", "twitter": "https://twitter.com/react_developer", "picture": "http://www.reactiospeakers.org/wp-content/uploads/2015/09/peter-220x220.jpeg" } } );</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph6.png" alt="graph6">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>Note that both talks should be held at <em>Auditorium2</em>. If we run the following command:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.update({ "room": "Auditorium2"}, { $set: { "room": "Auditorium"} })</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Only the first document found by Mongo will be updated</strong>, as shown on the image below.</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph7.png" alt="graph7">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>If we want to change all documents, we must use <em>multi</em> parameter, described in the following section.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Many properties can be changed with a single <em>update</em> clause. For example, if we run</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.update({ "room": "Auditorium2"}, { $set: { "room": "Auditorium", "timeslot": "Wed 29th, 10:00-11:30" } })</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>We will have both properties, <em>room</em> and <em>timeslot</em>, updated into the graph.</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph8.png" alt="graph8">
+</p>
+</div>
+</div>
+<div  id="__unset" class="sect4 "  >
+<h5>$unset</h5>
+
+
+<div class="paragraph">
+<p><strong>$unset</strong> clause updates a single document by removing a property on a document. For example, imagine we have inserted the <em>talks</em> previously described into <em>Upsert</em> section, and now we want to remove the <em>timeslot</em> property for the talk that has its <em>room</em> as <strong>Auditorium</strong>. We have to run the following instruction:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.update({ room: "Auditorium" }, { $unset: { timeslot:""  } });</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Compare both graphs:</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><strong>Before the update</strong></p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph8.png" alt="graph8">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p><strong>After the update</strong></p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph9.png" alt="graph9">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>This instruction will get the first document in Mongo that matches with the specified criteria and generate an update method call into <em>Neo4j Doc Manager</em>. Considering we have a document previously inserted into Mongo by the Upsert example, we will have a single update, removing the property (notice on the node on the left side of the image).</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><strong>Updated Nodes by removing a property</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+The node with <em>room: "Auditorium"</em> now will have the property <em>timeslot</em> removed from it.
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Only the first document found by Mongo will be updated and have <em>timeslot</em> property removed</strong>. If we want to change all documents, we must use <em>multi</em> parameter, described in the following section.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Many properties can be changed with a single <em>update</em> clause. For example, if we run</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.update({ "room": "Auditorium"}, { $unset: { "room": "", "timeslot": "" } })</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>We will have both properties, <em>room</em> and <em>timeslot</em>, removed of the node into the graph.</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph10.png" alt="graph10">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p><em>$unset</em> can also remove connected nodes and relationships. Assuming our default <em>talks</em> example:</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph1.png" alt="graph1">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>If we run:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.update({ room: "Auditorium" }, { $unset: { session:""  } });</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>In Neo4j it will cause a removal of the node with the label <em>session</em> for the room with the property <em>Auditorium</em> and also the removal os the relationship connecting <em>talks</em> and <em>session</em>.</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph11.png" alt="graph11">
+</p>
+</div>
+</div>
+<div  id="_updating_without_set_or_unset_document_replacement" class="sect4 "  >
+<h5>Updating without $set or $unset (document replacement)</h5>
+
+
+<div class="paragraph">
+<p>It is also possible to update a document by specifying the entire change desired on it. For example, imagine we have inserted the <em>talks</em> previously described into <em>Upsert</em> section.</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph1.png" alt="graph1">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>Now we want to update the document to select the one whose <em>room</em> will be <em>Auditorium</em> and clear all the root data and have only a property called <em>level</em>, which value will be <em>intermediate</em>. We have to run the following instruction:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.update({ room: "Auditorium" }, { level: "Intermediate"  } );</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>This instruction will get the first document in Mongo that matches with the specified criteria and generate an update method call into <em>Neo4j Doc Manager</em>. Considering we have a document previously inserted into Mongo by the Upsert example, we will have a single update.</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph12.png" alt="graph12">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Updated Nodes</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+The node with <em>room: "Auditorium"</em> now will have all it&#8217;s properties removed and only <em>level</em> property will be created and will remain. So we will have d:Documents:talks with its <strong>_id</strong> and a <strong>level</strong>.
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Updated Relationships</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+By running the previous statement, all the connected nodes and relationships will be removed. We will end up with a single node, without any relationship.
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>Attention: Calling an update clause without <em>$set</em> or <em>$unset</em> will lead to property overriding, not concatenating with the existing ones.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>It is also possible to run an update clause that contains a nested document as an argument. Imagine our default <em>talks</em> example:</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph1.png" alt="graph1">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>Then we run:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.update({ room: "Auditorium" },  { conference: { name: "GraphConnect", city: "London" }   });</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>This instruction will remove all the properties from the <em>talks</em> node (but it will still being the root node). A new node, with the label <em>conference</em>, will be created. Also, a relationship between <em>talks</em> and <em>conference</em> will be made:</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph13.png" alt="graph13">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Updated Nodes</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+The node with <em>room: "Auditorium"</em> now will have all it&#8217;s properties removed. So we will have d:Documents:talks with its <strong>_id</strong> only, with any remaining property. All the connected nodes (<em>session</em> and <em>speaker</em>) and its properties will be removed.
+</li>
+<li>
+A new node, <strong>Document::conference</strong>, will be created, with the properties <em>name</em> and <em>city</em>.
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Updated Relationships</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+By running the previous statement, all the connected nodes and relationships will be removed from the original <em>talks</em> node. A new relationship between <em>talks</em> and <em>conference</em> will be made.
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>We can also run a composite update clause where we create a new node and also update the root node:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.update({ room: "Auditorium" },  { conference: { name: "GraphConnect", city: "London" }, level: "intermediate"   });</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>This instruction will remove all the properties from the <em>talks</em> node (but it will still being the root node). It will also create a <strong>level</strong> property on <em>talks</em>, with <strong>intermediate</strong> value. A new node, with the label <em>conference</em>, will be created. Also, a relationship between <em>talks</em> and <em>conference</em> will be made:</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph14.png" alt="graph14">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Updated Nodes</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+The node with <em>room: "Auditorium"</em> now will have all it&#8217;s properties removed. So we will have d:Documents:talks with its <strong>_id</strong> and a new property, <strong>level</strong>. All the connected nodes (<em>session</em> and <em>speaker</em>) and its properties will be removed.
+</li>
+<li>
+A new node, <strong>Document::conference</strong>, will be created, with the properties <em>name</em> and <em>city</em>.
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Updated Relationships</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+By running the previous statement, all the connected nodes and relationships will be removed from the original <em>talks</em> node. A new relationship between <em>talks</em> and <em>conference</em> will be made.
+</li>
+</ul>
+</div>
+</div>
+<div  id="_multi" class="sect4 "  >
+<h5>multi</h5>
+
+
+<div class="paragraph">
+<p>We can update all the documents that match to a following criteria. Following the example above, to update all document <em>rooms</em> to <em>Auditorium</em>, we should run:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.update({ "room": "Auditorium"}, { $set: { "room": "Auditorium2"} }, { multi: true } )</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p><em>multi: true</em> will update all documents that match the specified clauses. This behaviour will also be reflected into Neo4j - all Nodes will be updated. So, if before the clause we had:</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Before the update:</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph15.png" alt="graph15">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>After the update:</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph16.png" alt="graph16">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Nodes</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+Two nodes with <strong>room</strong> setted to <strong>Auditorium2</strong>
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>After running the update clause with <em>multi</em> parameter, we end up with:</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><strong>Updated Nodes</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+The two nodes now have <em>room</em> setted for <em>Auditorium</em>.
+</li>
+</ul>
+</div>
+</div>
+<div  id="_inserting_new_properties" class="sect4 "  >
+<h5>Inserting new properties</h5>
+
+
+<div class="paragraph">
+<p>Update clauses also can be used for inserting new properties into documents. This will impact into a new property for a node. Let&#8217;s assume the <em>talks</em> previously inserted. Let&#8217;s set a <em>level</em> property for all the talks that will happen into <em>Auditorium</em> room, pointing that they require an <em>intermediate</em> level. Before running the update clause, we have the following into Neo4j graph:</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+Two nodes labelled as <strong>Document:talks</strong> without a <em>level</em> property.
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.update({ "room": "Auditorium"}, { $set: { "level": "intermediate"} }, { multi: true })</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>After running the update clause, we have:</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph17.png" alt="graph17">
+</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+The same two nodes labelled as <strong>Document:talks</strong>, now with a <em>level</em> property, containing <em>"intermediate"</em> as its value.
+</li>
+</ul>
+</div>
+</div>
+<div  id="_creating_new_documents_by_an_update_action" class="sect4 "  >
+<h5>Creating new documents by an update action</h5>
+
+
+<div class="paragraph">
+<p>Let&#8217;s assume the graph below:</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph1.png" alt="graph1">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>If the update clause does not match any document, by default a new document is not created. However, if you pass the parameter <em>{upsert: true}</em>, a new document is created. For example, assume we run the following clause:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.update({ "room": "Auditorium4"}, { $set: { "session": { "title": "Introduction to Neo4j", "abstract": "First steps with Neo4j, basic configuration and data modelling." }, "topics":  ["keynote", "databases"], "room": "Auditorium4", "timeslot": "Wed 29th, 13:30-14:30", "speaker": { "name": "Michael Hunger", "bio": "Senior Developer.", "twitter": "https://twitter.com/neo4j" } } })</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>At the moment we do not have any document that matches with <em>room</em> <em>Auditorium4</em>. If we do not specify anything, nothing is done to Mongo or Neo4j and we end up with a graph identical to the initial one:</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph1.png" alt="graph1">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>However, if we specify the <em>upsert</em> as a <em>true</em> parameter,</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.update({ "room": "Auditorium4"}, { $set: { "session": { "title": "Introduction to Neo4j", "abstract": "First steps with Neo4j, basic configuration and data modelling." }, "topics":  ["keynote", "databases"], "room": "Auditorium4", "timeslot": "Wed 29th, 13:30-14:30", "speaker": { "name": "Michael Hunger", "bio": "Senior Developer.", "twitter": "https://twitter.com/neo4j" } } }, {upsert: true})</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>A new document will be inserted into Mongo and a new group of nodes and relationships will be inserted into Neo4j. SO, after running the above query, we will have:</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph18.png" alt="graph18">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Update nodes</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+None
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Inserted nodes</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<em>Document:talks</em> - a new node is created, with <em>room</em> setted for <em>Auditorium4</em> and timeslot as <em>Wed 29th, 13:30-14:30</em>.
+</li>
+<li>
+<em>Document:session</em> - Node created from Nested Document.
+</li>
+<li>
+<em>Document:speaker</em> - also nested Document.
+</li>
+</ul>
+</div>
+</div>
+<div  id="_creating_new_nodes_by_an_update_action" class="sect4 "  >
+<h5>Creating new nodes by an update action</h5>
+
+
+<div class="paragraph">
+<p>We can also invoke an update action that contains a nested Document. For example, imagine that we have the following document in Mongo, that we have been using in the past examples:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="javascript"><code>{
+  "session": {
+    "title": "12 Years of Spring: An Open Source Journey",
+    "abstract": "Spring emerged as a core open source project in early 2003 and evolved to a broad portfolio of open source projects up until 2015."
+  },
+  "topics":  ["keynote", "spring"],
+  "tracks": [{ "main":"Java" }, { "second":"Languages" }],
+  "room": "Auditorium",
+  "timeslot": "Wed 29th, 09:30-10:30",
+  "speaker": {
+    "name": "Juergen Hoeller",
+    "bio": "Juergen Hoeller is co-founder of the Spring Framework open source project.",
+    "twitter": "https://twitter.com/springjuergen",
+    "picture": "http://www.springio.net/wp-content/uploads/2014/11/juergen_hoeller-220x220.jpeg"
+  }
+}</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>At Neo4j, we have:</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph1.png" alt="graph1">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Nodes:</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<em>Document:talks</em> - talks is the root node, coming from Mongo Document Collection, with an id that also comes from MongoDB. Non nested Documents are converted into regular properties, such as "room", "topics" and "timeslot" (a common String array).
+</li>
+<li>
+<em>Document:session</em> - Nested Document. Inner key/values are converted into Node properties. Note that the id incoming from root <strong>talks</strong> collection is propagated to this Node. Also, note that this node is labelled as its direct document key, in this case, <strong>session</strong>.
+</li>
+<li>
+<em>Document:speaker</em> - also nested Document.
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Relationships:</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+A relationship that connects <strong>talks</strong> and <strong>session</strong> nodes, called <strong>talks_session</strong>,
+</li>
+<li>
+A relationship that connects <strong>talks</strong> and <strong>speaker</strong> nodes, called <strong>talks_speaker</strong>.
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>And then we run the following instruction:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.update({ room: "Auditorium" }, { $set: { conference: { name: "GraphConnect", city: "London" }  } });</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>This will cause the following update in Mongo:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="javascript"><code>{
+  "session" : {
+    "title" : "12 Years of Spring: An Open Source Journey",
+    "abstract" : "Spring emerged as a core open source project in early 2003 and evolved to a broad portfolio of open source projects up until 2015."
+  },
+  "topics" : [
+    "keynote",
+    "spring"
+  ],
+  "room" : "Auditorium",
+  "timeslot" : "Wed 29th, 09:30-10:30",
+  "speaker" : {
+    "name" : "Juergen Hoeller",
+    "bio" : "Juergen Hoeller is co-founder of the Spring Framework open source project.",
+    "twitter" : "https://twitter.com/springjuergen",
+    "picture" : "http://www.springio.net/wp-content/uploads/2014/11/juergen_hoeller-220x220.jpeg"
+  },
+  "conference" : {
+    "name" : "GraphConnect",
+    "city" : "London"
+  }
+}</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Note that the nested document <em>conference</em> has been inserted. This will be translated as a new node and a new relationship into Neo4j:</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph19.png" alt="graph19">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Created by update action Nodes:</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<em>Document:conference</em> - Simple node with the properties <em>name</em> and <em>city</em>.
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p><strong>Created by update action Relationchips:</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+A relationship that connects <strong>talks</strong> and <strong>conference</strong> nodes, called <strong>talks_conference</strong>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div  id="_delete" class="sect3 "  >
+<h4>2.2.5. Delete</h4>
+
+
+<div class="paragraph">
+<p>It is possible to remove documents from MongoDB my calling <code><code>db.[your_collection].remove()</code></code> method. If you want to remove all the documents from <strong>talks</strong> collection, for example, you should call</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.remove({})</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>So let&#8217;s imagine that we had <strong>two</strong> nodes on talks, previously inserted. Each node has relationships and connected nodes:</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph15.png" alt="graph15">
+</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<em>Document:talks</em> - talks is the root node, coming from Mongo Document Collection, with an id that also comes from MongoDB. Non nested Documents are converted into regular properties, such as "room", "topics" and "timeslot" (a common String array).
+</li>
+<li>
+<em>Document:session</em> - Nested Document. Inner key/values are converted into Node properties. Note that the id incoming from root <strong>talks</strong> collection is propagated to this Node. Also, note that this node is labelled as its direct document key, in this case, <strong>session</strong>.
+</li>
+<li>
+<em>Document:speaker</em> - also nested Document.
+</li>
+<li>
+A relationship that connects <strong>talks</strong> and <strong>session</strong> nodes, called <strong>talks_session</strong>,
+</li>
+<li>
+A relationship that connects <strong>talks</strong> and <strong>speaker</strong> nodes, called <strong>talks_speaker</strong>.
+<div class="literalblock">
+<div class="content">
+<pre>By calling ```db.talks.remove({})```, we will remove all **talks** and their relationships and connected nodes. We end up with the removal of all elements listed above.</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div  id="_removing_relationships" class="sect4 "  >
+<h5>Removing relationships</h5>
+
+
+<div class="paragraph">
+<p>When a node will be removed, the nodes created from nested documents will also be removed. Also, all the relationships between these nodes will be deleted, to avoid orphans.</p>
+</div>
+
+</div>
+<div  id="_removing_nodes_with_clauses" class="sect4 "  >
+<h5>Removing nodes with clauses</h5>
+
+
+<div class="paragraph">
+<p>It is also possible to specify a document parameter that refers to the document that we want to remove. For example, we can run:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.remove( { room : "Auditorium" }, 1 )</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>This will remove a single document with <strong>room</strong> marked as <strong>Auditorium</strong>.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Before the update:</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph15.png" alt="graph15">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>After the update:</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="resources/images/graph20.png" alt="graph20">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>The translation will be held the same way for Neo4j - The corresponding <strong>Document::talks</strong> node will be removed with all his nested information.</p>
+</div>
+
+</div>
+</div>
+</div>
+<div  id="_customising_the_data_to_be_imported" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>2.3. Customising the data to be imported</h3>
+
+
+<div class="paragraph">
+<p>It is possible to specify which collections should be imported to Neo4j from MongoDB.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>When invoking <em>mongo-connector</em> command it is possible to pass <strong>-n</strong> as an argument and list the collections to be imported following the format</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db_name.collection.name</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>For example, imagine that we switched to a database called <em>test</em> in Mongo:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>use test</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>And then we added a document:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.insert(  { "room": "Auditorium", "timeslot": "Wed 29th, 09:30-10:30"  } );</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>By calling <em>mongo-connector</em> without <strong>-n</strong> option, all the namespaces will be imported:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>mongo-connector -m localhost:27017 -t http://localhost:7474/db/data -d neo4j_doc_manager</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>By specifying a namespace, let&#8217;s say, <strong>main.files</strong>:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>mongo-connector -m localhost:27017 -t http://localhost:7474/db/data -d neo4j_doc_manager -n main.files</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>We would not have the <strong>test</strong>.talks** collection listed above imported to Neo4j. We can also specify multiple namespaces:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>mongo-connector -m localhost:27017 -t http://localhost:7474/db/data -d neo4j_doc_manager -n main.files,another.collection,test.abc</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>If we insert a namespace that was previously excluded, such as test.talks, then the retroactive documents will be inserted into Neo4j:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>mongo-connector -m localhost:27017 -t http://localhost:7474/db/data -d neo4j_doc_manager -n main.files,test.talks</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Will cause the previous <em>talks</em> document do be imported into Neo4j graph.</p>
+</div>
+
+<div  id="_customising_fields_that_will_be_imported" class="sect3 "  >
+<h4>2.3.1. Customising fields that will be imported</h4>
+
+
+<div class="paragraph">
+<p>It is also possible to specify the fields from a document that will be imported to Neo4j. Imagine the same document that we mentioned above:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.insert(  { "room": "Auditorium", "timeslot": "Wed 29th, 09:30-10:30"  } );</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>We can filter the <strong>fields</strong> that will be imported specifying the command line parameter <em>-i</em>. For example, we can import only <em>room</em> field:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>mongo-connector -m localhost:27017 -t http://localhost:7474/db/data -d neo4j_doc_manager -i room</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>For this example, <em>timeslot</em> would not be imported. It is also possible to specify multiple values:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>mongo-connector -m localhost:27017 -t http://localhost:7474/db/data -d neo4j_doc_manager -i room,timeslot,title</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>If the specified field does not exist, only the existing ones will be imported. In the example, only <em>room</em> and <em>timeslot</em> will be imported.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>It is also possible to combine <em>-i</em> and <em>-n</em> options, such as:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>mongo-connector -m localhost:27017 -t http://localhost:7474/db/data -d neo4j_doc_manager -n test.talks -i room</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Important: All nodes will always have the <strong>_id</strong> property.</p>
+</div>
+
+<div  id="_nested_documents" class="sect4 "  >
+<h5>Nested Documents</h5>
+
+
+<div class="paragraph">
+<p>Imagine that we have the following document:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>db.talks.insert(  { "session": { "title": "12 Years of Spring: An Open Source Journey", "abstract": "Spring emerged as a core open source project in early 2003 and evolved to a broad portfolio of open source projects up until 2015.", "conference": { "city": "London" } }, "topics":  ["keynote", "spring"], "room": "Auditorium", "timeslot": "Wed 29th, 09:30-10:30", "speaker": { "name": "Juergen Hoeller", "bio": "Juergen Hoeller is co-founder of the Spring Framework open source project.", "twitter": "https://twitter.com/springjuergen", "picture": "http://www.springio.net/wp-content/uploads/2014/11/juergen_hoeller-220x220.jpeg" } } );</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>You can notice that we have nested documents. We can specify only the root level fields that will be imported. For example:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>mongo-connector -m localhost:27017 -t http://localhost:7474/db/data -d neo4j_doc_manager -n test.talks -i room,session</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>In Neo4j, we will have:</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><strong>Nodes</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<em>Document:talks</em>, with the <strong>_id</strong> and the <strong>room</strong> properties.
+</li>
+<li>
+<em>Document:session</em>, with all the properties (<em>id</em>, <em>title</em>, <em>abstract</em>) and with the inner node,
+</li>
+<li>
+<em>Document:conference</em>, nested node from session, with all its properties (<em>id</em>, <em>city</em>)
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>Note that the nested node <em>speaker</em> was not imported to Neo4j, nor the root level properties <em>topics</em> and <em>timeslot</em>.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><strong>Relationships</strong></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<strong>talks_session</strong>
+</li>
+<li>
+<strong>session_conference</strong>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div  id="_customising_the_data_to_be_imported_via_configuration_file" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>2.4. Customising the data to be imported via configuration file</h3>
+
+
+<div class="paragraph">
+<p>It is also possible configure what data will be imported to Neo4j through a configuration file. By passing a JSON such as <a href="https://github.com/mongodb-labs/mongo-connector/blob/master/config.json">this example</a> during <em>mongo-connetor</em> startup you can set which namespaces will be included. For example, consider the following file, called <strong>config.json</strong>:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="javascript"><code>{
+  "__comment__": "Configuration options starting with '__' are disabled",
+  "__comment__": "To enable them, remove the preceding '__'",
+
+  "mainAddress": "localhost:27017",
+  "oplogFile": "oplog.timestamp",
+  "noDump": false,
+  "batchSize": -1,
+  "verbosity": 1,
+  "continueOnError": false,
+
+  "namespaces": {
+    "include": ["test.talks"]
+  },
+
+  "docManagers": [
+    {
+      "docManager": "neo4j_doc_manager",
+      "targetURL": "http://localhost:7474/db/data",
+      "args": {
+        "clientOptions": {
+          "collection": "talks"
+        }
+      }
+    }
+  ]
+}</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Notice that every parameter that starts with <strong>__</strong> is ignored.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Take a look into <strong>namespaces</strong> key. Within the <strong>include</strong> option, you can specify which namespaces will be imported, such as you do via command line. For this example, if you have data into, let&#8217;s say, <strong>docs.info</strong>, they will not be imported to Neo4j, unless you explicitly inform the namespace:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>"include": ["test.talks", "docs.info"]</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Just a reminder, the default settings, when nothing is specified, is to import everything that you have into MongoDB.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>We can also specify the fields via configuration files:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="javascript"><code>{
+  "__comment__": "Configuration options starting with '__' are disabled",
+  "__comment__": "To enable them, remove the preceding '__'",
+
+  "mainAddress": "localhost:27017",
+  "oplogFile": "oplog.timestamp",
+  "noDump": false,
+  "batchSize": -1,
+  "verbosity": 1,
+  "continueOnError": false,
+
+  "fields": ["session", "timeslot", "title"],
+
+  "namespaces": {
+    "include": ["test.talks"]
+  },
+
+  "docManagers": [
+    {
+      "docManager": "neo4j_doc_manager",
+      "targetURL": "http://localhost:7474/db/data",
+      "args": {
+        "clientOptions": {
+          "collection": "talks"
+        }
+      }
+    }
+  ]
+}</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>The same principles that were described into the previous session through command line configuration are applied via configuration file. The key <em>field</em> holds a string array of fields that will be imported.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Just a remainder, you can only specify the fields of the root document and the direct nested documents that will be imported.</p>
+</div>
+
+</div>
+<div  id="_errors_and_exceptions" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>2.5. Errors and exceptions</h3>
+
+
+<div class="paragraph">
+<p>If something bad happens during the import, Neo4j Doc Manager should not stop. An error message should be thrown on the terminal. You can have more details by checking the file <em>mongo-connector.log</em>. It is also possible to increase the log details by initialising <em>mongo-connector</em> with <strong>-v</strong> option:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>mongo-connector -v -m localhost:27017 -t http://localhost:7474/db/data -d neo4j_doc_manager</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>This activates <em>verbose</em> level. You can have a better explanation about what are the failure points by seraching for <em>OperationFailed</em> on <em>mongo-connector.log</em> file.</p>
+</div>
+
+</div>
+</div>
+                    </div>
+                    <div class="large-3 large-pull-9 columns">
+                           <ul style="padding-top: 0;" class="side-nav">
+         <dl class="accordion">
+            <dd class="accordion-navigation inactive">
+               <a href="/developer-resources/get-started/">
+                  <h5>Get Started</h5>
+               </a>
+               <div class="content inactive" id="panel1">
+                  <ul>
+                     <li><a href="/developer-resources/get-started/graph-database/">What is a GraphDB?</a></li>
+                     <li><a href="/developer-resources/get-started/graph-db-vs-rdbms/">GraphDB vs RDBMS</a></li>
+                     <li><a href="/developer-resources/get-started/graph-db-vs-nosql/">GraphDB vs NOSQL</a></li>
+                     <li><a href="/developer-resources/get-started/guide-neo4j-browser/">Neo4j Browser Intro</a></li>
+                     <li><a href="/graphacademy/online-course-getting-started/">Getting Started Course</a></li>
+                     <!--<li><a href="/developer-resources/language-guides/">Language Drivers</a></li>-->
+                  </ul>
+               </div>
+            </dd>
+         </dl>
+            <dl class="accordion">
+               <dd class="accordion-navigation inactive">
+                  <a href="/developer-resources/cypher/">
+                     <h5>Cypher Query Language</h5>
+                  </a>
+                  <div class="content inactive" id="panel2">
+                     <ul>
+                        <li><a href="/developer-resources/cypher/cypher-query-language/">Cypher Intro</a></li>
+                        <li><a href="/developer-resources/cypher/guide-sql-to-cypher/">From SQL to Cypher</a></li>
+                        <li><a href="/developer-resources/cypher/guide-build-a-recommendation-engine/">Build a Recommendation Engine</a></li>
+                        <li><a href="/graphacademy/online-course-getting-started/">Getting Started Course</a></li>
+                        <li><a href="/docs/stable/cypher-refcard/">Cypher Refcard</a></li>
+                     </ul>
+                  </div>
+               </dd>
+            </dl>
+            <dl class="accordion">
+               <dd class="accordion-navigation inactive">
+                  <a href="/developer-resources/data-modeling/">
+                     <h5>Data Modeling</h5>
+                  </a>
+                  <div class="content inactive" id="panel3">
+                     <ul>
+                        <li><a href="/developer-resources/data-modeling/guide-data-modeling/">Graph Data Modeling Guidelines</a></li>
+                        <li><a href="/developer-resources/data-modeling/graphgist/">Interactive Graph Models - GraphGist</a></li>
+                     </ul>
+                  </div>
+               </dd>
+            </dl>
+            <dl class="accordion">
+               <dd class="accordion-navigation inactive">
+                  <a href="/developer-resources/working-with-data/">
+                     <h5>Working with Data</h5>
+                  </a>
+                  <div class="content inactive" id="panel4">
+                     <ul>
+                        <li><a href="/developer-resources/working-with-data/guide-data-visualization/">Graph Visualization for Neo4j</a></li>
+                        <li><a href="/developer-resources/working-with-data/guide-importing-data-and-etl/">Importing Data into Neo4j</a></li>
+                        <li><a href="/developer-resources/working-with-data/guide-import-csv/">Importing CSV</a></li>
+                        <li><a href="/developer-resources/working-with-data/example-data/">Example Datasets</a></li>
+                     </ul>
+                  </div>
+               </dd>
+            </dl>
+            <dl class="accordion">
+               <dd class="accordion-navigation inactive">
+                  <a href="/developer-resources/language-guides/">
+                     <h5>Drivers &amp; Language Guides</h5>
+                  </a>
+                  <div class="content inactive" id="panel5">
+                     <ul>
+                        <li><a href="/developer-resources/language-guides/java/">Java</a></li>
+                        <li><a href="/developer-resources/language-guides/spring-data-neo4j/">Spring Framework</a></li>
+                        <li><a href="/developer-resources/language-guides/dotnet/">.NET</a></li>
+                        <li><a href="/developer-resources/language-guides/javascript/">JavaScript</a></li>
+                        <li><a href="/developer-resources/language-guides/python/">Python</a></li>
+                        <li><a href="/developer-resources/language-guides/ruby/">Ruby</a></li>
+                        <li><a href="/developer-resources/language-guides/php/">PHP</a></li>
+                        <li><a href="/developer-resources/language-guides/">All Neo4j Drivers</a></li>
+                     </ul>
+                  </div>
+               </dd>
+            </dl>
+            <dl class="accordion">
+               <dd class="accordion-navigation active">
+                  <a href="/developer-resources/integration/">
+                     <h5>Neo4j Tools &amp; Integrations</h5>
+                  </a>
+                  <div class="content active" id="panel6">
+                     <ul>
+                        <li><a href="/developer-resources/integration/ecosystem/">Tools &amp; Libs for Neo4j</a></li>
+                        <li><a href="/developer-resources/integration/apache-spark/">Apache Spark</a></li>
+                        <li><a href="/developer-resources/integration/elastic-search/">Elastic-Search</a></li>
+                        <li><a href="/developer-resources/integration/mongodb/">MongoDB</a></li>
+                        <!--li><a href="/developer-resources/integration/apache-hadoop/">Hadoop</a></li-->
+                        <li><a href="/developer-resources/integration/docker/">Docker</a></li>
+                        <!--li><a href="/developer-resources/integration/meteor/">Integration with Meteor.js</a></li-->
+                     </ul>
+                  </div>
+               </dd>
+            </dl>
+            <dl class="accordion">
+               <dd class="accordion-navigation inactive">
+                  <a href="/developer-resources/in-production/">
+                     <h5>Neo4j In Production</h5>
+                  </a>
+                  <div class="content inactive" id="panel7">
+                     <ul>
+                        <li><a href="/developer-resources/in-production/guide-cloud-deployment/">Guide: Cloud Deployment</a></li>
+                        <li><a href="/developer-resources/in-production/guide-sizing-and-hardware-calculator/">Sizing + Hardware Calculator</a></li>
+                        <li><a href="/developer-resources/in-production/guide-performance-tuning/">Performance Tuning</a></li>
+                        <li><a href="/developer-resources/in-production/guide-clustering-neo4j/">Clustering Neo4j </a></li>
+	                    <li><a href="/graphacademy/online-course-prod/">In Production Course</a></li>
+                     </ul>
+                  </div>
+               </dd>
+            </dl>
+         <dl class="accordion">
+            <dd class="accordion-navigation ">
+               <a href="/developer-resources/resources/">
+                  <h5>Documentation &amp; Resources</h5>
+               </a>
+               <div class="content " id="panel4">
+                  <ul>
+	                 <li><a href="/graphacademy/online-course-getting-started/">Getting Started Course</a></li>
+	                 <li><a href="/developer-resources/resources/ruby-course/">Ruby / Rails Course</a></li>
+	                 <li><a href="/graphacademy/online-course-prod/">In Production Course</a></li>
+	                 <li><a href="/docs/stable/">Reference Manual</a></li>
+	                 <ul>
+	                 <li><a href="/docs/stable/introduction.html">Introduction</a></li>
+	                 <li><a href="/docs/stable/tutorials.html">Tutorials</a></li>
+	                 <li><a href="/docs/stable/cypher-query-lang.html">Cypher Query Language</a></li>
+	                 <li><a href="/docs/stable/operations.html">Operations</a></li>
+	                 <li><a href="/docs/stable/tools.html">Tools</a></li>
+	                 <li><a href="/docs/stable/advanced-usage.html">Advanced Usage</a></li>
+	                 </ul>
+                     <li><a href="/docs/stable/cypher-refcard/">Cypher Refcard</a></li>
+	                 <li><a href="/docs/milestone/">Manual - Milestone</a></li>
+                     <li><a href="/docs/">Older Documentation</a></li>
+                  </ul>
+               </div>
+            </dd>
+         </dl>
+         <dl class="accordion">
+            <dd class="accordion-navigation ">
+               <a href="/developer-resources/contribute/">
+                  <h5>Contributing to Neo4j</h5>
+               </a>
+               <div class="content " id="panel8">
+                  <ul>
+	                    <!-- todo CLA, SO, GitHub, Building, Tools -->
+                     <!--li><a href="/developer-resources/contribution/xxx">Contributing</a></li-->
+                  </ul>
+               </div>
+            </dd>
+         </dl>
+         </ul>
+         <div class="accordion-navigation">
+<div style="text-align:center">
+<div><a href="http://twitter.com/neo4j" target="_blank"> <img style="width:33%" src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/twitter.png"/><br/>Follow us on Twitter</a></div>
+<div><a href="http://neo4j.com/slack" target="_blank"><img style="width:33%" src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/slack_icon.png"/><br/>Chat on Slack</a></div>
+<div><a href="https://github.com/neo4j/neo4j" target="_blank"><img style="width:33%" src="http://neo4j.com/wp-content/themes/neo4jweb/assets/images/github.png"/><br/>Engage on GitHub</a></div>
+<div><a href="http://stackoverflow.com/questions/tagged/neo4j"  target="_blank"><img style="width:33%" src="http://neo4j.com/wp-content/themes/neo4jweb/assets/images/stackoverflow.png"/><br/>Ask on StackOverflow</a></div>
+<div><a href="https://groups.google.com/forum/#!forum/neo4j"><img style="width:33%" src="http://neo4j.com/wp-content/themes/neo4jweb/assets/images/googlegroups.png"/><br/>Discuss in our Google Group </a></div>
+         </div>
+         </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="row text-center hide-for-small hr-style">
+        <div class="medium-5 columns">
+            <hr>
+        </div>
+        <div class="medium-2 columns">
+            <object height="100%" width="100%"
+                    data="http://neo4j.com/wp-content/themes/neo4jweb/assets/images/hr-image.svg"
+                    type="image/svg+xml"></object>
+        </div>
+        <div class="medium-5 columns">
+            <hr>
+        </div>
+    </div>
+    <div class="row text-center show-for-small">
+        <div class="medium-12 columns">
+            <hr>
+        </div>
+    </div>
+    <section class="row">
+        <div class="medium-4 columns"></div>
+    </section>
+    <section class="row">
+        <div class="small-12 columns"></div>
+    </section>
+</article>
+<div class="calloutsection">
+    <div class="row">
+        <div class="medium-8 small-centered columns text-center">
+            <h3>Stay Connected</h3>
+
+            <p>Sign up to find out more about Neo4j's upcoming events &amp; meetups.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="medium-6 small-centered columns">
+            <div class="row collapse">
+                <div class="small-8 columns">
+                    <script src="//app-sjl.marketo.com/js/forms2/js/forms2.js"></script>
+                    <form id="mktoForm_519"></form>
+                    <script>MktoForms2.loadForm("//app-sjl.marketo.com", "773-GON-065", 519);</script>
+                </div>
+                <div class="small-4 columns"><a href="#" id="signupbody" class="button postfix">Keep Me
+                    Connected &rsaquo;</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+<style> #mktoForm_519 button {
+    display: none;
+} </style>
+<script>
+    var btn = document.getElementById("signupbody");
+    btn.onclick = function () {
+        MktoForms2.getForm(519).submit();
+    };
+</script>
+<div class="row text-center hide-for-small hr-style">
+    <div class="medium-5 columns">
+        <hr>
+    </div>
+    <div class="medium-2 columns">
+        <object height="100%" width="100%" data="http://neo4j.com/wp-content/themes/neo4jweb/assets/images/hr-image.svg"
+                type="image/svg+xml"></object>
+    </div>
+    <div class="medium-5 columns">
+        <hr>
+    </div>
+</div>
+<div class="row text-center show-for-small">
+    <div class="medium-12 columns">
+        <hr>
+    </div>
+</div>
+<footer id="footer">
+    <div class="row">
+        <div class="footer-widgets">
+            <div class="small-6 medium-3 columns">
+                <div>
+                    <div class="menu-product-and-services-container">
+                        <ul id="menu-product-and-services-1" class="menu">
+                            <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-36967"><a
+                                    href="/product">PRODUCT AND SERVICES</a></li>
+                            <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-36966"><a
+                                    href="http://neo4j.com/product">Neo4j Graph Database</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38756"><a
+                                    href="http://neo4j.com/subscriptions/">Subscriptions</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36971"><a
+                                    href="http://neo4j.com/neo4j-editions/">Compare Neo4j Editions</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36974"><a
+                                    href="http://neo4j.com/professional-services/">Professional Services</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38293"><a
+                                    href="http://neo4j.com/open-source-project/">Open Source Project</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="menu-partners-container">
+                        <ul id="menu-partners-1" class="menu">
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36965"><a
+                                    href="http://neo4j.com/partners/">PARTNER PROGRAM</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36963"><a
+                                    href="http://neo4j.com/neo4j-partner-program/">Become a Partner</a></li>
+                            <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-38558"><a
+                                    href="/partners/#find">Find a Partner</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="small-6 medium-3 columns">
+                <div>
+                    <div class="menu-customers-container">
+                        <ul id="menu-customers-1" class="menu">
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36955"><a
+                                    href="http://neo4j.com/customers/">CUSTOMERS</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="menu-use-cases-container">
+                        <ul id="menu-use-cases-1" class="menu">
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38559"><a
+                                    href="http://neo4j.com/use-cases/">USE CASES</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-use_case menu-item-38548"><a
+                                    href="http://neo4j.com/use-cases/network-and-data-center-management/">Network &#038;
+                                IT Operations Mgmt</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-use_case menu-item-38551"><a
+                                    href="http://neo4j.com/use-cases/master-data-management/">Master Data Management</a>
+                            </li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-use_case menu-item-38552"><a
+                                    href="http://neo4j.com/use-cases/recommendations/">Recommendations</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-use_case menu-item-38550"><a
+                                    href="http://neo4j.com/use-cases/social/">Social Network</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-use_case menu-item-38547"><a
+                                    href="http://neo4j.com/use-cases/identity-and-access-management/">Identity and
+                                Access Mgmt</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-use_case menu-item-38549"><a
+                                    href="http://neo4j.com/use-cases/digital-asset-management/">Digital Asset
+                                Management</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="menu-graphacademy-container">
+                        <ul id="menu-graphacademy-1" class="menu">
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36957"><a
+                                    href="http://neo4j.com/graphacademy/">GRAPHACADEMY</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36959"><a
+                                    href="http://neo4j.com/graphacademy/online-course/">Online Training</a></li>
+                            <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-39349"><a
+                                    href="/books/">Books</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38761"><a
+                                    href="http://neo4j.com/resources/">Resources</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="small-6 medium-3 columns">
+                <div>
+                    <div class="menu-developer-container">
+                        <ul id="menu-developer-1" class="menu">
+                            <li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item menu-item-38292">
+                                <a href="/developer-resources/get-started">DEVELOPER</a></li>
+                            <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-39699"><a
+                                    href="/docs">Docs</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="menu-community-4-container">
+                        <ul id="menu-community-5" class="menu">
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38291"><a
+                                    href="http://neo4j.com/community/">COMMUNITY</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="menu-neo4j-blog-container">
+                        <ul id="menu-neo4j-blog-1" class="menu">
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-38289">
+                                <a href="http://neo4j.com/blog/">Neo4j Blog</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="menu-events-container">
+                        <ul id="menu-events-1" class="menu">
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36956"><a
+                                    href="http://neo4j.com/events/">EVENTS</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="menu-about-us-container">
+                        <ul id="menu-about-us-1" class="menu">
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38561"><a
+                                    href="http://neo4j.com/company/">COMPANY</a></li>
+                            <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-36950"><a
+                                    href="http://neo4j.com/news">News</a></li>
+                            <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-36951"><a
+                                    href="http://neo4j.com/jobs">Jobs</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38563"><a
+                                    href="http://neo4j.com/staff/">Staff</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38288"><a
+                                    href="http://neo4j.com/contact-us/">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="small-6 medium-3 columns">
+                <div>
+                    <div class="textwidget">
+                        <h5><a href="/contact-us">Contact Us &rarr;</a></h5>
+
+                        <p>1-855-636-4532 <a href="mailto:info@neotechnology.com">US <i class="fi-mail"></i></a><br/>
+                            +44 808 189 0493 <a href="mailto:uk@neotechnology.com">UK <i class="fi-mail"></i></a><br/>
+                            +49 800 723 6231 <a href="mailto:vertrieb@neotechnology.com">Germany <i class="fi-mail"></i></a><br/>
+                            +33 (0)8 05 08 03 44 <a href="mailto:ventes@neotechnology.com">France <i
+                                    class="fi-mail"></i></a></p>
+                        <h5>Get Neo4j News</h5>
+
+                        <p>Keep up with the latest graph database trends, tips &amp; events.</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="textwidget">
+                        <div class="row collapse">
+                            <div class="small-9 columns">
+                                <script src="//app-sjl.marketo.com/js/forms2/js/forms2.js"></script>
+                                <form id="mktoForm_477"></form>
+                                <script>
+                                    MktoForms2.loadForm("//app-sjl.marketo.com", "773-GON-065", 477, function (form) {
+                                        form.onSuccess(function (values, followUpUrl) {
+                                            document.getElementById("signup").style.display = "none";
+                                            document.getElementById('thks-footer').innerHTML = "<p>Thank you! Email Node added.</p> ";
+                                            ga('send', 'event', 'subscribe', 'submitted', 'footer-subscribe');
+                                            form.getFormElem().hide();
+                                            return false;
+                                        });
+                                    });
+                                </script>
+                            </div>
+                            <div class="small-3 columns" style="border:none;"><a href="#footer" id="signup"
+                                                                                 class="button small postfix">Go</a>
+                            </div>
+                            <div id="thks-footer">&nbsp;</div>
+                        </div>
+                        <style> #mktoForm_477 button {
+                            display: none;
+                        }
+
+                        #mktoForm_477 {
+                            margin-left: -20px;
+                        } </style>
+                        <script>
+                            var btn = document.getElementById("signup");
+                            btn.onclick = function () {
+                                MktoForms2.getForm(477).submit();
+                            };
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row collapse copyright">
+        <div class="small-12 columns text-center">
+            <div class="logo-footer"><img
+                    src="http://neo4j.com/wp-content/themes/neo4jweb/assets/images/neo4j-blue-logo.png"/></div>
+            <p class="copyright-text">&copy; 2014 Neo Technology, Inc.</a></p>
+
+            <div class="community-text">
+                <p><span class="link-color">(<a href="/terms/">Terms</a>) - (<a href="/privacy-policy/">Privacy
+                    Policy</a>) </span></p>
+            </div>
+        </div>
+    </div>
+</footer>
+<a class="exit-off-canvas"></a> </div> </div>
+<script src="http://munchkin.marketo.net/munchkin.js" type="text/javascript"></script>
+<script type="text/javascript">mktoMunchkin("773-GON-065");</script>
+<script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.2/d3.min.js?ver=4.1'></script>
+<script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/json3/3.3.0/json3.min.js?ver=4.1'></script>
+<script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/neo_d3.js?ver=4.1'></script>
+<script>
+    jQuery(document).foundation({
+        tab: {
+            callback: function (tab) {
+                $(window).trigger('resize');
+            }
+        }
+    });
+</script>
+<script src="http://neo4j.com/wp-content/themes/neo4jweb/assets/js/foundation/foundation.equalizer.js"></script>
+
+</body>
+</html>
