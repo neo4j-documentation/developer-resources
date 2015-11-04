@@ -673,7 +673,8 @@ In case you forget it, you have to remove the credentials file in <code>data/dbm
 
 
 <div class="paragraph">
-<p>Start by typing <code>:play intro</code> into the command-line and pressing <kbd>Enter</kbd>.
+<p>tag::guide[]
+Start by typing <code>:play intro</code> into the command-line and pressing <kbd>Enter</kbd>.
 Please follow the guide to learn about our user interface.</p>
 </div>
 
@@ -1058,11 +1059,16 @@ Then you can for instance retrieve all labels in the database with <code>:GET /d
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="javascript"><code>:POST /db/data/transaction/commit {"statements":[
-     {"statement":"MATCH (m:Movie)
-       WHERE m.title={title} RETURN m.title, m.released, labels(m)",
+     {"statement":"MATCH (m:Movie)  WHERE m.title={title} RETURN m.title, m.released, labels(m)",
       "parameters":{"title":"Cloud Atlas"}}]}</code></pre>
 </div>
 </div>
+
+
+<div class="paragraph">
+<p>end::guide[]</p>
+</div>
+
 </div>
                     </div>
                     <div class="large-3 large-pull-9 columns">

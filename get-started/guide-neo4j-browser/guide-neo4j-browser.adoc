@@ -58,6 +58,7 @@ In case you forget it, you have to remove the credentials file in `data/dbms/aut
 
 Open the URL http://localhost:7474 to start working with Neo4j and our query language, link:/developer/cypher[Cypher].
 
+tag::guide[]
 Start by typing `:play intro` into the command-line and pressing kbd:[Enter]. 
 Please follow the guide to learn about our user interface.
 
@@ -252,10 +253,11 @@ To execute a Cypher statement you post to the transaction Cypher endpoint like t
 [source,javascript]
 ----
 :POST /db/data/transaction/commit {"statements":[
-     {"statement":"MATCH (m:Movie) 
-       WHERE m.title={title} RETURN m.title, m.released, labels(m)",
+     {"statement":"MATCH (m:Movie)  WHERE m.title={title} RETURN m.title, m.released, labels(m)",
       "parameters":{"title":"Cloud Atlas"}}]}
 ----
+
+end::guide[]
 
 ////
 [role=side-nav]
