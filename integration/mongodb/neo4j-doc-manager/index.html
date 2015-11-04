@@ -66,7 +66,7 @@
         <ul class="title-area">
             <li class="name">
                 <h1><a href="http://neo4j.com/"><img
-                        src="http://neo4j.com/wp-content/themes/neo4jweb/assets/images/neo4j-blue-logo.png"/></a></h1>
+                        src="http://neo4j.com/wp-content/themes/neo4jweb/assets/images/neo4j-logo-2015.png"/></a></h1>
             </li>
             <li class="toggle-topbar menu-icon"><a href="#"></a></li>
         </ul>
@@ -669,6 +669,7 @@ th.tableblock, th p.tableblock {
 </li>
 <li><a href="#_customising_the_data_to_be_imported_via_configuration_file">2.4. Customising the data to be imported via configuration file</a></li>
 <li><a href="#_errors_and_exceptions">2.5. Errors and exceptions</a></li>
+<li><a href="#_running_the_tests">2.6. Running the tests</a></li>
 </ul>
 </li>
 </ul>
@@ -1074,6 +1075,12 @@ Let&#8217;s also consider an empty instance of Neo4j.</p>
 
 
 <div class="paragraph">
+<p>Also, for every created node, a property names <strong>_ts</strong>, representing the timestamp of the creation in MongoBD, is added to the node.</p>
+</div>
+
+
+
+<div class="paragraph">
 <p><strong>Created Relationships:</strong></p>
 </div>
 
@@ -1157,6 +1164,12 @@ A relationship that connects <strong>talks</strong> and <strong>speaker</strong>
 </li>
 </ul>
 </div>
+
+
+<div class="paragraph">
+<p>Also, for every created node, a property names <strong>_ts</strong>, representing the timestamp of the creation in MongoBD, is added to the node.</p>
+</div>
+
 
 
 <div class="paragraph">
@@ -2643,7 +2656,53 @@ A relationship that connects <strong>talks</strong> and <strong>speaker</strong>
 
 
 <div class="paragraph">
-<p>This activates <em>verbose</em> level. You can have a better explanation about what are the failure points by seraching for <em>OperationFailed</em> on <em>mongo-connector.log</em> file.</p>
+<p>This activates <em>verbose</em> level. You can have a better explanation about what are the failure points by searching for <em>OperationFailed</em> on <em>mongo-connector.log</em> file.</p>
+</div>
+
+</div>
+<div  id="_running_the_tests" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>2.6. Running the tests</h3>
+
+
+<div class="paragraph">
+<p>If you are willing to contribute with this project (we hope you are!), then you may need to run the tests locally. To do so, you must:</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+install <strong>mongo-orchestration</strong> <a href="https://github.com/10gen/mongo-orchestration">repo</a>, by running <strong>pip install mongo-orchestration</strong>
+</li>
+<li>
+stop any MongoDB instances you might have running.
+</li>
+<li>
+Also stop Mongo Shell.
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>Move to your project directory and start <strong>mongo-orchestration</strong> by running <strong>mongo-orchestration start</strong>. Then simply run the tests with <strong>python -m unittest discover</strong>.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Just be sure that the ports <em>27017</em> and <em>27018</em> are not being used. You can verify it with the command <em>lsof</em> :</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>sudo lsof -i :27017
+sudo lsof -i :27018</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>A MongoDB server mock will need these ports.</p>
 </div>
 
 </div>
@@ -3087,8 +3146,8 @@ A relationship that connects <strong>talks</strong> and <strong>speaker</strong>
     <div class="row collapse copyright">
         <div class="small-12 columns text-center">
             <div class="logo-footer"><img
-                    src="http://neo4j.com/wp-content/themes/neo4jweb/assets/images/neo4j-blue-logo.png"/></div>
-            <p class="copyright-text">&copy; 2014 Neo Technology, Inc.</a></p>
+                    src="http://neo4j.com/wp-content/themes/neo4jweb/assets/images/neo4j-logo-2015.png"/></div>
+            <p class="copyright-text">&copy; 2015 Neo Technology, Inc.</a></p>
 
             <div class="community-text">
                 <p><span class="link-color">(<a href="/terms/">Terms</a>) - (<a href="/privacy-policy/">Privacy
