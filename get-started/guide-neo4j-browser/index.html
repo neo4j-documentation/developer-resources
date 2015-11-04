@@ -258,7 +258,7 @@
 <div class="marquee blue">
     <div class="row text-center">
         <div class="medium-10 small-centered columns">
-            <h1 class="entry-title">Styling Graph Visualizations in the Neo4j Browser</h1>
+            <h1 class="entry-title">Neo4j Browser User Interface Guide</h1>
         </div>
     </div>
 </div>
@@ -271,7 +271,7 @@
                     <ul class="breadcrumbs">
                         <li><a href="/developer-resources">Developer Guides</a></li>
                         
-                        <li class="current"><a href="#">Styling Graph Visualizations in the Neo4j Browser</a></li>
+                        <li class="current"><a href="#">Neo4j Browser User Interface Guide</a></li>
                     </ul>
                 </div>
             </div>
@@ -592,7 +592,7 @@ th.tableblock, th p.tableblock {
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-This article demonstrates how to style graph visualizations in the Neo4j browser interactively and by using a <strong>Graph Style Sheet</strong> (GRASS).
+This article demonstrates how to use the Neo4j browser for querying, visualization and data interaction.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
@@ -611,9 +611,15 @@ Please have <a href="/download">Neo4j downloaded</a> and unzipped. It helps if y
 
 <ul class="sectlevel1">
 <li><a href="#_installing_and_starting_neo4j_browser">Installing and Starting Neo4j Browser</a></li>
+<li><a href="#_feedback_questions">Feedback &amp; Questions</a></li>
+<li><a href="#_useful_commands_and_keyboard_shortcuts">Useful Commands and Keyboard Shortcuts</a></li>
+<li><a href="#_built_in_guides">Built in Guides</a></li>
 <li><a href="#_styling_neo4j_browser_visualization">Styling Neo4j Browser Visualization</a></li>
+<li><a href="#_running_queries">Running Queries</a></li>
+<li><a href="#_meta_graph">Meta Graph</a></li>
 <li><a href="#_queries_and_favorites">Queries and Favorites</a></li>
-<li><a href="#_some_tips_and_tricks_for_neo4j_browser">Some Tips and Tricks for Neo4j Browser</a></li>
+<li><a href="#_configuration">Configuration</a></li>
+<li><a href="#_executing_rest_requests">Executing REST requests</a></li>
 </ul>
 
 </div>
@@ -625,20 +631,16 @@ Please have <a href="/download">Neo4j downloaded</a> and unzipped. It helps if y
 
 
 <div class="paragraph">
-<p>First, <a href="http://neo4j.org/download">download</a> and unzip Neo4j, change into the new directory and start the server.
-If you have a JDK (Java7) installed and executed <code>bin/neo4j start</code> from there, you should see the following:</p>
+<p>First, <a href="http://neo4j.org/download">download</a> Neo4j.
+Use the provided installer, start the Neo4j Desktop App and start the database after (optionally) selecting a location for your database files.</p>
 </div>
 
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="bash"><code>$ cd neo4j-community-2.2.1
-$ bin/neo4j start
 
-Starting Neo4j Server...WARNING: not changing user
-process [70299]... waiting for server to be ready...... OK.
-http://localhost:7474/ is ready.</code></pre>
+
+<div class="paragraph">
+<p>Alternatively unzip the downloaded file, and start Neo4j by following the instructions in the readme (<code>bin/neo4j start</code>).</p>
 </div>
-</div>
+
 <div class="sidebarblock">
 <div class="content">
 
@@ -671,13 +673,91 @@ In case you forget it, you have to remove the credentials file in <code>data/dbm
 
 
 <div class="paragraph">
-<p>If you want to learn more first, click on any of the helpful links shown after startup: these are quick guides that introduce the different concepts.</p>
+<p>Start by typing <code>:play intro</code> into the command-line and pressing <kbd>Enter</kbd>.
+Please follow the guide to learn about our user interface.</p>
+</div>
+
+</div>
+<div  id="_feedback_questions" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Feedback &amp; Questions</h3>
+
+
+<div class="paragraph">
+<p>If you have feedback or questions on how to use the Neo4j Browser, there is a small messaging system in the configuration (cog) drawer.
+You can provide your name and send us a message.</p>
+</div>
+
+</div>
+<div  id="_useful_commands_and_keyboard_shortcuts" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Useful Commands and Keyboard Shortcuts</h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Shortcut</th>
+<th class="tableblock halign-left valign-top">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:help</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Help System</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:help commands</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Useful Commands</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:clear</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Clear Frames</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:style [reset]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Styling Popup &amp; Reset</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:help keys</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Keyboard Help</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="keyseq"><kbd>Ctrl</kbd>+<kbd>Enter</kbd></span> or <span class="keyseq"><kbd>Cmd</kbd>+<kbd>Enter</kbd></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Execute Statement</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="keyseq"><kbd>Ctrl</kbd>+<kbd>Up</kbd></span> or <span class="keyseq"><kbd>Cmd</kbd>+<kbd>Up</kbd></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Previous Statement</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="keyseq"><kbd>Shift</kbd>+<kbd>Enter</kbd></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enter Multiline Mode</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><kbd>/</kbd></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Move Focus to Editor</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><kbd>ESC</kbd></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Toggle Editor to Full Screen</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div  id="_built_in_guides" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Built in Guides</h3>
+
+
+<div class="paragraph">
+<p>If you want to learn more first, click on any of the helpful links shown after startup: these are quick guides that introduce the different concepts.
+You find more helpful links in the left sidebar in the "Information" tab, with the <code>(i)</code>.</p>
 </div>
 
 <div class="ulist">
 <ul>
 <li>
-<strong>Intro</strong> - a guided tour <code>:play intro</code>
+<strong>Intro</strong> - a guided tour of Neo4j browser <code>:play intro</code>
 </li>
 <li>
 <strong>Concepts</strong> - GraphDB 101 <code>:play concepts</code>
@@ -689,20 +769,29 @@ In case you forget it, you have to remove the credentials file in <code>data/dbm
 <strong>The Movie Graph</strong> - a mini graph model with use-cases <code>:play movie graph</code>
 </li>
 <li>
-<strong>The Northwind Database</strong> - the classic database demo import &amp; use-cases <code>:play northwind graph</code>
+<strong>The Northwind Database</strong> - the classic demo database with import instructions &amp; use-case queries <code>:play northwind graph</code>
+</li>
+<li>
+<strong>Custom Guides</strong> - starting with Neo4j 2.3 you can use <code>:play &lt;url&gt;</code> to play a custom guide, e.g. <code>:play <a href="http://guides.neo4j.com/intro/create.html" class="bare">http://guides.neo4j.com/intro/create.html</a></code> from the fundamentals training.
 </li>
 </ul>
 </div>
 
 
 <div class="paragraph">
-<p>Import sample data by entering <code>:play movies</code>, selecting the large Cypher CREATE ... statement, then hitting the <code>Run</code> button.</p>
+<p>Import our sample movie graph by entering <code>:play movie graph</code>.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>After a few seconds the data is imported, and we&#8217;ll see a subset of the movie graph rendered for us.</p>
+<p>On the second slide click the large Cypher CREATE ... statement, then hit the <code>Run</code> button.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>After a few seconds the data is imported, and you&#8217;ll see a subset of the movie data rendered as a graph.</p>
 </div>
 
 </div>
@@ -711,13 +800,19 @@ In case you forget it, you have to remove the credentials file in <code>data/dbm
 
 
 <div class="paragraph">
-<p>The nodes already have a sensible titles, this is new since Neo4j 2.2, it auto-selects a property from the property list to be rendered as label.</p>
+<p>You can pan the visual view around and drag nodes to rearrange them.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>If you click on any node or relationship you see the properties of that element below the visualization, larger property sets might be folded in, there is a little arrow on the right to fold them out.</p>
+<p>The nodes already have a sensible captions, it auto-selects a property from the property list to be rendered as caption.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>If you click on any node or relationship you see the properties of that element below the visualization, larger property sets might be folded in, there is a little triangle on the right to fold them out.</p>
 </div>
 
 
@@ -730,19 +825,19 @@ Same for actors or the <code>ACTED_IN</code> relationships.</p>
 
 
 <div class="paragraph">
-<p>If you click on any label or relationship above the graph visualization, you can then select the styling in the area below the graph.</p>
+<p>If you click on any label or relationship <strong>above</strong> the graph visualization, you can then chose its styling in the area below the graph.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Colors, sizes and titles are selectable from there.</p>
+<p>Colors, sizes and captions are selectable from there.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>For instance click on the <code>(Movies)</code> label above the graph and change the color, size and title of nodes labeled with <code>Movie</code>.</p>
+<p>For instance click on the <code>(Movies)</code> label above the graph and change the color, size and captions of nodes labeled with <code>Movie</code>.</p>
 </div>
 
 <div class="imageblock">
@@ -755,6 +850,127 @@ Same for actors or the <code>ACTED_IN</code> relationships.</p>
 <img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/style_relationship.jpg" alt="style relationship">
 </p>
 </div>
+</div>
+<div  id="_running_queries" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Running Queries</h3>
+
+
+<div class="paragraph">
+<p>When you continue with the guide, you will see more queries.
+You can get them into the editor <em>by clicking on them</em>.
+To execute, hit the triangular play button.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Query results are rendered either as visual graph or tabular result.
+You can switch between those with the icons on the left side of the result frame.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Remove all accumulated output frames with <code>:clear</code>, the cross removes a single frame and aborts a (long-)running statement.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>You can click the query above the graph visualisation to pull it back into the editor.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Use the keyboard shortcuts listed above to work efficiently with the editor area.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Navigate input history with <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>Up</kbd></span> and <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>Down</kbd></span>, access all of it via <code>:history</code>. The history will be persisted across browser restarts.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>You can switch between tabular, visual mode, query plan and x-ray mode for results with the icons on the left of each panel,</p>
+</div>
+
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title label">Note</div>
+</td>
+<td class="content">
+Don&#8217;t worry if you don&#8217;t see any output, you might just be in visual mode but returned tabular/scalar data, just switch the mode to tabular
+</td>
+</tr>
+</table>
+</div>
+
+
+<div class="paragraph">
+<p>Query time is reported in the tabular view, <strong>don&#8217;t rely on that exact timing though</strong> it includes the latency and (de-)serialization costs, not just the actual query execution time.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>You can download the results as CSV from the tabular output panel (top right download icon), and as JSON (download icon above the panel).
+The graph visualization can be exported as PNG and SVG.</p>
+</div>
+
+</div>
+<div  id="_meta_graph" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Meta Graph</h3>
+
+
+<div class="paragraph">
+<p>In the left side drawer on the three bubbles section (that resemble the Neo4j logo) you find the <strong>currently used</strong> node-labels and relationship types.
+Clicking on any of those runs a quick query to show you a sample of the graph using those.</p>
+</div>
+
+</div>
+<div  id="_queries_and_favorites" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Queries and Favorites</h3>
+
+
+<div class="paragraph">
+<p>If you start with an empty frame, display some nodes and relationships, use the Favorites (Star) drawer on the left, click on the <strong>Get Some Data</strong> entry, and run the query.
+This executes the statement <code>MATCH (n) RETURN n limit 100</code> which fetches some nodes.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>The browser helpfully also fetches and displays relationships between those nodes, <strong>even if they were not part of your query result</strong>.
+You can disable the latter behavior with the "Auto-Complete" switch in the bottom left corner.
+Then only relationships returned by the actual query will be shown.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>You can save your own queries as favorites by "starring" them.
+Use a comment <code>// comment</code> above your query for a title.
+Use folders to organize the favorites you can rearrange them by dragging and delete if they are no longer useful.</p>
+</div>
+
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title label">Note</div>
+</td>
+<td class="content">
+Favorites are stored in your local browser storage, so they are only available per Browser and URL.
+</td>
+</tr>
+</table>
+</div>
 <div  id="_advanced_styling" class="sect2 columns medium-12" style='padding-left: 0;' >
 <h3>Advanced Styling</h3>
 
@@ -763,17 +979,24 @@ Same for actors or the <code>ACTED_IN</code> relationships.</p>
 <p>For more advanced styling you can bring up the style-viewer with <code>:style</code>, download the graph-style-sheet (GRASS), edit it offline and drag it back onto the drag-area of the viewer.</p>
 </div>
 
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title label">Note</div>
+</td>
+<td class="content">
+You can reset to the default styles with <code>:style reset</code>.
+Alternatively by clicking the "fire extinguisher" icon in the popup from <code>:style</code>.
+</td>
+</tr>
+</table>
+</div>
 
 
 <div class="paragraph">
 <p>Within the GRASS file you can change colors, fonts, sizes, outlines and titles per node-label and relationship-type.
-It is also possible to combine multiple properties into a caption with <code>caption: '{name} of &lt;type&gt;';</code></p>
-</div>
-
-
-
-<div class="paragraph">
-<p>You can also <strong>reset all styling</strong> by clicking the "fire extinguisher" icon.</p>
+It is also possible to combine multiple properties into a caption with <code>caption: '{name}, born in {born}';</code></p>
 </div>
 
 <div class="imageblock">
@@ -783,108 +1006,13 @@ It is also possible to combine multiple properties into a caption with <code>cap
 </div>
 </div>
 </div>
-<div  id="_queries_and_favorites" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Queries and Favorites</h3>
-
-
-<div class="paragraph">
-<p>If you start with an empty frame, display some nodes and relationships, use the Favorites (Star) tab on the left, click on the <strong>Get Some Data</strong> entry, and run the query.
-This executes the statement <code>MATCH (n) RETURN n limit 100</code> which fetches some nodes.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>The browser also fetches and displays relationships between those nodes, even if they were not part of your query result.
-You can disable the latter behavior with the "Auto-Complete" switch in the bottom left corner.
-Then only relationships returned by the query will be shown.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>You can save your own queries as favorites by "starring" them.
-Use folders to organize the favorites.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>See the styling options in action in the following screencast:</p>
-</div>
-
-<iframe src="//player.vimeo.com/video/97204829?color=ff9933" width="685" height="500" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-</div>
-<div  id="_some_tips_and_tricks_for_neo4j_browser" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Some Tips and Tricks for Neo4j Browser</h3>
-
-
-<div class="paragraph">
-<p>Executing Queries &amp; Commands</p>
-</div>
-
+<div  id="_configuration" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Configuration</h3>
 <div class="ulist">
 <ul>
 <li>
-switch to multi-line editing mode with <code>shift+enter</code>, then <code>enter</code> will create newlines
+since Neo4j 2.3 there is a config drawer on the left (with the cog), no need for the <code>:config</code> command anymore
 </li>
-<li>
-execute with <code>ctrl+enter</code>
-</li>
-<li>
-you can click on the query text above the output pane and it is added to the editor again
-</li>
-<li>
-navigate history with <code>ctrl+up</code> and <code>ctrl+down</code>, the history will be persisted across browser restarts
-</li>
-<li>
-<code>ESC</code> puts the editor in fullscreen mode, good for large queries
-</li>
-<li>
-You can switch between tabular, visual mode and query plan mode for results with the icons on the left of each panel,
-<div class="ulist">
-<ul>
-<li>
-don&#8217;t worry if you don&#8217;t see any output, you might just be in visual mode but returned tabular/scalar data, just switch the mode to tabular
-</li>
-<li>
-query time is reported in the tabular view, but it is not the correct minimal time for your query, as the browser makes several requests and roundtrips to fetch the data
-</li>
-<li>
-you can download the results as CSV from the tabular output panel (top right download icon), and as JSON (download icon above the panel)
-</li>
-</ul>
-</div>
-</li>
-<li>
-<code>:clear</code> removes all accumulated output panels, the trashcan icon removes a single panel and the cross expands a panel into fullscreen (helpful in visual mode)
-</li>
-</ul>
-</div>
-
-
-<div class="paragraph">
-<p>Favorites</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-if you want to save a snippet to your favorites (using the star button), make sure to add a comment line on top (<code>// &#8230;&#8203;</code>) which will be used as title for your snipppet
-</li>
-<li>
-you can group your favorites into folders and order them with drag and drop and remove them again
-</li>
-</ul>
-</div>
-
-
-<div class="paragraph">
-<p>Configuration</p>
-</div>
-
-<div class="ulist">
-<ul>
 <li>
 you can retrieve the current configuration with <code>:config</code>
 </li>
@@ -896,25 +1024,28 @@ the individual settings are configured with:
 <code>:config maxNeighbours:100</code> - maxiumum number of neighbours for a node
 </li>
 <li>
-<code>:config maxNodes:1000</code> - maximum number of nodes for the visualization
-</li>
-<li>
-<code>:config maxNodes:1000</code> - maximum number of rows for the tabular result
+<code>:config maxRows:100</code> - maximum number of rows for the tabular result
 </li>
 </ul>
 </div>
 </li>
 </ul>
 </div>
-<div  id="_executing_rest_requests" class="sect2 columns medium-12" style='padding-left: 0;' >
+</div>
+<div  id="_executing_rest_requests" class="sect1 columns medium-12" style='padding-left: 0;' >
 <h3>Executing REST requests</h3>
 
 
 <div class="paragraph">
 <p>You can also execute REST requests with the Neo4j Browser, the command-syntax is<br>
 <code>:COMMAND /a/path {"some":"data"}</code>.
-The available commands are <code>:GET</code>, <code>:POST</code>, <code>:PUT</code> and <code>:DELETE</code>.
-A simple query would inspect the available endpoints of the database <code>:GET /db/data/</code>, the results are listed as formatted JSON.
+The available commands are <code>:GET</code>, <code>:POST</code>, <code>:PUT</code> and <code>:DELETE</code>.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>A simple query would inspect the available endpoints of the database <code>:GET /db/data/</code>, the results are listed as formatted JSON.
 Then you can for instance retrieve all labels in the database with <code>:GET /db/data/labels</code>.</p>
 </div>
 
@@ -927,9 +1058,9 @@ Then you can for instance retrieve all labels in the database with <code>:GET /d
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="javascript"><code>:POST /db/data/transaction/commit {"statements":[
-     {"statement":"MATCH (m:Movie) WHERE m.title={title} RETURN m.title, m.released, labels(m)",
+     {"statement":"MATCH (m:Movie)
+       WHERE m.title={title} RETURN m.title, m.released, labels(m)",
       "parameters":{"title":"Cloud Atlas"}}]}</code></pre>
-</div>
 </div>
 </div>
 </div>
