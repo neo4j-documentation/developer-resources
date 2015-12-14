@@ -58,19 +58,19 @@ For running Docker on https://docs.docker.com/engine/installation/mac/[Max OSX] 
 
 ----
 # interactive with terminal
-docker run -i -t --rm --name neo4j -v $HOME/neo4j/data:/data \
-           -p 8474:7474 neo4j
+docker run --interactive --rm --publish 7474:7474 \
+           --volume $HOME/neo4j/data:/data  neo4j
 
 # as daemon running in the background
-docker run -d --name neo4j -v $HOME/neo4j/data:/data \
-           -p 8474:7474 neo4j
+docker run --detach --name neo4j --publish 7474:7474 \
+           --volume $HOME/neo4j/data:/data neo4j
 ----
 
 The data-directory, containing the store-files, logs, auth etc. resides on your host system outside of the image.
 It can be just any empty directory or a (copy of a) data directory of a (not-running) Neo4j-server. 
 You can mount it with the `-v` (volume) option.
 
-You can then access http://localhost:8474 (or the port you exposed) on your machine to use Neo4j.
+You can then access http://localhost:7474 (or the port you exposed) on your machine to use Neo4j.
 
 The Neo4j Docker image comes with these capabilities:
 

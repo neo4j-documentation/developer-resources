@@ -688,12 +688,12 @@ For running Docker on <a href="https://docs.docker.com/engine/installation/mac/"
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre># interactive with terminal
-docker run -i -t --rm --name neo4j -v $HOME/neo4j/data:/data \
-           -p 8474:7474 neo4j
+docker run --interactive --rm --publish 7474:7474 \
+           --volume $HOME/neo4j/data:/data  neo4j
 
 # as daemon running in the background
-docker run -d --name neo4j -v $HOME/neo4j/data:/data \
-           -p 8474:7474 neo4j</pre>
+docker run --detach --name neo4j --publish 7474:7474 \
+           --volume $HOME/neo4j/data:/data neo4j</pre>
 </div>
 </div>
 
@@ -707,7 +707,7 @@ You can mount it with the <code>-v</code> (volume) option.</p>
 
 
 <div class="paragraph">
-<p>You can then access <a href="http://localhost:8474" class="bare">http://localhost:8474</a> (or the port you exposed) on your machine to use Neo4j.</p>
+<p>You can then access <a href="http://localhost:7474" class="bare">http://localhost:7474</a> (or the port you exposed) on your machine to use Neo4j.</p>
 </div>
 
 
