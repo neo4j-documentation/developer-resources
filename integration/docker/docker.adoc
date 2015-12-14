@@ -68,7 +68,7 @@ docker run --detach --name neo4j --publish 7474:7474 \
 
 The data-directory, containing the store-files, logs, auth etc. resides on your host system outside of the image.
 It can be just any empty directory or a (copy of a) data directory of a (not-running) Neo4j-server. 
-You can mount it with the `-v` (volume) option.
+You can mount it with the `--volume` option.
 
 You can then access http://localhost:7474 (or the port you exposed) on your machine to use Neo4j.
 
