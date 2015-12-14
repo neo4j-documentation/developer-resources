@@ -476,6 +476,7 @@ section {
     height: 2em;
     line-height: 2em;
     margin: 0;
+    font-size: 0.85em;
 }
 
 .content ul {
@@ -589,10 +590,17 @@ th.tableblock, th p.tableblock {
                     <div class="large-9 large-push-3 columns guide-section-content">
                         <div id="preamble columns medium-12">
 <div class="sectionbody">
+<div class="imageblock" style="float: right;">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/neo4j-docker-image-now-in-beta-235x300.jpg" alt="neo4j docker image now in beta 235x300">
+</p>
+</div>
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-This overview demonstrates several ways of utilizing Docker containers to run Neo4j instances or integrate them into a bigger setup. Detailed instructions are available at the linked repositories, which we don&#8217;t want to duplicate here.
+Running Neo4j with is supported officially, both by Neo Technology and Docker.
+There is an official Docker image for Neo4j as well as more specific images provided by us.
+Detailed instructions are available at the linked repositories, which we don&#8217;t want to duplicate here.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
@@ -606,19 +614,6 @@ You should have a sound understanding of both Docker and Neo4j, to leverage them
 <div class="label">Intermediate</div>
 <hr/>
 
-<div class="toc">
-<h3 class="title">Overview</h3>
-
-<ul class="sectlevel1">
-<li><a href="#_general_observations">General Observations</a></li>
-<li><a href="#neo4j-docker">The "Neo4j" Docker Image (beta)</a></li>
-<li><a href="#contributed-containers">Contributed Neo4j Containers</a></li>
-<li><a href="#_neo4j_enterprise_cluster">Neo4j Enterprise Cluster</a></li>
-<li><a href="#_neo4j_spark_analytics">Neo4j - Spark - Analytics</a></li>
-</ul>
-
-</div>
-<hr>
 </div>
 </div>
 <div  id="_general_observations" class="sect1 columns medium-12" style='padding-left: 0;' >
@@ -626,23 +621,24 @@ You should have a sound understanding of both Docker and Neo4j, to leverage them
 
 
 <div class="paragraph">
-<p><a href="http://docker.com">Docker</a> is a lightweight virtualization mechanism to run single applications containerized and restricted on a host operating system.
-Docker images are pre-build in layers from configuration of services one of which would be Neo.
-They are built using a simple textual description (<code>Dockerfile</code>) that describes one layer.
-A docker image can be started immediately after downloading, no time-consuming operating system boot required.</p>
+<p><a href="http://docker.com">Docker</a> is a lightweight virtualization mechanism to run single applications containerized and restricted on a Linux host system.
+Docker images are pre-built from dependent layers that build up the minimal setup required by the application or service to be run.
+Each layer is built from a simple text file (<code>Dockerfile</code>) that describes the operations to add the necessary filesystem-content on that layer.
+A docker image can be started immediately after downloading, in a few seconds.
+You can run as many docker image instances on your host as your resources allow, they are isolated from each other.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>There are many ways to leverage Docker for your Neo4j deployment.</p>
+<p>There are several ways to leverage Docker for your Neo4j deployment.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>You can create throwaway Neo4j instances of many different versions for testing and running your applications.
-You can pre-seed containers with datasets and configurations.</p>
+<p>You can create throw-away Neo4j instances of many different versions for testing and running your applications.
+You can pre-seed containers with datasets, extensions and configurations.</p>
 </div>
 
 
@@ -654,29 +650,50 @@ Docker containers can be used as infrastructure layer, data containers or config
 
 </div>
 <div  id="neo4j-docker" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>The "Neo4j" Docker Image (beta)</h3>
+<h3>The official Neo4j Docker Image</h3>
 
 
 <div class="paragraph">
-<p>This documents the <em>beta</em> <a href="https://hub.docker.com/r/neo4j/neo4j/">Neo4j - Docker image</a>, released after getting many requests for it from our users and customers.
-It is in <em>beta</em> state, because it doesn&#8217;t yet come with guarantees, official customer support and has not been as battle tested as the rest of our product packaging.</p>
+<p>Starting from Neo4j 2.3 we are happy to release official <a href="https://hub.docker.com/_/neo4j/">Neo4j Docker images</a>, both for Neo4j Community as well as Enterprise Edition.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>We make the recent versions available on Docker-Hub but you can also build it on your own from our GitHub Repository.</p>
+<p>It is offically supported both by Docker and Neo Technology.
+New versions will be made available with new Neo4j releases.
+Previous versions and milestones are available as tags in of the <a href="https://hub.docker.com/r/neo4j/neo4j/tags/">neo4j/neo4j</a> image.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>The Dockerfiles for the different versions are taken from <a href="https://github.com/neo4j/docker-neo4j/">this GitHub repository</a> and synched with Docker Hub and the official repository as needed.</p>
 </div>
 
 <div  id="_run_it" class="sect2 columns medium-12" style='padding-left: 0;' >
 <h3>Run it</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title label">Note</div>
+</td>
+<td class="content">
+For running Docker on <a href="https://docs.docker.com/engine/installation/mac/">Max OSX</a> and <a href="https://docs.docker.com/engine/installation/windows/">Windows</a> please consult the Docker documentation.
+</td>
+</tr>
+</table>
+</div>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre># interactive with terminal
-docker run -i -t --rm --name neo4j -v $HOME/neo4j-data:/data -p 8474:7474 neo4j/neo4j
+docker run -i -t --rm --name neo4j -v $HOME/neo4j/data:/data \
+           -p 8474:7474 neo4j
 
 # as daemon running in the background
-docker run -d --name neo4j -v $HOME/neo4j-data:/data -p 8474:7474 neo4j/neo4j</pre>
+docker run -d --name neo4j -v $HOME/neo4j/data:/data \
+           -p 8474:7474 neo4j</pre>
 </div>
 </div>
 
@@ -684,184 +701,72 @@ docker run -d --name neo4j -v $HOME/neo4j-data:/data -p 8474:7474 neo4j/neo4j</p
 <div class="paragraph">
 <p>The data-directory, containing the store-files, logs, auth etc. resides on your host system outside of the image.
 It can be just any empty directory or a (copy of a) data directory of a (not-running) Neo4j-server.
-You can mount it with the <code>-v</code> option.</p>
+You can mount it with the <code>-v</code> (volume) option.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Access then <a href="http://localhost:8474" class="bare">http://localhost:8474</a> (or whatever port you exposed) on your machine to use Neo4j.</p>
-</div>
-
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title label">Note</div>
-</td>
-<td class="content">
-On OSX, you have to use <a href="http://boot2docker.io/">boot2docker</a> and make the bootdocker environment variables available in your current shell session to have Docker connect correctly to the virtual machine.
-For accessing Neo4j you have to use the IP of the <code>$DOCKERHOST</code> environment variable.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title label">Note</div>
-</td>
-<td class="content">
-On Microsoft Windows, you have to use <a href="http://boot2docker.io/">boot2docker</a>. You&#8217;ll need to run <code>boot2docker</code> as an Administrator, or grant specific permissions in order for a symbolic link to be created on the filesystem.  See <a href="http://serverfault.com/questions/476610/virtualbox-issue-with-symlinks-in-shared-folders">serverfault post</a>.
-For accessing Neo4j you have to use the IP of the <code>$DOCKERHOST</code> environment variable.
-</td>
-</tr>
-</table>
-</div>
-
-
-<div class="paragraph">
-<p>There are several tags available:</p>
-</div>
-
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>2.2.3</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Neo4j Community 2.2.3 Stable Version</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>2.3-M02</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Neo4j Community 2.3-M02 Milestone Preview</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>latest</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">latest stable version (now 2.2.3) (master)</p></td>
-</tr>
-</tbody>
-</table>
-
-
-<div class="paragraph">
-<p>These are built from the appropriate branches of the <a href="https://github.com/neo4j-contrib/docker-neo4j">GitHub Repository</a>.</p>
+<p>You can then access <a href="http://localhost:8474" class="bare">http://localhost:8474</a> (or the port you exposed) on your machine to use Neo4j.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>There are also other branches, e.g. for creating Docker images on RedHat Enterprise Linux, which will be covered separately.</p>
-</div>
-
-</div>
-<div  id="_implementation" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Implementation</h3>
-
-
-<div class="paragraph">
-<p>The implementation is pretty straightforward, you can follow it in the <a href="https://github.com/neo4j-contrib/docker-neo4j/blob/master/Dockerfile"><code>Dockerfile on GitHub</code></a></p>
+<p>The Neo4j Docker image comes with these capabilities:</p>
 </div>
 
 <div class="ulist">
 <ul>
 <li>
-based on ubuntu + java8 image
+configure memory usage
 </li>
 <li>
-download and extract the correct Neo4j community version to <code>/var/lib/neo4j</code>
+configure passwords or disable auth
 </li>
 <li>
-mount <code>/data</code> directory within volume
+configure file-descriptor limits and logical log retention
 </li>
 <li>
-update some configuration values (enable shell, set max tx-log-file size, data directory, fix RRD issue)
-</li>
-<li>
-expose ports <code>7474</code> and <code>7473</code> for http(s) and <code>1337</code> and <code>1099</code> for neo4j-shell
-</li>
-<li>
-add and run a start script named <code>neo4j.sh</code>
-</li>
-<li>
-the start script sets some runtime configuration parameters
-</li>
-<li>
-links the <code>/data</code> directory to <code>/var/lib/neo4j/data</code>
-</li>
-<li>
-optionally disables auth
-</li>
-<li>
-starts Neo4j in console mode
+setup server extensions
 </li>
 </ul>
 </div>
+
+
+<div class="paragraph">
+<p>The Enterprise Edition additionally provides:</p>
 </div>
-<div  id="_building_the_image" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Building the Image</h3>
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="shell"><code>git clone https://github.com/neo4j-contrib/docker-neo4j
-cd docker-neo4j
-docker build .
 
-# note the resulting *image-id*
-# name your image with `--name`
-# run the image, `-i -t` stand for interactive and terminal so you can stop the server with ctrl-c
-# `--rm` deletes the image instance after it has stopped
-# pass in the path to an existing neo4j `data` directory or just an empty directory
-# `-d` would run it in detached daemon mode, which is the opposite of `-i -t`
-
-# docker run -i -t --rm --name neo4j -v &lt;/path/to/neo4j/data-dir&gt;:/data -p &lt;external port&gt;:7474 &lt;image-id&gt;
-# for example:
-
-docker run -i -t --rm --name neo4j -v $HOME/neo4j-data:/data -p 8474:7474 &lt;image-id&gt;</code></pre>
-</div>
+<div class="ulist">
+<ul>
+<li>
+run an high-availability cluster
+</li>
+<li>
+access online-backup
+</li>
+<li>
+advanced monitoring
+</li>
+</ul>
 </div>
 
 
 <div class="paragraph">
-<p>Open this URL <code><a href="http://localhost:8474" class="bare">http://localhost:8474</a></code>  in your browser.</p>
+<p><strong>Please read the <a href="https://hub.docker.com/_/neo4j/">information on Docker-Hub</a> for detailed and latest documentation on features, configuration, cluster-setup and environment variables.</strong></p>
 </div>
 
 
 
 <div class="paragraph">
-<p>On OSX use <a href="http://boot2docker.io/">boot2docker</a> and replace localhost with the IP from <code>$DOCKERHOST</code> instead.</p>
-</div>
-
-</div>
-<div  id="_authentication" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Authentication</h3>
-
-
-<div class="paragraph">
-<p>Please note that Neo4j 2.2.x requires authentication.
-You have to login with <code>neo4j/neo4j</code> at the first connection and set a new password.
-Or use the appropriate <a href="http://neo4j.com/docs/stable/rest-api-security.html#rest-api-security-user-status-and-password-changing">REST endpoint</a> to configure the initial password.
-The auth credentials are stored in the <code>data/dbms/auth</code> file, which will reside in your external, mounted <code>data</code> directory.</p>
+<p>Enjoy using the Docker Image and please provide us feedback, via <a href="https://github.com/neo4j-contrib/docker-neo4j/issues">GitHub issues</a>, <a href="http://twitter.com/neo4j">Twitter</a> or by <a href="mailto:feedback@neotechnology.com">dropping us an email</a>.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>You can also access the Neo4j log-files in <code>data/log</code> and <code>data/graph.db/messages.log</code></p>
-</div>
-
-
-
-<div class="paragraph">
-<p>If you set an environment variable <code>NEO4J_NO_AUTH</code> to a non-empty value, Neo4j&#8217;s authentication will be disabled when the Neo4j server in the image is started.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Have fun with the Docker Image and please provide us feedback, via <a href="https://github.com/neo4j-contrib/docker-neo4j/issues">GitHub issues</a>, <a href="http://twitter.com/neo4j">Twitter</a> or by <a href="mailto:feedback@neotechnology.com">dropping us an email</a>.</p>
+<p>The Neo4j Docker image is for example used in our <a href="http://neo4j.com/sandbox">live Neo4j Sandbox</a> offering and the <a href="http://neo4j.com/blog/graph-your-network-neo4j-docker-image/">Graph your Twitter Network Demo</a>.</p>
 </div>
 
 </div>
@@ -870,90 +775,17 @@ The auth credentials are stored in the <code>data/dbms/auth</code> file, which w
 <div class="ulist">
 <ul>
 <li>
-<a href="https://hub.docker.com/r/neo4j/neo4j/">Neo4j on Docker Hub</a>
+<a href="https://hub.docker.com/_/neo4j">Neo4j on Docker Hub</a>
 </li>
 <li>
-<a href="https://github.com/neo4j-contrib/docker-neo4j">Docker GitHub Repository</a>
+<a href="https://github.com/neo4j-contrib/docker-neo4j">Neo4j Docker GitHub Repository</a>
 </li>
 <li>
-<a href="http://neo4j.com/developer-resources/docker">Neo4j with Docker Developer Pages</a>
+<a href="https://hub.docker.com/r/neo4j/neo4j/">neo4j/neo4j on Docker Hub</a>
 </li>
 </ul>
 </div>
 </div>
-</div>
-<div  id="contributed-containers" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Contributed Neo4j Containers</h3>
-
-
-<div class="paragraph">
-<p>In the Neo4j community and ecosystem a number of containers for Neo4j have been developed, both for running individual instances, for setting up Neo4j Enterprise clusters easily and for providing integration with other tools and services.
-Here we want to list some of those examples to either be used directly or as inspiration for your own needs.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>It is easy to create a Neo4j image yourself, just any base linux container with a JDK is good enough.
-Just add Neo4j (e.g. the debian package) on top and you&#8217;re done.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>There are already a number of <a href="https://registry.hub.docker.com/search?q=neo4j">Docker Neo4j images</a> available on Docker Hub.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Make sure when running the docker image to expose the Neo4j port <code>7474</code> and provide the database directory as external volume. E.g.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p><code>docker run -i -t -d –privileged -v /home/user/neo4jdata:/var/lib/neo4j/data -p 7474:7474 tpires/neo4j</code></p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Some of the more widely used images:</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-<a href="https://registry.hub.docker.com/u/tpires/neo4j/">Neo4j 2.1.x by tpires</a>
-</li>
-<li>
-<a href="https://registry.hub.docker.com/u/kbastani/docker-neo4j/">latest Neo4j by Kenny Bastani</a>
-</li>
-</ul>
-</div>
-</div>
-<div  id="_neo4j_enterprise_cluster" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Neo4j Enterprise Cluster</h3>
-
-
-<div class="paragraph">
-<p>Our partner Ekino developed a container setup and script that allows you to spin up a Neo4j enterprise cluster quickly just with a bit of config and a single command line call, if you are on linux :</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="shell"><code># start a neo4j cluster w/ 3 nodes
-curl -sSL https://raw.githubusercontent.com/ekino/docker-neo4j-cluster/master/helper.sh | bash -s run:neomaster,neoreadslave,neobackup</code></pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>The latest version is available in ekino&#8217;s <a href="https://github.com/ekino/docker-neo4j-cluster">GitHub repository</a>.
-Please see the project documentation for more details.</p>
-</div>
-
 </div>
 <div  id="_neo4j_spark_analytics" class="sect1 columns medium-12" style='padding-left: 0;' >
 <h3>Neo4j - Spark - Analytics</h3>
