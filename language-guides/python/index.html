@@ -476,6 +476,7 @@ section {
     height: 2em;
     line-height: 2em;
     margin: 0;
+    font-size: 0.85em;
 }
 
 .content ul {
@@ -626,10 +627,6 @@ We also recommend installing and becoming familiar with both <a href="https://pi
 <ul class="sectlevel1">
 <li><a href="#_py2neo">Py2neo</a></li>
 <li><a href="#_neo4jrestclient">Neo4jRestClient</a></li>
-<li><a href="#_bulbflow">Bulbflow</a></li>
-<li><a href="#_neo4jdb_python">Neo4jdb-Python</a></li>
-<li><a href="#_neo4django">Neo4django</a></li>
-<li><a href="#_neomodel">NeoModel</a></li>
 <li><a href="#_further_reading">Further Reading</a></li>
 </ul>
 
@@ -668,7 +665,6 @@ While we do not provide a specific web framework recommendation, both the lightw
 <p>Many Pythonistas have invested a lot of time and love to develop these libraries, so if you use them, please provide feedback to the authors and help us improve.</p>
 </div>
 
-<hr>
 </div>
 </div>
 <div  id="_py2neo" class="sect1 columns medium-12" style='padding-left: 0;' >
@@ -749,7 +745,6 @@ friends = Path(alice, "KNOWS", bob, "KNOWS", carol)
 graph.create(friends)</code></pre>
 </div>
 </div>
-<hr>
 </div>
 </div>
 <div  id="_neo4jrestclient" class="sect1 columns medium-12" style='padding-left: 0;' >
@@ -829,281 +824,6 @@ However, a new syntax is introduced in order to reach a more pythonic style and 
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="bash"><code>$ pip install git+https://github.com/versae/neo4j-rest-client.git</code></pre>
 </div>
 </div>
-<hr>
-</div>
-</div>
-<div  id="_bulbflow" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Bulbflow</h3>
-
-
-<div class="paragraph">
-<p>Bulbs is an open-source Python persistence framework for graph databases and the first piece of a larger web development toolkit.
-It’s like an ORM for graphs.</p>
-</div>
-
-<div class="imageblock" style="float: right;">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2015/01/blubflow.200x200.png" alt="blubflow.200x200">
-</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Author:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://twitter.com/espeed">James Thornton</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Website:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://bulbflow.com/" class="bare">http://bulbflow.com/</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Source:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/espeed/bulbs" class="bare">https://github.com/espeed/bulbs</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Package:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://pypi.python.org/pypi/bulbs" class="bare">https://pypi.python.org/pypi/bulbs</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://bulbflow.com/docs/" class="bare">http://bulbflow.com/docs/</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Python:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.6 / 2.7 / 3.0 / 3.1 / 3.2</p></td>
-</tr>
-</tbody>
-</table>
-<div  id="_installation_3" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Installation</h3>
-
-
-<div class="paragraph">
-<p>You can use pip to install the latest version from GitHub into your project’s virtual environment:</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="bash"><code>$ mkdir example
-$ cd example
-$ virtualenv env
-$ source env/bin/activate
-(env)$ pip install https://github.com/espeed/bulbs/tarball/master</code></pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>Or you can use pip to install a potentially slightly older version from PyPi:</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="bash"><code>$ mkdir example
-$ cd example
-$ virtualenv env
-$ source env/bin/activate
-(env)$ pip install bulbs</code></pre>
-</div>
-</div>
-<hr>
-</div>
-</div>
-<div  id="_neo4jdb_python" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Neo4jdb-Python</h3>
-
-
-<div class="paragraph">
-<p>Implements the <a href="http://legacy.python.org/dev/peps/pep-0249/">Python DB API 2.0</a> for Neo4j.</p>
-</div>
-
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Author:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Jacob Hansson</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Website:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/jakewins/neo4jdb-python" class="bare">https://github.com/jakewins/neo4jdb-python</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Source:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/jakewins/neo4jdb-python" class="bare">https://github.com/jakewins/neo4jdb-python</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Package:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://pypi.python.org/pypi/neo4jdb" class="bare">https://pypi.python.org/pypi/neo4jdb</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/jakewins/neo4jdb-python/blob/master/README.rst" class="bare">https://github.com/jakewins/neo4jdb-python/blob/master/README.rst</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Python:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.6 / 2.7 / 3.2 / 3.3</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Neo4j:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.0 / 2.1</p></td>
-</tr>
-</tbody>
-</table>
-<div  id="_installation_4" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Installation</h3>
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="bash"><code>pip install neo4jdb</code></pre>
-</div>
-</div>
-<hr>
-</div>
-</div>
-<div  id="_neo4django" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Neo4django</h3>
-
-
-<div class="paragraph">
-<p>Neo4django is an Object Graph Mapper (OGM) for Django. Use familiar Django models and queries against Neo4j.</p>
-</div>
-
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Author:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Matt Luongo</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Website:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://neo4django.readthedocs.org/" class="bare">https://neo4django.readthedocs.org/</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Source:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://github.com/scholrly/neo4django" class="bare">http://github.com/scholrly/neo4django</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Package:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://pypi.python.org/pypi/neo4django" class="bare">https://pypi.python.org/pypi/neo4django</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://neo4django.readthedocs.org/" class="bare">https://neo4django.readthedocs.org/</a></p></td>
-</tr>
-</tbody>
-</table>
-<div  id="_installation_5" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Installation</h3>
-
-
-<div class="paragraph">
-<p>Using pip, you can install from PyPi:</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="bash"><code>pip install neo4django</code></pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>or straight from GitHub:</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="bash"><code>pip install -e git+https://github.com/scholrly/neo4django/#egg=neo4django</code></pre>
-</div>
-</div>
-<hr>
-</div>
-</div>
-<div  id="_neomodel" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>NeoModel</h3>
-
-
-<div class="paragraph">
-<p>An Object Graph Mapper (OGM) also usable for Django for the Neo4j graph database.</p>
-</div>
-
-<div class="imageblock" style="float: right;">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2015/01/neomodel.200x80.png" alt="neomodel.200x80">
-</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Author:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Robin Edwards</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Website:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://neomodel.readthedocs.org/" class="bare">http://neomodel.readthedocs.org/</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Source:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://github.com/robinedwards/neomodel" class="bare">http://github.com/robinedwards/neomodel</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Package:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://pypi.python.org/pypi/neomodel" class="bare">https://pypi.python.org/pypi/neomodel</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://neomodel.readthedocs.org/" class="bare">http://neomodel.readthedocs.org/</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Python:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.7 / 3.4 / pypy / pypy3</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Neo4j:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.0 / 2.1</p></td>
-</tr>
-</tbody>
-</table>
-<div  id="_installation_6" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Installation</h3>
-
-
-<div class="paragraph">
-<p>Install from pypi (recommended):</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="bash"><code>$ pip install neomodel</code></pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>To install from github:</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="bash"><code>$ pip install git+git://github.com/robinedwards/neomodel.git@HEAD#egg=neomodel-dev</code></pre>
-</div>
-</div>
-<hr>
 </div>
 </div>
 <div  id="_further_reading" class="sect1 columns medium-12" style='padding-left: 0;' >
