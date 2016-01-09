@@ -8,10 +8,11 @@ html_file=ARGV[0]
 raise 'Usage: feed me html files' unless html_file
 
 def get_value(name, lines)
-  (lines.find{ |l| l.match("^#{name}:.*") } || '').split(/:/).last.strip
+  (lines.find{ |l| l.match("^#{name}:.*") } || '').split(/:/).last
 end
 
-lines = File.read(html_file).each_line.collect.to_a
+lines = File.read(html_file).each_line.collect{ |l| l.strip }.to_a
+
 
 post_name = html_file.gsub(/deploy\/(.+)\.html$/,"\\1")
 title = get_value('title',lines)
