@@ -61,7 +61,6 @@ Please check the <<contributing-code-pull-requests,pull request checklist>> befo
 
 . <<contributing-code-intro-the-fast-track,Sign the CLA>>.
 . <<contributing-code-no-merging,Ensure that you have not added any merge commits>>.
-. <<contributing-code-single-commit,Squash all your changes into a single commit>>.
 . <<contributing-code-no-merging,Rebase against the latest master>>.
 . <<contributing-code-tests,Run all relevant tests>>.
 . Send the request!
@@ -83,11 +82,11 @@ The general structure of a unit test looks like this:
 public void myTest()
 {
     // Given
-    [ Setup code here, setting the stage and 
+    [ Setup code here, setting the stage and
       parameters that are relevant ]
 
     // When
-    [ The code that is being tested, preferably 
+    [ The code that is being tested, preferably
       just one line, like calling a method ]
 
     // Then
@@ -140,32 +139,3 @@ Merges are messy, and should only be done when necessary, e.g. when merging a br
 
 If you want to update your development branch to incorporate the latest changes from master, use `git rebase`.
 For details on how to use rebase, see Git manual on rebase: http://git-scm.com/book/en/Git-Branching-Rebasing[the Git Manual].
-
-[[contributing-code-single-commit]]
-== Single Commit
-
-If you have multiple commits, you should squash them into a single one for the pull request, unless there is some extraordinary reason not to.
-Keeping your changes in a single commit makes the commit history easier to read, it also makes it easy to revert and move features around.
-
-One way to do this is to, while standing on your local branch with your changes, create a new branch and then interactively rebase your commits into a single one.
-
-.Interactive rebasing with Git
-[source,shell]
---------------------------------------------
-# On branch mychanges
-git checkout -b mychanges-clean
-
-# Assuming you have 4 commits, rebase the last
-# four commits interactively:
-git rebase -i HEAD~4
-
-# In the dialog git gives you, keep your first commit, 
-# and squash all others into it. Then reword the commit
-# description to accurately depict what your commit does.
-# If applicable, include any issue numbers like so: #760
---------------------------------------------
-
-For more details, see the git manual: http://git-scm.com/book/en/Git-Tools-Rewriting-History#Changing-Multiple-Commit-Messages
-
-If you are asked to modify parts of your code, work in your original branch (the one with multiple commits), and follow the above process to create a fixed single commit.
-
