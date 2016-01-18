@@ -1,21 +1,23 @@
 require 'rubypress'
+require 'logger'
 
 class WordPressSyncer
   def initialize(blog_id, username, password, options = {})
     @blog_id = blog_id
     @wp_client = Rubypress::Client.new(host: @blog_id, username: username, password: password)
     @post_type = options[:post_type] || 'developer'
-    @logger = options[:logger] || Logger.new
+    @logger = options[:logger] || Logger.new(STDOUT)
   end
 
   def sync(title, name, html, custom_fields = {})
-    content = { post_type:     @post_type,
+    content = {
+                post_type:     @post_type,
                 post_date:     Time.now - 60*60*24*30,
                 post_content:  html,
                 post_title:    title,
                 post_name:     name,
                 post_status:   'publish',
-                custom_fields:  # was developer_section_slug
+                custom_fields:  custom_fields
               }
 
     all_pages = @wp_client.getPosts(filter: {post_type: @post_type, number: 1000})
@@ -37,11 +39,13 @@ class WordPressSyncer
 
       @logger.info "Editing #{post_id} on _#{@blog_id}_ custom-field #{content[:custom_fields].inspect}"
 
-      raise 'edit failed' unless @wp_client.editPost(blog_id: @blog_id, post_id: post_id, content: content)
+      puts "@wp_client.editPost(blog_id: #{@blog_id}, post_id: #{post_id}, content: #{content})"
+      # raise 'edit failed' unless @wp_client.editPost(blog_id: @blog_id, post_id: post_id, content: content)
     else
       @logger.info "Making a new post for '#{title}' on _#{@blog_id}_"
 
-      raise 'publish failed' unless @wp_client.newPost(blog_id: @blog_id, content: content)
+      puts "@wp_client.newPost(blog_id: #{@blog_id}, content: #{content})"
+      # raise 'publish failed' unless @wp_client.newPost(blog_id: @blog_id, content: content)
     end
   end
 end

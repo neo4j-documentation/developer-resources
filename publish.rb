@@ -10,11 +10,11 @@ syncer = WordPressSyncer.new(ENV['BLOG_HOSTNAME'], ENV['BLOG_USERNAME'], ENV['BL
 raise 'Usage: feed me html files' if ARGV.empty?
 
 def get_value(name, lines)
-  (lines.find { |l| l.match("^#{name}:.*") } || '').split(/:/).last.strip
+  lines.find { |l| l.match("^#{name}:.*") }.to_s.split(/:/).last.strip
 end
 
 ARGV.each do |html_file|
-  lines = File.read(html_file).each_line.collect.to_a
+  lines = File.read(html_file).each_line.collect{ |l| l.strip }.to_a  
 
   data = {}
 
@@ -34,6 +34,6 @@ ARGV.each do |html_file|
 
   syncer.sync(data[:title], data[:post_name], html,
               [{key: 'developer_section_name', value: developer_section_name},
-               {key: 'developer_section_slug', value: ''}])
+               {key: 'developer_section_slug', value: ''}]) # was developer_section_slug
 end
 
