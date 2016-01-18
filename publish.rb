@@ -4,23 +4,24 @@ require 'bundler/setup'
 
 require_relative('html_transformer')
 
-html_file=ARGV[0]
+html_file = ARGV[0]
+
 raise 'Usage: feed me html files' unless html_file
 
 def get_value(name, lines)
-  (lines.find{ |l| l.match("^#{name}:.*") } || '').split(/:/).last.strip
+  (lines.find { |l| l.match("^#{name}:.*") } || '').split(/:/).last.strip
 end
 
 lines = File.read(html_file).each_line.collect.to_a
 
 post_name = html_file.gsub(/deploy\/(.+)\.html$/,"\\1")
-title = get_value('title',lines)
-level = get_value('level',lines)
-author = get_value('author',lines)
-email = get_value('email',lines)
-developer_section_name = get_value('developer_section_name',lines)
-developer_section_slug = get_value('developer_section_slug',lines)
-optional_slug = get_value('slug',lines)
+title = get_value('title', lines)
+level = get_value('level', lines)
+author = get_value('author', lines)
+email = get_value('email', lines)
+developer_section_name = get_value('developer_section_name', lines)
+developer_section_slug = get_value('developer_section_slug', lines)
+optional_slug = get_value('slug', lines)
 
 post_name = optional_slug unless optional_slug.empty?
 
