@@ -14,7 +14,7 @@ def get_value(name, lines)
 end
 
 ARGV.each do |html_file|
-  lines = File.read(html_file).each_line.collect{ |l| l.strip }.to_a  
+  lines = File.read(html_file).each_line.collect(&:strip).to_a  
 
   data = {}
 

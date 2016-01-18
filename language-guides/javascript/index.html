@@ -476,6 +476,7 @@ section {
     height: 2em;
     line-height: 2em;
     margin: 0;
+    font-size: 0.85em;
 }
 
 .content ul {
@@ -615,13 +616,17 @@ You should have <a href="/download">installed Neo4j</a> and made yourself famili
 <li><a href="#_neo4j_for_javascript_developers">Neo4j for JavaScript Developers</a></li>
 <li><a href="#_the_example_project">The Example Project</a></li>
 <li><a href="#_using_the_http_endpoint_directly">Using the HTTP-Endpoint directly</a></li>
-<li><a href="#_seraph">Seraph</a></li>
-<li><a href="#_cypher_stream">cypher-stream</a></li>
 <li><a href="#node-neo4j">node-neo4j (Thingdom)</a></li>
-<li><a href="#node-neo4j-pk">node-neo4j (philipkueng)</a></li>
-<li><a href="#_meteor_js">Meteor.js</a></li>
+<li><a href="#_cypher_stream">cypher-stream</a></li>
+<li><a href="#_seraph">Seraph</a></li>
+<li><a href="#_meteor_js">Meteor.js</a>
+<ul class="sectlevel2">
+<li><a href="#_ccorcos_neo4j">ccorcos:neo4j</a></li>
+<li><a href="#_ostrio_meteor_js_driver">Ostrio - Meteor.js - Driver</a></li>
 <li><a href="#_neo4j_dart">Neo4j Dart</a></li>
 <li><a href="#_other_drivers">Other Drivers</a></li>
+</ul>
+</li>
 </ul>
 
 </div>
@@ -725,34 +730,64 @@ cypher(query,params,cb)
 </div>
 </div>
 </div>
-<div  id="_seraph" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Seraph</h3>
+<div  id="node-neo4j" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>node-neo4j (Thingdom)</h3>
 
 
 <div class="paragraph">
-<p><strong>Seraph</strong> is a comprehensive, well documented driver for Neo4j, which supports all Neo4j features and provides not only Neo4j connection support, but extensive lifecycle handling.
-The additional extensions <strong>seraph-model</strong> and <strong>seraph-resource</strong> allow you to quickly load and persist your models and integrate seraph-model resolution into your express routes with a base-controller for CRUD operations.
-With <strong>disposable-seraph</strong> you can manage a disposable Neo4j-instance for automatic testing.</p>
+<p>Most widely used Node.js driver for Neo4j.
+This driver aims to be the most robust, comprehensive, and battle-tested driver available. It&#8217;s run in production by <a href="https://www.fiftythree.com/">FiftyThree</a> to power <a href="https://www.fiftythree.com/paper">Paper</a> and <a href="https://mix.fiftythree.com/">Mix</a>.</p>
 </div>
 
+<div  id="_features" class="sect3 "  >
+<h4>Features</h4>
 <div class="ulist">
 <ul>
 <li>
-<a href="https://github.com/brikteknologier/seraph">seraph on GitHub</a>
+Cypher queries, parameters, batching, and transactions
 </li>
 <li>
-Author: <a href="https://github.com/jonpacker">Jon Packer via BRIK Teknologier, Norway</a>
+Arbitrary HTTP requests, for custom Neo4j plugins
 </li>
 <li>
-<a href="https://github.com/brikteknologier/seraph-model">seraph-model on GitHub</a>
+Custom headers, for high availability, application tracing, query logging, and more
 </li>
 <li>
-<a href="https://github.com/brikteknologier/seraph-resource">seraph-resource on GitHub</a>
+Precise errors, for robust error handling from the start
 </li>
 <li>
-<a href="https://github.com/brikteknologier/disposable-seraph">disposable-seraph on GitHub</a>
+Configurable connection pooling, for performance tuning &amp; monitoring
+</li>
+<li>
+Thorough test coverage with &gt;100 tests
+</li>
+<li>
+Continuously integrated against multiple versions of Node.js and Neo4j
 </li>
 </ul>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/aseemk/node-neo4j-template">Example Project</a>
+</li>
+<li>
+<a href="https://github.com/thingdom/node-neo4j/tree/v2">node-neo4j on GitHub</a>
+</li>
+<li>
+<a href="https://github.com/thingdom/node-neo4j/blob/v2/API_v2.md">Spec</a>
+</li>
+<li>
+Authors: <a href="https://twitter.com/aseemk">Aseem Kishore</a> &amp; Daniel Gasienica
+</li>
+<li>
+<a href="http://coffeedoc.info/github/thingdom/node-neo4j/">Documentation</a>
+</li>
+<li>
+<a href="https://groups.google.com/forum/#!forum/node-neo4j">google group</a>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div  id="_cypher_stream" class="sect2 columns medium-12" style='padding-left: 0;' >
@@ -790,60 +825,37 @@ Author: <a href="https://github.com/brian-gates">Brian Gates</a>
 </ul>
 </div>
 </div>
-<div  id="node-neo4j" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>node-neo4j (Thingdom)</h3>
+<div  id="_seraph" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Seraph</h3>
 
 
 <div class="paragraph">
-<p>Most widely used Node.js driver for Neo4j.</p>
+<p><strong>Seraph</strong> is a comprehensive, well documented driver for Neo4j, which supports all Neo4j features and provides not only Neo4j connection support, but extensive lifecycle handling.
+The additional extensions <strong>seraph-model</strong> and <strong>seraph-resource</strong> allow you to quickly load and persist your models and integrate seraph-model resolution into your express routes with a base-controller for CRUD operations.
+With <strong>disposable-seraph</strong> you can manage a disposable Neo4j-instance for automatic testing.</p>
 </div>
 
 <div class="ulist">
 <ul>
 <li>
-<a href="https://github.com/aseemk/node-neo4j-template">Example Project</a>
+<a href="https://github.com/brikteknologier/seraph">seraph on GitHub</a>
 </li>
 <li>
-<a href="http://github.com/thingdom/node-neo4j">node-neo4j on GitHub</a>
+Author: <a href="https://github.com/jonpacker">Jon Packer via BRIK Teknologier, Norway</a>
 </li>
 <li>
-Authors: <a href="https://twitter.com/aseemk">Aseem Kishore</a> &amp; Daniel Gasienica
+<a href="https://github.com/brikteknologier/seraph-model">seraph-model on GitHub</a>
 </li>
 <li>
-<a href="http://coffeedoc.info/github/thingdom/node-neo4j/">Documentation</a>
+<a href="https://github.com/brikteknologier/seraph-resource">seraph-resource on GitHub</a>
 </li>
 <li>
-<a href="https://groups.google.com/forum/#!forum/node-neo4j">google group</a>
+<a href="https://github.com/brikteknologier/disposable-seraph">disposable-seraph on GitHub</a>
 </li>
 </ul>
 </div>
 </div>
-<div  id="node-neo4j-pk" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>node-neo4j (philipkueng)</h3>
-
-
-<div class="paragraph">
-<p>Neo4j REST API wrapper for Node.js
-Well maintained library, has been around since 2012.</p>
-</div>
-
-<blockquote class="twitter-tweet" data-conversation="none" data-cards="hidden" lang="en"><p><a href="https://twitter.com/subvertallmedia">@subvertallmedia</a> I ended up using <a href="https://t.co/sh54JoVDHq">https://t.co/sh54JoVDHq</a> which worked fine. Also the neo4j shell was pretty good!</p>&mdash; John Resig (@jeresig) <a href="https://twitter.com/jeresig/status/559907758196396033">January 27, 2015</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-<div class="ulist">
-<ul>
-<li>
-<a href="https://github.com/philippkueng/node-neo4j">node-neo4j on GitHub</a>
-</li>
-<li>
-Author <a href="https://twitter.com/philippkueng">Philip Küng</a> and <a href="https://twitter.com/Stofkn">Kristof Van Miegem</a>
-</li>
-<li>
-<a href="https://github.com/philippkueng/node-neo4j#usage">Documentation</a>
-</li>
-</ul>
-</div>
-</div>
-<div  id="_meteor_js" class="sect2 columns medium-12" style='padding-left: 0;' >
+<div  id="_meteor_js" class="sect1 columns medium-12" style='padding-left: 0;' >
 <h3>Meteor.js</h3>
 <div class="imageblock">
 <p class="content">
@@ -856,12 +868,42 @@ Author <a href="https://twitter.com/philippkueng">Philip Küng</a> and <a href="
 <p><a href="http://meteor.com">Meteor</a> is a complete open source platform for building web and mobile apps in pure JavaScript.</p>
 </div>
 
+<div  id="_ccorcos_neo4j" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>ccorcos:neo4j</h3>
 
 
 <div class="paragraph">
-<p>Finally a Neo4j driver for Meteor is available.</p>
+<p>Chet and Sam Corcos created the <code>ccorcos:neo4j</code> package that integrates Meteor well with Neo4j including reactivity and query-reevaluation on data changes.</p>
 </div>
 
+
+
+<div class="paragraph">
+<p>Both wrote and presented about it and Chet provided insight into an example application for event feeds, written with Meteor and Neo4j as a stack.</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="https://medium.com/@SamCorcos/connecting-meteor-to-a-neo4j-database-and-deploying-with-graphenedb-3321966c3102">Blog: Connecting Meteor to a Neo4j database and deploying with GrapheneDB</a>
+</li>
+<li>
+<a href="https://medium.com/@SamCorcos/meteor-any-database-7f237f2448f0">Blog: Meteor + Any Database Reactivity</a>
+</li>
+<li>
+Example App Shindig: <a href="https://medium.com/@chetcorcos/shindig-an-event-discovery-app-built-with-meteor-js-react-js-and-neo4j-602afb483ae6">Blog: Main Article</a>, <a href="https://medium.com/@chetcorcos/shindig-integrating-neo4j-with-meteor-17b0fce644d">Blog: Integration with Neo4j</a>
+</li>
+<li>
+Authors: <a href="https://twitter.com/ccorcos">Chet Corcos</a> and <a href="https://twitter.com/samcorcos">Sam Corcos</a>
+</li>
+<li>
+<a href="https://github.com/ccorcos/meteor-neo4j">ccorcos:neo4j on GitHub</a>
+</li>
+</ul>
+</div>
+</div>
+<div  id="_ostrio_meteor_js_driver" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Ostrio - Meteor.js - Driver</h3>
 
 
 <div class="paragraph">
@@ -920,6 +962,31 @@ Author: <a href="https://twitter.com/smart_egg">Dmitriy Aristarkhovich</a>
 </div>
 <div  id="_other_drivers" class="sect2 columns medium-12" style='padding-left: 0;' >
 <h3>Other Drivers</h3>
+<div  id="node-neo4j-pk" class="sect3 "  >
+<h4>node-neo4j (philipkueng)</h4>
+
+
+<div class="paragraph">
+<p>Neo4j REST API wrapper for Node.js
+Well maintained library, has been around since 2012.</p>
+</div>
+
+<blockquote class="twitter-tweet" data-conversation="none" data-cards="hidden" lang="en"><p><a href="https://twitter.com/subvertallmedia">@subvertallmedia</a> I ended up using <a href="https://t.co/sh54JoVDHq">https://t.co/sh54JoVDHq</a> which worked fine. Also the neo4j shell was pretty good!</p>&mdash; John Resig (@jeresig) <a href="https://twitter.com/jeresig/status/559907758196396033">January 27, 2015</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/philippkueng/node-neo4j">node-neo4j on GitHub</a>
+</li>
+<li>
+Author <a href="https://twitter.com/philippkueng">Philip Küng</a> and <a href="https://twitter.com/Stofkn">Kristof Van Miegem</a>
+</li>
+<li>
+<a href="https://github.com/philippkueng/node-neo4j#usage">Documentation</a>
+</li>
+</ul>
+</div>
+</div>
 <div  id="_neo4j_js" class="sect3 "  >
 <h4>neo4j-js</h4>
 
@@ -964,6 +1031,7 @@ For performance reasons it stays as close to the original Java API as possible.<
 Author: Jochen Weis
 </li>
 </ul>
+</div>
 </div>
 </div>
 </div>

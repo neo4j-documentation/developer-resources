@@ -76,17 +76,30 @@ cypher(query,params,cb)
  "errors":[]}
 ----
 
-=== Seraph
+[[node-neo4j]]
+=== node-neo4j (Thingdom)
 
-*Seraph* is a comprehensive, well documented driver for Neo4j, which supports all Neo4j features and provides not only Neo4j connection support, but extensive lifecycle handling.
-The additional extensions *seraph-model* and *seraph-resource* allow you to quickly load and persist your models and integrate seraph-model resolution into your express routes with a base-controller for CRUD operations.
-With *disposable-seraph* you can manage a disposable Neo4j-instance for automatic testing.
+Most widely used Node.js driver for Neo4j.
+This driver aims to be the most robust, comprehensive, and battle-tested driver available. It's run in production by https://www.fiftythree.com/[FiftyThree] to power https://www.fiftythree.com/paper[Paper] and https://mix.fiftythree.com/[Mix].
 
-* https://github.com/brikteknologier/seraph[seraph on GitHub]
-* Author: https://github.com/jonpacker[Jon Packer via BRIK Teknologier, Norway]
-* https://github.com/brikteknologier/seraph-model[seraph-model on GitHub]
-* https://github.com/brikteknologier/seraph-resource[seraph-resource on GitHub]
-* https://github.com/brikteknologier/disposable-seraph[disposable-seraph on GitHub]
+==== Features
+
+* Cypher queries, parameters, batching, and transactions
+* Arbitrary HTTP requests, for custom Neo4j plugins
+* Custom headers, for high availability, application tracing, query logging, and more
+* Precise errors, for robust error handling from the start
+* Configurable connection pooling, for performance tuning & monitoring
+* Thorough test coverage with >100 tests
+* Continuously integrated against multiple versions of Node.js and Neo4j
+
+// TODO our example project
+
+* https://github.com/aseemk/node-neo4j-template[Example Project]
+* https://github.com/thingdom/node-neo4j/tree/v2[node-neo4j on GitHub]
+* https://github.com/thingdom/node-neo4j/blob/v2/API_v2.md[Spec]
+* Authors: https://twitter.com/aseemk[Aseem Kishore] & Daniel Gasienica
+* http://coffeedoc.info/github/thingdom/node-neo4j/[Documentation]
+* https://groups.google.com/forum/#!forum/node-neo4j[google group]
 
 === cypher-stream
 
@@ -101,40 +114,36 @@ This works for regular cypher calls and transactions.
 * Author: https://github.com/brian-gates[Brian Gates]
 * https://github.com/brian-gates/streaming-stack[Simple example of an ember/node/neo4j stack] that streams from database to client.
 
-[[node-neo4j]]
-=== node-neo4j (Thingdom)
+=== Seraph
 
-Most widely used Node.js driver for Neo4j.
+*Seraph* is a comprehensive, well documented driver for Neo4j, which supports all Neo4j features and provides not only Neo4j connection support, but extensive lifecycle handling.
+The additional extensions *seraph-model* and *seraph-resource* allow you to quickly load and persist your models and integrate seraph-model resolution into your express routes with a base-controller for CRUD operations.
+With *disposable-seraph* you can manage a disposable Neo4j-instance for automatic testing.
 
-// TODO our example project
+* https://github.com/brikteknologier/seraph[seraph on GitHub]
+* Author: https://github.com/jonpacker[Jon Packer via BRIK Teknologier, Norway]
+* https://github.com/brikteknologier/seraph-model[seraph-model on GitHub]
+* https://github.com/brikteknologier/seraph-resource[seraph-resource on GitHub]
+* https://github.com/brikteknologier/disposable-seraph[disposable-seraph on GitHub]
 
-* https://github.com/aseemk/node-neo4j-template[Example Project]
-* http://github.com/thingdom/node-neo4j[node-neo4j on GitHub]
-* Authors: https://twitter.com/aseemk[Aseem Kishore] & Daniel Gasienica
-* http://coffeedoc.info/github/thingdom/node-neo4j/[Documentation]
-* https://groups.google.com/forum/#!forum/node-neo4j[google group]
-
-[[node-neo4j-pk]]
-=== node-neo4j (philipkueng)
-
-Neo4j REST API wrapper for Node.js
-Well maintained library, has been around since 2012.
-
-++++
-<blockquote class="twitter-tweet" data-conversation="none" data-cards="hidden" lang="en"><p><a href="https://twitter.com/subvertallmedia">@subvertallmedia</a> I ended up using <a href="https://t.co/sh54JoVDHq">https://t.co/sh54JoVDHq</a> which worked fine. Also the neo4j shell was pretty good!</p>&mdash; John Resig (@jeresig) <a href="https://twitter.com/jeresig/status/559907758196396033">January 27, 2015</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-++++
-
-* https://github.com/philippkueng/node-neo4j[node-neo4j on GitHub]
-* Author https://twitter.com/philippkueng[Philip Küng] and https://twitter.com/Stofkn[Kristof Van Miegem]
-* https://github.com/philippkueng/node-neo4j#usage[Documentation]
-
-=== Meteor.js
+== Meteor.js 
 
 image::https://www.meteor.com/meteor-logo.png[width=200]
 http://meteor.com[Meteor] is a complete open source platform for building web and mobile apps in pure JavaScript.
 
-Finally a Neo4j driver for Meteor is available.
+=== ccorcos:neo4j
+
+Chet and Sam Corcos created the `ccorcos:neo4j` package that integrates Meteor well with Neo4j including reactivity and query-reevaluation on data changes.
+
+Both wrote and presented about it and Chet provided insight into an example application for event feeds, written with Meteor and Neo4j as a stack.
+
+* https://medium.com/@SamCorcos/connecting-meteor-to-a-neo4j-database-and-deploying-with-graphenedb-3321966c3102[Blog: Connecting Meteor to a Neo4j database and deploying with GrapheneDB]
+* https://medium.com/@SamCorcos/meteor-any-database-7f237f2448f0[Blog: Meteor + Any Database Reactivity]
+* Example App Shindig: https://medium.com/@chetcorcos/shindig-an-event-discovery-app-built-with-meteor-js-react-js-and-neo4j-602afb483ae6[Blog: Main Article], https://medium.com/@chetcorcos/shindig-integrating-neo4j-with-meteor-17b0fce644d[Blog: Integration with Neo4j]
+* Authors: https://twitter.com/ccorcos[Chet Corcos] and https://twitter.com/samcorcos[Sam Corcos]
+* https://github.com/ccorcos/meteor-neo4j[ccorcos:neo4j on GitHub]
+
+=== Ostrio - Meteor.js - Driver
 
 Dmitriy wrapped node-neo4j to be usable with Meteor and also provided a pseudo-reactive driver to support the life-query functionality.
 
@@ -177,6 +186,21 @@ main() async {
 * http://www.dartdocs.org/documentation/neo4j_dart/0.2.1/index.html#neo4j_dart/neo4j_dart-ogm[Neo4j Dart OGM]
 
 === Other Drivers
+
+[[node-neo4j-pk]]
+==== node-neo4j (philipkueng)
+
+Neo4j REST API wrapper for Node.js
+Well maintained library, has been around since 2012.
+
+++++
+<blockquote class="twitter-tweet" data-conversation="none" data-cards="hidden" lang="en"><p><a href="https://twitter.com/subvertallmedia">@subvertallmedia</a> I ended up using <a href="https://t.co/sh54JoVDHq">https://t.co/sh54JoVDHq</a> which worked fine. Also the neo4j shell was pretty good!</p>&mdash; John Resig (@jeresig) <a href="https://twitter.com/jeresig/status/559907758196396033">January 27, 2015</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+++++
+
+* https://github.com/philippkueng/node-neo4j[node-neo4j on GitHub]
+* Author https://twitter.com/philippkueng[Philip Küng] and https://twitter.com/Stofkn[Kristof Van Miegem]
+* https://github.com/philippkueng/node-neo4j#usage[Documentation]
 
 ==== neo4j-js
 

@@ -476,6 +476,7 @@ section {
     height: 2em;
     line-height: 2em;
     margin: 0;
+    font-size: 0.85em;
 }
 
 .content ul {
@@ -896,12 +897,21 @@ There is a <a href="/developer-resources/cypher">Cypher tutorial</a> if you woul
 <p>For this guide we will be using the Neo4j.rb project.  The project consists of the following gems:</p>
 </div>
 
-
-
-<div class="paragraph">
-<p>Unresolved directive in ruby-course.adoc - include::../ruby.adoc[tags=neo4jrb-gems]</p>
+<hr>
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/neo4jrb/neo4j">neo4j</a> A Object-Graph-Mapper (OGM) for the Neo4j graph database. It tries to follow API conventions established by ActiveRecord but with a Neo4j flavor.
+</li>
+<li>
+<a href="https://github.com/neo4jrb/neo4j-core">neo4j-core</a> A low level driver for connecting to Neo4j. Used by the neo4j gem.
+</li>
+<li>
+<a href="https://github.com/neo4jrb/neo4j-rake_tasks">neo4j-rake_tasks</a> A set of rake tasks for installing and managing a Neo4j database within your project. Used by the neo4j-core gem.
+</li>
+</ul>
 </div>
-
+<hr>
 
 
 <div class="paragraph">
@@ -1673,9 +1683,127 @@ end</code></pre>
 
 
 <div class="paragraph">
-<p>Unresolved directive in ruby-course.adoc - include::../ruby.adoc[tags=neo4jrb-integrations]</p>
+<p>There are many common gems that you&#8217;ll want to use with your Neo4j database.  Many are supported for the Neo4j.rb project:</p>
 </div>
 
+<table style="width: 100%">
+<tr>
+<td>
+
+
+<div class="paragraph">
+<p>Authentication</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/neo4jrb/devise-neo4j">devise-neo4j</a>
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>File Attachment</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/neo4jrb/neo4jrb-paperclip">neo4jrb-paperclip</a>
+</li>
+<li>
+<a href="https://github.com/neo4jrb/carrierwave-neo4j">carrierwave-neo4j</a>
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>Pagination</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/neo4jrb/neo4j-will_paginate_redux">neo4j-will_paginate_redux</a>
+</li>
+<li>
+<a href="https://github.com/megorei/kaminari-neo4j">kaminari-neo4j</a>
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>ElasticSearch Integration</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/neo4jrb/neo4j-searchkick">neo4j-searchkick</a>
+</li>
+</ul>
+</div>
+</td>
+<td>
+
+
+<div class="paragraph">
+<p>Admin User Interface</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/cheerfulstoic/rails_admin">rails_admin</a>
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>Integration With the <a href="https://github.com/neo4j-contrib/spatial">Neo4j Spatial Plugin</a></p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/neo4jrb/neo4jrb_spatial">neo4jrb_spatial</a>
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>Ruby Object Manager</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/rom-rb/rom-neo4j">rom-neo4j</a>
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>Misc.</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/subvertallchris/neo4j-even_easier_id">neo4j-even_easier_id</a> (BSON UUIDs)
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
                     </div>

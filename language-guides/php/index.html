@@ -476,6 +476,7 @@ section {
     height: 2em;
     line-height: 2em;
     margin: 0;
+    font-size: 0.85em;
 }
 
 .content ul {
@@ -617,10 +618,7 @@ You should have <a href="/download">installed Neo4j</a> and made yourself famili
 <li><a href="#_getting_started_tutorials">Getting started tutorials</a></li>
 <li><a href="#_using_neo4j_in_a_standalone_php_environment">Using Neo4j in a standalone PHP environment</a></li>
 <li><a href="#_neoclient">NeoClient</a></li>
-<li><a href="#_neo4jphp">Neo4jPHP</a></li>
-<li><a href="#_neo4j_ogm_php">Neo4j-OGM-PHP</a></li>
-<li><a href="#_with_the_symfony_framework">With the Symfony framework</a></li>
-<li><a href="#_neo4jogmbundle">Neo4jOGMBundle</a></li>
+<li><a href="#_neoeloquent_for_laravel">NeoEloquent for Laravel</a></li>
 <li><a href="#_other_drivers">Other Drivers</a></li>
 <li><a href="#_applications_built_with_php_and_neo4j">Applications built with PHP and Neo4j</a></li>
 </ul>
@@ -760,8 +758,29 @@ Author: <a href="http://twitter.com/ikwattro">Christophe Willemsen</a>
 </ul>
 </div>
 </div>
-<div  id="_neo4jphp" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Neo4jPHP</h3>
+<div  id="_neoeloquent_for_laravel" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>NeoEloquent for Laravel</h3>
+
+
+<div class="paragraph">
+<p>Neo4j Graph Eloquent Driver for Laravel 4</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="https://github.com/Vinelab/NeoEloquent">NeoEloquent on GitHub</a>
+</li>
+<li>
+Author: <a href="https://github.com/Mulkave">Abed Halawi</a>
+</li>
+</ul>
+</div>
+</div>
+<div  id="_other_drivers" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Other Drivers</h3>
+<div  id="_neo4jphp" class="sect3 "  >
+<h4>Neo4jPHP</h4>
 
 
 <div class="paragraph">
@@ -796,28 +815,9 @@ Author: <a href="http://twitter.com/josh_adell">Josh Adell</a>
 </li>
 </ul>
 </div>
-<div  id="_neoeloquent_for_laravel" class="sect3 "  >
-<h4>NeoEloquent for Laravel</h4>
-
-
-<div class="paragraph">
-<p>Neo4j Graph Eloquent Driver for Laravel 4</p>
 </div>
-
-<div class="ulist">
-<ul>
-<li>
-<a href="https://github.com/Vinelab/NeoEloquent">NeoEloquent on GitHub</a>
-</li>
-<li>
-Author: <a href="https://github.com/Mulkave">Abed Halawi</a>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div  id="_neo4j_ogm_php" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Neo4j-OGM-PHP</h3>
+<div  id="_neo4j_ogm_php" class="sect3 "  >
+<h4>Neo4j-OGM-PHP</h4>
 
 
 <div class="paragraph">
@@ -842,10 +842,9 @@ This driver is currently not actively maintained.
 <p><a href="https://github.com/lphuberdeau/Neo4j-PHP-OGM">https://github.com/lphuberdeau/Neo4j-PHP-OGM</a></p>
 </div>
 
-<hr>
 </div>
-<div  id="_with_the_symfony_framework" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>With the Symfony framework</h3>
+<div  id="_with_the_symfony_framework" class="sect3 "  >
+<h4>With the Symfony framework</h4>
 
 
 <div class="paragraph">
@@ -853,8 +852,8 @@ This driver is currently not actively maintained.
 </div>
 
 </div>
-<div  id="_neo4jogmbundle" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Neo4jOGMBundle</h3>
+<div  id="_neo4jogmbundle" class="sect3 "  >
+<h4>Neo4jOGMBundle</h4>
 
 
 <div class="paragraph">
@@ -867,7 +866,7 @@ This driver is currently not actively maintained.
 <p><a href="https://github.com/klaussilveira/neo4j-ogm-bundle">https://github.com/klaussilveira/neo4j-ogm-bundle</a></p>
 </div>
 
-<hr>
+</div>
 <div  id="_neo4laravel" class="sect3 "  >
 <h4>Neo4Laravel</h4>
 
@@ -886,51 +885,6 @@ Author: <a href="https://github.com/lrezek">Lukas Rezek</a>
 </li>
 </ul>
 </div>
-<hr>
-</div>
-</div>
-<div  id="_other_drivers" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Other Drivers</h3>
-<div  id="_neo4j_pdo" class="sect3 "  >
-<h4>neo4j-pdo</h4>
-
-
-<div class="paragraph">
-<p>This is a PHP Data Objects driver for the Neo4j graph database, it allows you to connect to a Neo4j server from PHP using the standard PDO API.
-The project currently only implements a “vanilla” PHP implementation, which means you need to use a special constructor to create your PDO connection.
-PHP extensions to register the driver with PDO in HHVM and Zend VM are planned future work.</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-<a href="http://github.com/jakewins/neo4j-pdo">neo4j-pdo on GitHub</a>
-</li>
-<li>
-Author: <a href="http://twitter.com/jakewins">Jacob Hansson</a>
-</li>
-</ul>
-</div>
-</div>
-<div  id="_php_cypher" class="sect3 "  >
-<h4>PHP Cypher</h4>
-
-
-<div class="paragraph">
-<p>A PHP adapter for Neo4j REST API Cypher endpoint.</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-<a href="https://github.com/endyjasmi/neo4j">PHP Cypher on GitHub</a>
-</li>
-<li>
-Author: <a href="https://github.com/endyjasmi">Endy Jasmi</a>
-</li>
-</ul>
-</div>
-<hr>
 </div>
 </div>
 <div  id="_applications_built_with_php_and_neo4j" class="sect2 columns medium-12" style='padding-left: 0;' >
@@ -981,7 +935,7 @@ Author: <a href="https://github.com/hasantayyar">Hasan Tayyar</a>
 
 
 <div class="paragraph">
-<p>Graph generation engine based on the Cypher DSL</p>
+<p>Graph generation engine based on a Cypher DSL</p>
 </div>
 
 <div class="ulist">
