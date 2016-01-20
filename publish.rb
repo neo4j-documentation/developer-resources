@@ -2,6 +2,22 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'logger'
+require 'asciidoctor'
+require 'pathname'
+
+IMAGE_BASE_URL = 'http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/'
+GITHUB = 'https://github.com/neo4j-contrib/developer-resources/tree/gh-pages'
+MANUAL = 'http://neo4j.com/docs/stable'
+EXAMPLES = 'https://github.com/neo4j-examples'
+
+ASCIIDOC_TEMPLATES_DIR = ENV['ASCIIDOC_TEMPLATES_DIR'] || '_templates'
+ASCIIDOC_ATTRIBUTES = %W(allow-uri-read
+                         linkattrs
+                         source-highlighter=codemirror
+                         img=#{IMAGE_BASE_URL}
+                         examples=#{EXAMPLES}
+                         manual=#{MANUAL}
+                         github=#{GITHUB})
 
 require_relative('html_transformer')
 require_relative('word_press_syncer')
@@ -9,33 +25,37 @@ require_relative('word_press_syncer')
 logger = Logger.new(STDOUT)
 syncer = WordPressSyncer.new(ENV['BLOG_HOSTNAME'], ENV['BLOG_USERNAME'], ENV['BLOG_PASSWORD'], logger: logger)
 
-raise 'Usage: feed me html files' if ARGV.empty?
+raise 'Usage: feed me asciidoctor files' if ARGV.empty?
 
-def get_value(name, lines)
-  lines.find { |l| l.match("^#{name}:.*") }.to_s.split(/:/)[1].to_s.strip
-end
+ARGV.each do |adoc_file_path|
+  adoc = Asciidoctor.load_file(adoc_file_path,
+                               template_dir: ASCIIDOC_TEMPLATES_DIR, header_footer: true, attributes: ASCIIDOC_ATTRIBUTES)
 
-ARGV.each do |html_file|
-  lines = File.read(html_file).each_line.collect(&:strip).to_a  
+  html = adoc.convert
 
   data = {}
 
-  data[:post_name] = html_file.gsub(/deploy\/(.+)\.html$/,"\\1")
-  optional_slug = get_value('slug', lines)
-  data[:post_name] = optional_slug unless optional_slug.empty?
+  post_name = File.basename(adoc_file_path, '.*')
+  optional_slug = adoc.attributes['slug'].to_s
+  post_name = optional_slug unless optional_slug.empty?
 
-  %i(title level author email developer_section_name developer_section_slug).each do |key|
-    data[key] = get_value(key, lines)
+  %w(level author email).each do |key|
+    data[key.to_sym] = adoc.attributes[key]
   end
 
-  html = HtmlTransformer.transform(lines)
+  data[:developer_section_name] = adoc.attributes['section'].to_s
+  # data[:developer_section_slug] = adoc.attributes['section-link']
 
-  # puts "data: #{data.inspect}"
+  data.reject! {|_, value| value.nil? }
 
-  logger.info "publishing: #{data[:post_name]}"
+  html = adoc.convert
 
-  syncer.sync(data[:title], data[:post_name], html,
+  logger.info "publishing: #{adoc.doctitle} (post_name: #{post_name})"
+
+  # logger.info "data: #{data.inspect}"
+
+  syncer.sync(adoc.doctitle, post_name, html,
               [{key: 'developer_section_name', value: data[:developer_section_name]},
-               {key: 'developer_section_slug', value: ''}]) # was developer_section_slug
+               {key: 'developer_section_slug', value: ''}]) # was data[:developer_section_slug]
 end
 
