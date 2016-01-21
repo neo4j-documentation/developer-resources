@@ -26,7 +26,7 @@ raise 'Usage: feed me asciidoctor files (or pass `all` to find all files)' if AR
 logger = Logger.new(STDOUT)
 renderer = AsciiPress::Renderer.new(attributes: ASCIIDOC_ATTRIBUTES, header_footer: true, safe: 0, template_dir: ASCIIDOC_TEMPLATES_DIR)
 
-if ENV['BLOG_HOSTNAME'] && ENV['BLOG_USERNAME'] && ENV['BLOG_PASSWORD']
+if ENV['BLOG_HOSTNAME'] && ENV['BLOG_USERNAME'] && ENV['BLOG_PASSWORD'] && ENV['PUBLISH']
   syncer = AsciiPress::WordPressSyncer.new(ENV['BLOG_HOSTNAME'], ENV['BLOG_USERNAME'], ENV['BLOG_PASSWORD'], logger: logger)
 end
 
