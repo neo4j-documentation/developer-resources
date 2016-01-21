@@ -30,13 +30,13 @@ if ENV['BLOG_HOSTNAME'] && ENV['BLOG_USERNAME'] && ENV['BLOG_PASSWORD']
   syncer = AsciiPress::WordPressSyncer.new(ENV['BLOG_HOSTNAME'], ENV['BLOG_USERNAME'], ENV['BLOG_PASSWORD'], logger: logger)
 end
 
-adoc_file_paths = if ARGV = ['all']
+adoc_file_paths = if ARGV == ['all']
   `find . -mindepth 2 -maxdepth 4 -name "*.adoc"`.split(/[\n\r]+/)
 else
   ARGV
 end
 
-ARGV.each do |adoc_file_path|
+adoc_file_paths.each do |adoc_file_path|
   rendering = renderer.render(adoc_file_path)
 
   if syncer
