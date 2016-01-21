@@ -9,13 +9,13 @@
   <title>Developer: Get started - Neo4j Graph Database</title>
   <meta name="description"
         content="This is where you’ll find step-by-step Neo4j tutorials and developer guides that cover all areas of the development life-cycle to help you get started."/>
-  <link rel="canonical" href="http://neo4j.com/developer-resources/get-started/"/>
+  <link rel="canonical" href="http://neo4j.com/developer/get-started/"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:type" content="article"/>
   <meta property="og:title" content="Developer: Get started - Neo4j Graph Database"/>
   <meta property="og:description"
         content="This is where you’ll find step-by-step Neo4j tutorials and developer guides that cover all areas of the development life-cycle to help you get started."/>
-  <meta property="og:url" content="http://neo4j.com/developer-resources/get-started/"/>
+  <meta property="og:url" content="http://neo4j.com/developer/get-started/"/>
   <meta property="og:site_name" content="Neo4j Graph Database"/>
   <meta property="og:image"
         content="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/10/icon-guide-theory.png"/>
@@ -74,7 +74,7 @@
             <ul id="menu-top-nav" class="top-bar-menu right">
                 <li id="menu-item-36917"
                     class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item active menu-item-36917">
-                    <a href="/developer-resources/get-started">Developer</a></li>
+                    <a href="/developer/get-started">Developer</a></li>
                 <li id="menu-item-38286"
                     class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-38286">
                     <a href="http://neo4j.com/blog/">Blog</a></li>
@@ -198,7 +198,7 @@
                                     <ul id="menu-developer" class="menu">
                                         <li id="menu-item-38292"
                                             class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item menu-item-38292">
-                                            <a href="/developer-resources/get-started">DEVELOPER</a></li>
+                                            <a href="/developer/get-started">DEVELOPER</a></li>
                                         <li id="menu-item-39699"
                                             class="menu-item menu-item-type-custom menu-item-object-custom menu-item-39699">
                                             <a href="/docs">Docs</a></li>
@@ -599,7 +599,7 @@ This article reviews the different tools available for visualizing graph-based d
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should have familiarized yourself with <a href="/developer-resources/get-started/graph-database">Graph Databases</a> and the <a href="/developer-resources/get-started/graph-database#property-graph">Property Graph Model</a>.
+You should have familiarized yourself with <a href="/developer/get-started/graph-database">Graph Databases</a> and the <a href="/developer/get-started/graph-database#property-graph">Property Graph Model</a>.
 </blockquote>
 </div>
 
@@ -689,7 +689,7 @@ We then discuss the Graph-Style-Sheet (GRASS) and how you can download, update, 
 
 
 <div class="paragraph">
-<p><span class="image"><a class="image" href="http://www.apcjones.com/talks/2014-03-26_Neo4j_London/#slide-0"><img src="http://assets.neo4j.org/img/still/seening_pattern_in_data.jpg" alt="seening_pattern_in_data" width="500"></a></span></p>
+<p><span class="image"><a class="image" href="http://www.apcjones.com/talks/2014-03-26_Neo4j_London/#slide-0"><img src="http://assets.neo4j.org/img/still/seening_pattern_in_data.jpg" alt="seening pattern in data" width="500"></a></span></p>
 </div>
 
 
@@ -828,7 +828,7 @@ You bind to these events to customize what happens, and, most importantly, your 
 
 <div class="paragraph">
 <p>If you want to get started directly, here are the few steps you have to take to convert Neo4j&#8217;s graph query results into the format typically needed by the visualization libraries.
-This approach is also used in the <a href="/developer-resources/language-guides/example-project">example project</a> which we implemented for each of the <a href="/developer-resources/language-guides">languages and drivers</a> listed.
+This approach is also used in the <a href="/developer/language-guides/example-project">example project</a> which we implemented for each of the <a href="/developer/language-guides">languages and drivers</a> listed.
 You can find the appropriate transformation code for your language and stack there.</p>
 </div>
 
@@ -860,50 +860,50 @@ Here we see 3 nodes (2 people, one database) and 3 relationships in that datastr
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="javascript"><code>var width = 800, height = 800;
-// force layout setup
-var force = d3.layout.force()
-        .charge(-200).linkDistance(30).size([width, height]);
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="javascript"><code>  var width = 800, height = 800;
+  // force layout setup
+  var force = d3.layout.force()
+          .charge(-200).linkDistance(30).size([width, height]);
 
-// setup svg div
-var svg = d3.select("#graph").append("svg")
-        .attr("width", "100%").attr("height", "100%")
-        .attr("pointer-events", "all");
+  // setup svg div
+  var svg = d3.select("#graph").append("svg")
+          .attr("width", "100%").attr("height", "100%")
+          .attr("pointer-events", "all");
 
-// load graph (nodes,links) json from /graph endpoint
-d3.json("/graph", function(error, graph) {
-    if (error) return;
+  // load graph (nodes,links) json from /graph endpoint
+  d3.json("/graph", function(error, graph) {
+if (error) return;
 
-    force.nodes(graph.nodes).links(graph.links).start();
+      force.nodes(graph.nodes).links(graph.links).start();
 
-    // render relationships as lines
-    var link = svg.selectAll(".link")
-            .data(graph.links).enter()
-            .append("line").attr("class", "link");
+      // render relationships as lines
+      var link = svg.selectAll(".link")
+              .data(graph.links).enter()
+              .append("line").attr("class", "link");
 
-    // render nodes as circles, css-class from label
-    var node = svg.selectAll(".node")
-            .data(graph.nodes).enter()
-            .append("circle")
-            .attr("class", function (d) { return "node "+d.label })
-            .attr("r", 10)
-            .call(force.drag);
+      // render nodes as circles, css-class from label
+      var node = svg.selectAll(".node")
+              .data(graph.nodes).enter()
+              .append("circle")
+              .attr("class", function (d) { return "node "+d.label })
+              .attr("r", 10)
+              .call(force.drag);
 
-    // html title attribute for title node-attribute
-    node.append("title")
-            .text(function (d) { return d.title; })
+      // html title attribute for title node-attribute
+      node.append("title")
+              .text(function (d) { return d.title; })
 
-    // force feed algo ticks for coordinate computation
-    force.on("tick", function() {
-        link.attr("x1", function(d) { return d.source.x; })
-                .attr("y1", function(d) { return d.source.y; })
-                .attr("x2", function(d) { return d.target.x; })
-                .attr("y2", function(d) { return d.target.y; });
+      // force feed algo ticks for coordinate computation
+      force.on("tick", function() {
+          link.attr("x1", function(d) { return d.source.x; })
+                  .attr("y1", function(d) { return d.source.y; })
+                  .attr("x2", function(d) { return d.target.x; })
+                  .attr("y2", function(d) { return d.target.y; });
 
-        node.attr("cx", function(d) { return d.x; })
-                .attr("cy", function(d) { return d.y; });
-    });
-});</code></pre>
+          node.attr("cx", function(d) { return d.x; })
+                  .attr("cy", function(d) { return d.y; });
+      });
+  });</code></pre>
 </div>
 </div>
 </div>
@@ -1332,7 +1332,7 @@ viz = {nodes:nodes, links:links};</code></pre>
                     <div class="menu-developer-container">
                         <ul id="menu-developer-1" class="menu">
                             <li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item menu-item-38292">
-                                <a href="/developer-resources/get-started">DEVELOPER</a></li>
+                                <a href="/developer/get-started">DEVELOPER</a></li>
                             <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-39699"><a
                                     href="/docs">Docs</a></li>
                         </ul>
