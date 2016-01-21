@@ -14,12 +14,12 @@ end
 
 
 guard :slidy do
-  watch(/.*\.(adoc|asciidoc)/) do |files|
+  watch(/.*\.(?:adoc|asciidoc)/) do |files|
     files.each do |file|
-      puts "Compiling: asciidoc #{file}"
-
-      run_script = File.join(Dir.pwd, 'render.sh')
-      `#{run_script} #{file}`
+      puts
+      run_script = File.join(Dir.pwd, 'render.rb')
+      output = `#{run_script} #{file} 2>&1`
+      puts output.split(/[\n\r]+/).reject {|line| line =~ /out of sequence/ }.join("\n")
     end
   end
 end
