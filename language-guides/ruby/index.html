@@ -9,13 +9,13 @@
   <title>Developer: Get started - Neo4j Graph Database</title>
   <meta name="description"
         content="This is where you’ll find step-by-step Neo4j tutorials and developer guides that cover all areas of the development life-cycle to help you get started."/>
-  <link rel="canonical" href="http://neo4j.com/developer-resources/get-started/"/>
+  <link rel="canonical" href="http://neo4j.com/developer/get-started/"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:type" content="article"/>
   <meta property="og:title" content="Developer: Get started - Neo4j Graph Database"/>
   <meta property="og:description"
         content="This is where you’ll find step-by-step Neo4j tutorials and developer guides that cover all areas of the development life-cycle to help you get started."/>
-  <meta property="og:url" content="http://neo4j.com/developer-resources/get-started/"/>
+  <meta property="og:url" content="http://neo4j.com/developer/get-started/"/>
   <meta property="og:site_name" content="Neo4j Graph Database"/>
   <meta property="og:image"
         content="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/10/icon-guide-theory.png"/>
@@ -74,7 +74,7 @@
             <ul id="menu-top-nav" class="top-bar-menu right">
                 <li id="menu-item-36917"
                     class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item active menu-item-36917">
-                    <a href="/developer-resources/get-started">Developer</a></li>
+                    <a href="/developer/get-started">Developer</a></li>
                 <li id="menu-item-38286"
                     class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-38286">
                     <a href="http://neo4j.com/blog/">Blog</a></li>
@@ -198,7 +198,7 @@
                                     <ul id="menu-developer" class="menu">
                                         <li id="menu-item-38292"
                                             class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item menu-item-38292">
-                                            <a href="/developer-resources/get-started">DEVELOPER</a></li>
+                                            <a href="/developer/get-started">DEVELOPER</a></li>
                                         <li id="menu-item-39699"
                                             class="menu-item menu-item-type-custom menu-item-object-custom menu-item-39699">
                                             <a href="/docs">Docs</a></li>
@@ -270,6 +270,8 @@
                 <div class="columns large-12" style="padding-top:10px;">
                     <ul class="breadcrumbs">
                         <li><a href="/developer-resources">Developer Guides</a></li>
+                        
+                        <li><a href="../">Guide</a></li>
                         
                         <li class="current"><a href="#">Using Neo4j from Ruby</a></li>
                     </ul>
@@ -604,7 +606,7 @@ This guide provides an overview of options for connecting to Neo4j using Ruby. I
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should be familiar with <a href="/developer-resources/get-started/graph-database">graph database concepts</a> and the property graph model. You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="/developer-resources/cypher">Cypher Query language</a>.
+You should be familiar with <a href="/developer/get-started/graph-database">graph database concepts</a> and the property graph model. You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="/developer/cypher">Cypher Query language</a>.
 </blockquote>
 </div>
 
@@ -612,8 +614,8 @@ You should be familiar with <a href="/developer-resources/get-started/graph-data
 <div class="label">Intermediate</div>
 <hr/>
 
-<div class="toc">
-<h3 class="title">Overview</h3>
+<div id="toc" class="toc">
+<h3 class="title" id="toctitle">Overview</h3>
 
 <ul class="sectlevel2">
 <li><a href="#_the_example_project">The Example Project</a></li>
@@ -680,7 +682,7 @@ You will find the implementations for all drivers as <a href="https://github.com
 
 
 <div class="paragraph">
-<p>Follow the guidance and videos here: <a href="/developer-resources/ruby-course/"><strong>Getting Started with Neo4j and Ruby</strong></a>.</p>
+<p>Follow the guidance and videos here: <a href="/developer/ruby-course/"><strong>Getting Started with Neo4j and Ruby</strong></a>.</p>
 </div>
 
 <div  id="_feature_comparison" class="sect3 "  >
@@ -828,7 +830,7 @@ You will find the implementations for all drivers as <a href="https://github.com
 
 
 <div class="paragraph">
-<p>Get more information on our <a href="/developer-resources/working-with-data/">Working With Data</a> page.</p>
+<p>Get more information on our <a href="/developer/working-with-data/">Working With Data</a> page.</p>
 </div>
 
 </div>
@@ -931,7 +933,7 @@ node = neo.create_node("age" =&gt; 31, "name" =&gt; "Max")</code></pre>
 <a href="http://neo4jrb.readthedocs.org/en/latest/">ReadTheDocs documentation</a>
 </li>
 <li>
-<a href="/developer-resources/ruby-course/">Getting Started with Neo4j and Ruby Course</a>
+<a href="/developer/ruby-course/">Getting Started with Neo4j and Ruby Course</a>
 </li>
 </ul>
 </div>
@@ -1182,11 +1184,11 @@ Author: Darrick Wiebe
                     <div class="large-3 large-pull-9 columns">
                            <ul style="padding-top: 0;" class="side-nav">
          <dl class="accordion">
-            <dd class="accordion-navigation inactive">
+            <dd class="accordion-navigation active">
                <a href="/developer-resources/get-started/">
                   <h5>Get Started</h5>
                </a>
-               <div class="content inactive" id="panel1">
+               <div class="content active" id="panel1">
                   <ul>
                      <li><a href="/developer-resources/get-started/graph-database/">What is a GraphDB?</a></li>
                      <li><a href="/developer-resources/get-started/graph-db-vs-rdbms/">GraphDB vs RDBMS</a></li>
@@ -1243,11 +1245,11 @@ Author: Darrick Wiebe
                </dd>
             </dl>
             <dl class="accordion">
-               <dd class="accordion-navigation active">
+               <dd class="accordion-navigation inactive">
                   <a href="/developer-resources/language-guides/">
                      <h5>Drivers &amp; Language Guides</h5>
                   </a>
-                  <div class="content active" id="panel5">
+                  <div class="content inactive" id="panel5">
                      <ul>
                         <li><a href="/developer-resources/language-guides/java/">Java</a></li>
                         <li><a href="/developer-resources/language-guides/spring-data-neo4j/">Spring Framework</a></li>
@@ -1511,7 +1513,7 @@ Author: Darrick Wiebe
                     <div class="menu-developer-container">
                         <ul id="menu-developer-1" class="menu">
                             <li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item menu-item-38292">
-                                <a href="/developer-resources/get-started">DEVELOPER</a></li>
+                                <a href="/developer/get-started">DEVELOPER</a></li>
                             <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-39699"><a
                                     href="/docs">Docs</a></li>
                         </ul>

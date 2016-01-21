@@ -6,8 +6,8 @@ The content is written as textual format in http://asciidoctor.org[AsciiDoc] ren
 
 Install asciidoctor (1.5.1) ruby gems with `bundle install` in the main directory.
 
-You can render a single document to its `index.html` by calling `./render.sh path/to/doc.adoc` +
-(e.g. `./render.sh in-production/guide-cloud-deployment/guide-cloud-deployment.adoc`) or render all pages at once with just `./render.sh`
+You can render a single document to its `index.html` by calling `./render.rb path/to/doc.adoc` +
+(e.g. `./render.rb in-production/guide-cloud-deployment/guide-cloud-deployment.adoc`) or render all pages at once with just `./render.rb all`
 
 You can open the generated `index.html` file locally to check the rendering/preview, or start the `http` script in the main directory, and then open: http://localhost:8000/developer-resources/
 
@@ -18,7 +18,7 @@ After commiting changes to head, you can push them to the publish branch: `git p
 Most of the documents in this developer resources section are organized as a guide. 
 Those guides come with a consistent structure and similar use of language and assets. 
 Each of the guides lives in its own directory and is rendered into an `index.html` file for publication.
-You can run the rendering process by calling `render.sh` on the command line.
+You can run the rendering process by calling `render.rb` on the command line.
 
 A guide has this general structure:
 

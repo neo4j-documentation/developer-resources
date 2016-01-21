@@ -1,12 +1,3 @@
-<!--
-title: <%= doctitle(:sanitize => true) %>
-level: <%= attr :level %>
-author: <%= attr :author %>
-email: <%= attr :email %>
-developer_section_name: <%= attr :section %>
-developer_section_slug: <%= attr "section-link" %>
-slug: <%= attr("slug","") %>
--->
 <% active= {"get-started"=>:inactive, "cypher"=>:inactive, "data-modeling"=>:inactive,"working-with-data"=>:inactive,"language-guides"=>:inactive,
 "ecosystem"=>:inactive,"in-production"=>:inactive}
 active[(@document.attr "section-link", "get-started")]=:active;
