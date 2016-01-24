@@ -617,10 +617,13 @@ You should be familiar with <a href="/developer/get-started/graph-database">grap
 <li><a href="#_github">GitHub</a></li>
 <li><a href="#_webpage">Webpage</a></li>
 <li><a href="#_graph_visualization">Graph Visualization</a></li>
+</ul>
+</li>
+<li><a href="#_data_setup">Data Setup</a>
+<ul class="sectlevel2">
 <li><a href="#_endpoints">Endpoints</a></li>
 </ul>
 </li>
-<li><a href="#_data_setup">Data Setup</a></li>
 <li><a href="#_run_locally">Run Locally</a></li>
 <li><a href="#_deploy_to_heroku">Deploy to Heroku</a></li>
 <li><a href="#_existing_language_driver_examples">Existing Language / Driver Examples</a></li>
@@ -636,7 +639,7 @@ You should be familiar with <a href="/developer/get-started/graph-database">grap
 
 <div class="paragraph">
 <p>To demonstrate connection to and usage of Neo4j in different programming languages we&#8217;ve created an example application.
-It is a simple, one-page webapp, that uses Neo4j&#8217;s movie demo database (movie, actor, director) as dataset.
+It is a <a href="http://my-neo4j-movies-app.herokuapp.com/">simple, one-page webapp</a>, that uses Neo4j&#8217;s movie demo database (movie, actor, director) as dataset.
 The same front-end web page consumes 3 REST-endpoints provided by backend implemented in the different programming languages and drivers.</p>
 </div>
 
@@ -655,7 +658,7 @@ graph visualization of the domain
 </div>
 <div class="imageblock">
 <p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/movie_application.png" alt="movie application">
+<a class="image" href="http://my-neo4j-movies-app.herokuapp.com/"><img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/movie_application.png" alt="movie application"></a>
 </p>
 </div>
 <div  id="_domain_model" class="sect2 columns medium-12" style='padding-left: 0;' >
@@ -706,6 +709,43 @@ If you click on any of the movie titles, the side-view is populated with the mov
 We then apply the force-layout algorithm to render nodes as circles and relationships as lines, and add some minor styling to the visualization to provide the movie title/person name as an HTML title attribute to the node circles.</p>
 </div>
 
+</div>
+</div>
+<div  id="_data_setup" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Data Setup</h3>
+<div class="ulist">
+<ul>
+<li>
+Start your local Neo4j Server (<a href="http://neo4j.com/download">Download &amp; Install</a>)
+</li>
+<li>
+Open the <a href="http://localhost:7474">Neo4j Browser</a>.
+</li>
+<li>
+Install the Movies dataset with <code>:play movies</code>
+</li>
+<li>
+Click the <code>CREATE</code> statement and hit the triangular "Run" button to insert the data.
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>You can also choose to use a <a href="/developer/in-production/guide-cloud-deployment">cloud-hosted Neo4j database</a>.
+If you go this route, then you have to provide the URL to your Neo4j server in an environment variable <code>NEO4J_URL</code>.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Alternatively you can run this Cypher <code>LOAD CSV</code> statement:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code></code></pre>
+</div>
 </div>
 <div  id="_endpoints" class="sect2 columns medium-12" style='padding-left: 0;' >
 <h3>Endpoints</h3>
@@ -814,32 +854,6 @@ A separate function then takes this result and converts it into the node- and li
 </div>
 </div>
 </div>
-</div>
-<div  id="_data_setup" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Data Setup</h3>
-<div class="ulist">
-<ul>
-<li>
-Start your local Neo4j Server (<a href="http://neo4j.com/download">Download &amp; Install</a>)
-</li>
-<li>
-Open the <a href="http://localhost:7474">Neo4j Browser</a>.
-</li>
-<li>
-Install the Movies dataset with <code>:play movies</code>
-</li>
-<li>
-Click the <code>CREATE</code> statement and hit the triangular "Run" button to insert the data.
-</li>
-</ul>
-</div>
-
-
-<div class="paragraph">
-<p>You can also choose to use a <a href="/developer/in-production/guide-cloud-deployment">cloud-hosted Neo4j database</a>.
-If you go this route, then you have to provide the URL to your Neo4j server in an environment variable <code>NEO4J_URL</code>.</p>
-</div>
-
 </div>
 <div  id="_run_locally" class="sect1 columns medium-12" style='padding-left: 0;' >
 <h3>Run Locally</h3>
