@@ -76,6 +76,8 @@ cypher(query,params,cb)
  "errors":[]}
 ----
 
+There is a nice, more detailed intro article on modulus on http://blog.modulus.io/learn-how-to-use-neo4j-with-node.js[how to use Neo4j from Javascript].
+
 [[node-neo4j]]
 === node-neo4j (Thingdom)
 
@@ -125,6 +127,30 @@ With *disposable-seraph* you can manage a disposable Neo4j-instance for automati
 * https://github.com/brikteknologier/seraph-model[seraph-model on GitHub]
 * https://github.com/brikteknologier/seraph-resource[seraph-resource on GitHub]
 * https://github.com/brikteknologier/disposable-seraph[disposable-seraph on GitHub]
+
+
+=== simple-neo4j
+
+This is a simple neo4j pure javascript database driver. 
+It takes in one or more queries, commits them to the database in a single transaction, and parses the database result into a simple and easy native javascript object, of course the parser can be disabled if desired.
+
+https://tonicdev.com/npm/simple-neo4j[Test simple-neo4j in your Browser]
+
+
+[source,javascript]
+----
+simpleNeo4J.execute('MATCH (n:Movie) RETURN count(*)')
+    .then(function(result)
+    {
+        result.firstValue === 26;
+    });
+----
+
+* https://www.npmjs.com/package/simple-neo4j[simple-neo4j on npm]
+* Author: https://twitter.com/aoi_ika_desu[John Mothershed]
+* https://github.com/RussellsToolbox/simple-neo4j[simple-neo4j on GitHub]
+* https://www.npmjs.com/~wiseguy12851[Other Neo4j projects by John]
+
 
 == Meteor.js 
 
