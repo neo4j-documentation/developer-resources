@@ -440,7 +440,7 @@ section {
 
 #content h3 {
     font-weight: 100;
-    color: #0f5788;
+    color: #3d5360;
     font-size:1.5em;
 }
 
@@ -619,6 +619,7 @@ You should have <a href="/download">installed Neo4j</a> and made yourself famili
 <li><a href="#node-neo4j">node-neo4j (Thingdom)</a></li>
 <li><a href="#_cypher_stream">cypher-stream</a></li>
 <li><a href="#_seraph">Seraph</a></li>
+<li><a href="#_simple_neo4j">simple-neo4j</a></li>
 <li><a href="#_meteor_js">Meteor.js</a>
 <ul class="sectlevel2">
 <li><a href="#_ccorcos_neo4j">ccorcos:neo4j</a></li>
@@ -729,6 +730,12 @@ cypher(query,params,cb)
  "errors":[]}</code></pre>
 </div>
 </div>
+
+
+<div class="paragraph">
+<p>There is a nice, more detailed intro article on modulus on <a href="http://blog.modulus.io/learn-how-to-use-neo4j-with-node.js">how to use Neo4j from Javascript</a>.</p>
+</div>
+
 </div>
 <div  id="node-neo4j" class="sect2 columns medium-12" style='padding-left: 0;' >
 <h3>node-neo4j (Thingdom)</h3>
@@ -851,6 +858,47 @@ Author: <a href="https://github.com/jonpacker">Jon Packer via BRIK Teknologier, 
 </li>
 <li>
 <a href="https://github.com/brikteknologier/disposable-seraph">disposable-seraph on GitHub</a>
+</li>
+</ul>
+</div>
+</div>
+<div  id="_simple_neo4j" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>simple-neo4j</h3>
+
+
+<div class="paragraph">
+<p>This is a simple neo4j pure javascript database driver.
+It takes in one or more queries, commits them to the database in a single transaction, and parses the database result into a simple and easy native javascript object, of course the parser can be disabled if desired.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><a href="https://tonicdev.com/npm/simple-neo4j">Test simple-neo4j in your Browser</a></p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="javascript"><code>simpleNeo4J.execute('MATCH (n:Movie) RETURN count(*)')
+    .then(function(result)
+    {
+        result.firstValue === 26;
+    });</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<a href="https://www.npmjs.com/package/simple-neo4j">simple-neo4j on npm</a>
+</li>
+<li>
+Author: <a href="https://twitter.com/aoi_ika_desu">John Mothershed</a>
+</li>
+<li>
+<a href="https://github.com/RussellsToolbox/simple-neo4j">simple-neo4j on GitHub</a>
+</li>
+<li>
+<a href="https://www.npmjs.com/~wiseguy12851">Other Neo4j projects by John</a>
 </li>
 </ul>
 </div>

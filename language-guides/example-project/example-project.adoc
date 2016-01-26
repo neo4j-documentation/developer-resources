@@ -25,14 +25,14 @@ toc::[]
 == Example Project Description
 
 To demonstrate connection to and usage of Neo4j in different programming languages we've created an example application.
-It is a simple, one-page webapp, that uses Neo4j's movie demo database (movie, actor, director) as dataset.
+It is a http://my-neo4j-movies-app.herokuapp.com/[simple, one-page webapp], that uses Neo4j's movie demo database (movie, actor, director) as dataset.
 The same front-end web page consumes 3 REST-endpoints provided by backend implemented in the different programming languages and drivers.
 
 * movie search
 * single movie listing
 * graph visualization of the domain
 
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/movie_application.png[]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/movie_application.png[link="http://my-neo4j-movies-app.herokuapp.com/"]
 
 === Domain Model
 
@@ -58,6 +58,23 @@ For the movie details it uses the `/movie/Movie%20Title` endpoint and the result
 
 For the Graph Visualization we use http://d3js.org[d3.js]. Our `/graph` endpoint already returns the data in the format of "nodes" and "links"-list that d3 can use directly.
 We then apply the force-layout algorithm to render nodes as circles and relationships as lines, and add some minor styling to the visualization to provide the movie title/person name as an HTML title attribute to the node circles.
+
+== Data Setup
+
+- Start your local Neo4j Server (http://neo4j.com/download[Download & Install])
+- Open the http://localhost:7474[Neo4j Browser].
+- Install the Movies dataset with `:play movies`
+- Click the `CREATE` statement and hit the triangular "Run" button to insert the data.
+
+You can also choose to use a link:/developer/in-production/guide-cloud-deployment[cloud-hosted Neo4j database].
+If you go this route, then you have to provide the URL to your Neo4j server in an environment variable `NEO4J_URL`.
+
+Alternatively you can run this Cypher `LOAD CSV` statement:
+
+[source,cypher]
+----
+
+----
 
 === Endpoints
 
@@ -134,16 +151,6 @@ MATCH (m:Movie)<-[:ACTED_IN]-(a:Person)
  RETURN m.title as movie, collect(a.name) as cast
  LIMIT {limit}
 ----
-
-== Data Setup
-
-- Start your local Neo4j Server (http://neo4j.com/download[Download & Install])
-- Open the http://localhost:7474[Neo4j Browser].
-- Install the Movies dataset with `:play movies`
-- Click the `CREATE` statement and hit the triangular "Run" button to insert the data.
-
-You can also choose to use a link:/developer/in-production/guide-cloud-deployment[cloud-hosted Neo4j database].
-If you go this route, then you have to provide the URL to your Neo4j server in an environment variable `NEO4J_URL`.
 
 == Run Locally
 
