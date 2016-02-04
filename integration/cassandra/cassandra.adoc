@@ -1,0 +1,156 @@
+= Neo4j and Cassandra
+:slug cassandra
+:level: Intermediate
+:toc:
+:toc-placement!:
+:toc-title: Neo4j Cassandra Data Import Tool
+:toclevels: 1
+:section: Neo4j Integrations
+:section-link: integration
+
+.Goals
+[abstract]
+The goal of this guide is to export data from Cassandra, convert to a property graph model and insert into Neo4j. To accomplish this we will use the Neo4j Cassandra data import tool, a prototype command line application that enables translation from a column-oriented data model to a property graph data model.
+
+[NOTE]
+The Neo4j Cassandra data import tool is in its infancy and currently has many limitations. It is currently a simple prototype meant to support a limited data model. We'd appreciate any feedback you might have, please raise an issue on the link:https://github.com/neo4j-contrib/neo4j-cassandra-connector/issues[GitHub project].
+
+.Prerequisites
+[abstract]
+You should have an understanding of Cassandra, Neo4j and be familiar with column-oriented and property graph data models. You will need to have Cassandra, Neo4j and Python 3.x installed.
+
+[role=expertise]
+{level}
+
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/20160203161027/datamodel.png[title='Translating from a column-oriented data model to a property graph.']
+
+toc::[]
+
+== Overview
+
+The main goal of the link:https://github.com/neo4j-contrib/neo4j-cassandra-connector[Cassandra Neo4j data import tool] is to provide a direct way to map a Cassandra schema to Neo4j and import result sets that come from Cassandra columns to Neo4j property graph model, generating a meaningful representation of nodes and relationships. This translation is specified by populating a YAML file based on the Cassandra schema to specify how the data should be mapped from a column-oriented data model to a property graph. The tool exports data from Cassandra using the Cassandra Python driver into CSV format as an intermediate step. LOAD CSV cypher statements are then generated based on the data model mapping specified for loading the data into Neo4j. The following sections will guide you through this process and also provide some mapping examples.
+
+[NOTE]
+At this point, only Python 3.x is supported
+
+== Install
+
+* Both link:http://cassandra.apache.org/download/[Cassandra] and link:http://neo4j.com/download[Neo4j] should be installed and running.
+* Clone link:https://github.com/neo4j-contrib/neo4j-cassandra-connector[this GitHub repository]: ```git clone https://github.com/neo4j-contrib/neo4j-cassandra-connector.git```
+* Install project dependencies: `pip install -r requirements.txt`
+
+== Populating an initial Cassandra Database
+
+We will use a sample database of musicians and songs:
+
+* A sample database is included that works with this example. Simply go to `db_gen` directory, start Cassandra shell `cqlsh` and invoke the command `SOURCE '/playlist.cql'`. You can also provide the absolute path of the file. This will populate your Cassandra database with a sample Tracks and Artists database.
+
+== Inspect the Cassandra schema
+
+After populating your initial database, you must generate a file to properly map a Cassandra Schema to a graph. Do the following:
+
+* Into the project directory, navigate to the subfolder __connector/__
+* Run the script `connector.py`. Invoke it with `python connector.py parse -k playlist`.
+* Some output files will be generated. At this stage, take a look into the generated `schema.yaml` file. It contains a YAML representation of the Cassandra schema with placeholders for specifying how to convert this Cassandra schema into a Neo4j property graph data model.
+
+The next step consists of populating the placeholders in this file with mapping information. Check out the next section for more information.
+
+== Configure data model mappings
+
+In order to import data into Neo4j the mapping from Cassandra schema to Neo4j property graph must be specified. This is done by populating the placeholders in the generated schema.yaml file.
+
+__schema.yaml__ file for the sample database:
+
+```
+CREATE TABLE playlist.artists_by_first_letter:
+    first_letter text: {}
+    artist text: {}
+    PRIMARY KEY (first_letter {}, artist {})
+CREATE TABLE playlist.track_by_id:
+    track_id uuid PRIMARY KEY: {}
+    artist text: {}
+    genre text: {}
+    music_file text: {}
+    track text: {}
+    track_length_in_seconds int: {}
+NEO4J CREDENTIALS (url {}, user {}, password {})
+```
+
+[NOTE]
+* Every table will be translated as a Node in Neo4j.
+* The keyspace from Cassandra will be translated as a label for every generated node in Neo4j.
+
+Note the __{}__. It's possible to fill them up with the following options:
+
+* _p_, for regular node property (fill with __{p}__),
+* __r__ for relationship (fill with __{r}__),
+* __u__ for unique constraint field (fill with __{u}__)
+
+For example:
+
+```
+CREATE TABLE playlist.artists_by_first_letter:
+    first_letter text: {p}
+    artist text: {r}
+    PRIMARY KEY (first_letter {p}, artist {u})
+CREATE TABLE playlist.track_by_id:
+    track_id uuid PRIMARY KEY: {u}
+    artist text: {r}
+    genre text: {p}
+    music_file text: {p}
+    track text: {p}
+    track_length_in_seconds int: {p}
+```
+
+This will create a propery graph with nodes for the artists and tracks, with a relationship connecting the artist to the track.
+
+There's also one last line at the end of the file, that requires Neo4j address and credentials:
+
+```
+NEO4J CREDENTIALS (url {"http://localhost:7474/db/data"}, user {"neo4j"}, password {"neo4jpasswd"})
+```
+
+If you have turned off authentication, you can leave __user__ and __password__ fields empty:
+```
+NEO4J CREDENTIALS (url {"http://localhost:7474/db/data"}, user {}, password {})
+```
+
+An example of filled YAML file can be found on __connector/schema.yaml.example__.
+
+=== Important points to consider when mapping:
+
+For this first version, we do not have a strong error handling. So please be aware of the following aspects:
+
+* If you populate a field as a relationship between two nodes, please map the field with __r__ in both table. In the example above, note that __artist__ is mapped as __r__ in both tables, __playlist.track_by_artist__ and __playlist.track_by_id__. In this initial version keys must have the same name to indicate a relationship.
+
+* Regarding unique constraints: be sure that you will not have more than one node with the property that you selected for creating this constraint. __u__ is going to work **only** for lines that have been marked with __PRIMARY KEY__. For example: `PRIMARY KEY (first_letter {p}, artist {u})` This example denotes that __artist__ is selected to be a constraint. We cannot have more than one node with the same artist.
+
+* To avoid performance issues, try to promote fields to constraints if you notice that it would reduce the number of reduced nodes (of course considering the meaningfulness of the modelling).
+
+== Import to Neo4j
+
+After populating the empty brackets, save the file and run the script `connector.py`, now specifying the tables you wish to export from Cassandra:
+
+```
+python connector.py export -k playlist -t track_by_id,artists_by_first_letter
+```
+
+The schema YAML file name (if different than `schema.yaml`) can also be specifed as a command line argument. For example:
+
+```
+python connector.py export -k playlist -t track_by_id,artists_by_first_letter -f my_schema_file.yaml
+```
+
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/20160203161028/neo4j_cassandra.png[title='Neo4j Cassandra data import tool']
+
+== Mapping data into Cassandra to Neo4j
+
+The YAML file will be parsed into Cypher queries. A file called **cypher_** will be generated in your directory. It contains the Cypher queries that will generate Nodes and Relationship into a graph structure. After generated, the queries are automatically executed by http://py2neo.org/2.0/[Py2Neo] using the Neo4j connection parameters specified in `schema.yaml`.
+
+Using the sample Artists and Tracks dataset, we have __Track__ nodes and __Artist__ nodes, connected by artist fields. We also wanted to make a constraint on artist by its name - we could not have two different nodes with similar artist names.
+
+
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/20160204123739/graph_data_model.png[title='Property graph data from sample playlist database']
+
+[NOTE]
+The Neo4j Cassandra data import tool is in its infancy and currently has many limitations. It is currently a simple prototype meant to support a limited data model. We'd appreciate any feedback you might have, please raise an issue on the link:https://github.com/neo4j-contrib/neo4j-cassandra-connector/issues[GitHub project].
