@@ -222,6 +222,33 @@ e.EmployeeID:reports:totalOrders
 9:[]:107
 |===
 
+=== Updating the Graph
+
+Now if we wanted to update our graph data, we have to first find the relevant information and then update or extend the graph structures.
+
+// price update
+
+// add new product
+
+==== Janet is now reporting to Steven
+
+We need to find Steven first, and Janet and her `REPORTS_TO` relationship.
+Then we remove the existing relationship and create a new one to Steven.
+
+[source,cypher]
+----
+MATCH (mgr:Employee {EmployeeID:5})
+MATCH (emp:Employee {EmployeeID:3})-[rel:REPORTS_TO]->()
+DELETE rel
+CREATE (emp)-[:REPORTS_TO]->(mgr)
+RETURN *;
+----
+
+//graph_result
+
+This single relationship change is all you need to update a part of the organizational hierarchy.
+All subsequent queries will immediately use the new structure.
+
 //[role=side-nav]
 * link:{github}/data/northwind[Northwind SQL, CSV and Cypher data files] link:{github}/data/northwind/northwind.zip[(zip)]
 * link:/developer/cypher/guide-sql-to-cypher[From SQL to Cypher]
