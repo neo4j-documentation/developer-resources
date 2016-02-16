@@ -3,7 +3,7 @@
 <tr>
 <td class="icon"><%
 if @document.attr? :icons, 'font' %>
-<i class="icon-<%= attr 'name' %>" title="<%= @caption %>"></i><%
+<i class="fa icon-<%= attr 'name' %>" title="<%= @caption %>"></i><%
 elsif @document.attr? :icons %>
 <img src="<%= icon_uri(attr :name) %>" alt="<%= @caption %>"><%
 else %>

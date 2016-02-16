@@ -15,9 +15,21 @@ adoc_vars = {
   examples: 'https://github.com/neo4j-examples'
 }
 
+<<<<<<< HEAD
 adoc_templates_dir = ENV['ASCIIDOC_TEMPLATES_DIR'] || '_templates'
 adoc_attributes = %W(allow-uri-read linkattrs source-highlighter=codemirror) +
                     adoc_vars.map {|k, v| "#{k}=#{v}" }
+=======
+ASCIIDOC_TEMPLATES_DIR = ENV['ASCIIDOC_TEMPLATES_DIR'] || '_templates'
+ASCIIDOC_ATTRIBUTES = %W(allow-uri-read
+                         icons=font
+                         linkattrs
+                         source-highlighter=codemirror
+                         img=#{IMAGE_BASE_URL}
+                         examples=#{EXAMPLES}
+                         manual=#{MANUAL}
+                         github=#{GITHUB})
+>>>>>>> font awesome icons for admonition notes
 
 raise 'Usage: feed me asciidoctor files (or pass `all` to find all files)' if ARGV.empty?
 
