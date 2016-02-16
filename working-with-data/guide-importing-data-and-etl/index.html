@@ -23,9 +23,10 @@
         href="http://neo4j.com/feed/"/>
   <link rel="alternate" type="application/rss+xml" title="Neo4j Graph Database &raquo; Comments Feed"
         href="http://neo4j.com/comments/feed/"/>
-  <link rel='stylesheet' id='font-awesome-four-css'
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+  <!--link rel='stylesheet' id='font-awesome-four-css'
         href="http://neo4j.com/wp-content/plugins/font-awesome-4-menus/css/font-awesome.min.css?ver=4.2.0"
-        type='text/css' media='all'/>
+        type='text/css' media='all'/-->
   <link rel='stylesheet' id='foundation-css'
         href="http://neo4j.com/wp-content/themes/neo4jweb/assets/css/app.css?ver=4.1" type='text/css' media='screen'/>
   <link rel='stylesheet' id='neo-codemirror-css'
@@ -583,6 +584,13 @@ td.tableblock, td p.tableblock,th.tableblock, th p.tableblock {
 th.tableblock, th p.tableblock {
 	font-weight:bold;
 }
+
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note:before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip:before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning:before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution:before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important:before{content:"\f06a";color:#bf0000}
 </style>
 
             <div>
@@ -617,6 +625,7 @@ If you <a href="/download">download</a> and install the Neo4j server you&#8217;l
 <li><a href="#_exporting_the_data_to_csv">Exporting the Data to CSV</a></li>
 <li><a href="#_importing_the_data_using_cypher">Importing the Data using Cypher</a></li>
 <li><a href="#_querying_the_graph">Querying the Graph</a></li>
+<li><a href="#_updating_the_graph">Updating the Graph</a></li>
 </ul>
 
 </div>
@@ -1180,6 +1189,41 @@ ORDER BY totalOrders DESC;</code></pre>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div  id="_updating_the_graph" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Updating the Graph</h3>
+
+
+<div class="paragraph">
+<p>Now if we wanted to update our graph data, we have to first find the relevant information and then update or extend the graph structures.</p>
+</div>
+
+<div  id="_janet_is_now_reporting_to_steven" class="sect3 "  >
+<h4>Janet is now reporting to Steven</h4>
+
+
+<div class="paragraph">
+<p>We need to find Steven first, and Janet and her <code>REPORTS_TO</code> relationship.
+Then we remove the existing relationship and create a new one to Steven.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (mgr:Employee {EmployeeID:5})
+MATCH (emp:Employee {EmployeeID:3})-[rel:REPORTS_TO]-&gt;()
+DELETE rel
+CREATE (emp)-[:REPORTS_TO]-&gt;(mgr)
+RETURN *;</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>This single relationship change is all you need to update a part of the organizational hierarchy.
+All subsequent queries will immediately use the new structure.</p>
+</div>
+
 <div class="ulist">
 <ul>
 <li>
