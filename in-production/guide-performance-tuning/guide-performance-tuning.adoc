@@ -24,55 +24,43 @@ toc::[]
 
 == Memory Configuration guidelines
 
-An in-depth description on this topic is available here: {manual}/configuration-io-examples.html
+An in-depth description on this topic is available in the {manual}/configuration-io-examples.html[Neo4j Manual].
 
-There are three types of memory to consider:
-
-* OS Memory
-* Page Cache
-* JVM Heap
+There are three types of memory to consider: _OS Memory_, _Page Cache_ and _Heap Space_.
 
 === OS Memory Sizing
 
 Some memory must be reserved for all activities on the server that are *not* Neo4j related.
-1G is a good starting default
+`1G` is good enough for most cases when Neo4j is the only server running on that machine.
+
+Please make sure that the configured memory doesn't exceed available RAM, otherwise the OS starts to swap to disk which heavily affects operation performance.
 
 === Page Cache Sizing
 
-Page cache, or _mapped memory_, is used to cache the Neo4j data as stored on disk.
-The goal is to size the page cache so that all the graph data fits into it.
-Ensuring that all the graph content is cached into memory will help avoid costly disk access.
+image::{img}/neo4j_memory_usage.jpg[width=300,float=right]
 
+The page cache, is used to cache the Neo4j data as stored on disk.
+Ensuring that most of the graph data from disk is cached into memory will help avoid costly disk access.
+You can determine the total memory needed by summing up the sizes of the `NEO4J_HOME/data/graph.db/neostore.*.db` files and adding 20% for growth.
 
-The size of the page cache is defined by the paramter `dbms.pagecache.memory` in the file `NEO4J_HOME/conf/neo4j-server.properties`.
+To estimate the necessary page-cache size for a dataset to be imported, it is useful to run an import with a fraction (e.g. 1/100th) of the data and then multiply the resulting store-size by that fraction (x 100).
 
+The size of the page cache, e.g. `5G` is defined by the parameter `dbms.pagecache.memory` in the file `NEO4J_HOME/conf/neo4j.properties`.
+By default, if not configured, Neo4j will use 50% of the available RAM in the system for its page cache.
 
-=== JVM Heap Sizing
+=== Heap Sizing
 
-The size of the JVM heap is an important aspect of the performance of any Java application. 
-For a more thorough discussion on this topic, refer to {manual}/performance-guide.html#_configuring_heap_size_and_gc
+The size of the available heap memory is an important aspect for the performance of Neo4j.
 
-* Tuning of the standalone server: Edit the file `NEO4J_HOME/conf/neo4j-wrapper.conf`.
+Generally speaking, it is beneficial to configure a large enough heap space to sustain concurrent operations.
+For many setups, a heap size between 8G and 16G is large enough to run Neo4j reliably.
 
-* Tuning Neo4j embedded: Specify paramters by adding command line flags to the java process.
+The heap memory size is determined by the parameters in `NEO4J_HOME/conf/neo4j-wrapper.conf`, namely
+ `wrapper.java.initmemory` and `wrapper.java.maxmemory` providing the heap size in Megabytes, e.g. `16000`.
+It is recommended to set these two parameters to the same size.
 
-Generally speaking, it is beneficial to configure a large heap space, at the same time as it is important to ensure that the heap fits into the RAM of the computer.
-The JVM heap size is determined by the parameters `wrapper.java.initmemory` and `wrapper.java.maxmemory`.
-It is recommended to set these two parameters to the same number.
-
-The JVM heap is divided into an _old generation_ and a _new generation_
-The proportions between these will affect the garbage collector's behavior.
-Tuning of the generation properties is done by specifying the parameter _wrapper.java.additional=-XX:NewRatio=N_, where N is typically between 2 and 8.
-It is recommended to configure the JVM to use the G1 garbage collector by setting the parameter _wrapper.java.additional=-XX:+UseG1GC
-
-Example: Specify JVM Parameters in `NEO4J_HOME/conf/neo4j-wrapper.conf`
-
-----
-wrapper.java.initmemory=24512
-wrapper.java.maxmemory=24512
-wrapper.java.additional=-XX:+UseG1GC
-wrapper.java.=-XX:NewRatio=2
-----
+For a more thorough discussion on this topic, refer to the {manual}/performance-guide.html#_configuring_heap_size_and_gc[heap memory configuration section in the Neo4j Manual].
+That section also contains information about heap memory distribution and gabarge collection tuning.
 
 [role=side-nav]
 * {manual}/operations.html[Operations,role=manual]
@@ -83,13 +71,15 @@ wrapper.java.=-XX:NewRatio=2
 
 == Logical Logs
 
-Logical logs in Neo4j are the source of truth in scenarios where the database needs to be recovered after a crash or similar.
-Logs are rotated every now and then (defaults to when they surpass 25 Mb in size) and the number of legacy logs to keep can be configured.
+Logical transaction logs in Neo4j are used in scenarios when the database needs to be recovered after a unclean shutdown (e.g. due to a system crash).
+These transaction log files are rotated after surpassing a certain size (25 Mb in size).
+The amount of log files that are kept, can be configured.
 
-It is recommended that the `keep_logical_logs` parameter be set to `7 days`
+It is recommended that the `keep_logical_logs` parameter is set to `7 days`
 
-== Number of Open Files on Linux
+== Number of Open Files
 
 The usual default of `1024` is often not enough, especially when many indexes are used or a server installation sees too many connections (network sockets also count against that limit).
-Users are therefore encouraged to increase that limit to a healthy value of `40000` or more, depending on usage patterns.
-Setting this value via the ulimit command is possible only for the root user and for that session only.  To set the value system wide you have to follow the instructions for your platform ({manual}/linux-performance-guide.html#_setting_the_number_of_open_files[Linux]).
+Users are therefore encouraged to increase that limit to a realistic value of `40000` or more, depending on usage patterns.
+Setting this value via the `ulimit` command is only possible for the current session.
+To set the value system wide you have to follow the {manual}/linux-performance-guide.html#_setting_the_number_of_open_files[instructions] for your platform.
