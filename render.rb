@@ -15,28 +15,22 @@ adoc_vars = {
   examples: 'https://github.com/neo4j-examples'
 }
 
-<<<<<<< HEAD
-adoc_templates_dir = ENV['ASCIIDOC_TEMPLATES_DIR'] || '_templates'
-adoc_attributes = %W(allow-uri-read linkattrs source-highlighter=codemirror) +
-                    adoc_vars.map {|k, v| "#{k}=#{v}" }
-=======
 ASCIIDOC_TEMPLATES_DIR = ENV['ASCIIDOC_TEMPLATES_DIR'] || '_templates'
 ASCIIDOC_ATTRIBUTES = %W(allow-uri-read
                          icons=font
                          linkattrs
                          source-highlighter=codemirror
-                         img=#{IMAGE_BASE_URL}
-                         examples=#{EXAMPLES}
-                         manual=#{MANUAL}
-                         github=#{GITHUB})
->>>>>>> font awesome icons for admonition notes
+                         img=#{adoc_vars['img']}
+                         examples=#{adoc_vars['examples']}
+                         manual=#{adoc_vars['manual']}
+                         github=#{adoc_vars['github']})
 
 raise 'Usage: feed me asciidoctor files (or pass `all` to find all files)' if ARGV.empty?
 
-renderer = AsciiPress::Renderer.new(attributes: adoc_attributes,
+renderer = AsciiPress::Renderer.new(attributes: ASCIIDOC_ATTRIBUTES,
                                     header_footer: true,
                                     safe: 0,
-                                    template_dir: adoc_templates_dir)
+                                    template_dir: ASCIIDOC_TEMPLATES_DIR)
 
 if ENV['BLOG_HOSTNAME'] && ENV['BLOG_USERNAME'] && ENV['BLOG_PASSWORD'] && ENV['PUBLISH']
   syncer = AsciiPress::WordPressSyncer.new(ENV['BLOG_HOSTNAME'],
