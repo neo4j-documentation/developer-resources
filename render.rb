@@ -8,22 +8,19 @@ LOGGER = Logger.new(STDOUT)
 
 require_relative 'html_transformer' # Neo Tech specific
 
-adoc_vars = {
-  img: 'http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/',
-  github: 'https://github.com/neo4j-contrib/developer-resources/tree/gh-pages',
-  manual: 'http://neo4j.com/docs/stable',
-  examples: 'https://github.com/neo4j-examples'
-}
-
 ASCIIDOC_TEMPLATES_DIR = ENV['ASCIIDOC_TEMPLATES_DIR'] || '_templates'
+IMAGE_BASE_URL = ENV['IMAGE_BASE_URL'] ||  'http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/'
+EXAMPLES = ENV['EXAMPLES'] || 'https://github.com/neo4j-examples'
+MANUAL = ENV['MANUAL'] || 'http://neo4j.com/docs/stable'
+GITHUB = ENV['GITHUB'] || 'https://github.com/neo4j-contrib/developer-resources/tree/gh-pages' 
 ASCIIDOC_ATTRIBUTES = %W(allow-uri-read
                          icons=font
                          linkattrs
                          source-highlighter=codemirror
-                         img=#{adoc_vars['img']}
-                         examples=#{adoc_vars['examples']}
-                         manual=#{adoc_vars['manual']}
-                         github=#{adoc_vars['github']})
+                         img=#{IMAGE_BASE_URL}
+                         examples=#{EXAMPLES}
+			 manual=#{MANUAL}
+			 github=#{GITHUB})
 
 raise 'Usage: feed me asciidoctor files (or pass `all` to find all files)' if ARGV.empty?
 
