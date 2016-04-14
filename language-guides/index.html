@@ -603,7 +603,9 @@ th.tableblock, th p.tableblock {
 
 <div class="paragraph">
 <p>These guides and tutorials are designed to provide detailed examples of how to integrate Neo4j with your preferred programming language.
-Neo4j supports drivers for all major programming languages. In this section, we provide an introduction and a consistent example application for several languages and Neo4j drivers.</p>
+Neo4j <strong>officially supports the drivers for .Net, Java, JavaScript and Python</strong> for the binary Bolt protocol.
+Our community contributors provides drivers for all major programming languages for all protocols and APIs.
+In this section, we provide an introduction and a consistent example application for several languages and Neo4j drivers.</p>
 </div>
 
 <div  id="_how_to_connect_to_neo4j" class="sect1 columns medium-12" style='padding-left: 0;' >
@@ -619,54 +621,134 @@ you can already work interactively with the database via the built-in Neo4j Brow
 
 
 <div class="paragraph">
-<p>If you want to access Neo4j programmatically, you can do so with one of the available HTTP-APIs, which allow you to:</p>
+<p>To build an application you want to connect to Neo4j from your technology stack. Fortunately it is very easy.</p>
 </div>
 
-<div class="ulist">
-<ul>
-<li>
-POST one or more cypher statements with parameters per request to the server
-</li>
-<li>
-Keep transactions open over multiple requests
-</li>
-<li>
-Choose different result formats
-</li>
-<li>
-Execute management operations or introspect the database
-</li>
-</ul>
 </div>
+<div  id="_the_binary_bolt_protocol" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>The binary Bolt Protocol</h3>
 
 
 <div class="paragraph">
-<p>Let&#8217;s look at one of the underlying remote API endpoints that Neo4j offers to execute queries.
-These APIs can be then used directly via a HTTP library or a driver for your language.</p>
+<p>Starting with Neo4j 3.0 we support a binary protocol called Bolt.
+It is based on the PackStream serialization and supports protocol versioning, authentication and TLS via certificats.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>A simple HTTP Cypher request, executable in the Neo4j Browser would look like this:</p>
+<p>The binary protocol is enabled in Neo4j by default, so you can use any language driver that supports it.</p>
 </div>
 
+
+
+<div class="paragraph">
+<p>Neo4j officially provides drivers for <a href="dotnet">.Net</a>, <a href="java">Java</a>, <a href="javascript">JavaScript</a> and <a href="python">Python</a>.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>See also the for an detailed overview of the official drivers link:[Neo4j Driver Manual]</p>
+</div>
+
+<dl class="tabs" data-tab>
+  <dd class="tab-title"><a href="#bolt-dotnet">.Net</a></dd>
+  <dd class="tab-title active"><a href="#bolt-java">Java</a></dd>
+  <dd class="tab-title"><a href="#bolt-javascript">JavaScript</a></dd>
+  <dd class="tab-title"><a href="#bolt-python">Python</a></dd>
+</dl>
+<div class="tabs-content">
+<div  id="bolt-dotnet" class="sect2 content columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j .Net Driver</h3>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="json"><code>:POST /db/data/transaction/commit {"statements":[
-      {"statement":"CREATE (p:Person {firstName:{name}}) RETURN p",
-       "parameters":{"name":"Daniel"}}
-    ]}</code></pre>
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="xml"><code>  &lt;package id="Neo4j.Driver" version="1.0.0-RC2" targetFramework="net45" /&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Example</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="dotnet"><code>            var statementTemplate = "MATCH (movie:Movie) WHERE movie.title CONTAINS {title} RETURN movie";
+            var statementParameters = new Dictionary&lt;string, object&gt; {{"title", query}};
+
+            var session = WebApiConfig.Neo4jDriver.Session();
+            var cursor = session.Run(statementTemplate, statementParameters);
+
+            var movies = new List&lt;Movie&gt;();
+
+            foreach (var record in cursor.Stream())
+            {
+                var node = (Node) record["movie"];
+                movies.Add(new Movie {
+                  released = (int) (long) node.Properties["released"],
+                  tagline = node.Properties["tagline"].ToString(),
+                  title = node.Properties["title"].ToString()});
+            }</code></pre>
+</div>
+</div>
+</div>
+<div  id="bolt-java" class="sect2 content active columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j Java Driver</h3>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="xml"><code>        &lt;dependency&gt;
+            &lt;groupId&gt;org.neo4j.driver&lt;/groupId&gt;
+            &lt;artifactId&gt;neo4j-java-driver&lt;/artifactId&gt;
+            &lt;version&gt;1.0.0-RC2&lt;/version&gt;
+        &lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>        Driver driver = GraphDatabase.driver("bolt://localhost");
+        String query = "MATCH (:Movie {title:{title}})&lt;-[:ACTED_IN]-(a:Person) RETURN a.name as actor";
+
+        try (Session session = driver.session()) {
+
+            StatementResult result = session.run(query, singletonMap("title", "The Matrix"));
+            while (result.hasNext()) {
+                System.out.println(result.next().get("actor"));
+            }
+        }</code></pre>
+</div>
+</div>
+</div>
+<div  id="bolt-javascript" class="sect2 content columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j JavaScript Driver</h3>
+<div class="listingblock">
+<div class="title">Setup</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="json"><code>Unresolved directive in language-guides.adoc - include::https://raw.githubusercontent.com/neo4j-examples/neo4j-movies-javascript-bolt/master/package.json[tag=setup]</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="javascript"><code>Unresolved directive in language-guides.adoc - include::https://raw.githubusercontent.com/neo4j-examples/neo4j-movies-javascript-bolt/master/test/doc_test.js[tag=minimum-viable-snippet]</code></pre>
+</div>
+</div>
+</div>
+<div  id="bolt-python" class="sect2 content columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j Python Driver</h3>
+<div class="listingblock">
+<div class="title">Setup</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="yaml"><code>Unresolved directive in language-guides.adoc - include::https://raw.githubusercontent.com/neo4j-examples/neo4j-movies-python-bolt/master/requirements.txt[tag=setup]</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="python"><code>Unresolved directive in language-guides.adoc - include::https://raw.githubusercontent.com/neo4j-examples/neo4j-movies-python-bolt/master/test/doc_test.py[tag=minimum-viable-snippet]</code></pre>
+</div>
 </div>
 </div>
 
 
 <div class="paragraph">
-<p>The language drivers use the same APIs under the hood, but make them available in a convenient way.
-Thanks to the Neo4j community, there are drivers for Neo4j for almost every popular programming language,
-most of which mimic existing database driver idioms and approaches.</p>
+<p>For more details on the protocol implementation, see the <a href="https://github.com/nigelsmall/bolt-howto">implementers documentation</a>.</p>
 </div>
 
+</div>
 </div>
 <div  id="_neo4j_drivers" class="sect1 columns medium-12" style='padding-left: 0;' >
 <h3>Neo4j Drivers</h3>
@@ -674,16 +756,18 @@ most of which mimic existing database driver idioms and approaches.</p>
 
 
 <div class="paragraph">
-<p>Looking for your language driver?</p>
+<p>Thanks to the Neo4j contributor community, there are additionally drivers for almost every popular programming language,
+most of which mimic existing database driver idioms and approaches.
+Get started with your stack now.</p>
 </div>
 
 <div class="ulist">
 <ul>
 <li>
-<a href="java">Java</a>
+<a href="dotnet">.NET</a>
 </li>
 <li>
-<a href="dotnet">.NET</a>
+<a href="java">Java</a>
 </li>
 <li>
 <a href="javascript">JavaScript</a>
@@ -735,7 +819,7 @@ graph visualization of the domain
 <h3>Domain Model</h3>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre>(:Movie {title,released,tagline})&lt;-[:ACTED_IN {roles}]-(actor:Person)</pre>
+<pre>(:Person{name})-[:ACTED_IN{roles}]-&gt;(:Movie{title,released})</pre>
 </div>
 </div>
 </div>
@@ -754,6 +838,58 @@ graph visualization of the domain
 </div>
 
 </div>
+</div>
+<div  id="_using_the_http_api" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Using the HTTP API</h3>
+
+
+<div class="paragraph">
+<p>If you want to access Neo4j programmatically, you can also use the HTTP-API, which allow you to:</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+POST one or more Cypher statements with parameters, multiple per request to the server
+</li>
+<li>
+Keep transactions open over multiple requests
+</li>
+<li>
+Choose different result formats
+</li>
+<li>
+Execute management operations or introspect the database
+</li>
+</ul>
+</div>
+
+
+<div class="paragraph">
+<p>Let&#8217;s look at one of the underlying remote API endpoints that Neo4j offers to execute queries.
+These APIs can be then used directly via a HTTP library or a driver for your language.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>A simple HTTP Cypher request, executable in the Neo4j Browser would look like this:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="json"><code>:POST /db/data/transaction/commit {"statements":[
+      {"statement":"CREATE (p:Person {firstName:{name}}) RETURN p",
+       "parameters":{"name":"Daniel"}}
+    ]}</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Some of the language drivers use the HTTP API under the hood, but make them available in a more convenient way.</p>
+</div>
+
 </div>
                     </div>
                     <div class="large-3 large-pull-9 columns">

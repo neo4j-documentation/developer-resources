@@ -673,7 +673,7 @@ graph visualization of the domain
 <h3>Domain Model</h3>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre>(:Movie {title,released,tagline})&lt;-[:ACTED_IN {roles}]-(actor:Person)</pre>
+<pre>(:Person{name})-[:ACTED_IN{roles}]-&gt;(:Movie{title,released})</pre>
 </div>
 </div>
 </div>
