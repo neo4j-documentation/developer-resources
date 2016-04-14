@@ -1,0 +1,17 @@
+<% active= {"get-started"=>:inactive, "cypher"=>:inactive, "data-modeling"=>:inactive,"working-with-data"=>:inactive,"language-guides"=>:inactive,
+"ecosystem"=>:inactive,"in-production"=>:inactive}
+active[(@document.attr "section-link", "get-started")]=:active;
+%>
+<%=  File.new("_templates/landing-page/style_partial.erb").read %>
+<%= content %>
+
+<!--
+<div class="row" style="padding-left: 0; padding-right: 0; padding-top: 1em;">
+   <div class="large-9 large-push-3 columns guide-section-content">
+   %= content %>
+   </div>
+   <div class="large-3 large-pull-9 columns" id="dev-menu-nav">
+       %= File.new("_templates/menu_partial.erb").read.gsub(/[\w-]+-activate/) { |m| active[m.gsub(/-activate/,"")].to_s } % >
+   </div>
+</div>
+-->

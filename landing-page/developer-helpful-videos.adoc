@@ -1,0 +1,81 @@
+++++
+<!-- ?php
+/**
+* YouTube Data API for PHP
+*
+* Built off existing Neo4j files that appear to be currently unused.
+* There is no WordPress page currently assigned the Template: Video YouTube
+*
+* page-video-yt.php
+* includes/youtube.php
+* assets/js/videos-yt.js
+*
+* TODO:
+* - roll this thing into a plugin: neo4j-core
+* - use Transients? https://codex.wordpress.org/Transients_API
+*/
+require 'youtube.php';
+$youtube = new YouTube('AIzaSyB3jZLnBi-Cqggq8BCq9xTV8YMgu-x_kTc');
+$videos = $youtube->getPlaylist('PL9Hl4pk2FsvUZsgKDpAYTFULjkygUGIpi', 6);
+
+$count = 0;
+?-->
+
+<section class="helpful-videos">
+	<h2>Videos</h2>
+
+	<div class="row">
+		<div class="small-12 columns">
+			<ul class="videos-list item-list small-block-grid-1 medium-block-grid-3">
+
+				<!-- ?php
+				foreach ( $videos as $index => $video ):
+					$id = $video['snippet']['resourceId']['videoId'];
+					$thumbnail = $video['snippet']['thumbnails']['medium'];
+					$title = $video['snippet']['title'];
+					$description = $video['snippet']['description'];
+					$video_id = $video['snippet']['resourceId']['videoId'];
+				?-->
+	
+				<!--?php if ( $count > 2 ): ?-->
+				<li class="text-center extra-item" style="display:none">
+				<!--?php else: ?-->
+				<li class="text-center <?php echo esc_html($list_class); ?>">
+				<!--?php endif; ?-->
+
+					<a href="https://www.youtube.com/watch?v=<?php echo esc_html($video_id); ?>" target="_blank">
+					<div class="videobox">
+						<img src=""> <!--?php echo esc_html($thumbnail['url']); ?-->
+						<span></span>
+					</div>
+					</a>
+					<h5><!--?php echo esc_html($title); ?--></h5>
+
+					<!--?php
+					/*
+					 * Going to be hard to find value in an excerpt of 8 to 10 words 
+					 * created from their YouTube video descriptions. Won't really make sense.
+					 *
+					<p><?php echo esc_html($description); ?></p>
+					*/
+					?-->
+
+				</li>
+
+				<!--?php $count++; ?-->
+				<!--?php endforeach; ?-->
+
+			</ul>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="small-12 columns text-center">
+			<a class="button more" href="https://www.youtube.com/c/neo4j" style="display:none">More Videos</a>
+			<a id="videos-list-btn" class="toggle-arrow" href=""></a>
+		</div>
+	</div>
+
+</section>
+++++

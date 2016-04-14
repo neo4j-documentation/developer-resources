@@ -1,0 +1,8 @@
+MATCH
+  (svc:Service)<-[:DEPENDS_ON*]-(dependent:Service)
+RETURN
+  svc,
+  count(DISTINCT dependent) AS dependents
+ORDER BY
+  dependents DESC
+LIMIT 1

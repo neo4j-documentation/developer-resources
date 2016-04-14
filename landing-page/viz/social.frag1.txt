@@ -1,0 +1,7 @@
+MATCH 
+  (user:Person)-[:KNOWS]-(friend)-
+    [:KNOWS]-(foaf:Person)
+WHERE 
+  user.name = "Joe" AND foaf.name = "Sally"
+RETURN 
+  friend.name AS friend

@@ -1,0 +1,7 @@
+MATCH
+  (ssn:SSN)<-[:HAS_SSN]-(:Person)-
+  [:HAS_ACCOUNT]->(acct:Account)
+WHERE
+  ssn.number = 993632634
+RETURN
+  acct
