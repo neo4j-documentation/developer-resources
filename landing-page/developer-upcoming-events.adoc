@@ -1,12 +1,14 @@
+// Events near you
+// FIXME: events.json returns empty??
+
+:site_url: http://neo4j.com
+
+[subs=attributes]
 ++++
 <section class="upcoming-events">
 	<div class="row">
 		<div class="small-12 columns">
 			<h2>Upcoming Events Near You</h2>
-			<?php
-			/**
-			 */
-			?>
 			<ul class="events-list item-list small-block-grid-1 medium-block-grid-3"></ul>
 		</div>
 	</div>
@@ -90,7 +92,7 @@
 
   /* Show events regardless of location, in case geocoding fails */
   function shownextevents() {
-    $.get("<?php echo get_site_url(); ?>/api/events.json",function(data) {
+    $.get("{site_url}/api/events.json",function(data) {
       var events = JSON.parse(data);
       eventsSource = events;
 
@@ -111,7 +113,7 @@
     }
     var lat1 = info.latitude;
     var lon1 = info.longitude;
-    $.get("<?php echo get_site_url(); ?>/api/events.json",function(data) {
+    $.get("{site_url}/api/events.json",function(data) {
       var events = JSON.parse(data);
       events.forEach(function(event) {
       if (event.Geo) {
