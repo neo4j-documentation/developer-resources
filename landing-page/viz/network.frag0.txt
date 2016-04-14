@@ -1,0 +1,6 @@
+MATCH
+  (n:Service)<-[:DEPENDS_ON*]-(dependent:Service)
+WHERE
+  n.name = "Server 1"
+RETURN
+  dependent

@@ -1,0 +1,800 @@
+// :viz-dir: /wp-content/themes/neo4jweb/assets/
+:viz-dir: ./
+[subs=attributes]
+++++
+<style>
+ol.install-instructions  {
+  color: white;
+}
+
+ol.install-instructions code {
+  font-size: 5px;
+}
+
+ol.install-instructions a {
+  color: white;
+  text-decoration: underline
+}
+
+.cypher-query {
+  padding-top: 10px;
+  padding-bottom: 15px;
+  font-size: 120%;
+}
+</style>
+
+<script type="text/javascript">
+    var vis_options = {
+        groups: {
+          people_highlighted: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf007',
+                size: 50,
+                color: '#fd756e'
+              }
+          },
+          people: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf007',
+                size: 50,
+                color: '#68bbf4'
+              }
+          },
+          server: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf233',
+                size: 50,
+                color: '#68bbf4'
+              }
+          },
+          server_highlighted: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf233',
+                size: 50,
+                color: '#fd756e'
+              }
+          },
+          disk: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf1c0',
+                size: 50,
+                color: '#68bbf4'
+              }
+          },
+          disk_highlighted: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf1c0',
+                size: 50,
+                color: '#fd756e'
+              }
+          },
+          code: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf121',
+                size: 50,
+                color: '#68bbf4'
+              }
+          },
+          code_highlighted: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf121',
+                size: 50,
+                color: '#fd756e'
+              }
+          },
+          account: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf19c',
+                size: 50,
+                color: '#68bbf4'
+              }            
+          },
+          account_highlighted: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf19c',
+                size: 50,
+                color: '#fd756e'
+              }            
+          },
+          SSN: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf292',
+                size: 50,
+                color: '#68bbf4'
+              }            
+          },
+          SSN_highlighted: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf292',
+                size: 50,
+                color: '#fd756e'
+              }            
+          },
+        },
+        edges: {
+            arrows: {to: {scaleFactor: 0.5}},
+            font: {align: 'bottom', face: 'courier', strokeWidth: 2, color: '#666666'},
+            color: "#6dcc9c",
+            width: 3
+        },
+        nodes: {
+            shape: 'dot',
+            size: 20,
+            font: {
+                size: 16,
+                color: '#000000'
+            },
+            borderWidth: 2
+        },
+        interaction: {
+          zoomView: false,
+        }
+    };
+
+
+
+      function renderGraph(event) {
+        var el = $("#sample-" + event.data.usecase + " .console")[event.data.index];
+        $.getJSON("{viz-dir}viz/" + event.data.usecase + "." + event.data.index + ".viz.json", function(d) {
+            d.nodes.forEach(function (n) {
+              n.title = n.label;
+              if (n.label == 'Person-Highlighted') {
+                n.group = 'people_highlighted';
+                n.label = n.name;
+              } else if (n.label == 'Person') {
+                n.group = 'people';
+                n.label = n.name;
+              } else if (n.label == 'Server') {
+                n.group = 'server';
+                n.label = n.name;
+              } else if (n.label == 'Disk') {
+                n.group = 'disk';
+                n.label = n.name;
+              } else if (n.label == 'Disk-Highlighted') {
+                n.group = 'disk_highlighted';
+                n.label = n.name;
+              } else if (n.label == 'Code') {
+                n.group = 'code';
+                n.label = n.name;
+              } else if (n.label == 'Code-Highlighted') {
+                n.group = 'code_highlighted';
+                n.label = n.name;
+              } else if (n.label == 'Server-Highlighted') {
+                n.group = 'server_highlighted';
+                n.label = n.name;
+              } else if (n.label == 'Account') {
+                n.group = 'account';
+                n.label = n.name;
+              } else if (n.label == 'SSN') {
+                n.group = 'SSN';
+                n.label = n.name;
+              } else if (n.label == 'Account-Highlighted') {
+                n.group = 'account_highlighted';
+                n.label = n.name;
+              } else if (n.label == 'SSN-Highlighted') {
+                n.group = 'SSN_highlighted';
+                n.label = n.name;
+              }
+            });
+            d.links.forEach(function (l) {
+              if (l.label && l.label == 'KNOWS-HIGHLIGHTED') {
+                l.color = '#fd756e';
+                l.label = 'KNOWS';
+              }
+            });
+            var g = {
+              nodes: d.nodes,
+              edges: d.links
+            };
+            var network = new vis.Network(el, g, vis_options);
+        });
+
+      };
+
+
+	$(document).ready(function() {
+    // social
+    $('#social-friends').click({usecase: 'social', index: 0}, renderGraph);    
+    $('#social-common').click({usecase: 'social', index: 1}, renderGraph);
+    $('#social-paths').click({usecase: 'social', index: 2}, renderGraph);
+
+    // network
+    $('#network-main').click({usecase: 'network', index: 0}, renderGraph);
+    $('#network-impact').click({usecase: 'network', index: 0}, renderGraph);    
+    $('#network-dependency').click({usecase: 'network', index: 1}, renderGraph);
+    $('#network-statistics').click({usecase: 'network', index: 2}, renderGraph);
+
+    // fraud
+    $('#fraud-main').click({usecase: 'fraud', index: 0}, renderGraph);
+    $('#fraud-transitive').click({usecase: 'fraud', index: 0}, renderGraph);    
+    $('#fraud-investigation').click({usecase: 'fraud', index: 1}, renderGraph);
+    $('#fraud-insights').click({usecase: 'fraud', index: 2}, renderGraph);
+
+
+
+		$(".contact-button").click(function(e) {
+			window.location = "http://info.neotechnology.com/ContactUs.html"
+		});
+
+    
+
+		$.each(["social","network","fraud"], function(i, usecase) {
+              $("#sample-" + usecase + " .runnable-example").each(function(i, runnable) {
+          var frag = $(runnable).attr("frag");
+          $.get("{viz-dir}viz/" + usecase + ".frag" + frag + ".txt", function(d) {
+            CodeMirror.colorize($(".cypher-query", runnable).text(d));
+            //CodeMirror.colorize($("#foo"));
+            //CodeMirror.runMode(d, 'application/x-cypher-query', $(".cypher-query"));
+          });
+          $(".run-example", runnable).click(function(e) {
+          });
+        });
+  });
+
+  // trigger first tabs displayed
+  $('#social-friends').trigger("click");
+  $('#network-impact').trigger("click");
+  $('#fraud-transitive').trigger("click");
+
+});    
+
+</script>
+
+<section class="test-drive show-for-large-up">
+	<div class="row">
+		<div class="small-12 columns">
+
+			<h2>Test-Drive Neo4j with Cypher</h2>
+
+			<dl class="tabs" data-tab role="tablist">
+				<dd class="tab-title active" role="presentation"><a href="#sample-social" role="tab" tabindex="0" aria-selected="true" aria-controls="sample-social">Social</a></dd>
+				<dd class="tab-title" role="presentation"><a href="#sample-network" role="tab" tabindex="0" aria-selected="false" aria-controls="sample-network" id="network-main">Network Management</a></dd>
+				<dd class="tab-title" role="presentation"><a href="#sample-fraud" role="tab" tabindex="0" aria-selected="false" aria-controls="sample-fraud" id="fraud-main">Fraud Detection</a></dd>
+			</dl>
+			<div class="tabs-content">
+				<section role="tabpanel" aria-hidden="false" class="content active" id="sample-social">
+					<dl class="tabs minimalist" data-tab role="tablist">
+						<dd class="tab-title active" role="presentation"><a href="#friends" role="tab" tabindex="0" aria-selected="true" aria-controls="friends" id="social-friends">Friends of Friends</a></dd>
+						<dd class="tab-title" role="presentation"><a href="#common" role="tab" tabindex="0" aria-selected="false" aria-controls="common" id="social-common">Common Friends</a></dd>
+						<dd class="tab-title" role="presentation"><a href="#paths" role="tab" tabindex="0" aria-selected="false" aria-controls="paths" id="social-paths">Connecting Paths</a></dd>
+					</dl>
+					<div class="tabs-content">
+						<section role="tabpanel" aria-hidden="false" aria-selected="true" class="content active gexample" id="friends">
+							<div class="demo runnable-example row" frag="0">
+								<div class="small-6 columns">
+									<h3>
+										Friends of Friends
+									</h3>
+									<p>Find all of Joe's second-degree friends</p>
+									<pre class="cypher-query cm-s-neo" data-lang="cypher">
+									</pre>
+									<p>Joe knows Sally, and Sally knows Anna.  Bob is excluded from the result because, in addition to being a 2nd-degree friend through Sally, he's also a first-degree friend.</p>
+								</div>
+								<div class="small-6 columns">
+									<div class="console"></div>
+								</div>
+							</div>
+						</section>
+						<section role="tabpanel" aria-hidden="true" class="content gexample" id="common">
+							<div class="demo runnable-example row" frag="1">
+								<div class="small-6 columns">
+									<h3>
+										Common Friends
+									</h3>
+									<p>Find friends in common between Joe and Sally</p>
+									<pre class="cypher-query cm-s-neo" data-lang="cypher">
+									</pre>
+									<p>Joe and Sally both know Bob.<br /><br /><br /></p>
+								</div>
+								<div class="small-6 columns">
+									<div class="console"></div>
+								</div>
+							</div>
+						</section>
+						<section role="tabpanel" aria-hidden="true" class="content gexample" id="paths">
+							<div class="demo runnable-example row" frag="2">
+								<div class="small-6 columns">
+									<h3>
+										Connecting Paths
+									</h3>
+									<p>Find all paths, up to 6 degrees, between Joe and Billy</p>
+									<pre class="cypher-query cm-s-neo" data-lang="cypher">
+									</pre>
+									<p>There's actually only one path between Joe and Billy in this dataset, so that path is returned.<br /><br /><br /></p>
+								</div>
+								<div class="small-6 columns">
+
+									<div class="console"></div>
+
+								</div>
+							</div>
+						</section>
+							<dl class="tabs dark" data-tab role="tablist">
+								<dd class="tab-title no-click" role="presentation">See Code In:</dd>
+								<dd class="tab-title" role="presentation"><a href="#java" role="tab" tabindex="0" aria-selected="false" aria-controls="java">Java</a></dd>
+								<dd class="tab-title" role="presentation"><a href="#python" role="tab" tabindex="0" aria-selected="false" aria-controls="python">Python</a></dd>
+                                <dd class="tab-title" role="presentation"><a href="#ruby" role="tab" tabindex="0" aria-selected="false" aria-controls="ruby">Ruby</a></dd>
+                                <dd class="tab-title" role="presentation"><a href="#php" role="tab" tabindex="0" aria-selected="true" aria-controls="php">PHP</a></dd>
+                                <dd class="tab-title" role="presentation"><a href="#cs" role="tab" tabindex="0" aria-selected="false" aria-controls="c#">C#</a></dd>
+								<dd class="tab-title" role="presentation"><a href="#node" role="tab" tabindex="0" aria-selected="false" aria-controls="node#">Node.js</a></dd>
+							</dl>
+							<div class="tabs-content dark">
+								<section role="tabpanel" aria-hidden="false" class="content" id="php">
+									<div class="row">
+										<div class="small-8 columns">
+											<div class="code-container">
+												<pre style="height: 500px;"><code class="language-php">
+++++
+include::examples/php/social-page.php[]
+++++
+												</code>
+												</pre>
+											</div>
+										</div>
+										<div class="small-4 columns">
+											<h3 class="subheader">Downloading and Installing PHP</h3>
+											<p><ol class="install-instructions">
+                                                                                           <li><a href="https://getcomposer.org/download/">Install Composer</a> from within web directory: <code>$ curl -sS https://getcomposer.org/installer | php</code></li>
+                                                                                           <li><a href="https://github.com/graphaware/neo4j-php-client">Install Neo4j-PHP-Client</a> from within web directory: <code>$ php composer.phar require neoxygen/neoclient</code></li>
+                                                                                           <li>Copy and paste code at left into php file and run</li>
+                                                                                           </ol></p>
+										</div>
+									</div>
+								</section>
+								<section role="tabpanel" aria-hidden="true" class="content" id="java">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-java"><?php $page = file_get_contents(get_template_directory() . "/includes/social-page.java.txt"); print htmlspecialchars($page); ?></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Java</h3>
+                                            <p><ol class="install-instructions">
+                                                                                           <li><a href="https://github.com/neo4j-contrib/neo4j-jdbc">Download Neo4j JDBC</a> </li>
+                                                                                           <li>Copy and paste code at left into <code>Social.java</code></li>
+                                                                                           <li>Run <code>javac Social.java</code></li>
+                                                                                           <li>Run <code>java -cp /path/to/neo4j-jdbc-2.3-SNAPSHOT-jar-with-dependencies.jar:. Social</code></li>
+                                                                                           </ol></p>
+                                        </div>
+                                    </div>
+								</section>
+								<section role="tabpanel" aria-hidden="true" class="content" id="python">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-python"><?php $page = file_get_contents(get_template_directory() . "/includes/social-page.py.txt"); print htmlspecialchars($page); ?></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Python</h3>
+                                            <p><ol class="install-instructions">
+                                                                                           <li><a href="http://py2neo.org/2.0/">Install Py2neo</a> using pip: <code>$ pip install py2neo</code></li>
+                                                                                           <li>Copy and paste code at left into py file and run</li>
+                                                                                           </ol></p>
+                                        </div>
+                                    </div>
+								</section>
+                                <section role="tabpanel" aria-hidden="true" class="content" id="ruby">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-ruby"><?php $page = file_get_contents(get_template_directory() . "/includes/social-page.rb.txt"); print htmlspecialchars($page); ?></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Ruby</h3>
+                                            <p><ol class="install-instructions">
+                                                <li><a href="http://neo4jrb.io/">Install Neo4j.rb</a> using gem: <code>$ gem install neo4j-core</code></li>
+                                                <li>Copy and paste code at left into rb file and run</li>
+                                            </ol></p>
+                                        </div>
+                                    </div>
+                                </section>
+								<section role="tabpanel" aria-hidden="true" class="content" id="cs">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-csharp"><?php $page = file_get_contents(get_template_directory() . "/includes/social-page.cs.txt"); print htmlspecialchars($page); ?></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing C#</h3>
+                                            <p><ol class="install-instructions">
+                                                                                           <li><a href="https://dist.nuget.org/index.html">Install NuGet</a> </li>
+                                                                                           <li>Run the NuGet Package Manager Console</li>
+                                                                                           <li>Install the <a href="http://www.nuget.org/packages/Neo4jClient">Neo4jClient package</a>: <code>PM&gt; Install-Package Neo4jClient</code></li>
+                                                                                           <li>Copy and paste code at left into your .NET project, build, and run</li>
+                                                                                           </ol></p>
+                                        </div>
+                                    </div>
+								</section>
+                                <section role="tabpanel" aria-hidden="true" class="content" id="node">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-javascript"><?php $page = file_get_contents(get_template_directory() . "/includes/social-page.js.txt"); print htmlspecialchars($page); ?></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Node.js</h3>
+                                            <p><ol class="install-instructions">
+                                                <li><a href="https://github.com/thingdom/node-neo4j/tree/v2/">Install node-neo4j</a> using npm: <code>$ npm install --save neo4j</code></li>
+                                                <li>Copy and paste code at left into js file and run</li>
+                                            </ol></p>
+                                        </div>
+                                    </div>
+                                </section>
+							</div>
+					</div>
+				</section>
+				<section role="tabpanel" aria-hidden="true" class="content" id="sample-network">
+          <dl class="tabs minimalist" data-tab role="tablist">
+            <dd class="tab-title active" role="presentation"><a href="#impact" role="tab" tabindex="0" aria-selected="true" aria-controls="impact" id="network-impact">Impact Analysis</a></dd>
+            <dd class="tab-title" role="presentation"><a href="#dependency" role="tab" tabindex="0" aria-selected="false" aria-controls="dependency" id="network-dependency">Dependency Analysis</a></dd>
+            <dd class="tab-title" role="presentation"><a href="#statistics" role="tab" tabindex="0" aria-selected="false" aria-controls="statistics" id="network-statistics">Statistics</a></dd>
+          </dl>
+          <div class="tabs-content">
+            <section role="tabpanel" aria-hidden="false" aria-selected="true" class="content active gexample" id="impact">
+              <div class="demo runnable-example row" frag="0">
+                <div class="small-6 columns">
+                  <h3>
+                    Impact Analysis
+                  </h3>
+                  <p>Find all services that depend on Server 1. These would be impacted by an outage of that server.</p>
+		  <pre class="cypher-query cm-s-neo" data-lang="cypher">
+		  </pre>
+                  <p>Only Webserver VM depends on Server 1.  Because we're looking at variable length paths of DEPENDS_ON relationships, we're also able to determine that Public Website would be impacted by an outage of Server 1.
+                </div>
+                <div class="small-6 columns">
+                  <div class="console"></div>
+                </div>
+              </div>
+            </section>
+            <section role="tabpanel" aria-hidden="true" class="content gexample" id="dependency">
+              <div class="demo runnable-example row" frag="1">
+                <div class="small-6 columns">
+                  <h3>
+                    Dependency Analysis
+                  </h3>
+                  <p>Find all services which the Public Website depends on to be operational.</p>
+		  <pre class="cypher-query cm-s-neo" data-lang="cypher">
+		  </pre>
+                  <p>The Public Website depends on the Database VM and the Webserver VM, which each depend on other services.</p>
+                </div>
+                <div class="small-6 columns">
+                  <div class="console"></div>
+                </div>
+              </div>
+            </section>
+            <section role="tabpanel" aria-hidden="true" class="content gexample" id="statistics">
+              <div class="demo runnable-example row" frag="2">
+                <div class="small-6 columns">
+                  <h3>
+                    Statistics
+                  </h3>
+                  <p>Find the most depended-upon component</p>
+		  <pre class="cypher-query cm-s-neo" data-lang="cypher">
+		  </pre>
+                  <p>As is the case in many data centers, the SAN is the most depended upon component.  All six other services directly or indirectly depend on it.</p>
+                </div>
+                <div class="small-6 columns">
+                  <div class="console"></div>
+                </div>
+              </div>
+            </section>
+                          <dl class="tabs dark" data-tab role="tablist">
+                <dd class="tab-title no-click" role="presentation">See Code In:</dd>
+                <dd class="tab-title" role="presentation"><a href="#java" role="tab" tabindex="0" aria-selected="false" aria-controls="java">Java</a></dd>
+                <dd class="tab-title" role="presentation"><a href="#python" role="tab" tabindex="0" aria-selected="false" aria-controls="python">Python</a></dd>
+                                <dd class="tab-title" role="presentation"><a href="#ruby" role="tab" tabindex="0" aria-selected="false" aria-controls="ruby">Ruby</a></dd>
+                                <dd class="tab-title" role="presentation"><a href="#php" role="tab" tabindex="0" aria-selected="true" aria-controls="php">PHP</a></dd>
+                                <dd class="tab-title" role="presentation"><a href="#cs" role="tab" tabindex="0" aria-selected="false" aria-controls="c#">C#</a></dd>
+                <dd class="tab-title" role="presentation"><a href="#node" role="tab" tabindex="0" aria-selected="false" aria-controls="node#">Node.js</a></dd>
+              </dl>
+              <div class="tabs-content dark">
+                <section role="tabpanel" aria-hidden="false" class="content" id="php">
+                  <div class="row">
+                    <div class="small-8 columns">
+                      <div class="code-container">
+                        <pre style="height: 500px;"><code class="language-php"><?php $page = file_get_contents(get_template_directory() . "/includes/network-page.php.txt"); print htmlspecialchars($page); ?></code></pre>
+                      </div>
+                    </div>
+                    <div class="small-4 columns">
+                      <h3 class="subheader">Downloading and Installing PHP</h3>
+                      <p><ol class="install-instructions">
+                                                                                           <li><a href="https://getcomposer.org/download/">Install Composer</a> from within web directory: <code>$ curl -sS https://getcomposer.org/installer | php</code></li>
+                                                                                           <li><a href="https://github.com/graphaware/neo4j-php-client">Install Neo4j-PHP-Client</a> from within web directory: <code>$ php composer.phar require neoxygen/neoclient</code></li>
+                                                                                           <li>Copy and paste code at left into php file and run</li>
+                                                                                           </ol></p>
+                    </div>
+                  </div>
+                </section>
+                <section role="tabpanel" aria-hidden="true" class="content" id="java">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-java"><?php $page = file_get_contents(get_template_directory() . "/includes/network-page.java.txt"); print htmlspecialchars($page); ?></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Java</h3>
+                                            <p><ol class="install-instructions">
+                                                                                           <li><a href="https://github.com/neo4j-contrib/neo4j-jdbc">Download Neo4j JDBC</a> </li>
+                                                                                           <li>Copy and paste code at left into <code>Social.java</code></li>
+                                                                                           <li>Run <code>javac Social.java</code></li>
+                                                                                           <li>Run <code>java -cp /path/to/neo4j-jdbc-2.3-SNAPSHOT-jar-with-dependencies.jar:. Social</code></li>
+                                                                                           </ol></p>
+                                        </div>
+                                    </div>
+                </section>
+                <section role="tabpanel" aria-hidden="true" class="content" id="python">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-python"><?php $page = file_get_contents(get_template_directory() . "/includes/network-page.py.txt"); print htmlspecialchars($page); ?></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Python</h3>
+                                            <p><ol class="install-instructions">
+                                                                                           <li><a href="http://py2neo.org/2.0/">Install Py2neo</a> using pip: <code>$ pip install py2neo</code></li>
+                                                                                           <li>Copy and paste code at left into py file and run</li>
+                                                                                           </ol></p>
+                                        </div>
+                                    </div>
+                </section>
+                                <section role="tabpanel" aria-hidden="true" class="content" id="ruby">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-ruby"><?php $page = file_get_contents(get_template_directory() . "/includes/network-page.rb.txt"); print htmlspecialchars($page); ?></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Ruby</h3>
+                                            <p><ol class="install-instructions">
+                                                <li><a href="http://neo4jrb.io/">Install Neo4j.rb</a> using gem: <code>$ gem install neo4j-core</code></li>
+                                                <li>Copy and paste code at left into rb file and run</li>
+                                            </ol></p>
+                                        </div>
+                                    </div>
+                                </section>
+                <section role="tabpanel" aria-hidden="true" class="content" id="cs">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-csharp"><?php $page = file_get_contents(get_template_directory() . "/includes/network-page.cs.txt"); print htmlspecialchars($page); ?></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing C#</h3>
+                                            <p><ol class="install-instructions">
+                                                                                           <li><a href="https://dist.nuget.org/index.html">Install NuGet</a> </li>
+                                                                                           <li>Run the NuGet Package Manager Console</li>
+                                                                                           <li>Install the <a href="http://www.nuget.org/packages/Neo4jClient">Neo4jClient package</a>: <code>PM&gt; Install-Package Neo4jClient</code></li>
+                                                                                           <li>This sample uses the Cypher LOAD CSV syntax to load data from a CSV file.  Copy and paste CSV content in 2nd comment in source code at left into c:/temp/services.csv</li>
+                                                                                           <li>Copy and paste code at left into your .NET project, build, and run</li>
+                                                                                           </ol></p>
+                                        </div>
+                                    </div>
+                </section>
+                                <section role="tabpanel" aria-hidden="true" class="content" id="node">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-javascript"><?php $page = file_get_contents(get_template_directory() . "/includes/network-page.js.txt"); print htmlspecialchars($page); ?></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Node.js</h3>
+                                            <p><ol class="install-instructions">
+                                                <li><a href="https://github.com/thingdom/node-neo4j/tree/v2/">Install node-neo4j</a> using npm: <code>$ npm install --save neo4j</code></li>
+                                                <li>Copy and paste code at left into js file and run</li>
+                                            </ol></p>
+                                        </div>
+                                    </div>
+                                </section>
+              </div>
+
+          </div>
+        </section>
+				<section role="tabpanel" aria-hidden="true" class="content" id="sample-fraud">
+          <dl class="tabs minimalist" data-tab role="tablist">
+            <dd class="tab-title active" role="presentation"><a href="#transitive" role="tab" tabindex="0" aria-selected="true" aria-controls="transitive" id="fraud-transitive">Transitive Closure</a></dd>
+            <dd class="tab-title" role="presentation"><a href="#investigation" role="tab" tabindex="0" aria-selected="false" aria-controls="investigation" id="fraud-investigation">Investigation Targeting</a></dd>
+            <dd class="tab-title" role="presentation"><a href="#insights" role="tab" tabindex="0" aria-selected="false" aria-controls="insights" id="fraud-insights">Fast Insights</a></dd>
+          </dl>
+          <div class="tabs-content">
+            <section role="tabpanel" aria-hidden="false" class="content active gexample" id="transitive">
+              <div class="demo runnable-example row" frag="0">
+                <div class="small-6 columns">
+                  <h3>
+                    Transitive Closure
+                  </h3>
+                  <p>Given suspicions about Hank, find related information to investigate.</p>
+		  <pre class="cypher-query cm-s-neo" data-lang="cypher">
+		  </pre>
+                  <p>Hank shares an account with Abby.  Abby shares a SSN with Sophie and Max.  Given that we suspect Hank may be involved in fraudulent activity, we can flag the Cayman account, Sophie, and Abby as possible fraudulent entities.</p>
+                </div>
+                <div class="small-6 columns">
+                  <div class="console"></div>
+                </div>
+              </div>
+            </section>
+            <section role="tabpanel" aria-hidden="true" class="content gexample" id="investigation">
+              <div class="demo runnable-example row" frag="1">
+                <div class="small-6 columns">
+                  <h3>
+                    Investigation Targeting
+                  </h3>
+                  <p>Fraud rings often share fraudulent identifying information. Any person with connections to more than two entities in the graph are suspicious. Find large cliques to investigate further.</p>
+		  <pre class="cypher-query cm-s-neo" data-lang="cypher">
+		  </pre>
+                  <p>Sophie, Max and Abby all share a SSN, which is suspicious. Hank is also suspicious because he is sharing an account with Abby.</p>
+                </div>
+                <div class="small-6 columns">
+                  <div class="console"></div>
+                </div>
+              </div>
+            </section>
+            <section role="tabpanel" aria-hidden="true" class="content gexample" id="insights">
+              <div class="demo runnable-example row" frag="2">
+                <div class="small-6 columns">
+                  <h3>
+                    Fast Insights
+                  </h3>
+                  <p>Given that we've identified SSN 993-63-2634 as suspcious, find all associated accounts.</p>
+		  <pre class="cypher-query cm-s-neo" data-lang="cypher">
+		  </pre>
+                  <p>We see that the Cayman account #863 is the only account where a Person using this SSN owns the account.<br /><br /><br /></p>
+                </div>
+                <div class="small-6 columns">
+                  <div class="console"></div>
+                </div>
+              </div>
+            </section>
+                          <dl class="tabs dark" data-tab role="tablist">
+                <dd class="tab-title no-click" role="presentation">See Code In:</dd>
+                <dd class="tab-title" role="presentation"><a href="#java" role="tab" tabindex="0" aria-selected="false" aria-controls="java">Java</a></dd>
+                <dd class="tab-title" role="presentation"><a href="#python" role="tab" tabindex="0" aria-selected="false" aria-controls="python">Python</a></dd>
+                                <dd class="tab-title" role="presentation"><a href="#ruby" role="tab" tabindex="0" aria-selected="false" aria-controls="ruby">Ruby</a></dd>
+                                <dd class="tab-title" role="presentation"><a href="#php" role="tab" tabindex="0" aria-selected="true" aria-controls="php">PHP</a></dd>
+                                <dd class="tab-title" role="presentation"><a href="#cs" role="tab" tabindex="0" aria-selected="false" aria-controls="c#">C#</a></dd>
+                <dd class="tab-title" role="presentation"><a href="#node" role="tab" tabindex="0" aria-selected="false" aria-controls="node#">Node.js</a></dd>
+              </dl>
+              <div class="tabs-content dark">
+                <section role="tabpanel" aria-hidden="false" class="content" id="php">
+                  <div class="row">
+                    <div class="small-8 columns">
+                      <div class="code-container">
+                        <pre style="height: 500px;"><code class="language-php"><?php $page = file_get_contents(get_template_directory() . "/includes/fraud-page.php.txt"); print htmlspecialchars($page); ?></code></pre>
+                      </div>
+                    </div>
+                    <div class="small-4 columns">
+                      <h3 class="subheader">Downloading and Installing PHP</h3>
+                      <p><ol class="install-instructions">
+                                                                                           <li><a href="https://getcomposer.org/download/">Install Composer</a> from within web directory: <code>$ curl -sS https://getcomposer.org/installer | php</code></li>
+                                                                                           <li><a href="https://github.com/graphaware/neo4j-php-client">Install Neo4j-PHP-Client</a> from within web directory: <code>$ php composer.phar require neoxygen/neoclient</code></li>
+                                                                                           <li>Copy and paste code at left into php file and run</li>
+                                                                                           </ol></p>
+                    </div>
+                  </div>
+                </section>
+                <section role="tabpanel" aria-hidden="true" class="content" id="java">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-java"><?php $page = file_get_contents(get_template_directory() . "/includes/fraud-page.java.txt"); print htmlspecialchars($page); ?></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Java</h3>
+                                            <p><ol class="install-instructions">
+                                                                                           <li><a href="https://github.com/neo4j-contrib/neo4j-jdbc">Download Neo4j JDBC</a> </li>
+                                                                                           <li>Copy and paste code at left into <code>Social.java</code></li>
+                                                                                           <li>Run <code>javac Social.java</code></li>
+                                                                                           <li>Run <code>java -cp /path/to/neo4j-jdbc-2.3-SNAPSHOT-jar-with-dependencies.jar:. Social</code></li>
+                                                                                           </ol></p>
+                                        </div>
+                                    </div>
+                </section>
+                <section role="tabpanel" aria-hidden="true" class="content" id="python">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-python"><?php $page = file_get_contents(get_template_directory() . "/includes/fraud-page.py.txt"); print htmlspecialchars($page); ?></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Python</h3>
+                                            <p><ol class="install-instructions">
+                                                                                           <li><a href="http://py2neo.org/2.0/">Install Py2neo</a> using pip: <code>$ pip install py2neo</code></li>
+                                                                                           <li>Copy and paste code at left into py file and run</li>
+                                                                                           </ol></p>
+                                        </div>
+                                    </div>
+                </section>
+                                <section role="tabpanel" aria-hidden="true" class="content" id="ruby">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-ruby"><?php $page = file_get_contents(get_template_directory() . "/includes/fraud-page.rb.txt"); print htmlspecialchars($page); ?></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Ruby</h3>
+                                            <p><ol class="install-instructions">
+                                                <li><a href="http://neo4jrb.io/">Install Neo4j.rb</a> using gem: <code>$ gem install neo4j-core</code></li>
+                                                <li>Copy and paste code at left into rb file and run</li>
+                                            </ol></p>
+                                        </div>
+                                    </div>
+                                </section>
+                <section role="tabpanel" aria-hidden="true" class="content" id="cs">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-csharp"><?php $page = file_get_contents(get_template_directory() . "/includes/fraud-page.cs.txt"); print htmlspecialchars($page); ?></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing C#</h3>
+                                            <p><ol class="install-instructions">
+                                                                                           <li><a href="https://dist.nuget.org/index.html">Install NuGet</a> </li>
+                                                                                           <li>Run the NuGet Package Manager Console</li>
+                                                                                           <li>Install the <a href="http://www.nuget.org/packages/Neo4jClient">Neo4jClient package</a>: <code>PM&gt; Install-Package Neo4jClient</code></li>
+                                                                                           <li>Copy and paste code at left into your .NET project, build and run</li>
+                                                                                           </ol></p>
+                                        </div>
+                                    </div>
+                </section>
+                                <section role="tabpanel" aria-hidden="true" class="content" id="node">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-javascript"><?php $page = file_get_contents(get_template_directory() . "/includes/fraud-page.js.txt"); print htmlspecialchars($page); ?></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Node.js</h3>
+                                            <p><ol class="install-instructions">
+                                                <li><a href="https://github.com/thingdom/node-neo4j/tree/v2/">Install node-neo4j</a> using npm: <code>$ npm install --save neo4j</code></li>
+                                                <li>Copy and paste code at left into js file and run</li>
+                                            </ol></p>
+                                        </div>
+                                    </div>
+                                </section>
+              </div>
+
+				</section>
+			</div>
+
+		</div>
+	</div>
+</section><!-- .test-drive -->
+++++

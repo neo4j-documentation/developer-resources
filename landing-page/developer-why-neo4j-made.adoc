@@ -1,0 +1,104 @@
+++++
+<section class="why-neo4j-made"> <div class="row"> <div class="small-12 columns"> 
+<h2>What It's Made of</h2>
+
+
+<dl class="tabs tab4 made-of-row-1" data-tab="" data-equalizer>
+	<dd class="text-center" data-equalizer-watch>
+		<a href="#panel3-1" aria-selected="false">
+		<p>Flexible Schema</p>
+	</a></dd>
+	<dd class="text-center" data-equalizer-watch>
+		<a href="#panel3-2" aria-selected="false" tabindex="0">
+		<p>ACID</p>
+	</a></dd>
+	<dd class="text-center" data-equalizer-watch>
+		<a href="#panel3-3" aria-selected="false" tabindex="0">
+		<p>Clustering for HA and Performance</p>
+	</a></dd>
+	<dd class="text-center" data-equalizer-watch>
+		<a href="#panel3-4" aria-selected="false" tabindex="0">
+		<p>Powerful Cypher Query Language</p>
+	</a></dd>
+</dl>
+<div class="tabs-content made-of-row-1">
+  <div class="content" id="panel3-1" aria-hidden="true">
+	<ul class="medium-block-grid-3">
+		<li><div class="num-cirlce">1</div> <div style="overflow:hidden">In the <a href="/developer/graph-database/#property-graph">property graph model</a>, objects are represented as nodes, with relationships connecting the nodes.  Both nodes and relationships can have name/value properties.</div></li>
+		<li><div class="num-cirlce">2</div> <div style="overflow:hidden"><a href="/docs/stable/query-set.html">Add</a> and <a href="/docs/stable/query-remove.html">remove</a> properties on the fly as your data model evolves, with <a href="/docs/stable/query-constraints.html">optional schema constraints</a> for flexibility.</div></li>
+		<li><div class="num-cirlce">3</div> <div style="overflow:hidden">No need for schema migrations.</div></li>
+	</ul>
+  </div>
+  <div class="content" id="panel3-2" aria-hidden="true">
+	<ul class="medium-block-grid-3">
+		<li><div class="num-cirlce">1</div> <div style="overflow:hidden">Neo4j is a transactional database for storing your critical data.  </div></li>
+		<li><div class="num-cirlce">2</div> <div style="overflow:hidden">While many NoSQL databases <a href="/blog/acid-vs-base-consistency-models-explained/">throw ACID out the door</a>, data reliability is a key design consideration for Neo4j.  If you don't have durability, how can you call yourself a database?</div></li>
+		<li><div class="num-cirlce">3</div> <div style="overflow:hidden">With <a href="/editions/">Neo4j Enterprise</a>, you have a configurable consistency model to balance performance and durability.</div></li>
+	</ul>
+  </div>
+  <div class="content" id="panel3-3" aria-hidden="true">
+	<ul class="medium-block-grid-3">
+		<li><div class="num-cirlce">1</div> <div style="overflow:hidden">Neo4j Enterprise can <a href="/developer/guide-clustering-neo4j/">scale</a> reads across dozens of machines, for ultimate performance with peak loads.</div></li>
+		<li><div class="num-cirlce">2</div> <div style="overflow:hidden">Support for <a href="/docs/stable/ha-how.html">master-slave replication</a> with master re-election and failover to keep your pager quiet at night.</div></li>
+		<li><div class="num-cirlce">3</div> <div style="overflow:hidden">Monitor your whole cluster with <a href="/docs/stable/metrics-extension.html">operational metrics</a> and integration with 3rd-party monitoring tools via Neo4j Metrics.</div></li>
+	</ul>
+  </div>
+  <div class="content" id="panel3-4" aria-hidden="true">
+	<ul class="medium-block-grid-3">
+		<li><div class="num-cirlce">1</div> <div style="overflow:hidden">Traverse your graph with <a href="/developer/cypher-query-language/">Cypher</a>, a declarative query language which defines graph patterns using ASCII-art for Graphs.  MATCH (me:Person)-[:KNOWS]-&gt;(you:Friend)</div></li>
+		<li><div class="num-cirlce">2</div> <div style="overflow:hidden">Natural patterns for <a href="/docs/stable/introduction-pattern.html#_variable_length">multi-level querying</a> mean you can forget nested JOINs.  The <a href="http://opencypher.org">openCypher</a> project ensures that Cypher will be the language for graphs across the industry.</div></li>
+		<li><div class="num-cirlce">3</div> <div style="overflow:hidden">Easy to learn for developers <a href="/developer/graph-db-vs-rdbms/">familiar with other query languages like SQL</a>, and easy for everyone to read.</div></li>
+	</ul>
+  </div>
+</div>
+
+<dl class="tabs tab4 made-of-row-2" data-tab="" data-equalizer>
+	<dd class="text-center" data-equalizer-watch>
+		<a href="#panel4-1" aria-selected="false">
+		<p>Neo4j Browser</p>
+	</a></dd>
+	<dd class="text-center" data-equalizer-watch>
+		<a href="#panel4-2" aria-selected="false" tabindex="0">
+		<p>Drivers for Popular Languages and Frameworks</p>
+	</a></dd>
+	<dd class="text-center" data-equalizer-watch>
+		<a href="#panel4-3" aria-selected="false" tabindex="0">
+		<p>Data Import</p>
+	</a></dd>
+	<dd class="text-center" data-equalizer-watch>
+		<a href="#panel4-4" aria-selected="false" tabindex="0">
+		<p>Cloud-Ready</p>
+	</a></dd>
+</dl>
+<div class="tabs-content made-of-row-2">
+  <div class="content" id="panel4-1" aria-hidden="true">
+	<ul class="medium-block-grid-3">
+		<li><div class="num-cirlce">1</div> <div style="overflow:hidden">Query and visualize your graph with the included <a href="/developer/guide-neo4j-browser/">Neo4j Browser</a> web application.  Tutorials help you get going quickly.</div></li>
+		<li><div class="num-cirlce">2</div> <div style="overflow:hidden">Discover patterns in your graph which can then be encoded into Cypher queries in your code for real-time decision making in your application.</div></li>
+		<li><div class="num-cirlce">3</div> <div style="overflow:hidden">Use the built-in graphical output of <a href="/docs/stable/how-do-i-profile-a-query.html">PROFILE and EXPLAIN</a> to fine-tune your queries before deploying to production.</div></li>
+	</ul>
+  </div>
+  <div class="content" id="panel4-2" aria-hidden="true">
+	<ul class="medium-block-grid-3">
+		<li><div class="num-cirlce">1</div> <div style="overflow:hidden">Whether you use Java, C#, Python, Ruby, JavaScript, PHP, R or Go, the Neo4j community has <a href="/developer/language-guides/">built drivers</a> to make interacting with Neo4j's HTTP APIs easy.</div></li>
+		<li><div class="num-cirlce">2</div> <div style="overflow:hidden">Support for popular frameworks, like <a href="/developer/spring-data-neo4j/">Spring Data</a>, <a href="https://neo4django.readthedocs.org/en/latest/">Django ORM</a>, <a href="https://github.com/Vinelab/NeoEloquent">Laravel</a>, <a href="/developer/java/#neo4j-jdbc">JDBC</a> and more.</div></li>
+		<li><div class="num-cirlce">3</div> <div style="overflow:hidden">Integrations with other database technologies and analytical tools, like <a href="/developer/mongodb/">MongoDB</a>, <a href="/developer/cassandra/">Cassandra</a>, <a href="/developer/elastic-search/">ElasticSearch</a> and <a href="/developer/apache-spark/">Spark/GraphX</a> for the polyglot environment.</div></li>
+	</ul>
+  </div>
+  <div class="content" id="panel4-3" aria-hidden="true">
+	<ul class="medium-block-grid-3">
+		<li><div class="num-cirlce">1</div> <div style="overflow:hidden">Easy to get your data into Neo4j in the world's most popular data format - CSV.</div></li>
+		<li><div class="num-cirlce">2</div> <div style="overflow:hidden"><a href="/developer/guide-import-csv/#_load_csv_for_medium_sized_datasets">LOAD CSV</a> functionality enables initial and incremental transactional loading of your data using Cypher for medium-size datasets up to 10M nodes and relationships.</div></li>
+		<li><div class="num-cirlce">3</div> <div style="overflow:hidden">For ultimate performance, the included <a href="/developer/guide-import-csv/#_super_fast_batch_importer_for_huge_datasets">neo4j-import tool</a> enables transaction-less loading of up to 1M records per second. The Windows PowerShell module provides support for high-performance loading via the <a href="/docs/stable/powershell.html#powershell-basic-examples">Import-CSV</a> command.</div></li>
+	</ul>
+  </div>
+  <div class="content" id="panel4-4" aria-hidden="true">
+	<ul class="medium-block-grid-3">
+		<li><div class="num-cirlce">1</div> <div style="overflow:hidden">Although some customers choose to run Neo4j behind their corporate firewalls, many use Neo4j in <a href="/developer/guide-cloud-deployment/">cloud environments</a> like AWS, Azure and Google Cloud Platform.</div></li>
+		<li><div class="num-cirlce">2</div> <div style="overflow:hidden">Partners provide <a href="/developer/guide-cloud-deployment/#_neo4j_cloud_hosting_providers">fully-hosted offerings</a> of Neo4j in the Cloud.</div></li>
+		<li><div class="num-cirlce">3</div> <div style="overflow:hidden"><a href="/developer/docker/">Official Docker image</a> simplifies automation and deployment, making it easy to get up and running with a single instance or a full HA cluster.  Try it out using the <a href="/sandbox/">Neo4j Sandbox</a>, or <a href="http://network.graphdemos.com/">explore your Twitter data in Neo4j</a>.</div></li>
+	</ul>
+  </div>
+</div>
+</div> </div> </section>
+++++

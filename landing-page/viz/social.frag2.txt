@@ -1,0 +1,8 @@
+MATCH 
+  path = shortestPath(
+    (p1:Person)-[:KNOWS*..6]-(p2:Person)
+  )
+WHERE 
+  p1.name = "Joe" AND p2.name = "Billy"
+RETURN
+  path
