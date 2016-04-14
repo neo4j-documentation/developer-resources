@@ -32,12 +32,13 @@ The same front-end web page consumes 3 REST-endpoints provided by backend implem
 * single movie listing
 * graph visualization of the domain
 
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/movie_application.png[link="http://my-neo4j-movies-app.herokuapp.com/"]
+image::{img}movie_application.png[link="http://my-neo4j-movies-app.herokuapp.com/"]
 
 === Domain Model
 
+[source,cypher]
 ----
-(:Movie {title,released,tagline})<-[:ACTED_IN {roles}]-(actor:Person)
+(:Person {name})-[:ACTED_IN {roles}]->(:Movie {title,released})
 ----
 
 === GitHub

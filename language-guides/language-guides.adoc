@@ -39,8 +39,8 @@ See also the for an detailed overview of the official drivers link:[Neo4j Driver
 
 ++++
 <dl class="tabs" data-tab>
-  <dd class="tab-title active"><a href="#bolt-dotnet">.Net</a></dd>
-  <dd class="tab-title"><a href="#bolt-java">Java</a></dd>
+  <dd class="tab-title"><a href="#bolt-dotnet">.Net</a></dd>
+  <dd class="tab-title active"><a href="#bolt-java">Java</a></dd>
   <dd class="tab-title"><a href="#bolt-javascript">JavaScript</a></dd>
   <dd class="tab-title"><a href="#bolt-python">Python</a></dd>
 </dl>
@@ -51,37 +51,62 @@ See also the for an detailed overview of the official drivers link:[Neo4j Driver
 ++++
 
 [[bolt-dotnet]]
-[.content.active]
+[.content]
 === Neo4j .Net Driver
 
+[source,xml]
+----
+include::https://github.com/neo4j-examples/movies-dotnet-bolt/raw/master/Neo4j.Driver.Example/packages.config[tag=setup]
+----
+
+.Example
 [source,dotnet]
 ----
-PM> Install-Package Neo4j.Driver-1.0.0-RC2
-
-include::bolt/Bolt.cs[tag=mvp]
+include::https://github.com/neo4j-examples/movies-dotnet-bolt/raw/master/Neo4j.Driver.Example/Controllers/SearchController.cs[tag=minimum-viable-snippet]
 ----
 
 [[bolt-java]]
-[.content]
+[.content.active]
 === Neo4j Java Driver
 
+[source,xml]
+----
+include::https://raw.githubusercontent.com/neo4j-examples/neo4j-movies-java-bolt/master/pom.xml[tag=bolt-dependency]
+----
+
+[source,java]
+----
+include::https://raw.githubusercontent.com/neo4j-examples/neo4j-movies-java-bolt/master/src/test/java/example/movies/DocTest.java[tag=minimum-viable-snippet]
+----
+
+[[bolt-javascript]]
+[.content]
+=== Neo4j JavaScript Driver
+
 .Setup
+[source,json]
 ----
-Add this to your pom.xml
-<dependencies>
-    <dependency>
-        <groupId>org.neo4j.driver</groupId>
-        <artifactId>neo4j-java-driver</artifactId>
-        <version>1.0.0-RC2</version>
-    </dependency>
-</dependencies>
-
-For Gradle use `compile 'org.neo4j.driver:neo4j-java-driver:1.0.0-RC2'`
+include::https://raw.githubusercontent.com/neo4j-examples/neo4j-movies-javascript-bolt/master/package.json[tag=setup]
 ----
 
-[source,dotnet]
+[source,javascript]
 ----
-include::bolt/Bolt.java[tag=mvp]
+include::https://raw.githubusercontent.com/neo4j-examples/neo4j-movies-javascript-bolt/master/test/doc_test.js[tag=minimum-viable-snippet]
+----
+
+[[bolt-python]]
+[.content]
+=== Neo4j Python Driver
+
+.Setup
+[source,yaml]
+----
+include::https://raw.githubusercontent.com/neo4j-examples/neo4j-movies-python-bolt/master/requirements.txt[tag=setup]
+----
+
+[source,python]
+----
+include::https://raw.githubusercontent.com/neo4j-examples/neo4j-movies-python-bolt/master/test/doc_test.py[tag=minimum-viable-snippet]
 ----
 
 ++++
