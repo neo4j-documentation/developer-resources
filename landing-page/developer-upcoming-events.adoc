@@ -1,7 +1,7 @@
 // Events near you
-// FIXME: events.json returns empty??
-
+// FIXME: configure events api url form environment variable?
 :site_url: http://neo4j.com
+:events_url: ./events/events.json
 
 [subs=attributes]
 ++++
@@ -92,8 +92,9 @@
 
   /* Show events regardless of location, in case geocoding fails */
   function shownextevents() {
-    $.get("{site_url}/api/events.json",function(data) {
-      var events = JSON.parse(data);
+    $.get("{events_url}",function(data) {
+      //var events = JSON.parse(data);
+      var events = data;
       eventsSource = events;
 
       var webinar = ofType(events, "Webinar");
@@ -113,8 +114,10 @@
     }
     var lat1 = info.latitude;
     var lon1 = info.longitude;
-    $.get("{site_url}/api/events.json",function(data) {
-      var events = JSON.parse(data);
+    $.get("{events_url}",function(data) {
+      //var events = JSON.parse(data);
+      var events = data;
+
       events.forEach(function(event) {
       if (event.Geo) {
         var coords=event.Geo.split(",");
