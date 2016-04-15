@@ -1,25 +1,59 @@
-++++
-<!-- ?php
-/**
-* YouTube Data API for PHP
-*
-* Built off existing Neo4j files that appear to be currently unused.
-* There is no WordPress page currently assigned the Template: Video YouTube
-*
-* page-video-yt.php
-* includes/youtube.php
-* assets/js/videos-yt.js
-*
-* TODO:
-* - roll this thing into a plugin: neo4j-core
-* - use Transients? https://codex.wordpress.org/Transients_API
-*/
-require 'youtube.php';
-$youtube = new YouTube('AIzaSyB3jZLnBi-Cqggq8BCq9xTV8YMgu-x_kTc');
-$videos = $youtube->getPlaylist('PL9Hl4pk2FsvUZsgKDpAYTFULjkygUGIpi', 6);
+:video_playlist_key: PL9Hl4pk2FsvUZsgKDpAYTFULjkygUGIpi
+:youtube_api_key: AIzaSyB3jZLnBi-Cqggq8BCq9xTV8YMgu-x_kTc
+:num_videos: 6
 
-$count = 0;
-?-->
+[subs=attributes]
+++++
+
+
+<script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+
+<script>
+    $(document).ready(function() {
+        gapi.client.setApiKey("{youtube_api_key}");
+        gapi.client.load('youtube', 'v3', function() {
+            var requestOptions = {
+                    playlistId: "{video_playlist_key}",
+                    part: 'snippet',
+                    maxResults: {num_videos}
+            };
+
+            var request = gapi.client.youtube.playlistItems.list(requestOptions);
+            request.execute(function(response) {
+
+                videoString = "";
+                $.each(response['items'], function(i,v) {
+                    var id = v['snippet']['resourceId']['videoId'],
+                        thumbnail = v['snippet']['thumbnails']['medium'],
+                        title = v['snippet']['title'],
+                        description = v['snippet']['description'],
+                        video_id = v['snippet']['resourceId']['videoId'];
+
+                    if (i > 2) {
+                        videoString += '<li class="text-center extra-item" style="display:none">';
+                    } else {
+                        videoString += '<li class="text-center">';
+                    }
+
+                    videoString += '<a href="https://www.youtube.com/watch?v="' + video_id + '" target="_blank">';
+                        videoString += '<div class="videobox">';
+                            videoString += '<img src="' + thumbnail['url'] + '">';
+                            videoString += '<span></span>';
+                        videoString += '</div>';
+                    videoString += '</a>';
+                    videoString += '<h5>' + title + '</h5>';
+                    videoString += '</li>';
+
+                });
+
+                $(".videos-list").append(videoString);
+
+            })
+        });
+
+    });
+
+</script>
 
 <section class="helpful-videos">
 	<h2>Videos</h2>
@@ -27,44 +61,6 @@ $count = 0;
 	<div class="row">
 		<div class="small-12 columns">
 			<ul class="videos-list item-list small-block-grid-1 medium-block-grid-3">
-
-				<!-- ?php
-				foreach ( $videos as $index => $video ):
-					$id = $video['snippet']['resourceId']['videoId'];
-					$thumbnail = $video['snippet']['thumbnails']['medium'];
-					$title = $video['snippet']['title'];
-					$description = $video['snippet']['description'];
-					$video_id = $video['snippet']['resourceId']['videoId'];
-				?-->
-	
-				<!--?php if ( $count > 2 ): ?-->
-				<li class="text-center extra-item" style="display:none">
-				<!--?php else: ?-->
-				<li class="text-center <?php echo esc_html($list_class); ?>">
-				<!--?php endif; ?-->
-
-					<a href="https://www.youtube.com/watch?v=<?php echo esc_html($video_id); ?>" target="_blank">
-					<div class="videobox">
-						<img src=""> <!--?php echo esc_html($thumbnail['url']); ?-->
-						<span></span>
-					</div>
-					</a>
-					<h5><!--?php echo esc_html($title); ?--></h5>
-
-					<!--?php
-					/*
-					 * Going to be hard to find value in an excerpt of 8 to 10 words 
-					 * created from their YouTube video descriptions. Won't really make sense.
-					 *
-					<p><?php echo esc_html($description); ?></p>
-					*/
-					?-->
-
-				</li>
-
-				<!--?php $count++; ?-->
-				<!--?php endforeach; ?-->
-
 			</ul>
 
 		</div>
@@ -76,6 +72,5 @@ $count = 0;
 			<a id="videos-list-btn" class="toggle-arrow" href=""></a>
 		</div>
 	</div>
-
 </section>
 ++++
