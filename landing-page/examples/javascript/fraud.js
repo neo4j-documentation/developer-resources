@@ -1,10 +1,11 @@
+// npm install neo4j-driver
+var neo4j = require('neo4j-driver').v1;
 
-// npm install --save neo4j
-var neo4j = require('neo4j');
-var db = new neo4j.GraphDatabase('http://neo4j:<password>@localhost:7474');
+var driver = neo4j.driver("bolt://localhost", neo4j.auth.basic("neo4j", "<password>"));
+var session = driver.session();
+var queryCount = 0;
 
-
-var insertQuery = 
+var insertQuery =
     "CREATE (hank:Person {name:'Hank'}), \
     (abby:Person {name:'Abby'}), \
     (max:Person {name:'Max'}), \
@@ -27,11 +28,11 @@ var insertQuery =
     (sophie)-[:HAS_SSN]->(ssn993632634), \
     (max)-[:HAS_SSN]->(ssn993632634)";
 
-var transitiveQuery = 
+var transitiveQuery =
     "MATCH (n:Person)-[*]-(o) \
     WHERE n.name = {name} \
     RETURN DISTINCT o AS other";
-        
+
 var targetingQuery =
     "MATCH (n:Person)-[*]-(o) \
     WITH n, count(DISTINCT o) AS size \
@@ -43,18 +44,33 @@ var insightsQuery =
     WHERE ssn.number = {ssn} \
     RETURN acct";
 
-function query(query, params, column, cb) {
-    function callback(err, results) {
-        if (err || !results) throw err;
-        if (!column) cb(results)
-        else results.forEach(function(row) { cb(row[column]) });
-    };
-    db.cypher({ query: query, params: params}, callback);
+function query(query, params, message, column) {
+    session
+        .run(query, params)
+        .then(function(result) {
+            console.log(message);
+            result.records.forEach(function(record) {
+                console.log(record.get(column));
+            });
+
+            queryCount += 1;
+            if (queryCount > 2) {
+                session.close();
+                process.exit();
+            }
+        })
+        .catch(function(error){
+            console.log(error);
+        });
 }
 
-query(insertQuery, {}, null, function () {
-    query(transitiveQuery, {name: "Hank"},"other", console.log); 
-    query(targetingQuery, {},"other",console.log);
-    query(insightsQuery, {ssn: 993632634}, "acct", 
-          function(res) { console.log(res)});
-});
+session
+    .run(insertQuery)
+    .then(function(result) {
+        query(transitiveQuery, {name: "Hank"}, "Transitive closure: ", "other");
+        query(targetingQuery, {}, "Investigation targeting: ", "n");
+        query(insightsQuery, {ssn: 993632634}, "Associated accounts: ", "acct");
+    })
+    .catch(function(error) {
+        console.log(error);
+    });
