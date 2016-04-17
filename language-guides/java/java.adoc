@@ -30,15 +30,24 @@ toc::[]
 
 Neo4j offers a rich set of integration possibilities for Java or JVM-language developers.
 
-There are two ways of using Neo4j from the JVM.
-The standalone Neo4j Server can be installed on any machine and then accessed via its HTTP API.
-You can use any REST library you choose for any JVM language.
-The dedicated Neo4j drivers go beyond that by offering comprehensive APIs for integrating with graph-based applications.
+The standalone Neo4j Server can be installed on any machine and then accessed via its *binary "Bolt" protocol* through our official driver or any bolt-enabled drivers.
+
+The server's HTTP API is used by many other integrations, drivers or with any REST library.
+
+You can also extend Neo4j by implementing *stored procedures for Cypher* in Java or other JVM languages, writing *server extensions* which act as REST-endpoints or by embedding Neo4j into your own Java applications.
 // end::intro[]
 
+
+[[neo4j-dotnet-driver]]
+=== icon:check-circle-o[] Neo4j Java Driver
+
+include::../_includes/java-driver.adoc[]
+
+=== Using Neo4j's Embedded Java API
+
 But you can also run {manual}/tutorials-java-embedded.html[Neo4j embedded in your JVM process], much like HSQL or Derby.
-This is great for unit testing, but also for high performance / no-network setups.
-If you use Neo4j embedded, you can use the Neo4j Core-Java-API directly.
+This is great for unit testing, but also for high performance / network-free setups.
+If you embed Neo4j, you can use the Neo4j Core-Java-API directly.
 Besides an object-oriented approach to the graph database, working with Nodes, Relationships, and Paths, it also offers highly customizable high-speed traversal- and graph-algorithm implementations.
 You can also choose from any useful drivers wrapping that API, which exist either for specific programming languages or that add interesting functionality.
 
@@ -50,6 +59,8 @@ With its non-transactional, low-level batch-insertion API it can ingest millions
 Follow the guides below to get you started.
 
 include::../_includes/sample_project.adoc[]
+
+include::../_includes/community-driver-notice.adoc[]
 
 [[neo4j-jdbc]]
 === Using Neo4j Server with JDBC
