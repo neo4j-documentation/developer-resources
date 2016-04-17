@@ -6,6 +6,12 @@
 :toclevels: 2
 :section: Develop with Neo4j
 :section-link: language-guides
+:dotnet-version: 1.0.0-RC2
+
+++++
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/clike/clike.min.js"></script>
+
+++++
 
 .Goals
 [abstract]
@@ -35,7 +41,8 @@ With the Neo4j 3.0 release we are happy to provide an officially supported drive
 
 // end::intro[]
 
-=== Neo4jDotNetDriver
+[[neo4j-dotnet-driver]]
+=== icon:check-circle-o[] Neo4jDotNetDriver
 
 The Neo4j .NET driver is officially supported by Neo4j and connects to the database using the binary protocol.
 It aims to be minimal, while being idiomatic to .NET
@@ -44,21 +51,22 @@ It aims to be minimal, while being idiomatic to .NET
 ----
 PM> Install-Package Neo4j.Driver -Pre
 
-include::https://github.com/neo4j-examples/movies-dotnet-bolt/raw/master/Neo4j.Driver.Example/packages.config[tag=setup]
+include::https://github.com/neo4j-examples/movies-dotnet-bolt/raw/master/Neo4j.Driver.Example/packages.config[tag=setup,indent=0]
 ----
 
 .Example
-[source,cs]
+[source,clike]
 ----
 include::https://github.com/neo4j/neo4j-dotnet-driver/raw/1.0/Neo4j.Driver/Neo4j.Driver.IntegrationTests/Examples.cs[tag=minimal-example-import]
 include::https://github.com/neo4j/neo4j-dotnet-driver/raw/1.0/Neo4j.Driver/Neo4j.Driver.IntegrationTests/Examples.cs[tag=minimal-example,indent=0]
 ----
 
-[cols="1,4"]
+////
+[cols="1,5"]
 |===
 | Name | Neo4jDotNetDriver
-| icon:tag[] Version  | 1.0.0-RC2
-| icon:user[] Authors | The Neo4j Team, Chris Skardon, Martin Jensen
+| icon:tag[] Version  | {dotnet-version}
+| icon:user[] Authors | The Neo4j Team, http://twitter.com/cskardon[Chris Skardon], https://twitter.com/IngvarKofoed[Martin Jensen]
 
 | icon:gift[] Package | http://www.nuget.org/packages/Neo4j.Driver
 | icon:play-circle[] Example | https://github.com/neo4j-examples/movies-dotnet-bolt
@@ -68,6 +76,7 @@ include::https://github.com/neo4j/neo4j-dotnet-driver/raw/1.0/Neo4j.Driver/Neo4j
 | icon:code[] API | http://alpha.neohq.net/docs/dotnet-driver
 | icon:github[] Source | http://github.com/neo4j/neo4j-dotnet-driver
 |===
+////
 
 [cols="3*"]
 |===
@@ -76,8 +85,8 @@ include::https://github.com/neo4j/neo4j-dotnet-driver/raw/1.0/Neo4j.Driver/Neo4j
 | icon:user[] Authors
 
 | Neo4jDotNetDriver
-| 1.0.0-RC2
-| The Neo4j Team, Chris Skardon, Martin Jensen
+| {dotnet-version}
+| The Neo4j Team, http://twitter.com/cskardon[Chris Skardon], https://twitter.com/IngvarKofoed[Martin Jensen]
 
 | http://www.nuget.org/packages/Neo4j.Driver[icon:gift[] Package]
 | {examples}//movies-dotnet-bolt[icon:play-circle[] Example]
