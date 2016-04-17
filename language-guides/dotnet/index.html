@@ -622,9 +622,10 @@ You should have <a href="/download">installed Neo4j</a> and made yourself famili
 
 <ul class="sectlevel2">
 <li><a href="#_neo4j_for_net_developers">Neo4j for .NET Developers</a></li>
+<li><a href="#_neo4jdotnetdriver">Neo4jDotNetDriver</a></li>
 <li><a href="#_the_example_project">The Example Project</a></li>
 <li><a href="#_neo4jclient">Neo4jClient</a></li>
-<li><a href="#_other_drivers">Other Drivers</a></li>
+<li><a href="#_cypher_net">Cypher.NET</a></li>
 </ul>
 
 </div>
@@ -635,21 +636,134 @@ You should have <a href="/download">installed Neo4j</a> and made yourself famili
 <h3>Neo4j for .NET Developers</h3>
 <div class="imageblock">
 <p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/dotnet.png" alt="dotnet">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/dotnet-logo.png" alt="dotnet logo">
 </p>
 </div>
 
 
 <div class="paragraph">
-<p>The .NET platform allows many developers to create fascinating applications utilizing graph concepts.</p>
+<p>The .NET platform allows developers to create fascinating applications utilizing graph concepts with Neo4j.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Powerful drivers like <code>Neo4jClient</code> showed early on how easy it is to connect to Neo4j from .NET</p>
+<p>Neo4j aims to have a great experience on Windows with an desktop installer and dedicated PowerShell modules.</p>
 </div>
 
+
+
+<div class="paragraph">
+<p>With the Neo4j 3.0 release we are happy to provide an officially supported driver for .NET</p>
+</div>
+
+</div>
+<div  id="_neo4jdotnetdriver" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4jDotNetDriver</h3>
+
+
+<div class="paragraph">
+<p>The Neo4j .NET driver is officially supported by Neo4j and connects to the database using the binary protocol.
+It aims to be minimal, while being idiomatic to .NET</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>PM&gt; Install-Package Neo4j.Driver -Pre
+
+  &lt;package id="Neo4j.Driver" version="1.0.0-RC2" targetFramework="net45" /&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Example</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cs"><code>using Neo4j.Driver;
+using (var driver = GraphDatabase.Driver("bolt://localhost", Config.Builder.WithLogger(new DebugLogger {Level=LogLevel.Trace}).ToConfig()))
+using (var session = driver.Session())
+{
+    session.Run("CREATE (neo:Person {name:'Neo', age:23})");
+    var result = session.Run("MATCH (p:Person) WHERE p.name = 'Neo' RETURN p.age");
+
+    foreach (var record in result)
+    {
+        output.WriteLine($"Neo is {record["p.age"]} years old.");
+    }
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Neo4jDotNetDriver</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-tag"></i></span> Version</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.0.0-RC2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-user"></i></span> Authors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Neo4j Team, Chris Skardon, Martin Jensen</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-gift"></i></span> Package</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://www.nuget.org/packages/Neo4j.Driver" class="bare">http://www.nuget.org/packages/Neo4j.Driver</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-play-circle"></i></span> Example</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/neo4j-examples/movies-dotnet-bolt" class="bare">https://github.com/neo4j-examples/movies-dotnet-bolt</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-stack-overflow "></i></span> SO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://stackoverflow.com/questions/tagged/neo4j+.net" class="bare">http://stackoverflow.com/questions/tagged/neo4j+.net</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-book"></i></span> Docs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://neo4j.com/docs/developer-manual/current#driver-manual-index" class="bare">http://neo4j.com/docs/developer-manual/current#driver-manual-index</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-code"></i></span> API</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://alpha.neohq.net/docs/dotnet-driver" class="bare">http://alpha.neohq.net/docs/dotnet-driver</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-github"></i></span> Source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://github.com/neo4j/neo4j-dotnet-driver" class="bare">http://github.com/neo4j/neo4j-dotnet-driver</a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-tag"></i></span> Version</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-user"></i></span> Authors</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Neo4jDotNetDriver</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.0.0-RC2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Neo4j Team, Chris Skardon, Martin Jensen</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://www.nuget.org/packages/Neo4j.Driver"><span class="icon"><i class="fa fa-gift"></i></span> Package</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/neo4j-examples//movies-dotnet-bolt"><span class="icon"><i class="fa fa-play-circle"></i></span> Example</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://stackoverflow.com/questions/tagged/neo4j+.net"><span class="icon"><i class="fa fa-stack-overflow "></i></span> StackOverflow</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://neo4j.com/docs/developer-manual/current#driver-manual-index"><span class="icon"><i class="fa fa-book"></i></span> Docs</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://alpha.neohq.net/docs/dotnet-driver"><span class="icon"><i class="fa fa-code"></i></span> API</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://github.com/neo4j/neo4j-dotnet-driver"><span class="icon"><i class="fa fa-github"></i></span> Source</a></p></td>
+</tr>
+</tbody>
+</table>
 <div class="ulist side-nav">
 <ul>
 <li>
@@ -669,12 +783,6 @@ You should have <a href="/download">installed Neo4j</a> and made yourself famili
 </li>
 </ul>
 </div>
-
-
-<div class="paragraph">
-<p>Members of the .NET community have invested a lot of time and love to develop all these drivers, so if you use them please provide feedback to the authors.</p>
-</div>
-
 </div>
 <div  id="_the_example_project" class="sect2 columns medium-12" style='padding-left: 0;' >
 <h3>The Example Project</h3>
@@ -693,6 +801,27 @@ Each backend implementation shows you how to connect to Neo4j from each of the d
 You will find the implementations for all drivers as <a href="https://github.com/neo4j-examples?query=movies">individual GitHub repositories</a>, which you can clone and deploy directly.</p>
 </div>
 
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The drivers below have been thankfully contributed by the Neo4j community.
+Many of these are fully featured and well maintained.
+But we don&#8217;t take any reponsibility for their fitness for use with the most recent Versions of Neo4j.
+</td>
+</tr>
+</table>
+</div>
+
+
+<div class="paragraph">
+<p>Members of the .NET community have invested a lot of time and love to develop all these drivers, so if you use them please provide feedback to the authors.
+Powerful drivers like <code>Neo4jClient</code> showed early on how easy it is to connect to Neo4j from .NET</p>
+</div>
+
 </div>
 <div  id="_neo4jclient" class="sect2 columns medium-12" style='padding-left: 0;' >
 <h3>Neo4jClient</h3>
@@ -703,50 +832,63 @@ You will find the implementations for all drivers as <a href="https://github.com
 It also supports basic CRUD and legacy indexing.</p>
 </div>
 
-<div class="ulist">
-<ul>
-<li>
-<a href="https://github.com/Readify/Neo4jClient">Neo4jClient on GitHub</a>
-</li>
-<li>
-Author: <a href="http://twitter.com/cskardon">Chris Skardon</a> <a href="http://twitter.com/tathamoddie">Tatham Oddie</a>
-</li>
-<li>
-<a href="http://stackoverflow.com/questions/tagged/neo4jclient">StackOverflow</a>
-</li>
-<li>
-<a href="https://github.com/Readify/Neo4jClient/wiki">Documentation</a>
-</li>
-<li>
-<a href="https://github.com/neo4j-examples/movies-dotnet-neo4jclient">Example Project</a>
-</li>
-</ul>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-github"></i></span> Source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/Readify/Neo4jClient" class="bare">https://github.com/Readify/Neo4jClient</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-user"></i></span> Authors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://twitter.com/cskardon">Chris Skardon</a> <a href="http://twitter.com/tathamoddie">Tatham Oddie</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-stackoverflow"></i></span> SO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://stackoverflow.com/questions/tagged/neo4jclient" class="bare">http://stackoverflow.com/questions/tagged/neo4jclient</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-book"></i></span> Docs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/Readify/Neo4jClient/wiki" class="bare">https://github.com/Readify/Neo4jClient/wiki</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-play-circle"></i></span> Example</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/neo4j-examples/movies-dotnet-neo4jclient" class="bare">https://github.com/neo4j-examples/movies-dotnet-neo4jclient</a></p></td>
+</tr>
+</tbody>
+</table>
 </div>
-</div>
-<div  id="_other_drivers" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Other Drivers</h3>
-<div  id="_cypher_net" class="sect3 "  >
-<h4>Cypher.NET</h4>
+<div  id="_cypher_net" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Cypher.NET</h3>
 
 
 <div class="paragraph">
 <p>A .NET API for the Neo4j HTTP Transactional Endpoint (v2.0.0) exposes a strongly-typed Graph Query API based on the Neo4j Cypher query language.</p>
 </div>
 
-<div class="ulist">
-<ul>
-<li>
-<a href="https://github.com/mtranter/CypherNet">GitHub</a>
-</li>
-<li>
-Author: Mark Tranter
-</li>
-<li>
-<a href="http://mtranter.com/2013/09/21/cypher-net-a-neo4j-cypher-api/">Blog Post</a>
-</li>
-</ul>
-</div>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-github"></i></span> Source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/mtranter/CypherNet" class="bare">https://github.com/mtranter/CypherNet</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-user"></i></span> Authors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mark Tranter</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-rss"></i></span> Blog</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://mtranter.com/2013/09/21/cypher-net-a-neo4j-cypher-api" class="bare">http://mtranter.com/2013/09/21/cypher-net-a-neo4j-cypher-api</a></p></td>
+</tr>
+</tbody>
+</table>
 </div>
                     </div>
                     <div class="large-3 large-pull-9 columns">

@@ -663,27 +663,25 @@ It is based on the PackStream serialization and supports protocol versioning, au
 <h3>Neo4j .Net Driver</h3>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="xml"><code>  &lt;package id="Neo4j.Driver" version="1.0.0-RC2" targetFramework="net45" /&gt;</code></pre>
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>PM&gt; Install-Package Neo4j.Driver -Pre
+
+  &lt;package id="Neo4j.Driver" version="1.0.0-RC2" targetFramework="net45" /&gt;</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Example</div>
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="dotnet"><code>            var statementTemplate = "MATCH (movie:Movie) WHERE movie.title CONTAINS {title} RETURN movie";
-            var statementParameters = new Dictionary&lt;string, object&gt; {{"title", query}};
-
-            var session = WebApiConfig.Neo4jDriver.Session();
-            var cursor = session.Run(statementTemplate, statementParameters);
-
-            var movies = new List&lt;Movie&gt;();
-
-            foreach (var record in cursor.Stream())
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="dotnet"><code>using Neo4j.Driver;
+            using (var driver = GraphDatabase.Driver("bolt://localhost", Config.Builder.WithLogger(new DebugLogger {Level=LogLevel.Trace}).ToConfig()))
+            using (var session = driver.Session())
             {
-                var node = (Node) record["movie"];
-                movies.Add(new Movie {
-                  released = (int) (long) node.Properties["released"],
-                  tagline = node.Properties["tagline"].ToString(),
-                  title = node.Properties["title"].ToString()});
+                session.Run("CREATE (neo:Person {name:'Neo', age:23})");
+                var result = session.Run("MATCH (p:Person) WHERE p.name = 'Neo' RETURN p.age");
+
+                foreach (var record in result)
+                {
+                    output.WriteLine($"Neo is {record["p.age"]} years old.");
+                }
             }</code></pre>
 </div>
 </div>
@@ -793,14 +791,14 @@ and <a href="r">R</a>, <a href="go">Go</a>, <a href="clojure">Clojure</a>, <a hr
 
 <div class="paragraph">
 <p>To demonstrate connection to and usage of Neo4j in different programming languages we&#8217;ve created an example application.
-It is a <a href="http://my-neo4j-movies-app.herokuapp.com/">simple, one-page webapp</a>, that uses Neo4j&#8217;s movie demo database (movie, actor, director) as dataset.
-The same front-end web page consumes 3 REST-endpoints provided by backend implemented in the different programming languages and drivers.</p>
+It is a <a href="http://my-neo4j-movies-app.herokuapp.com/">simple, one-page webapp</a>, that uses Neo4j&#8217;s movie demo database (movie, actor, director) as data set.
+The same front-end web page in all applications consumes 3 REST endpoints provided by backend implemented in the different programming languages and drivers.</p>
 </div>
 
 <div class="ulist">
 <ul>
 <li>
-movie search
+movie search by title
 </li>
 <li>
 single movie listing
@@ -819,7 +817,7 @@ graph visualization of the domain
 <h3>Domain Model</h3>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre>(:Person{name})-[:ACTED_IN{roles}]-&gt;(:Movie{title,released})</pre>
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>(:Person {name})-[:ACTED_IN {roles}]-&gt;(:Movie {title,released})</code></pre>
 </div>
 </div>
 </div>
@@ -828,7 +826,7 @@ graph visualization of the domain
 
 
 <div class="paragraph">
-<p>The source code for the different examples is available on <a href="https://github.com/neo4j-examples?query=movies">GitHub</a>.</p>
+<p>The source code for all the different language examples is available on <a href="https://github.com/neo4j-examples?query=movies">GitHub</a> as individual repositories that can be cloned and directly used as starting points.</p>
 </div>
 
 

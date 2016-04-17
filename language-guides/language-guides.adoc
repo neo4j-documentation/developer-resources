@@ -54,16 +54,20 @@ See also the for an detailed overview of the official drivers link:[Neo4j Driver
 [.content]
 === Neo4j .Net Driver
 
-[source,xml]
+[source]
 ----
+PM> Install-Package Neo4j.Driver -Pre
+
 include::https://github.com/neo4j-examples/movies-dotnet-bolt/raw/master/Neo4j.Driver.Example/packages.config[tag=setup]
 ----
 
 .Example
-[source,dotnet]
+[source,dotnet,indent=0]
 ----
-include::https://github.com/neo4j-examples/movies-dotnet-bolt/raw/master/Neo4j.Driver.Example/Controllers/SearchController.cs[tag=minimum-viable-snippet]
+include::https://github.com/neo4j/neo4j-dotnet-driver/raw/1.0/Neo4j.Driver/Neo4j.Driver.IntegrationTests/Examples.cs[tag=minimal-example-import]
+include::https://github.com/neo4j/neo4j-dotnet-driver/raw/1.0/Neo4j.Driver/Neo4j.Driver.IntegrationTests/Examples.cs[tag=minimal-example]
 ----
+
 
 [[bolt-java]]
 [.content.active]
