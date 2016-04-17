@@ -6,6 +6,12 @@
 :toclevels: 2
 :section: Develop with Neo4j
 :section-link: language-guides
+:javascript-version: 1.0.0-RC2
+
+++++
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/javascript/javascript.min.js"></script>
+
+++++
 
 .Goals
 [abstract]
@@ -27,16 +33,264 @@ toc::[]
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/nodejs.png[]
 
-The standalone Neo4j-Server can be installed on any machine and then accessed via its HTTP API. 
+Neo4j can be installed on any system and then accessed via its binary and HTTP APIs. 
 
-Below we show how you can use something as simple as the `request` module to send queries to and receive responses from Neo4j.
+You can use the official binary driver for JavaScript (neo4j-driver) or connect via HTTP using the `request` module or any of our community drivers.
 
-You can also choose to leverage one of the existing drivers for Neo4j which wrap that protocol in a more convenient API for you.
 // end::intro[]
 
-Follow the tips below to get you started.
+
+[[neo4j-driver]]
+=== icon:check-circle-o[] neo4j-driver
+
+The Neo4j JavaScript driver is officially supported by Neo4j and connects to the database using the binary protocol.
+It aims to be minimal, while being idiomatic to JavaScript, allowing you to subscribe to a stream of responses, errors and completion events.
+
+[source]
+----
+npm install neo4j-driver
+----
+// include::https://github.com/neo4j-examples/movies-javascript-bolt/raw/master/package.json[tag=setup]
+
+.Example
+[source,javascript]
+----
+include::https://github.com/neo4j/neo4j-javascript-driver/raw/1.1/test/v1/examples.test.js[tag=minimal-example-import,indent=0]
+include::https://github.com/neo4j/neo4j-javascript-driver/raw/1.1/test/v1/examples.test.js[tag=minimal-example,indent=0]
+----
+
+[cols="3*"]
+|===
+| Name 
+| icon:tag[] Version 
+| icon:user[] Authors
+
+| neo4j-driver
+| {javascript-version}
+| The Neo4j Team
+
+| https://www.npmjs.com/package/neo4j-driver[icon:gift[] Package]
+|
+// | {examples}//movies-javscript-bolt[icon:play-circle[] Example]
+| http://stackoverflow.com/questions/tagged/neo4j+javascript[icon:stack-overflow [] StackOverflow]
+
+| {manual}#driver-manual-index[icon:book[] Docs]
+| http://alpha.neohq.net/docs/javascript-driver[icon:code[] API]
+| http://github.com/neo4j/neo4j-javascript-driver[icon:github[] Source]
+|===
 
 include::../_includes/sample_project.adoc[]
+
+include::../_includes/community-driver-notice.adoc[]
+
+There is a nice, more detailed intro article on modulus on http://blog.modulus.io/learn-how-to-use-neo4j-with-node.js[how to use Neo4j from Javascript].
+
+[[node-neo4j]]
+=== node-neo4j (Thingdom)
+
+Most widely used Node.js driver for Neo4j.
+This driver aims to be the most robust, comprehensive, and battle-tested community driver available. 
+It's run in production by https://www.fiftythree.com/[FiftyThree] to power https://www.fiftythree.com/paper[Paper] and https://mix.fiftythree.com/[Mix].
+
+==== Features
+
+* Cypher queries, parameters, batching, and transactions
+* Arbitrary HTTP requests, for custom Neo4j plugins
+* Custom headers, for high availability, application tracing, query logging, and more
+* Precise errors, for robust error handling from the start
+* Configurable connection pooling, for performance tuning & monitoring
+* Thorough test coverage with >100 tests
+* Continuously integrated against multiple versions of Node.js and Neo4j
+
+// TODO our example project
+
+[cols="1,4"]
+|===
+| icon:user[] Authors | https://twitter.com/aseemk[Aseem Kishore] & Daniel Gasienica
+| icon:gift[] Package | https://www.npmjs.com/package/neo4j
+| icon:github[] Source | https://github.com/thingdom/node-neo4j/tree/v2
+
+| icon:play-circle[] Example | https://github.com/aseemk/node-neo4j-template
+| icon:book[] Docs | http://coffeedoc.info/github/thingdom/node-neo4j/
+| icon:code[] API | https://github.com/thingdom/node-neo4j/blob/v2/API_v2.md
+| icon:users[] Forum | https://groups.google.com/forum/#!forum/node-neo4j
+|===
+
+=== cypher-stream
+
+Neo4j cypher queries as node object streams.
+
+Transactions are duplex streams that allow you to write query statements then commit or roll back the written queries.
+
+To get a stream per statement, just pass a callback function with the statement object. 
+This works for regular cypher calls and transactions.
+
+* https://github.com/brian-gates/streaming-stack[Simple example of an ember/node/neo4j stack]
+
+[cols="1,4"]
+|===
+| icon:user[] Authors | https://github.com/brian-gates[Brian Gates]
+| icon:gift[] Package | https://www.npmjs.com/package/cypher-stream
+| icon:github[] Source | https://github.com/brian-gates/cypher-stream
+|===
+
+
+* [cypher-stream on GitHub]
+* Author: 
+*  that streams from database to client.
+
+=== Seraph
+
+*Seraph* is a comprehensive, well documented driver for Neo4j, which supports all Neo4j features and provides not only Neo4j connection support, but extensive lifecycle handling.
+The additional extensions *seraph-model* and *seraph-resource* allow you to quickly load and persist your models and integrate seraph-model resolution into your express routes with a base-controller for CRUD operations.
+With *disposable-seraph* you can manage a disposable Neo4j-instance for automatic testing.
+
+[cols="1,4"]
+|===
+| icon:user[] Authors | https://github.com/jonpacker[Jon Packer via BRIK Teknologier, Norway]
+| icon:gift[] Package | https://www.npmjs.com/package/seraph
+| icon:github[] Source | https://github.com/brikteknologier/seraph
+
+| icon:github[] Model | https://github.com/brikteknologier/seraph-model
+| icon:github[] Resource | https://github.com/brikteknologier/seraph-resource
+| icon:github[] Disposable | https://github.com/brikteknologier/disposable-seraph
+
+|===
+
+
+=== simple-neo4j
+
+This is a simple neo4j pure javascript database driver. 
+It takes in one or more queries, commits them to the database in a single transaction, and parses the database result into a simple and easy native javascript object, of course the parser can be disabled if desired.
+
+
+[source,javascript]
+----
+simpleNeo4J.execute('MATCH (n:Movie) RETURN count(*)')
+    .then(function(result)
+    {
+        result.firstValue === 26;
+    });
+----
+
+* https://tonicdev.com/npm/simple-neo4j[Test simple-neo4j in your Browser]
+* https://www.npmjs.com/~wiseguy12851[Other Neo4j projects by John]
+
+[cols="1,4"]
+|===
+| icon:user[] Authors | https://twitter.com/aoi_ika_desu[John Mothershed]
+| icon:gift[] Package | https://www.npmjs.com/package/simple-neo4j
+| icon:github[] Source | https://github.com/RussellsToolbox/simple-neo4j
+|===
+
+=== Meteor.js - Package ccorcos:neo4j
+
+image::https://upload.wikimedia.org/wikipedia/en/a/a4/Meteor-logo.png[width=200]
+http://meteor.com[Meteor] is a complete open source platform for building web and mobile apps in pure JavaScript.
+
+Chet and Sam Corcos created the `ccorcos:neo4j` package that integrates Meteor well with Neo4j including reactivity and query-reevaluation on data changes.
+
+Both wrote and presented about it and Chet provided insight into an example application for event feeds, written with Meteor and Neo4j as a stack.
+
+
+[cols="1,4"]
+|===
+| icon:user[] Authors | https://twitter.com/ccorcos[Chet Corcos] and https://twitter.com/samcorcos[Sam Corcos]
+| icon:gift[] Package | https://atmospherejs.com/ccorcos/neo4j
+| icon:github[] Source | https://github.com/ccorcos/meteor-neo4j
+|===
+
+* https://medium.com/@SamCorcos/connecting-meteor-to-a-neo4j-database-and-deploying-with-graphenedb-3321966c3102[Blog: Connecting Meteor to a Neo4j database and deploying with GrapheneDB]
+* https://medium.com/@SamCorcos/meteor-any-database-7f237f2448f0[Blog: Meteor + Any Database Reactivity]
+* https://medium.com/@chetcorcos/shindig-an-event-discovery-app-built-with-meteor-js-react-js-and-neo4j-602afb483ae6[Example App Shindig], https://medium.com/@chetcorcos/shindig-integrating-neo4j-with-meteor-17b0fce644d[Integration with Neo4j]
+
+=== Ostrio - Meteor.js - Driver
+
+Dmitriy wrapped node-neo4j to be usable with Meteor and also provided a pseudo-reactive driver to support the life-query functionality.
+
+[cols="1,4"]
+|===
+| icon:user[] Authors | https://twitter.com/smart_egg[Dmitriy Aristarkhovich]
+| icon:gift[] Package | https://atmospherejs.com/ostrio/neo4jdriver
+| icon:play-circle[] Example | https://github.com/VeliovGroup/Meteor-Leaderboard-Neo4j[Leaderboard Example Project]
+|===
+
+=== Neo4j Dart
+
+image::https://upload.wikimedia.org/wikipedia/en/3/35/Dart_logo_wordmark.png[width=200]
+
+A Neo4j driver for Dart. Both a simple driver and an OGM (Object Graph Mapper) is provided in separate libraries.
+
+////
+.Example
+[source,dart]
+----
+import 'package:neo4j_dart/neo4j_dart.dart';
+
+main() async {
+  var db = new Neo4j();
+  var result = await db.cypher('''
+        Create (dart:Language {dart})-[:connects_to]->(neo4j:Database {neo4j})
+        Return id(dart), id(neo4j)
+      ''', {
+        'dart': { 'name': 'Dart' },
+        'neo4j': { 'name': 'Neo4j' },
+      });
+
+  print('successfully created two nodes with id ${result['data'][0]['row'].join(' and ')}');
+}
+----
+////
+
+[cols="1,4"]
+|===
+| icon:user[] Authors | https://github.com/Pajn[Author: Rasmus Eneman]
+| icon:gift[] Package | https://pub.dartlang.org/packages/neo4j_dart
+| icon:github[] Source | https://github.com/Pajn/Neo4jDart
+| icon:play-circle[] Example | https://github.com/VeliovGroup/Meteor-Leaderboard-Neo4j[Leaderboard Example Project]
+| icon:book[] Docs | http://www.dartdocs.org/documentation/neo4j_dart
+|===
+
+[[node-neo4j-pk]]
+=== node-neo4j (philipkueng)
+
+Neo4j REST API wrapper for Node.js.
+Well maintained library, has been around since 2012.
+
+++++
+<blockquote class="twitter-tweet" data-conversation="none" data-cards="hidden" lang="en"><p><a href="https://twitter.com/subvertallmedia">@subvertallmedia</a> I ended up using <a href="https://t.co/sh54JoVDHq">https://t.co/sh54JoVDHq</a> which worked fine. Also the neo4j shell was pretty good!</p>&mdash; John Resig (@jeresig) <a href="https://twitter.com/jeresig/status/559907758196396033">January 27, 2015</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+++++
+
+[cols="1,4"]
+|===
+| icon:user[] Authors | https://twitter.com/philippkueng[Philip Küng], https://twitter.com/Stofkn[Kristof Van Miegem]
+| icon:gift[] Package | https://www.npmjs.com/package/node-neo4j
+| icon:github[] Source | https://github.com/philippkueng/node-neo4j
+| icon:book[] Docs | https://github.com/philippkueng/node-neo4j#usage
+|===
+
+////
+
+=== neo4j-js
+
+A Node.js (pure JavaScript) client library for accessing neo4j databases with batch support.
+
+* http://github.com/bretcope/neo4j-js[neo4j-js on GitHub]
+* Author: Bret Copeland
+
+=== node-neo4j-embedded
+
+Node.js driver for the embedded Neo4j Database, it accesses the datatabase API through the JVM-integration directly.
+Also supports HA Setups.
+
+Note: This is not idiomatic Javascript.
+For performance reasons it stays as close to the original Java API as possible.
+
+* http://github.com/joewhite86/node-neo4j-embedded[node-neo4j-embedded on GitHub]
+* Author: Jochen Weis
+
+////
 
 === Using the HTTP-Endpoint directly
 
@@ -75,173 +329,3 @@ cypher(query,params,cb)
   }],
  "errors":[]}
 ----
-
-There is a nice, more detailed intro article on modulus on http://blog.modulus.io/learn-how-to-use-neo4j-with-node.js[how to use Neo4j from Javascript].
-
-[[node-neo4j]]
-=== node-neo4j (Thingdom)
-
-Most widely used Node.js driver for Neo4j.
-This driver aims to be the most robust, comprehensive, and battle-tested driver available. It's run in production by https://www.fiftythree.com/[FiftyThree] to power https://www.fiftythree.com/paper[Paper] and https://mix.fiftythree.com/[Mix].
-
-==== Features
-
-* Cypher queries, parameters, batching, and transactions
-* Arbitrary HTTP requests, for custom Neo4j plugins
-* Custom headers, for high availability, application tracing, query logging, and more
-* Precise errors, for robust error handling from the start
-* Configurable connection pooling, for performance tuning & monitoring
-* Thorough test coverage with >100 tests
-* Continuously integrated against multiple versions of Node.js and Neo4j
-
-// TODO our example project
-
-* https://github.com/aseemk/node-neo4j-template[Example Project]
-* https://github.com/thingdom/node-neo4j/tree/v2[node-neo4j on GitHub]
-* https://github.com/thingdom/node-neo4j/blob/v2/API_v2.md[Spec]
-* Authors: https://twitter.com/aseemk[Aseem Kishore] & Daniel Gasienica
-* http://coffeedoc.info/github/thingdom/node-neo4j/[Documentation]
-* https://groups.google.com/forum/#!forum/node-neo4j[google group]
-
-=== cypher-stream
-
-Neo4j cypher queries as node object streams.
-
-Transactions are duplex streams that allow you to write query statements then commit or roll back the written queries.
-
-To get a stream per statement, just pass a callback function with the statement object. 
-This works for regular cypher calls and transactions.
-
-* https://github.com/brian-gates/cypher-stream[cypher-stream on GitHub]
-* Author: https://github.com/brian-gates[Brian Gates]
-* https://github.com/brian-gates/streaming-stack[Simple example of an ember/node/neo4j stack] that streams from database to client.
-
-=== Seraph
-
-*Seraph* is a comprehensive, well documented driver for Neo4j, which supports all Neo4j features and provides not only Neo4j connection support, but extensive lifecycle handling.
-The additional extensions *seraph-model* and *seraph-resource* allow you to quickly load and persist your models and integrate seraph-model resolution into your express routes with a base-controller for CRUD operations.
-With *disposable-seraph* you can manage a disposable Neo4j-instance for automatic testing.
-
-* https://github.com/brikteknologier/seraph[seraph on GitHub]
-* Author: https://github.com/jonpacker[Jon Packer via BRIK Teknologier, Norway]
-* https://github.com/brikteknologier/seraph-model[seraph-model on GitHub]
-* https://github.com/brikteknologier/seraph-resource[seraph-resource on GitHub]
-* https://github.com/brikteknologier/disposable-seraph[disposable-seraph on GitHub]
-
-
-=== simple-neo4j
-
-This is a simple neo4j pure javascript database driver. 
-It takes in one or more queries, commits them to the database in a single transaction, and parses the database result into a simple and easy native javascript object, of course the parser can be disabled if desired.
-
-https://tonicdev.com/npm/simple-neo4j[Test simple-neo4j in your Browser]
-
-
-[source,javascript]
-----
-simpleNeo4J.execute('MATCH (n:Movie) RETURN count(*)')
-    .then(function(result)
-    {
-        result.firstValue === 26;
-    });
-----
-
-* https://www.npmjs.com/package/simple-neo4j[simple-neo4j on npm]
-* Author: https://twitter.com/aoi_ika_desu[John Mothershed]
-* https://github.com/RussellsToolbox/simple-neo4j[simple-neo4j on GitHub]
-* https://www.npmjs.com/~wiseguy12851[Other Neo4j projects by John]
-
-
-== Meteor.js 
-
-image::https://upload.wikimedia.org/wikipedia/en/a/a4/Meteor-logo.png[width=200]
-http://meteor.com[Meteor] is a complete open source platform for building web and mobile apps in pure JavaScript.
-
-=== ccorcos:neo4j
-
-Chet and Sam Corcos created the `ccorcos:neo4j` package that integrates Meteor well with Neo4j including reactivity and query-reevaluation on data changes.
-
-Both wrote and presented about it and Chet provided insight into an example application for event feeds, written with Meteor and Neo4j as a stack.
-
-* https://medium.com/@SamCorcos/connecting-meteor-to-a-neo4j-database-and-deploying-with-graphenedb-3321966c3102[Blog: Connecting Meteor to a Neo4j database and deploying with GrapheneDB]
-* https://medium.com/@SamCorcos/meteor-any-database-7f237f2448f0[Blog: Meteor + Any Database Reactivity]
-* Example App Shindig: https://medium.com/@chetcorcos/shindig-an-event-discovery-app-built-with-meteor-js-react-js-and-neo4j-602afb483ae6[Blog: Main Article], https://medium.com/@chetcorcos/shindig-integrating-neo4j-with-meteor-17b0fce644d[Blog: Integration with Neo4j]
-* Authors: https://twitter.com/ccorcos[Chet Corcos] and https://twitter.com/samcorcos[Sam Corcos]
-* https://github.com/ccorcos/meteor-neo4j[ccorcos:neo4j on GitHub]
-
-=== Ostrio - Meteor.js - Driver
-
-Dmitriy wrapped node-neo4j to be usable with Meteor and also provided a pseudo-reactive driver to support the life-query functionality.
-
-* Author: https://twitter.com/smart_egg[Dmitriy Aristarkhovich]
-* https://atmospherejs.com/ostrio/neo4jdriver[Neo4j Driver on Atmosphere]
-* https://atmospherejs.com/ostrio/neo4jreactivity[Reactive Integration]
-* https://github.com/VeliovGroup/Meteor-Leaderboard-Neo4j[Leaderboard Example Project]
-* http://habrahabr.ru/post/248465/[Article:Meteor and Neo4j (ru)]
-
-=== Neo4j Dart
-
-image::https://upload.wikimedia.org/wikipedia/en/3/35/Dart_logo_wordmark.png[width=200]
-
-A Neo4j driver for Dart. Both a simple driver and an OGM (Object Graph Mapper) is provided in separate libraries.
-
-////
-.Example
-[source,dart]
-----
-import 'package:neo4j_dart/neo4j_dart.dart';
-
-main() async {
-  var db = new Neo4j();
-  var result = await db.cypher('''
-        Create (dart:Language {dart})-[:connects_to]->(neo4j:Database {neo4j})
-        Return id(dart), id(neo4j)
-      ''', {
-        'dart': { 'name': 'Dart' },
-        'neo4j': { 'name': 'Neo4j' },
-      });
-
-  print('successfully created two nodes with id ${result['data'][0]['row'].join(' and ')}');
-}
-----
-////
-
-* https://github.com/Pajn[Author: Rasmus Eneman]
-* https://pub.dartlang.org/packages/neo4j_dart[Dart Package]
-* https://github.com/Pajn/Neo4jDart[neo4j-dart on GitHub]
-* http://www.dartdocs.org/documentation/neo4j_dart/0.2.1/index.html#neo4j_dart/neo4j_dart-ogm[Neo4j Dart OGM]
-
-=== Other Drivers
-
-[[node-neo4j-pk]]
-==== node-neo4j (philipkueng)
-
-Neo4j REST API wrapper for Node.js
-Well maintained library, has been around since 2012.
-
-++++
-<blockquote class="twitter-tweet" data-conversation="none" data-cards="hidden" lang="en"><p><a href="https://twitter.com/subvertallmedia">@subvertallmedia</a> I ended up using <a href="https://t.co/sh54JoVDHq">https://t.co/sh54JoVDHq</a> which worked fine. Also the neo4j shell was pretty good!</p>&mdash; John Resig (@jeresig) <a href="https://twitter.com/jeresig/status/559907758196396033">January 27, 2015</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-++++
-
-* https://github.com/philippkueng/node-neo4j[node-neo4j on GitHub]
-* Author https://twitter.com/philippkueng[Philip Küng] and https://twitter.com/Stofkn[Kristof Van Miegem]
-* https://github.com/philippkueng/node-neo4j#usage[Documentation]
-
-==== neo4j-js
-
-A Node.js (pure JavaScript) client library for accessing neo4j databases with batch support.
-
-* http://github.com/bretcope/neo4j-js[neo4j-js on GitHub]
-* Author: Bret Copeland
-
-==== node-neo4j-embedded
-
-Node.js driver for the embedded Neo4j Database, it accesses the datatabase API through the JVM-integration directly.
-Also supports HA Setups.
-
-Note: This is not idiomatic Javascript.
-For performance reasons it stays as close to the original Java API as possible.
-
-* http://github.com/joewhite86/node-neo4j-embedded[node-neo4j-embedded on GitHub]
-* Author: Jochen Weis
