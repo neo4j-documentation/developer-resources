@@ -1,0 +1,56 @@
+include::versions.txt[]
+
+++++
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/java/java.min.js"></script>
+++++
+
+The Neo4j Java driver is officially supported by Neo4j and connects to the database using the binary protocol.
+It aims to be minimal, while being idiomatic to Java.
+
+When using Maven, add this to your _pom.xml_ file:
+
+[source, xml, subs="attributes, specialcharacters"]
+----
+<dependencies>
+    <dependency>
+        <groupId>org.neo4j.driver</groupId>
+        <artifactId>neo4j-java-driver</artifactId>
+        <version>{java-driver-version}</version>
+    </dependency>
+</dependencies>
+----
+
+For Gradle or Grails, this is how to add the dependency:
+
+[source, groovy, subs="attributes, specialcharacters"]
+----
+compile 'org.neo4j.driver:neo4j-java-driver:{java-driver-version}'
+----
+
+For other build systems, see {maven-artifact-info}[information available at Maven Central].
+
+[source,java]
+----
+include::https://github.com/neo4j/neo4j-java-driver/raw/1.0/examples/src/main/java/org/neo4j/docs/driver/MinimalWorkingExample.java[tag=minimal-example-import]
+
+include::https://github.com/neo4j/neo4j-java-driver/raw/1.0/examples/src/main/java/org/neo4j/docs/driver/MinimalWorkingExample.java[tag=minimal-example,indent=0]
+----
+
+[cols="3*"]
+|===
+| Name 
+| icon:tag[] Version 
+| icon:user[] Authors
+
+| neo4j-java-driver
+| {java-driver-version}
+| The Neo4j Team
+
+| {maven-artifact-info}[icon:gift[] Package]
+| {examples}/movies-java-bolt[icon:play-circle[] Example]
+| http://stackoverflow.com/questions/tagged/neo4j+java[icon:stack-overflow [] StackOverflow]
+
+| {manual}#driver-manual-index[icon:book[] Docs]
+| http://alpha.neohq.net/docs/java-driver[icon:code[] API]
+| http://github.com/neo4j/neo4j-java-driver[icon:github[] Source]
+|===

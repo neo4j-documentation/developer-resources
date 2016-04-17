@@ -1,0 +1,40 @@
+include::versions.txt[]
+
+++++
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/javascript/javascript.min.js"></script>
+++++
+
+The Neo4j JavaScript driver is officially supported by Neo4j and connects to the database using the binary protocol.
+It aims to be minimal, while being idiomatic to JavaScript, allowing you to subscribe to a stream of responses, errors and completion events.
+
+[source, shell, subs="attributes, specialcharacters"]
+----
+npm install neo4j-driver@{javascript-driver-version}
+----
+
+[source,javascript]
+----
+include::https://github.com/neo4j/neo4j-javascript-driver/raw/1.1/test/v1/examples.test.js[tag=minimal-example-import,indent=0]
+
+include::https://github.com/neo4j/neo4j-javascript-driver/raw/1.1/test/v1/examples.test.js[tag=minimal-example,indent=0]
+----
+
+[cols="3*"]
+|===
+| Name 
+| icon:tag[] Version 
+| icon:user[] Authors
+
+| neo4j-driver
+| {javascript-driver-version}
+| The Neo4j Team
+
+| https://www.npmjs.com/package/neo4j-driver[icon:gift[] Package]
+|
+// | {examples}//movies-javscript-bolt[icon:play-circle[] Example]
+| http://stackoverflow.com/questions/tagged/neo4j+javascript[icon:stack-overflow [] StackOverflow]
+
+| {manual}#driver-manual-index[icon:book[] Docs]
+| http://alpha.neohq.net/docs/javascript-driver[icon:code[] API]
+| http://github.com/neo4j/neo4j-javascript-driver[icon:github[] Source]
+|===

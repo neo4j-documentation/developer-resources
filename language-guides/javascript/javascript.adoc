@@ -6,12 +6,6 @@
 :toclevels: 2
 :section: Develop with Neo4j
 :section-link: language-guides
-:javascript-version: 1.0.0-RC2
-
-++++
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/javascript/javascript.min.js"></script>
-
-++++
 
 .Goals
 [abstract]
@@ -26,12 +20,12 @@ You should have link:/download[installed Neo4j] and made yourself familiar with 
 [role=expertise]
 {level}
 
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/nodejs.png[float=right,width=300]
+
 toc::[]
 
 // tag::intro[]
 === Neo4j for JavaScript Developers
-
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/nodejs.png[]
 
 Neo4j can be installed on any system and then accessed via its binary and HTTP APIs. 
 
@@ -43,41 +37,7 @@ You can use the official binary driver for JavaScript (neo4j-driver) or connect 
 [[neo4j-driver]]
 === icon:check-circle-o[] neo4j-driver
 
-The Neo4j JavaScript driver is officially supported by Neo4j and connects to the database using the binary protocol.
-It aims to be minimal, while being idiomatic to JavaScript, allowing you to subscribe to a stream of responses, errors and completion events.
-
-[source]
-----
-npm install neo4j-driver
-----
-// include::https://github.com/neo4j-examples/movies-javascript-bolt/raw/master/package.json[tag=setup]
-
-.Example
-[source,javascript]
-----
-include::https://github.com/neo4j/neo4j-javascript-driver/raw/1.1/test/v1/examples.test.js[tag=minimal-example-import,indent=0]
-include::https://github.com/neo4j/neo4j-javascript-driver/raw/1.1/test/v1/examples.test.js[tag=minimal-example,indent=0]
-----
-
-[cols="3*"]
-|===
-| Name 
-| icon:tag[] Version 
-| icon:user[] Authors
-
-| neo4j-driver
-| {javascript-version}
-| The Neo4j Team
-
-| https://www.npmjs.com/package/neo4j-driver[icon:gift[] Package]
-|
-// | {examples}//movies-javscript-bolt[icon:play-circle[] Example]
-| http://stackoverflow.com/questions/tagged/neo4j+javascript[icon:stack-overflow [] StackOverflow]
-
-| {manual}#driver-manual-index[icon:book[] Docs]
-| http://alpha.neohq.net/docs/javascript-driver[icon:code[] API]
-| http://github.com/neo4j/neo4j-javascript-driver[icon:github[] Source]
-|===
+include::../_includes/javascript-driver.adoc[]
 
 include::../_includes/sample_project.adoc[]
 
