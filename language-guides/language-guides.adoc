@@ -9,7 +9,6 @@
 :section-link: language-guides
 :section-level: 2
 
-
 = image:http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/10/icon-mdm.png[] Language Guides
 - - -
 
@@ -35,7 +34,9 @@ The binary protocol is enabled in Neo4j by default, so you can use any language 
 
 Neo4j officially provides drivers for link:dotnet[.Net], link:java[Java], link:javascript[JavaScript] and link:python[Python].
 
-See also the for an detailed overview of the official drivers link:[Neo4j Driver Manual]
+See also the for an detailed overview of the official drivers link:{manual}#driver-manual-index[Neo4j Driver Manual]
+
+_For more details on the protocol implementation, see the https://github.com/nigelsmall/bolt-howto[implementers documentation]._
 
 ++++
 <dl class="tabs" data-tab>
@@ -54,85 +55,53 @@ See also the for an detailed overview of the official drivers link:[Neo4j Driver
 [.content]
 === Neo4j .Net Driver
 
-[source]
-----
-PM> Install-Package Neo4j.Driver -Pre
+include::_includes/dotnet-driver.adoc[]
 
-include::https://github.com/neo4j-examples/movies-dotnet-bolt/raw/master/Neo4j.Driver.Example/packages.config[tag=setup]
-----
-
-.Example
-[source,dotnet,indent=0]
-----
-include::https://github.com/neo4j/neo4j-dotnet-driver/raw/1.0/Neo4j.Driver/Neo4j.Driver.IntegrationTests/Examples.cs[tag=minimal-example-import]
-include::https://github.com/neo4j/neo4j-dotnet-driver/raw/1.0/Neo4j.Driver/Neo4j.Driver.IntegrationTests/Examples.cs[tag=minimal-example]
-----
-
+For more details on other drivers see link:dotnet[Neo4j with .NET].
 
 [[bolt-java]]
 [.content.active]
 === Neo4j Java Driver
 
-[source,xml]
-----
-include::https://raw.githubusercontent.com/neo4j-examples/neo4j-movies-java-bolt/master/pom.xml[tag=bolt-dependency]
-----
+include::_includes/java-driver.adoc[]
 
-[source,java]
-----
-include::https://raw.githubusercontent.com/neo4j-examples/neo4j-movies-java-bolt/master/src/test/java/example/movies/DocTest.java[tag=minimum-viable-snippet]
-----
+For more details on other drivers see link:java[Neo4j with Java].
 
 [[bolt-javascript]]
 [.content]
 === Neo4j JavaScript Driver
 
-.Setup
-[source,json]
-----
-include::https://raw.githubusercontent.com/neo4j-examples/neo4j-movies-javascript-bolt/master/package.json[tag=setup]
-----
+include::_includes/javascript-driver.adoc[]
 
-[source,javascript]
-----
-include::https://raw.githubusercontent.com/neo4j-examples/neo4j-movies-javascript-bolt/master/test/doc_test.js[tag=minimum-viable-snippet]
-----
+For more details on other drivers see link:javascript[Neo4j with JavaScript].
+
 
 [[bolt-python]]
 [.content]
 === Neo4j Python Driver
 
-.Setup
-[source,yaml]
-----
-include::https://raw.githubusercontent.com/neo4j-examples/neo4j-movies-python-bolt/master/requirements.txt[tag=setup]
-----
+include::_includes/python-driver.adoc[]
 
-[source,python]
-----
-include::https://raw.githubusercontent.com/neo4j-examples/neo4j-movies-python-bolt/master/test/doc_test.py[tag=minimum-viable-snippet]
-----
+For more details on other drivers see link:python[Neo4j with Python].
 
 ++++
 </div>
 ++++
 
-For more details on the protocol implementation, see the https://github.com/nigelsmall/bolt-howto[implementers documentation].
-
-== Neo4j Drivers
+== Other Neo4j Drivers
 - - -
 
 Thanks to the Neo4j contributor community, there are additionally drivers for almost every popular programming language,
 most of which mimic existing database driver idioms and approaches. 
-Get started with your stack now.
+Get started with your stack now, see the dedicated page for more detail.
 
-* link:dotnet[.NET]
-* link:java[Java]
-* link:javascript[JavaScript]
-* link:python[Python]
 * link:ruby[Ruby]
 * link:php[PHP]
-* and link:r[R], link:go[Go], link:clojure[Clojure], link:perl[Perl], link:haskell[Haskell]
+* link:r[R]
+* link:go[Go]
+* link:clojure[Clojure]
+* link:perl[Perl]
+* link:haskell[Haskell]
 
 include::example-project/example-project.adoc[tags=intro]
 

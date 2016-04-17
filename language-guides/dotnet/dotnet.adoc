@@ -26,12 +26,12 @@ You should have link:/download[installed Neo4j] and made yourself familiar with 
 [role=expertise]
 {level}
 
+image::{img}dotnet-logo.png[float=right,width=300]
+
 toc::[]
 
 // tag::intro[]
 === Neo4j for .NET Developers
-
-image::{img}dotnet-logo.png[]
 
 The .NET platform allows developers to create fascinating applications utilizing graph concepts with Neo4j.
 
@@ -44,58 +44,7 @@ With the Neo4j 3.0 release we are happy to provide an officially supported drive
 [[neo4j-dotnet-driver]]
 === icon:check-circle-o[] Neo4jDotNetDriver
 
-The Neo4j .NET driver is officially supported by Neo4j and connects to the database using the binary protocol.
-It aims to be minimal, while being idiomatic to .NET
-
-[source]
-----
-PM> Install-Package Neo4j.Driver -Pre
-
-include::https://github.com/neo4j-examples/movies-dotnet-bolt/raw/master/Neo4j.Driver.Example/packages.config[tag=setup,indent=0]
-----
-
-.Example
-[source,clike]
-----
-include::https://github.com/neo4j/neo4j-dotnet-driver/raw/1.0/Neo4j.Driver/Neo4j.Driver.IntegrationTests/Examples.cs[tag=minimal-example-import]
-include::https://github.com/neo4j/neo4j-dotnet-driver/raw/1.0/Neo4j.Driver/Neo4j.Driver.IntegrationTests/Examples.cs[tag=minimal-example,indent=0]
-----
-
-////
-[cols="1,5"]
-|===
-| Name | Neo4jDotNetDriver
-| icon:tag[] Version  | {dotnet-version}
-| icon:user[] Authors | The Neo4j Team, http://twitter.com/cskardon[Chris Skardon], https://twitter.com/IngvarKofoed[Martin Jensen]
-
-| icon:gift[] Package | http://www.nuget.org/packages/Neo4j.Driver
-| icon:play-circle[] Example | https://github.com/neo4j-examples/movies-dotnet-bolt
-| icon:stack-overflow [] SO | http://stackoverflow.com/questions/tagged/neo4j+.net
-
-| icon:book[] Docs | {manual}#driver-manual-index
-| icon:code[] API | http://alpha.neohq.net/docs/dotnet-driver
-| icon:github[] Source | http://github.com/neo4j/neo4j-dotnet-driver
-|===
-////
-
-[cols="3*"]
-|===
-| Name 
-| icon:tag[] Version 
-| icon:user[] Authors
-
-| Neo4jDotNetDriver
-| {dotnet-version}
-| The Neo4j Team, http://twitter.com/cskardon[Chris Skardon], https://twitter.com/IngvarKofoed[Martin Jensen]
-
-| http://www.nuget.org/packages/Neo4j.Driver[icon:gift[] Package]
-| {examples}//movies-dotnet-bolt[icon:play-circle[] Example]
-| http://stackoverflow.com/questions/tagged/neo4j+.net[icon:stack-overflow [] StackOverflow]
-
-| {manual}#driver-manual-index[icon:book[] Docs]
-| http://alpha.neohq.net/docs/dotnet-driver[icon:code[] API]
-| http://github.com/neo4j/neo4j-dotnet-driver[icon:github[] Source]
-|===
+include::../_includes/dotnet-driver.adoc[]
 
 
 [role=side-nav]

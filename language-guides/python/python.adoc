@@ -27,44 +27,55 @@ image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/06/p
 toc::[]
 
 // tag::intro[]
+Neo4j can be installed on any system and then accessed via its binary and HTTP APIs. 
+
+You can use the official binary driver for Python (neo4j-python-driver) or connect via HTTP with any of our community drivers.
+
+// end::intro[]
+
+[[neo4j-driver]]
+=== icon:check-circle-o[] neo4j-driver
+
+include::../_includes/python-driver.adoc[]
+
+include::../_includes/sample_project.adoc[]
+
+include::../_includes/community-driver-notice.adoc[]
+
 For anyone working with https://www.python.org/[Python], the Neo4j community have contributed a range of driver options.
 These range from lightweight to comprehensive driver packages as well as libraries designed for use with web frameworks such as https://www.djangoproject.com/[Django].
-Python support is well-established for Neo4j, with REST drivers having existed since 2011 and _python-embedded_ before that.
-
-NOTE: The _python-embedded_ project is no longer maintained and supported by Neo Technology.
 
 Both Python 2 and Python 3 are supported by most of the libraries listed here and this should help give more flexibility when putting together your Neo4j-based technology stack.
+
 While we do not provide a specific web framework recommendation, both the lightweight http://flask.pocoo.org/[Flask] and the more comprehensive https://www.djangoproject.com/[Django] frameworks are known to work well.
 
 Many Pythonistas have invested a lot of time and love to develop these libraries, so if you use them, please provide feedback to the authors and help us improve.
 
-// end::intro[]
+=== Py2neo
 
-== Py2neo
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2015/01/py2neo.200x200.png[float="right",width=100]
 
 Py2neo is a client library and comprehensive toolkit for working with Neo4j from within Python applications and from the command line.
 The core library has no external dependencies and has been carefully designed to be easy and intuitive to use.
 
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2015/01/py2neo.200x200.png[float="right"]
-
+[cols="1,4"]
 |===
-| Author:          | https://twitter.com/neonige[Nigel Small]
-| Website:         | http://py2neo.org/
-| Source:          | https://github.com/nigelsmall/py2neo
-| Package:         | https://pypi.python.org/pypi/py2neo
-| Documentation:   | http://py2neo.org/
-| Example Project: | {examples}/movies-python-py2neo-2.0
-| Python:          | 2.7 / 3.3 / 3.4
-| Neo4j:           | 1.8 / 1.9 / 2.0 / 2.1 / 2.2
+| icon:user[] Author         | https://twitter.com/neonige[Nigel Small]
+| icon:gift[] Package        | https://pypi.python.org/pypi/py2neo
+| icon:github[] Source       | https://github.com/nigelsmall/py2neo
+
+| icon:play-circle[] Example | {examples}/movies-python-py2neo-2.0
+| icon:book[] Docs           | http://py2neo.org/
+| icon:code-fork[] Python    | 2.7 / 3.3 / 3.4
 |===
 
-=== Installation
+.Installation
 [source,bash]
 ----
 pip install py2neo
 ----
 
-=== Example
+.Example
 [source,python]
 ----
 from py2neo import Graph, Path
@@ -79,79 +90,42 @@ friends = Path(alice, "KNOWS", bob, "KNOWS", carol)
 graph.create(friends)
 ----
 
-== Neo4jRestClient
+=== Neo4jRestClient
 
 The main goal of neo4j-rest-client was to enable Python programmers already using Neo4j locally through python-embedded, to use the Neo4j REST server.
 So the syntax of neo4j-rest-client’s API is fully compatible with python-embedded.
 However, a new syntax is introduced in order to reach a more pythonic style and to enrich the API with the new features the Neo4j team introduces.
 
+
+[cols="1,4"]
 |===
-| Author:          | https://twitter.com/versae[Javier de la Rosa]
-| Website:         | http://neo4j-rest-client.readthedocs.org/
-| Source:          | https://github.com/versae/neo4j-rest-client
-| Package:         | https://pypi.python.org/pypi/neo4jrestclient/
-| Documentation:   | http://neo4j-rest-client.readthedocs.org/
-| Example Project: | {examples}/movies-python-neo4jrestclient
+| icon:user[] Author         | https://twitter.com/versae[Javier de la Rosa]
+| icon:gift[] Package        | https://pypi.python.org/pypi/neo4jrestclient/
+| icon:github[] Source       | https://github.com/versae/neo4j-rest-client
+
+| icon:play-circle[] Example | {examples}/movies-python-neo4jrestclient
+| icon:book[] Docs           | http://neo4j-rest-client.readthedocs.org/
 |===
-
-=== Installation
-Available through Python Package Index:
-[source,bash]
-----
-$ pip install neo4jrestclient
-----
-
-Or the old way:
-[source,bash]
-----
-$ easy_install neo4jrestclient
-----
-
-You can also install the development branch:
-[source,bash]
-----
-$ pip install git+https://github.com/versae/neo4j-rest-client.git
-----
-
-////
 
 === Bulbflow
+
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2015/01/blubflow.200x200.png[float="right",width=100]
 
 Bulbs is an open-source Python persistence framework for graph databases and the first piece of a larger web development toolkit.
 It’s like an ORM for graphs.
 
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2015/01/blubflow.200x200.png[float="right"]
 
+[cols="1,4"]
 |===
-| Author:        | https://twitter.com/espeed[James Thornton]
-| Website:       | http://bulbflow.com/
-| Source:        | https://github.com/espeed/bulbs
-| Package:       | https://pypi.python.org/pypi/bulbs
-| Documentation: | http://bulbflow.com/docs/
-| Python:        | 2.6 / 2.7 / 3.0 / 3.1 / 3.2
+| icon:user[] Author         | https://twitter.com/espeed[James Thornton]
+| icon:gift[] Package        | https://pypi.python.org/pypi/bulbs
+| icon:github[] Source       | https://github.com/espeed/bulbs
+
+| icon:book[] Docs           | http://bulbflow.com/
+| icon:code-fork[] Python    | 2.6 / 2.7 / 3.0 / 3.1 / 3.2
 |===
 
-==== Installation
-
-You can use pip to install the latest version from GitHub into your project’s virtual environment:
-[source,bash]
-----
-$ mkdir example
-$ cd example
-$ virtualenv env
-$ source env/bin/activate
-(env)$ pip install https://github.com/espeed/bulbs/tarball/master
-----
-
-Or you can use pip to install a potentially slightly older version from PyPi:
-[source,bash]
-----
-$ mkdir example
-$ cd example
-$ virtualenv env
-$ source env/bin/activate
-(env)$ pip install bulbs
-----
+////
 
 === Neo4jdb-Python
 
@@ -167,14 +141,6 @@ Implements the http://legacy.python.org/dev/peps/pep-0249/[Python DB API 2.0] fo
 | Neo4j:         | 2.0 / 2.1
 |===
 
-==== Installation
-
-[source,bash]
-----
-pip install neo4jdb
-----
-
-
 === Neo4django
 
 Neo4django is an Object Graph Mapper (OGM) for Django. Use familiar Django models and queries against Neo4j.
@@ -187,51 +153,23 @@ Neo4django is an Object Graph Mapper (OGM) for Django. Use familiar Django model
 | Documentation: | https://neo4django.readthedocs.org/
 |===
 
-==== Installation
-
-Using pip, you can install from PyPi:
-[source,bash]
-----
-pip install neo4django
-----
-
-or straight from GitHub:
-[source,bash]
-----
-pip install -e git+https://github.com/scholrly/neo4django/#egg=neo4django
-----
+////
 
 === NeoModel
 
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2015/01/neomodel.200x80.png[float="right",width=100]
+
 An Object Graph Mapper (OGM) also usable for Django for the Neo4j graph database.
 
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2015/01/neomodel.200x80.png[float="right"]
-
+[cols="1,4"]
 |===
-| Author:        | Robin Edwards
-| Website:       | http://neomodel.readthedocs.org/
-| Source:        | http://github.com/robinedwards/neomodel
-| Package:       | https://pypi.python.org/pypi/neomodel
-| Documentation: | http://neomodel.readthedocs.org/
-| Python:        | 2.7 / 3.4 / pypy / pypy3
-| Neo4j:         | 2.0 / 2.1
+| icon:user[] Author         | Robin Edwards
+| icon:gift[] Package        | https://pypi.python.org/pypi/neomodel
+| icon:github[] Source       | http://github.com/robinedwards/neomodel
+
+| icon:book[] Docs           | http://neomodel.readthedocs.org/
+| icon:code-fork[] Python    | 2.7 / 3.4 / pypy / pypy3
 |===
-
-==== Installation
-
-Install from pypi (recommended):
-[source,bash]
-----
-$ pip install neomodel
-----
-
-To install from github:
-[source,bash]
-----
-$ pip install git+git://github.com/robinedwards/neomodel.git@HEAD#egg=neomodel-dev
-----
-
-////
 
 == Further Reading
 
