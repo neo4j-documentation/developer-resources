@@ -605,7 +605,8 @@ th.tableblock, th p.tableblock {
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Docker does not run natively on Mac OSX or Windows. For running Docker on <a href="https://docs.docker.com/engine/installation/mac/">Max OSX</a> and <a href="https://docs.docker.com/engine/installation/windows/">Windows</a> please consult the Docker documentation.
+Docker does not run natively on Mac OSX or Windows.
+For running Docker on <a href="https://docs.docker.com/engine/installation/mac/">Mac OSX</a> and <a href="https://docs.docker.com/engine/installation/windows/">Windows</a> please consult the Docker documentation.
 </td>
 </tr>
 </table>
@@ -641,7 +642,8 @@ Docker does not run natively on Mac OSX or Windows. For running Docker on <a hre
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-All the volumes in this documentation are stored under <code>$HOME</code> in order to work on OSX where <code>$HOME</code> is automatically mounted into the machine VM. On Linux the volumes can be stored anywhere.
+All the volumes in this documentation are stored under <code>$HOME</code> in order to work on OSX where <code>$HOME</code> is automatically mounted into the machine VM.
+On Linux the volumes can be stored anywhere.
 </td>
 </tr>
 </table>
@@ -653,7 +655,8 @@ All the volumes in this documentation are stored under <code>$HOME</code> in ord
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-By default Neo4j requires authentication. You have to login with <code>neo4j/neo4j</code> at the first connection and set a new password.
+By default Neo4j requires authentication.
+You have to login with <code>neo4j/neo4j</code> at the first connection and set a new password.
 </td>
 </tr>
 </table>
@@ -687,13 +690,17 @@ By default Neo4j requires authentication. You have to login with <code>neo4j/neo
 
 
 <div class="paragraph">
-<p>Neo4j Enterprise Edition is designed for commercial deployments where scale and availability are important. Use of Neo4j Enterprise Edition requires a commercial license agreement with Neo Technology. Please see <a href="http://neo4j.com/licensing/">Neo4j licensing</a> for details.</p>
+<p>Neo4j Enterprise Edition is designed for commercial deployments where scale and availability are important.
+Use of Neo4j Enterprise Edition requires a commercial license agreement with Neo Technology.
+Please see <a href="http://neo4j.com/licensing/">Neo4j licensing</a> for details.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Tags are available for both editions. Version-specific Enterprise tags have an <code>-enterprise</code> suffix (like <code>neo4j:2.3.0-enterprise</code>), Community tags have no suffix (like <code>neo4j:2.3.0</code>). The latest Enterprise release is available as <code>neo4j:enterprise</code>.</p>
+<p>Tags are available for both editions.
+Version-specific Enterprise tags have an <code>-enterprise</code> suffix (like <code>neo4j:2.3.0-enterprise</code>), Community tags have no suffix (like <code>neo4j:2.3.0</code>).
+The latest Enterprise release is available as <code>neo4j:enterprise</code>.</p>
 </div>
 
 </div>
@@ -710,7 +717,8 @@ By default Neo4j requires authentication. You have to login with <code>neo4j/neo
 
 
 <div class="paragraph">
-<p>Docker controls the number of open file descriptors in a container; the limit depends on the configuration of your system. We recommend a limit of at least 40000 for running Neo4j.</p>
+<p>Docker controls the number of open file descriptors in a container; the limit depends on the configuration of your system.
+We recommend a limit of at least 40000 for running Neo4j.</p>
 </div>
 
 
@@ -748,7 +756,9 @@ By default Neo4j requires authentication. You have to login with <code>neo4j/neo
 
 
 <div class="paragraph">
-<p>The default configuration provided by this image is intended for learning about Neo4j, but must be modified to make it suitable for production use. In particular the memory assigned to Neo4j is very limited (see <code>NEO4J_CACHE_MEMORY</code> and <code>NEO4J_HEAP_MEMORY</code> below), to allow multiple containers to be run on the same server. You can read more about configuring Neo4j in the <a href="http://neo4j.com/docs/stable/configuration.html">manual</a>.</p>
+<p>The default configuration provided by this image is intended for learning about Neo4j, but must be modified to make it suitable for production use.
+In particular the memory assigned to Neo4j is very limited (see <code>NEO4J_CACHE_MEMORY</code> and <code>NEO4J_HEAP_MEMORY</code> below), to allow multiple containers to be run on the same server.
+You can read more about configuring Neo4j in the <a href="http://neo4j.com/docs/stable/configuration.html">manual</a>.</p>
 </div>
 
 
@@ -850,7 +860,9 @@ By default Neo4j requires authentication. You have to login with <code>neo4j/neo
 
 
 <div class="paragraph">
-<p>Any configuration files in the <code>/conf</code> volume will override files provided by the image. This includes values that may have been set in response to environment variables passed to the container by Docker. So if you want to change one value in a file you must ensure that the rest of the file is complete and correct.</p>
+<p>Any configuration files in the <code>/conf</code> volume will override files provided by the image.
+This includes values that may have been set in response to environment variables passed to the container by Docker.
+So if you want to change one value in a file you must ensure that the rest of the file is complete and correct.</p>
 </div>
 
 
@@ -921,7 +933,8 @@ By default Neo4j requires authentication. You have to login with <code>neo4j/neo
 
 
 <div class="paragraph">
-<p>In order to run Neo4j in HA mode under Docker you need to wire up the containers in the cluster so that they can talk to each other. Each container must have a network route to each of the others and the <code>NEO4J_HA_ADDRESS</code> and <code>NEO4J_INITIAL_HOSTS</code> environment variables must be set according (see above).</p>
+<p>In order to run Neo4j in HA mode under Docker you need to wire up the containers in the cluster so that they can talk to each other.
+Each container must have a network route to each of the others and the <code>NEO4J_HA_ADDRESS</code> and <code>NEO4J_INITIAL_HOSTS</code> environment variables must be set according (see above).</p>
 </div>
 
 
@@ -956,7 +969,8 @@ docker run --name=instance3 --detach --publish 7476:7474 --net=cluster --hostnam
 
 
 <div class="paragraph">
-<p>To install a plugin or unmanaged extension, provide a <code>/plugins</code> volume containing the jars. For unmanged extensions you also need to provide an environment variable specifying a URI mapping.</p>
+<p>To install a plugin or unmanaged extension, provide a <code>/plugins</code> volume containing the jars.
+For unmanged extensions you also need to provide an environment variable specifying a URI mapping.</p>
 </div>
 
 <div class="listingblock">
@@ -992,19 +1006,22 @@ docker run --name=instance3 --detach --publish 7476:7474 --net=cluster --hostnam
 
 
 <div class="paragraph">
-<p>Neo4j uses of <code>lsof</code> to ensure the server is running and accepting connections on a given port. Some AppArmor configurations (specifically the default configuration on Linux Mint) prevent <code>lsof</code> from working as expected.</p>
+<p>Neo4j uses of <code>lsof</code> to ensure the server is running and accepting connections on a given port.
+Some AppArmor configurations (specifically the default configuration on Linux Mint) prevent <code>lsof</code> from working as expected.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>A workaround is to run the docker image in privileged mode, by adding <code>--privileged=true</code> to the docker command line. This is a workaround that disables the security provided by AppArmor, and is not recommended for deployments.</p>
+<p>A workaround is to run the docker image in privileged mode, by adding <code>--privileged=true</code> to the docker command line.
+This is a workaround that disables the security provided by AppArmor, and is not recommended for deployments.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>The current best known solution is to enable the use of ptrace in the docker profile of AppArmor. Do this by adding the following line to <code>/etc/init.d/docker</code>:</p>
+<p>The current best known solution is to enable the use of ptrace in the docker profile of AppArmor.
+Do this by adding the following line to <code>/etc/init.d/docker</code>:</p>
 </div>
 
 <div class="literalblock">
@@ -1024,7 +1041,10 @@ docker run --name=instance3 --detach --publish 7476:7474 --net=cluster --hostnam
 
 
 <div class="paragraph">
-<p>To use your own key and certificate, provide an <code>/ssl</code> volume with the key and certificate inside. The key filename must end in <code>.key</code>, and the certificate in <code>.cert</code>. Only one of each file may be present. You must also publish port <code>7473</code> to access the HTTPS endpoint.</p>
+<p>To use your own key and certificate, provide an <code>/ssl</code> volume with the key and certificate inside.
+The key filename must end in <code>.key</code>, and the certificate in <code>.cert</code>.
+Only one of each file may be present.
+You must also publish port <code>7473</code> to access the HTTPS endpoint.</p>
 </div>
 
 <div class="listingblock">
