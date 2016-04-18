@@ -5,11 +5,8 @@
 [subs=attributes]
 ++++
 
-
-<script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
-
 <script>
-    $(document).ready(function() {
+    function googleApiClientReady() {
         gapi.client.setApiKey("{youtube_api_key}");
         gapi.client.load('youtube', 'v3', function() {
             var requestOptions = {
@@ -51,7 +48,7 @@
             })
         });
 
-    });
+    };
 
 </script>
 
@@ -73,4 +70,6 @@
 		</div>
 	</div>
 </section>
+
+<script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
 ++++
