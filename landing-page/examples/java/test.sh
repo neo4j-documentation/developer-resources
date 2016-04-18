@@ -1,8 +1,9 @@
 echo "You have to have a Neo4j server running with neo4j:<password> set as credentials"
 
+export CLASSPATH=neo4j-java-driver*.jar:.
 javac [SFN]*.java
-java -cp neo4j-jdbc.jar:. Social
-java -cp neo4j-jdbc.jar:. Fraud
-java -cp neo4j-jdbc.jar:. Network
+java -cp $CLASSPATH Social
+java -cp $CLASSPATH Fraud
+java -cp $CLASSPATH Network
 
 

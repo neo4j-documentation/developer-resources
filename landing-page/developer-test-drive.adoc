@@ -1,5 +1,7 @@
 // :viz-dir: /wp-content/themes/neo4jweb/assets/
 :viz-dir: ./
+include::../language-guides/_includes/versions.txt[]
+
 [subs=attributes]
 ++++
 <style>
@@ -349,7 +351,10 @@ ol.install-instructions a {
 											<div class="code-container">
 												<pre style="height: 500px;"><code class="language-php">
 ++++
+[pass]
+--
 include::examples/php/social-page.php[]
+--
 ++++
 												</code>
 												</pre>
@@ -369,16 +374,24 @@ include::examples/php/social-page.php[]
                                     <div class="row">
                                         <div class="small-8 columns">
                                             <div class="code-container">
-                                                <pre style="height: 500px;"><code class="language-java"><?php $page = file_get_contents(get_template_directory() . "/includes/social-page.java.txt"); print htmlspecialchars($page); ?></code></pre>
+                                                <pre style="height: 500px;"><code class="language-java">
+++++
+[pass]
+--
+include::examples/java/Social.java[]
+--
+[subs=attributes]
+++++
+</code></pre>
                                             </div>
                                         </div>
                                         <div class="small-4 columns">
                                             <h3 class="subheader">Downloading and Installing Java</h3>
                                             <p><ol class="install-instructions">
-                                                                                           <li><a href="https://github.com/neo4j-contrib/neo4j-jdbc">Download Neo4j JDBC</a> </li>
+                                                                                           <li><a href="http://search.maven.org/#artifactdetails|org.neo4j.driver|neo4j-java-driver|{java-driver-version}|jar">Download Neo4j Driver</a> </li>
                                                                                            <li>Copy and paste code at left into <code>Social.java</code></li>
-                                                                                           <li>Run <code>javac Social.java</code></li>
-                                                                                           <li>Run <code>java -cp /path/to/neo4j-jdbc-2.3-SNAPSHOT-jar-with-dependencies.jar:. Social</code></li>
+                                                                                           <li>Run <code>javac -cp neo4j-java-driver-{java-driver-version}.jar Social.java</code></li>
+                                                                                           <li>Run <code>java -cp neo4j-java-driver-{java-driver-version}.jar:. Social</code></li>
                                                                                            </ol></p>
                                         </div>
                                     </div>
@@ -439,7 +452,10 @@ include::examples/php/social-page.php[]
                                             <div class="code-container">
                                                 <pre style="height: 500px;"><code class="language-javascript">
 ++++
+[pass]
+--
 include::examples/javascript/social.js[]
+--
 ++++
                                                 </code></pre>
                                             </div>
@@ -613,7 +629,10 @@ include::examples/javascript/social.js[]
                                             <div class="code-container">
                                                 <pre style="height: 500px;"><code class="language-javascript">
 ++++
+[pass]
+--
 include::examples/javascript/network.js[]
+--
 ++++
                                                 </code></pre>
                                             </div>
@@ -787,7 +806,10 @@ include::examples/javascript/network.js[]
                                             <div class="code-container">
                                                 <pre style="height: 500px;"><code class="language-javascript">
 ++++
+[pass]
+--
 include::examples/javascript/fraud.js[]
+--
 ++++
                                                 </code></pre>
                                             </div>

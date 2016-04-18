@@ -1,67 +1,54 @@
-// javac Social.java
-// java -cp /path/to/neo4j-jdbc-2.3-SNAPSHOT-jar-with-dependencies.jar:. Social
+import org.neo4j.driver.v1.*;
+import static org.neo4j.driver.v1.Values.parameters;
 
-import java.sql.*;
-import static java.util.Arrays.asList;
 import java.util.List;
+import static java.util.Arrays.asList;
+import static java.util.Collections.singletonMap;
 
 public class Social {
 
-    public static void query(Connection con, 
-                            String query, String[] columns, Object...params)
-                      throws SQLException {
-        try (PreparedStatement pst = con.prepareStatement(query)) {
-            for (int i=0;i<params.length;i++) 
-                pst.setObject(i + 1, params[i]);
-            ResultSet rs = pst.executeQuery();
-            int count = 0;
-            while (rs.next()) {
-                for (int i=0;i<columns.length;i++) 
-                    System.out.print(rs.getString(columns[i])+"\t");
-               System.out.println();
-            }
-        }
-    }
-    public static void main(String...args) throws SQLException {
-        Connection con = DriverManager
-             .getConnection("jdbc:neo4j://localhost:7474/","neo4j","<password>");
+    public static void main(String...args) {
+        
+        Config noSSL = Config.build().withEncryptionLevel(Config.EncryptionLevel.NONE).toConfig();
+        Driver driver = GraphDatabase.driver("bolt://localhost",AuthTokens.basic("neo4j","test"),noSSL); // <password>
+        try (Session session = driver.session()) {
 
-        List data = 
-          asList(asList("Jim","Mike"),asList("Jim","Billy"),asList("Anna","Jim"),
-          asList("Anna","Mike"),asList("Sally","Anna"),asList("Joe","Sally"),
-          asList("Joe","Bob"),asList("Bob","Sally"));
-
-        String insertQuery = "UNWIND {1} as pair " +
-         "MERGE (p1:Person {name:pair[0]}) " +
-         "MERGE (p2:Person {name:pair[1]}) " +
-         "MERGE (p1)-[:KNOWS]-(p2);";
-
-        try {
-            PreparedStatement pst = con.prepareStatement(insertQuery);
-            pst.setObject(1, data);
-            pst.executeUpdate();
-            pst.close();
+              List data = 
+              asList(asList("Jim","Mike"),asList("Jim","Billy"),asList("Anna","Jim"),
+              asList("Anna","Mike"),asList("Sally","Anna"),asList("Joe","Sally"),
+              asList("Joe","Bob"),asList("Bob","Sally"));
     
-            String foafQuery = 
-            " MATCH (person:Person)-[:KNOWS]-(friend)-[:KNOWS]-(foaf) "+
-            " WHERE person.name = {1} " +
-            "   AND NOT (person)-[:KNOWS]-(foaf) " +
-            " RETURN foaf.name AS name ";
-            query(con, foafQuery, new String[] {"name"}, "Joe");
+              String insertQuery = "UNWIND {pairs} as pair " +
+               "MERGE (p1:Person {name:pair[0]}) " +
+               "MERGE (p2:Person {name:pair[1]}) " +
+               "MERGE (p1)-[:KNOWS]-(p2);";
+      
+               session.run(insertQuery,singletonMap("pairs",data)).consume();
+          
+               StatementResult result;
+            
+               String foafQuery = 
+               " MATCH (person:Person)-[:KNOWS]-(friend)-[:KNOWS]-(foaf) "+
+               " WHERE person.name = {name} " +
+               "   AND NOT (person)-[:KNOWS]-(foaf) " +
+               " RETURN foaf.name AS name ";
+               result = session.run(foafQuery, parameters("name","Joe"));
+               while (result.hasNext()) System.out.println(result.next().get("name"));
+      
+               String commonFriendsQuery =
+               "MATCH (user:Person)-[:KNOWS]-(friend)-[:KNOWS]-(foaf:Person) " +
+               " WHERE user.name = {from} AND foaf.name = {to} " +
+               " RETURN friend.name AS friend";
+               result = session.run(commonFriendsQuery, parameters("from","Joe","to","Sally"));
+               while (result.hasNext()) System.out.println(result.next().get("friend"));
+      
+               String connectingPathsQuery =
+               "MATCH path = shortestPath((p1:Person)-[:KNOWS*..6]-(p2:Person)) " +
+               " WHERE p1.name = {from} AND p2.name = {to} " +
+               " RETURN [n IN nodes(path) | n.name] as names";
+               result = session.run(connectingPathsQuery, parameters("from","Joe","to","Billy"));
+               while (result.hasNext()) System.out.println(result.next().get("names"));
 
-            String commonFriendsQuery =
-            "MATCH (user:Person)-[:KNOWS]-(friend)-[:KNOWS]-(foaf:Person) " +
-            " WHERE user.name = {1} AND foaf.name = {2} " +
-            " RETURN friend.name AS friend";
-            query(con, commonFriendsQuery, new String[] {"friend"}, "Joe", "Sally");
-
-            String connectingPathsQuery =
-            "MATCH path = shortestPath((p1:Person)-[:KNOWS*..6]-(p2:Person)) " +
-            " WHERE p1.name = {1} AND p2.name = {2} " +
-            " RETURN [n IN nodes(path) | n.name] as names";
-            query(con, connectingPathsQuery, new String[] {"names"}, "Joe","Billy");
-        } finally {
-            con.close();
         }
     }
 }
