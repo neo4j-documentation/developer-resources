@@ -28,28 +28,54 @@ toc::[]
 // tag::intro[]
 === Neo4j for Java Developers
 
-Neo4j offers a rich set of integration possibilities for Java or JVM-language developers.
+Neo4j offers a rich set of integration possibilities for developers using Java or other JVM-languages.
 
-There are two ways of using Neo4j from the JVM.
-The standalone Neo4j Server can be installed on any machine and then accessed via its HTTP API.
-You can use any REST library you choose for any JVM language.
-The dedicated Neo4j drivers go beyond that by offering comprehensive APIs for integrating with graph-based applications.
+The standalone Neo4j Server can be installed on any machine and then accessed via its *binary "Bolt" protocol* through our official driver or any bolt-enabled drivers.
+
+The server's additional HTTP API is used by many other integrations, drivers or with any REST library.
+
+You can also extend Neo4j by implementing *stored procedures for Cypher* in Java or other JVM languages, writing *server extensions* which act as REST-endpoints or by embedding Neo4j into your own Java applications.
+
 // end::intro[]
 
-But you can also run {manual}/tutorials-java-embedded.html[Neo4j embedded in your JVM process], much like HSQL or Derby.
-This is great for unit testing, but also for high performance / no-network setups.
-If you use Neo4j embedded, you can use the Neo4j Core-Java-API directly.
-Besides an object-oriented approach to the graph database, working with Nodes, Relationships, and Paths, it also offers highly customizable high-speed traversal- and graph-algorithm implementations.
-You can also choose from any useful drivers wrapping that API, which exist either for specific programming languages or that add interesting functionality.
+
+[[neo4j-java-driver]]
+=== icon:check-circle-o[] Neo4j Java Driver
+
+include::../_includes/java-driver.adoc[]
+
+=== Object Graph Mapping
 
 One example is link:../spring-data-neo4j[Spring Data Neo4j], which integrates tightly with the http://spring.io/[SpringFramework] and offers Object-Graph mapping on top of Neo4j.
 
 As a JVM developer you are also on the bright side when it comes to inserting large amounts of data into Neo4j.
 With its non-transactional, low-level batch-insertion API it can ingest millions of nodes and relationships in just seconds.
 
+=== Using Neo4j's Embedded Java API
+
+Being implemented in Java you can use it's Java APIs also directly in your programs. 
+This is great for unit testing, but also for very high performance / network-free setups.
+
+We also chose this approach for extending Neo4j.
+
+*Stored Procedures* are available within Cypher and encapsulate dedicated functionality.
+They are just annotated methods packaged in a jar-file and copied into a Neo4j-Server installation.
+
+Stored procedures are described XXX HERE XXX and in the {manual}[developer manual].
+
+Another extension point are {javamanual}[Neo4j Server REST extensions], they encapsulate certain graph or business functionality and are available for clients to get high performance access to specific graph operations.
+
+One can also run {manual}/tutorials-java-embedded.html[Neo4j embedded in your JVM process], much like HSQL or Derby.
+
+
+Besides an object-oriented approach to the graph database, working with Nodes, Relationships, and Paths, it also offers highly customizable high-speed traversal- and graph-algorithm implementations.
+
+
 Follow the guides below to get you started.
 
 include::../_includes/sample_project.adoc[]
+
+include::../_includes/community-driver-notice.adoc[]
 
 [[neo4j-jdbc]]
 === Using Neo4j Server with JDBC
