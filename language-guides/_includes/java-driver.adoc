@@ -4,20 +4,16 @@ include::versions.txt[]
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/java/java.min.js"></script>
 ++++
 
-The Neo4j Java driver is officially supported by Neo4j and connects to the database using the binary protocol.
+The Neo4j Java driver is *officially supported* by Neo4j and connects to the database using the binary protocol.
 It aims to be minimal, while being idiomatic to Java.
 
 When using Maven, add this to your _pom.xml_ file:
 
 [source, xml, subs="attributes, specialcharacters"]
 ----
-<dependencies>
-    <dependency>
-        <groupId>org.neo4j.driver</groupId>
-        <artifactId>neo4j-java-driver</artifactId>
-        <version>{java-driver-version}</version>
-    </dependency>
-</dependencies>
+<groupId>org.neo4j.driver</groupId>
+<artifactId>neo4j-java-driver</artifactId>
+<version>{java-driver-version}</version>
 ----
 
 For Gradle or Grails, this is how to add the dependency:
