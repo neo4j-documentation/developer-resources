@@ -1,10 +1,10 @@
+# pip install neo4j-driver
 
-# pip install py2neo
+from neo4j.v1 import GraphDatabase, basic_auth
 
-from py2neo import Graph
-graph = Graph("http://neo4j:<password>@localhost:7474/db/data/")
+driver = GraphDatabase.driver("bolt://localhost", auth=basic_auth("neo4j", "<password>"))
+session = driver.session()
 
-# tag::setup[]
 # Insert data
 insert_query = '''
 CREATE (hank:Person {name:"Hank"}),
@@ -30,8 +30,7 @@ CREATE (hank:Person {name:"Hank"}),
 (max)-[:HAS_SSN]->(ssn993632634)
 '''
 
-graph.cypher.execute(insert_query)
-# end:setup[]
+session.run(insert_query)
 
 # Transitive Closure
 
@@ -41,9 +40,9 @@ WHERE n.name = {name}
 RETURN DISTINCT o AS other
 '''
 
-results = graph.cypher.execute(transitive_query, {"name": "Hank"})
+results = session.run(transitive_query, parameters={"name": "Hank"})
 for record in results:
-    print(record)
+    print(record["other"])
 
 
 # Investigation Targeting
@@ -55,18 +54,21 @@ WHERE size > 2
 RETURN n
 """
 
-results = graph.cypher.execute(targeting_query)
+results = session.run(targeting_query)
 for record in results:
-    print(record)
+    print(record["n"])
 
 # Fast Insights
 
 insights_query = """
 MATCH (ssn:SSN)<-[:HAS_SSN]-(:Person)-[:HAS_ACCOUNT]->(acct:Account)
-WHERE ssn.number = 993632634
+WHERE ssn.number = {flagged_ssn}
 RETURN acct
 """
 
-results = graph.cypher.execute(insights_query)
+results = session.run(insights_query, parameters={"flagged_ssn": 993632634})
 for record in results:
-    print(record)
+    print(record["acct"])
+
+
+session.close()
