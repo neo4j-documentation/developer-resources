@@ -1,8 +1,9 @@
+# pip install neo4j-driver
 
-# pip install py2neo
+from neo4j.v1 import GraphDatabase, basic_auth
 
-from py2neo import Graph
-graph = Graph("http://neo4j:<password>@localhost:7474/db/data/")
+driver = GraphDatabase.driver("bolt://localhost", auth=basic_auth("neo4j", "<password>"))
+session = driver.session()
 
 # Insert data
 insert_query = '''
@@ -16,7 +17,7 @@ data = [["Jim","Mike"],["Jim","Billy"],["Anna","Jim"],
           ["Anna","Mike"],["Sally","Anna"],["Joe","Sally"],
           ["Joe","Bob"],["Bob","Sally"]]
 
-graph.cypher.execute(insert_query, {"pairs": data })
+session.run(insert_query, parameters={"pairs": data})
 
 # Friends of a friend
 
@@ -27,9 +28,9 @@ WHERE person.name = {name}
 RETURN foaf.name AS name
 '''
 
-results = graph.cypher.execute(foaf_query, {"name": "Joe"})
+results = session.run(foaf_query, parameters={"name": "Joe"})
 for record in results:
-    print(record)
+    print(record["name"])
 
 
 # Common friends
@@ -40,9 +41,9 @@ WHERE user.name = {user} AND foaf.name = {foaf}
 RETURN friend.name AS friend
 """
 
-results = graph.cypher.execute(common_friends_query, {"user": "Joe", "foaf": "Sally"})
+results = session.run(common_friends_query, parameters={"user": "Joe", "foaf": "Sally"})
 for record in results:
-    print(record)
+    print(record["friend"])
 
 # Connecting paths
 
@@ -52,6 +53,9 @@ WHERE p1.name = {name1} AND p2.name = {name2}
 RETURN path
 """
 
-results = graph.cypher.execute(connecting_paths_query, {"name1": "Joe", "name2": "Billy"})
+results = session.run(connecting_paths_query, parameters={"name1": "Joe", "name2": "Billy"})
 for record in results:
-    print(record)
+    print (record["path"])
+
+
+session.close()
