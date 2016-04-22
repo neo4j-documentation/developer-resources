@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Neo4j.Driver;
+using Neo4j.Driver.V1;
 
 namespace ConsoleApplication1
 {
