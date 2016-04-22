@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Neo4j.Driver;
+using Neo4j.Driver.V1;
 
 class SocialProgram
 {
@@ -45,7 +45,7 @@ class SocialProgram
 
 public class Social :IDisposable
 {
-    private readonly Driver _driver;
+    private readonly IDriver _driver;
 
     public Social()
     {
