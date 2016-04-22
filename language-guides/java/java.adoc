@@ -51,27 +51,29 @@ One example is link:../spring-data-neo4j[Spring Data Neo4j], which integrates ti
 As a JVM developer you are also on the bright side when it comes to inserting large amounts of data into Neo4j.
 With its non-transactional, low-level batch-insertion API it can ingest millions of nodes and relationships in just seconds.
 
+
 === Using Neo4j's Embedded Java API
 
-Being implemented in Java you can use it's Java APIs also directly in your programs. 
+Being implemented in Java you can use Neo4j's link:/docs/java-reference/current/javadocs/[Java APIs] also directly in your programs. 
 This is great for unit testing, but also for very high performance / network-free setups.
 
 We also chose this approach for extending Neo4j.
 
-*Stored Procedures* are available within Cypher and encapsulate dedicated functionality.
-They are just annotated methods packaged in a jar-file and copied into a Neo4j-Server installation.
+=== User Defined Procedures
 
-Stored procedures are described XXX HERE XXX and in the {manual}[developer manual].
+Integrated *Procedures* are available within Cypher and encapsulate dedicated functionality.
+Just by annotating methods with `@Procedure` and deploying the resulting jar file into your Neo4j installation, you can make new functionality easily available within the query language.
 
-Another extension point are {javamanual}[Neo4j Server REST extensions], they encapsulate certain graph or business functionality and are available for clients to get high performance access to specific graph operations.
+To get started we provided a https://github.com/neo4j-examples/neo4j-procedure-template[template project] and documentation the link:/docs/java-reference/current/#procedures[developer manual].
+
+Another extension point are {}[Neo4j Server REST extensions], they encapsulate certain graph or business functionality and are available for clients to get high performance access to specific graph operations.
 
 One can also run {manual}/tutorials-java-embedded.html[Neo4j embedded in your JVM process], much like HSQL or Derby.
 
-
 Besides an object-oriented approach to the graph database, working with Nodes, Relationships, and Paths, it also offers highly customizable high-speed traversal- and graph-algorithm implementations.
 
+http://jexp.de/blog/2016/02/neo4j-3-0-stored-procedures/
 
-Follow the guides below to get you started.
 
 include::../_includes/sample_project.adoc[]
 
