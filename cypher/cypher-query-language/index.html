@@ -790,7 +790,8 @@ Patterns can be used to MATCH and CREATE data, but also (evaluating to a list of
 
 
 <div class="paragraph">
-<p>Let&#8217;s try out what we&#8217;ve learned.</p>
+<p>Let&#8217;s try out what we&#8217;ve learned.
+See <a href="/graphgist/34b3cf4c-da1e-4650-81e4-3a7107336ac9">an interactive live example</a> of the exercise below.</p>
 </div>
 
 </div>
@@ -814,7 +815,7 @@ RETURN you</code></pre>
 
 
 <div class="paragraph">
-<p>You like the NoSQL, Graph Database <em>Neo4j</em>, right?</p>
+<p>You like <em>Neo4j</em>, right?</p>
 </div>
 
 
@@ -826,7 +827,7 @@ RETURN you</code></pre>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH  (you:Person {name:"You"})
-CREATE (you)-[like:LIKE]-&gt;(neo:Database:NoSql:Graph {name:"Neo4j" })
+CREATE (you)-[like:LIKE]-&gt;(neo:Database {name:"Neo4j" })
 RETURN you,like,neo</code></pre>
 </div>
 </div>
@@ -883,6 +884,11 @@ CREATE (anna)-[:FRIEND]-&gt;(:Person:Expert {name:"Amanda"})-[:WORKED_WITH]-&gt;
 <p><code>CREATE</code> can also add more complex patterns.</p>
 </div>
 
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/first_steps_friends_network.jpg" alt="first steps friends network" width="400">
+</p>
+</div>
 </div>
 <div  id="_find_someone_in_your_network_who_can_help_you_learn_neo4j" class="sect2 columns medium-12" style='padding-left: 0;' >
 <h3>Find Someone in your Network Who Can Help You Learn Neo4j</h3>
@@ -890,8 +896,8 @@ CREATE (anna)-[:FRIEND]-&gt;(:Person:Expert {name:"Amanda"})-[:WORKED_WITH]-&gt;
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you {name:"You"})
 MATCH (expert)-[:WORKED_WITH]-&gt;(db:Database {name:"Neo4j"})
-MATCH p = shortestPath( (you)-[:FRIEND*..5]-(expert) )
-RETURN p,db</code></pre>
+MATCH path = shortestPath( (you)-[:FRIEND*..5]-(expert) )
+RETURN db,expert,path</code></pre>
 </div>
 </div>
 <div class="ulist side-nav">
