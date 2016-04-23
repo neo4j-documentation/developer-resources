@@ -24,8 +24,9 @@ toc::[]
 
 == About Cypher
 
-Cypher is a declarative, SQL-inspired language for describing patterns in graphs.
-It allows us to describe *what* we want to select, insert, update or delete from a graph database without requiring us to describe exactly *how* to do it.
+Cypher is a declarative, SQL-inspired language for describing patterns in graphs visually using an ascii-art syntax.
+
+It allows us to state *what* we want to select, insert, update or delete from our graph data without requiring us to describe exactly *how* to do it.
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/cypher_pattern_simple.png[]
 
@@ -33,172 +34,88 @@ image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/cypher_pa
 
 Cypher uses ASCII-Art to represent patterns.
 We surround nodes with parentheses which look like circles, e.g. `(node)`.
-If we later want to refer to the node, we'll give it an identifier like `(p)` for person or `(t)` for thing.
+If we later want to refer to the node, we'll give it an variable like `(p)` for person or `(t)` for thing.
 In real-world queries, we'll probably use longer, more expressive variable names like `(person)` or `(thing)`.
+If the node is not relevant to your question, you can also use empty parentheses `()`.
 
-To illustrate, if we want to find all the *persons* and the *things* they like, the query will include the identifiers *person* and *thing*.
-We might use a pattern like `+(person)-->(thing)+` so we can refer to them later, for example, to access properties like `person.name` and `thing.quality`.
+[TIP]
+Usually, the relevant *labels* of the node are provided to distinguish between entities and optimize execution, like `(p:Person)`.
+
+We might use a pattern like `+(person:Person)-->(thing:Thing)+` so we can refer to them later, for example, to access properties like `person.name` and `thing.quality`.
 
 The more general structure is:
 
 [source,cypher]
 ----
-MATCH (node) RETURN node.property
+MATCH (node:Label) RETURN node.property
 
-MATCH (node1)-->(node2)
+MATCH (node1:Label1)-->(node2:Label2)
+WHERE node1.propertyA = {value}
 RETURN node2.propertyA, node2.propertyB
 ----
 
 [role=side-nav]
-* link:/developer/cypher/guide-sql-to-cypher[SQL to Cypher]
-* link:/graphacademy/online-course[Online Training]
-* http://neo4j.com/docs/stable/cypher-refcard[Cypher Reference Card]
-* {manual}/cypher-query-lang.html[Manual: Cypher Reference]
+* link:/developer-resources/cypher/guide-sql-to-cypher[SQL to Cypher]
+* link:/graphacademy/online-course[Free Online Training]
+* link:/docs/stable/cypher-refcard[Cypher Reference Card]
+* {manual}#cypher-query-lang[Manual: Cypher Reference]
+
+[WARNING]
+Please note that _node-labels_, _relationship-types_ and _property-names_ are *case-sensitive* in Cypher.
+All the other clauses, keywords and functions are not, but should be cased consistently according to the style used here.
 
 === Relationships
 
-The problem with the Cypher snippets we saw above is that they didn't say anything about the relationship between the nodes, so even though we used the identifier *person*, we may well have gotten back *suppliers* and *sellers* of our *things*.
-So we need to be able to describe the types of relationships in our Cypher queries.
+To fully utilize the power of our graph database we want to express more complex patterns between our nodes.
+Relationships are basically an arrow `+-->+` between two nodes.
+Additional information can be placed in square brackets inside of the arrow.
 
-If we wanted to retrieve everyone who likes a thing, we would describe the pattern `+(person)-[:LIKE]->(thing)+` to retrieve only nodes that had a relationship typed *LIKE* with other nodes (*thing*).
-Those nodes would then be *persons* as implied by the *LIKE* relationship.
+This can be
 
-Or generally:
+* relationship-types like `+-[:KNOWS|:LIKE]->+`
+* a variable name `+-[rel:KNOWS]->+` before the colon
+* additional properties `+-[{since:2010}]->+`
+* structural information for paths of variable length `+-[:KNOWS*..4]->+`
 
-[source,cypher]
-----
-MATCH (node1)-[:REL_TYPE]->(node2)
-----
+To access information about a relationship, we can assign it a variable, for later reference.
+It is placed in front of the colon `+-[rel:KNOWS]->+` or stands alone `+-[rel]->+`.
 
-Sometimes we need access to information about a relationship (e.g. its type or properties).
-For example, we might want to output the *rating* that a *person* gave a *thing* and that *rating* would probably be a property of the *LIKE* relationship.
-As with nodes, we can use identifiers for relationships (in front of the *:TYPE*).
-If we tried to match `+(person)-[how:LIKE]->(thing)+`, we would be able to output the `how.rating` for each of the persons and all the things that they like.
+[WARNING] If you forget the colon in front of a relationship-type, like this `+-[KNOWS]->+` it does represent a variable and the relationship has *no* relationship-type declared.
 
-[source,cypher]
-----
-MATCH (node1)-[rel:TYPE]->(node2)
-RETURN rel.property
-----
-
-////
-[role=side-nav]
-* http://neo4j.com/docs[The Neo4j Docs]
-* link:/blog[The Neo4j Blog]
-* link:/developer/guide-intro-to-graph-modeling[Intro to Graph Modeling]
-////
-
-=== Labels
-
-Labels allow us to assign roles or types to our nodes.
-For example, we might want to distinguish *things* from *persons* or *companies* (both deal with things).
-By matching for `+(person:Person)-[:LIKE]->(thing)+`, it will return *John*, but not *ACME Inc*--a well known manufacturer.
-
-Labels are usually used like this:
+General Syntax:
 
 [source,cypher]
 ----
-MATCH (node:Label) RETURN node
-
-MATCH (node:Label) WHERE node.property = "value" RETURN node
-
-MATCH (node1:Label1)-[:REL_TYPE]->(node2:Label2)
-RETURN node1, node2
+MATCH (n1:Label1)-[rel:TYPE]->(n2:Label2)
+WHERE rel.property > {value}
+RETURN rel.property, type(rel)
 ----
 
-== Practical Example
+=== Patterns
+
+Nodes and relationship expressions are the building blocks for more complex patterns.
+Patterns can be written continously or separated with commas.
+You can refer to variables declared earlier or introduce new ones.
+
+* friend-of-a-friend `+(user)-[:KNOWS]-(friend)-[:KNOWS]-(foaf)+`
+* shortest path: `+path = shortestPath( (user)-[:KNOWS*..5]-(other) )+`
+* collaborative filtering `+(user)-[:PURCHASED]->(product)<-[:PURCHASED]-()-[:PURCHASED]->(otherProduct)+`
+* tree navigation `+(root)<-[:PARENT*]-(leaf:Category)-[:ITEM]->(data:Product)+`
+
+[TIP]
+Patterns can be used to MATCH and CREATE data, but also (evaluating to a list of paths) in expressions, predicates and results.
+
+++++
+<object type="image/svg+xml" data="//s3.amazonaws.com/artifacts.opencypher.org/railroad/Pattern.svg"></object>
+++++
 
 Let's try out what we've learned.
 
-=== Create a Record for Yourself
-
-//setup
-[source,cypher]
-----
-CREATE (you:Person {name:"You"})
-RETURN you
-----
-
-`Create` creates nodes with labels and properties.
-
-// graph
-
-You like the NoSQL, Graph Database _Neo4j_, right?
-
-//setup
-[source,cypher]
-----
-MATCH  (you:Person {name:"You"})
-CREATE (you)-[like:LIKE]->(neo:Database:NoSql:Graph {name:"Neo4j" })
-RETURN you,like,neo
-----
-
-`Create` can create single nodes, or more complex structures in one go.
-
-// graph
-
-=== Create Your Friends
-
-//setup
-[source,cypher]
-----
-MATCH (you:Person {name:"You"})
-FOREACH (name in ["Johan","Rajesh","Anna","Julia","Andrew"] |
-  CREATE (you)-[:FRIEND]->(:Person {name:name}))
-----
-
-`Foreach` allows you to execute operations for each element of a list.
-
-// graph
-
-=== Find Your Friends
-
-[source,cypher]
-----
-MATCH (you {name:"You"})-[:FRIEND]->(yourFriends)
-RETURN you, yourFriends
-----
-
-// graph_result
-
-// table
-
-=== Create Second Degree Friends and Expertise
-
-//setup
-[source,cypher]
-----
-MATCH (neo:Database {name:"Neo4j"})
-MATCH (anna:Person {name:"Anna"})
-CREATE (anna)-[:FRIEND]->(:Person:Expert {name:"Amanda"})-[:WORKED_WITH]->(neo)
-----
-
-//setup
-[source,cypher]
-----
-MATCH (neo:Database {name:"Neo4j"})
-MATCH (johan:Person {name:"Johan"})
-CREATE (johan)-[:FRIEND]->(:Person:Expert {name:"Max"})-[:WORKED_WITH]->(neo)
-----
-
-// graph
-
-=== Find Someone Who Can Help You Learn Neo4j
-
-[source,cypher]
-----
-MATCH (you {name:"You"}), (expert)-[:WORKED_WITH]->(db:Database {name:"Neo4j"}),
-  p = shortestPath( (you)-[:FRIEND*..5]-(expert) )
-RETURN p,db
-----
-
-// graph_result
-
-// table
+include::example/first-steps-cypher.adoc[leveloffset=+1]
 
 [role=side-nav]
 * link:/learning-neo4j-book/[Free Book: Learning Neo4j]
-* http://graphgist.neo4j.com/[Live Graph Examples]
+* http://neo4j.com/graphgists[Live Graph Examples]
 * http://watch.neo4j.org/video/103466968[Webinar: Neo4j Intro by Nicole White]
-* https://www.airpair.com/neo4j/posts/getting-started-with-neo4j-and-cypher[Article: Getting Started with Neo4j and Cypher by Wes Freeman]
+* https://www.airpair.com/neo4j/posts/getting-started-with-neo4j-and-cypher[Article: Getting Started with Neo4j and Cypher by Eve Freeman]
 
