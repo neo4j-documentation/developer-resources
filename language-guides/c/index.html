@@ -212,7 +212,7 @@ var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
 <div class="marquee blue">
     <div class="row text-center">
         <div class="medium-10 small-centered columns">
-            <h1 class="entry-title">Guide: Example Dataset</h1>
+            <h1 class="entry-title">Neo4j from c</h1>
         </div>
     </div>
 </div>
@@ -225,7 +225,7 @@ var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
                     <ul class="breadcrumbs">
                         <li><a href="/developer-resources">Developer Guides</a></li>
                         
-                        <li class="current"><a href="#">Guide: Example Dataset</a></li>
+                        <li class="current"><a href="#">Neo4j from c</a></li>
                     </ul>
                 </div>
             </div>
@@ -554,14 +554,14 @@ th.tableblock, th p.tableblock {
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-There&#8217;s lots of example datasets for Neo4j.
-This guide outlines some of them.
+If you are a C or C++ developer, this guide provides an overview of options for connecting from C and C++ to Neo4j.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should be comfortable installing and importing data into Neo4j.
+You should be familiar with <a href="/developer/get-started/graph-database">graph database concepts</a> and the property graph model.
+You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="/developer/cypher">Cypher Query language</a>.
 </blockquote>
 </div>
 
@@ -573,23 +573,56 @@ You should be comfortable installing and importing data into Neo4j.
 <h3 class="title">Overview</h3>
 
 <ul class="sectlevel2">
-<li><a href="#_data_sets">Data Sets</a></li>
-<li><a href="#_loading_data_from_source">Loading Data from Source</a></li>
-<li><a href="#_using_the_copy_of_a_neo4j_store">Using the copy of a Neo4j store</a></li>
-<li><a href="#_the_data_sets">The Data Sets</a></li>
+<li><a href="#_neo4j_for_c_developers">Neo4j for C Developers</a></li>
+<li><a href="#_neo4j_community_drivers">Neo4j Community Drivers</a></li>
+<li><a href="#_libneo4j_client">libneo4j-client</a></li>
 </ul>
 
 </div>
 <hr>
 </div>
 </div>
-<div  id="_data_sets" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Data Sets</h3>
+<div  id="_neo4j_for_c_developers" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j for C Developers</h3>
 
 
 <div class="paragraph">
-<p>We want to cover data sets from the different domains.
-For each of the data sets we want to provide a description, the graph model and some use-case queries.</p>
+<p>Despite several attempts, Neo4j&#8217;s HTTP was not well supported in the C community.
+This changed with the advent of the binary protocol in Neo4j 3.0.
+Chris Leishman wrote a very comprehensive and full featured c-client library for the binary protocol.</p>
+</div>
+
+</div>
+<div  id="_neo4j_community_drivers" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j Community Drivers</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The drivers below have been thankfully contributed by the Neo4j community.
+Many of these are fully featured and well maintained.
+But we don&#8217;t take any reponsibility for their fitness for use with the most recent Versions of Neo4j.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div  id="_libneo4j_client" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>libneo4j-client</h3>
+
+
+<div class="paragraph">
+<p>Libneo4j-client is a full featured c-library for interacting with Neo4j&#8217;s binary protocol.
+It supports all wire commands, as well as the security features like auth and TLS.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>A very performant shell client is provided together with the library.</p>
 </div>
 
 <div class="admonitionblock note">
@@ -599,106 +632,32 @@ For each of the data sets we want to provide a description, the graph model and 
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-This is work in progress, so some data sets might not be updated with that information yet.
+This library is not only meant to be used from C/C++ programs directly, but also as convenient, low-level integration library for other languages like PHP, Ruby and Python.
 </td>
 </tr>
 </table>
 </div>
-</div>
-<div  id="_loading_data_from_source" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Loading Data from Source</h3>
-
-
-<div class="paragraph">
-<p>The most reliable way to get a dataset into Neo4j is to import it from the raw sources.
-Then you are independent of database and store-versions, which you otherwise have to upgrade.
-That&#8217;s why we provided raw data (CSV, JSON, XML) for many of the data sets, accompanied by import scripts.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>You would import the data using a command-line client like <code>neo4j-shell</code> or <a href="https://github.com/nicolewhite/cycli">CyCli</a> a modern, colorful Neo4j client, which understands the same file format.</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre>$NEO4J_HOME/bin/neo4j-shell -file import-file.cypher
-
-# or
-
-cycli -f import-file.cypher</pre>
-</div>
-</div>
-</div>
-<div  id="_using_the_copy_of_a_neo4j_store" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Using the copy of a Neo4j store</h3>
-
-
-<div class="paragraph">
-<p>Other data sets are provided as compressed copy (zip) of a Neo4j datastore.
-You can find the datastore files in <code>$NEO4J_HOME/data/databases/[graph.db]</code> or in the directory you selected at startup.
-Please stop your Neo4j server and uncompress the store-files into the appropriate directory.</p>
-</div>
-
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-For some data sets the Neo4j version they were built with might be older than your Neo4j version.
-Then you might need to configure Neo4j to upgrade your database automatically, by setting <code>dbms.allow_format_migration=true</code> in <code>$NEO4J_HOME/conf/neo4j.config</code>
-</td>
-</tr>
-</table>
-</div>
-
-
-<div class="paragraph">
-<p>You can also run neo4j-shell on the extracted directory directly:</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="shell"><code>$NEO4J_HOME/bin/neo4j-shell -path /path/to/graph.db</code></pre>
-</div>
-</div>
-</div>
-<div  id="_the_data_sets" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>The Data Sets</h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
+<col style="width: 20%;">
+<col style="width: 80%;">
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Title</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Code</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Download</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-user"></i></span> Authors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://twitter.com/cleishm">Chris Leishman</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Jim Webber&#8217;s Doctor Who Data Set (0.05MB)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Dr.Who universe of doctors, actors, enemies and props from the Neo4j Koans Tutorial.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://github.com/jimwebber/neo4j-tutorial">GitHub</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://example-data.neo4j.org/files/drwho.zip">drwho.zip</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-gift"></i></span> Package</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://clojars.org/clojurewerkz/neocons" class="bare">https://clojars.org/clojurewerkz/neocons</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Movie Database (12.3MB)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Full dataset (12k movies, 50k actors) of the Spring Data Neo4j Cineasts.net <a href="http://spring.neo4j.org/tutorial">tutorial</a>. Original Source: <a href="http://TheMovieDB.org">TheMovieDB</a>, Thanks!</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/SpringSource/spring-data-neo4j/tree/master/spring-data-neo4j-examples/cineasts">GitHub</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://example-data.neo4j.org/files/cineasts_12k_movies_50k_actors_2.1.6.zip">cineasts_12k_movies_50k_actors.zip (2.1.6)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-github"></i></span> Source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/cleishm/libneo4j-client" class="bare">https://github.com/cleishm/libneo4j-client</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Musicbrainz main entities - large (5.4GB)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Most of the interesting entities (800,000 Artists, 12,000,000 Tracks, 1,200,000 Releases, 75,000 Record Labels) from the <a href="http://musicbrainz.org">Musicbrainz dataset</a>.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="/blog/musicbrainz-in-neo4j-part-1/">Blog Post</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://example-data.neo4j.org/files/musicbrainz_21.zip">musicbrainz_21.zip (2.1.6)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-book"></i></span> Docs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://cleishm.github.com/libneo4j-client" class="bare">https://cleishm.github.com/libneo4j-client</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -768,11 +727,11 @@ Then you might need to configure Neo4j to upgrade your database automatically, b
                </dd>
             </dl>
             <dl class="accordion">
-               <dd class="accordion-navigation inactive">
+               <dd class="accordion-navigation active">
                   <a href="/developer-resources/language-guides/">
                      <h5>Drivers &amp; Language Guides</h5>
                   </a>
-                  <div class="content inactive" id="panel5">
+                  <div class="content active" id="panel5">
                      <ul>
                         <li><a href="/developer-resources/language-guides/java/">Java</a></li>
                         <li><a href="/developer-resources/language-guides/spring-data-neo4j/">Spring Framework</a></li>

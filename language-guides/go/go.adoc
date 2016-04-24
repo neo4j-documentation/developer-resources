@@ -25,26 +25,33 @@ toc::[]
 // tag::intro[]
 === Neo4j for Go Developers
 
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/GO.jpg[width=150]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/GO.jpg[width=150,float=right]
 
-Go drivers have been around for a while and, especially with the excellent `cq` driver from Wes Freeman, have gotten a lot of traction.
+Go drivers have been around for a while and, especially with the excellent `cq` driver from Eve Freeman, have gotten a lot of attention.
 // end::intro[]
 
 Members of the Go community have invested a lot of time and love to develop all these drivers, so if you use them, please provide feedback to the authors. 
 
 include::../_includes/sample_project.adoc[]
 
+include::../_includes/community-driver-notice.adoc[]
+
 === CQ
 
 A database/sql implementation for Cypher.
 
-* link:{examples}/movies-go-cq[Example Project with CQ]
-* https://github.com/go-cq/cq[CQ on GitHub]
-* Author: https://twitter.com/wefreema[Wes Freeman]
+[cols="1,4"]
+|===
+| icon:user[] Author | https://twitter.com/wefreema[Eve Freeman]
+// | icon:gift[] Package | 
+| icon:github[] Source | https://github.com/go-cq/cq
+// | icon:book[] Docs | http://clojureneo4j.info/
+| icon:play-circle[] Example Project | link:{examples}/movies-go-cq
+|===
 
-=== Other Drivers
+////
 
-==== Neoism
+=== Neoism
 
 Neoism is a Go client library providing access to the Neo4j graph database via its REST API.
 This driver is fairly complete, and may now be suitable for general use. The code has an extensive set of integration tests.
@@ -53,3 +60,5 @@ This driver is fairly complete, and may now be suitable for general use. The cod
 * Author: https://github.com/jmcvetta[Jason McVetta]
 * https://medium.com/medium-eng/how-medium-goes-social-b7dbefa6d413[How Medium Goes Social]
 * https://medium.com/medium-eng/running-concurrent-queries-in-gosocial-28e5841b05b5[Running concurrent queries in GoSocial]
+
+////

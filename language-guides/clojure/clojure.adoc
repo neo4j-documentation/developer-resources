@@ -23,7 +23,7 @@ toc::[]
 // tag::intro[]
 === Neo4j for Clojure Developers
 
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/clojure.png[]
+image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/clojure.png[float=right]
 
 Clojure drivers either support Neo4j embedded on the JVM or use Neo4j Server via its HTTP APIs, like the impressive `neocons` project.
 
@@ -33,14 +33,22 @@ Members of the Clojure community have invested a lot of time and love to develop
 
 include::../_includes/sample_project.adoc[]
 
+include::../_includes/community-driver-notice.adoc[]
+
 === Neocons
 
-An idiomatic, feature-rich Clojure client which supports (almost) all Neo4j REST API features and is constantly tested against bleeding-edge server changes, like the Cypher language improvements.
+An idiomatic, feature-rich Clojure client which supports (almost) all Neo4j REST API, like the Cypher language improvements.
 
-* {examples}/movies-clojure-neocons[Example Project with neocons]
-* https://github.com/michaelklishin/neocons[neocons on GitHub]
-* Authors: Michael Klishin, Rohit Aggarwal
-* http://clojureneo4j.info/[Documentation]
+[cols="1,4"]
+|===
+| icon:user[] Authors | Michael Klishin, Rohit Aggarwal
+| icon:play-circle[] Example Project | {examples}/movies-clojure-neocons
+| icon:gift[] Package | https://clojars.org/clojurewerkz/neocons
+| icon:github[] Source | https://github.com/michaelklishin/neocons
+| icon:book[] Docs | http://clojureneo4j.info/
+|===
+
+////
 
 ==== Borneo
 
@@ -48,3 +56,5 @@ Clojure wrapper for Neo4j, a graph database, in embedded JVM mode.
 
 * http://github.com/wagjo/borneo[Borneo on GitHub]
 * Author: Jozef Wagner
+
+////
