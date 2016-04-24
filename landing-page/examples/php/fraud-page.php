@@ -1,26 +1,23 @@
 
 <?php
 /**
- * To install Neoclient, we use Composer
- * 
+ * To install Neo4j-PHP-Client, we use Composer
+ *
  * $ curl -sS https://getcomposer.org/installer | php
- * $ php composer.phar require neoxygen/neoclient
+ * $ php composer.phar require graphaware/neo4j-php-client
  *
  */
 
-use Neoxygen\NeoClient\ClientBuilder;
-
 require __DIR__.'/vendor/autoload.php';
 
+use GraphAware\Neo4j\Client\ClientBuilder;
+
 // change to your hostname, port, username, password
-$neo4j_url = "http://neo4j:password@localhost:7474";
+$neo4j_url = "bolt://neo4j:password@localhost";
 
 // setup connection
-$cnx = parse_url($neo4j_url);
-$neo4j = ClientBuilder::create()
-    ->addConnection('default', $cnx['scheme'], $cnx['host'], $cnx['port'], true, $cnx['user'], $cnx['pass'])
-    ->setAutoFormatResponse(true)
-    ->setDefaultTimeout(20)
+$client = ClientBuilder::create()
+    ->addConnection('default', $neo4j_url)
     ->build();
 
 // setup data
@@ -49,7 +46,7 @@ CREATE (hank:Person {name:'Hank'}),
 EOQ;
 
 // insert data
-$neo4j->sendCypherQuery($insert_query);
+$client->run($insert_query);
 
 
 // transitive closure: query
@@ -61,10 +58,10 @@ EOQ;
 
 // transitive closure: build and execute query
 $params = ['name' => 'Hank'];
-$results = $neo4j->sendCypherQuery($transitive_query, $params)->getResult()->getTableFormat();
+$result = $client->run($transitive_query, $params);
 
-foreach ($results as $result) {
-  print_r($result);
+foreach ($result->records() as $record) {
+  print_r($record->values());
 }
 print "\n";
 
@@ -77,14 +74,13 @@ RETURN n
 EOQ;
 
 // investigation targeting: build and execute query
-$results = $neo4j->sendCypherQuery($investigation_targeting_query)->getResult()->getTableFormat();
+$result = $client->run($investigation_targeting_query);
 
-print "The following people are suspicious:\n";
+echo "The following people are suspicious:" . PHP_EOL;
 
-foreach ($results as $result) {
-  print "\t" . $result['n']['name'] . "\n";
+foreach ($result->records() as $record) {
+  echo $record->get('n')->value('name') . PHP_EOL;
 }
-print "\n";
 
 
 // fast insights: query
@@ -96,10 +92,10 @@ EOQ;
 
 // fast insights: build and execute query
 $params = ['ssn' => 993632634];
-$results = $neo4j->sendCypherQuery($fast_insights_query, $params)->getResult()->getTableFormat();
+$result = $client->run($fast_insights_query, $params);
 
-print "Accounts owned by this SSN:\n";
+echo "Accounts owned by this SSN:" . PHP_EOL;
 
-foreach ($results as $result) {
-  print "\t" . $result['acct']['number'] . " @ " . $result['acct']['bank'] . "\n";
+foreach ($result->records() as $record) {
+  echo "\t" . sprintf('%s@%s', $record->get('acct')->value('number'), $record->get('acct')->value('bank')) . PHP_EOL;
 }

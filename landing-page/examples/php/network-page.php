@@ -1,26 +1,23 @@
 
 <?php
 /**
- * To install Neoclient, we use Composer
- * 
+ * To install Neo4j-PHP-Client, we use Composer
+ *
  * $ curl -sS https://getcomposer.org/installer | php
- * $ php composer.phar require neoxygen/neoclient
+ * $ php composer.phar require graphaware/neo4j-php-client
  *
  */
 
-use Neoxygen\NeoClient\ClientBuilder;
-
 require __DIR__.'/vendor/autoload.php';
 
+use GraphAware\Neo4j\Client\ClientBuilder;
+
 // change to your hostname, port, username, password
-$neo4j_url = "http://neo4j:password@localhost:7474";
+$neo4j_url = "bolt://neo4j:password@localhost";
 
 // setup connection
-$cnx = parse_url($neo4j_url);
-$neo4j = ClientBuilder::create()
-    ->addConnection('default', $cnx['scheme'], $cnx['host'], $cnx['port'], true, $cnx['user'], $cnx['pass'])
-    ->setAutoFormatResponse(true)
-    ->setDefaultTimeout(20)
+$client = ClientBuilder::create()
+    ->addConnection('default', $neo4j_url)
     ->build();
 
 // setup data
@@ -37,7 +34,7 @@ $data = [["CRM","Database VM"],["Database VM","Server 2"],["Server 2","SAN"],
           ["Public Website","Database VM"]];
 
 // insert data
-$neo4j->sendCypherQuery($insert_query, ["pairs" => $data]);
+$client->run($insert_query, ["pairs" => $data]);
 
 
 // impact analysis: query
@@ -49,13 +46,12 @@ EOQ;
 
 // impact analysis: build and execute query
 $params = ['service' => 'Server 1'];
-$results = $neo4j->sendCypherQuery($impact_query, $params)->getResult()->getTableFormat();
+$result = $client->run($impact_query, $params);
 
-print "Services impacted by Server 1 outage:\n";
-foreach ($results as $result) {
-  print "\t" . $result['dependent']['name'] . "\n";
+echo "Services impacted by Server 1 outage:" . PHP_EOL;
+foreach ($result->records() as $record) {
+  echo "\t" . $record->get('dependent')->value('name') . PHP_EOL;
 }
-print "\n";
 
 
 // dependency analysis: query
@@ -67,14 +63,15 @@ EOQ;
 
 // dependency analysis: build and execute query
 $params = ['service' => 'Public Website'];
-$results = $neo4j->sendCypherQuery($dependency_analysis_query, $params)->getResult()->getTableFormat();
+$result = $client->run($dependency_analysis_query, $params);
 
-print "The following services depend upon Public Website, either directly or indirectly:\n";
+echo "The following services depend upon Public Website, either directly or indirectly:" . PHP_EOL;
 
-foreach ($results as $result) {
-  print "\t" . $result['downstream']['name'] . "\n";
+foreach ($result->records() as $record) {
+  echo "\t" . $record->get('downstream')->value('name') . PHP_EOL;
 }
-print "\n";
+
+echo PHP_EOL;
 
 
 // statistics: query
@@ -86,8 +83,12 @@ LIMIT 1
 EOQ;
 
 // statistics: build and execute query
-$results = $neo4j->sendCypherQuery($statistics_query)->getResult()->getTableFormat();
+$result = $client->run($statistics_query);
 
-foreach ($results as $result) {
-  print $result['n']['name'] . ' is the most depended-upon component with ' . $result['dependents'] . ' dependents' . "\n";
+foreach ($result->records() as $record) {
+  echo sprintf(
+    '%s is the most depended-upon component with %d dependents',
+    $record->get('n')->value('name'),
+    $record->get('dependents')
+    ) . PHP_EOL;
 }
