@@ -1,26 +1,23 @@
 
 <?php
 /**
- * To install Neoclient, we use Composer
- * 
+ * To install Neo4j-PHP-Client, we use Composer
+ *
  * $ curl -sS https://getcomposer.org/installer | php
- * $ php composer.phar require neoxygen/neoclient
+ * $ php composer.phar require graphaware/neo4j-php-client
  *
  */
 
-use Neoxygen\NeoClient\ClientBuilder;
-
 require __DIR__.'/vendor/autoload.php';
 
+use GraphAware\Neo4j\Client\ClientBuilder;
+
 // change to your hostname, port, username, password
-$neo4j_url = "http://neo4j:nods-increment-elbow@54.86.149.98:32826";
+$neo4j_url = "bolt://neo4j:password@localhost";
 
 // setup connection
-$cnx = parse_url($neo4j_url);
-$neo4j = ClientBuilder::create()
-    ->addConnection('default', $cnx['scheme'], $cnx['host'], $cnx['port'], true, $cnx['user'], $cnx['pass'])
-    ->setAutoFormatResponse(true)
-    ->setDefaultTimeout(20)
+$client = ClientBuilder::create()
+    ->addConnection('default', $neo4j_url)
     ->build();
 
 // setup data
@@ -37,7 +34,7 @@ $data = [["Jim","Mike"],["Jim","Billy"],["Anna","Jim"],
           ["Joe","Bob"],["Bob","Sally"]];
 
 // insert data
-$neo4j->sendCypherQuery($insert_query, ["pairs" => $data]);
+$client->run($insert_query, ["pairs" => $data]);
 
 
 // friend of friend: query
@@ -50,10 +47,10 @@ EOQ;
 
 // friend of friend: build and execute query
 $params = ['name' => 'Joe'];
-$results = $neo4j->sendCypherQuery($foaf_query, $params)->getResult()->getTableFormat();
+$result = $client->run($foaf_query, $params);
 
-foreach ($results as $result) {
-  print_r( $result );
+foreach ($result->records() as $record) {
+  echo $record->get('name') . PHP_EOL;
 }
 
 
@@ -66,10 +63,10 @@ EOQ;
 
 // common friends: build and execute query
 $params = ['user' => 'Joe', 'foaf' => 'Sally'];
-$results = $neo4j->sendCypherQuery($common_friends_query, $params)->getResult()->getTableFormat();
+$result = $client->run($common_friends_query, $params);
 
-foreach ($results as $result) {
-  print_r( $result );
+foreach ($result->records() as $record) {
+  echo $record->get('friend') . PHP_EOL;
 }
 
 
@@ -82,8 +79,8 @@ EOQ;
 
 // connecting paths: build and execute query
 $params = ['name1' => 'Joe', 'name2' => 'Billy'];
-$results = $neo4j->sendCypherQuery($connecting_paths_query, $params)->getResult()->getTableFormat();
+$result = $client->run($connecting_paths_query, $params);
 
-foreach ($results as $result) {
-  print_r( $result );
+foreach ($result->records() as $record) {
+  print_r($record->get('names'));
 }
