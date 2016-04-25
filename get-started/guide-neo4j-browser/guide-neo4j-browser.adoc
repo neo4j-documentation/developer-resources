@@ -32,23 +32,6 @@ Use the provided installer, start the Neo4j Desktop App and start the database a
 
 Alternatively unzip the downloaded file, and start Neo4j by following the instructions in the readme (`bin/neo4j start`).
 
-////
-Or just unzip the downloaded file.
-
-Change into the new directory and start the server.
-If you have a Java installed and executed `bin/neo4j start` from there, you should see the following:
-
-[source,bash]
-----
-$ cd neo4j-community-2.3.0
-$ bin/neo4j start
-
-Starting Neo4j Server...WARNING: not changing user
-process [70299]... waiting for server to be ready...... OK.
-http://localhost:7474/ is ready.
-----
-////
-
 
 ****
 If you connect to Neo4j for the first time, you're asked to change the password for the default user account "neo4j/neo4j".
@@ -67,8 +50,16 @@ Please follow the guide to learn about our user interface.
 
 == Feedback & Questions
 
-If you have feedback or questions on how to use the Neo4j Browser, there is a small messaging system in the configuration (cog) drawer.
+If you have feedback or questions on how to use the Neo4j Browser, there is a small messaging system in the configuration (icon:cog[]) drawer.
 You can provide your name and send us a message.
+
+== Neo4j Browser Sync
+
+Neo4j Browser Sync is a new feature that allows you to synchronize your favorites, styling and settings to a cloud storage, so you can share it across machines and browsers.
+
+image::{img}neo4j-browser-sync.png[width=500]
+
+Just log in with your GitHub, Twitter or Google account and synchronize your workplace to the cloud.
 
 == Useful Commands and Keyboard Shortcuts
 
@@ -109,18 +100,20 @@ m|:help keys
 == Built in Guides
 
 If you want to learn more first, click on any of the helpful links shown after startup: these are quick guides that introduce the different concepts.
-You find more helpful links in the left sidebar in the "Information" tab, with the `(i)`.
+You find more helpful links in the left sidebar in the "Information" tab (icon:book[]).
 
-* **Intro** - a guided tour of Neo4j browser `:play intro`
-* **Concepts** - GraphDB 101 `:play concepts`
-* **Cypher** - query language `:play cypher`
-* **The Movie Graph** - a mini graph model with use-cases `:play movie graph`
-* **The Northwind Database** - the classic demo database with import instructions & use-case queries `:play northwind graph`
-* **Custom Guides** - starting with Neo4j 2.3 you can use `:play <url>` to play a custom guide, e.g. `:play http://guides.neo4j.com/intro/create.html` from the fundamentals training.
+|===
+| Intro | a guided tour of Neo4j browser | `:play intro`
+| Concepts | GraphDB 101 | `:play concepts`
+| Cypher | query language  introduction |`:play cypher`
+| The Movie Graph | a mini graph model with use-cases | `:play movie graph`
+| The Northwind Database | the classic demo database with import instructions & use-case queries | `:play northwind graph`
+| Custom Guides | starting with Neo4j 2.3 you can use `:play <url>` to play a custom guide | `:play http://guides.neo4j.com/graphgist/restaurant_recommendation.html` 
+|===
 
 Import our sample movie graph by entering `:play movie graph`.
 
-On the second slide click the large Cypher +CREATE ...+ statement, then hit the `Run` button.
+On the second slide click the large Cypher +CREATE ...+ statement, then hit the triangular `Run` button.
 
 After a few seconds the data is imported, and you'll see a subset of the movie data rendered as a graph.
 
@@ -151,16 +144,18 @@ When you continue with the guide, you will see more queries.
 You can get them into the editor _by clicking on them_. 
 To execute, hit the triangular play button.
 
-Query results are rendered either as visual graph or tabular result.
+Query results are rendered either as visual graph, tabular or ascii-table result.
 You can switch between those with the icons on the left side of the result frame.
 
 Remove all accumulated output frames with `:clear`, the cross removes a single frame and aborts a (long-)running statement.
+The maximum number of frames that are kept is configurable.
 
-You can click the query above the graph visualisation to pull it back into the editor.
+You can click the small query above the graph visualisation to pull it back into the editor.
 
 Use the keyboard shortcuts listed above to work efficiently with the editor area.
 
-Navigate input history with kbd:[Ctrl+Up] and kbd:[Ctrl+Down], access all of it via `:history`. The history will be persisted across browser restarts.
+Navigate input history with kbd:[Ctrl+Up] and kbd:[Ctrl+Down], access all of it via `:history`. 
+The history will be persisted across browser restarts.
 
 You can switch between tabular, visual mode, query plan and x-ray mode for results with the icons on the left of each panel, 
 
@@ -173,29 +168,31 @@ Query time is reported in the tabular view, *don't rely on that exact timing tho
 You can download the results as CSV from the tabular output panel (top right download icon), and as JSON (download icon above the panel).
 The graph visualization can be exported as PNG and SVG.
 
+If you enter fullscreen mode of a graph visualization you can zoom in and out.
+After a node is clicked it gets a halo, in which you can expand and remove nodes from the visualization. 
+You can also turn previously dragged nodes lose again.
+
 == Meta Graph
 
-In the left side drawer on the three bubbles section (that resemble the Neo4j logo) you find the *currently used* node-labels and relationship types.
+In the left side drawer on the top database section (icon:database[]) you find the *currently used* node-labels and relationship types.
 Clicking on any of those runs a quick query to show you a sample of the graph using those.
 
 == Queries and Favorites
 
-If you start with an empty frame, display some nodes and relationships, use the Favorites (Star) drawer on the left, click on the **Get Some Data** entry, and run the query.
+If you start with an empty frame, display some nodes and relationships, use the Favorites (icon:star-o[]) drawer on the left, click on the **Get Some Data** entry, and run the query.
 This executes the statement `MATCH (n) RETURN n limit 100` which fetches some nodes. 
 
 The browser helpfully also fetches and displays relationships between those nodes, *even if they were not part of your query result*.
-You can disable the latter behavior with the "Auto-Complete" switch in the bottom left corner.
+You can disable the latter behavior with the "Auto-Complete" switch in the bottom right corner.
 Then only relationships returned by the actual query will be shown.
 
 You can save your own queries as favorites by "starring" them. 
-Use a comment `// comment` above your query for a title.
+Use a comment `// comment` above your query to provide a title.
 Use folders to organize the favorites you can rearrange them by dragging and delete if they are no longer useful.
 
 [NOTE]
-Favorites are stored in your local browser storage, so they are only available per Browser and URL.
-
-[CAUTION]
-If you clear your browser cache, your favorites will be removed.
+Your favorites, settings, and styles can be saved to the cloud with Neo4j Browser Sync.
+If you clear your browser cache, your local favorites will be removed.
 
 === Advanced Styling 
 
