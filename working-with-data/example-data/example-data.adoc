@@ -34,7 +34,7 @@ This is work in progress, so some data sets might not be updated with that infor
 Have fun, and send us feedback to feedback@neo4j.com or raise https://github.com/neo4j-contrib/developer-resources/issues[an issue] if something doesn't work as expected.
 
 
-==== Loading Data from Source
+=== Loading Data from Source
 
 The most reliable way to get a dataset into Neo4j is to import it from the raw sources.
 Then you are independent of database and store-versions, which you otherwise have to upgrade.
@@ -54,7 +54,7 @@ cycli -f import-file.cypher
 // todo screenshot cycli
 // todo import screencast
 
-==== Using the copy of a Neo4j store
+=== Using a copy of a Neo4j database
 
 Other data sets are provided as compressed copy (zip) of a Neo4j datastore.
 You can find the datastore files in `$NEO4J_HOME/data/databases/[graph.db]` or in the directory you selected at startup.
@@ -75,12 +75,45 @@ $NEO4J_HOME/bin/neo4j-shell -path /path/to/graph.db
 
 === The Data Sets
 
-|=======================
+////
+
+s3cmd ls s3://example-data.neo4j.org/3.0-datasets/ | awk '{ split($4,a,"/");print "| a[5] | desc                       | src                     | http://" a[3] "/" a[4] "/" a[5] "[" a[5] " (" int($3/1024/1024) "MB)]"}'
+
+////
+
+|===
 |Title | Description | Code | Download 
-|Jim Webber's Doctor Who Data Set (0.05MB)| The Dr.Who universe of doctors, actors, enemies and props from the Neo4j Koans Tutorial. | link:http://github.com/jimwebber/neo4j-tutorial[GitHub]| link:http://example-data.neo4j.org/files/drwho.zip[drwho.zip]
-|Movie Database (12.3MB) | 12k movies, 50k actors. Original Source: http://TheMovieDB.org[TheMovieDB] | link:https://github.com/SpringSource/spring-data-neo4j/tree/master/spring-data-neo4j-examples/cineasts[GitHub] | link:http://example-data.neo4j.org/files/cineasts_12k_movies_50k_actors_2.1.6.zip[cineasts_12k_movies_50k_actors.zip (2.1.6)]
-|The Musicbrainz main entities - large (5.4GB) | Most of the interesting entities (800,000 Artists, 12,000,000 Tracks, 1,200,000 Releases, 75,000 Record Labels) from the link:http://musicbrainz.org[Musicbrainz dataset].| link:/blog/musicbrainz-in-neo4j-part-1/[Blog Post]  |link:http://example-data.neo4j.org/files/musicbrainz_21.zip[musicbrainz_21.zip (2.1.6)]
-|====================
+|Jim Webber's Doctor Who Data Set | The Dr.Who universe of doctors, actors, enemies and props from the Neo4j Koans Tutorial. | link:http://github.com/jimwebber/neo4j-tutorial[GitHub]| link:http://example-data.neo4j.org/files/drwho.zip[drwho.zip]
+|Movie Database | 12k movies, 50k actors. Original Source: http://TheMovieDB.org[TheMovieDB] | link:https://github.com/SpringSource/spring-data-neo4j/tree/master/spring-data-neo4j-examples/cineasts[GitHub] | http://example-data.neo4j.org/3.0-datasets/cineasts.tgz[cineasts_12k_movies_50k_actors.zip (14MB)]
+|The Musicbrainz main entities | Most of the interesting entities (800,000 Artists, 12,000,000 Tracks, 1,200,000 Releases, 75,000 Record Labels) from the link:http://musicbrainz.org[Musicbrainz dataset].| link:/blog/musicbrainz-in-neo4j-part-1/[Blog Post] 
+| http://example-data.neo4j.org/3.0-datasets/musicbrainz.tgz[musicbrainz_21.zip (4.5GB)]
+|===
+
+////
+
+[[graph-databases]]
+==== Datasets from the Book "Graph Databases"
+
+You can find the free ebook for the O'Reilly book here:
+
+|Title | Description | Code | Download 
+
+|Access Control 
+|A complex access control scenario (p. 116-124)
+| src                     | http://example-data.neo4j.org/3.0-datasets/accesscontrol.tgz[accesscontrol.tgz (165MB)]
+|Logistics Routing 
+|Routing computation with partial leg optimization (p. 12)                       | src                     | http://example-data.neo4j.org/3.0-datasets/logistics.tgz[logistics.tgz (59MB)]
+| recommendations | desc                       | src                     | http://example-data.neo4j.org/3.0-datasets/recommendations.tgz[recommendations.tgz (0MB)]
+| social | desc                       | src                     | http://example-data.neo4j.org/3.0-datasets/socialnetwork.tgz[socialnetwork.tgz (530MB)]
+
+
+| title | desc                       | src                     | http://example-data.neo4j.org/3.0-datasets/cineasts.tgz[cineasts.tgz (14MB)]
+| title | desc                       | src                     | http://example-data.neo4j.org/3.0-datasets/cineasts_csv.tgz[cineasts_csv.tgz (0MB)]
+| title | desc                       | src                     | http://example-data.neo4j.org/3.0-datasets/elections.tgz[elections.tgz (64MB)]
+| title | desc                       | src                     | http://example-data.neo4j.org/3.0-datasets/ldbc_sf001_p006.tgz[ldbc_sf001_p006.tgz (404MB)]
+| title | desc                       | src                     | http://example-data.neo4j.org/3.0-datasets/ldbc_sf010_p006.tgz[ldbc_sf010_p006.tgz (3939MB)]
+| title | desc                       | src                     | http://example-data.neo4j.org/3.0-datasets/musicbrainz.tgz[musicbrainz.tgz (4555MB)]
+| title | desc                       | src                     | http://example-data.neo4j.org/3.0-datasets/pokec.tgz[pokec.tgz (1148MB)]
 
 //|Federal Election Commission Campaign Data - (63.91MB)| "The 2012 presidential campaign data from our Federal Election Committee Campaign Data link:/blog/follow-the-data-fec-campaign-data-challenge/[Workshop].| link:https://github.com/akollegger/FEC_GRAPH[GitHub]| link:http://example-data.neo4j.org/files/fec_data_presidential_2012.zip[fec_data_presidential_2012.zip]
 //|Small Cineasts Movies & Actors (0.14MB)| Small dataset of the Spring Data Neo4j Cineasts.net link:http://spring.neo4j.org/tutorial[tutorial].| link:https://github.com/SpringSource/spring-data-neo4j/tree/master/spring-data-neo4j-examples/cineasts[GitHub] | link:http://example-data.neo4j.org/files/cineasts_39_movies_446_actors.zip[cineasts_39_movies_446_actors.zip]
@@ -88,6 +121,8 @@ $NEO4J_HOME/bin/neo4j-shell -path /path/to/graph.db
 //|Neo Love (1.6MB) | Neo4j brings the love with a link:http://maxdemarzi.com/2013/04/19/match-making-with-neo4j/[sample dating site].| link:https://github.com/maxdemarzi/neo_love[GitHub] | link:https://dl.dropboxusercontent.com/u/57740873/neo_love.graph.db.zip[neo_love.graph.db.zip]
 //|ConceptNet 5 (243MB) | ConceptNet is a link:http://maxdemarzi.com/2013/05/13/knowledge-bases-in-neo4j/[semantic network] built from nodes representing concepts, and labeled relationships between them| link:https://github.com/maxdemarzi/neo_concept[GitHub] | link:https://dl.dropboxusercontent.com/u/57740873/conceptnet.graph.db.zip[conceptnet.graph.db.zip]
 //|Neo Permissions (560MB) | Check permissions from files and folders to users and groups in this link:http://maxdemarzi.com/?s=PERMISSION+RESOLUTION[ACL example]. | link:https://github.com/maxdemarzi/neo_permissions/blob/master/performance/src/test/resources/simulations/RandomPermissions.scala[GitHub] | link:https://dl.dropboxusercontent.com/u/57740873/datasets/neo_permissions.tar.gz[neo_permissions.tar.gz]
+
+////
 
 === Neo4j Graph Gists
 
