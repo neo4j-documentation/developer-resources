@@ -1,3 +1,6 @@
+// javac -cp neo4j-java-driver*.jar:. Network.java
+// java -cp neo4j-java-driver*.jar:. Network
+
 import org.neo4j.driver.v1.*;
 import static org.neo4j.driver.v1.Values.parameters;
 

@@ -1,70 +1,61 @@
+// javac -cp neo4j-java-driver*.jar:. Network.java
+// java -cp neo4j-java-driver*.jar:. Network
 
-// javac Network.java
-// java -cp /path/to/neo4j-jdbc-2.3-SNAPSHOT-jar-with-dependencies.jar:. Network
+import org.neo4j.driver.v1.*;
+import static org.neo4j.driver.v1.Values.parameters;
 
-import java.sql.*;
-import static java.util.Arrays.asList;
 import java.util.List;
+import static java.util.Arrays.asList;
+import static java.util.Collections.singletonMap;
 
 public class Network {
 
-    public static void query(Connection con, 
-                            String query, String[] columns, Object...params)
-                      throws SQLException {
-        try (PreparedStatement pst = con.prepareStatement(query)) {
-            for (int i=0;i<params.length;i++) 
-                pst.setObject(i + 1, params[i]);
-            ResultSet rs = pst.executeQuery();
-            int count = 0;
-            while (rs.next()) {
-                for (int i=0;i<columns.length;i++) 
-                    System.out.print(rs.getString(columns[i])+"\t");
-               System.out.println();
-            }
-        }
-    }
-    public static void main(String...args) throws SQLException {
-        Connection con = DriverManager
-             .getConnection("jdbc:neo4j://localhost:7474/","neo4j","<password>");
+public static void main(String...args) {
+    Config noSSL = Config.build().withEncryptionLevel(Config.EncryptionLevel.NONE).toConfig();
+    Driver driver = GraphDatabase.driver("bolt://localhost",AuthTokens.basic("neo4j","test"),noSSL); // <password>
+    try (Session session = driver.session()) {
 
         List data = 
           asList(asList("CRM", "Database VM"), asList("Database VM", "Server 2"),
           asList("Server 2", "SAN"), asList("Server 1", "SAN"), asList("Webserver VM", "Server 1"),
           asList("Public Website", "Webserver VM"), asList("Public Website", "Webserver VM"));
 
-        String insertQuery = "UNWIND {1} AS pair " +
-        "MERGE (s1:Service {name: pair[0]}) " +
-        "MERGE (s2:Service {name: pair[1]}) " +
-        "MERGE (s1)-[:DEPENDS_ON]->(s2) ";
+          String insertQuery = "UNWIND {pairs} AS pair " +
+          "MERGE (s1:Service {name: pair[0]}) " +
+          "MERGE (s2:Service {name: pair[1]}) " +
+          "MERGE (s1)-[:DEPENDS_ON]->(s2) ";
+
+           session.run(insertQuery,singletonMap("pairs",data)).consume();
+
+           StatementResult result;
         
-        try {
-            PreparedStatement pst = con.prepareStatement(insertQuery);
-            pst.setObject(1, data);
-            pst.executeUpdate();
-            pst.close();
-    
-            String impactQuery = 
-            "MATCH (n:Service)<-[:DEPENDS_ON*]-(dependent:Service) " +
-            "WHERE n.name = {1} " +
-            "RETURN collect(dependent.name) AS dependent_services";
+           String impactQuery = 
+           "MATCH (n:Service)<-[:DEPENDS_ON*]-(dependent:Service) " +
+           "WHERE n.name = {name} " +
+           "RETURN collect(dependent.name) AS dependent_services";
 
-            query(con, impactQuery, new String[] {"dependent_services"}, "Server 1");
+           result = session.run(impactQuery, parameters("name","Server 1"));
+           while (result.hasNext()) System.out.println(result.next().get("dependent_services"));
 
-            String dependencyQuery =
-            "MATCH (n:Service)-[:DEPENDS_ON*]->(downstream:Service) " +
-            "WHERE n.name = {1} " +
-            "RETURN collect(downstream.name) AS downstream_services ";
-            
-            query(con, dependencyQuery, new String[] {"downstream_services"}, "Public Website");
+           String dependencyQuery =
+           "MATCH (n:Service)-[:DEPENDS_ON*]->(downstream:Service) " +
+           "WHERE n.name = {name} " +
+           "RETURN collect(downstream.name) AS downstream_services ";
 
-            String statsQuery =
-            "MATCH (n:Service)<-[:DEPENDS_ON*]-(dependent:Service) " +
-            "RETURN n.name AS service, count(DISTINCT dependent) AS dependents " +
-            "ORDER BY dependents DESC " +
-            "LIMIT 1";
-            query(con, statsQuery, new String[]{"dependents"});
-        } finally {
-            con.close();
-        }
+           result = session.run(dependencyQuery, parameters("name","Public Website"));
+           while (result.hasNext()) System.out.println(result.next().get("downstream_services"));
+
+           String statsQuery =
+           "MATCH (n:Service)<-[:DEPENDS_ON*]-(dependent:Service) " +
+           "RETURN n.name AS service, count(DISTINCT dependent) AS dependents " +
+           "ORDER BY dependents DESC " +
+           "LIMIT 1";
+
+           result = session.run(statsQuery, parameters());
+           while (result.hasNext()) {
+             Record record = result.next();
+             System.out.printf("%s has %s dependents.%n",record.get("service"),record.get("dependents"));
+           }
     }
+}
 }

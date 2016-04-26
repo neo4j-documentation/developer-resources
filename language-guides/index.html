@@ -635,9 +635,19 @@ It aims to be minimal, while being idiomatic to .NET.</p>
 </div>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="clike"><code>Unresolved directive in _includes/dotnet-driver.adoc - include::https://github.com/neo4j/neo4j-dotnet-driver/raw/1.0/Neo4j.Driver/Neo4j.Driver.IntegrationTests/Examples.cs[tag=minimal-example-import]
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="clike"><code>using Neo4j.Driver.V1;
 
-Unresolved directive in _includes/dotnet-driver.adoc - include::https://github.com/neo4j/neo4j-dotnet-driver/raw/1.0/Neo4j.Driver/Neo4j.Driver.IntegrationTests/Examples.cs[tag=minimal-example,indent=0]</code></pre>
+using (var driver = GraphDatabase.Driver("bolt://localhost", AuthTokens.Basic("neo4j", "neo4j")))
+using (var session = driver.Session())
+{
+    session.Run("CREATE (a:Person {name:'Arthur', title:'King'})");
+    var result = session.Run("MATCH (a:Person) WHERE a.name = 'Arthur' RETURN a.name AS name, a.title AS title");
+
+    foreach (var record in result)
+    {
+        Output.WriteLine($"{record["title"].As&lt;string&gt;()} {record["name"].As&lt;string&gt;()}");
+    }
+}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all spread">
@@ -718,9 +728,22 @@ It aims to be minimal, while being idiomatic to Java.</p>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>Unresolved directive in _includes/java-driver.adoc - include::https://github.com/neo4j/neo4j-java-driver/raw/1.0/examples/src/main/java/org/neo4j/docs/driver/MinimalWorkingExample.java[tag=minimal-example-import]
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>import org.neo4j.driver.v1.*;
 
-Unresolved directive in _includes/java-driver.adoc - include::https://github.com/neo4j/neo4j-java-driver/raw/1.0/examples/src/main/java/org/neo4j/docs/driver/MinimalWorkingExample.java[tag=minimal-example,indent=0]</code></pre>
+Driver driver = GraphDatabase.driver( "bolt://localhost", AuthTokens.basic( "neo4j", "neo4j" ) );
+Session session = driver.session();
+
+session.run( "CREATE (a:Person {name:'Arthur', title:'King'})" );
+
+StatementResult result = session.run( "MATCH (a:Person) WHERE a.name = 'Arthur' RETURN a.name AS name, a.title AS title" );
+while ( result.hasNext() )
+{
+    Record record = result.next();
+    System.out.println( record.get( "title" ).asString() + " " + record.get("name").asString() );
+}
+
+session.close();
+driver.close();</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all spread">
@@ -776,9 +799,18 @@ It aims to be minimal, while being idiomatic to JavaScript, allowing you to subs
 </div>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="javascript"><code>Unresolved directive in _includes/javascript-driver.adoc - include::https://github.com/neo4j/neo4j-javascript-driver/raw/1.1/test/v1/examples.test.js[tag=minimal-example-import,indent=0]
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="javascript"><code>var neo4j = require('neo4j-driver').v1;
 
-Unresolved directive in _includes/javascript-driver.adoc - include::https://github.com/neo4j/neo4j-javascript-driver/raw/1.1/test/v1/examples.test.js[tag=minimal-example,indent=0]</code></pre>
+var driver = neo4j.driver("bolt://localhost", neo4j.auth.basic("neo4j", "neo4j"));
+var session = driver.session();
+session.run( "CREATE (neo:Person {name:'Neo', age:23})" );
+session
+  .run( "MATCH (p:Person) WHERE p.name = 'Neo' RETURN p.age" )
+  .then( function( result ) {
+    console.log( "Neo is " + result.records[0].get("p.age").toInt() + " years old." );
+    session.close();
+    driver.close();
+  });</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all spread">
@@ -834,9 +866,18 @@ It aims to be minimal, while being idiomatic to Python.</p>
 </div>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="python"><code>Unresolved directive in _includes/python-driver.adoc - include::https://github.com/neo4j/neo4j-python-driver/raw/1.0/examples/test_examples.py[tag=minimal-example-import]
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="python"><code>from neo4j.v1 import GraphDatabase, basic_auth
 
-Unresolved directive in _includes/python-driver.adoc - include::https://github.com/neo4j/neo4j-python-driver/raw/1.0/examples/test_examples.py[tag=minimal-example,indent=2]</code></pre>
+  driver = GraphDatabase.driver("bolt://localhost", auth=basic_auth("neo4j", "password"))
+  session = driver.session()
+
+  session.run("CREATE (a:Person {name:'Arthur', title:'King'})")
+
+  result = session.run("MATCH (a:Person) WHERE a.name = 'Arthur' RETURN a.name AS name, a.title AS title")
+  for record in result:
+      print("%s %s" % (record["title"], record["name"]))
+
+  session.close()</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all spread">
