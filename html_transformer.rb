@@ -1,7 +1,9 @@
 module HtmlTransformer
   def self.transform(lines)
     lines.map do |line|
-      line.gsub(%r{href="(?:/developer/)? # base of the url
+      line
+          .gsub(%r{href="/developer-resources/}, 'href="/developer/')
+          .gsub(%r{href="(?:/developer/)? # base of the url
                   (?:(?:\.\.|[a-zA-Z0-9_-]+)/)*  # the classification that we want to bin
                   ([^#:]+?)"}x,'href="/developer/\1"')
           .gsub(%r{/developer/+developer}, '/developer')
