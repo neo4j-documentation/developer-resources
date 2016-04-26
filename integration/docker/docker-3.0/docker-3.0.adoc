@@ -55,7 +55,7 @@ There are several changes in Neo4j 3.0 that affect the Docker image.
 * The configuration has been overhauled; the environment variables that are available have been changed to reflect the new settings (see below for details).
 
 If you are supplying your own configuration files rather than using environment variables then you will need to migrate those.
-See the http://neo4j.com/docs/operations-manual/3.0-RC1/#deployment-upgrading[manual] for details.
+See the http://neo4j.com/docs/operations-manual/3.0/#deployment-upgrading[manual] for details.
 
 == Docker configuration
 
@@ -88,7 +88,7 @@ docker run \
 
 The default configuration provided by this image is intended for learning about Neo4j, but must be modified to make it suitable for production use.
 In particular the memory assigned to Neo4j is very limited (see `NEO4J_CACHE_MEMORY` and `NEO4J_HEAP_MEMORY` below), to allow multiple containers to be run on the same server.
-You can read more about configuring Neo4j in the http://neo4j.com/docs/operations-manual/3.0-RC1/#configuration-settings[manual].
+You can read more about configuring Neo4j in the http://neo4j.com/docs/operations-manual/3.0/#configuration-settings[manual].
 
 There are three ways to modify the configuration depending on how much you need to customize the image.
 
@@ -107,11 +107,11 @@ docker run \
 
 The following environment variables are available:
 
-* `NEO4J_AUTH`: controls authentication, set to `none` to disable authentication or `neo4j/<password>` to override the default password (see the http://www.neo4j.com/docs/operations-manual/3.0-RC1/#security[manual] for details)
+* `NEO4J_AUTH`: controls authentication, set to `none` to disable authentication or `neo4j/<password>` to override the default password (see the http://www.neo4j.com/docs/operations-manual/3.0/#security[manual] for details)
 * `NEO4J_dbms_memory_pagecache_size`: the size of Neo4j's native-memory cache, defaults to 512M
 * `NEO4J_dbms_memory_heap_maxSize`: the size of Neo4j's heap in MB, defaults to 512
 * `NEO4J_dbms_txLog_rotation_retentionPolicy`: the retention policy for logical logs, defaults to `100M size`
-* `NEO4J_dbms_allowFormatMigration`: set to `true` to enable upgrades, defaults to `false` (see the http://www.neo4j.com/docs/operations-manual/3.0-RC1/#upgrading[manual] for details)
+* `NEO4J_dbms_allowFormatMigration`: set to `true` to enable upgrades, defaults to `false` (see the http://www.neo4j.com/docs/operations-manual/3.0/#upgrading[manual] for details)
 
 ==== Enterprise Edition
 
@@ -203,7 +203,7 @@ docker run --name=instance3 --detach --publish 7476:7474 --publish=7689:7687 --n
     neo4j:enterprise-3.0
 ----
 
-See the http://neo4j.com/docs/operations-manual/3.0-RC1/#ha-setup-tutorial[manual] for more details of Neo4j HA.
+See the http://neo4j.com/docs/operations-manual/3.0/#ha-setup-tutorial[manual] for more details of Neo4j HA.
 
 == User-defined procedures
 
@@ -213,7 +213,7 @@ To install user-defined procedures, provide a `/plugins` volume containing the j
 docker run --publish 7474:7474 --publish=7687:7687 --volume=$HOME/neo4j/plugins:/plugins neo4j:3.0
 ----
 
-See the http://neo4j.com/docs/developer-manual/3.0-RC1/#procedures[manual] for more details on procedures.
+See the http://neo4j.com/docs/developer-manual/3.0/#procedures[manual] for more details on procedures.
 
 == Neo4j shell
 
