@@ -78,7 +78,7 @@ docker run \
 
 The default configuration provided by this image is intended for learning about Neo4j, but must be modified to make it suitable for production use.
 In particular the memory assigned to Neo4j is very limited (see `NEO4J_CACHE_MEMORY` and `NEO4J_HEAP_MEMORY` below), to allow multiple containers to be run on the same server.
-You can read more about configuring Neo4j in the http://neo4j.com/docs/stable/configuration.html[manual].
+You can read more about configuring Neo4j in the http://neo4j.com/docs/2.3.3/configuration.html[manual].
 
 There are three ways to modify the configuration depending on how much you need to customize the image.
 
@@ -100,9 +100,9 @@ The following environment variables are available:
 * `NEO4J_CACHE_MEMORY`: the size of Neo4j's native-memory cache, defaults to 512M
 * `NEO4J_HEAP_MEMORY`: the size of Neo4j's heap in MB, defaults to 512
 * `NEO4J_KEEP_LOGICAL_LOGS`: the retention policy for logical logs, defaults to `100M size`
-* `NEO4J_AUTH`: controls authentication, set to `none` to disable authentication or `neo4j/<password>` to override the default password (see the http://neo4j.com/docs/stable/rest-api-security.html[manual] for details)
+* `NEO4J_AUTH`: controls authentication, set to `none` to disable authentication or `neo4j/<password>` to override the default password (see the http://neo4j.com/docs/2.3.3/rest-api-security.html[manual] for details)
 * `NEO4J_THIRDPARTY_JAXRS_CLASSES`: URI mappings for unmanaged extensions (see below)
-* `NEO4J_ALLOW_STORE_UPGRADE`: set to `true` to enable upgrades, defaults to `false` (see the http://neo4j.com/docs/stable/deployment-upgrading.html[manual] for details)
+* `NEO4J_ALLOW_STORE_UPGRADE`: set to `true` to enable upgrades, defaults to `false` (see the http://neo4j.com/docs/2.3.3/deployment-upgrading.html[manual] for details)
 
 ==== Enterprise Edition
 
@@ -199,7 +199,7 @@ docker run --publish 7474:7474 --volume=$HOME/neo4j/plugins:/plugins \
     neo4j:2.3
 ----
 
-See the http://neo4j.com/docs/stable/server-extending.html[manual] for more details on plugins and unmanaged extensions.
+See the http://neo4j.com/docs/2.3.3/server-extending.html[manual] for more details on plugins and unmanaged extensions.
 
 == Neo4j shell
 
