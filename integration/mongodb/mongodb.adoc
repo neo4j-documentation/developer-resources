@@ -10,7 +10,10 @@
 
 .Goals
 [abstract]
-Taking advantage of the strengths of multiple database technologies is the concept of polyglot persistence. For example, a product catalog application might use a document database (such as MongoDB) to power browsing / searching for products along with a graph database (such as Neo4j) to provide real time personalized product recommendations. To enable polyglot persistence the application needs to store data in multiple databases, each with its own data model (graph vs. document). Being able to connect MongoDB to Neo4j and synchronize data automatically makes this process much simpler.
+Taking advantage of the strengths of multiple database technologies is the concept of polyglot persistence.
+For example, a product catalog application might use a document database (such as MongoDB) to power browsing / searching for products along with a graph database (such as Neo4j) to provide real time personalized product recommendations.
+To enable polyglot persistence the application needs to store data in multiple databases, each with its own data model (graph vs. document).
+Being able to connect MongoDB to Neo4j and synchronize data automatically makes this process much simpler.
 
 .Prerequisites
 [abstract]
@@ -23,7 +26,8 @@ toc::[]
 
 == General Observations
 
-Often it is useful to synchronize meta data or a subset of data from MongoDB to Neo4j to take advantage of realationships in the data, something that Neo4j is optimized for and is more difficult to accomplish in MongoDB. The Neo4 Doc Manager project below facilitates this process.
+Often it is useful to synchronize meta data or a subset of data from MongoDB to Neo4j to take advantage of realationships in the data, something that Neo4j is optimized for and is more difficult to accomplish in MongoDB.
+The Neo4j Doc Manager project below facilitates this process.
 
 == Neo4j Doc Manager
 
@@ -34,9 +38,12 @@ The developers at link:http://mongodb.com[MongoDB] have provided the link:https:
 From the mongo-connector documentation:
 
 [quote]
-mongo-connector creates a pipeline from a MongoDB cluster to one or more target systems, such as Solr, Elasticsearch, or another MongoDB cluster. It synchronizes data in MongoDB to the target then tails the MongoDB oplog, keeping up with operations in MongoDB in real-time. It has been tested with Python 2.6, 2.7, 3.3, and 3.4.
+mongo-connector creates a pipeline from a MongoDB cluster to one or more target systems, such as Solr, Elasticsearch, or another MongoDB cluster.
+It synchronizes data in MongoDB to the target then tails the MongoDB oplog, keeping up with operations in MongoDB in real-time.
+It has been tested with Python 2.6, 2.7, 3.3, and 3.4.
 
-To facilitate synchronizing data from MongoDB to a Neo4j instance, the community has implemented a link:https://github.com/neo4j-contrib/neo4j_doc_manager[Neo4j Doc Manager] for mongo-connector. It is intended for live one-way synchronization from MongoDB to Neo4j, where you have both databases running to take advantage of each databases' strengths in your application.
+To facilitate synchronizing data from MongoDB to a Neo4j instance, the community has implemented a link:https://github.com/neo4j-contrib/neo4j_doc_manager[Neo4j Doc Manager] for mongo-connector.
+It is intended for live one-way synchronization from MongoDB to Neo4j, where you have both databases running to take advantage of each databases' strengths in your application.
 
 [NOTE]
 This project is currently beta quality and not officially supported by Neo Technology.
@@ -54,12 +61,14 @@ For alternative installation workflow, see the documentation link:neo4j-doc-mana
 
 ==== Using Neo4j Doc Manager
 
-Ensure that a Neo4j instance is running. If authentication is enabled (version 2.2+) for Neo4j, set the +NEO4J_AUTH+ environment variable, containing username and password:
+Ensure that a Neo4j instance is running.
+If authentication is enabled (version 2.2+) for Neo4j, set the +NEO4J_AUTH+ environment variable, containing username and password:
 
 [source]
 export NEO4J_AUTH=user:password
 
-Ensure that MongoDB is running a replica set. To initiate a replica set, start MongoDB with this command:
+Ensure that MongoDB is running a replica set.
+To initiate a replica set, start MongoDB with this command:
 
 [source]
 mongod --replSet myDevReplSet
@@ -76,7 +85,6 @@ Start the mongo-connector service with the following command:
 [source]
 mongo-connector -m localhost:27017 -t http://localhost:7474/db/data -d neo4j_doc_manager
 
-
 * *-m* provides the MongoDB endpoint
 * *-t* specifies the Neo4j endpoint
 * *-d* specifies Neo4j Doc Manager as the doc manager
@@ -85,7 +93,8 @@ To see all configuration options for Neo4j Doc Manager (including specifying whi
 
 ==== Data synchronization
 
-With the +neo4j_doc_manager+ service running, any documents inserted into MongoDB will be converted to a property graph structure and immediately inserted into Neo4j as well. Document keys will be turned into nodes. Nested values on each key will become properties.
+With the `neo4j_doc_manager` service running, any documents inserted into MongoDB will be converted to a property graph structure and immediately inserted into Neo4j as well. Document keys will be turned into nodes.
+Nested values on each key will become properties.
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/20160203162601/doc_to_graph1.png[Document to graph]
 
@@ -117,7 +126,4 @@ the document is converted to a property graph and inserted into Neo4j with this 
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/20160203162603/graph11.png[Property graph]
 
-
 To see more examples and the full documentation, please refer to the link:https://github.com/neo4j-contrib/neo4j_doc_manager[Neo4j Doc Manager project on GitHub].
-
-

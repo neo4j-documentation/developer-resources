@@ -10,7 +10,8 @@
 
 .Goals
 [abstract]
-Hadoop is well established as large scale data processing platform. It can easily pre-process huge datasets and information streams to extract and project the high quality data vectors that enrich your graph model with relevant new information.
+Hadoop is well established as large scale data processing platform.
+It can easily pre-process huge datasets and information streams to extract and project the high quality data vectors that enrich your graph model with relevant new information.
 Here we want to demonstrate some approaches that used Hadoop jobs to prepare data for ingestion into Neo4j.
 
 .Prerequisites
@@ -32,7 +33,8 @@ Real world, log-, sensor-, transaction- and event data is noisy.
 Most of the data frames don't add new information but are repetetive.
 For enriching a good graph model with variant information you want to filter out the noise and project the raw data into a format that can be easily ingested in your graph.
 
-We look at a few examples that
+// this sentence is cut off (commented out)
+// We look at a few examples that
 
 ////
 todo mention GraphBuilder ??
@@ -48,6 +50,9 @@ While this approach is performant, it is also tightly coupled to the store-forma
 With the parallel neo4j-import tool and APIs introduced in Neo4j 2.2, such a solution is no longer needed.
 The import facilities scale across a large number of CPUs to maximize import performance.
 
+////
+seems like more todos
+
 == Pre-processing Graph Data with Hadoop
 
 * Dave: BitCoin
@@ -56,4 +61,4 @@ The import facilities scale across a large number of CPUs to maximize import per
 * TODO: Streaming / Event-Stream Filtering, Conversion, Aggregation
 
 // == Concurrent Graph Data Ingestion
-
+////

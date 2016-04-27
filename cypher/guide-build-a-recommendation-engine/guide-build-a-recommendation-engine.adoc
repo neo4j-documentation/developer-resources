@@ -76,7 +76,8 @@ RETURN tom, movie
 
 //graph_result
 
-Of course Tom has colleagues who acted with him in his movies. This "co-actor" statement looks like this:
+Of course Tom has colleagues who acted with him in his movies.
+This "co-actor" statement looks like this:
 
 [source,cypher]
 ----
@@ -160,7 +161,7 @@ Imagine a graph like this: a few friends with their favorite restaurants, their 
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/restaurant-recommendation.png[]
 
-A practical question to answer here, formulated in http://neo4j.com/blog/why-the-most-important-part-of-facebook-graph-search-is-graph/[Graph Search] slang,
+A practical question to answer here, formulated in http://neo4j.com/blog/why-the-most-important-part-of-facebook-graph-search-is-graph/[Graph Search] slang:
 
 ----
 Sushi restaurants in New York that my friends like
@@ -176,10 +177,10 @@ MATCH (person:Person)-[:IS_FRIEND_OF]->(friend),
       (restaurant)-[:SERVES]->(type:Cuisine)
 
 WHERE person.name = 'Philip'
-  AND loc.location='New York'
-  AND type.cuisine='Sushi'
+  AND loc.location = 'New York'
+  AND type.cuisine = 'Sushi'
 
-RETURN restaurant.name, count(*) as occurrence
+RETURN restaurant.name, count(*) AS occurrence
 ORDER BY occurrence DESC
 LIMIT 5
 ----
