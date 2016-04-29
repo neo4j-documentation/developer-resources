@@ -23,7 +23,7 @@ You should have a sound understanding of both Docker and Neo4j, to leverage them
 [role=expertise]
 {level}
 
-//toc::[]
+toc::[]
 
 == General Observations
 
@@ -52,26 +52,44 @@ Previous versions and milestones are available as tags in of the https://hub.doc
 
 The Dockerfiles for the different versions are taken from https://github.com/neo4j/docker-neo4j/[this GitHub repository] and synched with Docker Hub and the official repository as needed.
 
-=== Run it
+=== How to use the Neo4j Docker Image
 
 [NOTE]
 For running Docker on https://docs.docker.com/engine/installation/mac/[Max OSX] and https://docs.docker.com/engine/installation/windows/[Windows] please consult the Docker documentation.
 
-----
-# interactive with terminal
-docker run --interactive --rm --publish 7474:7474 \
-           --volume $HOME/neo4j/data:/data  neo4j
 
-# as daemon running in the background
-docker run --detach --name neo4j --publish 7474:7474 \
-           --volume $HOME/neo4j/data:/data neo4j
-----
+++++
+<dl class="tabs" data-tab>
+  <dd class="tab-title active"><a href="#docker-3.0">Neo4j 3.0</a></dd>
+  <dd class="tab-title"><a href="#docker-2.3">Neo4j 2.3</a></dd>
+</dl>
+++++
 
-The data-directory, containing the store-files, logs, auth etc. resides on your host system outside of the image.
-It can be just any empty directory or a (copy of a) data directory of a (not-running) Neo4j-server.
-You can mount it with the `--volume` option.
+++++
+<div class="tabs-content">
+++++
 
-You can then access `http://localhost:7474` (or the port you exposed) on your machine to use Neo4j.
+[[docker-3.0]]
+[.content.active]
+=== Neo4j 3.0 Docker Image
+
+include::docker-3.0/docker-3.0.adoc[tag=get-started,leveloffset=1]
+
+For more details, see the link:docker-3.0[Neo4j 3.0 Docker page].
+
+[[docker-2.3]]
+[.content]
+=== Neo4j 2.3 Docker Image
+
+include::docker-2.3/docker-2.3.adoc[tag=get-started,leveloffset=1]
+
+For more details, see the link:docker-2.3[Neo4j 2.3 Docker page].
+
+++++
+</div>
+++++
+
+=== Capabilities
 
 The Neo4j Docker image comes with these capabilities:
 
