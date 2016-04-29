@@ -13,7 +13,7 @@
 /* <![CDATA[ */
 var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
 /* ]]> */
-</script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/neo4j-download/js/download.js?ver=4.5'></script> <script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/cookie-law-info/js/cookielawinfo.js?ver=1.5.3'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/jquery-updater/js/jquery-migrate-1.3.0.min.js?ver=1.3.0'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/vendor/modernizr.min.js?ver=4.5'></script> <script type='text/javascript' src='/developer-resources/assets/js/foundation.min.js'></script> <script type='text/javascript' src='/developer-resources/assets/js/codemirror.min.js'></script> <script type='text/javascript' src='/developer-resources/assets/js/neo_codemirror.js'></script> <script type='text/javascript' src='//use.typekit.net/rdt4xku.js?ver=4.5'></script> <script type='text/javascript' src='/developer-resources/assets/js/misc.js'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/bundle.js?ver=2016.03.11'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/neo_calculator_v3.js?ver=4.5'></script> <link rel='https://api.w.org/' href="http://neo4j.com/wp-json/"/> <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://neo4j.com/xmlrpc.php?rsd"/> <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://neo4j.com/wp-includes/wlwmanifest.xml"/> <meta name="generator" content="WordPress 4.5"/> <link rel='shortlink' href="http://neo4j.com/?p=38241"/> <link rel="alternate" type="application/json+oembed" href="http://neo4j.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fneo4j.com%2Fdeveloper%2Fget-started%2F"/> <link rel="alternate" type="text/xml+oembed" href="http://neo4j.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fneo4j.com%2Fdeveloper%2Fget-started%2F&#038;format=xml"/> </head>
+</script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/neo4j-download/js/download.js?ver=4.5'></script> <script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/cookie-law-info/js/cookielawinfo.js?ver=1.5.3'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/jquery-updater/js/jquery-migrate-1.3.0.min.js?ver=1.3.0'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/vendor/modernizr.min.js?ver=4.5'></script> <script type='text/javascript' src='/developer-resources/assets/js/foundation.js'></script> <script type='text/javascript' src='/developer-resources/assets/js/codemirror.min.js'></script> <script type='text/javascript' src='/developer-resources/assets/js/neo_codemirror.js'></script> <script type='text/javascript' src='//use.typekit.net/rdt4xku.js?ver=4.5'></script> <script type='text/javascript' src='/developer-resources/assets/js/misc.js'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/bundle.js?ver=2016.03.11'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/neo_calculator_v3.js?ver=4.5'></script> <link rel='https://api.w.org/' href="http://neo4j.com/wp-json/"/> <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://neo4j.com/xmlrpc.php?rsd"/> <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://neo4j.com/wp-includes/wlwmanifest.xml"/> <meta name="generator" content="WordPress 4.5"/> <link rel='shortlink' href="http://neo4j.com/?p=38241"/> <link rel="alternate" type="application/json+oembed" href="http://neo4j.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fneo4j.com%2Fdeveloper%2Fget-started%2F"/> <link rel="alternate" type="text/xml+oembed" href="http://neo4j.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fneo4j.com%2Fdeveloper%2Fget-started%2F&#038;format=xml"/> </head>
 <body>
 <div class="top-bar-container contain-to-grid">
     <nav class="top-bar" data-topbar role="navigation">
@@ -581,6 +581,9 @@ You should have a sound understanding of both Docker and Neo4j, to leverage them
 <ul class="sectlevel1">
 <li><a href="#_general_observations">General Observations</a></li>
 <li><a href="#neo4j-docker">The official Neo4j Docker Image</a></li>
+<li><a href="#_how_to_use_the_neo4j_docker_image">How to use the Neo4j Docker Image</a></li>
+<li><a href="#_capabilities">Capabilities</a></li>
+<li><a href="#_references">References</a></li>
 <li><a href="#_neo4j_spark_analytics">Neo4j - Spark - Analytics</a></li>
 </ul>
 
@@ -643,7 +646,8 @@ Previous versions and milestones are available as tags in of the <a href="https:
 <p>The Dockerfiles for the different versions are taken from <a href="https://github.com/neo4j/docker-neo4j/">this GitHub repository</a> and synched with Docker Hub and the official repository as needed.</p>
 </div>
 
-<div  id="_how_to_use_the_neo4j_docker_image" class="sect2 columns medium-12" style='padding-left: 0;' >
+</div>
+<div  id="_how_to_use_the_neo4j_docker_image" class="sect1 columns medium-12" style='padding-left: 0;' >
 <h3>How to use the Neo4j Docker Image</h3>
 <div class="admonitionblock note">
 <table>
@@ -658,12 +662,11 @@ For running Docker on <a href="https://docs.docker.com/engine/installation/mac/"
 </table>
 </div>
 <dl class="tabs" data-tab>
-  <dd class="tab-title active"><a href="#docker-3.0">Neo4j 3.0</a></dd>
-  <dd class="tab-title"><a href="#docker-2.3">Neo4j 2.3</a></dd>
+  <dd class="tab-title active"><a href="#docker-30">Neo4j 3.0</a></dd>
+  <dd class="tab-title"><a href="#docker-23">Neo4j 2.3</a></dd>
 </dl>
 <div class="tabs-content">
-</div>
-<div  id="docker-3.0" class="sect2 content active columns medium-12" style='padding-left: 0;' >
+<div  id="docker-30" class="sect2 content active columns medium-12" style='padding-left: 0;' >
 <h3>Neo4j 3.0 Docker Image</h3>
 
 
@@ -718,7 +721,7 @@ You have to login with <code>neo4j/neo4j</code> at the first connection and set 
 </div>
 
 </div>
-<div  id="docker-2.3" class="sect2 content columns medium-12" style='padding-left: 0;' >
+<div  id="docker-23" class="sect2 content columns medium-12" style='padding-left: 0;' >
 <h3>Neo4j 2.3 Docker Image</h3>
 
 
@@ -774,7 +777,8 @@ You have to login with <code>neo4j/neo4j</code> at the first connection and set 
 
 </div>
 </div>
-<div  id="_capabilities" class="sect2 columns medium-12" style='padding-left: 0;' >
+</div>
+<div  id="_capabilities" class="sect1 columns medium-12" style='padding-left: 0;' >
 <h3>Capabilities</h3>
 
 
@@ -836,7 +840,7 @@ advanced monitoring
 </div>
 
 </div>
-<div  id="_references" class="sect2 columns medium-12" style='padding-left: 0;' >
+<div  id="_references" class="sect1 columns medium-12" style='padding-left: 0;' >
 <h3>References</h3>
 <div class="ulist">
 <ul>
@@ -850,7 +854,6 @@ advanced monitoring
 <a href="https://hub.docker.com/r/neo4j/neo4j/">neo4j/neo4j on Docker Hub</a>
 </li>
 </ul>
-</div>
 </div>
 </div>
 <div  id="_neo4j_spark_analytics" class="sect1 columns medium-12" style='padding-left: 0;' >
