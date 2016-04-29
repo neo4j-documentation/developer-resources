@@ -666,7 +666,8 @@ RETURN tom, movie</code></pre>
 
 
 <div class="paragraph">
-<p>Of course Tom has colleagues who acted with him in his movies. This "co-actor" statement looks like this:</p>
+<p>Of course Tom has colleagues who acted with him in his movies.
+This "co-actor" statement looks like this:</p>
 </div>
 
 <div class="listingblock">
@@ -779,7 +780,7 @@ RETURN tom, movie1, coActor, movie2, cruise</code></pre>
 
 
 <div class="paragraph">
-<p>A practical question to answer here, formulated in <a href="http://neo4j.com/blog/why-the-most-important-part-of-facebook-graph-search-is-graph/">Graph Search</a> slang,</p>
+<p>A practical question to answer here, formulated in <a href="http://neo4j.com/blog/why-the-most-important-part-of-facebook-graph-search-is-graph/">Graph Search</a> slang:</p>
 </div>
 
 <div class="listingblock">
@@ -801,10 +802,10 @@ RETURN tom, movie1, coActor, movie2, cruise</code></pre>
       (restaurant)-[:SERVES]-&gt;(type:Cuisine)
 
 WHERE person.name = 'Philip'
-  AND loc.location='New York'
-  AND type.cuisine='Sushi'
+  AND loc.location = 'New York'
+  AND type.cuisine = 'Sushi'
 
-RETURN restaurant.name, count(*) as occurrence
+RETURN restaurant.name, count(*) AS occurrence
 ORDER BY occurrence DESC
 LIMIT 5</code></pre>
 </div>

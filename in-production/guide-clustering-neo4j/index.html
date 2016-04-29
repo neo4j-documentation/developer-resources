@@ -562,7 +562,7 @@ It includes topics such as data synchronization, mending procedures, configuring
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
 You should know how to <a href="/download">download</a> and install Neo4j on your system.
-If you are a developer you should be accustomed to the graph data model and have written your Neo4j application.
+If you are a developer, you should be accustomed to the graph data model and have written your Neo4j application.
 A sound understanding of Neo4j&#8217;s APIs, <a href="../guide-performance-tuning">tuning</a>, security, and upgrade aspects will help you set up a stable cluster.
 </blockquote>
 </div>
@@ -602,7 +602,7 @@ Any data (graph or index) created on the master is propagated to the slaves depe
 <a href="http://jimwebber.org/2011/03/strategies-for-scaling-neo4j/" class="blog">Strategies for Scaling Neo4j</a>
 </li>
 <li>
-<a href="http://neo4j.com/docs/operations-manual/current/ha.html" class="docs">Neo4j High Availability</a>
+<a href="http://neo4j.com/docs/operations-manual/current/#_high_availability" class="docs">Neo4j High Availability</a>
 </li>
 <li>
 <a href="http://neo4j.com/docs/operations-manual/current/ha-setup-tutorial.html" class="docs">Tutorial Cluster Setup</a>
@@ -685,13 +685,13 @@ Shut down all members of the cluster and stop any load against the cluster
 On the master instance, copy the <code>data/graph.db</code> folder as a backup
 </li>
 <li>
-Modify neo4j-server.properties, setting the org.neo4j.server.database.mode to "STANDALONE"
+Modify neo4j-server.properties, setting the <code>org.neo4j.server.database.mode</code> to STANDALONE`
 </li>
 <li>
 Start the database and, once it&#8217;s running, stop it again (this is to ensure he database is cleanly shut down)
 </li>
 <li>
-Remove all files named nioneo_logical.log.vXX in data/graph.db, being careful not to remove any files without the "v", like <code>nioneo_logical.log.1</code> or <code>nioneo_logical.log.active</code>
+Remove all files named <code>nioneo_logical.log.vXX</code> in <code>data/graph.db</code>, being careful not to remove any files without the &#8220;v&#8221;, like <code>nioneo_logical.log.1</code> or <code>nioneo_logical.log.active</code>
 </li>
 <li>
 Start the server and use either neo4j-shell or the neo4j browser to issue the following two queries:

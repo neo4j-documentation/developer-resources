@@ -610,7 +610,7 @@ From this description, a graph data model is designed to answer questions in the
 
 
 <div class="paragraph">
-<p>Consider the following description of the connection between two people, Sally and John.</p>
+<p>Consider the following description of the connection between two people: Sally and John.</p>
 </div>
 
 <div class="quoteblock" style="margin: auto; width: 95%;">
@@ -690,7 +690,8 @@ Apart from properties and relationships, nodes can also be labeled with zero or 
 
 
 <div class="paragraph">
-<p>We can identify nodes as entities with a unique conceptual identity. In this case, these entities are outlined below in bold.</p>
+<p>We can identify nodes as entities with a unique conceptual identity.
+In this case, these entities are outlined below in bold.</p>
 </div>
 
 <div class="quoteblock" style="margin: auto; width: 95%;">
@@ -705,7 +706,8 @@ Apart from properties and relationships, nodes can also be labeled with zero or 
 </div>
 
 <blockquote>
-Two people, <strong>John</strong> and <strong>Sally</strong>, are friends. Both <strong>John</strong> and <strong>Sally</strong> have read the book, <strong>Graph Databases</strong>.
+Two people, <strong>John</strong> and <strong>Sally</strong>, are friends.
+Both <strong>John</strong> and <strong>Sally</strong> have read the book, <strong>Graph Databases</strong>.
 </blockquote>
 <div class="row text-center hide-for-small hr-style">
    <div class="medium-5 columns">
@@ -805,7 +807,8 @@ We know that this statement is about two different types of objects:</p>
 </div>
 
 <blockquote>
-Two <em>people</em>, John and Sally, are friends. Both John and Sally have read the <em>book</em>, Graph Databases.
+Two <em>people</em>, John and Sally, are friends.
+Both John and Sally have read the <em>book</em>, Graph Databases.
 </blockquote>
 <div class="row text-center hide-for-small hr-style">
    <div class="medium-5 columns">
@@ -1029,7 +1032,7 @@ CREATE (john)-[:HAS_READ { rating: 5, on: 1359878400 }]-&gt;(gdb)</code></pre>
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (sally:Person { name: 'Sally' })
 MATCH (john:Person { name: 'John' })
 MATCH (sally)-[r:FRIEND_OF]-(john)
-RETURN r.since as friends_since</code></pre>
+RETURN r.since AS friends_since</code></pre>
 </div>
 </div>
 </div>
@@ -1039,7 +1042,7 @@ RETURN r.since as friends_since</code></pre>
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (gdb:Book { title: 'Graph Databases' })
 MATCH (gdb)&lt;-[r:HAS_READ]-()
-RETURN avg(r.rating) as average_rating</code></pre>
+RETURN avg(r.rating) AS average_rating</code></pre>
 </div>
 </div>
 </div>
@@ -1048,7 +1051,7 @@ RETURN avg(r.rating) as average_rating</code></pre>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (gdb:Book { title: 'Graph Databases' })
-RETURN gdb.authors as authors</code></pre>
+RETURN gdb.authors AS authors</code></pre>
 </div>
 </div>
 </div>
@@ -1057,7 +1060,7 @@ RETURN gdb.authors as authors</code></pre>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (sally:Person { name: 'Sally' })
-RETURN sally.age as sally_age</code></pre>
+RETURN sally.age AS sally_age</code></pre>
 </div>
 </div>
 </div>
@@ -1066,7 +1069,7 @@ RETURN sally.age as sally_age</code></pre>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (john:Person { name: 'John' })
-RETURN john.age as john_age</code></pre>
+RETURN john.age AS john_age</code></pre>
 </div>
 </div>
 </div>
@@ -1076,7 +1079,7 @@ RETURN john.age as john_age</code></pre>
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (people:Person)
 WHERE people.name = 'John' OR people.name = 'Sally'
-RETURN people.name as oldest
+RETURN people.name AS oldest
 ORDER BY people.age DESC
 LIMIT 1</code></pre>
 </div>
@@ -1089,7 +1092,7 @@ LIMIT 1</code></pre>
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (people:Person)
 WHERE people.name = 'John' OR people.name = 'Sally'
 MATCH (people)-[r:HAS_READ]-&gt;(gdb:Book { title: 'Graph Databases' })
-RETURN people.name as first_reader
+RETURN people.name AS first_reader
 ORDER BY r.on
 LIMIT 1</code></pre>
 </div>

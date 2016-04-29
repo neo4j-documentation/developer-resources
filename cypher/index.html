@@ -568,14 +568,14 @@ Cypher&#8217;s syntax provides a familiar way to match patterns of nodes and rel
 
 
 <div class="paragraph">
-<p>Here is a simple example of a cypher query (cast of movies starting with "T")</p>
+<p>Here is a simple example of a Cypher query (cast of movies starting with "T")</p>
 </div>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (actor:Person)-[:ACTED_IN]-&gt;(movie:Movie)
 WHERE movie.title STARTS WITH "T"
-RETURN movie.title as title, collect(actor.name) as cast
+RETURN movie.title AS title, collect(actor.name) AS cast
 ORDER BY title ASC LIMIT 10;</code></pre>
 </div>
 </div>
@@ -604,7 +604,7 @@ You should be able to read, understand and write Cypher queries after completing
 <a href="/developer-resources/cypher/guide-sql-to-cypher">From SQL to Cypher</a>
 </li>
 <li>
-<a href="/developer-resources/working-with-data/guide-importing-data-and-etl">Importing CSV-Data Using Cypher</a>
+<a href="/developer-resources/working-with-data/guide-importing-data-and-etl">Importing CSV Data Using Cypher</a>
 </li>
 <li>
 <a href="/online-training">Free Interactive Cypher Online Training</a>
@@ -657,13 +657,13 @@ You can always access the underlying query-plans using the <code>EXPLAIN</code> 
 
 
 <div class="paragraph">
-<p>Since October 2015 the <a href="http://openCypher.org">openCypher,_blank</a> project aims to provide an open grammar, language specification, technical compatibility kit and reference implementation of parser, planner and runtime for Cypher.</p>
+<p>Since October 2015 the <a href="http://openCypher.org">openCypher</a> project aims to provide an open grammar, language specification, technical compatibility kit and reference implementation of parser, planner and runtime for Cypher.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>It is backed by several companies in the database space and allows implementors of databases and clients to freely benefit, use from and contribute to the development of the open Cypher language.</p>
+<p>It is backed by several companies in the database space and allows implementors of databases and clients to freely benefit, use from and contribute to the development of the openCypher language.</p>
 </div>
 
 </div>

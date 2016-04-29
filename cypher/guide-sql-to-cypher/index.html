@@ -561,7 +561,9 @@ We&#8217;ll use the well-known Northwind database to explain the concepts and wo
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should have a basic understanding of the <a href="/developer-resources/get-started/graph-database#property-graph">property graph model</a>. Having <a href="/download">downloaded</a> and installed Neo4j helps you code along with the examples. Importing the data is covered in our <a href="/developer/working-with-data/guide-importing-data-and-etl">data import guide</a>.
+You should have a basic understanding of the <a href="/developer/get-started/graph-database#property-graph">property graph model</a>.
+Having <a href="/download">downloaded</a> and installed Neo4j helps you code along with the examples.
+Importing the data is covered in our <a href="/developer/working-with-data/guide-importing-data-and-etl">data import guide</a>.
 </blockquote>
 </div>
 
@@ -602,7 +604,7 @@ You should have a basic understanding of the <a href="/developer-resources/get-s
 
 
 <div class="paragraph">
-<p>Unlike SQL Cypher is all about expressing graph patterns.
+<p>Unlike SQL, Cypher is all about expressing graph patterns.
 We added a special clause <code>MATCH</code> for <strong>matching</strong> those patterns in your data.
 These patterns are what you would usually draw on a whiteboard, just converted into text using <strong>ASCII-art symbols</strong>.</p>
 </div>
@@ -668,7 +670,7 @@ The openCypher project also provides syntax diagrams that you&#8217;re used to f
 <div class="paragraph">
 <p>Relational databases store data in tables with fixed structure (schema), each column having a name, type, length, constraints etc.
 References between tables are represented by repeating the primary key of one table as column in another as a foreign key.
-For many-to-many references, join-tables (or link-tables) are needed as artificial construct between the connected tables.</p>
+For many-to-many references, JOIN-tables (or link-tables) are needed as artificial construct between the connected tables.</p>
 </div>
 
 
@@ -689,7 +691,7 @@ So if you still have the original ER diagram of your database available, try to 
 
 <div class="paragraph">
 <p>For such a sensible relational model, the transformation is not too hard.
-Rows of entity tables are converted into nodes and foreign-key relationships and join tables into relationships.</p>
+Rows of entity tables are converted into nodes and foreign-key relationships and JOIN tables into relationships.</p>
 </div>
 
 
@@ -846,7 +848,7 @@ FROM products as p;</code></pre>
 
 
 <div class="paragraph">
-<p>Similarly in Cypher, you just <strong>match</strong> a simple pattern: all nodes with the <strong>label</strong> `:Product`_, and <strong>return</strong> them.</p>
+<p>Similarly in Cypher, you just <strong>match</strong> a simple pattern: all nodes with the <strong>label</strong> <code>:Product</code> and <code>RETURN</code> them.</p>
 </div>
 
 <div class="listingblock">
@@ -909,7 +911,7 @@ LIMIT 10;</code></pre>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="plsql"><code>SELECT p.ProductName, p.UnitPrice
-FROM products as p
+FROM products AS p
 WHERE p.ProductName = 'Chocolade';</code></pre>
 </div>
 </div>
@@ -929,7 +931,7 @@ RETURN p.productName, p.unitPrice;</code></pre>
 
 
 <div class="paragraph">
-<p>There is a shortcut in Cypher, if you match for a labeled node with a certain attribute.</p>
+<p>There is a shortcut in Cypher if you match for a labeled node with a certain attribute.</p>
 </div>
 
 <div class="listingblock">
@@ -1006,7 +1008,7 @@ RETURN p.productName, p.unitPrice;</code></pre>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="plsql"><code>SELECT p.ProductName, p.UnitPrice
-FROM products as p
+FROM products AS p
 WHERE p.ProductName LIKE 'C%' AND p.UnitPrice &gt; 100;</code></pre>
 </div>
 </div>
@@ -1047,11 +1049,11 @@ Let&#8217;s join the four tables together, refer to the model (ER-diagram) when 
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="plsql"><code>SELECT distinct c.CompanyName
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="plsql"><code>SELECT DISTINCT c.CompanyName
 FROM customers AS c
 JOIN orders AS o ON (c.CustomerID = o.CustomerID)
 JOIN order_details AS od ON (o.OrderID = od.OrderID)
-JOIN products as p ON (od.ProductID = p.ProductID)
+JOIN products AS p ON (od.ProductID = p.ProductID)
 WHERE p.ProductName = 'Chocolade';</code></pre>
 </div>
 </div>
@@ -1086,11 +1088,11 @@ Then we have to use OUTER joins to make sure that results are returned even if t
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="plsql"><code>SELECT p.ProductName, sum(od.UnitPrice * od.Quantity) as Volume
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="plsql"><code>SELECT p.ProductName, sum(od.UnitPrice * od.Quantity) AS Volume
 FROM customers AS c
 LEFT OUTER JOIN orders AS o ON (c.CustomerID = o.CustomerID)
 LEFT OUTER JOIN order_details AS od ON (o.OrderID = od.OrderID)
-LEFT OUTER JOIN products as p ON (od.ProductID = p.ProductID)
+LEFT OUTER JOIN products AS p ON (od.ProductID = p.ProductID)
 WHERE c.CompanyName = 'Drachenblut Delikatessen'
 GROUP BY p.ProductName
 ORDER BY Volume DESC;</code></pre>
@@ -1106,7 +1108,7 @@ ORDER BY Volume DESC;</code></pre>
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (c:Customer {companyName:"Drachenblut Delikatessen"})
 OPTIONAL MATCH (p:Product)&lt;-[pu:PRODUCT]-(:Order)&lt;-[:PURCHASED]-(c)
-RETURN p.productName, toInt(sum(pu.unitPrice * pu.quantity)) as volume
+RETURN p.productName, toInt(sum(pu.unitPrice * pu.quantity)) AS volume
 ORDER BY volume DESC;</code></pre>
 </div>
 </div>
@@ -1122,7 +1124,7 @@ ORDER BY volume DESC;</code></pre>
 
 
 <div class="paragraph">
-<p>In the previous query we already sneaked in a bit of aggregation.
+<p>In the previous query we sneaked in a bit of aggregation.
 By summing up product prices and ordered quantities, we provided an aggregated view per product for this customer.</p>
 </div>
 
@@ -1136,8 +1138,8 @@ If we want to see our top-selling employees.</p>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="plsql"><code>SELECT e.EmployeeID, count(*) as Count
-FROM Employee as e
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="plsql"><code>SELECT e.EmployeeID, count(*) AS Count
+FROM Employee AS e
 JOIN Order AS o ON (o.EmployeeID = e.EmployeeID)
 GROUP BY e.EmployeeID
 ORDER BY Count DESC LIMIT 10;</code></pre>
@@ -1153,7 +1155,7 @@ As soon as you use the first aggregation function, all non-aggregated columns au
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (:Order)&lt;-[:SOLD]-(e:Employee)
-RETURN e.name, count(*) as cnt
+RETURN e.name, count(*) AS cnt
 ORDER BY cnt DESC LIMIT 10</code></pre>
 </div>
 </div>
@@ -1169,7 +1171,7 @@ ORDER BY cnt DESC LIMIT 10</code></pre>
 
 
 <div class="paragraph">
-<p>In SQL there is one dreaded kind of query - master detail information.
+<p>In SQL there is a particularly dreaded kind of query - master detail information.
 You have one main entity (master, head, parent) and many dependent ones (detail, position, child).
 Usually you either query it by joining both and returning the master data multiple times (once for each detail), or by only fetching the primary key of the master and then pulling all detail rows via that foreign key.</p>
 </div>
@@ -1183,7 +1185,7 @@ Usually you either query it by joining both and returning the master data multip
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="plsql"><code>SELECT e.LastName, et.Description
-FROM Employee as e
+FROM Employee AS e
 JOIN EmployeeTerritory AS et ON (et.EmployeeID = e.EmployeeID)
 JOIN Territory AS t ON (et.TerritoryID = t.TerritoryID);</code></pre>
 </div>
@@ -1230,7 +1232,7 @@ We will tackle only three potential levels here (which means 1+2+3 = 6 self-join
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="plsql"><code>SELECT p.ProductName
-FROM Product as p
+FROM Product AS p
 JOIN ProductCategory pc ON (p.CategoryID = pc.CategoryID AND pc.CategoryName = "Dairy Products")
 
 JOIN ProductCategory pc1 ON (p.CategoryID = pc1.CategoryID

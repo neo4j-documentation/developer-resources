@@ -650,7 +650,9 @@ You should have Ruby installed on your system.  Some experience with Ruby and/or
 
 
 <div class="paragraph">
-<p>Let&#8217;s say you would like to write a web application to track entities for yourself or your organization.  Being a good <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a> programmer you might decide that what you want is an <em>asset portal</em>: an application which gives you an GUI for browsing and editing entities while also making it easy to define new assets.  This guide will show you how you might start creating such an application using Ruby on Rails and Neo4j.</p>
+<p>Let&#8217;s say you would like to write a web application to track entities for yourself or your organization.
+Being a good <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a> programmer you might decide that what you want is an <em>asset portal</em>: an application which gives you an GUI for browsing and editing entities while also making it easy to define new assets.
+This guide will show you how you might start creating such an application using Ruby on Rails and Neo4j.</p>
 </div>
 
 </div>
@@ -660,7 +662,8 @@ You should have Ruby installed on your system.  Some experience with Ruby and/or
 
 
 <div class="paragraph">
-<p>Neo4j is the world&#8217;s most popular <em>graph database</em>.  This offers a number of advantages:</p>
+<p>Neo4j is the world&#8217;s most popular <em>graph database</em>.
+This offers a number of advantages:</p>
 </div>
 
 <div class="ulist">
@@ -765,7 +768,9 @@ RETURN p, f.name</code></pre>
 
 
 <div class="paragraph">
-<p>The <strong>MATCH</strong> clause is the most common starting point for Cypher queries.  It defines a pattern for which to search and returns one result per match.  For example we might get the following two matches:</p>
+<p>The <code>MATCH</code> clause is the most common starting point for Cypher queries.
+It defines a pattern for which to search and returns one result per match.
+For example, we might get the following two matches:</p>
 </div>
 
 
@@ -778,7 +783,7 @@ RETURN p, f.name</code></pre>
 
 
 <div class="paragraph">
-<p>With the <strong>RETURN</strong> clause we would end up returning a table such as:</p>
+<p>With the <code>RETURN</code> clause we would end up returning a table such as:</p>
 </div>
 
 <table class="tableblock frame-all grid-all" style="width: 99%;">
@@ -807,13 +812,15 @@ RETURN p, f.name</code></pre>
 
 
 <div class="paragraph">
-<p>Here you see we can return entire entities in our database rather than just properties.  This might be returned as a <code>Hash</code> in Ruby, though by default in the Neo4j.rb gems these are wrapped in an object.</p>
+<p>Here you see we can return entire entities in our database rather than just properties.
+This might be returned as a <code>Hash</code> in Ruby, though by default in the Neo4j.rb gems these are wrapped in an object.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>This is very handy, but it would also be nice to avoid the duplication of our <code>Person</code> node.  You can perform the same match but instead use the <code>collect</code> function to aggregate the values:</p>
+<p>This is very handy, but it would also be nice to avoid the duplication of our <code>Person</code> node.
+You can perform the same match but instead use the <code>collect</code> function to aggregate the values:</p>
 </div>
 
 <div class="listingblock">
@@ -855,7 +862,8 @@ There is a <a href="/developer/cypher">Cypher tutorial</a> if you would like to 
 
 
 <div class="paragraph">
-<p>For this guide we will be using the Neo4j.rb project.  The project consists of the following gems:</p>
+<p>For this guide we will be using the Neo4j.rb project.
+The project consists of the following gems:</p>
 </div>
 
 <hr>
@@ -892,7 +900,8 @@ There is a <a href="/developer/cypher">Cypher tutorial</a> if you would like to 
 
 
 <div class="paragraph">
-<p>Here we describe how to create a fresh Rails application with Neo4j as the database.  If you have an existing Rails application you can refer to the <a href="http://neo4jrb.readthedocs.org/en/5.2.x/Setup.html#adding-the-gem-to-an-existing-project">Neo4j.rb documentation</a>.</p>
+<p>Here we describe how to create a fresh Rails application with Neo4j as the database.
+If you have an existing Rails application you can refer to the <a href="http://neo4jrb.readthedocs.org/en/5.2.x/Setup.html#adding-the-gem-to-an-existing-project">Neo4j.rb documentation</a>.</p>
 </div>
 
 
@@ -918,13 +927,16 @@ rake neo4j:start</code></pre>
 
 
 <div class="paragraph">
-<p>The first creates a new Rails app skipping <code>ActiveRecord</code> (the <code>-O</code> flag) and setting up Neo4j.rb in your project (the <code>-m</code> flag).  Then we change into our directory and install the latest version of the community edition of Neo4j into our app directory (into <code>db/neo4j/development/</code>).  Last we start up our copy of Neo4j.</p>
+<p>The first creates a new Rails app skipping <code>ActiveRecord</code> (the <code>-O</code> flag) and setting up Neo4j.rb in your project (the <code>-m</code> flag).
+Then we change into our directory and install the latest version of the community edition of Neo4j into our app directory (into <code>db/neo4j/development/</code>).
+Last we start up our copy of Neo4j.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Next you should open up your <code>config/application.rb</code> file and find the <code>config.neo4j.<strong></code> lines.  Here you have a choice between *embedded</strong> and <strong>server</strong> modes:</p>
+<p>Next you should open up your <code>config/application.rb</code> file and find the <code>config.neo4j.*</code> lines.
+Here you have a choice between *embedded* and <strong>server</strong> modes:</p>
 </div>
 
 <div class="ulist">
@@ -940,7 +952,8 @@ Embedded mode requires JRuby and allows you to run Neo4j as part of your JRuby p
 
 
 <div class="paragraph">
-<p>By default you will be configured to Neo4j in server mode on the default port (7474).  If you would like something other than the default console the <a href="http://neo4jrb.readthedocs.org/en/5.2.x/Setup.html#rails-configuration">documentation</a>.</p>
+<p>By default you will be configured to Neo4j in server mode on the default port (7474).
+If you would like something other than the default console the <a href="http://neo4jrb.readthedocs.org/en/5.2.x/Setup.html#rails-configuration">documentation</a>.</p>
 </div>
 
 <div class="admonitionblock warning">
@@ -950,7 +963,8 @@ Embedded mode requires JRuby and allows you to run Neo4j as part of your JRuby p
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-By default the <code>rake neo4j:install</code> command disables Neo4j&#8217;s authentication.  It is suggested that you enable the authentication for any exposed Neo4j instances.
+By default the <code>rake neo4j:install</code> command disables Neo4j&#8217;s authentication.
+It is suggested that you enable the authentication for any exposed Neo4j instances.
 </td>
 </tr>
 </table>
@@ -965,7 +979,9 @@ By default the <code>rake neo4j:install</code> command disables Neo4j&#8217;s au
 
 
 <div class="paragraph">
-<p>In this guide we&#8217;ll be setting up different <code>ActiveNode</code> models which will serve as assets.  This is a textbook example of where we can use class inheritance in Neo4j.rb.  First we create some basic models:</p>
+<p>In this guide we&#8217;ll be setting up different <code>ActiveNode</code> models which will serve as assets.
+This is a textbook example of where we can use class inheritance in Neo4j.rb.
+First we create some basic models:</p>
 </div>
 
 <div class="listingblock">
@@ -1004,7 +1020,9 @@ end</code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-By default there will be a <code>uuid</code> property created on our model.  If you would like to define your own unique identifier you can use the <code>id_property</code> method.  Either can be accessed or changed via the <code>#id</code> and <code>#id=</code> methods.
+By default there will be a <code>uuid</code> property created on our model.
+If you would like to define your own unique identifier you can use the <code>id_property</code> method.
+Either can be accessed or changed via the <code>\#id</code> and <code>\#id=</code> methods.
 </td>
 </tr>
 </table>
@@ -1085,7 +1103,8 @@ You can remove the <code>title</code> property because it is inherited from the 
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-We need to specify our Neo4j relationship directions and types here.  Additionally since <code>author</code> isn&#8217;t enough for <code>ActiveNode</code> to understand that we want to reference users, we specify a <code>model_class</code> option.
+We need to specify our Neo4j relationship directions and types here.
+Additionally since <code>author</code> isn&#8217;t enough for <code>ActiveNode</code> to understand that we want to reference users, we specify a <code>model_class</code> option.
 </td>
 </tr>
 </table>
@@ -1093,13 +1112,15 @@ We need to specify our Neo4j relationship directions and types here.  Additional
 
 
 <div class="paragraph">
-<p>By inheriting from <code>Asset</code> our <code>Book</code> model will create nodes with two labels (<code>Book</code> and <code>Asset</code>).  Likewise when you query for nodes via the <code>Book</code> model it will only find nodes which have both labels.</p>
+<p>By inheriting from <code>Asset</code> our <code>Book</code> model will create nodes with two labels (<code>Book</code> and <code>Asset</code>).
+Likewise when you query for nodes via the <code>Book</code> model it will only find nodes which have both labels.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Lastly we just need to make a couple of small fixes.  Change these lines to get the names of book authors and categories:</p>
+<p>Lastly we just need to make a couple of small fixes.
+Change these lines to get the names of book authors and categories:</p>
 </div>
 
 <div class="listingblock">
@@ -1131,7 +1152,7 @@ We need to specify our Neo4j relationship directions and types here.  Additional
 
 
 <div class="paragraph">
-<p>And so that you can set your associations, change the <code>book_params</code> method in the <code>BooksController</code> to remove the <code>_id</code>:</p>
+<p>And so that you can set your associations, change the <code>book_params</code> method in the <code>BooksController</code> to remove the <code>\_id</code>:</p>
 </div>
 
 <div class="listingblock">
@@ -1157,7 +1178,8 @@ open http://localhost:3000/books</code></pre>
 
 
 <div class="paragraph">
-<p>From there you can create, update, browse, and delete books via the scaffolding.  You can visit <code>/books</code>, <code>/users</code>, and <code>/categories</code> to get entry points into the various sections.</p>
+<p>From there you can create, update, browse, and delete books via the scaffolding.
+You can visit <code>/books</code>, <code>/users</code>, and <code>/categories</code> to get entry points into the various sections.</p>
 </div>
 
 </div>
@@ -1166,7 +1188,8 @@ open http://localhost:3000/books</code></pre>
 
 
 <div class="paragraph">
-<p>If you just wanted to do simple CRUD operations there are plenty of other databases to choose from.  How can we do something a bit more fun using the power of Neo4j?</p>
+<p>If you just wanted to do simple CRUD operations there are plenty of other databases to choose from.
+How can we do something a bit more fun using the power of Neo4j?</p>
 </div>
 
 <div  id="_eager_loading" class="sect3 "  >
@@ -1174,7 +1197,8 @@ open http://localhost:3000/books</code></pre>
 
 
 <div class="paragraph">
-<p>First let&#8217;s look at a performance improvement which isn&#8217;t available from <code>ActiveRecord</code>.  When you go to your list of books you should see something like this in your log:</p>
+<p>First let&#8217;s look at a performance improvement which isn&#8217;t available from <code>ActiveRecord</code>.
+When you go to your list of books you should see something like this in your log:</p>
 </div>
 
 <div class="listingblock">
@@ -1260,7 +1284,8 @@ Completed 200 OK in 147ms (Views: 146.0ms)</code></pre>
 
 
 <div class="paragraph">
-<p>But we can do better!  Now modify the <code>index</code> action of the <code>BooksController</code> like so:</p>
+<p>But we can do better!
+Now modify the <code>index</code> action of the <code>BooksController</code> like so:</p>
 </div>
 
 <div class="listingblock">
@@ -1309,7 +1334,11 @@ Completed 200 OK in 62ms (Views: 61.5ms)</code></pre>
 
 
 <div class="paragraph">
-<p>You may have heard that Neo4j makes building recommendations from your data easy.  Let&#8217;s take a look at how we might make some recommendations.  For this we&#8217;re going to introduce <code>has_many</code> associations.  Since entities are connected via relationships in Neo4j the database doesn&#8217;t draw any distinction for when we want to have a single relationship or many to/from a node.  In our Ruby apps, however, it is often convenient to be able to draw this distinction.</p>
+<p>You may have heard that Neo4j makes building recommendations from your data easy.
+Let&#8217;s take a look at how we might make some recommendations.
+For this we&#8217;re going to introduce <code>has_many</code> associations.
+Since entities are connected via relationships in Neo4j the database doesn&#8217;t draw any distinction for when we want to have a single relationship or many to/from a node.
+In our Ruby apps, however, it is often convenient to be able to draw this distinction.</p>
 </div>
 
 
@@ -1412,7 +1441,8 @@ end</code></pre>
 
 
 <div class="paragraph">
-<p>It is simple to get a start on querying potential recommendations.  Try running this in your Rails console:</p>
+<p>It is simple to get a start on querying potential recommendations.
+Try running this in your Rails console:</p>
 </div>
 
 <div class="listingblock">
@@ -1437,7 +1467,10 @@ RETURN result_books</code></pre>
 
 
 <div class="paragraph">
-<p>This query is finding all of the books that share categories with all other books.  This isn&#8217;t particularly useful until we start introducing some variables.  In the <code>neo4j</code> gem this is called <em>association chaining</em>.  For more information about association chaining check out this short screencast:</p>
+<p>This query is finding all of the books that share categories with all other books.
+This isn&#8217;t particularly useful until we start introducing some variables.
+In the <code>neo4j</code> gem this is called <em>association chaining</em>.
+For more information about association chaining check out this short screencast:</p>
 </div>
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/pUAl9ov22j4?rel=0" frameborder="0" allowfullscreen></iframe>
@@ -1458,13 +1491,15 @@ RETURN result_books</code></pre>
 
 
 <div class="paragraph">
-<p>Notice how we&#8217;re starting to assign variables.  These eventually become the variables in the cypher query made to Neo4j.</p>
+<p>Notice how we&#8217;re starting to assign variables.
+These eventually become the variables in the cypher query made to Neo4j.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Taking it a step further, let&#8217;s create a query which finds, for all books, the books which share at least two categories.  We can also display these recommendations in our app like so:</p>
+<p>Taking it a step further, let&#8217;s create a query which finds, for all books, the books which share at least two categories.
+We can also display these recommendations in our app like so:</p>
 </div>
 
 <div class="listingblock">
@@ -1523,7 +1558,8 @@ end</code></pre>
 
 
 <div class="paragraph">
-<p>Because the <code>all</code> method starts it off we can actually add this to an existing chain rather than just calling it on the <code>Book</code> model.  For example if we had a <code>recent</code> scope which only gave us books from the past ten years:</p>
+<p>Because the <code>all</code> method starts it off we can actually add this to an existing chain rather than just calling it on the <code>Book</code> model.
+For example, if we had a <code>recent</code> scope which only gave us books from the past ten years:</p>
 </div>
 
 <div class="listingblock">
@@ -1538,7 +1574,9 @@ end</code></pre>
 
 
 <div class="paragraph">
-<p>Are you getting into the idea of using Neo4j?  Great!  There are a number of resources to help you along with your journey.</p>
+<p>Are you getting into the idea of using Neo4j?
+Great!
+There are a number of resources to help you along with your journey.</p>
 </div>
 
 <div  id="_an_example_sinatra_application" class="sect3 "  >
@@ -1608,7 +1646,9 @@ end</code></pre>
 
 
 <div class="paragraph">
-<p>You can find the result of this guide in it&#8217;s <a href="https://github.com/neo4j-examples/neo4jrb_guide_asset_portal">GitHub repository</a>.  If you would like to play with a more developed application check out our <a href="https://github.com/neo4j-examples/asset_portal">asset_portal</a> app.  The project introduces a single <code>AssetController</code> to avoid the duplication from this guide and also uses other tools like <a href="http://semantic-ui.com/">Semantic UI</a> for a cleaner interface.</p>
+<p>You can find the result of this guide in it&#8217;s <a href="https://github.com/neo4j-examples/neo4jrb_guide_asset_portal">GitHub repository</a>.
+If you would like to play with a more developed application check out our <a href="https://github.com/neo4j-examples/asset_portal">asset_portal</a> app.
+The project introduces a single <code>AssetController</code> to avoid the duplication from this guide and also uses other tools like <a href="http://semantic-ui.com/">Semantic UI</a> for a cleaner interface.</p>
 </div>
 
 </div>
@@ -1617,7 +1657,9 @@ end</code></pre>
 
 
 <div class="paragraph">
-<p>The maintainers of the <code>Neo4j.rb</code> project love to help!  You can ask a question on <a href="http://stackoverflow.com/questions/ask?tags=neo4j.rb+neo4j+ruby">StackOverflow</a> (make sure to use the <code>neo4j.rb</code> tag), or join us in our <a href="https://gitter.im/neo4jrb/neo4j">Gitter chat room</a>.  You can also check out the <a href="http://neo4jrb.io/">website</a> and the <a href="http://neo4jrb.readthedocs.org/">documentation</a>.</p>
+<p>The maintainers of the <code>Neo4j.rb</code> project love to help!
+You can ask a question on <a href="http://stackoverflow.com/questions/ask?tags=neo4j.rb+neo4j+ruby">StackOverflow</a> (make sure to use the <code>neo4j.rb</code> tag), or join us in our <a href="https://gitter.im/neo4jrb/neo4j">Gitter chat room</a>.
+You can also check out the <a href="http://neo4jrb.io/">website</a> and the <a href="http://neo4jrb.readthedocs.org/">documentation</a>.</p>
 </div>
 
 
