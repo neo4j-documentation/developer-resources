@@ -11,13 +11,13 @@ Cypher's syntax provides a familiar way to match patterns of nodes and relations
 
 These developer guides and tutorials show you how to query Neo4j using Cypher.
 
-Here is a simple example of a cypher query (cast of movies starting with "T")
+Here is a simple example of a Cypher query (cast of movies starting with "T")
 
 [source,cypher]
 ----
 MATCH (actor:Person)-[:ACTED_IN]->(movie:Movie)
 WHERE movie.title STARTS WITH "T"
-RETURN movie.title as title, collect(actor.name) as cast
+RETURN movie.title AS title, collect(actor.name) AS cast
 ORDER BY title ASC LIMIT 10;
 ----
 
@@ -32,7 +32,8 @@ You should be able to read, understand and write Cypher queries after completing
 * link:/developer-resources/cypher/cypher-query-language[Introduction to Cypher]
 // * link:/developer/cypher/cypher-query-basics[Introduction to Cypher]
 * link:/developer-resources/cypher/guide-sql-to-cypher[From SQL to Cypher]
-* link:/developer-resources/working-with-data/guide-importing-data-and-etl[Importing CSV-Data Using Cypher]
+* link:/developer-resources/working-with-data/guide-importing-data-and-etl[Importing CSV Data Using Cypher]
+// /online-training and /books are not part of developer-resources
 * link:/online-training[Free Interactive Cypher Online Training]
 * link:/books[Free Books on Cypher]
 
@@ -51,10 +52,9 @@ From the Neo4j Manual:
 == The openCypher Project
 - - -
 
-Since October 2015 the http://openCypher.org[openCypher,_blank] project aims to provide an open grammar, language specification, technical compatibility kit and reference implementation of parser, planner and runtime for Cypher.
+Since October 2015 the link:http://openCypher.org[openCypher] project aims to provide an open grammar, language specification, technical compatibility kit and reference implementation of parser, planner and runtime for Cypher.
 
-It is backed by several companies in the database space and allows implementors of databases and clients to freely benefit, use from and contribute to the development of the open Cypher language.
-
+It is backed by several companies in the database space and allows implementors of databases and clients to freely benefit, use from and contribute to the development of the openCypher language.
 
 [[recommendation]]
 == Build a Recommendation Engine

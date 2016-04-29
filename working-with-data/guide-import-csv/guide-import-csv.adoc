@@ -26,7 +26,7 @@ toc::[]
 
 ==== Real World Data Considerations
 
-Real world data is messy. 
+Real world data is messy.
 Don't assume what someone told you is in a CSV file is actually, in there, don't rely on format descriptions, consistency or correct quoting.
 Only trust data validity that you checked yourself.
 
@@ -77,7 +77,7 @@ So it is also possible to detect incorrect header column counts, delimiters, quo
 LOAD CSV FROM "file-url" AS line
 RETURN count(*);
 
-// check first few raw lines 
+// check first few raw lines
 LOAD CSV FROM "file-url" AS line WITH line
 RETURN line
 LIMIT 5;
@@ -121,7 +121,7 @@ It combines multiple aspects in a single operation:
 * Always `MATCH` and `MERGE` on a single label and the indexed primary-key property
 * Prefix your load statements with `USING PERIODIC COMMIT 10000`
 * If possible, separate node creation from relationship creation into different statements +
-  If your import is slow or runs into memory issues, see 
+  If your import is slow or runs into memory issues, see
   http://www.markhneedham.com/blog/2014/10/23/neo4j-cypher-avoiding-the-eager/[Mark's blog post on Eager loading].
 
 ===== Memory Config
@@ -174,9 +174,9 @@ The tool is located in `path/to/neo4j/bin/neo4j-import` and is used as follows:
 
 [source]
 ----
-bin/neo4j-import --into retail.db --id-type string \ 
+bin/neo4j-import --into retail.db --id-type string \
                  --nodes:Customer customers.csv --nodes products.csv  \
-                 --nodes orders_header.csv,orders1.csv,orders2.csv \ 
+                 --nodes orders_header.csv,orders1.csv,orders2.csv \
                  --relationships:CONTAINS order_details.csv \
                  --relationships:ORDERED customer_orders_header.csv,orders1.csv,orders2.csv
 ----
@@ -186,7 +186,7 @@ The first few rows of data used for this import look like this:
 .customers.csv
 [options="header"]
 |===
-| customerId:ID(Customer) | name 
+| customerId:ID(Customer) | name
 | 23 | Delicatessen Inc
 | 42 | Delicous Bakery
 |===
@@ -226,7 +226,7 @@ If you call the `neo4j-import` script without parameters it will list a comprehe
 
 The `--into retail.db` is obviously the target database, which must not contain an existing database.
 
-The repeated `--nodes` and `--relationships` parameters are groups of multiple (potentially split) csv-files of the same entity, i.e. with the same column structure. 
+The repeated `--nodes` and `--relationships` parameters are groups of multiple (potentially split) csv-files of the same entity, i.e. with the same column structure.
 
 All files per group are treated as if they could just be concatenated to form a single large file.
 A *header row* in the first file of the group is required, it might even be contained in a single-line file which might be easier to handle and edit than a multi-gigabyte text file.
@@ -239,11 +239,11 @@ Compressed files are supported too.
 . Line item relationships typed `:CONTAINS` are created from `order_details.csv`, relating orders with the contained products via their id's.
 . Orders are connected to customers by using the orders csv files again, but this time with a different header, which :IGNORE's the non-relevant columns
 
-The `--id-type string` is indicating that all :ID-columns contain alphanumeric values (there is an optimization for numeric-only id's).
+The `--id-type string` is indicating that all `:ID` columns contain alphanumeric values (there is an optimization for numeric-only id's).
 
 The column names are used for property-names of your nodes and relationships, there is some extra markup for specific columns
 
-* `name:ID` - global id column by which the node is looked up for later reconnecting, 
+* `name:ID` - global id column by which the node is looked up for later reconnecting,
 ** if property name is left off it will be not stored (temporary), this is what the `--id-type` refers to
 ** if you have repeated ids across entities you have to provide the entity (id-group) in parentheses like `:ID(Order)`
 ** if your ids are globally unique you can leave that off
@@ -251,7 +251,7 @@ The column names are used for property-names of your nodes and relationships, th
 * `:START_ID`, `:END_ID` - relationship file columns referring to the node ids, for id-groups use `:END_ID(Order)`
 * `:TYPE` - relationship-type column
 * all other columns are treated as properties but skipped if empty or annotated with :IGNORE
-* type conversion is possible by suffixing the name, e.g. by `:INT`, `:BOOLEAN`, etc. 
+* type conversion is possible by suffixing the name, e.g. by `:INT`, `:BOOLEAN`, etc.
 
 For more details on this header format and the tool, see the extensive documentation in the link:{manual}/import-tool.html[Neo4j Manual].
 

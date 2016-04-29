@@ -11,7 +11,8 @@
 
 .Goals
 [abstract]
-This guide explores how to export data from a PostgreSQL database (RDBMS) for import into Neo4j (GraphDB). You'll learn how to take a relational database schema and model it as a graph, for import into Neo4j.
+This guide explores how to export data from a PostgreSQL database (RDBMS) for import into Neo4j (GraphDB).
+You'll learn how to take a relational database schema and model it as a graph for import into Neo4j.
 
 .Prerequisites
 [abstract]
@@ -49,12 +50,12 @@ image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/northwind
 ** In the relational version, to track the employee hierarchy we have a null entry in the 'ReportsTo' column if they don't report to anybody. In the graph version we just don't define a relationship.
 ** Non existing value entries (properties) are just not present.
 * It describes the relationships in more detail. For example, we know that an employee SOLD an order rather than having a foreign key relationship between the Orders and Employees tables. We could also choose to add more metadata about that relationship should we wish.
-* It will often be more normalised. For example, addresses have been denormalised in several of the tables but in a future version of the graph model we might choose to make addresses nodes in their own rights. 
+* It will often be more normalised. For example, addresses have been denormalised in several of the tables but in a future version of the graph model we might choose to make addresses nodes in their own rights.
 
 === Exporting the Data to CSV
 
 Now that we know what we'd like our graph to look like, we need to extract the data from PostgreSQL so we can create it as a graph.
-The easiest way to do that is to export the appropriate tables in CSV format. 
+The easiest way to do that is to export the appropriate tables in CSV format.
 The PostgreSQL 'copy' command lets us execute a SQL query and write the result to a CSV file, e.g. with `psql -d northwind < export_csv.sql`:
 
 .export_csv.sql
@@ -133,7 +134,7 @@ ORDER BY count DESC
 LIMIT 5;
 ----
 
-Looks like employee #1 was very busy!
+Looks like employee No. 1 was very busy!
 
 [format="csv", options="header"]
 |===
@@ -168,7 +169,7 @@ manager,employee
 5,9
 |===
 
-Notice that employee #5 has people reporting to them but also reports to employee #2.
+Notice that employee No. 5 has people reporting to them but also reports to employee No. 2.
 
 Let's investigate that a bit more:
 

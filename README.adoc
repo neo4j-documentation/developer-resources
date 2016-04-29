@@ -9,14 +9,15 @@ Install asciidoctor (1.5.1) ruby gems with `bundle install` in the main director
 You can render a single document to its `index.html` by calling `./render.rb path/to/doc.adoc` +
 (e.g. `./render.rb in-production/guide-cloud-deployment/guide-cloud-deployment.adoc`) or render all pages at once with just `./render.rb all`
 
-You can open the generated `index.html` file locally to check the rendering/preview, or start the `http` script in the main directory, and then open: http://localhost:8000/developer-resources/
+You can open the generated `index.html` file locally to check the rendering/preview, or start the `http` script in the main directory (`./http`, for example), and then open: http://localhost:8000/developer-resources/
 
-After commiting changes to head, you can push them to the publish branch: `git push origin HEAD:publish`.  This will cause https://snap-ci.com/neo4j-contrib/developer-resources/branch/publish[Snap CI] to push the changes to the web server.
+After commiting changes to head, you can push them to the publish branch: `git push origin HEAD:publish`.
+This will cause https://snap-ci.com/neo4j-contrib/developer-resources/branch/publish[Snap CI] to push the changes to the web server.
 
 === Guides
 
-Most of the documents in this developer resources section are organized as a guide. 
-Those guides come with a consistent structure and similar use of language and assets. 
+Most of the documents in this developer resources section are organized as a guide.
+Those guides come with a consistent structure and similar use of language and assets.
 Each of the guides lives in its own directory and is rendered into an `index.html` file for publication.
 You can run the rendering process by calling `render.rb` on the command line.
 
@@ -25,8 +26,7 @@ A guide has this general structure:
 1. goal for this guide
 2. prerequisite with links to relevant sections
 3. recommended experience level (Beginner, Intermediate, Advanced)
-4. Multiple sections and subsections outlining the content
-use a welcoming and helpful, not overly complex or eloquent language with examples in code, pictures or videos
+4. Multiple sections and subsections outlining the content, using a welcoming and helpful, not overly complex or eloquent language with examples in code, pictures, or videos
 5. each top level (`===`) section can be followed by a sidebar section which will be rendered on the right side with links to follow up information (internal links, calls to action, external links)
 
 Please see the link:./guide_template.adoc[example guide template file] for a blueprint of the document structure needed.
