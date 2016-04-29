@@ -1,1 +1,1 @@
-asciidoctor landing-page/landing-page.adoc -o landing-page/index.html -T _templates/landing-page
+asciidoctor landing-page/landing-page.adoc -o index.html -T _templates/landing-page
