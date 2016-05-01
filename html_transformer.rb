@@ -1,5 +1,7 @@
 module HtmlTransformer
   def self.transform(lines)
+    lines = lines.each_line.to_a if lines.is_a?(String)
+
     lines.map do |line|
       line.gsub(%r{href="(?:/developer/)? # base of the url
                   (?:(?:\.\.|[a-zA-Z0-9_-]+)/)*  # the classification that we want to bin
