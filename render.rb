@@ -10,7 +10,7 @@ require 'ascii_press'
 
 LOGGER = Logger.new(STDOUT)
 
-require_relative 'html_transformer' # Neo Tech specific
+require './html_transformer' # Neo Tech specific
 
 adoc_vars = {
   img: 'http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/',
@@ -28,7 +28,9 @@ raise 'Usage: feed me asciidoctor files (or pass `all` to find all files)' if AR
 renderer = AsciiPress::Renderer.new(attributes: adoc_attributes,
                                     header_footer: true,
                                     safe: 0,
-                                    template_dir: adoc_templates_dir)
+                                    template_dir: adoc_templates_dir,
+                                    after_conversion: HtmlTransformer.method(:transform))
+
 
 if ENV['BLOG_HOSTNAME'] && ENV['BLOG_USERNAME'] && ENV['BLOG_PASSWORD'] && ENV['PUBLISH']
   syncer = AsciiPress::WordPressSyncer.new(ENV['BLOG_HOSTNAME'],
@@ -50,7 +52,9 @@ if syncer
   syncer.sync(adoc_file_paths, {})
 else
   adoc_file_paths.each do |adoc_file_path|
-    html_file_path = File.join(File.dirname(adoc_file_path), 'index.html')
+    dir = File.join('deploy', File.dirname(adoc_file_path))
+    FileUtils.mkdir_p(dir)
+    html_file_path = File.join(dir, 'index.html')
 
     LOGGER.info "Rendering #{adoc_file_path} to #{html_file_path}"
     File.open(html_file_path, 'w') { |f| f << renderer.render(adoc_file_path).html }
