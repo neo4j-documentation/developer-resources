@@ -1,6 +1,10 @@
 #!/usr/bin/env ruby
 require 'rubygems'
 require 'bundler/setup'
+
+require 'dotenv'
+Dotenv.load
+
 require 'logger'
 require 'ascii_press'
 
