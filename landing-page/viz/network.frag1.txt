@@ -1,0 +1,6 @@
+MATCH
+  (n:Service)-[:DEPENDS_ON*]->(downstream:Service)
+WHERE
+  n.name = "Public Website"
+RETURN
+  downstream

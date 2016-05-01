@@ -20,18 +20,26 @@ You should have link:/download[installed Neo4j] and made yourself familiar with 
 [role=expertise]
 {level}
 
+image::{img}dotnet-logo.png[float=right,width=300]
+
 toc::[]
 
 // tag::intro[]
 === Neo4j for .NET Developers
 
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/04/dotnet.png[]
+The .NET platform allows developers to create fascinating applications utilizing graph concepts with Neo4j.
 
-The .NET platform allows many developers to create fascinating applications utilizing graph concepts.
+Neo4j aims to have a great experience on Windows with an desktop installer and dedicated PowerShell modules.
 
-Powerful drivers like `Neo4jClient` showed early on how easy it is to connect to Neo4j from .NET
+With the Neo4j 3.0 release we are happy to provide an officially supported driver for .NET
 
 // end::intro[]
+
+[[neo4j-dotnet-driver]]
+=== icon:check-circle-o[] Neo4jDotNetDriver
+
+include::../_includes/dotnet-driver.adoc[]
+
 
 [role=side-nav]
 * https://wintellectnow.com/Videos/Watch?videoId=getting-started-with-graph-databases-using-neo4j[Tutorial: Neo4j on .Net Now by Brian Lanham]
@@ -40,27 +48,38 @@ Powerful drivers like `Neo4jClient` showed early on how easy it is to connect to
 * https://chocolatey.org/packages?q=neo4j[Neo4j Chocolatey Package by Glenn Sarti]
 * http://jim-salmons.github.io/neo4jcp/[Tool: Neo4j Control Panel by Jim Salmons]
 
-Members of the .NET community have invested a lot of time and love to develop all these drivers, so if you use them please provide feedback to the authors. 
 
 include::../_includes/sample_project.adoc[]
 
-=== Neo4jClient
+include::../_includes/community-driver-notice.adoc[]
+
+Members of the .NET community have invested a lot of time and love to develop all these drivers, so if you use them please provide feedback to the authors. 
+Powerful drivers like `Neo4jClient` showed early on how easy it is to connect to Neo4j from .NET
+
+==== Neo4jClient
 
 A .NET client for Neo4j, which makes it easy to write Cypher queries in C# with IntelliSense.
 It also supports basic CRUD and legacy indexing.
 
-* https://github.com/Readify/Neo4jClient[Neo4jClient on GitHub]
-* Author: http://twitter.com/cskardon[Chris Skardon] http://twitter.com/tathamoddie[Tatham Oddie]
-* http://stackoverflow.com/questions/tagged/neo4jclient[StackOverflow]
-* https://github.com/Readify/Neo4jClient/wiki[Documentation]
-* {examples}/movies-dotnet-neo4jclient[Example Project]
-
-=== Other Drivers
+[cols="1,5"]
+|===
+| icon:github[] Source       | https://github.com/Readify/Neo4jClient
+| icon:user[] Authors        | http://twitter.com/cskardon[Chris Skardon] http://twitter.com/tathamoddie[Tatham Oddie]
+| icon:stackoverflow[] SO    | http://stackoverflow.com/questions/tagged/neo4jclient
+| icon:book[] Docs           | https://github.com/Readify/Neo4jClient/wiki[]
+| icon:play-circle[] Example | {examples}/movies-dotnet-neo4jclient
+|===
 
 ==== Cypher.NET
 
 A .NET API for the Neo4j HTTP Transactional Endpoint (v2.0.0) exposes a strongly-typed Graph Query API based on the Neo4j Cypher query language.
 
-* https://github.com/mtranter/CypherNet[GitHub]
-* Author: Mark Tranter
-* http://mtranter.com/2013/09/21/cypher-net-a-neo4j-cypher-api/[Blog Post]
+[cols="1,5"]                   
+|===                           
+| icon:github[] Source       |   https://github.com/mtranter/CypherNet
+| icon:user[] Authors        |   Mark Tranter
+//| icon:stackoverflow[] SO    | 
+//| icon:book[] Docs           | 
+//| icon:play-circle[] Example | 
+| icon:rss[] Blog            |   http://mtranter.com/2013/09/21/cypher-net-a-neo4j-cypher-api
+|===

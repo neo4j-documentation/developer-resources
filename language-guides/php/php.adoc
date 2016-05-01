@@ -7,6 +7,10 @@
 :section: Develop with Neo4j
 :section-link: language-guides
 
+++++
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/php/php.min.js"></script>
+++++
+
 .Goals
 [abstract]
 If you are a PHP developer, this guide provides an overview of options for connecting to Neo4j.
@@ -25,10 +29,10 @@ toc::[]
 // tag::intro[]
 === Neo4j for PHP Developers
 
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/neo4j-loves-php.png[]
+image::{img}php_logo.png[float=right,width=300]
 
 You're a PHP developer and want to start with Neo4j?
-You're in the right place!
+Here you go.
 
 Whether you're using frameworks like Symfony and Laravel or you're developing without frameworks, you'll find an adequate library for your use case.
 
@@ -41,86 +45,120 @@ Members of the PHP community have invested a lot of time and love to develop all
 
 include::../_includes/sample_project.adoc[]
 
-=== Getting started tutorials
+=== Getting started tutorials 
 
-* link:http://www.sitepoint.com/discover-graph-databases-neo4j-php/[Discover Graph Database with Neo4j and PHP (Sitepoint)]
-* link:http://www.sitepoint.com/adding-social-network-features-php-app-neo4j/[Adding social newtork features to a PHP application with Neo4j (Sitepoint)]
-* link:http://www.sitepoint.com/efficient-user-timelines-php-application-neo4j/[Efficient User timelines in a PHP application with Neo4j (Sitepoint)]
+* link:http://www.sitepoint.com/discover-graph-databases-neo4j-php/[Discover Graph Database with Neo4j and PHP]
+* link:http://www.sitepoint.com/adding-social-network-features-php-app-neo4j/[Adding social newtork features to a PHP application with Neo4j]
+* link:http://www.sitepoint.com/efficient-user-timelines-php-application-neo4j/[Efficient User timelines in a PHP application with Neo4j]
 
 === Using Neo4j in a standalone PHP environment
 
 If you prefer to develop without frameworks, these libraries are made for you:
 
-=== NeoClient
+////
+The BOLT driver itself is located at https://github.com/graphaware/neo4j-bolt-php
 
-NeoClient is a powerful and flexible PHP Client for Neo4j with MultiDB support, and full High-Availability support for Neo4j Enterprise, and a convenient object formatter for handling graph results.
-It is built on top of the Symfony components, which makes integrating it in a modern PHP framework very easy.
-The 2.0 stable release has been announced end of November 14, with the following changes and improvements:
+I don’t expect a lot of people to use directly this repository, but they can if they want to use bolt only
 
-- Everything is built as an extension, meaning the core commands are an extension to the library, which makes the library very flexible and customizable.
-- All commands are registered as lazy services, improving the library performance.
-- The Service Container can be cached, gaining up to 300% performance when runnning in production.
-- Full High-Availability support, with master re-election detection, slaves fallback built-in mechanism, and convenience methods for directing write and read queries to different databases.
-- Minimalistic HA mechanism when running Neo4j Community Edition
+The Client is located at https://github.com/graphaware/neo4j-php-client and embraces the bolt driver and the http driver. Both Bolt and http use the API defined in the TCK, so if they want to switch from http to bolt and vice versa it is just a change in the url.
+
+Concerning documentation, currently I have only the README.
+////
+
+include::../_includes/community-driver-notice.adoc[]
+
+=== GraphAware PHP Client
+
+GraphAware PHP Client is a powerful and flexible PHP Client for Neo4j with MultiDB support, full High-Availability support for Neo4j Enterprise, and a convenient object formatter for handling graph results.
+The 4.0 release contains the following features:
+
+- Support for the *Bolt binary protocol*
 - Full-fledged Response Graph format
+
+- Full High-Availability support, with master re-election detection, slaves fallback built-in mechanism, and convenience methods for directing write and read queries to different databases.
 - Enterprise support by http://graphaware.com[GraphAware]
 
+[source,php]
+----
+<?php
 
-* link:{examples}/movies-php-neoclient[Example Project with NeoClient]
-* https://github.com/neoxygen/neo4j-neoclient[NeoClient GitHub]
-* Author: http://twitter.com/ikwattro[Christophe Willemsen]
-* http://neoxygen.io[Neo4j PHP Components and libraries]
-* http://graphgen.neoxygen.io[Graph Generator using NeoClient]
+require_once 'vendor/autoload.php';
+
+use GraphAware\Neo4j\Client\ClientBuilder;
+
+$client = ClientBuilder::create()
+    ->addConnection('bolt', 'bolt://neo4j:password@localhost:7687')
+    ->build();
+$query = "MATCH (n:Person)-[:FOLLOWS]->(friend) RETURN n.name, collect(friend) as friends";
+$result = $client->run($query);
+
+foreach ($result->getRecords() as $record) {
+    echo sprintf('Person name is : %s and has %d number of friends', $record->value('name'), count($record->value('friends'));
+}
+----
+
+[cols="1,4"]
+|===
+| icon:user[] Author | http://twitter.com/ikwattro[Christophe Willemsen]
+| icon:play-circle[] Example | {examples}/movies-bolt-php
+| icon:gift[] Package | `composer require graphaware/neo4j-php-client:^4.0`
+| icon:github[] Source | https://github.com/graphaware/neo4j-php-client
+| icon:book[] Docs | http://graphaware.com/resources
+|===
 
 === NeoEloquent for Laravel
 
 Neo4j Graph Eloquent Driver for Laravel 4
 
-* link:https://github.com/Vinelab/NeoEloquent[NeoEloquent on GitHub]
-* Author: https://github.com/Mulkave[Abed Halawi]
 
-=== Other Drivers
+[cols="1,4"]
+|===
+| icon:user[] Author | https://github.com/Mulkave[Abed Halawi]
+| icon:github[] Source | https://github.com/Vinelab/NeoEloquent
+|===
 
-==== Neo4jPHP
+=== Neo4jPHP
 
 Neo4jPHP provides an API that is both intuitive and flexible, and it takes advantage of ‘under-the-hood’ performance enhancements, such as caching and lazy-loading.
 
-[NOTE]
-This driver is currently not actively maintained.
-
-* link:{examples}/movies-php-neo4jphp[Example Project with Neo4jPHP]
-* http://github.com/jadell/neo4jphp[Neo4jPHP on GitHub]
-* Author: http://twitter.com/josh_adell[Josh Adell]
-* http://github.com/jadell/neo4jphp/wiki/Introduction[GitHub]
-
+[cols="1,4"]
+|===
+| icon:user[] Author | http://twitter.com/josh_adell[Josh Adell]
+| icon:play-circle[] Example Project | {examples}/movies-php-neo4jphp
+| icon:gift[] Package | `composer require "everyman/neo4jphp"`
+| icon:github[] Source | http://github.com/jadell/neo4jphp
+| icon:book[] Docs | http://github.com/jadell/neo4jphp/wiki/Introduction
+|===
 
 ==== Neo4j-OGM-PHP
 
-This library provides a basic Object-Graph mapping system and is built on top of Doctrine and the Neo4jPHP library.
+This library provides a basic object-graph-mapping system and is built on top of Doctrine and the Neo4jPHP library.
 
-[NOTE]
-This driver is currently not actively maintained.
-
-https://github.com/lphuberdeau/Neo4j-PHP-OGM[https://github.com/lphuberdeau/Neo4j-PHP-OGM]
-
-
-==== With the Symfony framework
-
-If you're using the Symfony framework, these bundles are available to you:
+[cols="1,4"]
+|===
+| icon:user[] Author | https://github.com/lphuberdeau[Louis-Philippe Huberdeau]
+| icon:github[] Source | https://github.com/lphuberdeau/Neo4j-PHP-OGM
+|===
 
 ==== Neo4jOGMBundle
 
-This bundle is wraps the Neo4j-PHP-OGM library mentioned above.
+This bundle is wraps the Neo4j-PHP-OGM library mentioned above for the Symfony framework.
 
-https://github.com/klaussilveira/neo4j-ogm-bundle[https://github.com/klaussilveira/neo4j-ogm-bundle]
-
+[cols="1,4"]
+|===
+| icon:user[] Author | https://github.com/klaussilveira[Klaus Silveira]
+| icon:github[] Source | https://github.com/klaussilveira/neo4j-ogm-bundle
+|===
 
 ==== Neo4Laravel
 
-A Neo4j Laravel 4.1 OGM Provider.
+A Neo4j Laravel 4.1 OGM Provider based on Neo4j-OGM-PHP.
 
-* https://github.com/lrezek/Neo4Laravel[Neo4Laravel on GitHub]
-* Author: https://github.com/lrezek[Lukas Rezek]
+[cols="1,4"]
+|===
+| icon:user[] Author | https://github.com/lrezek[Lukas Rezek]
+| icon:github[] Source | https://github.com/lrezek/Neo4Laravel
+|===
 
 ////
 
@@ -148,21 +186,30 @@ A PHP adapter for Neo4j REST API Cypher endpoint.
 
 Like for Github, but for recipes!
 
-* link:https://github.com/Omnomhub/omnomhub[Omnomhub on Github]
-* Author: https://twitter.com/michellesanver[Michelle Sanver]
+[cols="1,4"]
+|===
+| icon:user[] Author | https://twitter.com/michellesanver[Michelle Sanver]
+| icon:github[] Source | https://github.com/Omnomhub/omnomhub
+|===
 
 ==== Thesaurus Manager
 
 If you want to built your own thesaurus, this app is made for you
 
-* link:https://github.com/okulbilisim/thesaurus-manager[Thesaurus Manager with Symfony2 on Github]
-* link:http://hasantayyar.github.io/thesaurus-manager[Thesaurus Manager with Laravel]
-* Author: https://github.com/hasantayyar[Hasan Tayyar]
+[cols="1,4"]
+|===
+| icon:user[] Author | https://github.com/hasantayyar[Hasan Tayyar]
+| icon:play-circle[] Example | http://hasantayyar.github.io/thesaurus-manager
+| icon:github[] Source | https://github.com/okulbilisim/thesaurus-manager
+|===
 
 ==== Graphgen
 
 Graph generation engine based on a Cypher DSL
 
-* link:http://graphgen.neoxygen.io[Graphgen website]
-* link:https://github.com/neoxygen/graphgen[Graphgen on Github]
-* Author: https://github.com/ikwattro[Christophe Willemsen]
+[cols="1,4"]
+|===
+| icon:user[] Author | https://github.com/ikwattro[Christophe Willemsen]
+| icon:github[] Source | https://github.com/graphaware/graphgen
+| icon:book[] Docs | http://graphgen.graphaware.com
+|===

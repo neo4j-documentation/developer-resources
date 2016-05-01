@@ -9,21 +9,120 @@
 :section-link: language-guides
 :section-level: 2
 
-
 = image:http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/2014/10/icon-mdm.png[] Language Guides
 - - -
 
 These guides and tutorials are designed to provide detailed examples of how to integrate Neo4j with your preferred programming language.
-Neo4j supports drivers for all major programming languages. In this section, we provide an introduction and a consistent example application for several languages and Neo4j drivers.
+Neo4j *officially supports the drivers for .Net, Java, JavaScript and Python* for the binary Bolt protocol. 
+Our community contributors provide drivers for all major programming languages for all protocols and APIs. 
+In this section, we provide an introduction and a consistent example application for several languages and Neo4j drivers.
 
 == How to connect to Neo4j?
 - - -
+
 If you've link:/download[installed] and started Neo4j as a server on your system, 
 you can already work interactively with the database via the built-in Neo4j Browser application on http://localhost:7474[localhost:7474].
 
-If you want to access Neo4j programmatically, you can do so with one of the available HTTP-APIs, which allow you to:
+To build an application you want to connect to Neo4j from your technology stack. Fortunately it is very easy.
 
-* POST one or more cypher statements with parameters per request to the server
+[[bolt-drivers]]
+== The binary Bolt Protocol
+
+Starting with Neo4j 3.0 we support a binary protocol called Bolt.
+It is based on the PackStream serialization and supports protocol versioning, authentication and TLS via certificats.
+
+The binary protocol is enabled in Neo4j by default, so you can use any language driver that supports it.
+
+Neo4j officially provides drivers for link:dotnet[.Net], link:java[Java], link:javascript[JavaScript] and link:python[Python].
+
+See also the for an detailed overview of the official drivers link:{manual}#driver-manual-index[Neo4j Driver Manual]
+
+_For more details on the protocol implementation, see the https://github.com/nigelsmall/bolt-howto[implementers documentation]._
+
+++++
+<dl class="tabs" data-tab>
+  <dd class="tab-title"><a href="#bolt-dotnet">.Net</a></dd>
+  <dd class="tab-title active"><a href="#bolt-java">Java</a></dd>
+  <dd class="tab-title"><a href="#bolt-javascript">JavaScript</a></dd>
+  <dd class="tab-title"><a href="#bolt-python">Python</a></dd>
+</dl>
+++++
+
+++++
+<div class="tabs-content">
+++++
+
+[[bolt-dotnet]]
+[.content]
+=== Neo4j .Net Driver
+
+include::_includes/dotnet-driver.adoc[]
+
+For more details on other drivers see link:dotnet[Neo4j with .NET].
+
+[[bolt-java]]
+[.content.active]
+=== Neo4j Java Driver
+
+include::_includes/java-driver.adoc[]
+
+For more details on other drivers see link:java[Neo4j with Java] or read about using link:spring-data-neo4j[Neo4j with the Spring Framework].
+
+[[bolt-javascript]]
+[.content]
+=== Neo4j JavaScript Driver
+
+include::_includes/javascript-driver.adoc[]
+
+For more details on other drivers see link:javascript[Neo4j with JavaScript].
+
+
+[[bolt-python]]
+[.content]
+=== Neo4j Python Driver
+
+include::_includes/python-driver.adoc[]
+
+For more details on other drivers see link:python[Neo4j with Python].
+
+++++
+</div>
+++++
+
+== All Neo4j Drivers
+- - -
+
+Thanks to the Neo4j contributor community, there are additionally drivers for almost every popular programming language,
+most of which mimic existing database driver idioms and approaches. 
+Get started with your stack now, see the dedicated page for more detail.
+
+
+[cols="5*",width=100]
+|===
+| link:dotnet[.NET]
+| link:java[Java]
+| link:spring-data-neo4j[Spring]
+| link:javascript[JavaScript]
+| link:python[Python]
+| link:ruby[Ruby]
+| link:php[PHP]
+| link:r[R]
+| link:go[Go]
+| link:c[C/C++]
+| link:clojure[Clojure]
+| link:perl[Perl]
+| link:haskell[Haskell]
+|===
+
+include::example-project/example-project.adoc[tags=intro]
+
+link:example-project[Read More]
+
+== Using the HTTP API
+
+If you want to access Neo4j programmatically, you can also use the HTTP-API, which allow you to:
+
+* POST one or more Cypher statements with parameters, multiple per request to the server
 * Keep transactions open over multiple requests
 * Choose different result formats
 * Execute management operations or introspect the database
@@ -41,36 +140,5 @@ A simple HTTP Cypher request, executable in the Neo4j Browser would look like th
     ]}
 ----
 
-The language drivers use the same APIs under the hood, but make them available in a convenient way.
-Thanks to the Neo4j community, there are drivers for Neo4j for almost every popular programming language,
-most of which mimic existing database driver idioms and approaches.
+Some of the language drivers use the HTTP API under the hood, but make them available in a more convenient way.
 
-== Neo4j Drivers
-- - -
-Looking for your language driver?
-
-* link:java[Java]
-* link:dotnet[.NET]
-* link:javascript[JavaScript]
-* link:python[Python]
-* link:ruby[Ruby]
-* link:php[PHP]
-* and link:r[R], link:go[Go], link:clojure[Clojure], link:perl[Perl], link:haskell[Haskell]
-
-include::example-project/example-project.adoc[tags=intro]
-
-link:example-project[Read More]
-
-
-////
-== [.label]#Guide →# link:java[Neo4j Java Examples]
-
-Are you a Java developer? Neo4j provides two ways to connect using Java. Since Neo4j is written in Java, you can reference it as a dependency in your Java projects. You can also connect to the Neo4j server’s HTTP API. These guides help you get the most out of Neo4j with the Java programming language.
-
-From the Neo4j Manual:
-
-* {manual}/server-java-rest-client-example.html[How to use the REST API from Java]
-* {manual}/tutorials-cypher-java.html[Execute Cypher Queries from Java]
-* {manual}/tutorials-java-embedded.html[Using Neo4j embedded in Java applications]
-
-////

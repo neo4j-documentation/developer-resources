@@ -1,0 +1,75 @@
+:video_playlist_key: PL9Hl4pk2FsvUZsgKDpAYTFULjkygUGIpi
+:youtube_api_key: AIzaSyB3jZLnBi-Cqggq8BCq9xTV8YMgu-x_kTc
+:num_videos: 6
+
+[subs=attributes]
+++++
+
+<script>
+    function googleApiClientReady() {
+        gapi.client.setApiKey("{youtube_api_key}");
+        gapi.client.load('youtube', 'v3', function() {
+            var requestOptions = {
+                    playlistId: "{video_playlist_key}",
+                    part: 'snippet',
+                    maxResults: {num_videos}
+            };
+
+            var request = gapi.client.youtube.playlistItems.list(requestOptions);
+            request.execute(function(response) {
+
+                videoString = "";
+                $.each(response['items'], function(i,v) {
+                    var id = v['snippet']['resourceId']['videoId'],
+                        thumbnail = v['snippet']['thumbnails']['medium'],
+                        title = v['snippet']['title'],
+                        description = v['snippet']['description'],
+                        video_id = v['snippet']['resourceId']['videoId'];
+
+                    if (i > 2) {
+                        videoString += '<li class="text-center extra-item" style="display:none">';
+                    } else {
+                        videoString += '<li class="text-center">';
+                    }
+
+                    videoString += '<a href="https://www.youtube.com/watch?v="' + video_id + '" target="_blank">';
+                        videoString += '<div class="videobox">';
+                            videoString += '<img src="' + thumbnail['url'] + '">';
+                            videoString += '<span></span>';
+                        videoString += '</div>';
+                    videoString += '</a>';
+                    videoString += '<h5>' + title + '</h5>';
+                    videoString += '</li>';
+
+                });
+
+                $(".videos-list").append(videoString);
+
+            })
+        });
+
+    };
+
+</script>
+
+<section class="helpful-videos">
+	<h2>Videos</h2>
+
+	<div class="row">
+		<div class="small-12 columns">
+			<ul class="videos-list item-list small-block-grid-1 medium-block-grid-3">
+			</ul>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="small-12 columns text-center">
+			<a class="button more" href="https://www.youtube.com/c/neo4j" style="display:none">More Videos</a>
+			<a id="videos-list-btn" class="toggle-arrow" href=""></a>
+		</div>
+	</div>
+</section>
+
+<script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+++++

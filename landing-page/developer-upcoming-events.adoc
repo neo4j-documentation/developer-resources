@@ -1,0 +1,198 @@
+// Events near you
+// FIXME: configure events api url form environment variable?
+:site_url: http://neo4j.com
+:events_url: ./events/events.json
+
+[subs=attributes]
+++++
+<section class="upcoming-events">
+	<div class="row">
+		<div class="small-12 columns">
+			<h2>Upcoming Events Near You</h2>
+			<ul class="events-list item-list small-block-grid-1 medium-block-grid-3"></ul>
+		</div>
+	</div>
+	<div class="row">
+		<div class="small-12 columns text-center">
+			<a class="button more" href="/events/#/events" style="display:none">More Events</a>
+			<a id="events-list-btn" class="toggle-arrow" href=""></a>
+		</div>
+	</div>
+</section>
+
+<script>
+  var GEO_IP_SERVICE_URL = "http://freegeoip-1183212446.us-east-1.elb.amazonaws.com:8080/json/";
+
+  var eventsAdded = 0;
+  var eventsSource = [];
+  var sixWeeksFromNow = Date.now() + 42 * 24 * 3600 * 1000;
+  var eventsAddedUrls = [];
+
+  function addEvent(event) {
+      var date = Date.parse(event.Start.split(" ")[0]);
+      if (date > sixWeeksFromNow || eventsAdded > 8) return;
+      if ($.inArray(event.Url, eventsAddedUrls) > -1) return;
+
+      var dateString = new Date(date).toLocaleDateString();
+      var type_slug = "logo";
+      switch (event.Type) {
+        case "Conference":
+          type_slug = "conference"; break;
+        case "Training":
+          type_slug = "training"; break;
+        case "Meetup":
+          type_slug = "meetup"; break;
+        case "Webinar":
+          type_slug = "webinar"; break;
+      }
+
+    var eventString = "<li>";
+    if (eventsAdded > 2) { 
+      var eventString = "<li class='extra-item' style='display:none'>";
+    }
+    eventString += "<a href='"+event.Url+"'><div class='small-4 columns text-center'><img class='event-icon' src='/wp-content/themes/neo4jweb/assets/images/events/event-" + type_slug + ".png'> <span class='event-type'>" + event.Type + "</div><div class='small-8 columns'>" + dateString + "<br>";
+    eventString += event.SourceTitle
+    if (event.City) {
+      eventString += "<div class='city'>" + event.City + "</div>";
+    }
+    if (event.Description)  {
+      eventString += "<div class='description'>" + event.Description.substring(0, 50) + "...</div>";
+    }
+    eventString += "</div></a>";
+    eventString += "</li>";
+    $("ul.events-list").append(eventString);
+    eventsAdded += 1;
+    eventsAddedUrls.push(event.Url);
+  }
+
+  function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = deg2rad(lat2-lat1);  // deg2rad below
+    var dLon = deg2rad(lon2-lon1); 
+    var a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2)
+      ; 
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    var d = R * c; // Distance in km
+    return d;
+  }
+
+  function deg2rad(deg) {
+    return deg * (Math.PI/180)
+  }
+
+  function ofType(list, type) { 
+    return list.filter(
+      function (e) { 
+        return e.Type == type
+    }); 
+  };
+
+  /* Show events regardless of location, in case geocoding fails */
+  function shownextevents() {
+    $.get("{events_url}",function(data) {
+      //var events = JSON.parse(data);
+      var events = data;
+      eventsSource = events;
+
+      var webinar = ofType(events, "Webinar");
+      if (webinar.length > 0) {
+        addEvent(webinar[0]);
+      }
+      for (eventNum = 0; eventNum < eventsSource.length && eventsAdded < 9; eventNum++) {
+        addEvent(eventsSource[eventNum]);
+      }
+    });
+  };
+
+      
+  function geoip(info) {
+    if ((! "latitude" in info) || (! "longitude" in info) ) {
+      return shownextevents();
+    }
+    var lat1 = info.latitude;
+    var lon1 = info.longitude;
+    $.get("{events_url}",function(data) {
+      //var events = JSON.parse(data);
+      var events = data;
+
+      events.forEach(function(event) {
+      if (event.Geo) {
+        var coords=event.Geo.split(",");
+        event.Distance = Math.round(getDistanceFromLatLonInKm(lat1,lon1,parseFloat(coords[0]),parseFloat(coords[1])));
+      } else {
+        // event.Distance = Infinity;
+        event.Distance = 400;
+      }
+      })
+      var eventsLang = events.filter(function(event) {
+        if ((! "Language" in event) || event.Language == "") {
+          return true;
+        }
+        if (event.Language.toLowerCase() == "en") {
+          return true;
+        }
+        if (! "languages" in navigator) {
+          return true;
+        }
+        $.each(navigator.languages, function(index, value) {
+          if (event.Language.toLowerCase() == value.toLowerCase()) {
+            return true;
+          }
+          if (value.toLowerCase().indexOf(event.Language.toLowerCase()) == 0) {
+            return true;
+          }
+        })
+        return false;
+      });
+      var near = eventsLang.filter(function(event) {
+        return event.Distance == Infinity || event.Distance < 1500;
+      }).sort(function (e1,e2) { return e1.Distance < e2.Distance ? -1 : e1.Distance == e2.Distance ? 0 : 1; });
+
+      eventsSource = near;
+
+      var meetup = ofType(near,"Meetup");
+      var conf = ofType(near,"Conference");
+      var training = ofType(near, "Training");
+      var webinar = ofType(eventsLang, "Webinar");
+
+      if (conf.length > 0) {
+        addEvent(conf[0]);
+      }
+      if (training.length > 0) {
+        addEvent(training[0]);
+      }
+      if (webinar.length > 0) {
+        addEvent(webinar[0]);
+      }
+      if (meetup.length > 0) {
+        addEvent(meetup[0]);
+      }
+      if (eventsAdded < 9) {
+        if (webinar.length > 1) {
+          addEvent(webinar[1]);
+        }
+      }
+      for (eventNum = 0; eventNum < eventsSource.length && eventsAdded < 9; eventNum++) {
+        addEvent(eventsSource[eventNum]);
+      }
+    });
+  };
+
+  $.ajax({
+      url: GEO_IP_SERVICE_URL
+  })
+  .done(function(data) {
+    geoip(data);
+  })
+  .fail(function() {
+    shownextevents();
+    for (eventNum = 0; eventNum < eventsSource.length && eventsAdded < 9; eventNum++) {
+      addEvent(eventsSource[eventNum]);
+    }
+  });
+
+</script>
+++++

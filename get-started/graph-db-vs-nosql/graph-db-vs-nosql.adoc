@@ -21,17 +21,16 @@ You need no prior knowledge of other NoSQL stores, although it might be helpful 
 
 toc::[]
 
-Although somewhat vaguely named, the NoSQL ("Not only SQL") space brings together many interesting solutions offering different data models and database systems, each suitable for different use cases and shapes of data.
+Although unhelpfully named, the NoSQL ("Not only SQL") space brings together many interesting solutions offering different data models and database systems, each suitable for different use cases and shapes of data.
+
 With the advent of the NoSQL movement, the "one-size-fits-all" proposition of large relational systems was replaced by making conscious decisions about finding the right tool for the job.
 
-With this larger toolbox, developers have to gain the insight necessary to make informed decisions about which approaches are best suited to their particular applications.
-
-Most NoSQL systems are aggregate oriented, providing only atomic operations within their natural aggregate, which forms only one dedicated view of your data.
-Other projections have to be computed crunching your data.
+Most NoSQL systems are *aggregate oriented*, providing only atomic operations within their natural aggregate, which forms only one dedicated view of your data.
+Other projections have to be computed crunching or duplicating your data.
 Focusing on one aggregate at a time allows for easy sharding of bucketed data across a network of machines along the aggregate dimension, for instance the *Document* in Document Databases.
 
-Graph databases handle fine-grained networks of information providing any perspective on your data that fits your use-cases.
-Known and trusted from relational systems, transactional guarantees protect updates of that web of data conforming to ACID standards.
+Graph databases handle fine-grained networks of information providing *any perspective* on your data that fits your use-cases.
+Known and trusted from relational systems, transactional guarantees protect updates of that connected data conforming to ACID standards.
 
 .NoSQL databases lack relationships
 [quote, "Jim Webber, Ian Robinson", "Graph Databases, O'Reilly"]
@@ -41,14 +40,13 @@ One well-known strategy for adding relationships to such stores is to embed an a
 
 Let's compare graph databases to other NoSQL systems.
 
-////
-[role=side-nav]
-* http://neo4j.com/docs[The Neo4j Docs]
-* link:/blog[The Neo4j Blog]
-* link:/developer/guide-intro-to-graph-modeling[Intro to Graph Modeling]
-////
+++++
+<iframe width="680" height="425" src="https://www.youtube.com/embed/5Tl8WcaqZoc?list=PL9Hl4pk2FsvUVugR_NxBMH-bBDkMJt32N" frameborder="0" allowfullscreen></iframe>
+++++
 
-=== Neo4j as a NoSQL Database
+=== Neo4j in the NoSQL Ecosystem
+
+// TODO
 
 With the advent of the NoSQL movement, businesses of all sizes have a variety of modern options from which to build solutions relevant to their use cases.
 
@@ -59,22 +57,6 @@ With the advent of the NoSQL movement, businesses of all sizes have a variety of
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/nosql-space.png[]
 
-=== Uncover the Graph in a Relational Database
-
-Connect the rows of tables in a *Relational Database* by uncovering all the relationships, and you'll see a graph.
-Dumb JOIN tables are replaced by interesting relationships.
-
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/vs-rdbms.png[]
-
-Where a RDBMS is optimized for aggregated, highly structured data, Neo4j is optimized for highly connected heterogeneous data.
-
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/as-rdbms.png[]
-
-.Relational databases also lack relationships
-[quote, "Jim Webber, Ian Robinson", "Graph Databases, O'Reilly"]
-For several decades, developers have tried to accommodate connected, semi-structured datasets inside relational databases.
-But whereas relational databases were initially designed to codify paper forms and tabular structures--something they do exceedingly well--they struggle when attempting to model the ad hoc, exceptional relationships that crop up in the real world. +
-*Ironically, relational databases deal poorly with relationships. Relationships do exist in the vernacular of relational databases, but only as a means of joining tables.*
 
 === Relate Key-Value Stores with Graph Databases
 
@@ -98,10 +80,3 @@ Refer to other documents (or contained elements) within that tree and you have a
 A graph data model lets more than one natural representation emerge dynamically as needed.
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/as-document.png[]
-
-////
-[role=side-nav]
-* link:/books[The Neo4j Bookshelf]
-* http://watch.neo4j.org[The Neo4j Video Library]
-* http://gist.neo4j.org/[GraphGists]
-////

@@ -1,0 +1,93 @@
+= First Steps with Cypher
+:neo4j-version: 3.0
+:author: Michael Hunger
+:style: #65b144/#58b535/white:Person(name),#008cc1/#0f5788/white:Database(name)
+
+== Create a Record for Yourself
+
+//setup
+[source,cypher]
+----
+CREATE (you:Person {name:"You"})
+RETURN you
+----
+
+`CREATE` creates nodes with labels and properties.
+
+// graph
+
+You like _Neo4j_, right?
+
+Let's find ourselves and add a new relationship to a new node.
+
+//setup
+[source,cypher]
+----
+MATCH  (you:Person {name:"You"})
+CREATE (you)-[like:LIKE]->(neo:Database {name:"Neo4j" })
+RETURN you,like,neo
+----
+
+`CREATE` can create single nodes, or more complex structures.
+
+// graph
+
+== Create Your Friends
+
+//setup
+[source,cypher]
+----
+MATCH (you:Person {name:"You"})
+FOREACH (name in ["Johan","Rajesh","Anna","Julia","Andrew"] |
+  CREATE (you)-[:FRIEND]->(:Person {name:name}))
+----
+
+`FOREACH` allows you to execute update operations for each element of a list.
+
+// graph
+
+== Find Your Friends
+
+[source,cypher]
+----
+MATCH (you {name:"You"})-[:FRIEND]->(yourFriends)
+RETURN you, yourFriends
+----
+
+// graph_result
+
+// table
+
+Note that we get ourselves repeated for each path found in the graph.
+
+== Create Second Degree Friends and Expertise
+
+//setup
+[source,cypher]
+----
+MATCH (neo:Database {name:"Neo4j"})
+MATCH (anna:Person {name:"Anna"})
+CREATE (anna)-[:FRIEND]->(:Person:Expert {name:"Amanda"})-[:WORKED_WITH]->(neo)
+----
+
+`CREATE` can also add more complex patterns.
+
+ifndef::env-graphgist[]
+image::{img}first_steps_friends_network.jpg[width=400]
+endif::env-graphgist[]
+
+// graph
+
+== Find Someone in your Network Who Can Help You Learn Neo4j
+
+[source,cypher]
+----
+MATCH (you {name:"You"})
+MATCH (expert)-[:WORKED_WITH]->(db:Database {name:"Neo4j"})
+MATCH path = shortestPath( (you)-[:FRIEND*..5]-(expert) )
+RETURN db,expert,path
+----
+
+// graph_result
+
+// table

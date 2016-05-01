@@ -1,0 +1,41 @@
+include::versions.txt[]
+
+++++
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/clike/clike.min.js"></script>
+++++
+
+
+The Neo4j .NET driver is *officially supported* by Neo4j and connects to the database using the binary protocol.
+It aims to be minimal, while being idiomatic to .NET.
+
+[source,subs=attributes]
+----
+PM> Install-Package Neo4j.Driver-{dotnet-driver-version}
+----
+// include::https://github.com/neo4j-examples/movies-dotnet-bolt/raw/master/Neo4j.Driver.Example/packages.config[tag=setup]
+
+[source,clike]
+----
+include::https://github.com/neo4j/neo4j-dotnet-driver/raw/1.0/Neo4j.Driver/Neo4j.Driver.IntegrationTests/Examples.cs[tag=minimal-example-import]
+
+include::https://github.com/neo4j/neo4j-dotnet-driver/raw/1.0/Neo4j.Driver/Neo4j.Driver.IntegrationTests/Examples.cs[tag=minimal-example,indent=0]
+----
+
+[cols="3*"]
+|===
+| Name 
+| icon:tag[] Version 
+| icon:user[] Authors
+
+| Neo4jDotNetDriver
+| {dotnet-driver-version}
+| The Neo4j Team, http://twitter.com/cskardon[Chris Skardon], https://twitter.com/IngvarKofoed[Martin Jensen]
+
+| http://www.nuget.org/packages/Neo4j.Driver[icon:gift[] Package]
+| {examples}//movies-dotnet-bolt[icon:play-circle[] Example]
+| http://stackoverflow.com/questions/tagged/neo4j+.net[icon:stack-overflow [] StackOverflow]
+
+| {manual}#driver-manual-index[icon:book[] Docs]
+| http://alpha.neohq.net/docs/dotnet-driver[icon:code[] API]
+| http://github.com/neo4j/neo4j-dotnet-driver[icon:github[] Source]
+|===

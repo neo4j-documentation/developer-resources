@@ -22,34 +22,98 @@ You should be comfortable installing and importing data into Neo4j.
 
 toc::[]
 
-=== Importing Data Sets
+=== Data Sets
 
-The Zip files in the following section contain the contents of a Neo4j graph.db directory. To use them:
+We want to cover data sets from the different domains.
+For each of the data sets we want to provide a description, the graph model and some use-case queries.
 
-* Stop your Neo4j server
-* Extract the file into `/path/to/neo/data/graph.db`
-* Start the server again
-* Open the Neo4j Web Interface
-* Read about the Cypher Query Language
-* Follow the source links for some example Cypher queries
-* All data sets are compatible with Neo4j version 1.6 and later
+[NOTE]
+This is work in progress, so some data sets might not be updated with that information yet.
 
-You can also point the neo4j-shell to the extracted directory to run Cypher queries directly:
+[TIP]
+Have fun, and send us feedback to feedback@neo4j.com or raise https://github.com/neo4j-contrib/developer-resources/issues[an issue] if something doesn't work as expected.
+
+
+=== Loading Data from Source
+
+The most reliable way to get a dataset into Neo4j is to import it from the raw sources.
+Then you are independent of database and store-versions, which you otherwise have to upgrade.
+That's why we provided raw data (CSV, JSON, XML) for many of the data sets, accompanied by import scripts.
+
+You would import the data using a command-line client like `neo4j-shell` or https://github.com/nicolewhite/cycli[CyCli] a modern, colorful Neo4j client, which understands the same file format.
+
+
+----
+$NEO4J_HOME/bin/neo4j-shell -file import-file.cypher
+
+# or
+
+cycli -f import-file.cypher
+----
+
+// todo screenshot cycli
+// todo import screencast
+
+=== Using a copy of a Neo4j database
+
+Other data sets are provided as compressed copy (zip) of a Neo4j datastore.
+You can find the datastore files in `$NEO4J_HOME/data/databases/[graph.db]` or in the directory you selected at startup.
+Please stop your Neo4j server and uncompress the store-files into the appropriate directory.
+
+[WARNING]
+For some data sets the Neo4j version they were built with might be older than your Neo4j version.
+Then you might need to configure Neo4j to upgrade your database automatically, by setting `dbms.allow_format_migration=true` in `$NEO4J_HOME/conf/neo4j.config`
+
+You can also run neo4j-shell on the extracted directory directly:
+
 [source, shell]
 ----
-/path/to/neo/bin/neo4j-shell -path /path/to/graph.db
+$NEO4J_HOME/bin/neo4j-shell -path /path/to/graph.db
 ----
 
 // TODO CSV Datasets !!
 
 === The Data Sets
 
-|=======================
-|Title | Description | Code | Download 
-|Jim Webber's Doctor Who Data Set (0.05MB)| The Dr.Who universe of doctors, actors, enemies and props from the Neo4j Koans Tutorial. | link:http://github.com/jimwebber/neo4j-tutorial[GitHub]| link:http://example-data.neo4j.org/files/drwho.zip[drwho.zip]
-|Movie Database (12.3MB) | Full dataset (12k movies, 50k actors) of the Spring Data Neo4j Cineasts.net link:http://spring.neo4j.org/tutorial[tutorial]. Original Source: http://TheMovieDB.org[TheMovieDB], Thanks! | link:https://github.com/SpringSource/spring-data-neo4j/tree/master/spring-data-neo4j-examples/cineasts[GitHub] | link:http://example-data.neo4j.org/files/cineasts_12k_movies_50k_actors_2.1.6.zip[cineasts_12k_movies_50k_actors.zip (2.1.6)]
-|The Musicbrainz main entities - large (5.4GB) | Most of the interesting entities (800,000 Artists, 12,000,000 Tracks, 1,200,000 Releases, 75,000 Record Labels) from the link:http://musicbrainz.org[Musicbrainz dataset].| link:/blog/musicbrainz-in-neo4j-part-1/[Blog Post]  |link:http://example-data.neo4j.org/files/musicbrainz_21.zip[musicbrainz_21.zip (2.1.6)]
-|====================
+////
+
+s3cmd ls s3://example-data.neo4j.org/3.0-datasets/ | awk '{ split($4,a,"/");print "| a[5] | desc                       | src                     | http://" a[3] "/" a[4] "/" a[5] "[" a[5] " (" int($3/1024/1024) "MB)]"}'
+
+////
+
+|===
+|Title | Description | Code | Download
+|Jim Webber's Doctor Who Data Set | The Dr.Who universe of doctors, actors, enemies and props from the Neo4j Koans Tutorial. | link:http://github.com/jimwebber/neo4j-tutorial[GitHub]| link:http://example-data.neo4j.org/files/drwho.zip[drwho.zip]
+|Movie Database | 12k movies, 50k actors. Original Source: http://TheMovieDB.org[TheMovieDB] | link:https://github.com/SpringSource/spring-data-neo4j/tree/master/spring-data-neo4j-examples/cineasts[GitHub] | http://example-data.neo4j.org/3.0-datasets/cineasts.tgz[cineasts_12k_movies_50k_actors.zip (14MB)]
+|The Musicbrainz main entities | Most of the interesting entities (800,000 Artists, 12,000,000 Tracks, 1,200,000 Releases, 75,000 Record Labels) from the link:http://musicbrainz.org[Musicbrainz dataset].| link:/blog/musicbrainz-in-neo4j-part-1/[Blog Post]
+| http://example-data.neo4j.org/3.0-datasets/musicbrainz.tgz[musicbrainz_21.zip (4.5GB)]
+|===
+
+////
+
+[[graph-databases]]
+==== Datasets from the Book "Graph Databases"
+
+You can find the free ebook for the O'Reilly book here:
+
+|Title | Description | Code | Download
+
+|Access Control
+|A complex access control scenario (p. 116-124)
+| src                     | http://example-data.neo4j.org/3.0-datasets/accesscontrol.tgz[accesscontrol.tgz (165MB)]
+|Logistics Routing
+|Routing computation with partial leg optimization (p. 12)                       | src                     | http://example-data.neo4j.org/3.0-datasets/logistics.tgz[logistics.tgz (59MB)]
+| recommendations | desc                       | src                     | http://example-data.neo4j.org/3.0-datasets/recommendations.tgz[recommendations.tgz (0MB)]
+| social | desc                       | src                     | http://example-data.neo4j.org/3.0-datasets/socialnetwork.tgz[socialnetwork.tgz (530MB)]
+
+
+| title | desc                       | src                     | http://example-data.neo4j.org/3.0-datasets/cineasts.tgz[cineasts.tgz (14MB)]
+| title | desc                       | src                     | http://example-data.neo4j.org/3.0-datasets/cineasts_csv.tgz[cineasts_csv.tgz (0MB)]
+| title | desc                       | src                     | http://example-data.neo4j.org/3.0-datasets/elections.tgz[elections.tgz (64MB)]
+| title | desc                       | src                     | http://example-data.neo4j.org/3.0-datasets/ldbc_sf001_p006.tgz[ldbc_sf001_p006.tgz (404MB)]
+| title | desc                       | src                     | http://example-data.neo4j.org/3.0-datasets/ldbc_sf010_p006.tgz[ldbc_sf010_p006.tgz (3939MB)]
+| title | desc                       | src                     | http://example-data.neo4j.org/3.0-datasets/musicbrainz.tgz[musicbrainz.tgz (4555MB)]
+| title | desc                       | src                     | http://example-data.neo4j.org/3.0-datasets/pokec.tgz[pokec.tgz (1148MB)]
 
 //|Federal Election Commission Campaign Data - (63.91MB)| "The 2012 presidential campaign data from our Federal Election Committee Campaign Data link:/blog/follow-the-data-fec-campaign-data-challenge/[Workshop].| link:https://github.com/akollegger/FEC_GRAPH[GitHub]| link:http://example-data.neo4j.org/files/fec_data_presidential_2012.zip[fec_data_presidential_2012.zip]
 //|Small Cineasts Movies & Actors (0.14MB)| Small dataset of the Spring Data Neo4j Cineasts.net link:http://spring.neo4j.org/tutorial[tutorial].| link:https://github.com/SpringSource/spring-data-neo4j/tree/master/spring-data-neo4j-examples/cineasts[GitHub] | link:http://example-data.neo4j.org/files/cineasts_39_movies_446_actors.zip[cineasts_39_movies_446_actors.zip]
@@ -58,9 +122,11 @@ You can also point the neo4j-shell to the extracted directory to run Cypher quer
 //|ConceptNet 5 (243MB) | ConceptNet is a link:http://maxdemarzi.com/2013/05/13/knowledge-bases-in-neo4j/[semantic network] built from nodes representing concepts, and labeled relationships between them| link:https://github.com/maxdemarzi/neo_concept[GitHub] | link:https://dl.dropboxusercontent.com/u/57740873/conceptnet.graph.db.zip[conceptnet.graph.db.zip]
 //|Neo Permissions (560MB) | Check permissions from files and folders to users and groups in this link:http://maxdemarzi.com/?s=PERMISSION+RESOLUTION[ACL example]. | link:https://github.com/maxdemarzi/neo_permissions/blob/master/performance/src/test/resources/simulations/RandomPermissions.scala[GitHub] | link:https://dl.dropboxusercontent.com/u/57740873/datasets/neo_permissions.tar.gz[neo_permissions.tar.gz]
 
+////
+
 === Neo4j Graph Gists
 
-http://graphgist.neo4j.com[Neo4j Graph Gists] are a great source for datasets to get started, as they not only come with the example data setup, but also
+http://neo4j.com/graphgists[Neo4j Graph Gist examples] are a great source for datasets to get started, as they not only come with the example data setup, but also explanations and use case queries.
 
 ////
 === Graph Generators
@@ -70,15 +136,27 @@ http://graphgist.neo4j.com[Neo4j Graph Gists] are a great source for datasets to
 
 === Public Datasets with Instructions
 
-These are not prebuilt data-stores but raw data (mostly CSV) to be imported.
-The on the linked articles and repositories, the loading instructions are listed along with raw data sources.
+These are not prebuilt data-stores but existing data sets (mostly CSV) to be imported.
 
-Have fun, and send us https://github.com/neo4j-contrib/developer-resources/issues[feedback] if something doesn't work.
+The linked articles and repositories also provide instructions for the import.
 
-* link:/developer/working-withd-data/guide-importing-data-and-etl[Northwind Database Import]
+* http://neo4j.com/blog/analyzing-panama-papers-neo4j/[The Panama Papers]
+* link:/developer-resources/working-with-data/guide-importing-data-and-etl[Northwind Database Import]
+* http://neo4j.com/blog/import-10m-stack-overflow-questions/[Importing Stack Overflow into Neo4j]
+* https://dl.dropboxusercontent.com/u/14493611/the_universe_is_a_graph.html[The Cosmic Web of Galaxies]
+* http://www.markhneedham.com/blog/2015/04/14/spark-generating-csv-files-to-import-into-neo4j/[Chicago Crime Dataset]
+* http://www.markhneedham.com/blog/?s=himym[How I met your Mother Series]
 * https://github.com/caesar0301/awesome-public-datasets[Awesome Public Datasets]
-* link:/developer/working-with-data/guide-import-csv#load-csv-webinar[Consumer Complaint Data]
+* link:/developer-resources/working-with-data/guide-import-csv#load-csv-webinar[Consumer Complaint Data]
 * https://github.com/mneedham/neo4j-worldcup[Football(Soccer) Worldcup], http://worldcup.neo4j.org/the-world-cup-graph-domain-model/[Data Model]
 * https://gist.github.com/nicolewhite/cc178bf2a761d7ac3a20[Flight & Airline, Music, Train Schedules]
 * http://jexp.de/blog/2014/10/flexible-neo4j-batch-import-with-groovy/[Kaggle Publication Dataset]
 * https://medium.com/@christophewillemsen/github-events-analysis-with-neo4j-18bc6ffcab01[GitHub Event Data]
+
+
+=== Avid Bloggers on Data Import
+
+* http://www.markhneedham.com/blog/?s=neo4j+import[Mark Needham]
+* http://blog.bruggen.com/search/label/import[Rik van Bruggen]
+* http://www.lyonwj.com/?s=import[William Lyon]
+* http://jexp.de/blog?s=import[Michael Hunger]

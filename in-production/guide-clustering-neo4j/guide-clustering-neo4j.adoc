@@ -10,14 +10,14 @@
 
 .Goals
 [abstract]
-This guide describes how to configure clustering in an Enterprise Neo4J installation.
-This includes topics such as data synchronization, mending procedures, configuring an arbiter, and slave-only mode configuration.
+This guide describes how to configure a high availability cluster of Neo4j Enterprise.
+It includes topics such as data synchronization, mending procedures, configuring an arbiter, and slave-only mode configuration.
 
 .Prerequisites
 [abstract]
 You should know how to link:/download[download] and install Neo4j on your system.
-If you are a developer you should be accustomed to the graph data model and have written your Neo4j application.
-A sound understanding of Neo4j's HTTP APIs, link:../guide-performance-tuning[tuning], security, and upgrade aspects will help you set up a stable cluster.
+If you are a developer, you should be accustomed to the graph data model and have written your Neo4j application.
+A sound understanding of Neo4j's APIs, link:../guide-performance-tuning[tuning], security, and upgrade aspects will help you set up a stable cluster.
 
 [role=expertise]
 {level}
@@ -26,19 +26,19 @@ toc::[]
 
 === Data Synchronization between master and slaves
 
-The Neo4j High Availability Cluster is a full master-slave replication.
+The Neo4j High Availability Cluster is a fault tolerant, full master-slave replication setup.
 Any data (graph or index) created on the master is propagated to the slaves depending on the settings of the master `ha.tx_push_factor` (number of slaves to actively push to during commit) and slaves `ha.pull_interval` (frequency of pulling updates from the master).
 
 [role=side-nav]
-* http://jimwebber.org/2011/03/strategies-for-scaling-neo4j/[Strategies for Scaling Neo4j,role=blog]
-* {manual}/ha.html[Neo4j High Availability,role=docs]
-* {manual}/ha-setup-tutorial.html[Tutorial Cluster Setup,role=docs]
+* link:http://jimwebber.org/2011/03/strategies-for-scaling-neo4j/[Strategies for Scaling Neo4j,role=blog]
+* link:{opsmanual}/#_high_availability[Neo4j High Availability,role=docs]
+* link:{opsmanual}/ha-setup-tutorial.html[Tutorial Cluster Setup,role=docs]
 
 === Configuring a Two-Slave Cluster with an Arbiter
 
-There's a {manual}/ha-setup-tutorial.html[step-by-step tutorial for setting up a HA cluster].
+There's a link:{manual}/ha-setup-tutorial.html[step-by-step tutorial for setting up a HA cluster].
 For a two-node cluster, you'll actually want to run three separate machines, and use the Neo4j arbiter on the third.
-Details on the arbiter are available in the {manual}/arbiter-instances.html[Neo4j Manual].
+Details on the arbiter are available in the link:{manual}/arbiter-instances.html[Neo4j Manual].
 The configuration for the arbiter is identical to that of a regular instance, with the exception of anything relating to the actual graph database itself (since an arbiter doesn't hold any data).
 
 The `ha.initial_hosts` property should be the same on all the instances, including the arbiter.
@@ -46,7 +46,8 @@ The arbiter should have a unique `ha.server_id` (`3` is fine).
 
 === Setting a Server in Slave-Only Mode
 
-See the {manual}/ha-configuration.html[documentation] on `ha.slave_only`.
+// what is the new link?
+See the link:{manual}/ha-configuration.html[documentation] on `ha.slave_only`.
 
 You might want to configure a machine with that setting if it’s acting as a reporting instance but you need to make sure that two members don’t have that setting, or you won’t have any failover in the cluster.
 
@@ -60,7 +61,8 @@ It can also be configured to listen on all interfaces by setting `online_backup_
 
 It is best to use the back tool with the command line `./bin/neo4j-backup -host 192.168.1.34 -to /mnt/backup/neo4j-backup`, which will backup the store from that specific host even if that host is running in a cluster.
 
-Additional details can be found {manual}/backup-introduction.html[in the manual].
+// what is the new link?
+Additional details can be found link:{manual}/backup-introduction.html[in the manual].
 
 image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/neo4j-logo.png[]
 
@@ -68,9 +70,9 @@ image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/neo4j-log
 
 * Shut down all members of the cluster and stop any load against the cluster
 * On the master instance, copy the `data/graph.db` folder as a backup
-* Modify neo4j-server.properties, setting the org.neo4j.server.database.mode to "STANDALONE"
+* Modify neo4j-server.properties, setting the `org.neo4j.server.database.mode` to STANDALONE`
 * Start the database and, once it's running, stop it again (this is to ensure he database is cleanly shut down)
-* Remove all files named nioneo_logical.log.vXX in data/graph.db, being careful not to remove any files without the "v", like `nioneo_logical.log.1` or `nioneo_logical.log.active`
+* Remove all files named `nioneo_logical.log.vXX` in `data/graph.db`, being careful not to remove any files without the "`v`", like `nioneo_logical.log.1` or `nioneo_logical.log.active`
 * Start the server and use either neo4j-shell or the neo4j browser to issue the following two queries:
 
 . First query. Note the id returned here
@@ -91,7 +93,7 @@ MATCH (n) WHERE id(n) = <your node id> DELETE n
 * Set org.neo4j.server.database.mode to HA
 * Start the server
 
-===  Mending Procedure for Slaves
+=== Mending Procedure for Slaves
 
 * On each slave, remove the `data/graph.db` folder
 * Start the slave, and watch `data/graph.db` for it to copy the store from the master
@@ -99,5 +101,5 @@ MATCH (n) WHERE id(n) = <your node id> DELETE n
 
 [role=side-nav]
 * link:/books[The Neo4j Bookshelf]
-* http://watch.neo4j.org[The Neo4j Video Library]
-* http://gist.neo4j.org/[GraphGists]
+* link:http://watch.neo4j.org[The Neo4j Video Library]
+* link:http://gist.neo4j.org/[GraphGists]

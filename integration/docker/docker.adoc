@@ -12,7 +12,7 @@ image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/neo4j-doc
 
 .Goals
 [abstract]
-Running Neo4j with is supported officially, both by Neo Technology and Docker.
+Running Neo4j with Docker is supported officially, both by Neo Technology and Docker.
 There is an official Docker image for Neo4j as well as more specific images provided by us.
 Detailed instructions are available at the linked repositories, which we don't want to duplicate here.
 
@@ -23,7 +23,7 @@ You should have a sound understanding of both Docker and Neo4j, to leverage them
 [role=expertise]
 {level}
 
-//toc::[]
+toc::[]
 
 == General Observations
 
@@ -52,26 +52,44 @@ Previous versions and milestones are available as tags in of the https://hub.doc
 
 The Dockerfiles for the different versions are taken from https://github.com/neo4j/docker-neo4j/[this GitHub repository] and synched with Docker Hub and the official repository as needed.
 
-=== Run it
+== How to use the Neo4j Docker Image
 
 [NOTE]
 For running Docker on https://docs.docker.com/engine/installation/mac/[Max OSX] and https://docs.docker.com/engine/installation/windows/[Windows] please consult the Docker documentation.
 
-----
-# interactive with terminal
-docker run --interactive --rm --publish 7474:7474 \
-           --volume $HOME/neo4j/data:/data  neo4j
 
-# as daemon running in the background
-docker run --detach --name neo4j --publish 7474:7474 \
-           --volume $HOME/neo4j/data:/data neo4j
-----
+++++
+<dl class="tabs" data-tab>
+  <dd class="tab-title active"><a href="#docker-30">Neo4j 3.0</a></dd>
+  <dd class="tab-title"><a href="#docker-23">Neo4j 2.3</a></dd>
+</dl>
+++++
 
-The data-directory, containing the store-files, logs, auth etc. resides on your host system outside of the image.
-It can be just any empty directory or a (copy of a) data directory of a (not-running) Neo4j-server. 
-You can mount it with the `--volume` option.
+++++
+<div class="tabs-content">
+++++
 
-You can then access http://localhost:7474 (or the port you exposed) on your machine to use Neo4j.
+[[docker-30]]
+[.content.active]
+=== Neo4j 3.0 Docker Image
+
+include::docker-3.0/docker-3.0.adoc[tag=get-started]
+
+For more details, see the link:docker-3.0[Neo4j 3.0 Docker page].
+
+[[docker-23]]
+[.content]
+=== Neo4j 2.3 Docker Image
+
+include::docker-2.3/docker-2.3.adoc[tag=get-started]
+
+For more details, see the link:docker-2.3[Neo4j 2.3 Docker page].
+
+++++
+</div>
+++++
+
+== Capabilities
 
 The Neo4j Docker image comes with these capabilities:
 
@@ -92,7 +110,7 @@ Enjoy using the Docker Image and please provide us feedback, via https://github.
 
 The Neo4j Docker image is for example used in our http://neo4j.com/sandbox[live Neo4j Sandbox] offering and the http://neo4j.com/blog/graph-your-network-neo4j-docker-image/[Graph your Twitter Network Demo].
 
-=== References
+== References
 
 * https://hub.docker.com/_/neo4j[Neo4j on Docker Hub]
 * https://github.com/neo4j-contrib/docker-neo4j[Neo4j Docker GitHub Repository]

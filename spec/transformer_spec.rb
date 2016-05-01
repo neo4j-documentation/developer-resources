@@ -32,6 +32,19 @@ RSpec.describe HtmlTransformer do
       it { should match('<a href=\"/developer/language-guides/">') }
     end
 
+    context "developer-resources links" do
+      let(:fragment) do
+        <<-FRAGMENT
+          <dd class="accordion-navigation active">
+          <a href="/developer-resources/language-guides/">
+          <h5>Language Guides</h5>
+          </a>
+        FRAGMENT
+      end
+
+      it { should match('<a href=\"/developer/language-guides/">') }
+    end
+
     context 'multiple links' do
       let(:fragment) do
         <<-FRAGMENT

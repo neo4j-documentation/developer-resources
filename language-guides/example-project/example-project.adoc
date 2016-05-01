@@ -25,55 +25,62 @@ toc::[]
 == Example Project Description
 
 To demonstrate connection to and usage of Neo4j in different programming languages we've created an example application.
-It is a http://my-neo4j-movies-app.herokuapp.com/[simple, one-page webapp], that uses Neo4j's movie demo database (movie, actor, director) as dataset.
-The same front-end web page consumes 3 REST-endpoints provided by backend implemented in the different programming languages and drivers.
+It is a http://my-neo4j-movies-app.herokuapp.com/[simple, one-page webapp], that uses Neo4j's movie demo database (movie, actor, director) as data set.
+The same front-end web page in all applications consumes 3 REST endpoints provided by backend implemented in the different programming languages and drivers.
 
-* movie search
+* movie search by title
 * single movie listing
 * graph visualization of the domain
 
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/movie_application.png[link="http://my-neo4j-movies-app.herokuapp.com/"]
+image::{img}movie_application.png[link="http://my-neo4j-movies-app.herokuapp.com/"]
 
 === Domain Model
 
+[source,cypher]
 ----
-(:Movie {title,released,tagline})<-[:ACTED_IN {roles}]-(actor:Person)
+(:Person {name})-[:ACTED_IN {roles}]->(:Movie {title,released})
 ----
 
 === GitHub
 
-The source code for the different examples is available on https://github.com/neo4j-examples?query=movies[GitHub].
+The source code for all the different language examples is available on https://github.com/neo4j-examples?query=movies[GitHub] as individual repositories that can be cloned and directly used as starting points.
 // end::intro[]
 
 === Webpage
 
-The webpage is a single Bootstrap page that uses jQuery AJAX calls to access the backend and adds the returned JSON result data to HTML elements in the page.
+The webpage is a single Bootstrap page that uses jQuery AJAX calls to access the backend and adds the returned JSON result data to HTML DOM elements in the page.
 
-For the search, that is the `/search?q=query` endpoint whose results are added as table rows.
-If you click on any of the movie titles, the side-view is populated with the movie details.
+For the search, that is the `/search?q=query` endpoint whose results are added as table rows in a listing.
 
-For the movie details it uses the `/movie/Movie%20Title` endpoint and the results are rendered as panel title, image source, and unordered list for crew.
+If you click on any of the movie titles, the right-side view is populated with the movie details.
+
+For the movie details it uses the `/movie/A%20Movie%20Title` endpoint and the results are rendered as panel title, image source, and unordered list for the crew.
 
 === Graph Visualization
 
 For the Graph Visualization we use http://d3js.org[d3.js]. Our `/graph` endpoint already returns the data in the format of "nodes" and "links"-list that d3 can use directly.
-We then apply the force-layout algorithm to render nodes as circles and relationships as lines, and add some minor styling to the visualization to provide the movie title/person name as an HTML title attribute to the node circles.
+We then apply the force-layout algorithm to render nodes as circles and relationships as lines, and add some minimal styling to the visualization to provide the movie title/person name as title attribute to the node circles which is shown as a tooltip.
 
-== Data Setup
+=== Data Setup
 
 - Start your local Neo4j Server (http://neo4j.com/download[Download & Install])
 - Open the http://localhost:7474[Neo4j Browser].
+- Log in, remember the password
 - Install the Movies dataset with `:play movies`
-- Click the `CREATE` statement and hit the triangular "Run" button to insert the data.
+- Click the large `CREATE` statement and hit the triangular "Run" button to insert the data.
 
-You can also choose to use a link:/developer/in-production/guide-cloud-deployment[cloud-hosted Neo4j database].
+You can also choose to use our link:/sandbox[Neo4j Sandbox] or a link:/developer/in-production/guide-cloud-deployment[cloud-hosted Neo4j database].
 If you go this route, then you have to provide the URL to your Neo4j server in an environment variable `NEO4J_URL`.
 
 Alternatively you can run this Cypher `LOAD CSV` statement:
 
 [source,cypher]
 ----
-
+LOAD CSV WITH HEADERS FROM "https://dl.dropboxusercontent.com/u/14493611/movies_setup.csv" AS row
+MERGE (m:Movie {title:row.title}) ON CREATE SET m.released = toInt(row.released), m.tagline = row.tagline
+MERGE (p:Person  {name:row.name}) ON CREATE SET p.born     = toInt(row.born)
+WITH   m,p,row WHERE row.type = "ACTED_IN"
+MERGE (p)-[r:ACTED_IN]->(m) ON CREATE SET r.roles = split(row.roles,";")[0..-1]
 ----
 
 === Endpoints
@@ -95,12 +102,16 @@ It matches the movie by title, then optionally finds all people working on that 
 
 [source,cypher]
 ----
-MATCH (movie:Movie {title:{title}})
- OPTIONAL MATCH (movie)<-[r]-(person:Person)
- RETURN movie.title as title,
-       collect({name:person.name,
-                job:head(split(lower(type(r)),'_')),
-                role:r.roles}) as cast LIMIT 1
+LOAD CSV WITH HEADERS FROM "https://dl.dropboxusercontent.com/u/14493611/movies_setup.csv" AS row
+MERGE (m:Movie {title:row.title}) ON CREATE SET m.tagline = row.tagline,m.released=row.released
+MERGE (p:Person {name:row.name}) ON CREATE SET p.born = row.born
+FOREACH (_ in CASE row.type WHEN "ACTED_IN" then [1] else [] end |
+   MERGE (p)-[r:ACTED_IN]->(m) ON CREATE SET r.roles = split(row.roles,";")[0..-1]
+)
+FOREACH (_ in CASE row.type WHEN "DIRECTED" then [1] else [] end | MERGE (p)-[:DIRECTED]->(m))
+FOREACH (_ in CASE row.type WHEN "PRODUCED" then [1] else [] end | MERGE (p)-[:PRODUCED]->(m))
+FOREACH (_ in CASE row.type WHEN "WROTE"    then [1] else [] end | MERGE (p)-[:WROTE   ]->(m))
+FOREACH (_ in CASE row.type WHEN "REVIEWED" then [1] else [] end | MERGE (p)-[:REVIEWED]->(m))
 ----
 
 ==== Search Movies
@@ -114,14 +125,14 @@ curl http://localhost:8080/search?q=matrix
  {"movie": {"released": 2003, "tagline": "Everything that has a beginning has an end", "title": "The Matrix Revolutions"}}]
 ----
 
-The Cypher query used, with the parameters `{query:"(?i).\*matrix.*"}`, a case-insensitive regular expression partial match.
+The Cypher query used, with the parameters `{query:"matrix"}`.
 
-The Search Movies query matches the movies by title with a regular expression and then returns the movie nodes as a list of maps with the title, released and tagline entries.
+The search movies query matches the movies by title with CONTAINS and then returns the movie nodes as a list of maps with the title, released and tagline entries.
 
 [source,cypher]
 ----
 MATCH (movie:Movie)
- WHERE movie.title =~ {query}
+ WHERE lower(movie.title) CONTAINS {query}
  RETURN movie
 ----
 
@@ -164,7 +175,7 @@ Many of the mentioned https://github.com/neo4j-examples?query=movies[GitHub exam
 You can either use that or follow the manual process outlined below.
 
 We want to install our application to the cloud, for instance the http://heroku.com[Heroku] PaaS.
-We will also use either the https://addons.heroku.com/graphenedb[GrapheneDB] or https://addons.heroku.com/graphstory[GraphStory] Neo4j Database Hosting Add-On.
+We will also use either the https://addons.heroku.com/graphenedb[GrapheneDB] or https://addons.heroku.com/graphstory[GraphStory] Neo4j Database Hosting Add-On or the free link:/sandbox/[Neo4j Sandbox]
 
 Install the https://toolbelt.heroku.com/[Heroku Toolbelt] and git.
 
@@ -206,6 +217,8 @@ heroku addons:open graphstory
 
 In the Graphenedb-UI use "Launch Neo4j Admin UI".
 In the Neo4j-Browser import the `:play movies` dataset as of the install instructions above.
+
+Make sure that username and password are provied as part of the URL, e.g. `bolt://user:password@host:port` or `http://user:password@host:port`.
 
 Then your app is ready to roll.
 
