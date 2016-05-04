@@ -43,6 +43,7 @@ if ENV['BLOG_HOSTNAME'] && ENV['BLOG_USERNAME'] && ENV['BLOG_PASSWORD'] && ENV['
                                            renderer,
                                            post_type: 'developer',
                                            delete_not_found: false,
+                                           post_status: 'publish',
                                            logger: LOGGER)
 end
 
