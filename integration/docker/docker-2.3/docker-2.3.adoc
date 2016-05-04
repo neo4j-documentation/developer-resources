@@ -22,7 +22,7 @@ The image exposes two ports (`7474` and `7473`) for HTTP and HTTPS access to the
 docker run \
     --publish=7474:7474 \
     --volume=$HOME/neo4j/data:/data \
-    neo4j
+    neo4j:2.3
 ----
 
 Point your browser at `http://localhost:7474` on Linux or `http://$(docker-machine ip default):7474` on OSX.
@@ -63,7 +63,7 @@ We recommend a limit of at least 40000 for running Neo4j.
 To check the limit on your system, run this command:
 
 ----
-docker run neo4j \
+docker run neo4j:2.3 \
     bash -c 'echo Soft limit: $(ulimit -Sn); echo Hard limit: $(ulimit -Hn)'
 ----
 
