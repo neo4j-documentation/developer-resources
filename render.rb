@@ -32,7 +32,7 @@ raise 'Usage: feed me asciidoctor files (or pass `all` to find all files)' if AR
 
 renderer = AsciiPress::Renderer.new(attributes: ASCIIDOC_ATTRIBUTES,
                                     header_footer: true,
-                                    safe: 0,
+                                    safe: 'secure',
                                     template_dir: ASCIIDOC_TEMPLATES_DIR,
                                     after_conversion: HtmlTransformer.method(:transform))
 
