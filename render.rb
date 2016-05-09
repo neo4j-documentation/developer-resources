@@ -36,7 +36,7 @@ else
   ARGV
 end
 
-AsciiPress.verify_adoc_slugs!(adoc_file_paths)
+# AsciiPress.verify_adoc_slugs!(adoc_file_paths)
 
 renderer = AsciiPress::Renderer.new(attributes: ASCIIDOC_ATTRIBUTES,
                                     header_footer: true,
