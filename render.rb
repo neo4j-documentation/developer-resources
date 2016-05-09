@@ -30,6 +30,14 @@ ASCIIDOC_ATTRIBUTES = %W(allow-uri-read
 
 raise 'Usage: feed me asciidoctor files (or pass `all` to find all files)' if ARGV.empty?
 
+adoc_file_paths = if ARGV == ['all']
+  `find . -mindepth 2 -maxdepth 4 -name "*.adoc"`.split(/[\n\r]+/)
+else
+  ARGV
+end
+
+AsciiPress.verify_adoc_slugs!(adoc_file_paths)
+
 renderer = AsciiPress::Renderer.new(attributes: ASCIIDOC_ATTRIBUTES,
                                     header_footer: true,
                                     safe: 0,
@@ -45,12 +53,6 @@ if ENV['BLOG_HOSTNAME'] && ENV['BLOG_USERNAME'] && ENV['BLOG_PASSWORD'] && ENV['
                                            delete_not_found: false,
                                            post_status: 'publish',
                                            logger: LOGGER)
-end
-
-adoc_file_paths = if ARGV == ['all']
-  `find . -mindepth 2 -maxdepth 4 -name "*.adoc"`.split(/[\n\r]+/)
-else
-  ARGV
 end
 
 if syncer
