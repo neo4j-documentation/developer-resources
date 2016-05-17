@@ -38,18 +38,20 @@ end
 
 # AsciiPress.verify_adoc_slugs!(adoc_file_paths)
 
-renderer = AsciiPress::Renderer.new(attributes: ASCIIDOC_ATTRIBUTES,
-                                    header_footer: true,
-                                    safe: 0,
-                                    template_dir: ASCIIDOC_TEMPLATES_DIR,
-                                    after_conversion: HtmlTransformer.method(:transform))
+renderer = AsciiPress::Renderer.new(after_conversion: HtmlTransformer.method(:transform),
+                                    asciidoc_options: {
+                                      attributes: ASCIIDOC_ATTRIBUTES,
+                                      header_footer: true,
+                                      safe: 0,
+                                      template_dir: ASCIIDOC_TEMPLATES_DIR,
+                                    })
 
 if ENV['BLOG_HOSTNAME'] && ENV['BLOG_USERNAME'] && ENV['BLOG_PASSWORD'] && ENV['PUBLISH']
   syncer = AsciiPress::WordPressSyncer.new(ENV['BLOG_HOSTNAME'],
                                            ENV['BLOG_USERNAME'],
                                            ENV['BLOG_PASSWORD'],
+                                           'developer',
                                            renderer,
-                                           post_type: 'developer',
                                            delete_not_found: false,
                                            post_status: 'publish',
                                            logger: LOGGER)
