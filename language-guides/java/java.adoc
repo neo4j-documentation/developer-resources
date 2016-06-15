@@ -145,18 +145,43 @@ This {examples}/movies-java-server-extension[example project] shows how you woul
 === Using Neo4j Server with JDBC
 
 Being a Java developer you're probably familiar with JDBC as a way to work with relational databases, either directly or via abstractions like Spring's `JDBCTemplate` or MyBatis.
-Many tools for ETL, Business Intelligence, and data management also use JDBC drivers to interact with relational databases.
+Many tools for ETL, Report Generators, Business Intelligence, and data management also use JDBC drivers to interact with relational databases.
 
 As Cypher, like SQL, is a textual parametrizable query language that can return tabular results, it was possible for us to support the JDBC APIs and make a http://github.com/neo4j-contrib/neo4j-jdbc[Neo4j-JDBC] driver available.
+
+The driver supports the new binary "Bolt" protocol of Neo4j 3.x, the transactional http endpoint and Neo4j embedded connections.
+
+[source,java]
+----
+// Connect
+Connection con = DriverManager.getConnection("jdbc:neo4j:bolt://localhost");
+
+// Querying
+try (Statement stmt = con.createStatement()) {
+    ResultSet rs = stmt.executeQuery("MATCH (n:User) RETURN n.name");
+	while (rs.next()) {
+		System.out.println(rs.getString("n.name"));
+	}
+}
+con.close();
+----
+
 More details on how to use it can be found with our example project for {examples}/movies-java-jdbc[Java-JDBC].
 There, we implement the backend as a minimal Java webapp that leverages Neo4j-JDBC to connect to Neo4j Server.
 
+:jdbc-tools-link: https://github.com/neo4j-contrib/neo4j-jdbc/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22
+
+We tested the driver with many link:{jdbc-tools-link}[enterprise tools] to ensure that it works in a variety of environments.
+Just grab the https://github.com/neo4j-contrib/neo4j-jdbc/releases/latest[JAR of the latest release] and add it to your tool of choice.
+
 [cols="1,4"]
 |===
-| icon:user[] Authors | Rickard Öberg, Michael Hunger, Stefan Armbruster and many more
-| icon:gift[] Package | http://m2.neo4j.org/content/repositories/releases/org/neo4j/neo4j-jdbc/
+| icon:user[] Authors | Developers from http://www.larus-ba.it/neo4j/en/[Larus BA Italy] and Neo4j
+| icon:gift[] Package | https://github.com/neo4j-contrib/neo4j-jdbc/releases/latest
 | icon:github[] Source | https://github.com/neo4j-contrib/neo4j-jdbc
+| icon:book[] Docs | https://github.com/neo4j-contrib/neo4j-jdbc/blob/master/README.adoc
 | icon:play-circle[] Example | {examples}/movies-java-jdbc
+| icon:book[] Blog Post | http://neo4j.com/blog/couchbase-jdbc-integrations-neo4j-3-0/
 |===
 
 include::../_includes/community-driver-notice.adoc[]
@@ -220,6 +245,85 @@ Example:
 
 ==== NoSQL-Unit
 
+=== Testing Neo4j Applications
+
+Depending on the deployment mode, you test your Neo4j backed application differently.
+
+==== Unit Testing
+
+Applications using Neo4j in embedded mode and server extensions can be tested using the in-memory impermanent Graph Database instance.
+The Neo4j Manual has a complete section on this topic.
+
+You can obtain an instance of it like this:
+
+[source,java]
+----
+----
+
+Please make sure that your transactions are all completed (closed after `failure` or `success` calls) and the database is shut down correctly. 
+Otherwise you might experience delays (transaction grace period) or leaks while tearing down your tests.
+
+[source,java]
+----
+ImpermanentGraphDatabase db = new TestGraphDatabaseFactory().newImpermanentDatabase();
+
+// or
+
+ImpermanentGraphDatabase db = new TestGraphDatabaseFactory().newImpermanentDatabaseBuilder()
+        .setConfig(...).newGraphDatabase();
+----
+
+It also has a `cleanContent()` method which you can run between tests to clean out newly created data.
+
+If you use transaction around your test you can also rollback the transaction at the end to reset the database to its previous state.
+
+==== Testing Server Extensions
+
+Neo4j 2.2 introduces a {manual}/server-unmanaged-extensions-testing.html[new module] that makes it easier to test Neo4j Server and server extensions: `neo4j-harness`.
+
+After adding `org.neo4j.test:neo4j-harness:${neo4j.version}` to your dependency setup you can use both a builder to create Neo4j server instances as well as a JUnit Rule to achieve the same:
+
+[source,java]
+----
+@Rule
+public Neo4jRule server = new Neo4jRule().withExtension("/test", TestResource.class);
+
+@Test public void testWithRule() {
+   HTTP.Response response =
+           HTTP.withBaseUri(server.httpURI().toString())
+               // optional
+               .withHeaders("accept", "application/json").GET("test/foo/42");
+
+   assertEquals(200, response.status());
+   assertEquals(4711, response.<Map>content().get("value"));
+   
+}
+
+@Test public void testWithBuilder() {
+   try (ServerControls server TestServerBuilder.newInProcessBuilder().withConfig(...)
+                                    .withFixture(...).withExtension(...).newServer()) {
+
+      server.httpsUrl() ....
+   }
+}
+----
+
+==== GraphAware Testing Framework
+
+The GraphAware testing framework was developed as part of customer engagements and represents real-world testing experience with Neo4j.
+
+It supports setup fixtures, database comparisions and testing of both Neo4j Server as well as embedded APIs.
+
+// TODO MORE
+
+Example:
+
+[source,java]
+----
+----
+
+==== NoSQL-Unit
+
 Alex Soto's http://[NoSQL-Unit] allows testing of various NoSQL databases.
 
 For Neo4j it provides support for testing the embedded mode as well as Spring Data Neo4j.
@@ -233,7 +337,6 @@ you can quickly spin up a Neo4j server for testing in a temporary directory.
 Just make sure that you set-up auth before either by disabling it or by pre-seeding the server with a known password by either copying a `data/dbms/auth` file or by calling the "change password endpoint" upfront with the default credentials.
 
 Travis CI (config) and also http://graphenedb.com[GrapheneDB] (API) provide options to provision Neo4j instances programmatically.
-
 
 ////
 
