@@ -7,8 +7,8 @@
 :toclevels: 2
 :section: Develop with Neo4j
 :section-link: language-guides
-:SDN4: 4.0.0.RELEASE
-:SDN3: 3.3.1.RELEASE
+:SDN4: 4.1.1.RELEASE
+:SDN3: 3.3.4.RELEASE
 
 .Goals
 [abstract]
@@ -37,12 +37,16 @@ image::http://assets.neo4j.org/img/languages/sdn.png[float="right"]
 Neo4j offers a rich set of possibilities for developers using Spring.
 If you are looking for using Neo4j on the JVM in general, check out our link:../java[Java Developer's Guide].
 
-In general, using Neo4j's Java API is always possible from Spring. Just configure an embedded, in-process GraphDatabase as a singleton bean to be injected.
-For embedded use, Spring Data Neo4j 3 provides great integration too.
+If you want to benefit from full fledged Object Mapping and the other helpful support that comes with Spring Data, check out *Spring Data Neo4j 4*.
+
+It is based on the link:../java#neo4j-ogm[Neo4j-OGM] a plain java Object-Graph-Mapper and integrates in the Spring Data infrastructure, including Spring-Data repository, and annotated object mapping support.
+
+Spring Data Neo4j 4 is also supported by Spring Boot from version 1.4.0.M3, you can use the https://start.spring.io/[Spring Boot Starter page] to get started with Spring Data Neo4j immediately.
+
+Using Neo4j's Java API is always possible from Spring. Just configure an embedded, in-process GraphDatabase as a singleton bean to be injected.
 The integrated variant is also great for unit testing and high-performance/no-network setups.
 
-If you are running Neo4j as a standalone server or cluster, you can access its HTTP-APIs either with a plain RestTemplate or by combining our *JDBC-Driver* with Spring's JDBCTemplate.
-If you want to benefit from full fledged Object Mapping and the other helpful support that comes with Spring Data, check out *Spring Data Neo4j 4*.
+If you are running Neo4j as a standalone server or cluster, you can access its HTTP-APIs either with a plain RestTemplate or by combining our link:../java#neo4j-jdbc[JDBC-Driver] with Spring's JDBCTemplate.
 // end::intro[]
 
 For all Neo4j drivers and integrations, we provide a small, consistent example project across all languages.
@@ -53,8 +57,8 @@ include::../_includes/sample_project.adoc[]
 
 ++++
 <dl class="tabs" data-tab>
-  <dd class="tab-title active"><a href="#boot-jdbc">Spring Boot with JDBC</a></dd>
-  <dd class="tab-title"><a href="#sdn4">Spring Data Neo4j 4</a></dd>
+  <dd class="tab-title active"><a href="#sdn4">Spring Data Neo4j 4</a></dd>
+  <dd class="tab-title"><a href="#boot-jdbc">Spring Boot with JDBC</a></dd>
   <dd class="tab-title"><a href="#sdn3">Spring Data Neo4j 3</a></dd>
 </dl>
 ++++
@@ -62,41 +66,6 @@ include::../_includes/sample_project.adoc[]
 ++++
 <div class="tabs-content">
 ++++
-
-[[boot-jdbc]]
-[.content.active]
-=== Using Spring Boot with JDBC
-
-Spring Boot is a rapid application development infrastructure that allows you to quickly write Spring-based applications with little setup and configuration.
-
-Here we use a simple Spring Boot WebMVC and JDBC application to provide a backend for our movie application.
-
-It uses the well known APIs of `@RestController` and `JdbcTemplate` to do the job.
-
-More details can be found in the {examples}/movies-java-spring-boot-jdbc[example project].
-
-////
-==== Quickstart
-
-.Dependencies
-[source,xml]
-----
-include::https://raw.githubusercontent.com/neo4j-examples/movies-java-spring-boot-jdbc/master/pom.xml[tags=dependencies]
-----
-
-.DataSource Configuration
-[source,java]
-----
-include::https://raw.githubusercontent.com/neo4j-examples/movies-java-spring-boot-jdbc/master/src/main/java/movies/spring/jdbc/SampleMovieApplication.java[tags=config]
-----
-
-.Using JDBCTemplate with Cypher
-[source,java]
-----
-include::https://raw.githubusercontent.com/neo4j-examples/movies-java-spring-boot-jdbc/master/src/main/java/movies/spring/jdbc/SampleMovieApplication.java[tags=jdbctemplate]
-----
-
-////
 
 [[sdn4]]
 [.content]
@@ -135,24 +104,10 @@ Then you can use Neo4jTemplate to manage your entities (optionally annotated) an
 @EnableTransactionManagement
 @ComponentScan("org.neo4j.cineasts")
 public class PersistenceContext extends Neo4jConfiguration {
-
-    @Autowired Environment env;
 	
     @Override
     public SessionFactory getSessionFactory() {
         return new SessionFactory("org.neo4j.cineasts.domain");
-    }
-
-    @Bean
-    public Neo4jServer neo4jServer() {
-        return new RemoteServer(env.getProperty("neo4j.url"));
-    }
-
-    @Override
-    @Bean
-    @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-    public Session getSession() throws Exception {
-        return super.getSession();
     }
 }
 ----
@@ -169,7 +124,7 @@ public class Movie {
 
   Person director;
 
-  @Relationship(type="ACTED_IN", direction = "INCOMING")
+  @Relationship(type="ACTED_IN", direction = Relationship.INCOMING)
   Set<Person> actors = new HashSet<>();
 }
 ----
@@ -180,11 +135,10 @@ public class Movie {
 interface MovieRepository extends GraphRepository<Movie> {
 
   @Query("MATCH (m:Movie)<-[rating:RATED]-(user)
-          WHERE id(m) = {movieId}
-          RETURN rating")
-  Iterable<Rating> getRatings(Long movieId);
+          WHERE id(m) = {movieId} RETURN rating")
+  Iterable<Rating> getRatings(@Param("movieID") Long movieId);
 
-  Collection<Movie> findByTitle(name);
+  List<Movie> findByTitle(String title);
 }
 ----
 
@@ -193,7 +147,7 @@ interface MovieRepository extends GraphRepository<Movie> {
 ----
 @Autowired MovieRepository repo;
 
-Collection<Movie> movie = repo.findByTitle("The Matrix");
+List<Movie> movie = repo.findByTitle("The Matrix");
 
 Iterable<Rating> ratings = repo.getRatings(movieId);
 ----
@@ -205,13 +159,49 @@ We provide a https://github.com/neo4j-examples?query=sdn4[number of example proj
 // See the {examples}/movies-java-spring-data-neo4j4[example project] for further details.
 
 // * http://projects.spring.io/spring-data-neo4j[Spring Data Neo4j Project]
-* Authors: Adam George, Luanne Misquitta, Michal Bachman, Vince Bickers, Michael Hunger, Oliver Gierke and others
-* https://github.com/neo4j-examples?query=sdn4[Spring Data Neo4j 4 Example Projects]
-* https://github.com/spring-projects/spring-data-neo4j/tree/4.0.x[Spring Data Neo4j on GitHub]
-* http://docs.spring.io/spring-data/data-neo4j/docs/{SDN4}/reference/html/[Reference Documentation], http://docs.spring.io/spring-data/data-neo4j/docs/{SDN4}/api/[JavaDoc], http://docs.spring.io/spring-data/data-neo4j/docs/{SDN4}/changelog.txt[ChangeLog]
+* Authors: Adam George, Luanne Misquitta, Michal Bachman, Vince Bickers, Mark Angrish, Michael Hunger, Oliver Gierke and others
+* {examples}?query=sdn4[Spring Data Neo4j 4 Example Projects]
+* https://github.com/spring-projects/spring-data-neo4j[Spring Data Neo4j on GitHub]
+* http://docs.spring.io/spring-data/data-neo4j/docs/current/reference/html/[Reference Documentation], http://docs.spring.io/spring-data/data-neo4j/docs/current/api/[JavaDoc], http://docs.spring.io/spring-data/data-neo4j/docs/current/changelog.txt[ChangeLog]
 * https://www.airpair.com/neo4j/posts/the-essence-of-spring-data-neo4j-4[Article: Introducing SDN4 by Luanne Misquitta]
 * https://www.youtube.com/watch?v=Atz8fVxrIZ4&index=20&list=PL9Hl4pk2FsvXY_LSIPL6Da7PJXW33lxLy[Video: Introducing SDN 4, role=video]
-// * {examples}/movies-java-spring-data-neo4j-4[Spring Data Neo4j Example Project]
+* {examples}/movies-java-spring-data-neo4j-4[Spring Data Neo4j Example Project]
+
+[[boot-jdbc]]
+[.content.active]
+=== Using Spring Boot with JDBC
+
+Spring Boot is a rapid application development infrastructure that allows you to quickly write Spring-based applications with little setup and configuration.
+
+Here we use a simple Spring Boot WebMVC and JDBC application to provide a backend for our movie application.
+
+It uses the well known APIs of `@RestController` and `JdbcTemplate` to do the job.
+
+More details can be found in the {examples}/movies-java-spring-boot-jdbc[example project].
+
+////
+==== Quickstart
+
+.Dependencies
+[source,xml]
+----
+include::https://raw.githubusercontent.com/neo4j-examples/movies-java-spring-boot-jdbc/master/pom.xml[tags=dependencies]
+----
+
+.DataSource Configuration
+[source,java]
+----
+include::https://raw.githubusercontent.com/neo4j-examples/movies-java-spring-boot-jdbc/master/src/main/java/movies/spring/jdbc/SampleMovieApplication.java[tags=config]
+----
+
+.Using JDBCTemplate with Cypher
+[source,java]
+----
+include::https://raw.githubusercontent.com/neo4j-examples/movies-java-spring-boot-jdbc/master/src/main/java/movies/spring/jdbc/SampleMovieApplication.java[tags=jdbctemplate]
+----
+
+////
+
 
 [[sdn3]]
 [.content]

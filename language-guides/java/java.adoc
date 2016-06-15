@@ -37,7 +37,12 @@ The server's additional HTTP API is used by many other integrations, using drive
 
 You can also extend Neo4j by implementing *user defined procedures for Cypher* in Java or other JVM languages, writing *server extensions* which act as REST-endpoints or by embedding Neo4j into your own Java applications.
 
+[NOTE]
+Please note that starting with version 3.0 you need Java 8 to use Neo4j.
+
 // end::intro[]
+
+include::../_includes/sample_project.adoc[]
 
 [[neo4j-java-driver]]
 === icon:check-circle-o[] Neo4j Java Driver
@@ -91,15 +96,24 @@ The connection to Neo4j handled by a driver layer, which can use the binary prot
 
 === Using Neo4j's Embedded Java API
 
+[role=side-nav]
+* link:/docs/java-reference/current[Java developers manual]
+* link:/docs/java-reference/current/javadocs/[API JavaDoc]
+* http://www.tutorialspoint.com/neo4j/neo4j_java_introduction.htm[Tutorialspoint step-by-step Introduction]
+* http://www.informit.com/articles/article.aspx?p=2415371[Inform-IT Tutorial on Java-API]
+* https://maxdemarzi.com/tag/java/[Articles on the JavaAPI by Max de Marzi]
+
 Being implemented in Java you can use Neo4j's link:/docs/java-reference/current/javadocs/[Java APIs] also directly in your programs, much like HSQL or Derby. 
 This is great for unit testing, but also useful for very high performance requirements and single-tier setups.
 
 Besides an object-oriented API to the graph database, working with `Node`, `Relationship`, and `Path` objects, it also offers highly customizable, high-speed traversal- and graph-algorithm implementations.
 
+We don't provide extensive code examples for the Java API on this page, because they are covered in detail in the link:/docs/java-reference/current[Java developers manual] and other  articles (please adapt the cited Neo4j version to the one you use).
+
 As a JVM developer you are also on the bright side when it comes to inserting large amounts of data into Neo4j.
 With its non-transactional, highly-concurrent batch-insertion APIs it can ingest billions of nodes and relationships in just minutess.
 
-That's why we also chose this approach for extending Neo4j.
+Because of its flexibility and performance, we also chose the Java API for extending Neo4j as explained below.
 
 === User Defined Procedures
 
@@ -107,11 +121,9 @@ User Defined *Procedures* are now available within Cypher and encapsulate dedica
 
 Just by annotating methods of a Java class with `@Procedure` and deploying the resulting jar file into your Neo4j installation, you can make new functionality easily available within the query language.
 
-To get started we provided a https://github.com/neo4j-examples/neo4j-procedure-template[template project] and documentation the link:/docs/java-reference/current/#procedures[developer manual].
+To get started we provided a https://github.com/neo4j-examples/neo4j-procedure-template[template project] and documentation in the link:/docs/java-reference/current/#procedures[Java developer manual].
 
 More useful examples for user defined procedures can be found in our https://github.com/neo4j-contrib?query=procedure[neo4j-contrib GitHub repository].
-
-include::../_includes/sample_project.adoc[]
 
 [[server-extension]]
 === Extending Neo4j Server with a REST Server Extension
