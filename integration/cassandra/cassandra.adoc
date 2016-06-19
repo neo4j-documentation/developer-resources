@@ -25,7 +25,7 @@ You will need to have Cassandra, Neo4j and Python 3.x installed.
 [role=expertise]
 {level}
 
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/20160203161027/datamodel.png[title='Translating from a column-oriented data model to a property graph.']
+image:://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/20160203161027/datamodel.png[title='Translating from a column-oriented data model to a property graph.']
 
 toc::[]
 
@@ -144,7 +144,7 @@ The schema YAML file name (if different than `schema.yaml`) can also be specifed
 python connector.py export -k playlist -t track_by_id,artists_by_first_letter -f my_schema_file.yaml
 ```
 
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/20160203161028/neo4j_cassandra.png[title='Neo4j Cassandra data import tool']
+image:://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/20160203161028/neo4j_cassandra.png[title='Neo4j Cassandra data import tool']
 
 == Mapping data into Cassandra to Neo4j
 
@@ -153,7 +153,7 @@ The YAML file will be parsed into Cypher queries. A file called **cypher_** will
 Using the sample Artists and Tracks dataset, we have __Track__ nodes and __Artist__ nodes, connected by artist fields. We also wanted to make a constraint on artist by its name - we could not have two different nodes with similar artist names.
 
 
-image::http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/20160204123739/graph_data_model.png[title='Property graph data from sample playlist database']
+image:://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/20160204123739/graph_data_model.png[title='Property graph data from sample playlist database']
 
 [NOTE]
 The Neo4j Cassandra data import tool is in its infancy and currently has many limitations. It is currently a simple prototype meant to support a limited data model. We'd appreciate any feedback you might have, please raise an issue on the link:https://github.com/neo4j-contrib/neo4j-cassandra-connector/issues[GitHub project].
