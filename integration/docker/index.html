@@ -8,7 +8,7 @@
 	
 <link rel='stylesheet' id='cookielawinfo-style-css' href="http://neo4j.com/wp-content/plugins/cookie-law-info/css/cli-style.css?ver=1.5.3" type='text/css' media='all'/> 
 <!--link rel='stylesheet' id='font-awesome-four-css' href="http://neo4j.com/wp-content/plugins/font-awesome-4-menus/css/font-awesome.min.css?ver=4.5.0" type='text/css' media='all'/-->
- <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+ <link href="/developer///maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
  <link rel='stylesheet' id='foundation-css' href="http://neo4j.com/wp-content/themes/neo4jweb/assets/css/app.css?ver=2016.03.02" type='text/css' media='screen'/> <link rel='stylesheet' id='neo-codemirror-css' href="http://neo4j.com/wp-content/themes/neo4jweb/assets/css/codemirror-neo.css?ver=4.5" type='text/css' media='screen'/> <script type='text/javascript'>
 /* <![CDATA[ */
 var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
@@ -34,7 +34,7 @@ var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
                     <a href="http://neo4j.com/blog/">Blog</a></li>
                 <li id="menu-item-38817"
                     class="menu-item menu-item-type-custom menu-item-object-custom menu-item-38817"><a
-                        href="//support.neo4j.com/hc">Support</a></li>
+                        href="/support.neo4j.com/hc">Support</a></li>
                 <li id="menu-item-36919"
                     class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36919"><a
                         href="http://neo4j.com/contact-us/">Contact Us</a></li>
@@ -58,7 +58,7 @@ var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
                                     <ul id="menu-product-and-services" class="menu">
                                         <li id="menu-item-36967"
                                             class="menu-item menu-item-type-custom menu-item-object-custom menu-item-36967">
-                                            <a href="/product">PRODUCT AND SERVICES</a></li>
+                                            <a href="/developer//product">PRODUCT AND SERVICES</a></li>
                                         <li id="menu-item-36966"
                                             class="menu-item menu-item-type-custom menu-item-object-custom menu-item-36966">
                                             <a href="http://neo4j.com/product">Neo4j Graph Database</a></li>
@@ -553,7 +553,7 @@ th.tableblock, th p.tableblock {
 <div class="sectionbody">
 <div class="imageblock" style="float: right;">
 <p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/neo4j-docker-image-now-in-beta-235x300.jpg" alt="neo4j docker image now in beta 235x300">
+<img src="//s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/neo4j-docker-image-now-in-beta-235x300.jpg" alt="neo4j docker image now in beta 235x300">
 </p>
 </div>
 <div class="quoteblock abstract">
@@ -580,10 +580,13 @@ You should have a sound understanding of both Docker and Neo4j, to leverage them
 
 <ul class="sectlevel1">
 <li><a href="#_general_observations">General Observations</a></li>
+<li><a href="#docker-store">Docker Store</a></li>
 <li><a href="#neo4j-docker">The official Neo4j Docker Image</a></li>
 <li><a href="#_how_to_use_the_neo4j_docker_image">How to use the Neo4j Docker Image</a></li>
 <li><a href="#_capabilities">Capabilities</a></li>
 <li><a href="#_references">References</a></li>
+<li><a href="#_using_the_neo4j_docker_image_at_neo4j">Using the Neo4j Docker Image at Neo4j</a></li>
+<li><a href="#_docker_neo4j_a_long_history">Docker + Neo4j: A Long History</a></li>
 <li><a href="#_neo4j_spark_analytics">Neo4j - Spark - Analytics</a></li>
 </ul>
 
@@ -624,6 +627,23 @@ Docker containers can be used as infrastructure layer, data containers or config
 </div>
 
 </div>
+<div  id="docker-store" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Docker Store</h3>
+
+
+<div class="paragraph">
+<p>We’re excited to have been chosen by the team at Docker to be included as a launch partner in the brand new <a href="https://store.docker.com/">Docker Store</a>.
+Although it is still in limited beta, we wanted to share a bit on why we’re enthusiastic about the new Store and Docker as a platform for distribution and operations.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>The new Docker Store means great things for Docker users – you’ll see Neo4j among other high-quality images, and have the ability to rate and review these images as well as provide feedback to the vendors.
+Perhaps most importantly, we’ll have the ability to push out new releases to you much faster through an automated publication workflow!</p>
+</div>
+
+</div>
 <div  id="neo4j-docker" class="sect1 columns medium-12" style='padding-left: 0;' >
 <h3>The official Neo4j Docker Image</h3>
 
@@ -632,6 +652,24 @@ Docker containers can be used as infrastructure layer, data containers or config
 <p>Starting from Neo4j 2.3 we are happy to release official <a href="https://hub.docker.com/_/neo4j/">Neo4j Docker images</a>, both for Neo4j Community as well as Enterprise Edition.</p>
 </div>
 
+
+
+<div class="paragraph">
+<p>Developers at a wide variety of organizations have used the image, and we have <strong><em>over 1M+ pulls</em></strong> from the Docker repository.</p>
+</div>
+
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Let us know what you end up doing with the Neo4j Docker image by mentioning <code>#Docker</code> and <code>#Neo4j</code> in your tweets!
+</td>
+</tr>
+</table>
+</div>
 
 
 <div class="paragraph">
@@ -717,7 +755,7 @@ You have to login with <code>neo4j/neo4j</code> at the first connection and set 
 
 
 <div class="paragraph">
-<p>For more details, see the <a href="docker-30">Neo4j 3.0 Docker page</a>.</p>
+<p>For more details, see the <a href="/developer/docker-30">Neo4j 3.0 Docker page</a>.</p>
 </div>
 
 </div>
@@ -734,7 +772,7 @@ You have to login with <code>neo4j/neo4j</code> at the first connection and set 
 <pre>docker run \
     --publish=7474:7474 \
     --volume=$HOME/neo4j/data:/data \
-    neo4j</pre>
+    neo4j:2.3</pre>
 </div>
 </div>
 
@@ -772,7 +810,7 @@ You have to login with <code>neo4j/neo4j</code> at the first connection and set 
 
 
 <div class="paragraph">
-<p>For more details, see the <a href="docker-23">Neo4j 2.3 Docker page</a>.</p>
+<p>For more details, see the <a href="/developer/docker-23">Neo4j 2.3 Docker page</a>.</p>
 </div>
 
 </div>
@@ -856,6 +894,32 @@ advanced monitoring
 </ul>
 </div>
 </div>
+<div  id="_using_the_neo4j_docker_image_at_neo4j" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Using the Neo4j Docker Image at Neo4j</h3>
+
+
+<div class="paragraph">
+<p>We built the <a href="http://network.graphdemos.com/">Graph Your Network application</a>, scaling from a handful to hundreds of simultaneous Docker containers <a href="http://neo4j.com/blog/graph-your-network-neo4j-docker-image/">running Neo4j on Amazon ECS</a>.
+This application allows users to load their Twitter activity into Neo4j and analyze it with the Cypher query language.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>If you’re just looking to evaluate Neo4j, our <a href="http://neo4j.com/sandbox/">Neo4j Sandbox</a> uses a similar architecture.</p>
+</div>
+
+</div>
+<div  id="_docker_neo4j_a_long_history" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Docker + Neo4j: A Long History</h3>
+
+
+<div class="paragraph">
+<p>Our Developer Relations team launched the Community Edition <a href="http://neo4j.com/blog/neo4j-docker-image-now-in-beta/">Neo4j Docker image in beta</a> in Spring 2015.
+After months of iterating based on the feedback from the community, our Engineering team <a href="https://blog.docker.com/2016/01/three-new-official-repos-join-the-docker-library/">launched the Official Repository</a>, with support for both Community Edition and Enterprise Edition, including full cluster and high availability (HA) capabilities.</p>
+</div>
+
+</div>
 <div  id="_neo4j_spark_analytics" class="sect1 columns medium-12" style='padding-left: 0;' >
 <h3>Neo4j - Spark - Analytics</h3>
 
@@ -880,114 +944,112 @@ advanced monitoring
                            <ul style="padding-top: 0;" class="side-nav">
          <dl class="accordion">
             <dd class="accordion-navigation inactive">
-               <a href="/developer-resources/get-started/">
+               <a href="/developer/get-started/">
                   <h5>Get Started</h5>
                </a>
                <div class="content inactive" id="panel1">
                   <ul>
-                     <li><a href="/developer-resources/get-started/graph-database/">What is a GraphDB?</a></li>
-                     <li><a href="/developer-resources/get-started/graph-db-vs-rdbms/">GraphDB vs RDBMS</a></li>
-                     <li><a href="/developer-resources/get-started/graph-db-vs-nosql/">GraphDB vs NOSQL</a></li>
-                     <li><a href="/developer-resources/get-started/guide-neo4j-browser/">Neo4j Browser Intro</a></li>
+                     <li><a href="/developer/graph-database/">What is a GraphDB?</a></li>
+                     <li><a href="/developer/graph-db-vs-rdbms/">GraphDB vs RDBMS</a></li>
+                     <li><a href="/developer/graph-db-vs-nosql/">GraphDB vs NOSQL</a></li>
+                     <li><a href="/developer/guide-neo4j-browser/">Neo4j Browser Intro</a></li>
                      <li><a href="/graphacademy/online-course-getting-started/">Getting Started Course</a></li>
-                     <!--<li><a href="/developer-resources/language-guides/">Language Drivers</a></li>-->
+                     <!--<li><a href="/developer/language-guides/">Language Drivers</a></li>-->
                   </ul>
                </div>
             </dd>
          </dl>
             <dl class="accordion">
                <dd class="accordion-navigation inactive">
-                  <a href="/developer-resources/cypher/">
+                  <a href="/developer/cypher/">
                      <h5>Cypher Query Language</h5>
                   </a>
                   <div class="content inactive" id="panel2">
                      <ul>
-                        <li><a href="/developer-resources/cypher/cypher-query-language/">Cypher Intro</a></li>
-                        <li><a href="/developer-resources/cypher/guide-sql-to-cypher/">From SQL to Cypher</a></li>
-                        <li><a href="/developer-resources/cypher/guide-build-a-recommendation-engine/">Build a Recommendation Engine</a></li>
+                        <li><a href="/developer/cypher-query-language/">Cypher Intro</a></li>
+                        <li><a href="/developer/guide-sql-to-cypher/">From SQL to Cypher</a></li>
+                        <li><a href="/developer/guide-build-a-recommendation-engine/">Build a Recommendation Engine</a></li>
                         <li><a href="/graphacademy/online-course-getting-started/">Getting Started Course</a></li>
-                        <li><a href="/docs/stable/cypher-refcard/">Cypher Refcard</a></li>
+                        <li><a href="/docs/cypher-refcard/current/">Cypher Refcard</a></li>
                      </ul>
                   </div>
                </dd>
             </dl>
             <dl class="accordion">
                <dd class="accordion-navigation inactive">
-                  <a href="/developer-resources/data-modeling/">
+                  <a href="/developer/data-modeling/">
                      <h5>Data Modeling</h5>
                   </a>
                   <div class="content inactive" id="panel3">
                      <ul>
-                        <li><a href="/developer-resources/data-modeling/guide-data-modeling/">Graph Data Modeling Guidelines</a></li>
-                        <li><a href="/developer-resources/data-modeling/graphgist/">Interactive Graph Models - GraphGist</a></li>
+                        <li><a href="/developer/guide-data-modeling/">Graph Data Modeling Guidelines</a></li>
+                        <li><a href="/developer/graphgist/">Interactive Graph Models - GraphGist</a></li>
                      </ul>
                   </div>
                </dd>
             </dl>
             <dl class="accordion">
                <dd class="accordion-navigation inactive">
-                  <a href="/developer-resources/working-with-data/">
+                  <a href="/developer/working-with-data/">
                      <h5>Working with Data</h5>
                   </a>
                   <div class="content inactive" id="panel4">
                      <ul>
-                        <li><a href="/developer-resources/working-with-data/guide-data-visualization/">Graph Visualization for Neo4j</a></li>
-                        <li><a href="/developer-resources/working-with-data/guide-importing-data-and-etl/">Importing Data into Neo4j</a></li>
-                        <li><a href="/developer-resources/working-with-data/guide-import-csv/">Importing CSV</a></li>
-                        <li><a href="/developer-resources/working-with-data/example-data/">Example Datasets</a></li>
+                        <li><a href="/developer/guide-data-visualization/">Graph Visualization for Neo4j</a></li>
+                        <li><a href="/developer/guide-importing-data-and-etl/">Importing Data into Neo4j</a></li>
+                        <li><a href="/developer/guide-import-csv/">Importing CSV</a></li>
+                        <li><a href="/developer/example-data/">Example Datasets</a></li>
                      </ul>
                   </div>
                </dd>
             </dl>
             <dl class="accordion">
                <dd class="accordion-navigation inactive">
-                  <a href="/developer-resources/language-guides/">
+                  <a href="/developer/language-guides/">
                      <h5>Drivers &amp; Language Guides</h5>
                   </a>
                   <div class="content inactive" id="panel5">
                      <ul>
-                        <li><a href="/developer-resources/language-guides/java/">Java</a></li>
-                        <li><a href="/developer-resources/language-guides/spring-data-neo4j/">Spring Framework</a></li>
-                        <li><a href="/developer-resources/language-guides/dotnet/">.NET</a></li>
-                        <li><a href="/developer-resources/language-guides/javascript/">JavaScript</a></li>
-                        <li><a href="/developer-resources/language-guides/python/">Python</a></li>
-                        <li><a href="/developer-resources/language-guides/ruby/">Ruby</a></li>
-                        <li><a href="/developer-resources/language-guides/php/">PHP</a></li>
-                        <li><a href="/developer-resources/language-guides/">All Neo4j Drivers</a></li>
+                        <li><a href="/developer/java/">Java</a></li>
+                        <li><a href="/developer/spring-data-neo4j/">Spring Framework</a></li>
+                        <li><a href="/developer/dotnet/">.NET</a></li>
+                        <li><a href="/developer/javascript/">JavaScript</a></li>
+                        <li><a href="/developer/python/">Python</a></li>
+                        <li><a href="/developer/ruby/">Ruby</a></li>
+                        <li><a href="/developer/php/">PHP</a></li>
+                        <li><a href="/developer/language-guides/">All Neo4j Drivers</a></li>
                      </ul>
                   </div>
                </dd>
             </dl>
             <dl class="accordion">
                <dd class="accordion-navigation active">
-                  <a href="/developer-resources/integration/">
+                  <a href="/developer/integration/">
                      <h5>Neo4j Tools &amp; Integrations</h5>
                   </a>
                   <div class="content active" id="panel6">
                      <ul>
-                        <li><a href="/developer-resources/integration/ecosystem/">Tools &amp; Libs for Neo4j</a></li>
-                        <li><a href="/developer-resources/integration/docker/">Docker</a></li>
-                        <li><a href="/developer-resources/integration/apache-spark/">Apache Spark</a></li>
-                        <li><a href="/developer-resources/integration/elastic-search/">Elastic-Search</a></li>
-                        <li><a href="/developer-resources/integration/mongodb/">MongoDB</a></li>
-                        <li><a href="/developer-resources/integration/cassandra/">Cassandra</a></li>
-                        <!--li><a href="/developer-resources/integration/apache-hadoop/">Hadoop</a></li-->
-                        <!--li><a href="/developer-resources/integration/meteor/">Integration with Meteor.js</a></li-->
+                        <li><a href="/developer/ecosystem/">Tools &amp; Libs for Neo4j</a></li>
+                        <li><a href="/developer/docker/">Docker</a></li>
+                        <li><a href="/developer/apache-spark/">Apache Spark</a></li>
+                        <li><a href="/developer/elastic-search/">Elastic-Search</a></li>
+                        <li><a href="/developer/mongodb/">MongoDB</a></li>
+                        <li><a href="/developer/cassandra/">Cassandra</a></li>
                      </ul>
                   </div>
                </dd>
             </dl>
             <dl class="accordion">
                <dd class="accordion-navigation inactive">
-                  <a href="/developer-resources/in-production/">
+                  <a href="/developer/in-production/">
                      <h5>Neo4j In Production</h5>
                   </a>
                   <div class="content inactive" id="panel7">
                      <ul>
-                        <li><a href="/developer-resources/in-production/guide-cloud-deployment/">Guide: Cloud Deployment</a></li>
-                        <li><a href="/developer-resources/in-production/guide-sizing-and-hardware-calculator/">Sizing + Hardware Calculator</a></li>
-                        <li><a href="/developer-resources/in-production/guide-performance-tuning/">Performance Tuning</a></li>
-                        <li><a href="/developer-resources/in-production/guide-clustering-neo4j/">Clustering Neo4j </a></li>
+                        <li><a href="/developer/guide-cloud-deployment/">Guide: Cloud Deployment</a></li>
+                        <!--li><a href="/developer/guide-sizing-and-hardware-calculator/">Sizing + Hardware Calculator</a></li-->
+                        <li><a href="/developer/guide-performance-tuning/">Performance Tuning</a></li>
+                        <li><a href="/developer/guide-clustering-neo4j/">Clustering Neo4j</a></li>
 	                    <li><a href="/graphacademy/online-course-prod/">In Production Course</a></li>
                      </ul>
                   </div>
@@ -995,21 +1057,21 @@ advanced monitoring
             </dl>
          <dl class="accordion">
             <dd class="accordion-navigation ">
-               <a href="/developer-resources/resources/">
+               <a href="/developer/resources/">
                   <h5>Documentation &amp; Resources</h5>
                </a>
                <div class="content " id="panel4">
                   <ul>
 	                 <li><a href="/graphacademy/online-course-getting-started/">Getting Started Course</a></li>
-	                 <li><a href="/developer-resources/resources/ruby-course/">Ruby / Rails Course</a></li>
+	                 <li><a href="/developer/ruby-course/">Ruby / Rails Course</a></li>
 	                 <li><a href="/graphacademy/online-course-prod/">In Production Course</a></li>
 
-                     <li><a href="/docs/">All Neo4j Documentation</a></li>
+                     <li><a href="/docs/">Neo4j Documentation</a></li>
                      <ul>
 	                 <li><a href="/docs/developer-manual/current/">Developer Manual</a></li>
 	                 <li><a href="/docs/java-reference/current/">Java Developer Reference</a></li>
 	                 <li><a href="/docs/operations-manual/current/">Operations Manual</a></li>
-                     <li><a href="/docs/stable/cypher-refcard/">Cypher Refcard</a></li>
+                     <li><a href="/docs/cypher-refcard/current/">Cypher Refcard</a></li>
                      </ul>
                   </ul>
                </div>
@@ -1017,13 +1079,13 @@ advanced monitoring
          </dl>
          <dl class="accordion">
             <dd class="accordion-navigation ">
-               <a href="/developer-resources/contribute/">
+               <a href="/developer/contribute/">
                   <h5>Contributing to Neo4j</h5>
                </a>
                <div class="content " id="panel8">
                   <ul>
 	                    <!-- todo CLA, SO, GitHub, Building, Tools -->
-                     <!--li><a href="/developer-resources/contribution/xxx">Contributing</a></li-->
+                     <!--li><a href="/developer/xxx">Contributing</a></li-->
                   </ul>
                </div>
             </dd>
@@ -1074,7 +1136,7 @@ advanced monitoring
 	btn.onclick = function(){
 	MktoForms2.getForm(519).submit();
 	};
-</script> <div class="row text-center hide-for-small hr-style"> <div class="medium-5 columns"> <hr> </div> <div class="medium-2 columns"> <object height="100%" width="100%" data="http://neo4j.com/wp-content/themes/neo4jweb/assets/images/hr-image.svg" type="image/svg+xml"></object> </div> <div class="medium-5 columns"> <hr> </div> </div> <div class="row text-center show-for-small"> <div class="medium-12 columns"> <hr> </div> </div> <footer id="footer"> <div class="footer-widgets"> <div class="row-1 row"> <div class="small-12 medium-8 columns footer-menus"> <div class="row-2 row"> <div class="footer-menu-widget small-6 medium-3 columns"><div class="menu-footer-menus-new-1-container"><ul id="menu-footer-menus-new-1" class="menu"><li id="menu-item-51837" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom menu-item-51837"><a href="/product/">PRODUCTS</a></li> <li id="menu-item-51838" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom menu-item-51838"><a href="/use-cases/">SOLUTIONS</a></li> <li id="menu-item-51839" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom menu-item-51839"><a href="/partners/">PARTNERS</a></li> </ul></div></div><div class="footer-menu-widget small-6 medium-3 columns"><div class="menu-footer-menus-new-2-container"><ul id="menu-footer-menus-new-2" class="menu"><li id="menu-item-51840" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom menu-item-51840"><a href="/customers/">CUSTOMERS</a></li> <li id="menu-item-51841" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom menu-item-51841"><a href="/graphacademy/">LEARN</a></li> <li id="menu-item-51842" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom current-menu-item menu-item-51842"><a href="./">DEVELOPERS</a></li> </ul></div></div><div class="footer-menu-widget small-6 medium-3 columns"><div class="menu-footer-menus-new-4-container"><ul id="menu-footer-menus-new-4" class="menu"><li id="menu-item-51942" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51942"><a href="http://neo4j.com/company/">COMPANY</a></li> <li id="menu-item-51846" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51846"><a href="/news/">News</a></li> <li id="menu-item-51847" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51847"><a href="/awards/">Awards</a></li> <li id="menu-item-51848" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51848"><a href="/jobs/">Jobs</a></li> <li id="menu-item-51849" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51849"><a href="/staff/">Staff</a></li> </ul></div></div> </div> </div> <div class="small-12 medium-4 columns"><div> <div class="textwidget"><div class="social-icons"><a href="//www.linkedin.com/company/neo4j" title="Neo4j on LinkedIn" target="_blank"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-linkedin fa-stack-1x fa-inverse"></i></span></a> <a href="//twitter.com/neo4j" title="Neo4j on Twitter" target="_blank"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-twitter fa-stack-1x fa-inverse"></i></span></a> <a href="http://youtube.com/neo4j" title="Neo4j on YouTube" target="_blank"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i></span></a> <a href="//www.facebook.com/neo4j.graph.database" title="Neo4j on Facebook" target="_blank"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-facebook fa-stack-1x fa-inverse"></i></span></a> <a href="http://neo4j.com/slack" title="Neo4j Users on Slack" target="_blank"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-slack fa-stack-1x fa-inverse"></i></span></a> </div></div> </div></div> </div> <div class="row"> <div><div class="small-12 medium-4 columns"> <div class="textwidget"><div class="copyright"> <div class="logo-footer"></div> <p>&copy; 2016 Neo Technology, Inc.<br/> <a href="/terms/">Terms</a> | <a href="/privacy-%20policy/">Privacy </a> | <a href="/sitemap/">Sitemap</a></p> <p>Neo4j<sup>&#174;</sup>, Cypher<sup>&#174;</sup>, and <br/>Neo Technology<sup>&#174;</sup> <br/>are registered trademarks<br/> of Neo Technology, Inc.</p> </div></div> </div><div class="small-12 medium-4 columns"><h2>GET NEO4J NEWS</h2> <div class="textwidget"><div class="footer-form"> <p>Keep up with the latest graph <br>database trends, tips &amp; events.</p> <script src="//app-sjl.marketo.com/js/forms2/js/forms2.js"></script> <form id="mktoForm_477"></form> <script>
+</script> <div class="row text-center hide-for-small hr-style"> <div class="medium-5 columns"> <hr> </div> <div class="medium-2 columns"> <object height="100%" width="100%" data="http://neo4j.com/wp-content/themes/neo4jweb/assets/images/hr-image.svg" type="image/svg+xml"></object> </div> <div class="medium-5 columns"> <hr> </div> </div> <div class="row text-center show-for-small"> <div class="medium-12 columns"> <hr> </div> </div> <footer id="footer"> <div class="footer-widgets"> <div class="row-1 row"> <div class="small-12 medium-8 columns footer-menus"> <div class="row-2 row"> <div class="footer-menu-widget small-6 medium-3 columns"><div class="menu-footer-menus-new-1-container"><ul id="menu-footer-menus-new-1" class="menu"><li id="menu-item-51837" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom menu-item-51837"><a href="/developer//product/">PRODUCTS</a></li> <li id="menu-item-51838" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom menu-item-51838"><a href="/use-cases/">SOLUTIONS</a></li> <li id="menu-item-51839" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom menu-item-51839"><a href="/developer//partners/">PARTNERS</a></li> </ul></div></div><div class="footer-menu-widget small-6 medium-3 columns"><div class="menu-footer-menus-new-2-container"><ul id="menu-footer-menus-new-2" class="menu"><li id="menu-item-51840" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom menu-item-51840"><a href="/developer//customers/">CUSTOMERS</a></li> <li id="menu-item-51841" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom menu-item-51841"><a href="/graphacademy/">LEARN</a></li> <li id="menu-item-51842" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom current-menu-item menu-item-51842"><a href="/developer/./">DEVELOPERS</a></li> </ul></div></div><div class="footer-menu-widget small-6 medium-3 columns"><div class="menu-footer-menus-new-4-container"><ul id="menu-footer-menus-new-4" class="menu"><li id="menu-item-51942" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51942"><a href="http://neo4j.com/company/">COMPANY</a></li> <li id="menu-item-51846" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51846"><a href="/developer//news/">News</a></li> <li id="menu-item-51847" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51847"><a href="/developer//awards/">Awards</a></li> <li id="menu-item-51848" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51848"><a href="/developer//jobs/">Jobs</a></li> <li id="menu-item-51849" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51849"><a href="/developer//staff/">Staff</a></li> </ul></div></div> </div> </div> <div class="small-12 medium-4 columns"><div> <div class="textwidget"><div class="social-icons"><a href="/developer///www.linkedin.com/company/neo4j" title="Neo4j on LinkedIn" target="_blank"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-linkedin fa-stack-1x fa-inverse"></i></span></a> <a href="/developer///twitter.com/neo4j" title="Neo4j on Twitter" target="_blank"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-twitter fa-stack-1x fa-inverse"></i></span></a> <a href="http://youtube.com/neo4j" title="Neo4j on YouTube" target="_blank"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i></span></a> <a href="/developer///www.facebook.com/neo4j.graph.database" title="Neo4j on Facebook" target="_blank"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-facebook fa-stack-1x fa-inverse"></i></span></a> <a href="http://neo4j.com/slack" title="Neo4j Users on Slack" target="_blank"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-slack fa-stack-1x fa-inverse"></i></span></a> </div></div> </div></div> </div> <div class="row"> <div><div class="small-12 medium-4 columns"> <div class="textwidget"><div class="copyright"> <div class="logo-footer"></div> <p>&copy; 2016 Neo Technology, Inc.<br/> <a href="/developer//terms/">Terms</a> | <a href="/developer//privacy-%20policy/">Privacy </a> | <a href="/developer//sitemap/">Sitemap</a></p> <p>Neo4j<sup>&#174;</sup>, Cypher<sup>&#174;</sup>, and <br/>Neo Technology<sup>&#174;</sup> <br/>are registered trademarks<br/> of Neo Technology, Inc.</p> </div></div> </div><div class="small-12 medium-4 columns"><h2>GET NEO4J NEWS</h2> <div class="textwidget"><div class="footer-form"> <p>Keep up with the latest graph <br>database trends, tips &amp; events.</p> <script src="//app-sjl.marketo.com/js/forms2/js/forms2.js"></script> <form id="mktoForm_477"></form> <script>
 MktoForms2.loadForm("//app-sjl.marketo.com", "773-GON-065", 477, function(form){
   form.onSuccess(function(values, followUpUrl){
     document.getElementById("signup").style.display = "none";
@@ -1089,7 +1151,7 @@ MktoForms2.loadForm("//app-sjl.marketo.com", "773-GON-065", 477, function(form){
   btn.onclick = function(){
     MktoForms2.getForm(477).submit();
   };
-</script> </div></div> </div><div class="small-12 medium-4 columns"> <div class="textwidget"><h5><a href="/contact-us">Contact Us &rarr;</a></h5> <p>1-855-636-4532 <a href="mailto:info@neotechnology.com">US <i class="fi-mail"></i></a><br/> +44 808 189 0493 <a href="mailto:uk@neotechnology.com">UK <i class="fi-mail"></i></a><br/> Please email: <a href="mailto:vertrieb@neotechnology.com">Germany <i class="fi-mail"></i></a><br/> +33 (0) 8 05 08 03 44 <a href="mailto:ventes@neotechnology.com">France <i class="fi-mail"></i></a><br/> </p></div> </div></div> </div> </div> <div class="contact-bar"> <div class="row"> <div class="columns"> <span class="contact-bar-phone">Contact Sales: 1.855.636.4532</span> <span class="contact-bar-email"><a href="/contact-us/">Contact Us</a></span> </div> </div> </div> </footer> <a class="exit-off-canvas"></a> </div> </div> <div id="cookie-law-info-bar"><span>This website uses 'cookies' to give you the best, most relevant experience. Using this website means you’re OK with this. You can change which cookies are set at any time - by clicking on <a href="http://neo4j.com/privacy-policy/cookies/" id="CONSTANT_OPEN_URL" target="_blank" class="cli-plugin-main-link">more info</a>. <a href="#" id="cookie_action_close_header" class="medium cli-plugin-button cli-plugin-main-button">Accept</a> </span></div> <script type="text/javascript">
+</script> </div></div> </div><div class="small-12 medium-4 columns"> <div class="textwidget"><h5><a href="/developer//contact-us">Contact Us &rarr;</a></h5> <p>1-855-636-4532 <a href="mailto:info@neotechnology.com">US <i class="fi-mail"></i></a><br/> +44 808 189 0493 <a href="mailto:uk@neotechnology.com">UK <i class="fi-mail"></i></a><br/> Please email: <a href="mailto:vertrieb@neotechnology.com">Germany <i class="fi-mail"></i></a><br/> +33 (0) 8 05 08 03 44 <a href="mailto:ventes@neotechnology.com">France <i class="fi-mail"></i></a><br/> </p></div> </div></div> </div> </div> <div class="contact-bar"> <div class="row"> <div class="columns"> <span class="contact-bar-phone">Contact Sales: 1.855.636.4532</span> <span class="contact-bar-email"><a href="/developer//contact-us/">Contact Us</a></span> </div> </div> </div> </footer> <a class="exit-off-canvas"></a> </div> </div> <div id="cookie-law-info-bar"><span>This website uses 'cookies' to give you the best, most relevant experience. Using this website means you’re OK with this. You can change which cookies are set at any time - by clicking on <a href="http://neo4j.com/privacy-policy/cookies/" id="CONSTANT_OPEN_URL" target="_blank" class="cli-plugin-main-link">more info</a>. <a href="#" id="cookie_action_close_header" class="medium cli-plugin-button cli-plugin-main-button">Accept</a> </span></div> <script type="text/javascript">
 			//<![CDATA[
 			jQuery(document).ready(function() {
 				cli_show_cookiebar({
