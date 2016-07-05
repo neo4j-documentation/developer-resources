@@ -107,6 +107,89 @@ foreach ($result->getRecords() as $record) {
 | icon:book[] Docs | https://github.com/graphaware/neo4j-php-client/blob/master/README.md
 |===
 
+=== GraphAware Neo4j-PHP-OGM
+
+GraphAware Neo4j-PHP-OGM is an object graph mapper for Neo4j in PHP. Highly inspired by Doctrine2, it uses annotations
+to defined mapping and all the operations to the graph are centralized via an EntityManager.
+
+[source,php]
+----
+<?php
+
+namespace Movies;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use GraphAware\Neo4j\OGM\Annotations as OGM;
+
+/**
+ * @OGM\Node(label="Movie")
+ */
+class Movie
+{
+    /**
+     * @OGM\GraphId()
+     * @var int
+     */
+    protected $id;
+
+    /**
+     * @OGM\Property(type="string")
+     * @var string
+     */
+    protected $title;
+
+    /**
+     * @OGM\Property(type="string")
+     * @var string
+     */
+    protected $tagline;
+
+    /**
+     * @OGM\Property(type="int")
+     * @var int
+     */
+    protected $release;
+
+    /**
+     * @OGM\Relationship(type="ACTED_IN", direction="OUTGOING", targetEntity="Person", collection=true)
+     * @var ArrayCollection|Person[]
+     */
+    protected $actors;
+
+    /**
+     * @param string $title
+     * @param string|null $release
+     */
+    public function __construct($title, $release = null)
+    {
+        $this->title = $title;
+        $this->release = $release;
+        $this->actors = new ArrayCollection();
+    }
+    // Getters and Setters
+----
+
+[source, php]
+---- 
+<?php
+
+$user = new User('cypher666');
+/** @var Movie $movie */
+$movie = $em->getRepository(Movie::class)->findOneBy('title', 'The Matrix');
+$user->rateMovie($movie, '4.5');
+$em->persist($user);
+$em->flush();
+
+---- 
+
+[cols="1,4"]
+|===
+| icon:user[] Author | http://twitter.com/ikwattro[Christophe Willemsen]
+| icon:gift[] Package | `composer require graphaware/neo4j-php-ogm:^1.0@beta
+| icon:github[] Source | https://github.com/graphaware/neo4j-php-ogm
+| icon:book[] Docs | https://github.com/graphaware/neo4j-php-ogm/blob/1.0/docs/01-intro.md
+|===
+
 === NeoEloquent for Laravel
 
 Neo4j Graph Eloquent Driver for Laravel 4
