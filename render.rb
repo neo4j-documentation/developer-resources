@@ -13,10 +13,10 @@ LOGGER = Logger.new(STDOUT)
 require './html_transformer' # Neo Tech specific
 
 ASCIIDOC_TEMPLATES_DIR = ENV['ASCIIDOC_TEMPLATES_DIR'] || '_templates'
-IMAGE_BASE_URL = ENV['IMAGE_BASE_URL'] ||  'http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/'
+IMAGE_BASE_URL = ENV['IMAGE_BASE_URL'] ||  'https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/'
 EXAMPLES = ENV['EXAMPLES'] || 'https://github.com/neo4j-examples'
-MANUAL = ENV['MANUAL'] || 'http://neo4j.com/docs/developer-manual/current'
-OPSMANUAL = ENV['OPSMANUAL'] || 'http://neo4j.com/docs/operations-manual/current'
+MANUAL = ENV['MANUAL'] || 'https://neo4j.com/docs/developer-manual/current'
+OPSMANUAL = ENV['OPSMANUAL'] || 'https://neo4j.com/docs/operations-manual/current'
 GITHUB = ENV['GITHUB'] || 'https://github.com/neo4j-contrib/developer-resources/tree/gh-pages' 
 ASCIIDOC_ATTRIBUTES = %W(allow-uri-read
                          icons=font
