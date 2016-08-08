@@ -24,10 +24,12 @@ You should know that Neo4j employs its own persistence and caching implementatio
 
 toc::[]
 
+
 === Neo4j's Architecture
 
 Neo4j is a native graph database; it handles the graph data records down to the disk/filesystem level.
 On top of the memory mapped filesystem, Neo4j employs additional caches for loaded Node and Relationship-Records.
+
 
 === Disk Storage
 
@@ -59,11 +61,13 @@ Total  is 110.2MB
 * link:/developer/guide-intro-to-graph-modeling[Intro to Graph Modeling]
 ////
 
+
 === Low Level Cache
 
 The low level cache requirements are the same as for the disk space.
 Its configuration (memory mapped regions per file), is done in `conf/neo4j.properties`.
 You should try to memory-map as much data as your RAM allows (allow for 6 to 16GB heap depending on availability and use-cases).
+
 
 === Optimizing
 
@@ -74,6 +78,7 @@ In optimizing a graph database solution for performance, we should bear the foll
 * Tune the JVM heap and keep an eye on GC behaviors
 * Consider using fast disks—SSDs or enterprise flash hardware to bring up the bottom line when disk access becomes inevitable
 
+
 === Performance Optimization
 There are three areas in which we can optimize for performance:
 
@@ -81,6 +86,7 @@ There are three areas in which we can optimize for performance:
 * Increase the file cache (from 2 GB all the way up to 200 GB or more in exceptional circumstances)
 * Increase the percentage of the store mapped into the filesystem cache
 * Invest in faster disks: SSDs or enterprise flash hardware
+
 
 === Hardware sizing calculator
 

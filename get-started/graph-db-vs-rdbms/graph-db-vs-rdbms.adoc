@@ -29,6 +29,7 @@ toc::[]
 * guides / tips for relational database developers / DBAs
 ////
 
+
 === Relational Databases
 
 Relational databases have been the power-horse of software applications since the 80s, and continue so to this day.
@@ -80,6 +81,7 @@ But whereas relational databases were initially designed to codify paper forms a
 <iframe width="640" height="360" src="https://www.youtube.com/embed/NO3C-CWykkY" frameborder="0" allowfullscreen></iframe>
 ++++
 
+
 === From Relational to Graph Databases
 
 Relationships are first-class citizens of the graph data model, unlike other database management systems, which require us to infer connections between entities using special properties such as foreign keys, or out-of-band processing like map-reduce.
@@ -120,6 +122,7 @@ image://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/organization_re
 image://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/organization_graph.png[width=45%]
 --
 
+
 === Data Model Transformation
 
 Here are some tips that help you with the transformation:
@@ -141,6 +144,7 @@ It is important to have an understanding of the graph model before you start to 
 * link:/developer/get-started/graph-database["What is a Graph Database?"]
 * https://vimeo.com/103466968["Intro to Neo4j"^,role=webinar]
 * http://neo4j.com/events?type=Training["Neo4j Training",role=event]
+
 
 === Working with Neo4j
 
@@ -185,11 +189,13 @@ RETURN p.name
 * link:/developer/cypher[Quick Cypher Intro]
 * link:/use-cases[Use-Case Examples]
 * link:/developer/cypher/guide-sql-to-cypher["From SQL to Cypher"]
-* {manual}#examples-from-sql-to-cypher[Manual: From SQL to Cypher]
+// * {manual}#examples-from-sql-to-cypher[Manual: From SQL to Cypher]
+
 
 === Connecting to Neo4j
 
 If you've installed and started Neo4j as a server on your system, you can interact with the database with the built-in Neo4j browser application (like sql-plus on steroids).
+
 
 ==== HTTP-API
 // todo remove http API section ??
@@ -203,7 +209,7 @@ If you want to access Neo4j programmatically, you would do so with the integrate
 A sample HTTP request that executes Cypher to create a _Person_ would look like this. 
 You can run it directly from the Neo4j browser, here shown with the plain JSON response.
 
-[source,json]
+[source, json]
 ----
 :POST http://localhost:7474/db/data/transaction/commit 
   {"statements":[
@@ -213,6 +219,7 @@ You can run it directly from the Neo4j browser, here shown with the plain JSON r
 {"results":[{"columns":["p"],"data":[{"row":[{"name":"Daniel"}]}]}],"errors":[]}
 ----
 
+
 ==== Language Drivers
 
 Of course, you don't want to connect to Neo4j manually, but with a driver or connector library designed for your stack or programing language.
@@ -220,7 +227,7 @@ Thanks to the Neo4j community, there are drivers for Neo4j for almost all popula
 
 For instance, the Neo4j JDBC driver would be used like this to query the database for _Johns departments_:
 
-[source,java]
+[source, java]
 ----
 Connection con = DriverManager.getConnection("jdbc:neo4j://localhost:7474/");
 
@@ -240,7 +247,8 @@ try (PreparedStatement stmt = con.prepareStatement(QUERY)) {
 * link:/download[Install Neo4j]
 * link:/developer/language-guides[Neo4j Language Drivers]
 * link:/developer/language-guides/java/#_using_neo4j_server_with_jdbc[JDBC example]
-* {manual}#rest-api-transactional[Cypher HTTP Endpoint,role=docs]
+* {manual}/http-api/#http-api-transactional[Cypher HTTP Endpoint,role=docs]
+
 
 === Importing Data from a Relational Database
 
@@ -283,7 +291,7 @@ Other, dedicated import tools, help you importing larger volumes (10M+ rows) of 
 //[role=side-nav]
 
 * link:/developer/working-with-data/guide-importing-data-and-etl["Guide: Data Import",role=guide]
-* {manual}#query-load-csv["Manual: LOAD CSV",role=docs]
+* {manual}/cypher/#query-load-csv["Manual: LOAD CSV",role=docs]
 * http://watch.neo4j.org/video/112447027["Webinar: Data Import",role=video]
 * link:/developer/working-with-data/guide-import-csv[Guide CSV Import]
 * http://github.com/jexp/neo4j-rdbms-import[Tool: Direct RDBMS Import]

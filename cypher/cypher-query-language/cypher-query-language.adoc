@@ -22,6 +22,7 @@ You should have familiarized yourself with link:/developer/get-started/graph-dat
 
 toc::[]
 
+
 == About Cypher
 
 Cypher is a declarative, SQL-inspired language for describing patterns in graphs visually using an ascii-art syntax.
@@ -29,6 +30,7 @@ Cypher is a declarative, SQL-inspired language for describing patterns in graphs
 It allows us to state *what* we want to select, insert, update or delete from our graph data without requiring us to describe exactly *how* to do it.
 
 image:://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/cypher_pattern_simple.png[]
+
 
 === Nodes
 
@@ -39,13 +41,15 @@ In real-world queries, we'll probably use longer, more expressive variable names
 If the node is not relevant to your question, you can also use empty parentheses `()`.
 
 [TIP]
+--
 Usually, the relevant *labels* of the node are provided to distinguish between entities and optimize execution, like `(p:Person)`.
+--
 
 We might use a pattern like `+(person:Person)-->(thing:Thing)+` so we can refer to them later, for example, to access properties like `person.name` and `thing.quality`.
 
 The more general structure is:
 
-[source,cypher]
+[source, cypher]
 ----
 MATCH (node:Label) RETURN node.property
 
@@ -57,12 +61,15 @@ RETURN node2.propertyA, node2.propertyB
 [role=side-nav]
 * link:/developer-resources/cypher/guide-sql-to-cypher[SQL to Cypher]
 * link:/graphacademy/online-course[Free Online Training]
-* link:/docs/stable/cypher-refcard[Cypher Reference Card]
-* {manual}#cypher-query-lang[Manual: Cypher Reference]
+* link:/docs/cypher-refcard/current/[Cypher Reference Card]
+* {manual}/cypher/[Manual: Cypher Reference]
 
 [WARNING]
+--
 Please note that _node-labels_, _relationship-types_ and _property-names_ are *case-sensitive* in Cypher.
 All the other clauses, keywords and functions are not, but should be cased consistently according to the style used here.
+--
+
 
 === Relationships
 
@@ -80,21 +87,25 @@ This can be
 To access information about a relationship, we can assign it a variable, for later reference.
 It is placed in front of the colon `+-[rel:KNOWS]->+` or stands alone `+-[rel]->+`.
 
-[WARNING] If you forget the colon in front of a relationship-type, like this `+-[KNOWS]->+` it does represent a variable and the relationship has *no* relationship-type declared.
+[WARNING]
+--
+If you forget the colon in front of a relationship-type, like this `+-[KNOWS]->+` it does represent a variable and the relationship has *no* relationship-type declared.
+--
 
 General Syntax:
 
-[source,cypher]
+[source, cypher]
 ----
 MATCH (n1:Label1)-[rel:TYPE]->(n2:Label2)
 WHERE rel.property > {value}
 RETURN rel.property, type(rel)
 ----
 
+
 === Patterns
 
 Nodes and relationship expressions are the building blocks for more complex patterns.
-Patterns can be written continously or separated with commas.
+Patterns can be written continuously or separated with commas.
 You can refer to variables declared earlier or introduce new ones.
 
 * friend-of-a-friend `+(user)-[:KNOWS]-(friend)-[:KNOWS]-(foaf)+`
@@ -103,7 +114,9 @@ You can refer to variables declared earlier or introduce new ones.
 * tree navigation `+(root)<-[:PARENT*]-(leaf:Category)-[:ITEM]->(data:Product)+`
 
 [TIP]
+--
 Patterns can be used to `MATCH` and `CREATE` data, but also (evaluating to a list of paths) in expressions, predicates and results.
+--
 
 ++++
 <object type="image/svg+xml" data="//s3.amazonaws.com/artifacts.opencypher.org/railroad/Pattern.svg"></object>
