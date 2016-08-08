@@ -24,7 +24,7 @@ toc::[]
 
 == Memory Configuration guidelines
 
-An in-depth description on this topic is available in the link:{opsmanual}/#memory-tuning[Neo4j Operations Manual].
+An in-depth description on this topic is available in the link:{opsmanual}/performance/#memory-tuning[Neo4j Operations Manual].
 
 There are three types of memory to consider: _OS Memory_, _Page Cache_ and _Heap Space_.
 
@@ -58,12 +58,12 @@ For many setups, a heap size between 8G and 16G is large enough to run Neo4j rel
 The heap memory size is determined by the parameters in `$NEO4J_HOME/conf/neo4j-wrapper.conf`, namely `dbms.memory.heap.initial_size` and `dbms.memory.heap.max_size` providing the heap size in Megabytes, e.g. `16000`.
 It is recommended to set these two parameters to the same size.
 
-For a more thorough discussion on this topic, refer to the link:{opsmanual}#heap-sizing[heap memory configuration section in the Neo4j Manual].
+For a more thorough discussion on this topic, refer to the link:{opsmanual}/performance/#heap-sizing[heap memory configuration section in the Neo4j Manual].
 That section also contains information about heap memory distribution and gabarge collection tuning.
 
 [role=side-nav]
 * {opsmanual}[Operations,role=manual]
-* {opsmanual}#performance-tuning[Configuration & Performance,role=manual]
+* {opsmanual}/performance/#performance-tuning[Configuration & Performance,role=manual]
 // * http://maxdemarzi.com/2013/11/25/scaling-up/[Scaling Up Neo4j,role=blog]
 * link:/support[Neo4j Professional Support]
 
@@ -84,4 +84,4 @@ The usual default of `1024` for the open file limit is often not enough, especia
 Users are therefore encouraged to increase that limit to a realistic value of `40000` or more, depending on usage patterns.
 Setting this value via the `ulimit` command is only possible for the current session.
 
-To set the value system wide you have to follow the link:{opsmanual}#linux-open-files[instructions] for your platform.
+To set the value system wide you have to follow the link:{opsmanual}/deployment/#linux-open-files[instructions] for your platform.
