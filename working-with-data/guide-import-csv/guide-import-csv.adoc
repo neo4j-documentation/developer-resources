@@ -22,13 +22,16 @@ And to use `LOAD CSV` efficiently it pays off to be comfortable with our link:/d
 
 toc::[]
 
+
 === CSV Data Quality
+
 
 ==== Real World Data Considerations
 
 Real world data is messy.
 Don't assume what someone told you is in a CSV file is actually, in there, don't rely on format descriptions, consistency or correct quoting.
 Only trust data validity that you checked yourself.
+
 
 ==== Common Pitfalls
 
@@ -40,6 +43,7 @@ Only trust data validity that you checked yourself.
 * Unexpected newlines in quoted and unquoted text-fields <- either quote text or remove newlines
 * stray quotes - standalone double or single quote in the middle of non-quoted text, or non-escaped quotes in quoted text <- escape or remove stray quotes
 
+
 ==== Tools
 
 There are a number of tools that help you check and validate your CSV data files.
@@ -48,16 +52,19 @@ The most basic is hexdump, and the hex-mode of editors like vi, emacs, UltraEdit
 
 But there are other tools available, that are more end-user friendly.
 
+
 ===== CSVKit
 
 http://csvkit.readthedocs.org/en/0.9.0/[CSVKit] is a set of Python tools that provide statistics (csvstat), search (csvgrep), ... and more for your CSV files.
 Especially `csvstat` is very helpful to get an overview and statistic over your file, if you know your domain and data you can immediately spot inaccuracies.
 Field length is important as excess field length indicates stray quotes.
 
+
 ===== CSVLint
 
 http://csvlint.io/[CSVLint] is an online service to validate CSV files.
 You can upload the file or provide an URL to load it from, there is the option to provide additional schema information.
+
 
 ===== Papa Parse
 
@@ -65,13 +72,14 @@ http://papaparse.com/[Papa Parse] is a comprehensive Javascript library for CSV 
 In the http://papaparse.com/demo[Demo] area you can test your files yourself or use the library directly.
 There is also a http://papaparse.com/faq#nodejs[fork called BabyParse] running on node.js.
 
+
 ===== Cypher
 
 What Cypher sees, is what will be imported, so you can use that to your advantage.
 You can use `LOAD CSV` without creating graph structure and just output samples, counts or distributions.
 So it is also possible to detect incorrect header column counts, delimiters, quotes, escapes or spelling of header names.
 
-[source,cypher]
+[source, cypher]
 ----
 // assert correct line count
 LOAD CSV FROM "file-url" AS line
@@ -88,7 +96,9 @@ RETURN line
 LIMIT 5;
 ----
 
+
 === LOAD CSV for Medium Sized Datasets
+
 
 ==== The real secret of LOAD CSV.
 
@@ -102,9 +112,11 @@ It combines multiple aspects in a single operation:
 * supports complex computations
 * create or merge data, relationships and structure
 
+
 ==== Important Tips for LOAD CSV
 
 * Always use the latest version of Neo4j, it will most probably be faster than earlier ones.
+
 
 ===== Data Quality and Conversion
 
@@ -115,6 +127,7 @@ It combines multiple aspects in a single operation:
 * Check your Cypher import statement for typos: labels, property names and relationship-types are *case-sensitive*
 * Conditional conversions can be achieved with `CASE`
 
+
 ===== Indexing and Performance
 
 * Make sure to have indexes and constraints declared and ONLINE for entities you want to `MATCH` or `MERGE` on
@@ -124,11 +137,13 @@ It combines multiple aspects in a single operation:
   If your import is slow or runs into memory issues, see
   http://www.markhneedham.com/blog/2014/10/23/neo4j-cypher-avoiding-the-eager/[Mark's blog post on Eager loading].
 
+
 ===== Memory Config
 
 * Make sure to have enough memory (at least 4G heap in `neo4j-wrapper.conf`) reserved for your Neo4j-Server or Neo4j-Shell (`export JAVA_OPTS="-Xmx4G"`)
 * Configure the memory mapping settings (Neo4j 2.1) according to your expected file sizes +
   (Neo4j 2.1 `neo4j.properties` keep these ratios: `nodestore=100M, relationshipstore=2G, propertystore=500M, stringstore=500M`)
+
 
 ===== File-URLs and Neo4j-Shell
 
@@ -137,11 +152,13 @@ It combines multiple aspects in a single operation:
 * Use the `bin/neo4j-shell` instead of the browser for better error messages and control +
   by default it connects to a running server, but you can also use `bin/neo4j-shell -path import.db -config conf/neo4j.properties` for direct database directory access (when no server is running with that db).
 
+
 ==== Step by Step Example for LOAD CSV
 
 In our guide on link:/developer/working-with-data/guide-importing-data-and-etl[ETL import from a relational database] we explain how to import CSV data step by step, from data modeling, creating indexes to writing the individual LOAD CSV statements.
 
 // TODO should we show how to import the customers, orders, products here ??
+
 
 [[load-csv-webinar]]
 ==== Webinar "LOAD CSV in the Real World"
@@ -163,6 +180,7 @@ You can find all scripts and data on https://github.com/nicolewhite/consumer_com
 * http://www.markhneedham.com/blog/?s=load+csv+neo4j[LOAD CSV Tips] by Mark Needham
 // * Example Northwind Dataset on https://github.com/neo4j-contrib/northwind-neo4j[GitHub]
 * Blog Post: http://jexp.de/blog/2014/06/using-load-csv-to-import-git-history-into-neo4j/[Import git-log data into Neo4j]
+
 
 === Super Fast Batch Importer For Huge Datasets
 
@@ -253,11 +271,11 @@ The column names are used for property-names of your nodes and relationships, th
 * all other columns are treated as properties but skipped if empty or annotated with :IGNORE
 * type conversion is possible by suffixing the name, e.g. by `:INT`, `:BOOLEAN`, etc.
 
-For more details on this header format and the tool, see the extensive documentation in the link:{manual}#import-tool[Neo4j Manual].
+For more details on this header format and the tool, see the extensive documentation in the link:{opsmanual}/deployment/#import-tool[Neo4j Manual].
 
 And the resulting output would look like this:
 
-[source,shell]
+[source, shell]
 ----
 [INPUT------|ENCODER--------|WRITER: W:24.59 MB/s--------------------------]  4M
 Calculate dense nodes
@@ -276,7 +294,7 @@ IMPORT DONE. Took: 58s 124ms
 ----
 
 [role=side-nav]
-* link:{manual}#import-tool["Manual: Import Tool",role=docs]
+* link:{opsmanual}/deployment/#import-tool["Manual: Import Tool",role=docs]
 * link:/developer/data-modeling/guide-data-modeling[Intro to Graph Modeling]
 * http://www.intelliwareness.org/?p=583["Article: Importing Medicare Provider and Payment Data",role=blog]
 * http://blog.graphenedb.com/blog/2015/01/13/importing-data-into-neo4j-via-csv/[Article: LOAD CSV Intro with GrapheneDB]

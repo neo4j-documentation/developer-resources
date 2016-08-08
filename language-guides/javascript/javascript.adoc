@@ -25,6 +25,7 @@ image:://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/2014/04/nodejs
 
 toc::[]
 
+
 // tag::intro[]
 === Neo4j for JavaScript Developers
 
@@ -46,12 +47,14 @@ include::../_includes/community-driver-notice.adoc[]
 
 There is a nice, more detailed intro article on modulus on http://blog.modulus.io/learn-how-to-use-neo4j-with-node.js[how to use Neo4j from Javascript].
 
+
 [[node-neo4j]]
 === node-neo4j (Thingdom)
 
 Most widely used Node.js driver for Neo4j.
 This driver aims to be the most robust, comprehensive, and battle-tested community driver available. 
 It's run in production by https://www.fiftythree.com/[FiftyThree] to power https://www.fiftythree.com/paper[Paper] and https://mix.fiftythree.com/[Mix].
+
 
 ==== Features
 
@@ -77,6 +80,7 @@ It's run in production by https://www.fiftythree.com/[FiftyThree] to power https
 | icon:users[] Forum | https://groups.google.com/forum/#!forum/node-neo4j
 |===
 
+
 === cypher-stream
 
 Neo4j cypher queries as node object streams.
@@ -99,6 +103,7 @@ This works for regular cypher calls and transactions.
 * [cypher-stream on GitHub]
 * Author: 
 *  that streams from database to client.
+
 
 === Seraph
 
@@ -125,7 +130,7 @@ This is a simple neo4j pure javascript database driver.
 It takes in one or more queries, commits them to the database in a single transaction, and parses the database result into a simple and easy native javascript object, of course the parser can be disabled if desired.
 
 
-[source,javascript]
+[source, javascript]
 ----
 simpleNeo4J.execute('MATCH (n:Movie) RETURN count(*)')
     .then(function(result)
@@ -143,6 +148,7 @@ simpleNeo4J.execute('MATCH (n:Movie) RETURN count(*)')
 | icon:gift[] Package | https://www.npmjs.com/package/simple-neo4j
 | icon:github[] Source | https://github.com/RussellsToolbox/simple-neo4j
 |===
+
 
 === Meteor.js - Package ccorcos:neo4j
 
@@ -165,6 +171,7 @@ Both wrote and presented about it and Chet provided insight into an example appl
 * https://medium.com/@SamCorcos/meteor-any-database-7f237f2448f0[Blog: Meteor + Any Database Reactivity]
 * https://medium.com/@chetcorcos/shindig-an-event-discovery-app-built-with-meteor-js-react-js-and-neo4j-602afb483ae6[Example App Shindig], https://medium.com/@chetcorcos/shindig-integrating-neo4j-with-meteor-17b0fce644d[Integration with Neo4j]
 
+
 === Ostrio - Meteor.js - Driver
 
 Dmitriy wrapped node-neo4j to be usable with Meteor and also provided a pseudo-reactive driver to support the life-query functionality.
@@ -175,6 +182,7 @@ Dmitriy wrapped node-neo4j to be usable with Meteor and also provided a pseudo-r
 | icon:gift[] Package | https://atmospherejs.com/ostrio/neo4jdriver
 | icon:play-circle[] Example | https://github.com/VeliovGroup/Meteor-Leaderboard-Neo4j[Leaderboard Example Project]
 |===
+
 
 === Neo4j Dart
 
@@ -211,6 +219,7 @@ main() async {
 | icon:play-circle[] Example | https://github.com/VeliovGroup/Meteor-Leaderboard-Neo4j[Leaderboard Example Project]
 | icon:book[] Docs | http://www.dartdocs.org/documentation/neo4j_dart
 |===
+
 
 [[node-neo4j-pk]]
 === node-neo4j (philipkueng)
@@ -253,16 +262,17 @@ For performance reasons it stays as close to the original Java API as possible.
 
 ////
 
+
 === Using the HTTP-Endpoint directly
 
 You can use something as simple as the `request` node-module to send queries to and receive responses from Neo4j.
-The endpoint protocol and formats are explained in detail in the {manual}#rest-api-transactional[Neo4j Manual].
+The endpoint protocol and formats are explained in detail in the {manual}/http-api/#http-api-transactional[Neo4j Manual].
 It enables you do to much more, e.g. sending many statements per request or keeping transactions open across multiple requests.
 
 Here is a very simple example:
 
 .Simple Function Accessing the Remote Endpoint
-[source,javascript]
+[source, javascript]
 ----
 var r=require("request");
 var txUrl = "http://localhost:7474/db/data/transaction/commit";
@@ -274,7 +284,7 @@ function cypher(query,params,cb) {
 ----
 
 .Running the Function
-[source,javascript]
+[source, javascript]
 ---- 
 var query="MATCH (n:User) RETURN n, labels(n) as l LIMIT {limit}"
 var params={limit: 10}

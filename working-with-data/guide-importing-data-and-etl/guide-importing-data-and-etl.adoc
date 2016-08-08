@@ -24,6 +24,7 @@ If you link:/download[download] and install the Neo4j server you'll be able to f
 
 toc::[]
 
+
 === NorthWind Introduction
 
 In this guide we'll be using the link:https://code.google.com/p/northwindextended/downloads/detail?name=northwind.postgre.sql&can=2&q=[NorthWind dataset], a commonly used SQL dataset.
@@ -32,6 +33,7 @@ Although the NorthWind dataset is often used to demonstrate SQL and relational d
 The following is an entity relationship diagram of the NorthWind dataset:
 
 image:://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/Northwind_diagram.jpg[]
+
 
 === Developing a Graph Model
 
@@ -44,6 +46,7 @@ In this dataset, the following graph model serves as a first iteration:
 
 image:://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/northwind_graph_simple.png[width=800]
 
+
 ==== How does the Graph Model Differ from the Relational Model?
 
 * There are no nulls.
@@ -51,6 +54,7 @@ image:://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/northwind_grap
 ** Non existing value entries (properties) are just not present.
 * It describes the relationships in more detail. For example, we know that an employee SOLD an order rather than having a foreign key relationship between the Orders and Employees tables. We could also choose to add more metadata about that relationship should we wish.
 * It will often be more normalised. For example, addresses have been denormalised in several of the tables but in a future version of the graph model we might choose to make addresses nodes in their own rights.
+
 
 === Exporting the Data to CSV
 
@@ -64,9 +68,10 @@ The PostgreSQL 'copy' command lets us execute a SQL query and write the result t
 include::{northwind}/export_csv.sql[]
 ----
 
+
 === Importing the Data using Cypher
 
-After we've exported our data from PostgreSQL, we'll use Cypher's link:{manual}#query-load-csv[LOAD CSV] command to transform the contents of the CSV file into a graph structure.
+After we've exported our data from PostgreSQL, we'll use Cypher's link:{manual}/cypher/#query-load-csv[LOAD CSV] command to transform the contents of the CSV file into a graph structure.
 
 First, create the nodes:
 
@@ -119,13 +124,15 @@ image:://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/northwind_grap
 
 We can now query the resulting graph.
 
+
 === Querying the Graph
 
 One question we might be interested in is:
 
+
 ==== Which Employee had the Highest Cross-Selling Count of 'Chocolade' and Which Product?
 
-[source,cypher]
+[source, cypher]
 ----
 MATCH (choc:Product {productName:'Chocolade'})<-[:PRODUCT]-(:Order)<-[:SOLD]-(employee),
       (employee)-[:SOLD]->(o2)-[:PRODUCT]->(other:Product)
@@ -147,6 +154,7 @@ employee.employeeId,other.productName,count
 |===
 
 We might also like to answer the following question:
+
 
 ==== How are Employees Organized? Who Reports to Whom?
 
@@ -172,6 +180,7 @@ manager,employee
 Notice that employee No. 5 has people reporting to them but also reports to employee No. 2.
 
 Let's investigate that a bit more:
+
 
 ==== Which Employees Report to Each Other Indirectly?
 
@@ -199,6 +208,7 @@ e.EmployeeID:sub.EmployeeID:via
 2:9:[5]
 |===
 
+
 ==== How Many Orders were Made by Each Part of the Hierarchy?
 
 [source, cypher]
@@ -223,6 +233,7 @@ e.EmployeeID:reports:totalOrders
 9:[]:107
 |===
 
+
 === Updating the Graph
 
 Now if we wanted to update our graph data, we have to first find the relevant information and then update or extend the graph structures.
@@ -231,12 +242,13 @@ Now if we wanted to update our graph data, we have to first find the relevant in
 
 // add new product
 
+
 ==== Janet is now reporting to Steven
 
 We need to find Steven first, and Janet and her `REPORTS_TO` relationship.
 Then we remove the existing relationship and create a new one to Steven.
 
-[source,cypher]
+[source, cypher]
 ----
 MATCH (mgr:Employee {EmployeeID:5})
 MATCH (emp:Employee {EmployeeID:3})-[rel:REPORTS_TO]->()

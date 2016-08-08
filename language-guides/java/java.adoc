@@ -26,6 +26,7 @@ image::http://assets.neo4j.org/img/languages/java.jpg[float=right,width=200]
 
 toc::[]
 
+
 // tag::intro[]
 === Neo4j for Java Developers
 
@@ -44,10 +45,12 @@ Please note that starting with version 3.0 you need Java 8 to use Neo4j.
 
 include::../_includes/sample_project.adoc[]
 
+
 [[neo4j-java-driver]]
 === icon:check-circle-o[] Neo4j Java Driver
 
 include::../_includes/java-driver.adoc[]
+
 
 === Spring Data Neo4j
 
@@ -69,6 +72,7 @@ Features (based on Neo4j-OGM):
 * persistence lifecycle events
 
 More detail can be found on the dedicated link:../spring-data-neo4j[Spring Data Neo4j] page.
+
 
 [[neo4j-ogm]]
 === Object-Graph-Mapping with Neo4j-OGM
@@ -115,6 +119,7 @@ With its non-transactional, highly-concurrent batch-insertion APIs it can ingest
 
 Because of its flexibility and performance, we also chose the Java API for extending Neo4j as explained below.
 
+
 === User Defined Procedures
 
 User Defined *Procedures* are now available within Cypher and encapsulate dedicated functionality.
@@ -124,6 +129,7 @@ Just by annotating methods of a Java class with `@Procedure` and deploying the r
 To get started we provided a https://github.com/neo4j-examples/neo4j-procedure-template[template project] and documentation in the link:/docs/java-reference/current/#procedures[Java developer manual].
 
 More useful examples for user defined procedures can be found in our https://github.com/neo4j-contrib?query=procedure[neo4j-contrib GitHub repository].
+
 
 [[server-extension]]
 === Extending Neo4j Server with a REST Server Extension
@@ -141,6 +147,7 @@ You test your server extensions using the link:/docs/java-reference/current/#ser
 
 This {examples}/movies-java-server-extension[example project] shows how you would do that for our movie application endpoints.
 
+
 [[neo4j-jdbc]]
 === Using Neo4j Server with JDBC
 
@@ -151,7 +158,7 @@ As Cypher, like SQL, is a textual parametrizable query language that can return 
 
 The driver supports the new binary "Bolt" protocol of Neo4j 3.x, the transactional http endpoint and Neo4j embedded connections.
 
-[source,java]
+[source, java]
 ----
 // Connect
 Connection con = DriverManager.getConnection("jdbc:neo4j:bolt://localhost");
@@ -185,6 +192,7 @@ Just grab the https://github.com/neo4j-contrib/neo4j-jdbc/releases/latest[JAR of
 |===
 
 include::../_includes/community-driver-notice.adoc[]
+
 
 [[jcypher]]
 === JCypher
@@ -340,6 +348,7 @@ Travis CI (config) and also http://graphenedb.com[GrapheneDB] (API) provide opti
 
 ////
 
+
 === Groovy & Grails: Neo4j Grails Plugin
 
 image:://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/2014/04/grails.png[width=200,float=right]
@@ -359,6 +368,7 @@ The goal of GORM for Neo4j is to provide a 'as-complete-as-possible' GORM implem
 | icon:github[] Source | https://github.com/grails/grails-data-mapping/tree/master/grails-datastore-gorm-neo4j
 | icon:book[] Docs | http://grails.github.io/grails-data-mapping/latest/neo4j/
 |===
+
 
 === Clojure: Neocons
 
@@ -383,6 +393,7 @@ Clojure wrapper for Neo4j, a graph database, in embedded JVM mode.
 
 ////
 
+
 === Scala: AnormCypher
 
 image::http://assets.neo4j.org/img/languages/scala.png[width=200,float="right"]
@@ -405,6 +416,7 @@ The Neo4j Scala wrapper library allows you use Neo4j's open source graph databas
 
 * https://github.com/FaKod/neo4j-scala/[Source]
 ////
+
 
 === JPA: Hibernate OGM
 
