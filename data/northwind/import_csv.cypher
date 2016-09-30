@@ -1,12 +1,3 @@
-// tag::indexes[]
-CREATE INDEX ON :Product(productID);
-CREATE INDEX ON :Product(productName);
-CREATE INDEX ON :Category(categoryID);
-CREATE INDEX ON :Employee(employeeID);
-CREATE INDEX ON :Supplier(supplierID);
-CREATE INDEX ON :Customer(customerID);
-CREATE INDEX ON :Customer(customerName);
-// end::indexes[]
 
 // tag::nodes[]
 // Create customers
@@ -39,10 +30,23 @@ LOAD CSV WITH HEADERS FROM "file:orders.csv" AS row
 MERGE (order:Order {orderID: row.OrderID}) ON CREATE SET order.shipName =  row.ShipName;
 // end::nodes[]
 
+// tag::indexes[]
+CREATE INDEX ON :Product(productID);
+CREATE INDEX ON :Product(productName);
+CREATE INDEX ON :Category(categoryID);
+CREATE INDEX ON :Employee(employeeID);
+CREATE INDEX ON :Supplier(supplierID);
+CREATE INDEX ON :Customer(customerID);
+CREATE INDEX ON :Customer(customerName);
+// end::indexes[]
+
+
 // tag::constraints[]
 CREATE CONSTRAINT ON (o:Order) ASSERT o.orderID IS UNIQUE;
 // end::constraints[]
 
+
+schema await
 
 // tag::rels_orders[]
 USING PERIODIC COMMIT

@@ -88,7 +88,21 @@ Next, we'll create indexes on the just-created nodes to ensure their quick looku
 include::{northwind}/import_csv.cypher[tags=indexes]
 ----
 
-Initial nodes and indices in place, we can now create relationships of orders to products and employees:
+
+[source, cypher]
+----
+include::{northwind}/import_csv.cypher[tags=constraints]
+----
+
+
+As the indexes are created after the nodes are inserted, their population happens asynchronously, so we use `schema await` (a shell command) to block until they are populated.
+
+[source, cypher]
+----
+schema await
+----
+
+Initial nodes and indices in place, we can now create relationships of orders to products and employees.
 
 [source, cypher]
 ----
@@ -107,13 +121,6 @@ Finally we'll create the 'REPORTS_TO' relationship between employees to represen
 [source, cypher]
 ----
 include::{northwind}/import_csv.cypher[tags=rels_employees]
-----
-
-For completeness and optimal query speed, create an unique constraint on orders:
-
-[source, cypher]
-----
-include::{northwind}/import_csv.cypher[tags=constraints]
 ----
 
 You can also run the whole script at once using `bin/neo4j-shell -path northwind.db -file import_csv.cypher`.
