@@ -36,7 +36,7 @@ RSpec.describe HtmlTransformer do
       let(:fragment) do
         <<-FRAGMENT
           <dd class="accordion-navigation active">
-          <a href="/developer-resources/language-guides/">
+          <a href="/developer/language-guides/">
           <h5>Language Guides</h5>
           </a>
         FRAGMENT

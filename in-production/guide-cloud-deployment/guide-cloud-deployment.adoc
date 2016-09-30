@@ -16,7 +16,7 @@ It includes setting up Neo4j on EC2 on AWS, using our Docker image, and introduc
 .Prerequisites
 [abstract]
 You should know how to run and operate Neo4j locally.
-Knowledge of link:/developer-resources/language-guides[remote drivers] to access Neo4j from your application helps you connect to your cloud-hosted database.
+Knowledge of link:/developer/language-guides[remote drivers] to access Neo4j from your application helps you connect to your cloud-hosted database.
 For self-service hosting you should bring along enough operations experience that a Linux system doesn't scare you away.
 
 [role=expertise]
@@ -27,16 +27,16 @@ toc::[]
 [[docker]]
 === Neo4j with Docker
 
-image:://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/neo4j-docker-image-now-in-beta-235x300.jpg[float=right]
+image::{img}neo4j-docker-image-now-in-beta-235x300.jpg[float=right]
 
 link:http://docker.com[Docker] is a lightweight virtualization mechanism to run single applications containerized and restricted on your machine.
 Docker images are pre-build in layers from configuration of services one of which would be Neo4j.
 A docker image can be started immediately after downloading, no time-consuming boot required.
 
 Neo4j and Docker provide an officially supported link:http://hub.docker.com/_/neo4j[Docker image].
-Please also see the documentation for the Neo4j link:/developer-resources/integration/docker/docker-23[version 2.3] and the new link:{opsmanual}/deployment/single-instance/docker/[3.x releases].
+Please also see the documentation for the Neo4j link:/developer/integration/docker/docker-23[version 2.3] and the new link:/developer/integration/docker/docker-30[3.x releases].
 
-Other projects around docker are discussed on our link:/developer-resources/integration/docker[Neo4j & Docker integration page].
+Other projects around docker are discussed on our link:/developer/integration/docker[Neo4j & Docker integration page].
 
 === Hosting on AWS / EC2
 
@@ -94,9 +94,18 @@ There are a number of Neo4j partners that provide hosting of Neo4j instances in 
 [NOTE]
 If you provision databases via their offering, you enter a contract with those partners, not with Neo Technology.
 
+==== GraphGrid
+
+image::{img}20160914051238/graphgrid.jpg[width=300,float=right]
+
+* *GraphGrid Data Platform* is the complete Neo4j data platform, architected for the enterprise to unleash the full power of Neo4j into your modern graph data architecture.
+* *High Performance Neo4j Clusters* The full power of Neo4j at your fingertips with thousands of graph compute cores for big graph data processing and graph data warehouse management.
+* *On Graph Analytics in Real Time* Don't drown in your disconnected data lake. Embrace the connectedness of your data and discover meaningful insights today.
+* *Setup your Neo4j Cluster in Minutes* Enterprise-grade graph data management platform enabling batch, interactive and real-time analytics and data processing applications simultaneously across your connected graph data.
+
 ==== GrapheneDB
 
-image::{img}/graphenedb.png[width=400,float=right]
+image::{img}graphenedb.png[width=400,float=right]
 
 http://www.graphenedb.com/[GrapheneDB] offers Neo4j instances from free plans suitable for evaluation and testing to production-ready plans for demanding graph applications, with following features:
 
@@ -112,7 +121,7 @@ GrapheneDB is also available as a link:https://elements.heroku.com/addons/graphe
 
 ==== GraphStory
 
-image::{img}/logo_GraphStory.png[width=400,float=right]
+image::{img}logo_GraphStory.png[width=400,float=right]
 
 link:http://www.graphstory.com[GraphStory] focuses on a whole experience in Graph Database hosting.
 

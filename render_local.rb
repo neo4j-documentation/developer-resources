@@ -13,7 +13,7 @@ LOGGER = Logger.new(STDOUT)
 require './html_transformer' # Neo Tech specific
 
 ASCIIDOC_TEMPLATES_DIR = ENV['ASCIIDOC_TEMPLATES_DIR'] || '_templates'
-IMAGE_BASE_URL = ENV['IMAGE_BASE_URL'] ||  '//s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/'
+IMAGE_BASE_URL = ENV['IMAGE_BASE_URL'] || '//s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/' # '.'
 EXAMPLES = ENV['EXAMPLES'] || 'https://github.com/neo4j-examples'
 MANUAL = ENV['MANUAL'] || 'http://neo4j.com/docs/developer-manual/current'
 OPSMANUAL = ENV['OPSMANUAL'] || 'http://neo4j.com/docs/operations-manual/current'
@@ -38,7 +38,7 @@ end
 
 # AsciiPress.verify_adoc_slugs!(adoc_file_paths)
 
-renderer = AsciiPress::Renderer.new(after_conversion: HtmlTransformer.method(:transform),
+renderer = AsciiPress::Renderer.new( # after_conversion: HtmlTransformer.method(:transform),
                                     asciidoc_options: {
                                       attributes: ASCIIDOC_ATTRIBUTES,
                                       header_footer: true,
@@ -46,27 +46,11 @@ renderer = AsciiPress::Renderer.new(after_conversion: HtmlTransformer.method(:tr
                                       template_dir: ASCIIDOC_TEMPLATES_DIR,
                                     })
 
-if ENV['BLOG_HOSTNAME'] && ENV['BLOG_USERNAME'] && ENV['BLOG_PASSWORD'] && ENV['PUBLISH']
-  syncer = AsciiPress::WordPressSyncer.new(ENV['BLOG_HOSTNAME'],
-                                           ENV['BLOG_USERNAME'],
-                                           ENV['BLOG_PASSWORD'],
-                                           'developer',
-                                           renderer,
-                                           delete_not_found: false,
-                                           post_status: 'publish',
-                                           logger: LOGGER)
+adoc_file_paths.each do |adoc_file_path|
+  dir = File.join('.', File.dirname(adoc_file_path))
+  FileUtils.mkdir_p(dir)
+  html_file_path = File.join(dir, 'index.html')
+
+  LOGGER.info "Rendering #{adoc_file_path} to #{html_file_path}"
+  File.open(html_file_path, 'w') { |f| f << renderer.render(adoc_file_path).html }
 end
-
-if syncer
-  syncer.sync(adoc_file_paths, {})
-else
-  adoc_file_paths.each do |adoc_file_path|
-    dir = File.join('deploy', File.dirname(adoc_file_path))
-    FileUtils.mkdir_p(dir)
-    html_file_path = File.join(dir, 'index.html')
-
-    LOGGER.info "Rendering #{adoc_file_path} to #{html_file_path}"
-    File.open(html_file_path, 'w') { |f| f << renderer.render(adoc_file_path).html }
-  end
-end
-

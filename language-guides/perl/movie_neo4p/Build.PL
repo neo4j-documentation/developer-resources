@@ -27,7 +27,7 @@ my $build = Module::Build->new(
   },
   meta_merge => {
     resources => {
-      repository => 'https://github.com/majensen/developer-resources'
+      repository => 'https://github.com/majensen/developer'
     }
   }
 );

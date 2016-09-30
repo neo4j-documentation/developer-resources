@@ -29,6 +29,9 @@ toc::[]
 * guides / tips for relational database developers / DBAs
 ////
 
+[role=side-nav]
+* https://neo4j.com/resources/rdbms-developer-graph-white-paper/[Free Ebook: Relational to Graph]
+* https://dzone.com/refcardz/from-relational-to-graph-a-developers-guide[DZone Refcard: Relational to Graph]
 
 === Relational Databases
 
@@ -40,7 +43,7 @@ This is enforceable with constraints, but only when the reference is never optio
 Joins are computed at query time by matching primary- and foreign-keys of the many (potentially indexed) rows of the to-be-joined tables.
 These operations are compute- and memory-intensive and have an exponential cost.
 
-image:://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/from_relational_model.png[]
+image::{img}from_relational_model.png[]
 
 If you use many-to-many relationships, you have to introduce a _JOIN_ table (or junction table) that holds foreign keys of both participating tables which further increases join operation costs.
 Those costly join operations are usually addressed by denormalising data to reduce the number of joins necessary.
@@ -55,11 +58,11 @@ Meet graph databases.
 Connect the rows of tables in a *Relational Database* by uncovering all the relationships, and you'll see a graph.
 Dumb JOIN tables are replaced by interesting relationships.
 
-image:://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/vs-rdbms.png[]
+image::{img}vs-rdbms.png[]
 
 Where a RDBMS is optimized for aggregated, highly structured data, Neo4j is optimized for highly connected heterogeneous data.
 
-image:://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/as-rdbms.png[]
+image::{img}as-rdbms.png[]
 
 .Relational databases also lack relationships
 [quote, "Jim Webber, Ian Robinson", "Graph Databases, O'Reilly"]
@@ -97,7 +100,7 @@ This ability of pre-materializing relationships into database structures allows 
 
 The resulting data models are much simpler and at the same time more expressive than those produced using traditional relational or other NoSQL databases.
 
-image:://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/relational_to_graph.png[]
+image::{img}relational_to_graph.png[]
 
 Graph databases support a very flexible and fine-grained data model that allows you to model and manage rich domains in an easy and intuitive way.
 
@@ -109,7 +112,7 @@ The well-known and tested concept of transactions groups a set of updates of nod
 Graph databases like Neo4j fully support the transactional concepts including write-ahead logs and recovery after abnormal termination.
 So you never lose your data that has been comitted to the database.
 
-image:://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/to_graph_model.png[]
+image::{img}to_graph_model.png[]
 
 If you're used to modeling with relational databases, remember the ease and beauty of a well done, normalized entity-relationship diagram: a simple, easy to understand model you can quickly whiteboard with your colleagues and domain experts.
 A graph is exactly that, a clear model of the domain, focused on the use-cases you want to efficiently support.
@@ -118,8 +121,8 @@ Let's take a model of the organizational domain and show how it would be modeled
 
 [.float-group]
 --
-image://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/organization_relational.png[width=45%]
-image://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/organization_graph.png[width=45%]
+image:{img}organization_relational.png[width=45%]
+image:{img}organization_graph.png[width=45%]
 --
 
 

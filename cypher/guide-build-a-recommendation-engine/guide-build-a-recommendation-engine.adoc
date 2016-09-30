@@ -37,7 +37,7 @@ In this guide we will load the dataset using `LOAD CSV`
 //setup
 [source,cypher]
 ----
-LOAD CSV WITH HEADERS FROM "https://neo4j-contrib.github.io/developer-resources/cypher/movies_actors.csv" AS line
+LOAD CSV WITH HEADERS FROM "https://neo4j-contrib.github.io/developer/cypher/movies_actors.csv" AS line
 WITH line
 WHERE line.job = "ACTED_IN"
 MERGE (m:Movie {title:line.title}) ON CREATE SET m.released = toInt(line.released), m.tagline = line.tagline
@@ -159,7 +159,7 @@ You can also watch the video of Andreas running these queries live on our main e
 
 Imagine a graph like this: a few friends with their favorite restaurants, their cuisines and locations.
 
-image:://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/restaurant-recommendation.png[]
+image::{img}restaurant-recommendation.png[]
 
 A practical question to answer here, formulated in http://neo4j.com/blog/why-the-most-important-part-of-facebook-graph-search-is-graph/[Graph Search] slang:
 
