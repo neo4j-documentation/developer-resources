@@ -25,6 +25,7 @@ You should have a sound understanding of both Docker and Neo4j, to leverage them
 
 toc::[]
 
+
 == General Observations
 
 http://docker.com[Docker] is a lightweight virtualization mechanism to run single applications containerized and restricted on a Linux host system.
@@ -40,6 +41,7 @@ You can pre-seed containers with datasets, extensions and configurations.
 
 Conflicting port and disk usage can be handled by mapping ports and volumes of multiple instances of the same container to different on the host system.
 Docker containers can be used as infrastructure layer, data containers or configuration providers.
+
 
 [[docker-store]]
 == Docker Store
@@ -67,6 +69,7 @@ Previous versions and milestones are available as tags in of the https://hub.doc
 
 The Dockerfiles for the different versions are taken from https://github.com/neo4j/docker-neo4j/[this GitHub repository] and synched with Docker Hub and the official repository as needed.
 
+
 == How to use the Neo4j Docker Image
 
 [NOTE]
@@ -84,13 +87,45 @@ For running Docker on https://docs.docker.com/engine/installation/mac/[Max OSX] 
 <div class="tabs-content">
 ++++
 
+
 [[docker-30]]
 [.content.active]
 === Neo4j 3.0 Docker Image
 
-include::docker-30/docker-30.adoc[tag=get-started]
+By default the Docker image exposes three ports for remote access:
 
-For more details, see the link:docker-30[Neo4j 3.0 Docker page].
+* `7474` for HTTP.
+* `7473` for HTTPS.
+* `7687` for Bolt.
+
+It also exposes two volumes:
+
+* _/data_ to allow the database to be persisted outside its container.
+* _/logs_ to allow access to Neo4j log files.
+
+[source, shell]
+----
+docker run \
+    --publish=7474:7474 --publish=7687:7687 \
+    --volume=$HOME/neo4j/data:/data \
+    --volume=$HOME/neo4j/logs:/logs \
+    neo4j:3.0
+----
+
+Point your browser at `http://localhost:7474` on Linux or `http://$(docker-machine ip default):7474` on OS X.
+
+All the volumes in this documentation are stored under `$HOME` in order to work on OS X where `$HOME` is automatically mounted into the machine VM.
+On Linux the volumes can be stored anywhere.
+
+
+[NOTE]
+--
+By default Neo4j requires authentication.
+You have to login with `neo4j/neo4j` at the first connection and set a new password.
+--
+
+For more details, see the link:{opsmanual}/deployment/single-instance/docker/[Neo4j 3.0 Docker page].
+
 
 [[docker-23]]
 [.content]
@@ -103,6 +138,7 @@ For more details, see the link:docker-23[Neo4j 2.3 Docker page].
 ++++
 </div>
 ++++
+
 
 == Capabilities
 
@@ -125,23 +161,27 @@ Enjoy using the Docker Image and please provide us feedback, via https://github.
 
 The Neo4j Docker image is for example used in our http://neo4j.com/sandbox[live Neo4j Sandbox] offering and the http://neo4j.com/blog/graph-your-network-neo4j-docker-image/[Graph your Twitter Network Demo].
 
+
 == References
 
 * https://hub.docker.com/_/neo4j[Neo4j on Docker Hub]
 * https://github.com/neo4j-contrib/docker-neo4j[Neo4j Docker GitHub Repository]
 * https://hub.docker.com/r/neo4j/neo4j/[neo4j/neo4j on Docker Hub]
 
+
 == Using the Neo4j Docker Image at Neo4j
 
-We built the http://network.graphdemos.com/[Graph Your Network application], scaling from a handful to hundreds of simultaneous Docker containers http://neo4j.com/blog/graph-your-network-neo4j-docker-image/[running Neo4j on Amazon ECS]. 
-This application allows users to load their Twitter activity into Neo4j and analyze it with the Cypher query language. 
+We built the http://network.graphdemos.com/[Graph Your Network application], scaling from a handful to hundreds of simultaneous Docker containers http://neo4j.com/blog/graph-your-network-neo4j-docker-image/[running Neo4j on Amazon ECS].
+This application allows users to load their Twitter activity into Neo4j and analyze it with the Cypher query language.
 
-If you’re just looking to evaluate Neo4j, our http://neo4j.com/sandbox/[Neo4j Sandbox] uses a similar architecture. 
+If you’re just looking to evaluate Neo4j, our http://neo4j.com/sandbox/[Neo4j Sandbox] uses a similar architecture.
+
 
 == Docker + Neo4j: A Long History
 
 Our Developer Relations team launched the Community Edition http://neo4j.com/blog/neo4j-docker-image-now-in-beta/[Neo4j Docker image in beta] in Spring 2015.
 After months of iterating based on the feedback from the community, our Engineering team https://blog.docker.com/2016/01/three-new-official-repos-join-the-docker-library/[launched the Official Repository], with support for both Community Edition and Enterprise Edition, including full cluster and high availability (HA) capabilities.
+
 
 == Neo4j - Spark - Analytics
 
