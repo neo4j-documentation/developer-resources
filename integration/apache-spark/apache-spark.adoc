@@ -53,7 +53,7 @@ The general usage is:
 
 1. create `org.neo4j.spark.Neo4j(sc)`
 2. set `cypher(query,[params])`,`nodes(query,[params])`,`rels(query,[params])` as direct query, or +
-   `pattern("Label1",Seq("REL"),"Label2")` or `pattern(("Label1","prop1",("REL","prop"),("Label2","prop2))`
+   `pattern("Label1",Seq("REL"),"Label2")` or `pattern( ("Label1","prop1"),("REL","prop"),("Label2","prop2") )`
 3. optionally define `partitions(n)`, `batch(size)`, `rows(count)` for parallelism
 4. choose which datatype to return
    * `loadRowRdd`, `loadNodeRdds`, `loadRelRdd`, `loadRdd[T]`
