@@ -29,24 +29,51 @@ toc::[]
 image::{img}GO.jpg[width=150,float=right]
 
 Go drivers have been around for a while and, especially with the excellent `cq` driver from Eve Freeman, have gotten a lot of attention.
+Recently the work of John Nadratowski added a driver with Bolt support.
 // end::intro[]
 
-Members of the Go community have invested a lot of time and love to develop all these drivers, so if you use them, please provide feedback to the authors. 
+Members of the Go community have invested a lot of time and love to develop all these drivers, so if you use them, *please provide feedback to the authors*.
 
 include::../_includes/sample_project.adoc[]
 
 include::../_includes/community-driver-notice.adoc[]
 
+=== Golang Neo4J Bolt Driver
+
+This implementation attempts to follow the best practices as per the Bolt specification, but also implements compatibility with Golang's `sql.driver` interface.
+
+It is recommended that you use the Neo4j Bolt-specific interfaces if possible.
+The implementation is more efficient and can more closely support the Neo4j Bolt feature set.
+
+Features
+
+* Neo4j Bolt low-level binary protocol support
+* Message Pipelining for high concurrency
+* Connection Pooling
+* TLS support
+* Compatible with sql.driver
+
+[cols="1,4"]
+|===
+| icon:user[] Author | https://twitter.com/johnnadratowski[John Nadratowski]
+// | icon:gift[] Package |
+| icon:github[] Source | https://github.com/johnnadratowski/golang-neo4j-bolt-driver
+| icon:book[] Docs | https://github.com/johnnadratowski/golang-neo4j-bolt-driver/tree/master/README.md
+| icon:play-circle[] Example Project | link:{examples}/golang-bolt-movie-example
+|===
+
+
 === CQ
 
-A database/sql implementation for Cypher.
+A database/sql implementation for Cypher inspired by the http://golang.org/pkg/database/sql/[database/sql] package which provides idiomatic go database access.
+Cypher is close enough to SQL that it seems to fit pretty well in the database/sql implementation.
 
 [cols="1,4"]
 |===
 | icon:user[] Author | https://twitter.com/wefreema[Eve Freeman]
-// | icon:gift[] Package | 
+// | icon:gift[] Package |
 | icon:github[] Source | https://github.com/go-cq/cq
-// | icon:book[] Docs | http://clojureneo4j.info/
+| icon:book[] Docs | https://github.com/go-cq/cq/tree/master/readme.md
 | icon:play-circle[] Example Project | link:{examples}/movies-go-cq
 |===
 
@@ -54,8 +81,9 @@ A database/sql implementation for Cypher.
 
 === Neoism
 
-Neoism is a Go client library providing access to the Neo4j graph database via its REST API.
-This driver is fairly complete, and may now be suitable for general use. The code has an extensive set of integration tests.
+Neoism is a Go client library providing access to the Neo4j graph database via its HTTP REST API.
+This driver is fairly complete, and is suitable for general use.
+The code has an extensive set of integration tests.
 
 * http://github.com/jmcvetta/neoism[Neoism on GitHub]
 * Author: https://github.com/jmcvetta[Jason McVetta]

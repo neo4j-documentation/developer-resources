@@ -37,7 +37,7 @@ Spark can also serve as external Graph Compute solution, where you
 
 [NOTE]
 Neo4j itself is capable of running graph processing on medium to large graphs quickly.
-For instance the https://github.com/maxdemarzi/graph_processing[graph-processing] project demonstrates that we can run PageRank (5 iterations) on the dbpedia dataset (10M nodes, 125M relationships) in 40 seconds as a Neo4j server extension or http://neo4j-contrib.github.io/neo4j-apoc-procedures/#_pagerank_algorithm[user defined procedure]. 
+For instance the https://github.com/maxdemarzi/graph_processing[graph-processing] project demonstrates that we can run PageRank (5 iterations) on the dbpedia dataset (10M nodes, 125M relationships) in 20 seconds as a Neo4j server extension or http://neo4j-contrib.github.io/neo4j-apoc-procedures/#_pagerank_algorithm[user defined procedure]. 
 Spark might be better suited for larger datasets or more intensive compute operations.
 
 [[neo4j-spark-connector]]
@@ -45,68 +45,85 @@ Spark might be better suited for larger datasets or more intensive compute opera
 
 The https://github.com/neo4j-contrib/neo4j-spark-connector[Neo4j Spark Connector] uses the binary Bolt protocol to transfer data from and to a Neo4j server.
 
-It offers Spark-APIs for *RDD, DataFrame, GraphX and GraphFrames*, so you're free to chose how you want to use and process your Neo4j graph data in Spark.
+It offers Spark-2.0 APIs for *RDD, DataFrame, GraphX and GraphFrames*, so you're free to chose how you want to use and process your Neo4j graph data in Apache Spark.
 
 Configure Neo4j-URL, -user and -password via `spark.neo4j.bolt.*` Spark Config options.
 
-Here is a basic example for using `Neo4jRowRDD` (there are some more RDD types).
+The general usage is:
+
+1. create `org.neo4j.spark.Neo4j(sc)`
+2. set `cypher(query,[params])`,`nodes(query,[params])`,`rels(query,[params])` as direct query, or +
+   `pattern("Label1",Seq("REL"),"Label2")` or `pattern(("Label1","prop1",("REL","prop"),("Label2","prop2))`
+3. optionally define `partitions(n)`, `batch(size)`, `rows(count)` for parallelism
+4. choose which datatype to return
+   * `loadRowRdd`, `loadNodeRdds`, `loadRelRdd`, `loadRdd[T]`
+   * `loadDataFrame`,`loadDataFrame(schema)`
+   * `loadGraph[VD,ED]`
+   * `loadGraphFrame[VD,ED]`
+
+Here is a basic example for loading a `RDD[Row]`.
+
+[source,scala]
+----
+org.neo4j.spark.Neo4j(sc).cypher("MATCH (n:Person) RETURN n.name").partitions(5).batch(10000).loadRowRdd
+----
 
 [source,shell]
 ----
 $SPARK_HOME/bin/spark-shell --conf spark.neo4j.bolt.password=<password> \
---packages neo4j-contrib:neo4j-spark-connector:1.0.0-RC1
+--packages neo4j-contrib:neo4j-spark-connector:2.0.0-M2,graphframes:graphframes:0.2.0-spark2.0-s_2.11
 ----
 
 [source,scala]
 ----
 import org.neo4j.spark._
 
-Neo4jRowRDD(sc,"MATCH (n) where id(n) < {maxId} return id(n)",Seq(("maxId",100000))).count
-// res0: Long = 100000
+val neo = Neo4j(sc)
+
+val rdd = neo.cypher("MATCH (n:Person) RETURN id(n) as id ").loadRowRdd
+rdd.count
+
+// inferred schema
+rdd.first.schema.fieldNames
+//   => ["id"]
+rdd.first.schema("id") 
+//   => StructField(id,LongType,true)
+
+neo.cypher("MATCH (n:Person) RETURN id(n)").loadRdd[Long].mean
+//   => res30: Double = 236696.5
+
+neo.cypher("MATCH (n:Person) WHERE n.id <= {maxId} RETURN n.id").param("maxId", 10).loadRowRdd.count
+//   => res34: Long = 10
 ----
 
-The *GraphX* integration also allows to write data back to Neo4j with a `save` operation.
+Similar operations are available for *DataFrames* and *GraphX*.
+The GraphX integration also allows to write data back to Neo4j with a `save` operation.
 
 To use *GraphFrames* you have to declare it as package.
-Then you can use `Neo4jGraphFrame` to pull in graph data from Neo4j and run graph algorithms or pattern matchin on it (the latter will be slower than in Neo4j).
-
-[source,shell]
-----
-$SPARK_HOME/bin/spark-shell --conf spark.neo4j.bolt.password=<password> \
---packages neo4j-contrib:neo4j-spark-connector:1.0.0-RC1,\
-graphframes:graphframes:0.1.0-spark1.6
-----
+Then you can load a GraphFrame with graph data from Neo4j and run graph algorithms or pattern matchin on it (the latter will be slower than in Neo4j).
 
 [source,scala]
 ----
 import org.neo4j.spark._
 
-val gdf = Neo4jGraphFrame(sqlContext,("Person","name"),("KNOWS",null),("Person","name"))
-// gdf: org.graphframes.GraphFrame = GraphFrame(v:[id: bigint, prop: string], 
-//                                e:[src: bigint, dst: bigint, prop: string])
+val neo = Neo4j(sc)
 
-val gdf = Neo4jGraphFrame.fromGraphX(sc,"Person",Seq("KNOWS"),"Person")
+import org.graphframes._
 
+val graphFrame = neo.pattern(("Person","id"),("KNOWS",null), ("Person","id")).partitions(3).rows(1000).loadGraphFrame
 
-gdf.vertices.count // res0: Long = 1000000
+graphFrame.vertices.count
+//     => 100
+graphFrame.edges.count
+//     => 1000
 
-gdf.edges.count    // res1: Long = 999999
+val pageRankFrame = graphFrame.pageRank.maxIter(5).run()
+val ranked = pageRankFrame.vertices
+ranked.printSchema()
 
-val results = gdf.pageRank.resetProbability(0.15).maxIter(5).run
-
-// results: org.graphframes.GraphFrame = GraphFrame(
-//                   v:[id: bigint, prop: string, pagerank: double], 
-//                   e:[src: bigint, dst: bigint, prop: string, weight: double])
-
-results.vertices.take(5)
-
-// res3: Array[org.apache.spark.sql.Row] = Array([31,name32,0.96820096875], [231,name232,0.15], 
-// [431,name432,0.15], [631,name632,1.1248028437499997], [831,name832,0.15])
-
-// pattern matching
-val results = gdf.find("(A)-[]->(B)").select("A","B").take(3)
-// results: Array[org.apache.spark.sql.Row] = Array([[159148,name159149],[31,name32]], 
-// [[461182,name461183],[631,name632]], [[296686,name296687],[1031,name1032]])
+val top3 = ranked.orderBy(ranked.col("pagerank").desc).take(3)
+//     => top3: Array[org.apache.spark.sql.Row] 
+//     => Array([236716,70,0.62285...], [236653,7,0.62285...], [236658,12,0.62285])
 ----
 
 More examples and details can be found in the docs of the GitHub repository.

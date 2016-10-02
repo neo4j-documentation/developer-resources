@@ -37,7 +37,7 @@ In this guide we will load the dataset using `LOAD CSV`
 //setup
 [source,cypher]
 ----
-LOAD CSV WITH HEADERS FROM "https://neo4j-contrib.github.io/developer/cypher/movies_actors.csv" AS line
+LOAD CSV WITH HEADERS FROM "https://neo4j-contrib.github.io/developer-resources/cypher/movies_actors.csv" AS line
 WITH line
 WHERE line.job = "ACTED_IN"
 MERGE (m:Movie {title:line.title}) ON CREATE SET m.released = toInt(line.released), m.tagline = line.tagline
