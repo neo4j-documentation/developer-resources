@@ -213,7 +213,7 @@ var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
 <div class="marquee blue">
     <div class="row text-center">
         <div class="medium-10 small-centered columns">
-            <h1 class="entry-title">Cypher Query Language</h1>
+            <h1 class="entry-title">User Defined Procedures and Functions</h1>
         </div>
     </div>
 </div>
@@ -226,7 +226,7 @@ var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
                     <ul class="breadcrumbs">
                         <li><a href="/developer">Developer Guides</a></li>
                         
-                        <li class="current"><a href="#">Cypher Query Language</a></li>
+                        <li class="current"><a href="#">User Defined Procedures and Functions</a></li>
                     </ul>
                 </div>
             </div>
@@ -560,150 +560,46 @@ ul.none li {
             <div>
                 <div class="row" style="padding-left: 0; padding-right: 0;">
                     <div class="large-9 large-push-3 columns guide-section-content">
-                        <h1 id="__span_class_image_img_src_s3_amazonaws_com_dev_assets_neo4j_com_wp_content_uploads_feature_cypher_png_alt_feature_cypher_span_cypher_query_language" class="sect0"><span class="image"><img src="//s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/feature-cypher.png" alt="feature cypher"></span> Cypher Query Language</h1>
-<!--div class="title"><span class="image"><img src="//s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/feature-cypher.png" alt="feature cypher"></span> Cypher Query Language</div-->
-
-
-<div class="paragraph">
-<p>Cypher is Neo4j&#8217;s open graph query language.
-Cypher&#8217;s syntax provides a familiar way to match patterns of nodes and relationships in the graph.</p>
+                        <div id="preamble columns medium-12">
+<div class="sectionbody">
+<div class="quoteblock abstract">
+<div class="title">Goals</div>
+<blockquote style="padding-left: 0;">
+This guide explains how to use, create and deploy user defined procedures and functions, the extension mechanism of Cypher, Neo4j&#8217;s query language.
+It also covers existing, widely used procedure libraries
+</blockquote>
+</div>
+<div class="quoteblock abstract">
+<div class="title">Prerequisites</div>
+<blockquote style="padding-left: 0;">
+You should have learned to read and write statements in <a href="/developer/cypher/cypher-query-language">Cypher</a> and seen the need for additional capabilities.
+</blockquote>
 </div>
 
 
+<div class="label">Intermediate</div>
+<hr/>
 
-<div class="paragraph">
-<p>These developer guides and tutorials show you how to query Neo4j using Cypher.</p>
-</div>
+<div class="toc">
+<h3 class="title">Overview</h3>
 
-
-
-<div class="paragraph">
-<p>Here is a simple example of a Cypher query (cast of movies starting with "T")</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (actor:Person)-[:ACTED_IN]-&gt;(movie:Movie)
-WHERE movie.title STARTS WITH "T"
-RETURN movie.title AS title, collect(actor.name) AS cast
-ORDER BY title ASC LIMIT 10;</code></pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>If you&#8217;re be able to read and understand it without any training, we achieved our goal.</p>
-</div>
-
-<div  id="intro" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Introduction to Cypher</h3>
-
-
-<div class="paragraph">
-<p>These guides explain the basic concepts of Cypher, including how to create and query data.
-You should be able to read, understand and write Cypher queries after completing them.</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-<a href="/developer/cypher/cypher-query-language">Introduction to Cypher</a>
-</li>
-<li>
-<a href="/developer/cypher/guide-sql-to-cypher">From SQL to Cypher</a>
-</li>
-<li>
-<a href="/developer/working-with-data/guide-importing-data-and-etl">Importing CSV Data Using Cypher</a>
-</li>
-<li>
-<a href="/online-training">Free Interactive Cypher Online Training</a>
-</li>
-<li>
-<a href="/books">Free Books on Cypher</a>
-</li>
+<ul class="sectlevel1">
+<li><a href="#_extending_cypher">Extending Cypher</a></li>
+<li><a href="#_what_are_procedures_and_functions">What are Procedures and Functions?</a></li>
+<li><a href="#_listing_using_functions_and_procedures">Listing &amp; Using Functions and Procedures</a></li>
+<li><a href="#_deploying_procedures_functions">Deploying Procedures &amp; Functions</a></li>
+<li><a href="#_awesome_procedures_on_cypher_apoc">Awesome Procedures on Cypher (APOC)</a></li>
+<li><a href="#_neo4j_spatial_procedures">Neo4j Spatial Procedures</a></li>
+<li><a href="#_semantic_web_rdf_ontology_procedures">Semantic Web (RDF / Ontology) Procedures</a></li>
+<li><a href="#_developing_your_own_procedures_and_functions">Developing your own Procedures and Functions</a></li>
 </ul>
+
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-In Neo4j Cypher statements are executed via a <strong>fast binary protocol</strong>, using our <a href="/developer/language-guides#bolt-drivers">officially supported drivers</a>.
-A <strong>cost based optimizer</strong> uses real-time database statistics to run your statements as efficiently as possible.
-You can always access the underlying query-plans using the <code>EXPLAIN</code> and <code>PROFILE</code> prefixes.
-</td>
-</tr>
-</table>
+<hr>
 </div>
-<div class="openblock">
-<div class="content">
-
-
-<div class="paragraph">
-<p>From the Neo4j Manual:</p>
 </div>
-
-<div class="ulist">
-<ul>
-<li>
-<a href="http://neo4j.com/docs/developer-manual/current/get-started/#cypher-getting-started">Get Started With Cypher</a>
-</li>
-<li>
-<a href="http://neo4j.com/docs/developer-manual/current/cypher/">Cypher Reference</a>
-</li>
-<li>
-<a href="http://neo4j.com/docs/developer-manual/current/procedures/">User-defined Procedures</a>
-</li>
-</ul>
-</div>
-
-
-<div class="paragraph">
-<p>== The openCypher Project</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Since October 2015 the <a href="http://openCypher.org">openCypher</a> project aims to provide an open grammar, language specification, technical compatibility kit and reference implementation of parser, planner and runtime for Cypher.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>It is backed by several companies in the database space and allows implementors of databases and clients to freely benefit, use from and contribute to the development of the openCypher language.</p>
-</div>
-
-
-
-<div id="recommendation" class="paragraph">
-<p>== Build a Recommendation Engine</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>This guide explains how to leverage connections in your data to gather insights and start recommending currently unrelated but relevant facts to your nodes in focus.</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-<a href="/developer/cypher/guide-build-a-recommendation-engine">Build a Recommendation Engine</a>
-</li>
-<li>
-<a href="http://watch.neo4j.org/video/109169965">Webinar: Build Recommendation Engines with Neo4j by Nicole White</a>
-</li>
-</ul>
-</div>
-
-
-<div id="procedures-functions" class="paragraph">
-<p>== Extending Cypher with User Defined Procedures and Functions</p>
-</div>
-
+<div  id="_extending_cypher" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Extending Cypher</h3>
 
 
 <div class="paragraph">
@@ -713,59 +609,879 @@ You can always access the underlying query-plans using the <code>EXPLAIN</code> 
 
 
 <div class="paragraph">
-<p>But sometimes you need to do more than it currently offers, like additional graph algorithms, parallization or custom conversions.</p>
+<p>But sometimes you need to do more than it currently offers, like additional graph algorithms, parallelization or custom conversions.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>That&#8217;s why the ability to extend Cypher with <a href="procedures-functions">User Defined Procedures and Functions</a> was added to the Neo4j 3.0 and 3.1 releases.
-Learn how to use, create and deploy procedures and functions to take your graph capabilities to the next level.</p>
+<p>That&#8217;s why the ability to extend Cypher with User Defined Procedures and Functions was added to the Neo4j 3.0 and 3.1 releases.
+But not only users, even Neo4j itself provides and utilizes custom procedures.
+Many of the monitoring, introspection and security features exposed by Neo4j-Browser are implemented using procedures.</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="//s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/procedures-functions-bolt.jpg" alt="procedures functions bolt" width="600">
+</p>
+</div>
+</div>
+<div  id="_what_are_procedures_and_functions" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>What are Procedures and Functions?</h3>
+<div class="ulist">
+<ul>
+<li>
+Functions are simple computations / conversions and return a single value
+</li>
+<li>
+Functions can be used in any expression or predicate
+</li>
+<li>
+Procedures are more complex operations and generate streams of results.
+</li>
+<li>
+Procedures must be used within the <code>CALL</code> clause and <code>YIELD</code> their result columns
+</li>
+<li>
+They can generate, fetch or compute data to make it available to later processing steps in your Cypher query
+</li>
+</ul>
+</div>
+</div>
+<div  id="_listing_using_functions_and_procedures" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Listing &amp; Using Functions and Procedures</h3>
+
+
+<div class="paragraph">
+<p>There are a <a href="http://neo4j.com/docs/developer-manual/current/procedures/#built-in-procedures">number of built in procedures</a>, two of which are used to list available functions and procedures.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>== Cypher Reference Card</p>
+<p>Run the following statements along to get a hang of the usage and see their results.</p>
+</div>
+
+<div class="listingblock">
+<div class="title">stand-alone call of a procedure</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CALL dbms.procedures()</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Call <code>dbms.functions()</code> to list functions.</p>
+</div>
+
+<div class="listingblock">
+<div class="title">yield and process result columns</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CALL dbms.procedures()
+YIELD name, signature, description
+RETURN * ORDER BY name ASC</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">process result columns, group by package</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CALL dbms.procedures()
+YIELD name, signature, description
+WITH split(name,".") AS parts
+RETURN parts[0] AS package,  count(*) AS count,
+       collect(parts[-1]) AS names</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>As of Neo4j 3.1, all functions available are directly part of the Cypher implementation, so user defined functions would only come from installed libraries.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>The <a href="/docs/cypher-refcard/"><strong>Cypher Reference Card</strong></a> is an invaluable resource for each Neo4j user.
-It details every clause, function and keyword in Cypher with short examples to help you understand the concepts.
-You should keep a <a href="/docs/pdf/neo4j-cypher-refcard-stable.pdf">printed variant</a> handy at all times.</p>
+<p>You can grab any procedure library and deploy it to your server to get a number of additional procedures and functions available.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>== Blogs, Screencasts &amp; Video Tutorials</p>
+<p>Please also have a look at the <a href="http://neo4j.com/docs/developer-manual/current/procedures">procedure section in the Neo4j Manual</a>.</p>
+</div>
+
+</div>
+<div  id="_deploying_procedures_functions" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Deploying Procedures &amp; Functions</h3>
+
+
+<div class="paragraph">
+<p>If you packaged your own procedures or got them from somewhere else, they usually come in a jar-file.
+You can just copy that file into the <code>$NEO4J_HOME/plugins</code> directory of your Neo4j server and restart.</p>
+</div>
+
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<strong>A word of caution.</strong>
+As procedures and functions use the low level Java API they can access all Neo4j internals as well as the file system and machine.
+That&#8217;s why you should know which procedures you deploy and why.
+If they are open source, check their source-code and best build them yourself.
+</td>
+</tr>
+</table>
+</div>
+
+
+<div class="paragraph">
+<p>Now let&#8217;s look at some of the procedure libraries built by our community.</p>
+</div>
+
+</div>
+<div  id="_awesome_procedures_on_cypher_apoc" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Awesome Procedures on Cypher (APOC)</h3>
+
+
+<div class="paragraph">
+<p>With the advent of user defined procedures, many capabilities could be added to Cypher with ease.
+That&#8217;s how the APOC library got started, which developed into a "standard-library" for Neo4j built by the Neo4j community.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>By now it contaisn 200+ procedures and 70+ functions.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>APOC covers many areas, here are some examples:</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Procedures:</p>
+</div>
+
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 37.5%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+<col style="width: 12.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">package</th>
+<th class="tableblock halign-left valign-top"># of procedures</th>
+<th class="tableblock halign-left valign-top">example procedure</th>
+<th class="tableblock halign-left valign-top">docs link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>data api access</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>11</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apoc.load.json(json-url)</code></p></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p><span class="icon"><a class="image" href="{apoc}#_load_json"><i class="fa fa-book"></i></a></span></p>
+</div>
+</div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>database integration</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>23</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apoc.load.jdbc(jdbc-url,table-or-statement)</code></p></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p><span class="icon"><a class="image" href="{apoc}#_load_jdbc"><i class="fa fa-book"></i></a></span></p>
+</div>
+</div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>graph algorithms</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>18</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apoc.algo.dijkstra(from,to,cost-prop)<br>
+apoc.algo.pageRankStats({iterations:10,write:true})</code></p></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p><span class="icon"><a class="image" href="{apoc}#graph_algorithms"><i class="fa fa-book"></i></a></span></p>
+</div>
+</div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>(virtual) data creation</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>16</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CALL apoc.create.relationship(startNode,'TYPE',{key:value,…​}, endNode)</code></p></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p><span class="icon"><a class="image" href="{apoc}#_creating_data"><i class="fa fa-book"></i></a></span></p>
+</div>
+</div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>transaction control</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>8</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apoc.periodic.iterate('source-query','work-statement',{batchSize:100, parallel:true})</code></p></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p><span class="icon"><a class="image" href="{apoc}#_job_management_and_periodic_execution"><i class="fa fa-book"></i></a></span></p>
+</div>
+</div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>cypher operations</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>9</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apoc.cypher.runFile(file or url)</code></p></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p><span class="icon"><a class="image" href="{apoc}#_cypher_operations"><i class="fa fa-book"></i></a></span></p>
+</div>
+</div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>graph data export</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>9</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apoc.export.cypher.query(query,file,config)</code></p></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p><span class="icon"><a class="image" href="{apoc}#_export_import"><i class="fa fa-book"></i></a></span></p>
+</div>
+</div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>graph generation</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>5</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apoc.generate.ws(noNodes, degree, beta, 'label', 'TYPE') // Watts-Strogatz</code></p></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p><span class="icon"><a class="image" href="{apoc}#_generating_graphs"><i class="fa fa-book"></i></a></span></p>
+</div>
+</div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>meta information</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>4</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apoc.meta.stats()</code></p></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p><span class="icon"><a class="image" href="{apoc}#_meta_graph"><i class="fa fa-book"></i></a></span></p>
+</div>
+</div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>time to live, node-expiry</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>1</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CALL apoc.date.expire(node,100,'s');</code></p></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p><span class="icon"><a class="image" href="{apoc}#_timetolive_ttl_expire_nodes"><i class="fa fa-book"></i></a></span></p>
+</div>
+</div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>monitoring &amp; operations</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>6</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apoc.monitor.tx()</code></p></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p><span class="icon"><a class="image" href="{apoc}#_warmup"><i class="fa fa-book"></i></a></span></p>
+</div>
+</div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>manual and schema indexes</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>17</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apoc.index.between(node1,'TYPE',node2,'prop:value*')</code></p></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p><span class="icon"><a class="image" href="{apoc}#_monitoring"><i class="fa fa-book"></i></a></span></p>
+</div>
+</div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>cypher triggers on transaction end</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>3</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apoc.trigger.add(name, statement, selector)</code></p></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p><span class="icon"><a class="image" href="{apoc}#_triggers"><i class="fa fa-book"></i></a></span></p>
+</div>
+</div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>search and expand</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>5</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apoc.path.expand(startNode, relationshipFilter, labelFilter, minDepth, maxDepth )</code></p></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p><span class="icon"><a class="image" href="{apoc}#_path_expander"><i class="fa fa-book"></i></a></span></p>
+</div>
+</div></td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="paragraph">
+<p>Functions:</p>
+</div>
+
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">package</th>
+<th class="tableblock halign-left valign-top"># of functions</th>
+<th class="tableblock halign-left valign-top">example function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>date &amp; time conversion</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>3</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apoc.date.parse("time",["unit"],["format"])</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>number conversion</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>3</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apoc.number.parse("number",["format"])</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>general type conversion</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>8</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apoc.convert.toMap(value)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>type information and checking</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>4</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apoc.meta.type(value)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>collection and map functions</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>25</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apoc.map.fromList(["k1",v1,"k2",v2,"k3",v3])</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>JSON conversion</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>4</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apoc.convert.toJson(value)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>string functions</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>7</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apoc.text.join(["s1","s2","s3"],"delim")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>hash functions</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>2</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apoc.util.md5(value)</code></p></td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="paragraph">
+<p>Learn more by reading the [blog post series on APOC] or watch the</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>APOC itself comes also with a comprehensive and growing [documentation site].</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Recently added Neo4j Browser guides, make that documentation available within your working environment.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Just run: <code>:play <a href="http://guides.neo4j.com/apoc" class="bare">http://guides.neo4j.com/apoc</a></code></p>
+</div>
+
+</div>
+<div  id="_neo4j_spatial_procedures" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j Spatial Procedures</h3>
+
+
+<div class="paragraph">
+<p>The <a href="http://github.com/neo4j-contrib/spatial">neo4j-spatial</a> library has been with Neo4j for a long time.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>In the past you interacted with its Java or REST APIs.
+Now for Neo4j 3.0 the maintainer, Craig Taverner added a number of procedures to integrate the spatial capabilities closely with Cypher.</p>
+</div>
+
+<div  id="_using_neo4j_spatial_procedures_in_legis_graph_spatial" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Using Neo4j Spatial Procedures in legis-graph-spatial</h3>
+
+
+<div class="paragraph">
+<p>William Lyon demonstrates how to use them in the <a href="http://www.lyonwj.com/2016/08/09/neo4j-spatial-procedures-congressional-boundaries/">Legis-Graph-Spatial Blog post</a> with the <a href="http://legis-graph.github.io/legis-graph-spatial/">code being available on GitHub</a></p>
+</div>
+
+<div class="listingblock">
+<div class="title">create a WKT layer</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>call spatial.addWKTLayer('geom', 'wkt')</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">match on all District nodes and add them to the WKT layer</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (d:District)
+WITH collect(d) AS districts
+CALL spatial.addNodes('geom', districts) YIELD node
+RETURN count(*)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Find Geometry within distance and related</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>WITH {latitude: 37.563440, longitude: -122.322265} AS coordinate
+CALL spatial.withinDistance('geom', coordinate, 1) YIELD node AS district
+MATCH (district)&lt;-[:REPRESENTS]-(legislator:Legislator)
+RETURN district.state, legislator.govtrackID, legislator.lastName, l.currentParty AS party</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div  id="_semantic_web_rdf_ontology_procedures" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Semantic Web (RDF / Ontology) Procedures</h3>
+
+
+<div class="paragraph">
+<p>Neo4j Consultant Jesus Barrasa wrote a number of procedures for importing and managing semantic web data.</p>
+</div>
+
+<div class="listingblock">
+<div class="title">import RDF formats and convert them into the property graph model</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CALL semantics.importRDF(rdf-url-or-file,format, shorten-url-flag, batch-commit-size);</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">import ontologies into Neo4j ontologies for graph generation and checking</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CALL semantics.LiteOntoImport(own-url-or-file,'RDF/XML')</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>You can find them <a href="https://github.com/jbarrasa/neosemantics">here on GitHub</a>, for more detail see his <a href="https://jesusbarrasa.wordpress.com/?s=procedure">blog post series</a>.</p>
+</div>
+
+</div>
+<div  id="_developing_your_own_procedures_and_functions" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Developing your own Procedures and Functions</h3>
+<div  id="_writing_your_first_function" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Writing your first Function</h3>
+
+
+<div class="paragraph">
+<p>You can find details on writing and testing procedures in the <a href="http://neo4j.com/docs/developer-manual/current/procedures/#user-defined-procedures">Neo4j Manual</a>.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>There is even an <a href="https://github.com/neo4j-examples/neo4j-procedure-template">example GitHub repository</a> with detailed documentation and comments that you can clone directly and use as a starting point.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>User-defined functions are simpler, so let&#8217;s look at one here:</p>
 </div>
 
 <div class="ulist">
 <ul>
 <li>
-<a href="http://neo4j.com/graphgists">Interactive Example Graph Gists</a>
-</li>
+<code>@UserFunction</code> annotated, named Java Methods
+<div class="ulist">
+<ul>
 <li>
-<a href="http://nigelsmall.com/zen">The Zen of Cypher by Nigel Small</a>
-</li>
-<li>
-<a href="http://www.markhneedham.com/blog/?s=cypher">Mark Needham</a>
-</li>
-<li>
-<a href="http://maxdemarzi.com/?s=cypher">Max de Marzi</a>
-</li>
-<li>
-<a href="http://blog.bruggen.com/search?q=cypher&amp;view=magazine">Rik van Bruggen</a>
-</li>
-<li>
-<a href="http://jexp.de/blog/?s=cypher">Michael Hunger</a>
+default name is <code>class package + "." +  method-name</code>
 </li>
 </ul>
 </div>
+</li>
+<li>
+take `@Name&#8217;ed parameters (with optional default values)
+</li>
+<li>
+return a single value
+</li>
+<li>
+are read only
+</li>
+<li>
+can use <code>@Context</code> injected <code>GraphDatabaseService</code> etc
+</li>
+<li>
+run within Transaction of the Cypher Statement
+</li>
+</ul>
 </div>
+<div class="listingblock">
+<div class="title">simple user defined uuid function</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>@UserFunction("create.uuid")
+@Description("creates an UUID (universally unique id)")
+public String uuid() {
+   return UUID.randomUUID().toString();
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">use the function like this</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (p:Person {id: create.uuid(), name:{name}})</code></pre>
+</div>
+</div>
+</div>
+<div  id="_testing_the_function" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Testing the Function</h3>
+
+
+<div class="paragraph">
+<p>The Neo4j testing library <code>neo4j-harness</code> enables you to spin up a Neo4j server, provide fixtures for data setup and register your functions and procedures.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>You then call and test test the function via the bolt - <code>neo4j-java-driver</code>.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>@Rule
+public Neo4jRule neo4j = new Neo4jRule()
+                         .withFunction( UUIDs.class );
+...
+
+try( Driver driver = GraphDatabase.driver( neo4j.boltURI() , config ) {
+    Session session = driver.session();
+    String uuid = session.run("RETURN create.uuid() AS uuid")
+                         .single().get( 0 ).asString();
+    assertThat( uuid,....);
+}</code></pre>
+</div>
+</div>
+</div>
+<div  id="_writing_a_procedure" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Writing a Procedure</h3>
+
+
+<div class="paragraph">
+<p>User defined procedures are similar:</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<code>@Procedure</code> annotated, Java methods
+</li>
+<li>
+with an additional <code>mode</code> attribute (<code>Read, Write, Dbms</code>)
+</li>
+<li>
+return a <code>Stream</code> of value objects (DTO) with <code>public</code> fields
+</li>
+<li>
+value object fields are turned into result columns to be `YIELD`ed
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Expose dijkstra algoritm from the Java API to Cypher</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>@Procedure(mode = Write)
+@Description("apoc.algo.dijkstra(startNode, endNode, 'KNOWS', 'distance') YIELD path," +
+       " weight - run dijkstra with relationship property name as cost function")
+public Stream&lt;WeightedPathResult&gt; dijkstra(
+       @Name("startNode") Node startNode,
+       @Name("endNode") Node endNode,
+       @Name("type") String type,
+       @Name("costProperty") String costProperty) {
+
+
+   PathFinder&lt;WeightedPath&gt; algo = GraphAlgoFactory.dijkstra(
+           PathExpanders.forType(RelationshipType.withName(type)),
+           costProperty);
+   Iterable&lt;WeightedPath&gt; allPaths = algo.findAllPaths(startNode, endNode);
+   return Iterables.asCollection(allPaths).stream()
+           .map(WeightedPathResult::new);
+}
+
+public static class WeightedPathResult {
+   public final Path path;
+   public final double weight;
+   public WeightedPathResult(WeightedPath wp) { this.path = wp; this.weight = wp.weight(); }
+}</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Use a build tool (like maven, gradle, ant) to package your code into a jar-file and copy that into <code>$NEO4J_HOME/plugins</code>
+Make sure required dependencies are added as well, either to your jar or the plugins directory.</p>
+</div>
+
 </div>
 </div>
                     </div>
