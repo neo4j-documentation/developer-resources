@@ -30,12 +30,43 @@ image::{img}haskell.png[float=right]
 
 include::../_includes/community-driver-notice.adoc[]
 
+=== Hasbolt
+
+Haskell driver for Neo4j 3+ (BOLT protocol).
+
+The package covers:
+
+* Data serialization and deserialization
+* Nodes, relationships and paths support
+* Cypher queries and responses
+* Authentification
+
+The code was tested with neo4j versions 3.0 and 3.1.
+
+The https://github.com/neo4j-examples/neo4j-movies-haskell-bolt[example movie database application] uses https://github.com/scotty-web/scotty[Scotty] as a web framework and comes with detailed documentation, including deployment instructions to Heroku.
+
+[cols="1,4"]
+|===
+| icon:user[] Author         | https://twitter.com/zmactep[Pavel Yakovlev]
+| icon:gift[] Package        | https://hackage.haskell.org/package/hasbolt
+| icon:github[] Source       | https://github.com/zmactep/hasbolt
+
+| icon:play-circle[] Example | {examples}/neo4j-movies-haskell-bolt
+| icon:book[] Docs           | https://github.com/zmactep/hasbolt#readme
+| icon:book[] Blog           | https://neo4j.com/blog/hasbolt-haskell-neo4j-bolt-driver/
+|===
+
+
 === Haskell-Cypher
 
 Haskell-Cypher makes it easy to send Cypher commands to Neo4j servers over their REST API.
 Additionally, it allows users to parse Haskell datatypes from Cypher queries.
 It's meant to be used in conjunction with the aeson package.
 
-* https://github.com/lassoinc/haskell-cypher[Haskell-Cypher on GitHub]
-* http://hackage.haskell.org/package/cypher-0.8[Documentation]
-* Author: Sam Anklesaria
+[cols="1,4"]
+|===
+| icon:user[] Author         | Sam Anklesaria
+| icon:github[] Source       | https://github.com/lassoinc/haskell-cypher
+
+| icon:book[] Docs           | http://hackage.haskell.org/package/cypher-0.8
+|===
