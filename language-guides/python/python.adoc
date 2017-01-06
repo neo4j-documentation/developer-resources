@@ -90,6 +90,42 @@ friends = Path(alice, "KNOWS", bob, "KNOWS", carol)
 graph.create(friends)
 ----
 
+=== Neomodel
+
+image::{img}neomodel.200x80.png[float="right",width=100]
+
+An Object Graph Mapper built on top of the Neo4j python driver. Familiar Django style node definition with a powerful query API, thread safe and full transaction support.
+
+[cols="1,4"]
+|===
+| icon:user[] Author         | Robin Edwards
+| icon:gift[] Package        | https://pypi.python.org/pypi/neomodel
+| icon:github[] Source       | http://github.com/robinedwards/neomodel
+
+| icon:book[] Docs           | http://neomodel.readthedocs.org/
+| icon:code-fork[] Python    | 2.7 / 3.3+
+|===
+
+.Example
+[source,python]
+----
+from neomodel import StructuredNode, StringProperty, RelationshipTo, RelationshipFrom, config
+
+config.DATABASE_URL = 'bolt://neo4j:test@localhost:7687'
+
+class Book(StructuredNode):
+    title = StringProperty(unique_index=True)
+    author = RelationshipTo('Author', 'AUTHOR')
+
+class Author(StructuredNode):
+    name = StringProperty(unique_index=True)
+    books = RelationshipFrom('Book', 'AUTHOR')
+
+harry_potter = Book(title='Harry potter and the..').save()
+rowling =  Author(name='J. K. Rowling').save()
+harry_potter.author.connect(rowling)
+----
+
 === Neo4jRestClient
 
 The main goal of neo4j-rest-client was to enable Python programmers already using Neo4j locally through python-embedded, to use the Neo4j REST server.
@@ -155,21 +191,6 @@ Neo4django is an Object Graph Mapper (OGM) for Django. Use familiar Django model
 
 ////
 
-=== NeoModel
-
-image::{img}neomodel.200x80.png[float="right",width=100]
-
-An Object Graph Mapper (OGM) also usable for Django for the Neo4j graph database.
-
-[cols="1,4"]
-|===
-| icon:user[] Author         | Robin Edwards
-| icon:gift[] Package        | https://pypi.python.org/pypi/neomodel
-| icon:github[] Source       | http://github.com/robinedwards/neomodel
-
-| icon:book[] Docs           | http://neomodel.readthedocs.org/
-| icon:code-fork[] Python    | 2.7 / 3.4 / pypy / pypy3
-|===
 
 == Further Reading
 
