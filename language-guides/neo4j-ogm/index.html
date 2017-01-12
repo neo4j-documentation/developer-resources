@@ -213,7 +213,7 @@ var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
 <div class="marquee blue">
     <div class="row text-center">
         <div class="medium-10 small-centered columns">
-            <h1 class="entry-title">User Defined Procedures and Functions</h1>
+            <h1 class="entry-title">Neo4j - OGM Object Graph Mapper</h1>
         </div>
     </div>
 </div>
@@ -226,7 +226,7 @@ var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
                     <ul class="breadcrumbs">
                         <li><a href="/developer">Developer Guides</a></li>
                         
-                        <li class="current"><a href="#">User Defined Procedures and Functions</a></li>
+                        <li class="current"><a href="#">Neo4j - OGM Object Graph Mapper</a></li>
                     </ul>
                 </div>
             </div>
@@ -565,14 +565,16 @@ ul.none li {
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-This guide explains how to use, create and deploy user defined procedures and functions, the extension mechanism of Cypher, Neo4j&#8217;s query language.
-It also covers existing, widely used procedure libraries
+If you are a Java developer, and want to use a plain Java object graph mapper, then this guide introduces the Neo4j-OGM library.
+While this guide is not comprehensive, it will introduce the different APIs and link to the relevant resources.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should have learned to read and write statements in <a href="/developer/cypher/cypher-query-language">Cypher</a> and seen the need for additional capabilities.
+You should be familiar with the <a href="/developer/get-started/graph-database">graph database concepts</a> and the property graph model.
+Having <a href="/download">installed Neo4j</a> and tried out our <a href="/developer/cypher">Cypher Query language</a> helps too.
+When developing with Neo4j, please use JDK 8 and your favorite IDE.
 </blockquote>
 </div>
 
@@ -583,362 +585,388 @@ You should have learned to read and write statements in <a href="/developer/cyph
 <div class="toc">
 <h3 class="title">Overview</h3>
 
-<ul class="sectlevel1">
-<li><a href="#_extending_cypher">Extending Cypher</a></li>
-<li><a href="#_what_are_procedures_and_functions">What are Procedures and Functions?</a></li>
-<li><a href="#_listing_using_functions_and_procedures">Listing &amp; Using Functions and Procedures</a></li>
-<li><a href="#_deploying_procedures_functions">Deploying Procedures &amp; Functions</a></li>
-<li><a href="#_procedure_and_function_gallery">Procedure and Function Gallery</a></li>
-<li><a href="#_developing_your_own_procedures_and_functions">Developing your own Procedures and Functions</a></li>
+<ul class="sectlevel2">
+<li><a href="#__span_class_icon_i_class_fa_fa_check_circle_o_i_span_neo4j_ogm"><span class="icon"><i class="fa fa-check-circle-o"></i></span> Neo4j-OGM</a></li>
+<li><a href="#_features">Features</a></li>
+<li><a href="#neo4j-ogm">Resources</a></li>
+<li><a href="#reference:getting-started:versions">Versions</a></li>
+<li><a href="#reference:getting-started:dependency-management">Dependency Management</a></li>
+<li><a href="#_minimal_code_snippet">Minimal Code Snippet</a></li>
+<li><a href="#_the_example_project">The Example Project</a></li>
+<li><a href="#_faq">FAQ</a></li>
 </ul>
 
 </div>
 <hr>
 </div>
 </div>
-<div  id="_extending_cypher" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Extending Cypher</h3>
+<div  id="__span_class_icon_i_class_fa_fa_check_circle_o_i_span_neo4j_ogm" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3><span class="icon"><i class="fa fa-check-circle-o"></i></span> Neo4j-OGM</h3>
 
 
 <div class="paragraph">
-<p>Cypher is a quite powerful and expressive language, with first class graph pattern and collection support.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>But sometimes you need to do more than it currently offers, like additional graph algorithms, parallelization or custom conversions.</p>
+<p>Neo4j offers a rich set of integration possibilities for developers using Java or other JVM-languages using either Cypher via all APIs (Binary-Bolt, HTTP, Embedded) or the embedded Java API, e.g. for writing user defined procedures and functions.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>That&#8217;s why the ability to extend Cypher with User Defined Procedures and Functions was added to the Neo4j 3.0 and 3.1 releases.
-But not only users, even Neo4j itself provides and utilizes custom procedures.
-Many of the monitoring, introspection and security features exposed by Neo4j-Browser are implemented using procedures.</p>
+<p>While using the query language directly works well for small projects and more advanced queries, the boilerplate of CRUD operations gets tedious.</p>
 </div>
 
-<div class="imageblock">
-<p class="content">
-<img src="//s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/procedures-functions-bolt.jpg" alt="procedures functions bolt" width="600">
-</p>
+
+
+<div class="paragraph">
+<p>That&#8217;s where object graph mappers come in, they take your existing domain POJOs and map them to Neo4j.
+With a graph database that&#8217;s easier than with a relational database as there is no such data-model mismatch.</p>
 </div>
+
+
+
+<div class="paragraph">
+<p>Besides the Neo4j-OGM introduced here, there are also <a href="../spring-data-neo4j">Spring Data Neo4j</a>, <a href="../java#hibernate">Hibernate-OGM</a> and others.</p>
 </div>
-<div  id="_what_are_procedures_and_functions" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>What are Procedures and Functions?</h3>
+
+
+
+<div class="paragraph">
+<p>We created the Neo4j-OGM as a standalone object graph mapper for Java as a base library for Spring Data Neo4j.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>The Neo4j-OGM uses Cypher consistently under the hood and supports several transport protocols - bolt, http and embedded.
+That&#8217;s why besides either the neo4j-java-driver, http-client or Neo4j itself it has no special dependencies.</p>
+</div>
+
+</div>
+<div  id="_features" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Features</h3>
+
+
+<div class="paragraph">
+<p>The Neo4j-OGM supports the features you would expect:</p>
+</div>
+
 <div class="ulist">
 <ul>
 <li>
-Functions are simple computations / conversions and return a single value
+Object graph mapping of annotated node- and relationship-entities
 </li>
 <li>
-Functions can be used in any expression or predicate
+Neo4jSession for direct interaction with Neo4j
 </li>
 <li>
-Procedures are more complex operations and generate streams of results.
+Fast class metadata scanning
 </li>
 <li>
-Procedures must be used within the <code>CALL</code> clause and <code>YIELD</code> their result columns
+Optimized management of data loading and change tracking for minimal data transfers
 </li>
 <li>
-They can generate, fetch or compute data to make it available to later processing steps in your Cypher query
+Multiple transports: <strong>binary protocol</strong>, HTTP and embedded
+</li>
+<li>
+Persistence lifecycle events
+</li>
+<li>
+Query result projection to DTOs
 </li>
 </ul>
 </div>
 </div>
-<div  id="_listing_using_functions_and_procedures" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Listing &amp; Using Functions and Procedures</h3>
-
-
-<div class="paragraph">
-<p>There are a <a href="http://neo4j.com/docs/developer-manual/current/procedures/#built-in-procedures">number of built in procedures</a>, two of which are used to list available functions and procedures.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Run the following statements along to get a hang of the usage and see their results.</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CALL dbms.procedures()</code></pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>Call <code>dbms.functions()</code> to list functions.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Each procedure returns one or more columns of data.
-With <code>yield</code> these columns can be selected and also aliased and are then available in your Cypher statement.</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CALL dbms.procedures()
-YIELD name, signature, description as text
-WHERE name STARTS WITH 'db.'
-RETURN * ORDER BY name ASC</code></pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>Of course you can also process the result columns with other Cypher clauses.
-Here we group them by package.</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CALL dbms.procedures()
-YIELD name, signature, description
-WITH split(name,".") AS parts
-RETURN parts[0..-1] AS package,  count(*) AS count,
-       collect(parts[-1]) AS names
-ORDER BY count DESC</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre>╒════════════════════╤═══════╤════════════════════════════════════════════════════════════╕
-│"package"           │"count"│"names"                                                     │
-╞════════════════════╪═══════╪════════════════════════════════════════════════════════════╡
-│["dbms","security"] │16     │["activateUser","addRoleToUser","changePassword",....]      │
-├────────────────────┼───────┼────────────────────────────────────────────────────────────┤
-│["apoc","refactor"] │11     │["categorize","cloneNodes","from"....]                      │
-├────────────────────┼───────┼────────────────────────────────────────────────────────────┤
-│["apoc","load"]     │9      │["csv","driver","jdbc","jdbcParams","json","jsoe"]          │
-├────────────────────┼───────┼────────────────────────────────────────────────────────────┤
-│["db"]              │9      │["awaitIndex","constraints","indexes","labels",..,"schema"] │
-├────────────────────┼───────┼────────────────────────────────────────────────────────────┤
-│["dbms"]            │9      │["components","functions","queries","procedures",...]       │
-└────────────────────┴───────┴────────────────────────────────────────────────────────────┘</pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>As of Neo4j 3.1, all functions available are directly part of the Cypher implementation, so User Defined Functions would only come from installed libraries.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>You can take any procedure library and deploy it to your server to make additional procedures and functions available.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Please also have a look at the <a href="http://neo4j.com/docs/developer-manual/current/extending-neo4j/procedures">procedure section in the Neo4j Manual</a>.</p>
-</div>
-
-</div>
-<div  id="_deploying_procedures_functions" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Deploying Procedures &amp; Functions</h3>
-
-
-<div class="paragraph">
-<p>If you built your own procedures or downloaded them from an community project, they are packaged in a jar-file.
-You can copy that file into the <code>$NEO4J_HOME/plugins</code> directory of your Neo4j server and restart.</p>
-</div>
-
-<div class="admonitionblock warning">
-<table>
+<div  id="neo4j-ogm" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Resources</h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<tbody>
 <tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-<strong>A word of caution.</strong>
-As procedures and functions use the low level Java API they can access all Neo4j internals as well as the file system and machine.
-That&#8217;s why you should know which procedures you deploy and why.
-Only install procedures from trusted sources.
-If they are open source, check their source-code and best build them yourself.
-</td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-user"></i></span> Authors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Neo4j and <a href="http://graphaware.com/neo4j-experts/">GraphAware Teams</a></p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-gift"></i></span> Package</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://search.maven.org/#search|ga|1|a%3A%22neo4j-ogm%22">http://maven.org</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-github"></i></span> Source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/neo4j/neo4j-ogm" class="bare">https://github.com/neo4j/neo4j-ogm</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-book"></i></span> Docs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://neo4j.com/docs/ogm-manual/current/" class="bare">https://neo4j.com/docs/ogm-manual/current/</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-book"></i></span> Article</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://neo4j.com/blog/neo4j-java-object-graph-mapper-released/" class="bare">http://neo4j.com/blog/neo4j-java-object-graph-mapper-released/</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-play-circle"></i></span> Example-University</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/neo4j-examples/neo4j-ogm-university" class="bare">https://github.com/neo4j-examples/neo4j-ogm-university</a></p></td>
+</tr>
+</tbody>
 </table>
 </div>
-</div>
-<div  id="_procedure_and_function_gallery" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Procedure and Function Gallery</h3>
+<div  id="reference:getting-started:versions" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Versions</h3>
 
 
 <div class="paragraph">
-<p>In our <a href="../procedures-gallery">procedure and functions gallery</a> we describe some of the impressive procedure libraries built by our community.
-Check it out to see what&#8217;s already there.
-Many of your needs will already be covered by those, for example:</p>
+<p>Consult the version table to determine which version of the OGM to use with a particular version of Neo4j and related technologies.</p>
+</div>
+
+<table class="tableblock frame-topbot grid-all" style="width: 80%;">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Neo4j-OGM Version</th>
+<th class="tableblock halign-left valign-top">Neo4j Version</th>
+<th class="tableblock halign-left valign-top">Compatible with Spring Data Neo4j Version</th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.1.5<sup>*</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.1.x, 2.2.x, 2.3.x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4.0.x</p></td>
+</tr>
+</tfoot>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.1.0+</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.3.x, 3.0.x, 3.1.x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4.2.x</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0.2+</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.3.x, 3.0.x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4.1.2 - 4.1.6+</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0.1<sup>*</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.2.x, 2.3.x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4.1.0 - 4.1.1</p></td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="paragraph">
+<p><sup>*</sup> <em>These versions are no longer actively developed or supported.</em></p>
+</div>
+
+</div>
+<div  id="reference:getting-started:dependency-management" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Dependency Management</h3>
+
+
+<div class="paragraph">
+<p>For building an application, your build automation tool needs to be configured to include the Neo4j OGM dependencies.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>The OGM dependencies consist of <code>neo4j-ogm-core</code>, together with the relevant dependency declarations on the driver you want to use.  OGM 2.1  provides support for connecting to Neo4j by configuring one of the following Drivers:</p>
 </div>
 
 <div class="ulist">
 <ul>
 <li>
-graph algorithms
+<code>neo4j-ogm-http-driver</code> - Uses HTTP to communicate between the OGM and a remote Neo4j instance.
 </li>
 <li>
-index operations
+<code>neo4j-ogm-embedded-driver</code> - Connects directly to the Neo4j database engine.
 </li>
 <li>
-database/api integration
-</li>
-<li>
-graph refactorings
-</li>
-<li>
-import and export
-</li>
-<li>
-spatial index lookup
-</li>
-<li>
-rdf import and export
-</li>
-<li>
-and many more
+<code>neo4j-ogm-bolt-driver</code> - Uses native Bolt protocol to communicate between the OGM and a remote Neo4j instance.
 </li>
 </ul>
 </div>
 
 
 <div class="paragraph">
-<p>Here are two cool examples of what you can do:</p>
+<p>If you&#8217;re not using a particular driver, you don&#8217;t need to declare it.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>A procedure to load data from another database:</p>
+<p>Neo4j OGM projects can be built using Maven, Gradle or any other build system that utilises Maven&#8217;s artifact repository structure.</p>
+</div>
+
+<div  id="reference:getting-started:dependency-management:maven" class="sect3 "  >
+<h4>Maven</h4>
+
+
+<div class="paragraph">
+<p>In the <code>&lt;dependencies&gt;</code> section of your <code>pom.xml</code> add the following:</p>
+</div>
+
+<div class="listingblock">
+<div class="title">Maven dependencies</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="xml"><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.neo4j&lt;/groupId&gt;
+    &lt;artifactId&gt;neo4j-ogm-core&lt;/artifactId&gt;
+    &lt;version&gt;2.1.1&lt;/version&gt;
+    &lt;scope&gt;compile&lt;/scope&gt;
+&lt;/dependency&gt;
+
+&lt;!-- Only add if you're using the HTTP driver --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.neo4j&lt;/groupId&gt;
+    &lt;artifactId&gt;neo4j-ogm-http-driver&lt;/artifactId&gt;
+    &lt;version&gt;2.1.1&lt;/version&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;
+
+&lt;!-- Only add if you're using the Embedded driver --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.neo4j&lt;/groupId&gt;
+    &lt;artifactId&gt;neo4j-ogm-embedded-driver&lt;/artifactId&gt;
+    &lt;version&gt;2.1.1&lt;/version&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;
+
+&lt;!-- Only add if you're using the Bolt driver --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.neo4j&lt;/groupId&gt;
+    &lt;artifactId&gt;neo4j-ogm-bolt-driver&lt;/artifactId&gt;
+    &lt;version&gt;2.1.1&lt;/version&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>If you plan on using a development (i.e. <code>SNAPSHOT</code>) version of the OGM you will need to add the following to the
+<code>&lt;repositories&gt;</code> section of your <code>pom.xml</code>:</p>
+</div>
+
+<div class="listingblock">
+<div class="title">Neo4j Snapshot Repository</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="xml"><code>&lt;repository&gt;
+    &lt;id&gt;neo4j-snapshot-repository&lt;/id&gt;
+    &lt;name&gt;Neo4j Maven 2 snapshot repository&lt;/name&gt;
+    &lt;url&gt;http://m2.neo4j.org/content/repositories/snapshots&lt;/url&gt;
+&lt;/repository&gt;</code></pre>
+</div>
+</div>
+</div>
+<div  id="reference:getting-started:dependency-management:gradle" class="sect3 "  >
+<h4>Gradle</h4>
+
+
+<div class="paragraph">
+<p>Ensure the following dependencies are added to you <code>build.gradle</code>:</p>
+</div>
+
+<div class="listingblock">
+<div class="title">Gradle dependencies</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="groovy"><code>dependencies {
+    compile 'org.neo4j:neo4j-ogm-core:2.1.1'
+    runtime 'org.neo4j:neo4j-ogm-http-driver:2.1.1' // Only add if you're using the HTTP driver
+    runtime 'org.neo4j:neo4j-ogm-embedded-driver:2.1.1' //  Only add if you're using the Embedded driver
+    runtime 'org.neo4j:neo4j-ogm-bolt-driver:2.1.1' // Only add if you're using the Bolt driver
+}</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>If you plan on using a development (i.e. <code>SNAPSHOT</code>) version of the OGM you will need to add the following section of your <code>build.gradle</code>:</p>
+</div>
+
+<div class="listingblock">
+<div class="title">Neo4j Snapshot Repository</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="groovy"><code>repositories {
+    maven { url "http://m2.neo4j.org/content/repositories/snapshots" }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div  id="_minimal_code_snippet" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Minimal Code Snippet</h3>
+
+
+<div class="paragraph">
+<p>This code example is taken from the Example Project (see below).</p>
 </div>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>WITH "jdbc:mysql://localhost:3306/northwind?user=root" as url
-CALL apoc.load.jdbc(url,"products") YIELD row
-RETURN row
-ORDER BY row.UnitPrice DESC
-LIMIT 20</code></pre>
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="java"><code>@NodeEntity(label="Film")
+public class Movie {
+
+   @GraphId Long id;
+
+   @Property(name="title")
+   private String name;
+}
+
+@NodeEntity
+public class Actor extends DomainObject {
+
+   @GraphId
+   private Long id;
+
+   @Property(name="name")
+   private String fullName;
+
+   @Relationship(type="ACTED_IN", direction=Relationship.OUTGOING)
+   private List&lt;Role&gt; filmography;
+
+}
+
+@RelationshipEntity(type="ACTED_IN")
+public class Role {
+    @GraphId   private Long relationshipId;
+    @Property  private String title;
+    @StartNode private Actor actor;
+    @EndNode   private Movie movie;
+}</code></pre>
 </div>
 </div>
-<div class="imageblock">
-<p class="content">
-<img src="http://neo4j-contrib.github.io/neo4j-apoc-procedures/img/apoc-load-jdbc.jpg" alt="apoc load jdbc">
-</p>
 </div>
+<div  id="_the_example_project" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>The Example Project</h3>
 
 
 <div class="paragraph">
-<p>A function to format and parse timestamps of different resolutions:</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>RETURN apoc.date.format(timestamp()) as time,
-       apoc.date.format(timestamp(),'ms','yyyy-MM-dd') as date,
-       apoc.date.parse('13.01.1975','s','dd.MM.yyyy') as unixtime,
-       apoc.date.parse('2017-01-05 13:03:07') as millis</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre>╒═════════════════════╤════════════╤══════════╤═════════════╕
-│"time"               │"date"      │"unixtime"│"millis"     │
-╞═════════════════════╪════════════╪══════════╪═════════════╡
-│"2017-01-05 13:06:39"│"2017-01-05"│158803200 │1483621387000│
-└─────────────────────┴────────────┴──────────┴─────────────┘</pre>
-</div>
-</div>
-</div>
-<div  id="_developing_your_own_procedures_and_functions" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Developing your own Procedures and Functions</h3>
-
-
-<div class="paragraph">
-<p>You can find details on writing and testing procedures in the <a href="http://neo4j.com/docs/developer-manual/current/procedures/#user-defined-procedures">Neo4j Manual</a>.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>There is even an <a href="https://github.com/neo4j-examples/neo4j-procedure-template">example GitHub repository</a> with detailed documentation and comments that you can clone directly and use as a starting point.</p>
+<p>The Neo4j example project is a small, one page webapp for the movies database built into the Neo4j tutorial.
+The front-end page is the same for all drivers: movie search, movie details, and a graph visualization of actors and movies.
+Each backend implementation shows you how to connect to Neo4j from each of the different languages and drivers.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Here are just some initial tips:</p>
+<p>You can learn more about our small, consistent example project across many different language drivers <a href="../example-project">here</a>.
+You will find the implementations for all drivers as <a href="https://github.com/neo4j-examples?query=movies">individual GitHub repositories</a>, which you can clone and deploy directly.</p>
 </div>
 
+</div>
+<div  id="_faq" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>FAQ</h3>
 
 
 <div class="paragraph">
-<p>User-defined functions are simpler, so let&#8217;s start with them:</p>
+<p>Upcoming.</p>
 </div>
 
-<div class="ulist">
-<ul>
-<li>
-<code>@UserFunction</code> are annotated, public Java methods in a class
-</li>
-<li>
-their default name is package-name.method-name
-</li>
-<li>
-they return a single value
-</li>
-<li>
-are read only
-</li>
-</ul>
-</div>
-
-
-<div class="paragraph">
-<p>User defined procedures are similar:</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-<code>@Procedure</code> annotated, Java methods
-</li>
-<li>
-with an additional <code>mode</code> attribute (<code>READ, WRITE, DBMS</code>)
-</li>
-<li>
-return a Java 8 <code>Stream</code> of simple objects with <code>public</code> fields
-</li>
-<li>
-these fields names are turned into result columns available for <code>YIELD</code>
-</li>
-</ul>
-</div>
-
-
-<div class="paragraph">
-<p>These things are valid for both:</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-take `@Name&#8217;ed parameters (with optional default values)
-</li>
-<li>
-can use an injected <code>@Context public GraphDatabaseService</code>
-</li>
-<li>
-run within transaction of the Cypher statement
-</li>
-<li>
-supported types for parameters and results are: <code>Long, Double, Boolean, String, Node, Relationship, Path, Object</code>
-</li>
-</ul>
-</div>
 </div>
                     </div>
                     <div class="large-3 large-pull-9 columns">
@@ -961,11 +989,11 @@ supported types for parameters and results are: <code>Long, Double, Boolean, Str
             </dd>
          </dl>
             <dl class="accordion">
-               <dd class="accordion-navigation active">
+               <dd class="accordion-navigation inactive">
                   <a href="/developer/cypher/">
                      <h5>Cypher Query Language</h5>
                   </a>
-                  <div class="content active" id="panel2">
+                  <div class="content inactive" id="panel2">
                      <ul>
                         <li><a href="/developer/cypher/cypher-query-language/">Cypher Intro</a></li>
                         <li><a href="/developer/cypher/guide-sql-to-cypher/">From SQL to Cypher</a></li>
@@ -1006,11 +1034,11 @@ supported types for parameters and results are: <code>Long, Double, Boolean, Str
                </dd>
             </dl>
             <dl class="accordion">
-               <dd class="accordion-navigation inactive">
+               <dd class="accordion-navigation active">
                   <a href="/developer/language-guides/">
                      <h5>Drivers &amp; Language Guides</h5>
                   </a>
-                  <div class="content inactive" id="panel5">
+                  <div class="content active" id="panel5">
                      <ul>
                         <li><a href="/developer/language-guides/java/">Java</a></li>
                         <li><a href="/developer/language-guides/spring-data-neo4j/">Spring Framework</a></li>

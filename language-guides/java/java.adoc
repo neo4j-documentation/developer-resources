@@ -92,20 +92,15 @@ The connection to Neo4j handled by a driver layer, which can use the binary prot
 | icon:user[] Authors | The Neo4j and http://graphaware.com/neo4j-experts/[GraphAware Teams]
 | icon:gift[] Package | link:{maven-ogm}[http://maven.org]
 | icon:github[] Source | https://github.com/neo4j/neo4j-ogm
-| icon:book[] Docs | http://neo4j.com/docs/ogm/java/stable
+| icon:book[] Docs | https://neo4j.com/docs/ogm-manual/current/
 | icon:book[] Article | http://neo4j.com/blog/neo4j-java-object-graph-mapper-released/
 | icon:play-circle[] Example | https://github.com/neo4j-examples/neo4j-ogm-university
 |===
 
+More detail can be found on the dedicated link:../neo4j-ogm[Neo4j OGM] page.
+
 
 === Using Neo4j's Embedded Java API
-
-[role=side-nav]
-* link:/docs/java-reference/current[Java developers manual]
-* link:/docs/java-reference/current/javadocs/[API JavaDoc]
-* http://www.tutorialspoint.com/neo4j/neo4j_java_introduction.htm[Tutorialspoint step-by-step Introduction]
-* http://www.informit.com/articles/article.aspx?p=2415371[Inform-IT Tutorial on Java-API]
-* https://maxdemarzi.com/tag/java/[Articles on the JavaAPI by Max de Marzi]
 
 Being implemented in Java you can use Neo4j's link:/docs/java-reference/current/javadocs/[Java APIs] also directly in your programs, much like HSQL or Derby. 
 This is great for unit testing, but also useful for very high performance requirements and single-tier setups.
@@ -119,16 +114,33 @@ With its non-transactional, highly-concurrent batch-insertion APIs it can ingest
 
 Because of its flexibility and performance, we also chose the Java API for extending Neo4j as explained below.
 
+* link:/docs/java-reference/current[Java developers manual]
+* link:/docs/java-reference/current/javadocs/[API JavaDoc]
+* http://www.tutorialspoint.com/neo4j/neo4j_java_introduction.htm[Tutorialspoint step-by-step Introduction]
+* http://www.informit.com/articles/article.aspx?p=2415371[Inform-IT Tutorial on Java-API]
+* https://maxdemarzi.com/tag/java/[Articles on the JavaAPI by Max de Marzi]
 
-=== User Defined Procedures
+=== User Defined Procedures and Functions
 
-User Defined *Procedures* are now available within Cypher and encapsulate dedicated functionality.
+link:/developer/cypher/procedures-functions[User Defined *Procedures* and *Functions*] are now available within Cypher and encapsulate dedicated functionality.
 
-Just by annotating methods of a Java class with `@Procedure` and deploying the resulting jar file into your Neo4j installation, you can make new functionality easily available within the query language.
+Just by annotating methods of a Java class and deploying the resulting jar file into your Neo4j installation, you can make new functionality easily available within the query language.
 
-To get started we provided a https://github.com/neo4j-examples/neo4j-procedure-template[template project] and documentation in the link:/docs/java-reference/current/#procedures[Java developer manual].
+Neo4j uses that functionality itself for built-in procedures for meta-data, cluster-, query- and user-management and more.
 
-More useful examples for user defined procedures can be found in our https://github.com/neo4j-contrib?query=procedure[neo4j-contrib GitHub repository].
+Several libraries already provide new capabilities using procedures and functions, here is an example from the link:/developer/cypher/procedures-gallery#apoc[APOC] library.
+
+[source,cypher]
+----
+MATCH (start:City {name: 'Berlin'}),(end:City {name: 'Malmö'})
+CALL apoc.algo.dikjstra(start, end, "ROUTE","distance") yield path, weight
+RETURN path
+ORDER BY weight ASC LIMIT 10
+----
+
+To get you started we provided a https://github.com/neo4j-examples/neo4j-procedure-template[template project] and documentation in the link:/docs/java-reference/current/#procedures[Java developer manual].
+
+More useful examples for user defined procedures can be found in our link:/cypher/procedures-gallery[procedure & function gallery].
 
 
 [[server-extension]]

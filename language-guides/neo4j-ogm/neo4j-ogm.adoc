@@ -1,0 +1,127 @@
+= Neo4j - OGM Object Graph Mapper
+:slug: java
+:level: Intermediate
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 2
+:section: Develop with Neo4j
+:section-link: language-guides
+
+include::../_includes/versions.txt[]
+
+.Goals
+[abstract]
+If you are a Java developer, and want to use a plain Java object graph mapper, then this guide introduces the Neo4j-OGM library.
+While this guide is not comprehensive, it will introduce the different APIs and link to the relevant resources.
+
+.Prerequisites
+[abstract]
+You should be familiar with the link:/developer/get-started/graph-database[graph database concepts] and the property graph model.
+Having link:/download[installed Neo4j] and tried out our link:/developer/cypher[Cypher Query language] helps too.
+When developing with Neo4j, please use JDK 8 and your favorite IDE.
+
+[role=expertise]
+{level}
+
+// image::{img}java.jpg[float=right,width=200]
+
+toc::[]
+
+// tag::intro[]
+=== icon:check-circle-o[] Neo4j-OGM 
+
+While using the Cypher query language directly works well for small projects and more advanced queries, the boilerplate of CRUD operations gets tedious.
+
+That's where object graph mappers come in.
+They take your existing domain objects (POJOs) and map them to Neo4j.
+With a graph database that's easier than with a relational database as there is no such data-model mismatch.
+
+Besides the Neo4j-OGM introduced here, there are also link:../spring-data-neo4j[Spring Data Neo4j], link:../java#hibernate[Hibernate-OGM] and others.
+
+We created the Neo4j-OGM as a standalone object graph mapper for Java as a base library for Spring Data Neo4j.
+
+The Neo4j-OGM uses Cypher consistently under the hood and supports several transport protocols - bolt, http and embedded.
+That's why besides either the neo4j-java-driver, http-client or Neo4j itself it has no special dependencies.
+
+// end::intro[]
+
+=== Features
+
+The Neo4j-OGM supports the features you would expect:
+
+* Object graph mapping of annotated node- and relationship-entities
+* Neo4jSession for direct interaction with Neo4j
+* Fast class metadata scanning
+* Optimized management of data loading and change tracking for minimal data transfers
+* Multiple transports: *binary protocol*, HTTP and embedded
+* Persistence lifecycle events
+* Query result projection to DTOs
+
+[[neo4j-ogm]]
+=== Resources
+
+:maven-ogm: http://search.maven.org/#search|ga|1|a%3A%22neo4j-ogm%22
+
+[cols="1,4"]
+|===
+| icon:user[] Authors | The Neo4j and http://graphaware.com/neo4j-experts/[GraphAware Teams]
+| icon:gift[] Package | link:{maven-ogm}[http://maven.org]
+| icon:github[] Source | https://github.com/neo4j/neo4j-ogm
+| icon:book[] Docs | https://neo4j.com/docs/ogm-manual/current/
+| icon:book[] Article | http://neo4j.com/blog/neo4j-java-object-graph-mapper-released/
+// | icon:play-circle[] Example-Movies | https://github.com/neo4j-examples/neo4j-ogm-movies
+| icon:play-circle[] Example-University | https://github.com/neo4j-examples/neo4j-ogm-university
+|===
+
+:version: {neo4j-ogm-version}
+include::https://raw.githubusercontent.com/neo4j/neo4j-ogm/doc-updates/neo4j-ogm-docs/src/main/asciidoc/reference/setup.adoc[lines=3..-1,leveloffset=+1]
+
+
+=== Minimal Code Snippet
+
+This code example is taken from the Example Project (see below).
+
+// todo replace with actual include
+
+[source,java]
+----
+@NodeEntity(label="Film")
+public class Movie {
+
+   @GraphId Long id;
+
+   @Property(name="title")
+   private String name;
+}
+
+@NodeEntity
+public class Actor extends DomainObject {
+
+   @GraphId
+   private Long id;
+
+   @Property(name="name")
+   private String fullName;
+
+   @Relationship(type="ACTED_IN", direction=Relationship.OUTGOING)
+   private List<Role> filmography;
+
+}
+
+@RelationshipEntity(type="ACTED_IN")
+public class Role {
+    @GraphId   private Long relationshipId;
+    @Property  private String title;
+    @StartNode private Actor actor;
+    @EndNode   private Movie movie;
+}
+----
+
+include::../_includes/sample_project.adoc[]
+
+=== FAQ
+
+Upcoming.
+
+// include::https://raw.githubusercontent.com/neo4j/neo4j-ogm/doc-updates/neo4j-ogm-docs/src/main/asciidoc/reference/faq.adoc[lines=3..-1,leveloffset=+1]

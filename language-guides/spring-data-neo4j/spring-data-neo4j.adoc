@@ -7,21 +7,18 @@
 :toclevels: 2
 :section: Develop with Neo4j
 :section-link: language-guides
-:SDN4: 4.1.1.RELEASE
-:SDN3: 3.3.4.RELEASE
 
 .Goals
 [abstract]
 For Java developers who use the Spring Framework or Spring Boot, this guide introduces Spring integration but emphasizes the Spring Data Neo4j library.
 The library provides convenient access to Neo4j including object mapping, Spring Data repositories, conversion, transaction handling, etc.
-We cover both the all-new Spring Data Neo4j 4 as well as the previous Spring Data Neo4j 3.
 
 .Prerequisites
 [abstract]
 You should be familiar with link:/developer/get-started/graph-database[graph database concepts] and the property graph model.
 Having link:/download[installed Neo4j] and tried out the link:/developer/cypher[Cypher query language] helps too.
 You should also be familar with Spring. Knowing http://spring.io/projects/spring-data[Spring Data] and Spring Boot are both great additions to your toolbox as well.
-When developing with Neo4j, please use JDK 7 or 8 and your favorite IDE.
+When developing with Neo4j, please use JDK 8 and your favorite IDE.
 
 [role=expertise]
 {level}
@@ -37,50 +34,48 @@ image::{img}sdn.png[float="right"]
 Neo4j offers a rich set of possibilities for developers using Spring.
 If you are looking for using Neo4j on the JVM in general, check out our link:../java[Java Developer's Guide].
 
-If you want to benefit from full fledged Object Mapping and the other helpful support that comes with Spring Data, check out *Spring Data Neo4j 4*.
+If you want to benefit from full fledged Object Mapping and the other helpful support that comes with Spring Data, use *Spring Data Neo4j 4*.
 
-It is based on the link:../java#neo4j-ogm[Neo4j-OGM] a plain java Object-Graph-Mapper and integrates in the Spring Data infrastructure, including Spring-Data repository, and annotated object mapping support.
+Neo4j's Spring Data integration was the founding project of the Spring Data efforts, started by Rod Johnson and Emil Eifrem.
+Spring Data Neo4j 4 was rewritten in 2015 to incorporate the many improvements in Neo4j and Cypher but also in the Spring Data ecosystem.
+It integrates tightly with the http://spring.io/[Spring Framework] and offers Object-Graph mapping on top of Neo4j.
 
-Spring Data Neo4j 4 is also supported by Spring Boot from version 1.4.0.M3, you can use the https://start.spring.io/[Spring Boot Starter page] to get started with Spring Data Neo4j immediately.
+It is based on the link:../neo4j-ogm[Neo4j-OGM] a plain java Object-Graph-Mapper and integrates in the http://projects.spring.io/spring-data[Spring Data] infrastructure, including Spring-Data repository, and annotated object mapping support.
 
+Spring Data Neo4j 4 is also supported by Spring Boot from version 1.4.0.M3.
+You can use the https://start.spring.io/[Spring Boot Starter page] to get started with Spring Data Neo4j immediately.
+
+////
 Using Neo4j's Java API is always possible from Spring. Just configure an embedded, in-process GraphDatabase as a singleton bean to be injected.
 The integrated variant is also great for unit testing and high-performance/no-network setups.
 
-If you are running Neo4j as a standalone server or cluster, you can access its HTTP-APIs either with a plain RestTemplate or by combining our link:../java#neo4j-jdbc[JDBC-Driver] with Spring's JDBCTemplate.
+If you are running Neo4j as a standalone server or cluster, you can access it via the binary bolt protocol with the neo4j-java-driver, the HTTP-APIs with a RestTemplate or by combining our link:../java#neo4j-jdbc[JDBC-Driver] with Spring's JDBCTemplate.
+////
 // end::intro[]
 
-For all Neo4j drivers and integrations, we provide a small, consistent example project across all languages.
-
-include::../_includes/sample_project.adoc[]
-
-== Spring Integrations
-
-++++
-<dl class="tabs" data-tab>
-  <dd class="tab-title active"><a href="#sdn4">Spring Data Neo4j 4</a></dd>
-  <dd class="tab-title"><a href="#boot-jdbc">Spring Boot with JDBC</a></dd>
-  <dd class="tab-title"><a href="#sdn3">Spring Data Neo4j 3</a></dd>
-</dl>
-++++
-
-++++
-<div class="tabs-content">
-++++
-
-[[sdn4]]
-[.content]
-=== Using Spring Data Neo4j 4
+[[spring-data-neo4j-version]]
+=== Spring Data Neo4j 4
 
 Spring Data Neo4j has been around for a long time.
 Meanwhile Neo4j, it's APIs and usage developed quickly from an embedded Java only database to a Server solution which is mostly interacted with via link:/developer/cypher[Cypher].
 That's why we made the decision that a clean slate and reimplementation of the library from scratch is the best approach to embrace the modern Neo4j architecture.
 In a joint effort with our partner http://graphaware.com[GraphAware] the all-new Spring Data Neo4j 4 library was developed and tested by existing users.
 
-Spring Data Neo4j integrates the link:../java#neo4j-ogm[Neo4j-OGM] library to provide fast and comprehensive object graph mapping.
+Spring Data Neo4j integrates the link:../neo4j-ogm[Neo4j-OGM] library to provide fast and comprehensive object graph mapping.
 Additionally it provides support for Spring Conversions, Transaction Handling, Spring-Data Repositories, Spring-Data REST and Spring-Boot.
 
 To get started, add Spring Data Neo4j 4 as a dependency, then configure the necessary beans in your Java config.
 Then you can use Neo4jTemplate to manage your entities (optionally annotated) and define Spring-Data-Repositories as convenient interfaces to your persistence layer.
+
+==== Features
+
+* Spring Boot Integration (since 1.4)
+* annotation based object graph mapping
+* interface based repository support with annotated and derived finder methods
+* fast class metadata scanning
+* optimized management of data loading and change tracking for minimal data transfers
+* multiple transports: *binary protocol*, HTTP and embedded
+* persistence lifecycle events
 
 ==== Quickstart
 
@@ -91,7 +86,7 @@ Then you can use Neo4jTemplate to manage your entities (optionally annotated) an
     <dependency>
         <groupId>org.springframework.data</groupId>
         <artifactId>spring-data-neo4j</artifactId>
-        <version>{SDN4}</version>
+        <version>{spring-data-neo4j-version}</version>
     </dependency>
 </dependencies>
 ----
@@ -152,183 +147,62 @@ List<Movie> movie = repo.findByTitle("The Matrix");
 Iterable<Rating> ratings = repo.getRatings(movieId);
 ----
 
-We provide a https://github.com/neo4j-examples?query=sdn4[number of example projects] using Spring Data Neo4j 4, Spring Boot and Web-Frameworks like Angular.js
+We provide a https://github.com/neo4j-examples?query=sdn%204[number of example projects] using Spring Data Neo4j 4, Spring Boot and Web-Frameworks like Angular.js
 
 // The example uses Spring-Boot with Spring-Data-Neo4j and Spring-Data-REST and an additional RestMVCController.
 
-// See the {examples}/movies-java-spring-data-neo4j4[example project] for further details.
+// See the {examples}/movies-java-spring-data-neo4j-4[example project] for further details.
 
-// * http://projects.spring.io/spring-data-neo4j[Spring Data Neo4j Project]
-* Authors: Adam George, Luanne Misquitta, Michal Bachman, Vince Bickers, Mark Angrish, Michael Hunger, Oliver Gierke and others
-* {examples}?query=sdn4[Spring Data Neo4j 4 Example Projects]
-* https://github.com/spring-projects/spring-data-neo4j[Spring Data Neo4j on GitHub]
-* http://docs.spring.io/spring-data/data-neo4j/docs/current/reference/html/[Reference Documentation], http://docs.spring.io/spring-data/data-neo4j/docs/current/api/[JavaDoc], http://docs.spring.io/spring-data/data-neo4j/docs/current/changelog.txt[ChangeLog]
-* https://www.airpair.com/neo4j/posts/the-essence-of-spring-data-neo4j-4[Article: Introducing SDN4 by Luanne Misquitta]
-* https://www.youtube.com/watch?v=Atz8fVxrIZ4&index=20&list=PL9Hl4pk2FsvXY_LSIPL6Da7PJXW33lxLy[Video: Introducing SDN 4, role=video]
-* {examples}/movies-java-spring-data-neo4j-4[Spring Data Neo4j Example Project]
+:maven-sdn: http://search.maven.org/#search|ga|1|a%3A%22spring-data-neo4j%22
+
+[cols="1,4"]
+|===
+| icon:code-fork[] Project | http://projects.spring.io/spring-data-neo4j
+| icon:user[] Authors | The Neo4j, http://graphaware.com/neo4j-experts/[GraphAware] and Pivotal teams.
+| icon:gift[] Package | link:{maven-sdn}[http://maven.org]
+| icon:github[] Source | https://github.com/spring-projects/spring-data-neo4j
+| icon:medkit[] Issues | https://jira.spring.io/browse/DATAGRAPH[JIRA]
+| icon:book[] Docs | http://docs.spring.io/spring-data/data-neo4j/docs/current/reference/html/[Reference], http://docs.spring.io/spring-data/data-neo4j/docs/current/api/[JavaDoc], http://docs.spring.io/spring-data/data-neo4j/docs/current/changelog.txt[ChangeLog]
+| icon:book[] Article | http://graphaware.com/blog/sdn/[GraphAware], https://www.airpair.com/neo4j/posts/the-essence-of-spring-data-neo4j-4[Introducing SDN4]
+| icon:film[] Video | https://www.youtube.com/watch?v=Atz8fVxrIZ4&index=20&list=PL9Hl4pk2FsvXY_LSIPL6Da7PJXW33lxLy[Introducing SDN 4]
+| icon:play-circle[] Example |{examples}/movies-java-spring-data-neo4j-4[Movies Example], {examples}?query=sdn%204[Other Example Projects]
+|===
+
+include::../_includes/sample_project.adoc[]
 
 [[boot-jdbc]]
-[.content.active]
 === Using Spring Boot with JDBC
 
 Spring Boot is a rapid application development infrastructure that allows you to quickly write Spring-based applications with little setup and configuration.
 
-Here we use a simple Spring Boot WebMVC and JDBC application to provide a backend for our movie application.
+Here we use a simple Spring Boot WebMVC and http://github.com/neo4j-contrib/neo4j-jdbc[JDBC] application to provide a backend for our movie application.
 
 It uses the well known APIs of `@RestController` and `JdbcTemplate` to do the job.
 
 More details can be found in the {examples}/movies-java-spring-boot-jdbc[example project].
 
-////
-==== Quickstart
-
-.Dependencies
-[source,xml]
-----
-include::https://raw.githubusercontent.com/neo4j-examples/movies-java-spring-boot-jdbc/master/pom.xml[tags=dependencies]
-----
-
-.DataSource Configuration
-[source,java]
-----
-include::https://raw.githubusercontent.com/neo4j-examples/movies-java-spring-boot-jdbc/master/src/main/java/movies/spring/jdbc/SampleMovieApplication.java[tags=config]
-----
-
-.Using JDBCTemplate with Cypher
-[source,java]
-----
-include::https://raw.githubusercontent.com/neo4j-examples/movies-java-spring-boot-jdbc/master/src/main/java/movies/spring/jdbc/SampleMovieApplication.java[tags=jdbctemplate]
-----
-
-////
-
-
 [[sdn3]]
-[.content]
-=== Using Spring Data Neo4j 3.3.x
+=== Spring Data Neo4j 3.x
+:SDN3: 3.4.6.RELEASE
 
 Spring Data Neo4j was the first Spring Data project and enables convenient integration of Neo4j in your Spring-based application.
-It provides object-graph mapping functionality and other features common to the Spring Data projects.
-
-To use Neo4j with Spring Data Neo4j, you just add the dependency to your build setup.
-After setting up a simple Java-based Spring configuration, and annotating your `@Node-` and `@RelationshipEntity`, you can use `Neo4jTemplate` to access Neo4j APIs and object-graph mapping functionality.
-Additionally, you can leverage the convenient Spring Data repositories to get interface-based DAO implementations injected into your Spring Components.
+It provided object-graph mapping functionality and other features common to the Spring Data projects.
 
 [NOTE]
-The current version of Spring Data Neo4j works best with an embedded Neo4j database.
+Spring Data Neo4j 3.x works best with an embedded Neo4j database.
 To achieve highest-performance Neo4j-Server integration, use Spring Data Neo4j 4 or move your SDN persistence layer into an Server Extension.
-
-==== Quick-Start
-
-////
-
-:project: https://raw.githubusercontent.com/neo4j-examples/movies-java-spring-data-neo4j/master
-
-.Dependencies
-[source,xml]
-----
-include::{project}/pom.xml[tags=dependencies]
-----
-
- Configuration
-[source,java]
-----
-include::{project}/src/main/java/movies/spring/data/neo4j/MyNeo4jConfiguration.java[tags=config]
-----
-
-.Entity
-[source,java]
-----
-include::{project}/src/main/java/movies/spring/data/neo4j/domain/Movie.java[tags=movie]
-----
-
-.Repository
-[source,java]
-----
-include::{project}/src/main/java/movies/spring/data/neo4j/repositories/MovieRepository.java[tags=repository]
-----
-
-.Controller
-[source,java]
-----
-include::{project}/src/main/java/movies/spring/data/neo4j/repositories/MovieRepository.java[tags=repository]
-----
-
-////
-
-[source,xml,subs="verbatim,attributes"]
-----
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.data</groupId>
-        <artifactId>spring-data-neo4j</artifactId>
-        <version>{SDN3}</version>
-    </dependency>
-</dependencies>
-----
-
-.Entities
-[source,java]
-----
-@NodeEntity
-public class Movie {
-
-  @GraphId Long id;
-
-  @Indexed(type = FULLTEXT, indexName = "search") 
-  String title;
-
-  Person director;
-
-  @RelatedTo(type="ACTS_IN", direction = INCOMING)
-  Set<Person> actors;
-
-  @RelatedToVia(type = "RATED")
-  Iterable<Rating> ratings;
-}
-----
-
-.Declare a repository interface
-[source,java]
-----
-interface MovieRepository extends GraphRepository<Movie> {
-
-  @Query("MATCH (m:Movie)<-[rating:RATED]-(user)
-          WHERE id(m) = {movie}
-          RETURN rating")
-  Iterable<Rating> getRatings(Movie movie);
-
-  // Co-Actors
-  Iterable<Person> findByActorsMoviesActorName(name)
-}
-----
-
-.Use repository
-[source,java]
-----
-@Autowired MovieRepository repo;
-
-Collection<Movie> movie = repo.findByTitleLike("Matrix");
-
-Iterable<Rating> ratings = repo.getRatings(movie);
-----
 
 The example uses Spring-Boot with Spring-Data-Neo4j and Spring-Data-REST and an additional RestMVCController.
 
 See the {examples}/movies-java-spring-data-neo4j[example project] for further details.
 
-* http://projects.spring.io/spring-data-neo4j[Spring Data Neo4j Project Page]
-* Authors: Michael Hunger, Oliver Gierke, Nicki Watt and many contributors
-* {examples}/movies-java-spring-data-neo4j[Spring Data Neo4j Example Project]
-* http://github.com/spring-projects/spring-data-neo4j[Spring Data Neo4j on GitHub]
-* https://jira.spring.io/browse/DATAGRAPH[Spring Data Neo4j JIRA]
-* http://docs.spring.io/spring-data/data-neo4j/docs/{SDN3}/reference/html/[Reference Documentation], http://docs.spring.io/spring-data/data-neo4j/docs/{SDN3}/api/[JavaDoc], http://docs.spring.io/spring-data/data-neo4j/docs/{SDN3}/changelog.txt[ChangeLog]
-* link:/books/spring-data[Spring Data Book], link:/books/good-relationships/[Spring Data Neo4j Guide-Book]
-* https://spring.io/guides/gs/accessing-neo4j-data-rest/[SpringSource' Spring Data Neo4j + REST Guide]
-* http://www.youtube.com/watch?v=ZfbJ1ZJdb_A[Webinar: Spring Boot & SDN, role=video]
+:maven-sdn: http://search.maven.org/#search|ga|1|a%3A%22spring-data-neo4j%22
 
-++++
-</div>
-++++
-
-
+[cols="1,4"]
+|===
+| icon:code-fork[] Project | http://projects.spring.io/spring-data-neo4j
+| icon:user[] Authors | Michael Hunger, Oliver Gierke, Nicki Watt and many contributors
+| icon:github[] Source | https://github.com/spring-projects/spring-data-neo4j/tree/{SDN3}[GitHub]
+| icon:book[] Docs | http://docs.spring.io/spring-data/data-neo4j/docs/{SDN3}/reference/html/[Reference], http://docs.spring.io/spring-data/data-neo4j/docs/{SDN3}/api/[JavaDoc], http://docs.spring.io/spring-data/data-neo4j/docs/{SDN3}/changelog.txt[ChangeLog]
+| icon:play-circle[] Example |{examples}/movies-java-spring-data-neo4j[Movies Example]
+|===

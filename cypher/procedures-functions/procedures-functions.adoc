@@ -50,7 +50,6 @@ There are a link:{manual}/procedures/#built-in-procedures[number of built in pro
 
 Run the following statements along to get a hang of the usage and see their results.
 
-.stand-alone call of a procedure
 [source,cypher]
 ----
 CALL dbms.procedures() 
@@ -58,247 +57,144 @@ CALL dbms.procedures()
 
 Call `dbms.functions()` to list functions.
 
+Each procedure returns one or more columns of data.
+With `yield` these columns can be selected and also aliased and are then available in your Cypher statement.
 
-.yield and process result columns
 [source,cypher]
 ----
 CALL dbms.procedures() 
-YIELD name, signature, description 
+YIELD name, signature, description as text
+WHERE name STARTS WITH 'db.'
 RETURN * ORDER BY name ASC
 ----
 
-.process result columns, group by package
+Of course you can also process the result columns with other Cypher clauses. 
+Here we group them by package.
+
 [source,cypher]
 ----
-CALL dbms.procedures() 
-YIELD name, signature, description 
+CALL dbms.procedures()
+YIELD name, signature, description
 WITH split(name,".") AS parts
-RETURN parts[0] AS package,  count(*) AS count, 
+RETURN parts[0..-1] AS package,  count(*) AS count,
        collect(parts[-1]) AS names
+ORDER BY count DESC
 ----
 
-As of Neo4j 3.1, all functions available are directly part of the Cypher implementation, so user defined functions would only come from installed libraries.
+----
+╒════════════════════╤═══════╤════════════════════════════════════════════════════════════╕
+│"package"           │"count"│"names"                                                     │
+╞════════════════════╪═══════╪════════════════════════════════════════════════════════════╡
+│["dbms","security"] │16     │["activateUser","addRoleToUser","changePassword",....]      │
+├────────────────────┼───────┼────────────────────────────────────────────────────────────┤
+│["apoc","refactor"] │11     │["categorize","cloneNodes","from"....]                      │
+├────────────────────┼───────┼────────────────────────────────────────────────────────────┤
+│["apoc","load"]     │9      │["csv","driver","jdbc","jdbcParams","json","jsoe"]          │
+├────────────────────┼───────┼────────────────────────────────────────────────────────────┤
+│["db"]              │9      │["awaitIndex","constraints","indexes","labels",..,"schema"] │
+├────────────────────┼───────┼────────────────────────────────────────────────────────────┤
+│["dbms"]            │9      │["components","functions","queries","procedures",...]       │
+└────────────────────┴───────┴────────────────────────────────────────────────────────────┘
+----
 
-You can grab any procedure library and deploy it to your server to get a number of additional procedures and functions available.
+As of Neo4j 3.1, all functions available are directly part of the Cypher implementation, so User Defined Functions would only come from installed libraries.
 
-Please also have a look at the link:{manual}/procedures[procedure section in the Neo4j Manual].
+You can take any procedure library and deploy it to your server to make additional procedures and functions available.
+
+Please also have a look at the link:{manual}/extending-neo4j/procedures[procedure section in the Neo4j Manual].
 
 == Deploying Procedures & Functions
 
-If you packaged your own procedures or got them from somewhere else, they usually come in a jar-file.
-You can just copy that file into the `$NEO4J_HOME/plugins` directory of your Neo4j server and restart.
+If you built your own procedures or downloaded them from an community project, they are packaged in a jar-file.
+You can copy that file into the `$NEO4J_HOME/plugins` directory of your Neo4j server and restart.
 
 [WARNING] 
 *A word of caution.*
 As procedures and functions use the low level Java API they can access all Neo4j internals as well as the file system and machine. 
 That's why you should know which procedures you deploy and why. 
+Only install procedures from trusted sources. 
 If they are open source, check their source-code and best build them yourself.
 
-Now let's look at some of the procedure libraries built by our community.
+== Procedure and Function Gallery
 
-== Awesome Procedures on Cypher (APOC)
+In our link:../procedures-gallery[procedure and functions gallery] we describe some of the impressive procedure libraries built by our community.
+Check it out to see what's already there.
+Many of your needs will already be covered by those, for example:
 
-With the advent of user defined procedures, many capabilities could be added to Cypher with ease.
-That's how the APOC library got started, which developed into a "standard-library" for Neo4j built by the Neo4j community.
+* graph algorithms
+* index operations
+* database/api integration
+* graph refactorings
+* import and export
+* spatial index lookup
+* rdf import and export
+* and many more
 
-By now it contaisn 200+ procedures and 70+ functions.
+Here are two cool examples of what you can do:
 
-APOC covers many areas, here are some examples:
+A procedure to load data from another database:
 
-Procedures:
+[source,cypher]
+-----
+WITH "jdbc:mysql://localhost:3306/northwind?user=root" as url
+CALL apoc.load.jdbc(url,"products") YIELD row
+RETURN row 
+ORDER BY row.UnitPrice DESC
+LIMIT 20
+-----
 
-[options="header",cols="3a,a,3m,a"]
-|===
-| package | # of procedures | example procedure | docs link
+image::http://neo4j-contrib.github.io/neo4j-apoc-procedures/img/apoc-load-jdbc.jpg[]
 
-| data api access
-| 11
-| apoc.load.json(json-url)
-| icon:book[link={apoc}#_load_json]
+A function to format and parse timestamps of different resolutions:
 
-| database integration
-| 23
-| apoc.load.jdbc(jdbc-url,table-or-statement)
-| icon:book[link={apoc}#_load_jdbc]
-
-| graph algorithms
-| 18
-| apoc.algo.dijkstra(from,to,cost-prop) +
-apoc.algo.pageRankStats({iterations:10,write:true})
-| icon:book[link={apoc}#graph_algorithms]
-
-
-| (virtual) data creation
-| 16
-| CALL apoc.create.relationship(startNode,'TYPE',{key:value,…​}, endNode)
-| icon:book[link={apoc}#_creating_data]
-
-| transaction control
-| 8
-| apoc.periodic.iterate('source-query','work-statement',{batchSize:100, parallel:true})
-| icon:book[link={apoc}#_job_management_and_periodic_execution]
-
-| cypher operations
-| 9
-| apoc.cypher.runFile(file or url)
-| icon:book[link={apoc}#_cypher_operations]
-
-| graph data export
-| 9
-| apoc.export.cypher.query(query,file,config)
-| icon:book[link={apoc}#_export_import]
-
-| graph generation
-| 5
-| apoc.generate.ws(noNodes, degree, beta, 'label', 'TYPE') // Watts-Strogatz
-| icon:book[link={apoc}#_generating_graphs]
-
-| meta information
-| 4
-| apoc.meta.stats()
-| icon:book[link={apoc}#_meta_graph]
-
-| time to live, node-expiry
-| 1
-| CALL apoc.date.expire(node,100,'s');
-| icon:book[link={apoc}#_timetolive_ttl_expire_nodes]
-
-| monitoring & operations
-| 6
-| apoc.monitor.tx()
-| icon:book[link={apoc}#_warmup]
-
-| manual and schema indexes
-| 17
-| apoc.index.between(node1,'TYPE',node2,'prop:value*') 
-| icon:book[link={apoc}#_monitoring]
-
-
-| cypher triggers on transaction end
-| 3
-| apoc.trigger.add(name, statement, selector) 
-| icon:book[link={apoc}#_triggers]
-
-| search and expand
-| 5
-| apoc.path.expand(startNode, relationshipFilter, labelFilter, minDepth, maxDepth )
-| icon:book[link={apoc}#_path_expander]
-
-|===
-
-Functions:
-
-[options="header",cols="2a,a,2m"]
-|===
-| package | # of functions | example function
-| date & time conversion
-| 3
-| apoc.date.parse("time",["unit"],["format"])
-
-| number conversion
-| 3
-| apoc.number.parse("number",["format"])
-
-| general type conversion
-| 8
-| apoc.convert.toMap(value)
-
-| type information and checking
-| 4
-| apoc.meta.type(value)
-
-| collection and map functions
-| 25
-| apoc.map.fromList(["k1",v1,"k2",v2,"k3",v3])
-
-| JSON conversion
-| 4
-| apoc.convert.toJson(value)
-
-| string functions
-| 7
-| apoc.text.join(["s1","s2","s3"],"delim")
-
-| hash functions
-| 2
-| apoc.util.md5(value)
-
-|===
-
-
-
-Learn more by reading the [blog post series on APOC] or watch the 
-
-APOC itself comes also with a comprehensive and growing [documentation site].
-
-Recently added Neo4j Browser guides, make that documentation available within your working environment.
-
-Just run: `:play http://guides.neo4j.com/apoc`
-
-== Neo4j Spatial Procedures
-
-The http://github.com/neo4j-contrib/spatial[neo4j-spatial] library has been with Neo4j for a long time.
-
-In the past you interacted with its Java or REST APIs.
-Now for Neo4j 3.0 the maintainer, Craig Taverner added a number of procedures to integrate the spatial capabilities closely with Cypher.
-
-=== Using Neo4j Spatial Procedures in legis-graph-spatial
-
-William Lyon demonstrates how to use them in the http://www.lyonwj.com/2016/08/09/neo4j-spatial-procedures-congressional-boundaries/[Legis-Graph-Spatial Blog post] with the http://legis-graph.github.io/legis-graph-spatial/[code being available on GitHub]
-
-.create a WKT layer
 [source,cypher]
 ----
-call spatial.addWKTLayer('geom', 'wkt')
+RETURN apoc.date.format(timestamp()) as time, 
+       apoc.date.format(timestamp(),'ms','yyyy-MM-dd') as date,
+       apoc.date.parse('13.01.1975','s','dd.MM.yyyy') as unixtime, 
+       apoc.date.parse('2017-01-05 13:03:07') as millis
 ----
 
-.match on all District nodes and add them to the WKT layer
-[source,cypher]
 ----
-MATCH (d:District)
-WITH collect(d) AS districts
-CALL spatial.addNodes('geom', districts) YIELD node
-RETURN count(*)
+╒═════════════════════╤════════════╤══════════╤═════════════╕
+│"time"               │"date"      │"unixtime"│"millis"     │
+╞═════════════════════╪════════════╪══════════╪═════════════╡
+│"2017-01-05 13:06:39"│"2017-01-05"│158803200 │1483621387000│
+└─────────────────────┴────────────┴──────────┴─────────────┘
 ----
-
-.Find Geometry within distance and related 
-[source,cypher]
-----
-WITH {latitude: 37.563440, longitude: -122.322265} AS coordinate
-CALL spatial.withinDistance('geom', coordinate, 1) YIELD node AS district
-MATCH (district)<-[:REPRESENTS]-(legislator:Legislator)
-RETURN district.state, legislator.govtrackID, legislator.lastName, l.currentParty AS party
-----
-
-== Semantic Web (RDF / Ontology) Procedures
-
-Neo4j Consultant Jesus Barrasa wrote a number of procedures for importing and managing semantic web data.
-
-
-.import RDF formats and convert them into the property graph model
-[source,cypher]
-----
-CALL semantics.importRDF(rdf-url-or-file,format, shorten-url-flag, batch-commit-size);
-----
-
-.import ontologies into Neo4j ontologies for graph generation and checking
-[source,cypher]
-----
-CALL semantics.LiteOntoImport(own-url-or-file,'RDF/XML')
-----
-
-You can find them https://github.com/jbarrasa/neosemantics[here on GitHub], for more detail see his https://jesusbarrasa.wordpress.com/?s=procedure[blog post series].
-
-
-// == Procedures for GraphAware Graph Modules
 
 == Developing your own Procedures and Functions
 
-=== Writing your first Function
+// === Writing your first Function
 
 You can find details on writing and testing procedures in the link:{manual}/procedures/#user-defined-procedures[Neo4j Manual].
 
 There is even an https://github.com/neo4j-examples/neo4j-procedure-template[example GitHub repository] with detailed documentation and comments that you can clone directly and use as a starting point.
+
+Here are just some initial tips:
+
+User-defined functions are simpler, so let's start with them:
+
+* `@UserFunction` are annotated, public Java methods in a class
+* their default name is package-name.method-name
+* they return a single value
+* are read only
+
+User defined procedures are similar:
+
+* `@Procedure` annotated, Java methods
+* with an additional `mode` attribute (`READ, WRITE, DBMS`)
+* return a Java 8 `Stream` of simple objects with `public` fields
+* these fields names are turned into result columns available for `YIELD`
+
+These things are valid for both:
+
+* take `@Name`'ed parameters (with optional default values)
+* can use an injected `@Context public GraphDatabaseService`
+* run within transaction of the Cypher statement
+* supported types for parameters and results are: `Long, Double, Boolean, String, Node, Relationship, Path, Object`
+
+////
 
 User-defined functions are simpler, so let's look at one here:
 
@@ -310,7 +206,7 @@ User-defined functions are simpler, so let's look at one here:
 * can use `@Context` injected `GraphDatabaseService` etc
 * run within Transaction of the Cypher Statement
 
-.simple user defined uuid function
+.simple user defined `create.uuid` function in Java
 [source,java]
 ----
 @UserFunction("create.uuid")
@@ -319,6 +215,7 @@ public String uuid() {
    return UUID.randomUUID().toString();
 }
 ----
+////
 
 ////
 cp $GROOVY_HOME/lib/groovy-2.*.jar $NEO4J_HOME/plugins/
@@ -336,6 +233,7 @@ class UDF {
 ////
 
 
+////
 .use the function like this
 [source,cypher]
 ----
@@ -402,3 +300,4 @@ public static class WeightedPathResult {
 
 Use a build tool (like maven, gradle, ant) to package your code into a jar-file and copy that into `$NEO4J_HOME/plugins`
 Make sure required dependencies are added as well, either to your jar or the plugins directory.
+////
