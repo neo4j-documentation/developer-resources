@@ -1,0 +1,115 @@
+= Using Neo4j from Swift
+:slug: swift
+:level: Intermediate
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 2
+:section: Develop with Neo4j
+:section-link: language-guides
+
+.Goals
+[abstract]
+
+If you are an iOS, macOS or Linux developer using Swift, this guide provides instructions for how to use the https://github.com/GraphStory/neo4j-ios[Theo] framework to interact with Neo4j. 
+
+.Prerequisites
+[abstract]
+You should be familiar with link:/developer/get-started/graph-database[graph database concepts] and the property graph model.
+You should have link:/download[installed Neo4j] and made yourself familiar with our link:/developer/cypher[Cypher Query language].
+
+[role=expertise]
+{level}
+
+image::{img}swift-logo.png[float=right,width=300]
+
+toc::[]
+
+// tag::intro[]
+=== Neo4j for Swift Developers
+
+Swift is a great language for writing iOS and macOS apps, and with the introduction of Swift 3.0, it has become a great language for writing server side applications as well. All of which are excellent places to use Neo4j.
+
+// end::intro[]
+
+include::../_includes/community-driver-notice.adoc[]
+
+==== Theo
+
+https://github.com/GraphStory/neo4j-ios[Theo], the Swift framework for interfacing Neo4j, is now available in it’s version 3.0.
+It supports CRUD operations for nodes and relationships, cypher  and transactions.
+It is available for iOS, macOS and Linux, using package managers such as the https://github.com/GraphStory/neo4j-ios#swift-package-manager[Swift Package Manager], https://github.com/GraphStory/neo4j-ios#cococapods[CocoaPods] and https://github.com/GraphStory/neo4j-ios#carthage[Carthage], as well as a https://github.com/GraphStory/neo4j-ios#git-submodule[git submodule].
+
+[cols="1,5"]
+|===
+| icon:github[] Source                | https://github.com/GraphStory/neo4j-ios
+| icon:user[] Authors                 | http://twitter.com/kwylez[Cory Wiles], http://twitter.com/niklassaers[Niklas Saers]
+| icon:stackoverflow[] Stack Overflow | http://stackoverflow.com/questions/tagged/theo
+|===
+
+=== Getting started with Theo
+After installing https://github.com/GraphStory/neo4j-ios[Theo] in your project, you are ready to
+
+[source, swift]
+----
+import Theo
+----
+
+Then you can instantiate your client like so
+
+[source, swift]
+----
+let theo: Client = Client(baseURL: "hostname.com", user: "username", pass: "password")
+----
+
+create a node
+
+[source, swift]
+----
+let node = Node()
+let randomString: String = NSUUID().UUIDString
+
+node.setProp("propertyKey_1", propertyValue: "propertyValue_1" + randomString)
+node.setProp("propertyKey_2", propertyValue: "propertyValue_2" + randomString)
+
+theo.createNode(node, completionBlock: { (node, error) in
+    print("new node \(node)")
+})
+----
+
+fetch a node
+
+[source, swift]
+----
+theo.fetchNode("IDToFetch", completionBlock: { (node, error) in    
+    print("meta in success \(node!.meta) node \(node) error \(error)")
+})
+----
+
+do a cypher query
+
+[source, swift]
+----
+let cyperQuery: String = "MATCH (node1:Label1)-->(node2:Label2) WHERE node1.propertyA = {value} RETURN node2.propertyA, node2.propertyB"
+let cyperParams: Dictionary<String, AnyObject> = ["value" : "someValue"]
+		
+theo.executeCypher(cyperQuery, params: cyperParams, completionBlock: { (cypher, error) in
+    println("response from cyper \(cypher)")
+})
+----
+
+or a transaction
+
+[source, swift]
+----
+let createStatement: String = "CREATE ( bike:Bike { weight: 10 } ) CREATE ( frontWheel:Wheel { spokes: 3 } ) CREATE ( backWheel:Wheel { spokes: 32 } ) CREATE p1 = bike -[:HAS { position: 1 } ]-> frontWheel CREATE p2 = bike -[:HAS { position: 2 } ]-> backWheel RETURN bike, p1, p2"        
+let resultDataContents: Array<String> = ["row", "graph"]
+let statement: Dictionary <String, AnyObject> = ["statement" : createStatement, "resultDataContents" : resultDataContents]
+let statements: Array<Dictionary <String, AnyObject>> = [statement]
+
+theo.executeTransaction(statements, completionBlock: {(response, error) in
+    print("response \(response) and error \(error?.description")
+})
+----
+
+As you can see, it is very much how you would expect Swift code to read, and it integrates with Neo4j very much how you would expect a Neo4j integration to be. So no hard learning curves, meaning you can start being productive right away. Happy coding
