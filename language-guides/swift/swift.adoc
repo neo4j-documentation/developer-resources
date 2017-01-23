@@ -43,6 +43,7 @@ It is available for iOS, macOS and Linux, using package managers such as the htt
 [cols="1,5"]
 |===
 | icon:github[] Source                | https://github.com/GraphStory/neo4j-ios
+| icon:play-circle[] Example          | https://github.com/niklassaers/theo-example
 | icon:user[] Authors                 | http://twitter.com/kwylez[Cory Wiles], http://twitter.com/niklassaers[Niklas Saers]
 | icon:stackoverflow[] Stack Overflow | http://stackoverflow.com/questions/tagged/theo
 |===
@@ -67,7 +68,7 @@ create a node
 [source, swift]
 ----
 let node = Node()
-let randomString: String = NSUUID().UUIDString
+let randomString: String = UUID().uuidString
 
 node.setProp("propertyKey_1", propertyValue: "propertyValue_1" + randomString)
 node.setProp("propertyKey_2", propertyValue: "propertyValue_2" + randomString)
