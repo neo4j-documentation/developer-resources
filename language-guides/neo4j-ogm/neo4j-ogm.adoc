@@ -12,8 +12,7 @@ include::../_includes/versions.txt[]
 
 .Goals
 [abstract]
-If you are a Java developer, and want to use a plain Java object graph mapper, then this guide introduces the Neo4j-OGM library.
-While this guide is not comprehensive, it will introduce the different APIs and link to the relevant resources.
+For Java developers that require a simple mechanism to manage their domain objects with Neo4j, this guide introduces the Neo4j Object Graph Mapping (OGM) library.   This is the same library that powers Spring Data Neo4j but can also be used independently of Spring as well.
 
 .Prerequisites
 [abstract]
@@ -29,20 +28,18 @@ When developing with Neo4j, please use JDK 8 and your favorite IDE.
 toc::[]
 
 // tag::intro[]
-=== icon:check-circle-o[] Neo4j-OGM 
+=== Neo4j-OGM 
 
-While using the Cypher query language directly works well for small projects and more advanced queries, the boilerplate of CRUD operations gets tedious.
+While using the Cypher query language alongside the Java driver works well for small projects and more advanced queries, the boilerplate of CRUD operations often gets tedious.
 
-That's where object graph mappers come in.
-They take your existing domain objects (POJOs) and map them to Neo4j.
-With a graph database that's easier than with a relational database as there is no such data-model mismatch.
+That's where object graph mappers come in; they take your existing domain objects (POJOs) and map them to Neo4j.
+The great benefit with this approach is that with graph databases, there is no data-model impedence mismatch like there is with relational databases.
 
-Besides the Neo4j-OGM introduced here, there are also link:../spring-data-neo4j[Spring Data Neo4j], link:../java#hibernate[Hibernate-OGM] and others.
+Besides the Neo4j-OGM, there are also link:../spring-data-neo4j[Spring Data Neo4j], link:../java#hibernate[Hibernate-OGM] and others.
 
-We created the Neo4j-OGM as a standalone object graph mapper for Java as a base library for Spring Data Neo4j.
+We created the Neo4j-OGM as a standalone, simple object graph mapper for Java which also acts as the base for Spring Data Neo4j.
 
-The Neo4j-OGM uses Cypher consistently under the hood and supports several transport protocols - bolt, http and embedded.
-That's why besides either the neo4j-java-driver, http-client or Neo4j itself it has no special dependencies.
+The Neo4j-OGM uses Cypher in a consistent manner under the hood and can communicate via several transport protocols - bolt, http and embedded.
 
 // end::intro[]
 
@@ -54,7 +51,7 @@ The Neo4j-OGM supports the features you would expect:
 * Neo4jSession for direct interaction with Neo4j
 * Fast class metadata scanning
 * Optimized management of data loading and change tracking for minimal data transfers
-* Multiple transports: *binary protocol*, HTTP and embedded
+* Multiple transports: binary (bolt), HTTP and embedded
 * Persistence lifecycle events
 * Query result projection to DTOs
 
@@ -75,7 +72,7 @@ The Neo4j-OGM supports the features you would expect:
 |===
 
 :version: {neo4j-ogm-version}
-include::https://raw.githubusercontent.com/neo4j/neo4j-ogm/doc-updates/neo4j-ogm-docs/src/main/asciidoc/reference/setup.adoc[lines=3..-1,leveloffset=+1]
+include::https://raw.githubusercontent.com/neo4j/neo4j-ogm/master/neo4j-ogm-docs/src/main/asciidoc/reference/getting-started.adoc[lines=3..-1,leveloffset=+1]
 
 
 === Minimal Code Snippet
@@ -122,6 +119,4 @@ include::../_includes/sample_project.adoc[]
 
 === FAQ
 
-Upcoming.
-
-// include::https://raw.githubusercontent.com/neo4j/neo4j-ogm/doc-updates/neo4j-ogm-docs/src/main/asciidoc/reference/faq.adoc[lines=3..-1,leveloffset=+1]
+include::https://raw.githubusercontent.com/neo4j/neo4j-ogm/master/neo4j-ogm-docs/src/main/asciidoc/appendix/faq.adoc[lines=3..-1,leveloffset=+1]
