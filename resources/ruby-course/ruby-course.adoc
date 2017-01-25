@@ -337,10 +337,11 @@ def book_params
 end
 ----
 
-Now that we've created our scaffolding let's start up our Rails server:
+Now that we've created our scaffolding let's run the migrations to create constraints for our models and then start up our Rails server:
 
 [source,bash]
 ----
+rake neo4j:migrate
 rails s
 open http://localhost:3000/books
 ----
@@ -362,16 +363,20 @@ When you go to your list of books you should see something like this in your log
 .log/development.log
 [source,log]
 ----
-Started GET "/books" for ::1 at 2015-09-30 17:34:03 +1300
+Started GET "/books/" for ::1 at 2016-12-23 14:50:39 -0500
 Processing by BooksController#index as HTML
- CYPHER 4ms MATCH (n:`Book`:`Asset`) RETURN n
+  Rendering books/index.html.erb within layouts/application
+ HTTP REQUEST: 6ms GET http://localhost:7474/db/data/schema/constraint (0 bytes)
+ HTTP REQUEST: 3ms GET http://localhost:7474/db/data/schema/index (0 bytes)
+ Book MATCH (n:`Book`:`Asset`) RETURN n HTTP REQUEST: 5ms POST http://localhost:7474/db/data/transaction/commit (1 bytes)
 
- Book#author 4ms MATCH (previous:`Book`:`Asset`) WHERE (ID(previous) IN {ID_previous}) OPTIONAL MATCH previous<-[rel1:`CREATED`]-(next:`User`) RETURN ID(previous), collect(next) | {:ID_previous=>[2, 5, 9, 10]}
+ Book#author MATCH (previous:`Book`:`Asset`) WHERE (ID(previous) = {ID_previous}) OPTIONAL MATCH (previous)<-[rel1:`CREATED`]-(next:`User`) RETURN ID(previous), collect(next) | {:ID_previous=>4}
+ HTTP REQUEST: 5ms POST http://localhost:7474/db/data/transaction/commit (1 bytes)
 
- Book#category 3ms MATCH (previous:`Book`:`Asset`) WHERE (ID(previous) IN {ID_previous}) OPTIONAL MATCH previous<-[rel1:`HAS_CATEGORY`]-(next:`Category`) RETURN ID(previous), collect(next) | {:ID_previous=>[2, 5, 9, 10]}
-
-  Rendered books/index.html.erb within layouts/application (17.1ms)
-Completed 200 OK in 110ms (Views: 109.2ms)
+ Book#category MATCH (previous:`Book`:`Asset`) WHERE (ID(previous) = {ID_previous}) OPTIONAL MATCH (previous)-[rel1:`HAS_CATEGORY`]->(next:`Category`) RETURN ID(previous), collect(next) | {:ID_previous=>4}
+ HTTP REQUEST: 4ms POST http://localhost:7474/db/data/transaction/commit (1 bytes)
+  Rendered books/index.html.erb within layouts/application (32.7ms)
+Completed 200 OK in 84ms (Views: 81.5ms)
 ----
 
 If you find that a bit hard to read then you can add the following line to your application's configuration:
@@ -389,29 +394,31 @@ Once you done this your log will look more like this:
 .log/development.log
 [source,log]
 ----
-Started GET "/books" for ::1 at 2015-09-30 17:37:34 +1300
+Started GET "/books/" for ::1 at 2016-12-23 14:51:34 -0500
 Processing by BooksController#index as HTML
- CYPHER 9ms
+  Rendering books/index.html.erb within layouts/application
+ Book
   MATCH (n:`Book`:`Asset`)
   RETURN n
-
- Book#author 5ms
+ HTTP REQUEST: 5ms POST http://localhost:7474/db/data/transaction/commit (1 bytes)
+ Book#author
   MATCH (previous:`Book`:`Asset`)
-  WHERE (ID(previous) IN {ID_previous})
-  OPTIONAL MATCH previous<-[rel1:`CREATED`]-(next:`User`)
+  WHERE (ID(previous) = {ID_previous})
+  OPTIONAL MATCH (previous)<-[rel1:`CREATED`]-(next:`User`)
   RETURN
     ID(previous),
-    collect(next) | {:ID_previous=>[2, 5, 9, 10]}
-
- Book#category 4ms
+    collect(next) | {:ID_previous=>4}
+ HTTP REQUEST: 4ms POST http://localhost:7474/db/data/transaction/commit (1 bytes)
+ Book#category
   MATCH (previous:`Book`:`Asset`)
-  WHERE (ID(previous) IN {ID_previous})
-  OPTIONAL MATCH previous<-[rel1:`HAS_CATEGORY`]-(next:`Category`)
+  WHERE (ID(previous) = {ID_previous})
+  OPTIONAL MATCH (previous)-[rel1:`HAS_CATEGORY`]->(next:`Category`)
   RETURN
     ID(previous),
-    collect(next) | {:ID_previous=>[2, 5, 9, 10]}
-  Rendered books/index.html.erb within layouts/application (24.2ms)
-Completed 200 OK in 147ms (Views: 146.0ms)
+    collect(next) | {:ID_previous=>4}
+ HTTP REQUEST: 3ms POST http://localhost:7474/db/data/transaction/commit (1 bytes)
+  Rendered books/index.html.erb within layouts/application (20.2ms)
+Completed 200 OK in 51ms (Views: 48.3ms)
 ----
 
 First the books are loaded and then separate queries are made to get all of the authors and categories for those books.
@@ -435,21 +442,29 @@ The `with_associations` method is similar to `includes`, except that our associa
 .log/development.log
 [source,log]
 ----
-Started GET "/books" for ::1 at 2015-09-30 17:54:25 +1300
+Started GET "/books/" for ::1 at 2016-12-23 14:52:16 -0500
 Processing by BooksController#index as HTML
- CYPHER 9ms
+  Rendering books/index.html.erb within layouts/application
+ Book
   MATCH (n:`Book`:`Asset`)
-  OPTIONAL MATCH
-    n<-[:`CREATED`]-author,
-    n<-[:`HAS_CATEGORY`]-category
-  WHERE
-    (author:User) AND
-    (category:Category)
+  WITH n
+  OPTIONAL MATCH (n)<-[:`CREATED`]-(author)
+  WHERE (author:`User`)
+  WITH
+    n,
+    collect(author) AS author_collection
+  OPTIONAL MATCH (n)-[:`HAS_CATEGORY`]->(category)
+  WHERE (category:`Category`)
+  WITH
+    n,
+    collect(category) AS category_collection,
+    author_collection
   RETURN
     n,
-    [collect(author),collect(category)]
-  Rendered books/index.html.erb within layouts/application (12.0ms)
-Completed 200 OK in 62ms (Views: 61.5ms)
+    [author_collection,category_collection]
+ HTTP REQUEST: 6ms POST http://localhost:7474/db/data/transaction/commit (1 bytes)
+  Rendered books/index.html.erb within layouts/application (11.8ms)
+Completed 200 OK in 46ms (Views: 43.6ms)
 ----
 
 What we get is a list of `Book` objects which are pre-populated with authors and categories.
@@ -475,6 +490,15 @@ First change the `category` association for the `Book` model:
 [source,ruby]
 ----
 has_many :out, :categories, type: :HAS_CATEGORY
+----
+
+Don't forget to change the `:category` argument in the `with_associations` call in the controller to `:categories`:
+
+.app/controllers/books_controller.rb
+[source,ruby]
+----
+  def index
+    @books = Book.all.with_associations(:author, :categories)
 ----
 
 Then add a `books` association to the `Category` model:
