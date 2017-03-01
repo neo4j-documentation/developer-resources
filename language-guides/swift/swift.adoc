@@ -57,6 +57,7 @@ We look forward to hearing what you create using Theo and Neo4j. Feel free to as
 | icon:play-circle[] Example          | https://github.com/niklassaers/theo-example
 | icon:user[] Authors                 | http://twitter.com/kwylez[Cory Wiles], http://twitter.com/niklassaers[Niklas Saers]
 | icon:stackoverflow[] Stack Overflow | http://stackoverflow.com/questions/tagged/theo
+| icon:book[] Blog Post                    | https://neo4j.com/blog/theo-3-0-swift-framework-neo4j/
 |===
 
 === Getting started with Theo
@@ -102,11 +103,11 @@ do a cypher query
 
 [source, swift]
 ----
-let cyperQuery: String = "MATCH (node1:Label1)-->(node2:Label2) WHERE node1.propertyA = {value} RETURN node2.propertyA, node2.propertyB"
-let cyperParams: Dictionary<String, AnyObject> = ["value" : "someValue"]
+let cypherQuery: String = "MATCH (node1:Label1)-->(node2:Label2) WHERE node1.propertyA = {value} RETURN node2.propertyA, node2.propertyB"
+let cypherParams: Dictionary<String, AnyObject> = ["value" : "someValue"]
 		
-theo.executeCypher(cyperQuery, params: cyperParams, completionBlock: { (cypher, error) in
-    println("response from cyper \(cypher)")
+theo.executeCypher(cypherQuery, params: cypherParams, completionBlock: { (cypher, error) in
+    println("response from cypher \(cypher)")
 })
 ----
 
