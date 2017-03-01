@@ -81,21 +81,15 @@ RETURN parts[0..-1] AS package,  count(*) AS count,
 ORDER BY count DESC
 ----
 
-----
-╒════════════════════╤═══════╤════════════════════════════════════════════════════════════╕
-│"package"           │"count"│"names"                                                     │
-╞════════════════════╪═══════╪════════════════════════════════════════════════════════════╡
-│["dbms","security"] │16     │["activateUser","addRoleToUser","changePassword",....]      │
-├────────────────────┼───────┼────────────────────────────────────────────────────────────┤
-│["apoc","refactor"] │11     │["categorize","cloneNodes","from"....]                      │
-├────────────────────┼───────┼────────────────────────────────────────────────────────────┤
-│["apoc","load"]     │9      │["csv","driver","jdbc","jdbcParams","json","jsoe"]          │
-├────────────────────┼───────┼────────────────────────────────────────────────────────────┤
-│["db"]              │9      │["awaitIndex","constraints","indexes","labels",..,"schema"] │
-├────────────────────┼───────┼────────────────────────────────────────────────────────────┤
-│["dbms"]            │9      │["components","functions","queries","procedures",...]       │
-└────────────────────┴───────┴────────────────────────────────────────────────────────────┘
-----
+[options=header]
+|===
+|package             |count  |names
+|["dbms","security"] |16     |["activateUser","addRoleToUser","changePassword",....]     
+|["apoc","refactor"] |11     |["categorize","cloneNodes","from"....]                     
+|["apoc","load"]     |9      |["csv","driver","jdbc","jdbcParams","json","jsoe"]         
+|["db"]              |9      |["awaitIndex","constraints","indexes","labels",..,"schema"]
+|["dbms"]            |9      |["components","functions","queries","procedures",...]      
+|===
 
 As of Neo4j 3.1, all functions available are directly part of the Cypher implementation, so User Defined Functions would only come from installed libraries.
 
@@ -155,13 +149,11 @@ RETURN apoc.date.format(timestamp()) as time,
        apoc.date.parse('2017-01-05 13:03:07') as millis
 ----
 
-----
-╒═════════════════════╤════════════╤══════════╤═════════════╕
-│"time"               │"date"      │"unixtime"│"millis"     │
-╞═════════════════════╪════════════╪══════════╪═════════════╡
-│"2017-01-05 13:06:39"│"2017-01-05"│158803200 │1483621387000│
-└─────────────────────┴────────────┴──────────┴─────────────┘
-----
+[options="header,autowidth"]
+|===
+|time                 |date        |unixtime  |millis
+|"2017-01-05 13:06:39"|"2017-01-05"|158803200 |1483621387000
+|===
 
 == Developing your own Procedures and Functions
 
@@ -189,7 +181,7 @@ User defined procedures are similar:
 
 These things are valid for both:
 
-* take `@Name`'ed parameters (with optional default values)
+* take `@Name` annotated parameters (with optional default values)
 * can use an injected `@Context public GraphDatabaseService`
 * run within transaction of the Cypher statement
 * supported types for parameters and results are: `Long, Double, Boolean, String, Node, Relationship, Path, Object`
