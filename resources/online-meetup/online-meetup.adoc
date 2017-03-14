@@ -7,6 +7,10 @@
 :section: Contributing to Neo4j
 :section-link: resources
 :section-level: 1
+:video_playlist_key: PL9Hl4pk2FsvVnz4oi0F8UXiD3nMNqsRO2
+:youtube_api_key: AIzaSyB3jZLnBi-Cqggq8BCq9xTV8YMgu-x_kTc
+:youtube_channel_id: UCvze3hU6OZBkB1vkhH2lH9Q
+:num_videos: 6
 
 == Join us for online sessions streamed on YouTube Live
 
@@ -22,27 +26,153 @@ You can also link:https://www.youtube.com/neo4j?sub_confirmation=1[subscribe to 
 <div class="g-ytsubscribe" data-channelid="UCvze3hU6OZBkB1vkhH2lH9Q" data-layout="full" data-count="default"></div>
 ++++
 
-== Live session
-
-Our link:https://www.meetup.com/Neo4j-Online-Meetup/events/237696549/[next live streamed event] is on 2nd March 2017 at 17:00 UTC.
-
-link:https://twitter.com/barrasadv[Jesus Barrasa], Senior Pre Sales Engineer at Neo4j, and link:https://twitter.com/markhneedham[Mark Needham], Software Engineer (Clustering) at Neo4j, will explore how the two graph worlds of semantic technologies and graph databases relate.
-
-Don't forget to link:https://www.meetup.com/Neo4j-Online-Meetup/events/237696549/[register on the meetup page].
+== Live
 
 ++++
-<iframe width="560" height="315" src="https://www.youtube.com/embed/SvwIqzaoYMo" frameborder="0" allowfullscreen></iframe>
+<div class="row">
+	<div class="small-12">
+		<div class="live-videos-list">
+      There is no live session at the moment but check below for upcoming and previous sessions.
+    </div>
+	</div>
+</div>
 ++++
 
-== Past sessions
 
-Below you can watch videos of previous presentations.
+== Upcoming sessions
 
-=== Exploring TrumpWorld with Neo4j
-14th February 2017 at 17:00 UTC
-
-In this talk link:https://twitter.com/mesirii[Michael Hunger], Head of Developer Relations EMEA at Neo4j, showed us how to explore Buzzfeed's TrumpWorld dataset.
+We've got the following online meetups coming up soon:
 
 ++++
-<iframe width="560" height="315" src="https://www.youtube.com/embed/pW9boJoUxO0" frameborder="0" allowfullscreen></iframe>
+<div class="row">
+	<div class="small-12">
+		<div class="upcoming-videos-list">
+      There are no upcoming sessions scheduled at the moment but check below for the videos from past sessions.
+    </div>
+	</div>
+</div>
+++++
+
+== Previous sessions
+
+You can watch videos from previous online meetups:
+
+++++
+<div class="row">
+	<div class="small-12 columns">
+		<ul class="past-videos-list item-list small-block-grid-1 medium-block-grid-3">
+		</ul>
+
+	</div>
+</div>
+++++
+
+All videos are also available on the link:https://www.youtube.com/playlist?list=PL9Hl4pk2FsvVnz4oi0F8UXiD3nMNqsRO2[Neo4j Online Meetup playlist, window="_blank"].
+
+[subs=attributes]
+++++
+<script>
+    function googleApiClientReady() {
+        gapi.client.setApiKey("{youtube_api_key}");
+        gapi.client.load('youtube', 'v3', function() {
+            var requestOptions = {
+                    playlistId: "{video_playlist_key}",
+                    part: 'snippet',
+                    maxResults: {num_videos}
+            };
+
+            var request = gapi.client.youtube.playlistItems.list(requestOptions);
+            request.execute(function(response) {
+
+                videoString = "";
+                $.each(response['items'], function(i,v) {
+                    var id = v['snippet']['resourceId']['videoId'],
+                        thumbnail = v['snippet']['thumbnails']['medium'],
+                        title = v['snippet']['title'],
+                        description = v['snippet']['description'],
+                        video_id = v['snippet']['resourceId']['videoId'];
+
+                    if (i > 2) {
+                        videoString += '<li class="text-center extra-item" style="display:none">';
+                    } else {
+                        videoString += '<li class="text-center">';
+                    }
+
+                    videoString += '<a href="https://www.youtube.com/watch?v=' + video_id + '&list={video_playlist_key}" target="_blank">';
+                        videoString += '<div class="videobox">';
+                            videoString += '<img src="' + thumbnail['url'] + '">';
+                            videoString += '<span></span>';
+                        videoString += '</div>';
+                    videoString += '</a>';
+                    videoString += '<h5>' + title + '</h5>';
+                    videoString += '</li>';
+
+                });
+                $(".past-videos-list").append(videoString);
+            });
+
+            var upcomingRequest = gapi.client.youtube.search.list({
+              part: 'snippet',
+              channelId: "{youtube_channel_id}",
+              maxResults: 1,
+              eventType: 'upcoming',
+              type: 'video'
+            });
+
+            upcomingRequest.execute(function(response) {
+              videoString = "";
+              $.each(response['items'], function(i,v) {
+
+                  var thumbnail = v['snippet']['thumbnails']['high'],
+                      title = v['snippet']['title'],
+                      description = v['snippet']['description'],
+                      video_id = v['id']['videoId'];
+
+
+                  videoString += '<iframe width="560" height="315" src="https://www.youtube.com/embed/'  + video_id + '" frameborder="0" allowfullscreen></iframe>';
+                  videoString += "<hr />"
+
+              });
+
+							if(videoString != "") {
+								$(".upcoming-videos-list").replaceWith(videoString);
+							}
+            });
+
+						var liveRequest = gapi.client.youtube.search.list({
+              part: 'snippet',
+              channelId: "{youtube_channel_id}",
+              maxResults: 1,
+              eventType: 'live',
+              type: 'video'
+            });
+
+            liveRequest.execute(function(response) {
+              videoString = "";
+              $.each(response['items'], function(i,v) {
+
+                  var thumbnail = v['snippet']['thumbnails']['high'],
+                      title = v['snippet']['title'],
+                      description = v['snippet']['description'],
+                      video_id = v['id']['videoId'];
+
+
+                  videoString += '<iframe width="560" height="315" src="https://www.youtube.com/embed/'  + video_id + '" frameborder="0" allowfullscreen></iframe>';
+                  videoString += "<hr />"
+
+              });
+
+							if(videoString != "") {
+								$(".live-videos-list").replaceWith(videoString);
+							}
+
+            });
+
+        });
+
+    };
+</script>
+
+
+<script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
 ++++
