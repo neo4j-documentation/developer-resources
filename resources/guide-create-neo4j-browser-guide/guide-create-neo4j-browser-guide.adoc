@@ -75,10 +75,11 @@ The server hosting the guide has to support proper CORS headers for both GET and
 So unfortunately GitHub pages and Dropbox folders don't work, but S3 can be configured to work well enough (or a custom Python or Java webserver).
 
 [WARNING]
-For security reasons Javascript and Angular tags are stripped from the HTML, even from whitelisted sources.
+For security reasons, Javascript and Angular tags are stripped from the HTML, even from whitelisted sources.
 
 [WARNING]
-If your Neo4j instance is accessed via a 'https://' URL, only guides hosted on 'https://' URLs will render. Currently, as of April 2017, guides.neo4j.com does not support 'https'.
+If your Neo4j instance is accessed via a `https://` URL, only guides hosted on `https://` URLs will render.
+Currently, as of April 2017, guides.neo4j.com does not support `https`.
 
 You can also provide your guide as a startup URL in two ways:
 
@@ -104,9 +105,10 @@ browser.post_connect_cmd=play intro
 === Slide Format and Creation
 
 The HTML format is https://github.com/neo4j-contrib/neo4j-guides/blob/master/docs/html-guides.adoc[described in detail here^].
-Don't worry, you do not have to create the HTML manually, although you can fine tune the generated HTML from the next step after the fact.
+Don't worry, you do not have to create the HTML manually.
+Although you can fine tune the generated HTML from the next step afterwards.
 
-To make it easier to create Browser Guides we created a https://github.com/neo4j-contrib/neo4j-guides[simple tooling repository^] that uses AsciiDoc as source format and a HTML template with the slide structure.
+To make it easier to create Browser Guides, we created a https://github.com/neo4j-contrib/neo4j-guides[simple tooling repository^] that uses AsciiDoc as source format and a HTML template with the slide structure.
 
 AsciiDoc is used in many places, e.g. for O'Reilly books, many Documentation Manuals (ours too), these developer pages, our http://neo4j.com/developer/kb[knowledge base], http://portal.graphgist.org/about[GraphGists^] but also in Readme's and Wiki's on GitHub.
 It was developed for technical documentation, and is more powerful than Markdown.
@@ -133,7 +135,7 @@ edit adoc/test.adoc
 ----
 
 .test.adoc
-[indent=0]
+[.small,indent=0]
 ----
  = A Test Guide
  
@@ -179,7 +181,7 @@ edit adoc/test.adoc
  == Third Slide: Links
  
  * http://neo4j.com/developer/cypher[Learn more about Cypher]
- * pass:a[<a help-topic='key'>Help Keys</a>]
+ * pass:a[<a help-topic='keys'>Help Keys</a>]
  * pass:a[<a play-topic='http://guides.neo4j.com/'>Another Guide</a>]
  
  image::https://avatars3.githubusercontent.com/u/201120[width=100,link="http://example.com"]
@@ -285,18 +287,20 @@ ABK's guides with Jade: https://github.com/neo4j-contrib/guides
 ==== Panama Papers Guide
 
 The award winning investigative work around the https://neo4j.com/blog/icij-neo4j-unravel-panama-papers/["Panama Papers"^] leak by the journalists of the ICIJ is available as an online database.
-It also comes as a downloadable Neo4j installation with a comprehensive browser guide to explore the vast network of shell company connections.
+
+It is also available as a https://neo4j.com/sandbox/[*Neo4j Panama Papers Sandbox*] with a comprehensive browser guide to explore the vast network of shell company connections.
 
 {play}https://cloudfront-files-1.publicintegrity.org/offshoreleaks/neo4j/guide/index.html[`:play https://cloudfront-files-1.publicintegrity.org/offshoreleaks/neo4j/guide/index.html`^]
-----
 
 image::{img}browser-guide-panama-papers.jpg[]
 
+////
 [NOTE]
 You need to whitelist the source hostname.
 ----
 browser.remote_content_hostname_whitelist=https://cloudfront-files-1.publicintegrity.org
 ----
+////
 
 ==== GraphGists
 

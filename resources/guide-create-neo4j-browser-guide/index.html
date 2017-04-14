@@ -732,7 +732,7 @@ So unfortunately GitHub pages and Dropbox folders don&#8217;t work, but S3 can b
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-For security reasons Javascript and Angular tags are stripped from the HTML, even from whitelisted sources.
+For security reasons, Javascript and Angular tags are stripped from the HTML, even from whitelisted sources.
 </td>
 </tr>
 </table>
@@ -744,7 +744,8 @@ For security reasons Javascript and Angular tags are stripped from the HTML, eve
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-If your Neo4j instance is accessed via a 'https://' URL, only guides hosted on 'https://' URLs will render. Currently, as of April 2017, guides.neo4j.com does not support 'https'.
+If your Neo4j instance is accessed via a <code>https://</code> URL, only guides hosted on <code>https://</code> URLs will render.
+Currently, as of April 2017, guides.neo4j.com does not support <code>https</code>.
 </td>
 </tr>
 </table>
@@ -782,13 +783,14 @@ http://localhost:7474/browser?cmd=play&amp;arg=northwind%20graph</pre>
 
 <div class="paragraph">
 <p>The HTML format is <a href="https://github.com/neo4j-contrib/neo4j-guides/blob/master/docs/html-guides.adoc" target="_blank">described in detail here</a>.
-Don&#8217;t worry, you do not have to create the HTML manually, although you can fine tune the generated HTML from the next step after the fact.</p>
+Don&#8217;t worry, you do not have to create the HTML manually.
+Although you can fine tune the generated HTML from the next step afterwards.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>To make it easier to create Browser Guides we created a <a href="https://github.com/neo4j-contrib/neo4j-guides" target="_blank">simple tooling repository</a> that uses AsciiDoc as source format and a HTML template with the slide structure.</p>
+<p>To make it easier to create Browser Guides, we created a <a href="https://github.com/neo4j-contrib/neo4j-guides" target="_blank">simple tooling repository</a> that uses AsciiDoc as source format and a HTML template with the slide structure.</p>
 </div>
 
 
@@ -848,7 +850,7 @@ cd neo4j-guides
 edit adoc/test.adoc</pre>
 </div>
 </div>
-<div class="listingblock">
+<div class="listingblock small">
 <div class="title">test.adoc</div>
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre>= A Test Guide
@@ -895,7 +897,7 @@ RETURN db
 == Third Slide: Links
 
 * http://neo4j.com/developer/cypher[Learn more about Cypher]
-* pass:a[&lt;a help-topic='key'&gt;Help Keys&lt;/a&gt;]
+* pass:a[&lt;a help-topic='keys'&gt;Help Keys&lt;/a&gt;]
 * pass:a[&lt;a play-topic='http://guides.neo4j.com/'&gt;Another Guide&lt;/a&gt;]
 
 image::https://avatars3.githubusercontent.com/u/201120[width=100,link="http://example.com"]</pre>
@@ -985,8 +987,13 @@ s3cmd put -P html/$name.html s3://guides.neo4j.com/$name</pre>
 
 
 <div class="paragraph">
-<p>The award winning investigative work around the <a href="https://neo4j.com/blog/icij-neo4j-unravel-panama-papers/">Panama Papers</a> leak by the journalists of the ICIJ is available as an online database.
-It also comes as a downloadable Neo4j installation with a comprehensive browser guide to explore the vast network of shell company connections.</p>
+<p>The award winning investigative work around the <a href="https://neo4j.com/blog/icij-neo4j-unravel-panama-papers/">Panama Papers</a> leak by the journalists of the ICIJ is available as an online database.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>It is also available as a <a href="https://neo4j.com/sandbox/"><strong>Neo4j Panama Papers Sandbox</strong></a> with a comprehensive browser guide to explore the vast network of shell company connections.</p>
 </div>
 
 
@@ -995,255 +1002,337 @@ It also comes as a downloadable Neo4j installation with a comprehensive browser 
 <p><a href="http://localhost:7474/browser?cmd=play&amp;arg=https://cloudfront-files-1.publicintegrity.org/offshoreleaks/neo4j/guide/index.html" target="_blank"><code>:play https://cloudfront-files-1.publicintegrity.org/offshoreleaks/neo4j/guide/index.html</code></a></p>
 </div>
 
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/browser-guide-panama-papers.jpg" alt="browser guide panama papers">
+</p>
+</div>
+</div>
+<div  id="_graphgists" class="sect3 "  >
+<h4>GraphGists</h4>
+<div class="imageblock" style="float: right;">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/browser-guide-graphgist.jpg" alt="browser guide graphgist">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>The <a href="http://portal.graphgist.org">GraphGist Portal</a> allows any GraphGist to be viewed as a browser guide.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Just click the  "Run this gist in the Neo4j console" link on the right hand sidebar, e.g.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><a href="http://localhost:7474/browser?cmd=play&amp;arg=http://portal.graphgist.org/graph_gists/trumpworld-graph/graph_guide" target="_blank"><code>:play http://portal.graphgist.org/graph_gists/trumpworld-graph/graph_guide</code></a></p>
+</div>
+
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You need to whitelist the source hostname.
+</td>
+</tr>
+</table>
+</div>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre>image::{img}browser-guide-panama-papers.jpg[]
-
-[NOTE]
-You need to whitelist the source hostname.</pre>
+<pre>browser.remote_content_hostname_whitelist=http://portal.graphgist.org</pre>
 </div>
 </div>
 
 
 <div class="paragraph">
-<p>browser.remote_content_hostname_whitelist=https://cloudfront-files-1.publicintegrity.org</p>
+<p>And then chose any Graph Gist to render in your browser <a href="http://localhost:7474/browser?cmd=play&amp;arg=http://guides.neo4j.com/graphgists/" target="_blank"><code>:play http://guides.neo4j.com/graphgists/</code></a></p>
 </div>
 
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre>==== GraphGists
-
-image::{img}browser-guide-graphgist.jpg[float=right]
-
-The http://portal.graphgist.org[GraphGist Portal] allows any GraphGist to be viewed as a browser guide.
-
-Just click the  "Run this gist in the Neo4j console" link on the right hand sidebar, e.g.
-
-
-{play}http://portal.graphgist.org/graph_gists/trumpworld-graph/graph_guide[`:play http://portal.graphgist.org/graph_gists/trumpworld-graph/graph_guide`^]
-
-[NOTE]
-You need to whitelist the source hostname.</pre>
 </div>
+<div  id="_sandbox" class="sect3 "  >
+<h4>Sandbox</h4>
+
+
+<div class="paragraph">
+<p>The new <a href="http://neo4j.com/sandbox">Neo4j Sandbox</a> uses Browser Guides to guide the user through the dataset presented.</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/browser-guide-sandbox-reco.jpg" alt="browser guide sandbox reco">
+</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>Use Case</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>Guide URL</p>
+</div>
+</div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>Blank</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p><a href="http://localhost:7474/browser?cmd=play&amp;arg=http://guides.neo4j.com/sandbox/blank-sandbox" target="_blank"><code>:play http://guides.neo4j.com/sandbox/blank-sandbox</code></a></p>
+</div>
+</div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>Legis Graph</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p><a href="http://localhost:7474/browser?cmd=play&amp;arg=http://guides.neo4j.com/sandbox/legis-graph" target="_blank"><code>:play http://guides.neo4j.com/sandbox/legis-graph</code></a></p>
+</div>
+</div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>Movie Recommendations</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p><a href="http://localhost:7474/browser?cmd=play&amp;arg=http://guides.neo4j.com/sandbox/recommendations" target="_blank"><code>:play http://guides.neo4j.com/sandbox/recommendations</code></a></p>
+</div>
+</div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>Trumpworld</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p><a href="http://localhost:7474/browser?cmd=play&amp;arg=http://guides.neo4j.com/sandbox/trumpworld" target="_blank"><code>:play http://guides.neo4j.com/sandbox/trumpworld</code></a></p>
+</div>
+</div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>Network Management</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p><a href="http://localhost:7474/browser?cmd=play&amp;arg=http://guides.neo4j.com/sandbox/network-management" target="_blank"><code>:play http://guides.neo4j.com/sandbox/network-management</code></a></p>
+</div>
+</div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>Twitter</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p><a href="http://localhost:7474/browser?cmd=play&amp;arg=http://guides.neo4j.com/twitter-neo4j/" target="_blank"><code>:play http://guides.neo4j.com/twitter-neo4j/</code></a></p>
+</div>
+</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div  id="_apoc" class="sect3 "  >
+<h4>APOC</h4>
+<div class="imageblock" style="float: right;">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/browser-guide-apoc.jpg" alt="browser guide apoc">
+</p>
 </div>
 
 
 <div class="paragraph">
-<p>browser.remote_content_hostname_whitelist=http://portal.graphgist.org</p>
+<p>The <a href="https://github.com/neo4j-contrib/neo4j-apoc-procedures">APOC procedure library</a> comes with a lot of useful functionality for Neo4j.
+For an "interactive" manual, some of the <a href="https://github.com/neo4j-contrib/neo4j-apoc-procedures/blob/3.1/docs/guides.adoc">original documentation</a> was turned into guides.</p>
 </div>
 
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre>And then chose any Graph Gist to render in your browser {play}http://guides.neo4j.com/graphgists/[`:play http://guides.neo4j.com/graphgists/`^]
-
-////
-==== Training Classes
-
-Guides for Classroom Training: https://github.com/neo4j-contrib/training/
-Neo4j Fundamentals  :play http://guides.neo4j.com/fundamentals/
-Intro: Relational to Graph: :play http://guides.neo4j.com/intro/
-Advanced Cypher :play http://guides.neo4j.com/advanced_cypher/
-// old advanced training :play http://guides.neo4j.com/advanced/
-Recommendation Training: :play http://guides.neo4j.com/reco
-:play http://guides.neo4j.com/reco/file
-// old modeling training :play http://guides.neo4j.com/modeling/
-Modeling Flights: :play http://guides.neo4j.com/modeling_airports
-
-
-Online Training Cypher Guide:
-https://github.com/neo-technology/training-slides/tree/master/online/cypher/60-Minute-Cypher
-:play http://guides.neo4j.com/cypher
-////
-
-==== Sandbox
-
-The new http://neo4j.com/sandbox[Neo4j Sandbox] uses Browser Guides to guide the user through the dataset presented.
-
-image::{img}browser-guide-sandbox-reco.jpg[]
-
-[cols="a,3a"]
-|===
-| Use Case | Guide URL
-| Blank | {play}http://guides.neo4j.com/sandbox/blank-sandbox[`:play http://guides.neo4j.com/sandbox/blank-sandbox`^]
-| Legis Graph |{play}http://guides.neo4j.com/sandbox/legis-graph[`:play http://guides.neo4j.com/sandbox/legis-graph`^]
-| Movie Recommendations | {play}http://guides.neo4j.com/sandbox/recommendations[`:play http://guides.neo4j.com/sandbox/recommendations`^]
-// | Retail Recommendations | {play}http://guides.neo4j.com/sandbox/retail-recommendations[`:play http://guides.neo4j.com/sandbox/retail-recommendations`^]
-| Trumpworld | {play}http://guides.neo4j.com/sandbox/trumpworld[`:play http://guides.neo4j.com/sandbox/trumpworld`^]
-//| US Elections | {play}http://guides.neo4j.com/sandbox/us-elections-2016[`:play http://guides.neo4j.com/sandbox/us-elections-2016`^]
-| Network Management | {play}http://guides.neo4j.com/sandbox/network-management[`:play http://guides.neo4j.com/sandbox/network-management`^]
-| Twitter | {play}http://guides.neo4j.com/twitter-neo4j/[`:play http://guides.neo4j.com/twitter-neo4j/`^]
-|===
-
-==== APOC
-
-image::{img}browser-guide-apoc.jpg[float=right]
-
-The https://github.com/neo4j-contrib/neo4j-apoc-procedures[APOC procedure library] comes with a lot of useful functionality for Neo4j.
-For an "interactive" manual, some of the https://github.com/neo4j-contrib/neo4j-apoc-procedures/blob/3.1/docs/guides.adoc[original documentation] was turned into guides.
-
-* APOC Guides: {play}http://guides.neo4j.com/apoc/[`:play http://guides.neo4j.com/apoc/`^]
-* Loading Data with Apoc {play}http://guides.neo4j.com/apocload/[`:play http://guides.neo4j.com/apocload/`^]
-
-==== Beer Graph Guide - Rik Van Bruggen
-
-++++
-&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/jIT3O_fO7Tk" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
-++++
-
-Rik van Bruggen demonstrates in detail how to turn a data set or GraphGist into a proper Browser Guide.
-
-http://blog.bruggen.com/2016/03/the-beergraphguide-in-neo4j-browser.html
-http://blog.bruggen.com/2016/03/an-easier-better-tastier-beergraphguide.html
-
-==== HetNet Protein Networks - Daniel Himmelstein
-
-Daniel used Browser Guides to represent the topic of his PhD thesis - Protein Networks in a Graph Database.
-
-image::https://cloud.githubusercontent.com/assets/1117703/16320501/216f2626-3966-11e6-8a0d-215f70b44be2.png[]
-
-He https://thinklab.com/discussion/hosting-hetionet-in-the-cloud-creating-a-public-neo4j-instance/216[details the process] of setting up a public server for hosting the dataset as well as the steps involved in creating the guides in this article.
-
-Daniel also presented about his research at https://www.youtube.com/watch?v=jwhAlNgjvMA[GraphConnect San Francisco].
-
-==== Game of Thrones Guide
-
-After the mathematicians Andrew Beveridge and Jie Shan published the "Network of Thrones" reseearch paper, William Lyon took the data (with permission) of co-occurrence of characters in volume 3 of "Game of Thrones" and turned it into a Neo4j Graph database.
-
-Using that popular dataset Will explains the basic workings of a graph database and then expands into http://www.lyonwj.com/2016/06/26/graph-of-thrones-neo4j-social-network-analysis/[data science with social network analysis and graph algorithms].
-
-The guide turns Wills blog post into an interactive experience.
-// You can find https://github.com/johnymontana/graph-of-thrones[his repository here].
-
-{play}http://guides.neo4j.com/got[`:play http://guides.neo4j.com/got`^]
-
-
-We also created a separate "Game of Thrones" guide that aims at recreating the whole universe using data from a variety of sources.
-It uses this https://docs.google.com/presentation/d/1bXXR-7rJMvM56Fc52qme1kriQPIFDHUQ3PzhwPkKzSY/edit#slide=id.g147007f109_0_125[set of accompanying slides] to teach about Neo4j.
-
-{play}http://guides.neo4j.com/got/index.html[`:play http://guides.neo4j.com/got/index.html`^]
-
-// :play http://guides.neo4j.com/got_wwc/
-
-////
-==== Twitter
-
-TODO link to network / sandbox</pre>
+<div class="ulist">
+<ul>
+<li>
+APOC Guides: <a href="http://localhost:7474/browser?cmd=play&amp;arg=http://guides.neo4j.com/apoc/" target="_blank"><code>:play http://guides.neo4j.com/apoc/</code></a>
+</li>
+<li>
+Loading Data with Apoc <a href="http://localhost:7474/browser?cmd=play&amp;arg=http://guides.neo4j.com/apocload/" target="_blank"><code>:play http://guides.neo4j.com/apocload/</code></a>
+</li>
+</ul>
 </div>
+</div>
+<div  id="_beer_graph_guide_rik_van_bruggen" class="sect3 "  >
+<h4>Beer Graph Guide - Rik Van Bruggen</h4>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jIT3O_fO7Tk" frameborder="0" allowfullscreen></iframe>
+
+
+<div class="paragraph">
+<p>Rik van Bruggen demonstrates in detail how to turn a data set or GraphGist into a proper Browser Guide.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><a href="http://blog.bruggen.com/2016/03/the-beergraphguide-in-neo4j-browser.html" class="bare">http://blog.bruggen.com/2016/03/the-beergraphguide-in-neo4j-browser.html</a>
+<a href="http://blog.bruggen.com/2016/03/an-easier-better-tastier-beergraphguide.html" class="bare">http://blog.bruggen.com/2016/03/an-easier-better-tastier-beergraphguide.html</a></p>
+</div>
+
+</div>
+<div  id="_hetnet_protein_networks_daniel_himmelstein" class="sect3 "  >
+<h4>HetNet Protein Networks - Daniel Himmelstein</h4>
+
+
+<div class="paragraph">
+<p>Daniel used Browser Guides to represent the topic of his PhD thesis - Protein Networks in a Graph Database.</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="https://cloud.githubusercontent.com/assets/1117703/16320501/216f2626-3966-11e6-8a0d-215f70b44be2.png" alt="216f2626 3966 11e6 8a0d 215f70b44be2">
+</p>
 </div>
 
 
 <div class="paragraph">
-<p>:play <a href="http://guides.neo4j.com/twitter-neo4j/" class="bare">http://guides.neo4j.com/twitter-neo4j/</a></p>
+<p>He <a href="https://thinklab.com/discussion/hosting-hetionet-in-the-cloud-creating-a-public-neo4j-instance/216">details the process</a> of setting up a public server for hosting the dataset as well as the steps involved in creating the guides in this article.</p>
 </div>
 
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre>Twitter Election Graph :play http://guides.neo4j.com/twitterElection/
-
-==== Exploring Shipping Data
-
-* `:play http://guides.neo4j.com/shipping/`
-
-==== Graphs in Data Journalism
-
-Graphs in Data Journalism: `:play http://guides.neo4j.com/ddj/`
-
-* Finding Insights in Campaign Finance Data With Graphs `:play http://guides.neo4j.com/nicar2017`
-* IRE Fundamentals of graph databases + https://github.com/johnymontana/neo4j-datasets/tree/master/us-fec-elections-2016[US Congress + FEC Data] `:play http://guides.neo4j.com/ire2016/`
-
-==== Field
-
-POLE database `:play http://guides.neo4j.com/field/pole.html`
-
-==== Trumpworld:
-
-TODO text, link to blog posts, link to trumpworld-graph repo
-
-https://github.com/johnymontana/neo4j-datasets/tree/master/trumpworld/src</pre>
-</div>
-</div>
 
 
 <div class="paragraph">
-<p>:play <a href="http://guides.neo4j.com/trumpworld" class="bare">http://guides.neo4j.com/trumpworld</a></p>
+<p>Daniel also presented about his research at <a href="https://www.youtube.com/watch?v=jwhAlNgjvMA">GraphConnect San Francisco</a>.</p>
 </div>
 
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre>// :play http://guides.neo4j.com/trump_wwc
-// :play http://guides.neo4j.com/trumpworld-simple/
-
-
-==== Legis Graph:
-
-TODO blog posts / repo</pre>
 </div>
-</div>
+<div  id="_game_of_thrones_guide" class="sect3 "  >
+<h4>Game of Thrones Guide</h4>
 
 
 <div class="paragraph">
-<p>:play <a href="http://guides.neo4j.com/legisgraph/" class="bare">http://guides.neo4j.com/legisgraph/</a>
-:play <a href="http://guides.neo4j.com/legisgraphalgo/" class="bare">http://guides.neo4j.com/legisgraphalgo/</a></p>
+<p>After the mathematicians Andrew Beveridge and Jie Shan published the "Network of Thrones" reseearch paper, William Lyon took the data (with permission) of co-occurrence of characters in volume 3 of "Game of Thrones" and turned it into a Neo4j Graph database.</p>
 </div>
 
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre>==== Short Term Rental Listings (AirBNB)
-
-https://github.com/johnymontana/neo4j-datasets/tree/master/airbnb/src/guide</pre>
-</div>
-</div>
 
 
 <div class="paragraph">
-<p>:play <a href="http://guides.neo4j.com/listings/" class="bare">http://guides.neo4j.com/listings/</a></p>
+<p>Using that popular dataset Will explains the basic workings of a graph database and then expands into <a href="http://www.lyonwj.com/2016/06/26/graph-of-thrones-neo4j-social-network-analysis/">data science with social network analysis and graph algorithms</a>.</p>
 </div>
 
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre>==== RDF
-
-TODO link / url
-
-* RDF vs LPG: The data models `:play http://guides.neo4j.com/rdf-graphs/`
-* RDF A worked example: `:play http://guides.neo4j.com/rdf/rdf-to-neo-worked.html`
-
-////
-
-==== Graph-Commons
-
-// https://twitter.com/graphcommons/status/815999498245853185
-
-++++
-&lt;blockquote class="twitter-tweet" data-lang="en"&gt;&lt;p lang="en" dir="ltr"&gt;How to import a graph from &lt;a href="https://twitter.com/graphcommons"&gt;@graphcommons&lt;/a&gt; into your &lt;a href="https://twitter.com/neo4j"&gt;@neo4j&lt;/a&gt; &lt;a href="https://twitter.com/hashtag/graphdb?src=hash"&gt;#graphdb&lt;/a&gt; &lt;a href="https://twitter.com/hashtag/gif?src=hash"&gt;#gif&lt;/a&gt; &lt;a href="https://t.co/oKzSo4wKXw"&gt;https://t.co/oKzSo4wKXw&lt;/a&gt; &lt;a href="https://t.co/P5PI0xIRn4"&gt;pic.twitter.com/P5PI0xIRn4&lt;/a&gt;&lt;/p&gt;&amp;mdash; Graph Commons (@graphcommons) &lt;a href="https://twitter.com/graphcommons/status/815999498245853185"&gt;January 2, 2017&lt;/a&gt;&lt;/blockquote&gt;
-&lt;script async src="//platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;
-++++
-
-Also you've probably seen it, http://graphcommons.com[Graph Commons] supports the Neo4j browser, play the URL in the Neo4j browser (note the `/neo4j` at the end):
-
-{play}https://graphcommons.com/graphs/1a93e8fa-e3ce-4ec7-ba16-814b867d1bcb/neo4j[`:play https://graphcommons.com/graphs/1a93e8fa-e3ce-4ec7-ba16-814b867d1bcb/neo4j`^]
-
-[NOTE]
-You need to whitelist the source.</pre>
-</div>
-</div>
 
 
 <div class="paragraph">
-<p>browser.remote_content_hostname_whitelist=https://graphcommons.com/graphs/</p>
+<p>The guide turns Wills blog post into an interactive experience.</p>
 </div>
 
+
+
+<div class="paragraph">
+<p><a href="http://localhost:7474/browser?cmd=play&amp;arg=http://guides.neo4j.com/got" target="_blank"><code>:play http://guides.neo4j.com/got</code></a></p>
+</div>
+
+
+
+<div class="paragraph">
+<p>We also created a separate "Game of Thrones" guide that aims at recreating the whole universe using data from a variety of sources.
+It uses this <a href="https://docs.google.com/presentation/d/1bXXR-7rJMvM56Fc52qme1kriQPIFDHUQ3PzhwPkKzSY/edit#slide=id.g147007f109_0_125">set of accompanying slides</a> to teach about Neo4j.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><a href="http://localhost:7474/browser?cmd=play&amp;arg=http://guides.neo4j.com/got/index.html" target="_blank"><code>:play http://guides.neo4j.com/got/index.html</code></a></p>
+</div>
+
+</div>
+<div  id="_graph_commons" class="sect3 "  >
+<h4>Graph-Commons</h4>
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">How to import a graph from <a href="https://twitter.com/graphcommons">@graphcommons</a> into your <a href="https://twitter.com/neo4j">@neo4j</a> <a href="https://twitter.com/hashtag/graphdb?src=hash">#graphdb</a> <a href="https://twitter.com/hashtag/gif?src=hash">#gif</a> <a href="https://t.co/oKzSo4wKXw">https://t.co/oKzSo4wKXw</a> <a href="https://t.co/P5PI0xIRn4">pic.twitter.com/P5PI0xIRn4</a></p>&mdash; Graph Commons (@graphcommons) <a href="https://twitter.com/graphcommons/status/815999498245853185">January 2, 2017</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<div class="paragraph">
+<p>Also you&#8217;ve probably seen it, <a href="http://graphcommons.com">Graph Commons</a> supports the Neo4j browser, play the URL in the Neo4j browser (note the <code>/neo4j</code> at the end):</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><a href="http://localhost:7474/browser?cmd=play&amp;arg=https://graphcommons.com/graphs/1a93e8fa-e3ce-4ec7-ba16-814b867d1bcb/neo4j" target="_blank"><code>:play https://graphcommons.com/graphs/1a93e8fa-e3ce-4ec7-ba16-814b867d1bcb/neo4j</code></a></p>
+</div>
+
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You need to whitelist the source.
+</td>
+</tr>
+</table>
+</div>
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre>==== jQAssistant
-
-The http://jqassistant.org[Software analytics tool], uses a guide to explore any scanned software project.
-
-// https://docs.google.com/document/d/16ecoO9OybalYNzG0kWiOENLk_q6_ou-qf1eyzFu5nUE/edit
-
-{play}http://guides.neo4j.com/jqassistant[`:play http://guides.neo4j.com/jqassistant`^]</pre>
+<pre>browser.remote_content_hostname_whitelist=https://graphcommons.com/graphs/</pre>
 </div>
 </div>
+</div>
+<div  id="_jqassistant" class="sect3 "  >
+<h4>jQAssistant</h4>
+
+
+<div class="paragraph">
+<p>The <a href="http://jqassistant.org">Software analytics tool</a>, uses a guide to explore any scanned software project.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><a href="http://localhost:7474/browser?cmd=play&amp;arg=http://guides.neo4j.com/jqassistant" target="_blank"><code>:play http://guides.neo4j.com/jqassistant</code></a></p>
+</div>
+
 </div>
 </div>
                     </div>
