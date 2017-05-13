@@ -82,9 +82,7 @@ type Movie {
     title: String!
     released: Int
     tagline: String
-    actors: [Person] @relation(name:"ACTED_IN", direction:IN)
-    director: Person @relation(name:"DIRECTED", direction:IN)
-    recommendation(first:Int = 3): [Movie] @cypher(statement:"")
+    actors: [Person]
 }
 
 type Person {
@@ -129,9 +127,6 @@ We're especially proud of the `@cypher` directive, the auto-generated mutations,
 
 Here is an example, how the schema definition above could / would be extended:
 
-[source,graphql]
-----
-.GraphQL example schema
 [source,graphql]
 ----
 type Movie {
