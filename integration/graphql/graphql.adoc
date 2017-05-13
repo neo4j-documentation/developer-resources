@@ -73,7 +73,7 @@ GraphQL queries return data in a tree-form that perfectly matches the front end 
 === Schema
 
 The typesystem is often declared in schema (IDL) files which contain entities, their attributes, interfaces, enumerations, but also mutations and subscriptions.
-The schema can be extended with custom directives and custom types that allow specific extensions of the core language.
+The schema can be extended with custom directives and types that allow specific extensions of the core language.
 
 .GraphQL example schema
 [source,graphql]
@@ -82,8 +82,9 @@ type Movie {
     title: String!
     released: Int
     tagline: String
-    actors: [Person]
-    director: Person
+    actors: [Person] @relation(name:"ACTED_IN", direction:IN)
+    director: Person @relation(name:"DIRECTED", direction:IN)
+    recommendation(first:Int = 3): [Movie] @cypher(statement:"")
 }
 
 type Person {
@@ -116,6 +117,7 @@ This will:
 
 === Neo4j GraphQL extension
 
+image::https://dl.dropboxusercontent.com/u/14493611/neo4j-graphql.png[width=200,float=right]
 We wanted to combine the power of Neo4j and GraphQL by making it super-easy to take an IDL schema OR an existing graph and serve a native GraphQL backend from it.
 
 You can grab the latest release our extension from https://github.com/neo4j-graphql/neo4j-graphql/releases[here] and drop it into any Neo4j 3.1.x server (`plugins` directory).
@@ -125,11 +127,46 @@ We added some neat features that we hope are useful and make your life easier.
 
 We're especially proud of the `@cypher` directive, the auto-generated mutations, and the `graphql.execute` and `graphql.schema` procedures.
 
-Have a look at the following "feature" table, to see what else is in the box:
+Here is an example, how the schema definition above could / would be extended:
+
+[source,graphql]
+----
+.GraphQL example schema
+[source,graphql]
+----
+type Movie {
+    title: ID!
+    released: Int
+    tagline: String
+
+    actors: [Person] @relation(name:"ACTED_IN", direction:IN)
+
+    director: Person @relation(name:"DIRECTED", direction:IN)
+
+    recommendation(first:Int = 3): [Movie] @cypher(statement:"MATCH (this)<-[r1:REVIEWED]-(:User)-[r2:REVIEWED]->(reco:Movie) WHERE 3 <= r1.stars <= r2.stars RETURN reco, sum(r2.stars) as rating ORDER BY rating DESC")
+}
+
+type Person {
+    name: ID!
+    born: Int
+
+    movies: [Movie] @relation(name:"ACTED_IN")
+}
+
+type Mutations {
+    directed(movie:ID! director:ID!) : String @cypher(statement:"MATCH (m:Movie {title: $movie}), (d:Person {name: $director}) MERGE (d)-[:DIRECTED]->(m)")
+}
+schema {
+   mutations: Mutations
+}
+----
+
+Have a look at the following "feature" table, to see what else is "in the box":
 
 include::https://raw.githubusercontent.com/neo4j-graphql/neo4j-graphql/master/readme.adoc[tags=features]
 
 In the repository, you can find a https://github.com/neo4j-graphql/neo4j-graphql/blob/master/movies.schema[movies schmema] and https://github.com/neo4j-graphql/neo4j-graphql/blob/master/movies.graphql[accompanying queries], that uses some of those features.
+
 
 == GraphQL Community Graph Hackathon
 
