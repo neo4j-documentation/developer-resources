@@ -4,15 +4,17 @@
 :toc:
 :toc-placement!:
 :toc-title: Overview
-:toclevels: 1
+:toclevels: 2
 :section: Neo4j Integrations
 :section-link: integration
+
+toc::[]
 
 == About GraphQL
 
 image::https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/GraphQL_Logo.svg/200px-GraphQL_Logo.svg.png[float=right,width=200]
 
-GraphQL is a specification for querying a slice of an application graph, retrieving a tree of data that perfectly matches a front-end view, regardless of where that data was pulled from.
+GraphQL is a specification for querying a slice of an application graph, retrieving a tree of data that perfectly matches a front-end view, regardless of was that data was pulled from.
 It covers tree-based read-queries, mutations for updates and subscriptions for live updates.
 
 === Queries
@@ -116,14 +118,18 @@ This will:
 === Neo4j GraphQL extension
 
 image::https://dl.dropboxusercontent.com/u/14493611/neo4j-graphql.png[width=200,float=right]
+
 We wanted to combine the power of Neo4j and GraphQL by making it super-easy to take an IDL schema OR an existing graph and serve a native GraphQL backend from it.
 
-You can grab the latest release our extension from https://github.com/neo4j-graphql/neo4j-graphql/releases[here] and drop it into any Neo4j 3.1.x server (`plugins` directory).
-After a restart you can either query your graph data using GraphQL *directly* or after posting an IDL file with the schema you like
+With the information from the schema we're able to generate a single query against the backing graph database.
+During development both Neo4j's property graph model as well as the Cypher query language turned out to be a great fit for the GraphQL features we're supporting so far.
+
+You can grab the latest release our extension from https://github.com/neo4j-graphql/neo4j-graphql/releases[here] and drop it into any Neo4j 3.1.x server (in the `plugins` directory).
+After a restart you can either query your graph data using GraphQL *directly* or after posting an IDL file with the schema you like.
 
 We added some neat features that we hope are useful and make your life easier.
 
-We're especially proud of the `@cypher` directive, the auto-generated mutations, and the `graphql.execute` and `graphql.schema` procedures.
+We're especially proud of the `@cypher` directive, the auto-generated mutations (create, update, delete), and the `graphql.execute`, `graphql.idl` and `graphql.schema` procedures.
 
 Here is an example, how the schema definition above could / would be extended:
 
@@ -138,18 +144,35 @@ type Movie {
 
     director: Person @relation(name:"DIRECTED", direction:IN)
 
-    recommendation(first:Int = 3): [Movie] @cypher(statement:"MATCH (this)<-[r1:REVIEWED]-(:User)-[r2:REVIEWED]->(reco:Movie) WHERE 3 <= r1.stars <= r2.stars RETURN reco, sum(r2.stars) as rating ORDER BY rating DESC")
+    recommendation(first:Int = 3): [Movie] 
+      @cypher(statement:"MATCH (this)<-[r1:REVIEWED]-(:User)-[r2:REVIEWED]->(reco:Movie) 
+                         WHERE 3 <= r1.stars <= r2.stars 
+                         RETURN reco, sum(r2.stars) as rating ORDER BY rating DESC")
 }
 
-type Person {
+interface Person {
+    name: ID!
+    born: Int
+}
+
+type Actor extends Person {
     name: ID!
     born: Int
 
     movies: [Movie] @relation(name:"ACTED_IN")
 }
 
+type Director extends Person {
+    name: ID!
+    born: Int
+
+    movies: [Movie] @relation(name:"DIRECTED")
+}
+
 type Mutations {
-    directed(movie:ID! director:ID!) : String @cypher(statement:"MATCH (m:Movie {title: $movie}), (d:Person {name: $director}) MERGE (d)-[:DIRECTED]->(m)")
+    directed(movie:ID! director:ID!) : String 
+      @cypher(statement:"MATCH (m:Movie {title: $movie}), (d:Person {name: $director}) 
+                         MERGE (d)-[:DIRECTED]->(m)")
 }
 schema {
    mutations: Mutations
@@ -165,37 +188,52 @@ In the repository, you can find a https://github.com/neo4j-graphql/neo4j-graphql
 
 == GraphQL Community Graph Hackathon
 
-image::https://image.slidesharecdn.com/discoveringdarkdatajavazone-2015-09-09-150910133613-lva1-app6891/95/graph-search-and-discovery-for-your-dark-data-19-638.jpg?cb=1441892388[width=600]
+image::http://graphql.communitygraph.org/img/graphql.png[width=500]
 
+////
 === The GraphQL Community 
 
 GraphQL was originally developed at Facebook for their mobile applications and has since been widely used, especially in the React community.
 
-GraphQL is defined as a https://facebook.github.io/graphql/[specification^] with lots of detailed resources available.
+GraphQL is defined as a language https://facebook.github.io/graphql/[specification^] with lots of detailed resources available.
 
 // Besides Facebook, Apollo (Meteor), Graph.Cool, Scaphold.io, and Reindex are leading innovation in the GraphQL community.
 
 Recently some larger sites (GitHub, Mattermark, Yelp) have been publishing APIs for developers not just as REST resources but also as GraphQL endpoints.
 
-There are many learning resources, tutorials, example applications, libraries about GraphQL available, and the community is growing at a rapid pace.
+// There are many learning resources, tutorials, example applications, libraries about GraphQL available, and the community is growing at a rapid pace.
+////
 
-=== What is a community graph?
+=== What is a Community Graph?
 
-We found it very helpful and inspiring to bring the people and activities in all the different channels together into one 360° view.
+We found it very helpful and inspiring to bring the people and activities of our community in all the different channels together into one single 360° view.
 No matter if you're active on Twitter, StackOverflow, Meetup, GitHub or Slack, your contributions should be visible.
 
 Everyone in the community should be able to identify new content, recent topics, active people or new events quickly. 
 That's why we created a "community-graph" for GraphQL that brings all of this together.
 
-image::https://github.com/community-graph/graphql-community/raw/master/images/community.graphql.cypher.table.jpg[width=600]
+image::https://github.com/neo4j-graphql/graphql-community/raw/master/images/graphiql.communitygraph.jpg[width=800,link="http://graphql.communitygraph.org/graphiql/",window="_blank"]
 
-=== Data Access
+=== Hackathon
 
-The data is publicly accessible here (http://107.170.69.23:7474 username/pwd: graphql/graphql).
+To learn more about what's important to the GraphQL community, *we'd love to challenge you.*
+ 
+Write an demo / application / dashboard / visualization / timeline / react component, whatever you want against this backend and *TWEET* the link with #graphql #neo4j.
 
-image::https://github.com/community-graph/graphql-community/raw/master/images/community-graphql-cypher-graph.jpg[width=600]
+Please https://goo.gl/forms/8OvygPaQEFg0tulf1[submit your work in this survey^] and tell us.
 
-If you are used to Neo4j you can use it right away by writing some link:/developer/cypher[Cypher^] statements (https://github.com/community-graph/dashboard[some suggestions^]).
+* How did it work for you?
+* What was useful and what not?
+* Which bugs / issues did you encounter?
+* Which suggestions for improvements / ideas do you have?
+* Which features and capabilities of GraphQL you need / like / use / dislike ? 
+
+
+If you fill out the survey above, we'll send you a really cool graph t-shirt.
+
+If you are attending http://graphql-europe.com[*GraphQL-Europe*^] we'd love you to *come by our booth and tell and show us in person*.
+
+*Then you can get your t-shirt right away.*
 
 === GraphQL Support
 
@@ -210,32 +248,20 @@ image::https://github.com/neo4j-graphql/graphql-community/raw/master/images/grap
 
 You can find the https://github.com/neo4j-graphql/graphql-community/blob/master/community-graph.schema[schema for the data] and several GraphQL queries and screenshots of your tools in action https://github.com/neo4j-graphql/graphql-community#screenshots[in this repository^].
 
-=== GraphQL Support
-
-To learn more about what's important to the GraphQL community, *we'd love to challenge you.*
- 
-Write an demo / application / dashboard / visualization / timeline / react component, whatever you want against this backend.
-
-And tell us:
-
-* How did it work for you?
-* What was useful and what not?
-* Which bugs / issues did you encounter?
-* Which suggestions for improvements / ideas do you have?
-* Which features and capabilities of GraphQL you need / like / use / dislike ? 
-
-////
-// TODO: Survey
-
-If you fill out the survey above, we'll send you a really cool graph t-shirt.
-////
-
-If you are attending http://graphql-europe.com[*GraphQL-Europe*^] we'd love you to *come by our booth and tell and show us in person*.
-
-*Then you can get your t-shirt right away.*
-
 == Resources
 
-If you want to provide more feedback, just create an issue in any of our http://github.com/neo4j-graphql[neo4j-graphql repositories^] ,  mailto:devrel@neo4j.com[drop us an email^] or join http://neo4j.com/slack[neo4j-users Slack^] and ask in the #neo4j-graphql channel.
+If you want to provide more feedback, just create an issue in any of our http://github.com/neo4j-graphql[neo4j-graphql repositories^],  mailto:devrel@neo4j.com[drop us an email^] or join http://neo4j.com/slack[neo4j-users Slack^] and ask in the #neo4j-graphql channel.
 
-* https://github.com/chentsulin/awesome-graphql[Awesome GraphQL^]
+=== Raw Data Access
+
+The raw graph data is publicly accessible here via the Neo4j Browser (http://107.170.69.23:7474 username/pwd: graphql/graphql).
+
+image::https://github.com/community-graph/graphql-community/raw/master/images/community-graphql-cypher-graph.jpg[width=600]
+
+image::https://github.com/community-graph/graphql-community/raw/master/images/community.graphql.cypher.table.jpg[width=600]
+
+If you are used to Neo4j you can use it right away by writing some link:/developer/cypher[Cypher^] statements. 
+Here are (https://github.com/community-graph/dashboard[some suggestions^]).
+
+
+// * https://github.com/chentsulin/awesome-graphql[Awesome GraphQL^]
