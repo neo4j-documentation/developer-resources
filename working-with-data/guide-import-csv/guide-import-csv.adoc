@@ -140,9 +140,8 @@ It combines multiple aspects in a single operation:
 
 ===== Memory Config
 
-* Make sure to set the heap size so a sufficient value.
+* Make sure to set the heap size to a sufficient value.
 You do this by setting `dbms.memory.heap.initial_size` and `dbms.memory.heap.max_size` to at least 4G in `neo4j.conf`.
-If using cypher-shell, the memory is set by doing `export JAVA_OPTS="-Xmx4G"` before starting cypher-shell.
 * Ensure that the page cache is sufficient.
 You do this by setting `dbms.memory.pagecache.size` in `neo4j.conf`.
 Ideally, the page cache should be large enough to keep the whole database in memory.
