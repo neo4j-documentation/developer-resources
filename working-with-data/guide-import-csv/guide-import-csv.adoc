@@ -140,17 +140,20 @@ It combines multiple aspects in a single operation:
 
 ===== Memory Config
 
-* Make sure to have enough memory (at least 4G heap in `neo4j-wrapper.conf`) reserved for your Neo4j-Server or Neo4j-Shell (`export JAVA_OPTS="-Xmx4G"`)
-* Configure the memory mapping settings (Neo4j 2.1) according to your expected file sizes +
-  (Neo4j 2.1 `neo4j.properties` keep these ratios: `nodestore=100M, relationshipstore=2G, propertystore=500M, stringstore=500M`)
+* Make sure to set the heap size so a sufficient value.
+You do this by setting `dbms.memory.heap.initial_size` and `dbms.memory.heap.max_size` to at least 4G in `neo4j.conf`.
+If using cypher-shell, the memory is set by doing `export JAVA_OPTS="-Xmx4G"` before starting cypher-shell.
+* Ensure that the page cache is sufficient.
+You do this by setting `dbms.memory.pagecache.size` in `neo4j.conf`.
+Ideally, the page cache should be large enough to keep the whole database in memory.
 
 
-===== File-URLs and Neo4j-Shell
+===== File-URLs
 
-* Make sure to use the right URLs esp. file URLs.+
-  On OSX and Unix use `file:///path/to/data.csv`, on Windows, please use `file:c:/path/to/data.csv`
-* Use the `bin/neo4j-shell` instead of the browser for better error messages and control +
-  by default it connects to a running server, but you can also use `bin/neo4j-shell -path import.db -config conf/neo4j.properties` for direct database directory access (when no server is running with that db).
+* Make sure to use the right URLs.
+In particular for file URLs: On OSX and Unix use `file:///path/to/data.csv`, and on Windows use a URL similar to: `file:c:/path/to/data.csv`.
+* Use `bin/cypher-shell` instead of the browser for better control.
+By default it connects to the database running on localhost but you can point it to a database anywhere over the network.
 
 
 ==== Step by Step Example for LOAD CSV
@@ -184,7 +187,8 @@ You can find all scripts and data on https://github.com/nicolewhite/consumer_com
 
 === Super Fast Batch Importer For Huge Datasets
 
-With Neo4j 2.2, a new, massively parallel and scalable CSV importer was released as part of the product.
+`LOAD CSV` is great for importing small - medium sized data, i.e. up to the 10B records range.
+For large data sets, i.e. in the 100B records range, we have access to a specialized bulk importer.
 
 We want to use it to import similar order data into Neo4j: _customers, orders and contained products_.
 
