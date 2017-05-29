@@ -150,7 +150,8 @@ Ideally, the page cache should be large enough to keep the whole database in mem
 ===== File-URLs
 
 * Make sure to use the right URLs.
-In particular for file URLs: On OSX and Unix use `file:///path/to/data.csv`, and on Windows use a URL similar to: `file:c:/path/to/data.csv`.
+In particular for file URLs: On OSX and Unix use `+file:///path/to/data.csv+`, and on Windows use a URL similar to: `file:c:/path/to/data.csv`.
+The file URLs are relative to the _import_ directory (for location of the _import_ directory refer to the link:{opsmanual}/configuration/file-locations[Neo4j Operations Manual]).
 * Use `bin/cypher-shell` instead of the browser for better control.
 By default it connects to the database running on localhost but you can point it to a database anywhere over the network.
 
@@ -186,7 +187,7 @@ You can find all scripts and data on https://github.com/nicolewhite/consumer_com
 
 === Super Fast Batch Importer For Huge Datasets
 
-`LOAD CSV` is great for importing small - medium sized data, i.e. up to the 10B records range.
+`LOAD CSV` is great for importing small - medium sized data, i.e. up to the 10M records range.
 For large data sets, i.e. in the 100B records range, we have access to a specialized bulk importer.
 
 We want to use it to import similar order data into Neo4j: _customers, orders and contained products_.
