@@ -40,56 +40,53 @@ Other projects around docker are discussed on our link:/developer/integration/do
 
 === Hosting on AWS / EC2
 
-////
-Outdated not updated for 3.0
+Starting from version 3.2.0, link:https://aws.amazon.com/marketplace/pp/B071P26C9D[Neo4j can be installed from the AWS marketplace^].
 
-We provide a https://github.com/neo4j-contrib/ec2neo[EC2 CloudFormation Template] that creates a single server running Neo4j.  This template creates a complete Neo4j installation, including Amazon AWS server, fixed IP address and backup storage.
-It's intended to help application developers get up and running quickly with Neo4j without in-depth experience of Linux servers, AWS, or installing databases like Neo4j.
-
-This is provided on a contrib basis: we welcome Pull Requests.  Please take extra care to make sure that you're running as many Amazon machines as you want, and not more.
-////
-
-Installing Neo4j on any Debian or Ubuntu system can be accomplished by following the instructions on link:http://debian.neo4j.org[our Debian Repository].
-//  We also offer an experimental http://yum.neo4j.org[Yum repository].
+If you're using an earlier version, installing Neo4j on any Debian or Ubuntu system can be accomplished by following the instructions on link:http://debian.neo4j.org[our Debian Repository].
 
 For other Linux distributions, download the link:http://neo4j.com/download/other-releases[Neo4j tarball]; it can be uncompressed and run interactively.
-// what is the new link?
-// Our operations manual discusses several ways to run link:{opsmanual}/deployment/single-instance/linux/#linux-service[Neo4j as system service on Linux].
+Our operations manual discusses several ways to run link:{opsmanual}/installation/linux/[Neo4j as system service on Linux].
 
-[role=side-nav]
-* {opsmanual}[Neo4j Operations Manual]
-* http://debian.neo4j.org[Neo4j Debian Repository]
-* http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html[AWS EC2 Getting Started Guide]
+=== Hosting on Microsoft Azure
 
-// === Neo4j Provisioning Solutions
+Starting from version 3.2.0, link:https://azuremarketplace.microsoft.com/en-us/marketplace/apps/neo4j.neo4j-enterprise-edition?tab=PlansAndPrice[Neo4j can be installed from the Azure marketplace^].
+You can read more in the link:https://neo4j.com/blog/neo4j-microsoft-azure-marketplace-part-1/[release blog post^].
 
-// * https://github.com/michaelklishin/neo4j-server-chef-cookbook[Neo4j Server Chef Cookbook]
-// * https://forge.puppet.com/mlambrichs/neo4j/readme[Neo4j Puppet Module]
-// * https://github.com/maxehmookau/neo4j-ansible[Ansible Playbooks] for booting a server running the Neo4j graph database system
-// * https://github.com/julienroubieu/ansible-neo4j[Ansible role to install Neo4j], with Vagrant support
+=== Orchestration
 
-////
+Orchestration systems are systems for automating the deployment, scaling, and management of containerized applications.
+You can follow the guides below to run Neo4j on some popular orchestration systems.
 
-=== Windows Azure
+==== Mesosphere DC/OS
 
-It gets easier to deploy Neo4j Server on Azure every day, so here you can find some step-by-step instructions and hints on how to achieve that.
+link:https://docs.mesosphere.com/[Mesosphere DC/OS^] is built around the long established link:http://mesos.apache.org/[Apache Mesos^] project.
+Mesos is used by companies such as Twitter, Apple, Netflix, or Airbnb to manage their production clusters.
 
-Neo4j installation on Windows Azure can be provisioned through the VMDepot Image or by provisioning Linux instances and then running any of the provisioning scripts you'd like.
+Neo4j is link:https://github.com/neo4j-contrib/neo4j-dcos[available as a Universe application^] and can be installed via the link:https://mesosphere.github.io/marathon/[Marathon container orchestration platform^].
+
+You can read more in the https://neo4j.com/blog/neo4j-mesosphere-dc-os/[release blog post^] or watch the presentation that Johannes Unterstein gave at the link:/developer/online-meetup/[Neo4j online meetup^].
 
 ++++
-<iframe src="//www.slideshare.net/slideshow/embed_code/32462907" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/neo4j/neo4j-201-windows-azure-vm-release" title="Neo4j 2.0.1 Windows Azure VM Release" target="_blank">Neo4j 2.0.1 Windows Azure VM Release</a> </strong> from <strong><a href="//www.slideshare.net/neo4j" target="_blank">Neo4j - The Open Source Graph Database </a></strong> </div>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/qvJ7V33NfsA" frameborder="0" allowfullscreen></iframe>
 ++++
 
-* http://neo4j.com/blog/neo4j-2-0-1-community-released-on-windows-azure-vm-depot/[Azure VMDepot Image Blog Post]
-* How to deploy Neo4j to Azure with Visual Studio 2012 - http://blog.jongallant.com/2013/03/neo4j-azure-vs2012.html[A step-by-step guide].
-* http://www.opensourceazure.com/blog/2013/05/22/point-click-deployment-of-neo4j-to-windows-azure/[Point-Click Deployment of Neo4J to Windows Azure]
-* http://www.cogno-sys.com/cloud-azure-amazon-open-stack/neo4j-azure-installation-graph-database-tutorials/[Azure AWS Open Stack – Neo4j Setup Tutorials on Ubuntu]
+==== Kubernetes
 
-////
+Kubernetes is an open-source system for automating deployment, scaling, and management of containerized applications that builds on 15 years of experience of running production workloads at Google.
+
+Neo4j core servers can be installed using the StatefulSet abstraction, which was introduced as a beta feature in v1.5.0.
+Read replicas can be installed using the replication controller abstraction.
+
+Mark Needham's https://github.com/mneedham/neo4j-kubernetes[neo4j-kubernetes^] repository has full instructions to get a cluster up and running.
+You can also watch Dippy Aggarwal's talk from GraphConnect San Francisco 2016.
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/GSfam8De7K0" frameborder="0" allowfullscreen></iframe>
+++++
 
 === Neo4j Cloud Hosting Providers
 
-There are a number of Neo4j partners that provide hosting of Neo4j instances in the cloud.
+There are a number of companies that provide hosting of Neo4j instances in the cloud.
 
 [NOTE]
 If you provision databases via their offering, you enter a contract with those partners, not with Neo Technology.
@@ -135,8 +132,5 @@ link:http://www.graphstory.com[Graph Story] provides end-to-end Graph Database h
 === Other PaaS Integrations
 
 * link:https://www.digitalocean.com/community/tutorials/how-to-install-neo4j-on-an-ubuntu-vps[Digital Ocean]
-// * http://docs.pivotal.io/p1-services/Neo4j.html[Pivotal CloudFoundry]
-// * http://blog.jelastic.com/2013/03/21/neo4j-in-the-cloud/[Jelastic]
 * link:https://github.com/jelastic-public-cartridges/openshift-origin-cartridge-neo4j-v21[Jelastic OpenShift Cartridge]
-// * http://tomasmuller.com.br/2012/03/29/10-steps-to-run-neo4j-at-redhat-openshift-cloud/[OpenShift in 10 Steps]
-// * https://github.com/hannelita/neo4j-openshift[Neo4j-Openshift]
+
