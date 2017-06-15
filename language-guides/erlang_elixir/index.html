@@ -213,7 +213,7 @@ var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
 <div class="marquee blue">
     <div class="row text-center">
         <div class="medium-10 small-centered columns">
-            <h1 class="entry-title">What is a Graph Database?</h1>
+            <h1 class="entry-title">Using Neo4j from Erlang and Elixir</h1>
         </div>
     </div>
 </div>
@@ -226,7 +226,7 @@ var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
                     <ul class="breadcrumbs">
                         <li><a href="/developer">Developer Guides</a></li>
                         
-                        <li class="current"><a href="#">What is a Graph Database?</a></li>
+                        <li class="current"><a href="#">Using Neo4j from Erlang and Elixir</a></li>
                     </ul>
                 </div>
             </div>
@@ -579,220 +579,260 @@ ul.none li {
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-This article is an introduction to graph databases in general and Neo4j in particular.
+If you are an Erlang, or today an Elixir developer, this guide provides an overview of options for connecting to Neo4j.
+While this guide is not comprehensive it will introduce the different drivers and link to the relevant resources.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should have a basic understanding of what a database is.
+You should be familiar with <a href="/developer/get-started/graph-database">graph database concepts</a> and the property graph model.
+You should have <a href="/download">installed Neo4j</a> and made yourself familiar with our <a href="/developer/cypher">Cypher Query language</a>.
 </blockquote>
 </div>
 
 
-<div class="label">Beginner</div>
+<div class="label">Intermediate</div>
 <hr/>
 
 <div class="toc">
 <h3 class="title">Overview</h3>
 
 <ul class="sectlevel2">
-<li><a href="#property-graph">The Property Graph Model</a></li>
-<li><a href="#_what_is_neo4j">What is Neo4j?</a></li>
-<li><a href="#_neo4j_editions">Neo4j Editions</a></li>
-<li><a href="#_neo4j_server">Neo4j Server</a></li>
+<li><a href="#_neo4j_for_erlang_elixir_developers">Neo4j for Erlang/Elixir Developers</a></li>
+<li><a href="#_the_example_project">The Example Project</a></li>
+<li><a href="#_neo4j_community_drivers">Neo4j Community Drivers</a></li>
+<li><a href="#_elixir_bolt_sips_driver">Elixir Bolt.Sips Driver</a></li>
+<li><a href="#_neo4j_sips">Neo4j.Sips</a></li>
+<li><a href="#_erlang_client_library_for_neo4j">Erlang client library for Neo4J</a></li>
 </ul>
 
 </div>
 <hr>
-
-
-<div class="paragraph">
-<p>We live in a connected world.
-There are no isolated pieces of information, but rich, connected domains all around us.
-Only a database that embraces relationships as a core aspect of its data model is able to store, process, and query connections efficiently.
-While other databases compute relationships expensively at query time, a graph database stores connections as first class citizens, readily available for any "join-like" navigation operation.
-Accessing those already persistent connections is an efficient, constant-time operation and allows you to quickly traverse millions of connections per second per core.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Independent of the total size of your dataset, graph databases excel at managing highly connected data and complex queries.
-Armed only with a pattern and a set of starting points, graph databases explore the larger neighborhood around the initial starting points&#8201;&#8212;&#8201;collecting and aggregating information from millions of nodes and relationships&#8201;&#8212;&#8201;leaving the billions outside the search perimeter untouched.</p>
-</div>
-
-<iframe width="640" height="360" src="https://www.youtube.com/embed/-dCeFEqDkUI" frameborder="0" allowfullscreen></iframe>
 </div>
 </div>
-<div  id="property-graph" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>The Property Graph Model</h3>
-
-
-<div class="paragraph">
-<p>If you’ve ever worked with an object model or an entity relationship diagram, the labeled property graph model will seem familiar.
-The property graph contains connected entities (the <em>nodes</em>) which can hold any number of attributes (key-value-pairs).
-Nodes can be tagged with labels representing their different roles in your domain.
-In addition to contextualizing node and relationship properties, labels may also serve to attach metadata&#8212;&#8203;index or constraint information&#8212;&#8203;to certain nodes.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p><em>Relationships</em> provide directed, named semantically relevant connections between two node-entities.
-A relationship always has a direction, a type, a <em>start node</em>, and an <em>end node</em>.
-Like nodes, relationships can have any properties.
-In most cases, relationships have quantitative properties, such as weights, costs, distances, ratings, time intervals, or strengths.
-As relationships are stored efficiently, two nodes can share any number or type of relationships without sacrificing performance.
-Note that although they are directed, relationships can always be navigated regardless of direction.</p>
-</div>
-
-<div class="imageblock">
+<div  id="_neo4j_for_erlang_elixir_developers" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j for Erlang/Elixir Developers</h3>
+<div class="imageblock" style="float: right;">
 <p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/graphdb-gve.png" alt="graphdb gve">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/erlang.png" alt="erlang" width="150">
+</p>
+</div>
+<div class="imageblock" style="float: left;">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/elixir.png" alt="elixir" width="150">
 </p>
 </div>
 
 
 <div class="paragraph">
-<p><em>The building blocks of the Property Graph</em></p>
+<p>Members of the Erlang and Elixir community have invested a lot of time and love to develop these drivers, so please if you use them, provide feedback to the authors.</p>
+</div>
+
+</div>
+<div  id="_the_example_project" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>The Example Project</h3>
+
+
+<div class="paragraph">
+<p>The Neo4j example project is a small, one page webapp for the movies database built into the Neo4j tutorial.
+The front-end page is the same for all drivers: movie search, movie details, and a graph visualization of actors and movies.
+Each backend implementation shows you how to connect to Neo4j from each of the different languages and drivers.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>There is one core consistent rule in a graph database: "No broken links".
-Since a relationship always has a start and end node, you can’t delete a node without also deleting its associated relationships.
-You can also always assume that an existing relationship will never point to a non-existing endpoint.</p>
+<p>You can learn more about our small, consistent example project across many different language drivers <a href="../example-project">here</a>.
+You will find the implementations for all drivers as <a href="https://github.com/neo4j-examples?query=movies">individual GitHub repositories</a>, which you can clone and deploy directly.</p>
 </div>
 
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/property_graph_model.png" alt="property graph model">
-</p>
 </div>
-<div class="ulist side-nav">
-<ul>
-<li>
-<a href="http://watch.neo4j.org/video/103466968">Webinar: Intro to Neo4j by Nicole White</a>
-</li>
-<li>
-<a href="/developer/guide-intro-to-graph-modeling">Intro to Graph Modeling</a>
-</li>
-<li>
-<a href="/online-course">Training: Online Intro Course</a>
-</li>
-<li>
-<a href="/learning-neo4j-book/">Book: Learning Neo4j by Rik Van Bruggen</a>
-</li>
-</ul>
+<div  id="_neo4j_community_drivers" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j Community Drivers</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The drivers below have been thankfully contributed by the Neo4j community.
+Many of these are fully featured and well maintained.
+But we don&#8217;t take any responsibility for their fitness for use with the most recent versions of Neo4j.
+</td>
+</tr>
+</table>
 </div>
 </div>
-<div  id="_what_is_neo4j" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>What is Neo4j?</h3>
+<div  id="_elixir_bolt_sips_driver" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Elixir Bolt.Sips Driver</h3>
 
 
 <div class="paragraph">
-<p>Sponsored by Neo Technology, Neo4j is an open-source NoSQL graph database implemented in Java and Scala.
-With development starting in 2003, it has been publicly available since 2007.
-The source code and issue tracking are available on <a href="https://github.com/neo4j/neo4j">GitHub</a>, with support readily available on Stack Overflow and the Neo4j Google group.
-Neo4j is used today by hundreds of thousands of companies and organizations in almost all industries.
-Use cases include matchmaking, network management, software analytics, scientific research, routing, organizational and project management, recommendations, social networks, and more.</p>
+<p>Neo4j driver for Elixir wrapped around the Bolt protocol.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Neo4j implements the Property Graph Model efficiently down to the storage level.
-As opposed to graph processing or in-memory libraries, Neo4j provides full database characteristics including ACID transaction compliance, cluster support, and runtime failover, making it suitable to use graph data in <strong>production scenarios</strong>.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Some particular features make Neo4j very popular among users, developers, and DBAs:</p>
+<p>Features:</p>
 </div>
 
 <div class="ulist">
 <ul>
 <li>
-Materializing of relationships at creation time, resulting in no penalties for complex runtime queries
+It is using: Bolt. Neo4j&#8217;s newest network protocol, designed for high-performance
 </li>
 <li>
-Constant time traversals for relationships in the graph both in depth and in breadth due to efficient representation of nodes and relationships
+Supports transactions, simple and complex Cypher queries with or w/o parameters
 </li>
 <li>
-All relationships in Neo4j are equally important and fast, making it possible to materialize and use new relationships later on to "shortcut" and speed up the domain data when new needs arise
+Connection pool implementation using: "A hunky Erlang worker pool factory", aka: <a href="http://github.com/devinus/poolboy">Poolboy</a> :)
 </li>
 <li>
-Compact storage and memory caching for graphs, resulting in efficient scale-up and billions of nodes in one database on moderate hardware
-</li>
-<li>
-Written on top of the JVM
+Supports Neo4j 3.0.x
 </li>
 </ul>
 </div>
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/neo4j-nosql.png" alt="neo4j nosql">
-</p>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-user"></i></span> Author</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://twitter.com/florin">Florin Patrascu</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-play-circle"></i></span> Example Project</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/neo4j-examples/bolt_movies_elixir_phoenix" class="bare">https://github.com/neo4j-examples/bolt_movies_elixir_phoenix</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-gift"></i></span> Package</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://hex.pm/packages/bolt_sips" class="bare">https://hex.pm/packages/bolt_sips</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-github"></i></span> Source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/florinpatrascu/bolt_sips" class="bare">https://github.com/florinpatrascu/bolt_sips</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-book"></i></span> Docs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://hexdocs.pm/bolt_sips/" class="bare">http://hexdocs.pm/bolt_sips/</a></p></td>
+</tr>
+</tbody>
+</table>
 </div>
-</div>
-<div  id="_neo4j_editions" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Neo4j Editions</h3>
+<div  id="_neo4j_sips" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j.Sips</h3>
 
 
 <div class="paragraph">
-<p>Neo4j’s free and open-source <em>Community</em> edition is a high-performance, fully ACID-transactional database. The <em>Community</em> edition includes (but is not limited to) all the functionality described previously in this section.
-Neo4j&#8217;s <em>Enterprise</em> editions provide all of the functionality of the Community edition in addition to <strong>scalable clustering, fail-over, high-availability, live backups, and comprehensive monitoring</strong>.
-<em>Learn more about the <a href="/editions">Community and Enterprise editions</a>.</em></p>
+<p>A simple Elixir wrapper around the Neo4j graph database REST API.
+It is aiming to help Elixir developers to play with Neo4j, and to eventually become the main support for a future <a href="https://github.com/elixir-lang/ecto">Ecto</a> adapter.</p>
 </div>
 
-<div class="ulist side-nav">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-user"></i></span> Author</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://twitter.com/florin">Florin Patrascu</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-play-circle"></i></span> Example Project</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/neo4j-examples/movies-elixir-phoenix" class="bare">https://github.com/neo4j-examples/movies-elixir-phoenix</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-gift"></i></span> Package</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://hex.pm/packages/neo4j_sips" class="bare">https://hex.pm/packages/neo4j_sips</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-github"></i></span> Source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/florinpatrascu/neo4j_sips" class="bare">https://github.com/florinpatrascu/neo4j_sips</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-book"></i></span> Docs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/florinpatrascu/neo4j_sips/blob/master/README.md" class="bare">https://github.com/florinpatrascu/neo4j_sips/blob/master/README.md</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div  id="_erlang_client_library_for_neo4j" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Erlang client library for Neo4J</h3>
+
+
+<div class="paragraph">
+<p>This is a lightweight wrapper for Neo4j REST API.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Features:</p>
+</div>
+
+<div class="ulist">
 <ul>
 <li>
-<a href="/developer/get-started/guide-neo4j-browser">Neo4j Browser Intro</a>
-</li>
+Implements all of Neo4J 2.0.0&#8217;s REST API as referenced here with one caveat:
+<div class="ulist">
+<ul>
 <li>
-<a href="/developer/cypher/">Cypher Query Language</a>
-</li>
-<li>
-<a href="/developer/language-guides">Neo4j Language Drivers</a>
-</li>
-<li>
-<a href="/editions">Community and Enterprise editions</a>
+Does not implement streaming API
 </li>
 </ul>
 </div>
+</li>
+<li>
+Uses jiffy for JSON
+</li>
+<li>
+Uses hackney for http queries
+<div class="ulist">
+<ul>
+<li>
+Does not support HTTPS (yet?)
+</li>
+</ul>
 </div>
-<div  id="_neo4j_server" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Neo4j Server</h3>
-
-
-<div class="paragraph">
-<p>You can download Neo4j from <code><a href="http://neo4j.com/download">http://neo4j.com/download</a></code> and install it as a server on all operating systems.
-By default, the Neo4j Server is bundled with an interactive, web-based database interface bound to <code><a href="http://localhost:7474" class="bare">http://localhost:7474</a></code>.
-The simplest way of getting started is to use Neo4j&#8217;s database browser to execute your graph queries (written in <a href="/developer/cypher">Cypher</a>) in a workbench-like fashion.
-Results are presented as either intuitive graph visualizations or as easy-to-read, exportable tables.</p>
+</li>
+</ul>
 </div>
-
-
-
-<div class="paragraph">
-<p>A remote Neo4j server can be accessed via its Cypher HTTP API, either directly or through one of the many available <a href="/developer/language-guides">language drivers</a>.
-For high performance special cases, you can write Neo4j server extensions in any JVM language to access Neo4j&#8217;s internal database engine directly without network overhead.</p>
-</div>
-
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-user"></i></span> Author</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://twitter.com/dmitriid">Dmitrii 'Mamut' Dimandt</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-github"></i></span> Source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/dmitriid/neo4j-erlang" class="bare">https://github.com/dmitriid/neo4j-erlang</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-book"></i></span> Docs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/dmitriid/neo4j-erlang/blob/master/README.md" class="bare">https://github.com/dmitriid/neo4j-erlang/blob/master/README.md</a></p></td>
+</tr>
+</tbody>
+</table>
 </div>
                     </div>
                     <div class="large-3 large-pull-9 columns">
                            <ul style="padding-top: 0;" class="side-nav">
          <dl class="accordion">
-            <dd class="accordion-navigation active">
+            <dd class="accordion-navigation inactive">
                <a href="/developer/get-started/">
                   <h5>Get Started</h5>
                </a>
-               <div class="content active" id="panel1">
+               <div class="content inactive" id="panel1">
                   <ul>
                      <li><a href="/developer/get-started/graph-database/">What is a GraphDB?</a></li>
                      <li><a href="/developer/get-started/graph-db-vs-rdbms/">GraphDB vs RDBMS</a></li>
@@ -850,11 +890,11 @@ For high performance special cases, you can write Neo4j server extensions in any
                </dd>
             </dl>
             <dl class="accordion">
-               <dd class="accordion-navigation inactive">
+               <dd class="accordion-navigation active">
                   <a href="/developer/language-guides/">
                      <h5>Drivers &amp; Language Guides</h5>
                   </a>
-                  <div class="content inactive" id="panel5">
+                  <div class="content active" id="panel5">
                      <ul>
                         <li><a href="/developer/language-guides/java/">Java</a></li>
                         <li><a href="/developer/language-guides/spring-data-neo4j/">Spring Framework</a></li>

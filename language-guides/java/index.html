@@ -13,7 +13,7 @@
 /* <![CDATA[ */
 var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
 /* ]]> */
-</script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/neo4j-download/js/download.js?ver=4.5'></script> <script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/cookie-law-info/js/cookielawinfo.js?ver=1.5.3'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/jquery-updater/js/jquery-migrate-1.3.0.min.js?ver=1.3.0'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/vendor/modernizr.min.js?ver=4.5'></script> <script type='text/javascript' src='/developer/assets/js/foundation.js'></script> <script type='text/javascript' src='/developer/assets/js/codemirror.min.js'></script> <script type='text/javascript' src='/developer/assets/js/neo_codemirror.js'></script> <script type='text/javascript' src='//use.typekit.net/rdt4xku.js?ver=4.5'></script> <script type='text/javascript' src='/developer/assets/js/misc.js'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/bundle.js?ver=2016.03.11'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/neo_calculator_v3.js?ver=4.5'></script> <link rel='https://api.w.org/' href="http://neo4j.com/wp-json/"/> <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://neo4j.com/xmlrpc.php?rsd"/> <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://neo4j.com/wp-includes/wlwmanifest.xml"/> <meta name="generator" content="WordPress 4.5"/> <link rel='shortlink' href="http://neo4j.com/?p=38241"/> <link rel="alternate" type="application/json+oembed" href="http://neo4j.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fneo4j.com%2Fdeveloper%2Fget-started%2F"/> <link rel="alternate" type="text/xml+oembed" href="http://neo4j.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fneo4j.com%2Fdeveloper%2Fget-started%2F&#038;format=xml"/> </head>
+</script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/neo4j-download/js/download.js?ver=4.5'></script> <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/cookie-law-info/js/cookielawinfo.js?ver=1.5.3'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/jquery-updater/js/jquery-migrate-1.3.0.min.js?ver=1.3.0'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/vendor/modernizr.min.js?ver=4.5'></script> <script type='text/javascript' src='/developer/assets/js/foundation.js'></script> <script type='text/javascript' src='/developer/assets/js/codemirror.min.js'></script> <script type='text/javascript' src='/developer/assets/js/neo_codemirror.js'></script> <script type='text/javascript' src='https://use.typekit.net/rdt4xku.js?ver=4.5'></script> <script type='text/javascript' src='/developer/assets/js/misc.js'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/bundle.js?ver=2016.03.11'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/neo_calculator_v3.js?ver=4.5'></script> <link rel='https://api.w.org/' href="http://neo4j.com/wp-json/"/> <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://neo4j.com/xmlrpc.php?rsd"/> <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://neo4j.com/wp-includes/wlwmanifest.xml"/> <meta name="generator" content="WordPress 4.5"/> <link rel='shortlink' href="http://neo4j.com/?p=38241"/> <link rel="alternate" type="application/json+oembed" href="http://neo4j.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fneo4j.com%2Fdeveloper%2Fget-started%2F"/> <link rel="alternate" type="text/xml+oembed" href="http://neo4j.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fneo4j.com%2Fdeveloper%2Fget-started%2F&#038;format=xml"/> </head>
 
 <body>
 <div class="top-bar-container contain-to-grid">
@@ -553,10 +553,24 @@ ul.none li {
 .admonitionblock td.icon .icon-caution:before{content:"\f06d";color:#bf3400}
 .admonitionblock td.icon .icon-important:before{content:"\f06a";color:#bf0000}
 
-
+.c2a-icons {
+/*	text-align:center;*/
+}
+.c2a-icons div {
+	display:inline-block;
+	font-size:0.6em;
+	width:48%;
+}
+.c2a-icons div i {
+	font-size:3em;
+	padding-left:1em;
+}
+.button.apply {
+	font-size:1.5em;
+}
 </style>
-
-
+<link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/master/devicon.min.css">
+ <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
             <div>
                 <div class="row" style="padding-left: 0; padding-right: 0;">
                     <div class="large-9 large-push-3 columns guide-section-content">
@@ -584,7 +598,7 @@ When developing with Neo4j, please use JDK 7 or 8 and your favorite IDE.
 
 <div class="imageblock" style="float: right;">
 <p class="content">
-<img src="//s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/java.jpg" alt="java" width="200">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/java.jpg" alt="java" width="200">
 </p>
 </div>
 <div class="toc">
@@ -689,7 +703,7 @@ It aims to be minimal, while being idiomatic to Java.</p>
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
 <pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="xml"><code>&lt;groupId&gt;org.neo4j.driver&lt;/groupId&gt;
 &lt;artifactId&gt;neo4j-java-driver&lt;/artifactId&gt;
-&lt;version&gt;1.1.0&lt;/version&gt;</code></pre>
+&lt;version&gt;1.2.1&lt;/version&gt;</code></pre>
 </div>
 </div>
 
@@ -700,13 +714,13 @@ It aims to be minimal, while being idiomatic to Java.</p>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="groovy"><code>compile 'org.neo4j.driver:neo4j-java-driver:1.1.0'</code></pre>
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="groovy"><code>compile 'org.neo4j.driver:neo4j-java-driver:1.2.1'</code></pre>
 </div>
 </div>
 
 
 <div class="paragraph">
-<p>For other build systems, see <a href="http://search.maven.org/#artifactdetails%7Corg.neo4j.driver%7Cneo4j-java-driver%7C1.1.0%7Cjar">information available at Maven Central</a>.</p>
+<p>For other build systems, see <a href="http://search.maven.org/#artifactdetails%7Corg.neo4j.driver%7Cneo4j-java-driver%7C1.2.1%7Cjar">information available at Maven Central</a>.</p>
 </div>
 
 <div class="listingblock">
@@ -748,11 +762,11 @@ driver.close();</code></pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">neo4j-java-driver</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1.1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.2.1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The Neo4j Team</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://search.maven.org/#artifactdetails%7Corg.neo4j.driver%7Cneo4j-java-driver%7C1.1.0%7Cjar"><span class="icon"><i class="fa fa-gift"></i></span> Package</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://search.maven.org/#artifactdetails%7Corg.neo4j.driver%7Cneo4j-java-driver%7C1.2.1%7Cjar"><span class="icon"><i class="fa fa-gift"></i></span> Package</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/neo4j-examples/movies-java-bolt"><span class="icon"><i class="fa fa-play-circle"></i></span> Example</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://stackoverflow.com/questions/tagged/neo4j+java"><span class="icon"><i class="fa fa-stack-overflow "></i></span> StackOverflow</a></p></td>
 </tr>
@@ -768,7 +782,7 @@ driver.close();</code></pre>
 <h3>Spring Data Neo4j</h3>
 <div class="imageblock" style="float: right;">
 <p class="content">
-<img src="//s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/sdn.png" alt="sdn">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/sdn.png" alt="sdn">
 </p>
 </div>
 
@@ -864,11 +878,11 @@ It uses Cypher statements to handle those operations in Neo4j.</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-book"></i></span> Docs</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://neo4j.com/docs/ogm-manual/current/" class="bare">https://neo4j.com/docs/ogm-manual/current/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://neo4j.com/docs/ogm-manual/current/introduction/" class="bare">https://neo4j.com/docs/ogm-manual/current/introduction/</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-book"></i></span> Article</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://neo4j.com/blog/neo4j-java-object-graph-mapper-released/" class="bare">http://neo4j.com/blog/neo4j-java-object-graph-mapper-released/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://neo4j.com/blog/neo4j-java-object-graph-mapper-released/" class="bare">https://neo4j.com/blog/neo4j-java-object-graph-mapper-released/</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-play-circle"></i></span> Example</p></td>
@@ -1186,7 +1200,7 @@ While simple, the model allows you to easily navigate and manipulate graphs.</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="icon"><i class="fa fa-book"></i></span> Article</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://neo4j.com/blog/jcypher-focus-on-your-domain-model-not-how-to-map-it-to-the-database/" class="bare">http://neo4j.com/blog/jcypher-focus-on-your-domain-model-not-how-to-map-it-to-the-database/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://neo4j.com/blog/jcypher-focus-on-your-domain-model-not-how-to-map-it-to-the-database/" class="bare">https://neo4j.com/blog/jcypher-focus-on-your-domain-model-not-how-to-map-it-to-the-database/</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -1195,7 +1209,7 @@ While simple, the model allows you to easily navigate and manipulate graphs.</p>
 <h3>Groovy &amp; Grails: Neo4j Grails Plugin</h3>
 <div class="imageblock" style="float: right;">
 <p class="content">
-<img src="//s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/grails.png" alt="grails" width="200">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/grails.png" alt="grails" width="200">
 </p>
 </div>
 
@@ -1252,7 +1266,7 @@ Access the Neo4j graph database in all flavours (Embedded, REST and HA)
 <h3>Clojure: Neocons</h3>
 <div class="imageblock" style="float: right;">
 <p class="content">
-<img src="//s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/clojure.png" alt="clojure">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/clojure.png" alt="clojure">
 </p>
 </div>
 
@@ -1290,7 +1304,7 @@ Access the Neo4j graph database in all flavours (Embedded, REST and HA)
 <h3>Scala: AnormCypher</h3>
 <div class="imageblock" style="float: right;">
 <p class="content">
-<img src="//s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/scala.png" alt="scala" width="200">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/scala.png" alt="scala" width="200">
 </p>
 </div>
 
@@ -1453,6 +1467,7 @@ Access the Neo4j graph database in all flavours (Embedded, REST and HA)
                   <div class="content " id="panel6">
                      <ul>
                         <li><a href="/developer/integration/ecosystem/">Tools &amp; Libs for Neo4j</a></li>
+                        <li><a href="/developer/integration/graphql/">GraphQL</a></li>
                         <li><a href="/developer/integration/docker/">Docker</a></li>
                         <li><a href="/developer/integration/apache-spark/">Apache Spark</a></li>
                         <li><a href="/developer/integration/elastic-search/">Elastic-Search</a></li>
@@ -1469,11 +1484,25 @@ Access the Neo4j graph database in all flavours (Embedded, REST and HA)
                   </a>
                   <div class="content inactive" id="panel7">
                      <ul>
-                        <li><a href="/developer/in-production/guide-cloud-deployment/">Cloud Deployment</a></li>
-                        <!--li><a href="/developer/in-production/guide-sizing-and-hardware-calculator/">Sizing + Hardware Calculator</a></li-->
+                        <li><a href="/developer/guide-cloud-deployment/">Cloud Deployment</a></li>
                         <li><a href="/developer/in-production/guide-performance-tuning/">Performance Tuning</a></li>
                         <li><a href="/developer/in-production/guide-clustering-neo4j/">Clustering Neo4j</a></li>
 	                    <li><a href="/graphacademy/online-course-prod/">In Production Course</a></li>
+                     </ul>
+                  </div>
+               </dd>
+            </dl>
+            <dl class="accordion">
+               <dd class="accordion-navigation inactive">
+                  <a href="/developer/guide-cloud-deployment/">
+                     <h5>Neo4j in the Cloud</h5>
+                  </a>
+                  <div class="content inactive" id="panel9">
+                     <ul>
+                        <li><a href="/developer/guide-cloud-deployment/neo4j-cloud-aws-ec2-ami/">Deploying to EC2</a></li>
+                        <li><a href="https://neo4j.com/blog/deploy-neo4j-microsoft-azure-part-2">Deploying to Azure</a></li>
+                        <li><a href="/developer/guide-cloud-deployment/guide-orchestration">Orchestration Tools</a></li>
+                        <li><a href="/developer/guide-cloud-deployment/neo4j-cloud-hosting-providers">Cloud Hosting Providers</a></li>
                      </ul>
                   </div>
                </dd>
@@ -1515,12 +1544,14 @@ Access the Neo4j graph database in all flavours (Embedded, REST and HA)
          </dl>
          </ul>
          <div class="accordion-navigation">
-            <div style="text-align:center">
-               <div><a href="https://github.com/neo4j/neo4j" target="_blank"><img style="width:33%" src="https://neo4j.com/wp-content/themes/neo4jweb/assets/images/github.png"/><br/>Star us on GitHub</a></div>
-               <div><a href="http://twitter.com/neo4j" target="_blank"> <img style="width:33%" src="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/twitter.png"/><br/>Follow us on Twitter</a></div>
-               <div><a href="http://neo4j.com/slack" target="_blank"><img style="width:33%" src="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/slack_icon.png"/><br/>Chat on Slack</a></div>
-               <div><a href="http://stackoverflow.com/questions/tagged/neo4j"  target="_blank"><img style="width:33%" src="https://neo4j.com/wp-content/themes/neo4jweb/assets/images/stackoverflow.png"/><br/>Ask on StackOverflow</a></div>
-               <div><a href="https://groups.google.com/forum/#!forum/neo4j"><img style="width:33%" src="https://neo4j.com/wp-content/themes/neo4jweb/assets/images/googlegroups.png"/><br/>Discuss in our Google Group </a></div>
+            <div class="c2a-icons">
+               <div><a href="https://github.com/neo4j/neo4j" target="_blank"><i class="fa fa-github" aria-hidden="true"></i><br/>Star us on GitHub</a></div>
+               <div><a href="http://twitter.com/neo4j" target="_blank"> <i class="fa fa-twitter" aria-hidden="true"></i><br/>Follow us on Twitter</a></div>
+               <div><a href="http://neo4j.com/developer/slack" target="_blank"><i class="fa fa-slack" aria-hidden="true"></i><br/>Chat on Slack</a></div>
+               <div><a href="http://stackoverflow.com/questions/tagged/neo4j"  target="_blank"><i class="fa fa-stack-overflow" aria-hidden="true"></i><br/>Ask on StackOverflow</a></div>
+               <div><a href="http://youtube.com/c/neo4j" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i><br/>Watch on YouTube</a></div>
+               <div><a href="https://meetup.com/Neo4j-Online-Meetup/"  target="_blank"><i class="fa fa-meetup" aria-hidden="true"></i><br/>Join our Live Meetup</a></div>
+               <div><a href="https://groups.google.com/forum/#!forum/neo4j"><i class="fa fa-users" aria-hidden="true"></i><br/>Discuss in our Group</a></div>
             </div>
          </div>
 
