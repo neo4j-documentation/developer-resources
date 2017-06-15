@@ -213,7 +213,7 @@ var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
 <div class="marquee blue">
     <div class="row text-center">
         <div class="medium-10 small-centered columns">
-            <h1 class="entry-title">What is a Graph Database?</h1>
+            <h1 class="entry-title">Hosting Neo4j in the Cloud</h1>
         </div>
     </div>
 </div>
@@ -226,7 +226,7 @@ var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
                     <ul class="breadcrumbs">
                         <li><a href="/developer">Developer Guides</a></li>
                         
-                        <li class="current"><a href="#">What is a Graph Database?</a></li>
+                        <li class="current"><a href="#">Hosting Neo4j in the Cloud</a></li>
                     </ul>
                 </div>
             </div>
@@ -574,225 +574,141 @@ ul.none li {
             <div>
                 <div class="row" style="padding-left: 0; padding-right: 0;">
                     <div class="large-9 large-push-3 columns guide-section-content">
-                        <div id="preamble columns medium-12">
-<div class="sectionbody">
-<div class="quoteblock abstract">
-<div class="title">Goals</div>
-<blockquote style="padding-left: 0;">
-This article is an introduction to graph databases in general and Neo4j in particular.
-</blockquote>
-</div>
-<div class="quoteblock abstract">
-<div class="title">Prerequisites</div>
-<blockquote style="padding-left: 0;">
-You should have a basic understanding of what a database is.
-</blockquote>
-</div>
-
-
-<div class="label">Beginner</div>
-<hr/>
-
-<div class="toc">
-<h3 class="title">Overview</h3>
-
-<ul class="sectlevel2">
-<li><a href="#property-graph">The Property Graph Model</a></li>
-<li><a href="#_what_is_neo4j">What is Neo4j?</a></li>
-<li><a href="#_neo4j_editions">Neo4j Editions</a></li>
-<li><a href="#_neo4j_server">Neo4j Server</a></li>
-</ul>
-
-</div>
-<hr>
+                        <h1 id="__span_class_image_img_src_http_dev_assets_neo4j_com_s3_amazonaws_com_wp_content_uploads_icon_guide_ops_png_alt_icon_guide_ops_span_hosting_neo4j_in_the_cloud" class="sect0"><span class="image"><img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/icon-guide-ops.png" alt="icon guide ops"></span> Hosting Neo4j in the Cloud</h1>
+<!--div class="title"><span class="image"><img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/icon-guide-ops.png" alt="icon guide ops"></span> Hosting Neo4j in the Cloud</div-->
 
 
 <div class="paragraph">
-<p>We live in a connected world.
-There are no isolated pieces of information, but rich, connected domains all around us.
-Only a database that embraces relationships as a core aspect of its data model is able to store, process, and query connections efficiently.
-While other databases compute relationships expensively at query time, a graph database stores connections as first class citizens, readily available for any "join-like" navigation operation.
-Accessing those already persistent connections is an efficient, constant-time operation and allows you to quickly traverse millions of connections per second per core.</p>
+<p>Are you preparing to deploy Neo4j to the cloud?
+This section features guides and tutorials to help you understand the available options.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Independent of the total size of your dataset, graph databases excel at managing highly connected data and complex queries.
-Armed only with a pattern and a set of starting points, graph databases explore the larger neighborhood around the initial starting points&#8201;&#8212;&#8201;collecting and aggregating information from millions of nodes and relationships&#8201;&#8212;&#8201;leaving the billions outside the search perimeter untouched.</p>
-</div>
-
-<iframe width="640" height="360" src="https://www.youtube.com/embed/-dCeFEqDkUI" frameborder="0" allowfullscreen></iframe>
-</div>
-</div>
-<div  id="property-graph" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>The Property Graph Model</h3>
-
-
-<div class="paragraph">
-<p>If you’ve ever worked with an object model or an entity relationship diagram, the labeled property graph model will seem familiar.
-The property graph contains connected entities (the <em>nodes</em>) which can hold any number of attributes (key-value-pairs).
-Nodes can be tagged with labels representing their different roles in your domain.
-In addition to contextualizing node and relationship properties, labels may also serve to attach metadata&#8212;&#8203;index or constraint information&#8212;&#8203;to certain nodes.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p><em>Relationships</em> provide directed, named semantically relevant connections between two node-entities.
-A relationship always has a direction, a type, a <em>start node</em>, and an <em>end node</em>.
-Like nodes, relationships can have any properties.
-In most cases, relationships have quantitative properties, such as weights, costs, distances, ratings, time intervals, or strengths.
-As relationships are stored efficiently, two nodes can share any number or type of relationships without sacrificing performance.
-Note that although they are directed, relationships can always be navigated regardless of direction.</p>
-</div>
-
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/graphdb-gve.png" alt="graphdb gve">
-</p>
-</div>
-
-
-<div class="paragraph">
-<p><em>The building blocks of the Property Graph</em></p>
-</div>
-
-
-
-<div class="paragraph">
-<p>There is one core consistent rule in a graph database: "No broken links".
-Since a relationship always has a start and end node, you can’t delete a node without also deleting its associated relationships.
-You can also always assume that an existing relationship will never point to a non-existing endpoint.</p>
-</div>
-
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/property_graph_model.png" alt="property graph model">
-</p>
-</div>
-<div class="ulist side-nav">
-<ul>
-<li>
-<a href="http://watch.neo4j.org/video/103466968">Webinar: Intro to Neo4j by Nicole White</a>
-</li>
-<li>
-<a href="/developer/guide-intro-to-graph-modeling">Intro to Graph Modeling</a>
-</li>
-<li>
-<a href="/online-course">Training: Online Intro Course</a>
-</li>
-<li>
-<a href="/learning-neo4j-book/">Book: Learning Neo4j by Rik Van Bruggen</a>
-</li>
-</ul>
-</div>
-</div>
-<div  id="_what_is_neo4j" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>What is Neo4j?</h3>
-
-
-<div class="paragraph">
-<p>Sponsored by Neo Technology, Neo4j is an open-source NoSQL graph database implemented in Java and Scala.
-With development starting in 2003, it has been publicly available since 2007.
-The source code and issue tracking are available on <a href="https://github.com/neo4j/neo4j">GitHub</a>, with support readily available on Stack Overflow and the Neo4j Google group.
-Neo4j is used today by hundreds of thousands of companies and organizations in almost all industries.
-Use cases include matchmaking, network management, software analytics, scientific research, routing, organizational and project management, recommendations, social networks, and more.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Neo4j implements the Property Graph Model efficiently down to the storage level.
-As opposed to graph processing or in-memory libraries, Neo4j provides full database characteristics including ACID transaction compliance, cluster support, and runtime failover, making it suitable to use graph data in <strong>production scenarios</strong>.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Some particular features make Neo4j very popular among users, developers, and DBAs:</p>
+<p>Topics include:</p>
 </div>
 
 <div class="ulist">
 <ul>
 <li>
-Materializing of relationships at creation time, resulting in no penalties for complex runtime queries
+Deploying on Amazon EC2
 </li>
 <li>
-Constant time traversals for relationships in the graph both in depth and in breadth due to efficient representation of nodes and relationships
+Deploying on Microsoft Azure
 </li>
 <li>
-All relationships in Neo4j are equally important and fast, making it possible to materialize and use new relationships later on to "shortcut" and speed up the domain data when new needs arise
+Deploying on other PaaS
 </li>
 <li>
-Compact storage and memory caching for graphs, resulting in efficient scale-up and billions of nodes in one database on moderate hardware
-</li>
-<li>
-Written on top of the JVM
+Cloud Hosting Providers
 </li>
 </ul>
 </div>
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/neo4j-nosql.png" alt="neo4j nosql">
-</p>
-</div>
-</div>
-<div  id="_neo4j_editions" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Neo4j Editions</h3>
+<div  id="__span_class_label_guide_span_amazon_ec2" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3><span class="label">Guide →</span> Amazon EC2</h3>
 
 
 <div class="paragraph">
-<p>Neo4j’s free and open-source <em>Community</em> edition is a high-performance, fully ACID-transactional database. The <em>Community</em> edition includes (but is not limited to) all the functionality described previously in this section.
-Neo4j&#8217;s <em>Enterprise</em> editions provide all of the functionality of the Community edition in addition to <strong>scalable clustering, fail-over, high-availability, live backups, and comprehensive monitoring</strong>.
-<em>Learn more about the <a href="/editions">Community and Enterprise editions</a>.</em></p>
+<p>Amazon Elastic Compute Cloud (Amazon EC2) is a web service that provides secure, resizable compute capacity in the cloud.
+It is designed to make web-scale cloud computing easier for developers.</p>
 </div>
 
-<div class="ulist side-nav">
+
+
+<div class="paragraph">
+<p>Starting from version 3.2.0, <a href="https://aws.amazon.com/marketplace/pp/B071P26C9D" target="_blank">Neo4j can be installed from the AWS marketplace</a>.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>If you&#8217;re using an earlier version, installing Neo4j on any Debian or Ubuntu system can be accomplished by following the instructions on <a href="http://debian.neo4j.org">our Debian Repository</a>.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>For other Linux distributions, download the <a href="http://neo4j.com/download/other-releases">Neo4j tarball</a>; it can be uncompressed and run interactively.
+Our operations manual discusses several ways to run <a href="http://neo4j.com/docs/operations-manual/current/installation/linux/">Neo4j as system service on Linux</a>.</p>
+</div>
+
+<div class="ulist">
 <ul>
 <li>
-<a href="/developer/get-started/guide-neo4j-browser">Neo4j Browser Intro</a>
-</li>
-<li>
-<a href="/developer/cypher/">Cypher Query Language</a>
-</li>
-<li>
-<a href="/developer/language-guides">Neo4j Language Drivers</a>
-</li>
-<li>
-<a href="/editions">Community and Enterprise editions</a>
+<a href="/developer/guide-cloud-deployment/neo4j-cloud-aws-ec2-ami">Deploying Neo4j on EC2 using a custom Neo4j AMI</a>
 </li>
 </ul>
 </div>
 </div>
-<div  id="_neo4j_server" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Neo4j Server</h3>
+<div  id="__span_class_label_guide_span_microsoft_azure" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3><span class="label">Guide →</span> Microsoft Azure</h3>
 
 
 <div class="paragraph">
-<p>You can download Neo4j from <code><a href="http://neo4j.com/download">http://neo4j.com/download</a></code> and install it as a server on all operating systems.
-By default, the Neo4j Server is bundled with an interactive, web-based database interface bound to <code><a href="http://localhost:7474" class="bare">http://localhost:7474</a></code>.
-The simplest way of getting started is to use Neo4j&#8217;s database browser to execute your graph queries (written in <a href="/developer/cypher">Cypher</a>) in a workbench-like fashion.
-Results are presented as either intuitive graph visualizations or as easy-to-read, exportable tables.</p>
+<p>Microsoft Azure is a cloud computing service created by Microsoft for building, deploying, and managing applications and services through a global network of Microsoft-managed data centers.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>A remote Neo4j server can be accessed via its Cypher HTTP API, either directly or through one of the many available <a href="/developer/language-guides">language drivers</a>.
-For high performance special cases, you can write Neo4j server extensions in any JVM language to access Neo4j&#8217;s internal database engine directly without network overhead.</p>
+<p>It provides software as a service, platform as a service and infrastructure as a service and supports many different programming languages, tools and frameworks, including both Microsoft-specific and third-party software and systems.</p>
 </div>
 
+
+
+<div class="paragraph">
+<p>Starting from version 3.2.0, <a href="https://azuremarketplace.microsoft.com/en-us/marketplace/apps/neo4j.neo4j-enterprise-edition?tab=PlansAndPrice" target="_blank">Neo4j can be installed from the Azure marketplace</a>.
+You can read more in the <a href="https://neo4j.com/blog/neo4j-microsoft-azure-marketplace-part-1/" target="_blank">release blog post</a>.</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="https://neo4j.com/blog/deploy-neo4j-microsoft-azure-part-2/" target="_blank">Step by step guide to deploying Neo4j on Azure</a>.
+</li>
+</ul>
+</div>
+</div>
+<div  id="__span_class_label_guide_span_other_paas_integrations" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3><span class="label">Guide →</span> Other PaaS Integrations</h3>
+<div class="ulist">
+<ul>
+<li>
+<a href="https://www.digitalocean.com/community/tutorials/how-to-install-neo4j-on-an-ubuntu-vps">Digital Ocean</a>
+</li>
+<li>
+<a href="https://github.com/jelastic-public-cartridges/openshift-origin-cartridge-neo4j-v21">Jelastic OpenShift Cartridge</a>
+</li>
+</ul>
+</div>
+</div>
+<div  id="__span_class_label_guide_span_cloud_hosting_providers" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3><span class="label">Guide →</span> Cloud Hosting Providers</h3>
+
+
+<div class="paragraph">
+<p>There are a number of companies that provide hosting of Neo4j instances in the cloud.
+This guide explains the available offerings.</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+<a href="/developer/guide-cloud-deployment/neo4j-cloud-hosting-providers">Neo4j Cloud Hosting Providers</a>
+</li>
+</ul>
+</div>
 </div>
                     </div>
                     <div class="large-3 large-pull-9 columns">
                            <ul style="padding-top: 0;" class="side-nav">
          <dl class="accordion">
-            <dd class="accordion-navigation active">
+            <dd class="accordion-navigation inactive">
                <a href="/developer/get-started/">
                   <h5>Get Started</h5>
                </a>
-               <div class="content active" id="panel1">
+               <div class="content inactive" id="panel1">
                   <ul>
                      <li><a href="/developer/get-started/graph-database/">What is a GraphDB?</a></li>
                      <li><a href="/developer/get-started/graph-db-vs-rdbms/">GraphDB vs RDBMS</a></li>
@@ -902,11 +818,11 @@ For high performance special cases, you can write Neo4j server extensions in any
                </dd>
             </dl>
             <dl class="accordion">
-               <dd class="accordion-navigation inactive">
+               <dd class="accordion-navigation active">
                   <a href="/developer/guide-cloud-deployment/">
                      <h5>Neo4j in the Cloud</h5>
                   </a>
-                  <div class="content inactive" id="panel9">
+                  <div class="content active" id="panel9">
                      <ul>
                         <li><a href="/developer/guide-cloud-deployment/neo4j-cloud-aws-ec2-ami/">Deploying to EC2</a></li>
                         <li><a href="https://neo4j.com/blog/deploy-neo4j-microsoft-azure-part-2">Deploying to Azure</a></li>

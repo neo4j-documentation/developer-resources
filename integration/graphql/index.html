@@ -213,7 +213,7 @@ var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
 <div class="marquee blue">
     <div class="row text-center">
         <div class="medium-10 small-centered columns">
-            <h1 class="entry-title">What is a Graph Database?</h1>
+            <h1 class="entry-title">GraphQL and Neo4j</h1>
         </div>
     </div>
 </div>
@@ -226,7 +226,7 @@ var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
                     <ul class="breadcrumbs">
                         <li><a href="/developer">Developer Guides</a></li>
                         
-                        <li class="current"><a href="#">What is a Graph Database?</a></li>
+                        <li class="current"><a href="#">GraphQL and Neo4j</a></li>
                     </ul>
                 </div>
             </div>
@@ -576,223 +576,648 @@ ul.none li {
                     <div class="large-9 large-push-3 columns guide-section-content">
                         <div id="preamble columns medium-12">
 <div class="sectionbody">
-<div class="quoteblock abstract">
-<div class="title">Goals</div>
-<blockquote style="padding-left: 0;">
-This article is an introduction to graph databases in general and Neo4j in particular.
-</blockquote>
-</div>
-<div class="quoteblock abstract">
-<div class="title">Prerequisites</div>
-<blockquote style="padding-left: 0;">
-You should have a basic understanding of what a database is.
-</blockquote>
-</div>
-
-
-<div class="label">Beginner</div>
-<hr/>
-
 <div class="toc">
 <h3 class="title">Overview</h3>
 
+<ul class="sectlevel1">
+<li><a href="#_about_graphql">About GraphQL</a>
 <ul class="sectlevel2">
-<li><a href="#property-graph">The Property Graph Model</a></li>
-<li><a href="#_what_is_neo4j">What is Neo4j?</a></li>
-<li><a href="#_neo4j_editions">Neo4j Editions</a></li>
-<li><a href="#_neo4j_server">Neo4j Server</a></li>
+<li><a href="#_queries">Queries</a></li>
+<li><a href="#_graphql_as_a_contract">GraphQL as a Contract</a></li>
+<li><a href="#_schema">Schema</a></li>
+</ul>
+</li>
+<li><a href="#_graphql_and_neo4j">GraphQL and Neo4j</a>
+<ul class="sectlevel2">
+<li><a href="#_neo4j_graphql_extension">Neo4j GraphQL extension</a></li>
+</ul>
+</li>
+<li><a href="#_graphql_community_graph_hackathon">GraphQL Community Graph Hackathon</a>
+<ul class="sectlevel2">
+<li><a href="#_what_is_a_community_graph">What is a Community Graph?</a></li>
+<li><a href="#_hackathon">Hackathon</a></li>
+<li><a href="#_graphql_support">GraphQL Support</a></li>
+</ul>
+</li>
+<li><a href="#_resources">Resources</a>
+<ul class="sectlevel2">
+<li><a href="#_raw_data_access">Raw Data Access</a></li>
+</ul>
+</li>
 </ul>
 
 </div>
 <hr>
-
-
-<div class="paragraph">
-<p>We live in a connected world.
-There are no isolated pieces of information, but rich, connected domains all around us.
-Only a database that embraces relationships as a core aspect of its data model is able to store, process, and query connections efficiently.
-While other databases compute relationships expensively at query time, a graph database stores connections as first class citizens, readily available for any "join-like" navigation operation.
-Accessing those already persistent connections is an efficient, constant-time operation and allows you to quickly traverse millions of connections per second per core.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Independent of the total size of your dataset, graph databases excel at managing highly connected data and complex queries.
-Armed only with a pattern and a set of starting points, graph databases explore the larger neighborhood around the initial starting points&#8201;&#8212;&#8201;collecting and aggregating information from millions of nodes and relationships&#8201;&#8212;&#8201;leaving the billions outside the search perimeter untouched.</p>
-</div>
-
-<iframe width="640" height="360" src="https://www.youtube.com/embed/-dCeFEqDkUI" frameborder="0" allowfullscreen></iframe>
 </div>
 </div>
-<div  id="property-graph" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>The Property Graph Model</h3>
-
-
-<div class="paragraph">
-<p>If you’ve ever worked with an object model or an entity relationship diagram, the labeled property graph model will seem familiar.
-The property graph contains connected entities (the <em>nodes</em>) which can hold any number of attributes (key-value-pairs).
-Nodes can be tagged with labels representing their different roles in your domain.
-In addition to contextualizing node and relationship properties, labels may also serve to attach metadata&#8212;&#8203;index or constraint information&#8212;&#8203;to certain nodes.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p><em>Relationships</em> provide directed, named semantically relevant connections between two node-entities.
-A relationship always has a direction, a type, a <em>start node</em>, and an <em>end node</em>.
-Like nodes, relationships can have any properties.
-In most cases, relationships have quantitative properties, such as weights, costs, distances, ratings, time intervals, or strengths.
-As relationships are stored efficiently, two nodes can share any number or type of relationships without sacrificing performance.
-Note that although they are directed, relationships can always be navigated regardless of direction.</p>
-</div>
-
-<div class="imageblock">
+<div  id="_about_graphql" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>About GraphQL</h3>
+<div class="imageblock" style="float: right;">
 <p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/graphdb-gve.png" alt="graphdb gve">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/GraphQL_Logo.svg/200px-GraphQL_Logo.svg.png" alt="200px GraphQL Logo.svg" width="200">
 </p>
 </div>
 
 
 <div class="paragraph">
-<p><em>The building blocks of the Property Graph</em></p>
+<p>GraphQL is a specification for querying a slice of an application graph, retrieving a tree of data that perfectly matches a front-end view, regardless of was that data was pulled from.
+It covers tree-based read-queries, mutations for updates and subscriptions for live updates.</p>
+</div>
+
+<div  id="_queries" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Queries</h3>
+
+
+<div class="paragraph">
+<p>Queries form a tree structure, based upon entities and relevant attributes.
+Any of those can take parameters (e.g for filtering or pagination) and directives.</p>
+</div>
+
+<div class="listingblock">
+<div class="title">GraphQL example query</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="graphql"><code>query {
+   Movie(title:"The Matrix") {
+      title
+      released
+      tagline
+      actors {
+         name
+         born
+      }
+   }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">GraphQL example result</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="json"><code>{
+   "Movie": [{
+      "title": "The Matrix",
+      "released": 1999,
+      "tagline": "Welcome to the Real World",
+      "actors": [{
+         "name": "Keanu Reeves",
+         "born": 1964
+         }, {
+         "name": "Carrie-Anne Moss",
+         "born": 1967
+         }, {
+         "name": "Laurence Fishburne",
+         "born": 1961
+         }
+      ]
+   }]
+}</code></pre>
+</div>
+</div>
+</div>
+<div  id="_graphql_as_a_contract" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>GraphQL as a Contract</h3>
+
+
+<div class="paragraph">
+<p>In this regard it is a <strong>contract</strong> between front-end and back-end, based on the agreed upon type system which forms an application data model in the form of <strong>a graph</strong>.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>There is one core consistent rule in a graph database: "No broken links".
-Since a relationship always has a start and end node, you can’t delete a node without also deleting its associated relationships.
-You can also always assume that an existing relationship will never point to a non-existing endpoint.</p>
+<p>It decouples the front-end from the back-end data source(s), which allows you to change both independently as the type system stays consistent.
+Each query from the front-end is using that type system to define in a fine grained way which data it is interested in.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>There is no prescription how and where the data in the back-end comes from, it can be anything from databases, to APIs, from third party systems to in-memory representations, and even code or static assets.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>GraphQL queries return data in a tree-form that perfectly matches the front end view hierarchy. If the application data is a graph, then the perfect back-end is a Graph Database with native support for resolving GraphQL queries: Neo4j.</p>
+</div>
+
+</div>
+<div  id="_schema" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Schema</h3>
+
+
+<div class="paragraph">
+<p>The typesystem is often declared in schema (IDL) files which contain entities, their attributes, interfaces, enumerations, but also mutations and subscriptions.
+The schema can be extended with custom directives and types that allow specific extensions of the core language.</p>
+</div>
+
+<div class="listingblock">
+<div class="title">GraphQL example schema</div>
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="graphql"><code>type Movie {
+    title: String!
+    released: Int
+    tagline: String
+    actors: [Person]
+}
+
+type Person {
+    name: String!
+    born: Int
+    movies: [Movie]
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div  id="_graphql_and_neo4j" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>GraphQL and Neo4j</h3>
+<div  id="_neo4j_graphql_extension" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j GraphQL extension</h3>
+<div class="imageblock" style="float: right;">
+<p class="content">
+<img src="https://github.com/neo4j-graphql/graphql-community/raw/master/images/neo4j-graphql-logo.png" alt="neo4j graphql logo" width="200">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>We wanted to combine the power of Neo4j and GraphQL by making it super-easy to take an IDL schema OR an existing graph and serve a native GraphQL backend from it.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>With the information from the schema we&#8217;re able to generate a single query against the backing graph database.
+During development both Neo4j&#8217;s property graph model as well as the Cypher query language turned out to be a great fit for the GraphQL features we&#8217;re supporting so far.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>You can grab the latest release our extension from <a href="https://github.com/neo4j-graphql/neo4j-graphql/releases">here</a> and drop it into any Neo4j 3.1.x server (in the <code>plugins</code> directory).
+After a restart you can either query your graph data using GraphQL <strong>directly</strong> or after posting an IDL file with the schema you like.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>We added some neat features that we hope are useful and make your life easier.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>We&#8217;re especially proud of the <code>@cypher</code> directive, the auto-generated mutations (create, update, delete), and the <code>graphql.execute</code>, <code>graphql.idl</code> and <code>graphql.schema</code> procedures.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Here is an example, how the schema definition above could / would be extended:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="graphql"><code>type Movie {
+    title: ID!
+    released: Int
+    tagline: String
+
+    actors: [Person] @relation(name:"ACTED_IN", direction:IN)
+
+    director: Person @relation(name:"DIRECTED", direction:IN)
+
+    recommendation(first:Int = 3): [Movie]
+      @cypher(statement:"MATCH (this)&lt;-[r1:REVIEWED]-(:User)-[r2:REVIEWED]-&gt;(reco:Movie)
+                         WHERE 3 &lt;= r1.stars &lt;= r2.stars
+                         RETURN reco, sum(r2.stars) as rating ORDER BY rating DESC")
+}
+
+interface Person {
+    name: ID!
+    born: Int
+}
+
+type Actor extends Person {
+    name: ID!
+    born: Int
+
+    movies: [Movie] @relation(name:"ACTED_IN")
+}
+
+type Director extends Person {
+    name: ID!
+    born: Int
+
+    movies: [Movie] @relation(name:"DIRECTED")
+}
+
+type Mutations {
+    directed(movie:ID! director:ID!) : String
+      @cypher(statement:"MATCH (m:Movie {title: $movie}), (d:Person {name: $director})
+                         MERGE (d)-[:DIRECTED]-&gt;(m)")
+}
+schema {
+   mutations: Mutations
+}</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Have a look at the following "feature" table, to see what else is "in the box":</p>
+</div>
+
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 33.3333%;">
+<col style="width: 50.0001%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">name</th>
+<th class="tableblock halign-left valign-top">information</th>
+<th class="tableblock halign-left valign-top">example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>entities</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>each node label represented as entity</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>{ Person {name,born} }</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>multi entities</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>multiple entities per query turned into <code>UNION</code></p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>{ Person {name,born} Movie {title,released} }</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>properties (out)</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>via sampling property names and types are determined</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>{ Movie {title, released} }</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>field parameters</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>all properties can be used as filtering (exact/list) input parameters, will be turned into Cypher parameters</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>{ Movie(title:"The Matrix") {name,released} }</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>query parameters</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>passed through as Cypher parameters</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>query MovieByParameter ($title: String!) { Person(name:$name) {name,born} }</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>relationships</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>via a <code>@relationship</code> annotated field, optional direction</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type Person { name: String, movies : Movie @relation(name:"ACTED_IN", direction:OUT) }</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>ordering</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>via an extra <code>orderBy</code> parameter</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>query PersonSortQuery { Person(orderBy:[name_desc,born_desc]) {name,born}}</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>pagination</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>via <code>first</code> and <code>offset</code> parameters</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>query PagedPeople { Person(first:10, offset:20) {name,born}}</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>schema first IDL support</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>define schema via IDL</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:POST /graphql/idl "type Person {name: String!, born: Int}"</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>Mutations</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>create/delete mutations inferred from the schema</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>createMovie(title:ID!, released:Int)
+updateMovie(title:ID!, released:Int)
+deleteMovie(title:ID!)
+</code></p><p class="tableblock"><code>createMoviePersons(title:ID!,persons:[ID!])
+deleteMoviePersons(title:ID!,persons:[ID!])</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>Cypher queries</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p><code>@cypher</code> directive on fields and types, parameter support</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>actors : Int @cypher(statement:"RETURN sizethis)&#8592;[:ACTED_IN]-(")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>Cypher updates</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>Custom mutations by executing <code>@cypher</code> directives</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>createPerson(name: String) : Person @cypher(statement:"CREATE (p:Person {name:{name}}) RETURN p")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>extensions</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><div>
+
+<div class="paragraph">
+<p>extra information returned</p>
+</div>
+</div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fields are: columns, query, warnings, plan, type READ_ONLY/READ_WRITE,</code></p></td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="paragraph">
+<p>In the repository, you can find a <a href="https://github.com/neo4j-graphql/neo4j-graphql/blob/master/movies.schema">movies schmema</a> and <a href="https://github.com/neo4j-graphql/neo4j-graphql/blob/master/movies.graphql">accompanying queries</a>, that uses some of those features.</p>
+</div>
+
+</div>
+</div>
+<div  id="_graphql_community_graph_hackathon" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>GraphQL Community Graph Hackathon</h3>
+<div class="imageblock">
+<p class="content">
+<img src="https://github.com/neo4j-graphql/graphql-community/raw/master/images/graphql-community-graph.jpg" alt="graphql community graph" width="500">
+</p>
+</div>
+<div  id="_what_is_a_community_graph" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>What is a Community Graph?</h3>
+
+
+<div class="paragraph">
+<p>We found it very helpful and inspiring to bring the people and activities of the GraphQL-Community into one database with a GraphQL-API endpoint.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>It contains tweets, github-repositories, stackoverflow-questions and answers and meetup events and the users and tags related to them.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>No matter where you are active, your contributions should be visible.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>And everyone in the community should be able to find new content, recent topics, active people or new events easily.</p>
 </div>
 
 <div class="imageblock">
 <p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/property_graph_model.png" alt="property graph model">
+<a class="image" href="http://graphql.communitygraph.org/graphiql/"><img src="https://github.com/neo4j-graphql/graphql-community/raw/master/images/graphiql.communitygraph.jpg" alt="graphiql.communitygraph" width="800"></a>
 </p>
 </div>
-<div class="ulist side-nav">
-<ul>
-<li>
-<a href="http://watch.neo4j.org/video/103466968">Webinar: Intro to Neo4j by Nicole White</a>
-</li>
-<li>
-<a href="/developer/guide-intro-to-graph-modeling">Intro to Graph Modeling</a>
-</li>
-<li>
-<a href="/online-course">Training: Online Intro Course</a>
-</li>
-<li>
-<a href="/learning-neo4j-book/">Book: Learning Neo4j by Rik Van Bruggen</a>
-</li>
-</ul>
 </div>
-</div>
-<div  id="_what_is_neo4j" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>What is Neo4j?</h3>
+<div  id="_hackathon" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Hackathon</h3>
 
 
 <div class="paragraph">
-<p>Sponsored by Neo Technology, Neo4j is an open-source NoSQL graph database implemented in Java and Scala.
-With development starting in 2003, it has been publicly available since 2007.
-The source code and issue tracking are available on <a href="https://github.com/neo4j/neo4j">GitHub</a>, with support readily available on Stack Overflow and the Neo4j Google group.
-Neo4j is used today by hundreds of thousands of companies and organizations in almost all industries.
-Use cases include matchmaking, network management, software analytics, scientific research, routing, organizational and project management, recommendations, social networks, and more.</p>
+<p>To learn more about what&#8217;s important to the GraphQL community, <strong>We&#8217;d love to challenge you!</strong></p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Neo4j implements the Property Graph Model efficiently down to the storage level.
-As opposed to graph processing or in-memory libraries, Neo4j provides full database characteristics including ACID transaction compliance, cluster support, and runtime failover, making it suitable to use graph data in <strong>production scenarios</strong>.</p>
+<p>We&#8217;re running a world-wide community Hackathon, starting now and running until end of day Monday, May 22.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Some particular features make Neo4j very popular among users, developers, and DBAs:</p>
+<p>Write a (mobile) demo, application, dashboard, visualization, timeline, react component, whatever you want against this GraphQL API, submit it here and also <strong>TWEET</strong> the link with <a href="https://twitter.com/search?f=tweets&amp;vertical=default&amp;q=%23graphql%20%23neo4j"><strong>#graphql #neo4j</strong></a> hashtags.</p>
 </div>
 
-<div class="ulist">
-<ul>
-<li>
-Materializing of relationships at creation time, resulting in no penalties for complex runtime queries
-</li>
-<li>
-Constant time traversals for relationships in the graph both in depth and in breadth due to efficient representation of nodes and relationships
-</li>
-<li>
-All relationships in Neo4j are equally important and fast, making it possible to materialize and use new relationships later on to "shortcut" and speed up the domain data when new needs arise
-</li>
-<li>
-Compact storage and memory caching for graphs, resulting in efficient scale-up and billions of nodes in one database on moderate hardware
-</li>
-<li>
-Written on top of the JVM
-</li>
-</ul>
+
+
+<div class="paragraph">
+<p>For the first 15 <em>valid</em> submissions we offer a prize (a pair of AirPods or equivalent amazon-gift-card).</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Please <a href="http://bit.ly/graphqlhackathon" target="_blank">submit your work in this survey</a> and tell us about your experience building it and your thoughts about GraphQL.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>If you fill out the survey above, we&#8217;ll send you a really cool graph t-shirt.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>If you are attending <a href="http://graphql-europe.com" target="_blank"><strong>GraphQL-Europe</strong></a> we&#8217;d love you to <strong>come by our booth and tell and show us in person</strong>.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><strong>Then you can get your t-shirt right away.</strong></p>
+</div>
+
+</div>
+<div  id="_graphql_support" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>GraphQL Support</h3>
+
+
+<div class="paragraph">
+<p>To demonstrate the combined power of a graph database (Neo4j) and GraphQL we also added the GraphQL extension to this server. Access the GraphQL community graph, including GraphiQL <a href="http://graphql.communitygraph.org/">here</a>.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>After authorising you&#8217;ll be able to query the GraphQL community graph with your trusted tools like GraphiQL or Apollo-Client.
+You can also visualize the Schema using Voyager.</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<img src="https://github.com/neo4j-graphql/graphql-community/raw/master/images/graphql-community-query-leeb.jpg" alt="graphql community query leeb" width="600">
+</p>
 </div>
 <div class="imageblock">
 <p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/neo4j-nosql.png" alt="neo4j nosql">
+<img src="https://github.com/neo4j-graphql/graphql-community/raw/master/images/graphql-community-voyager.jpg" alt="graphql community voyager" width="600">
 </p>
 </div>
-</div>
-<div  id="_neo4j_editions" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Neo4j Editions</h3>
 
 
 <div class="paragraph">
-<p>Neo4j’s free and open-source <em>Community</em> edition is a high-performance, fully ACID-transactional database. The <em>Community</em> edition includes (but is not limited to) all the functionality described previously in this section.
-Neo4j&#8217;s <em>Enterprise</em> editions provide all of the functionality of the Community edition in addition to <strong>scalable clustering, fail-over, high-availability, live backups, and comprehensive monitoring</strong>.
-<em>Learn more about the <a href="/editions">Community and Enterprise editions</a>.</em></p>
+<p>You can find the <a href="https://github.com/neo4j-graphql/graphql-community/blob/master/community-graph.schema">schema for the data</a> and several GraphQL queries and screenshots of your tools in action <a href="https://github.com/neo4j-graphql/graphql-community#screenshots" target="_blank">in this repository</a>.</p>
 </div>
 
-<div class="ulist side-nav">
-<ul>
-<li>
-<a href="/developer/get-started/guide-neo4j-browser">Neo4j Browser Intro</a>
-</li>
-<li>
-<a href="/developer/cypher/">Cypher Query Language</a>
-</li>
-<li>
-<a href="/developer/language-guides">Neo4j Language Drivers</a>
-</li>
-<li>
-<a href="/editions">Community and Enterprise editions</a>
-</li>
-</ul>
 </div>
 </div>
-<div  id="_neo4j_server" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Neo4j Server</h3>
+<div  id="_resources" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Resources</h3>
 
 
 <div class="paragraph">
-<p>You can download Neo4j from <code><a href="http://neo4j.com/download">http://neo4j.com/download</a></code> and install it as a server on all operating systems.
-By default, the Neo4j Server is bundled with an interactive, web-based database interface bound to <code><a href="http://localhost:7474" class="bare">http://localhost:7474</a></code>.
-The simplest way of getting started is to use Neo4j&#8217;s database browser to execute your graph queries (written in <a href="/developer/cypher">Cypher</a>) in a workbench-like fashion.
-Results are presented as either intuitive graph visualizations or as easy-to-read, exportable tables.</p>
+<p>If you want to provide more feedback, just create an issue in any of our <a href="http://github.com/neo4j-graphql" target="_blank">neo4j-graphql repositories</a>,  <a href="mailto:devrel@neo4j.com" target="_blank">drop us an email</a> or join <a href="http://neo4j.com/slack" target="_blank">neo4j-users Slack</a> and ask in the #neo4j-graphql channel.</p>
 </div>
 
+<div  id="_raw_data_access" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Raw Data Access</h3>
 
 
 <div class="paragraph">
-<p>A remote Neo4j server can be accessed via its Cypher HTTP API, either directly or through one of the many available <a href="/developer/language-guides">language drivers</a>.
-For high performance special cases, you can write Neo4j server extensions in any JVM language to access Neo4j&#8217;s internal database engine directly without network overhead.</p>
+<p>The raw graph data is publicly accessible here via the Neo4j Browser (<a href="http://107.170.69.23:7474" class="bare">http://107.170.69.23:7474</a> username/pwd: graphql/graphql).</p>
 </div>
 
+<div class="imageblock">
+<p class="content">
+<img src="https://github.com/community-graph/graphql-community/raw/master/images/community-graphql-cypher-graph.jpg" alt="community graphql cypher graph" width="600">
+</p>
+</div>
+<div class="imageblock">
+<p class="content">
+<img src="https://github.com/community-graph/graphql-community/raw/master/images/community.graphql.cypher.table.jpg" alt="community.graphql.cypher.table" width="600">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p>If you are used to Neo4j you can use it right away by writing some <a href="/developer/cypher" target="_blank">Cypher</a> statements.
+Here are (<a href="https://github.com/community-graph/dashboard" target="_blank">some suggestions</a>).</p>
+</div>
+
+</div>
 </div>
                     </div>
                     <div class="large-3 large-pull-9 columns">
                            <ul style="padding-top: 0;" class="side-nav">
          <dl class="accordion">
-            <dd class="accordion-navigation active">
+            <dd class="accordion-navigation inactive">
                <a href="/developer/get-started/">
                   <h5>Get Started</h5>
                </a>
-               <div class="content active" id="panel1">
+               <div class="content inactive" id="panel1">
                   <ul>
                      <li><a href="/developer/get-started/graph-database/">What is a GraphDB?</a></li>
                      <li><a href="/developer/get-started/graph-db-vs-rdbms/">GraphDB vs RDBMS</a></li>
@@ -869,11 +1294,11 @@ For high performance special cases, you can write Neo4j server extensions in any
                </dd>
             </dl>
             <dl class="accordion">
-               <dd class="accordion-navigation ">
+               <dd class="accordion-navigation active">
                   <a href="/developer/integration/">
                      <h5>Neo4j Tools &amp; Integrations</h5>
                   </a>
-                  <div class="content " id="panel6">
+                  <div class="content active" id="panel6">
                      <ul>
                         <li><a href="/developer/integration/ecosystem/">Tools &amp; Libs for Neo4j</a></li>
                         <li><a href="/developer/integration/graphql/">GraphQL</a></li>
