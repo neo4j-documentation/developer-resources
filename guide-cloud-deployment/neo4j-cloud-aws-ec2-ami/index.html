@@ -213,7 +213,7 @@ var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
 <div class="marquee blue">
     <div class="row text-center">
         <div class="medium-10 small-centered columns">
-            <h1 class="entry-title">What is a Graph Database?</h1>
+            <h1 class="entry-title">Hosting Neo4j on EC2 on AWS</h1>
         </div>
     </div>
 </div>
@@ -226,7 +226,7 @@ var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
                     <ul class="breadcrumbs">
                         <li><a href="/developer">Developer Guides</a></li>
                         
-                        <li class="current"><a href="#">What is a Graph Database?</a></li>
+                        <li class="current"><a href="#">Hosting Neo4j on EC2 on AWS</a></li>
                     </ul>
                 </div>
             </div>
@@ -579,28 +579,26 @@ ul.none li {
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-This article is an introduction to graph databases in general and Neo4j in particular.
+This guide explains how to deploy Neo4j on Amazon&#8217;s EC2 platform.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
 <div class="title">Prerequisites</div>
 <blockquote style="padding-left: 0;">
-You should have a basic understanding of what a database is.
+You should know how to run and operate Neo4j locally.
+Knowledge of <a href="/developer/language-guides">remote drivers</a> to access Neo4j from your application helps you connect to your cloud-hosted database.
 </blockquote>
 </div>
-
-
-<div class="label">Beginner</div>
-<hr/>
-
 <div class="toc">
 <h3 class="title">Overview</h3>
 
 <ul class="sectlevel2">
-<li><a href="#property-graph">The Property Graph Model</a></li>
-<li><a href="#_what_is_neo4j">What is Neo4j?</a></li>
-<li><a href="#_neo4j_editions">Neo4j Editions</a></li>
-<li><a href="#_neo4j_server">Neo4j Server</a></li>
+<li><a href="#_create_ec2_key_pair">Create EC2 key pair</a></li>
+<li><a href="#_create_security_group">Create security group</a></li>
+<li><a href="#start-up-instance">Start up the instance</a></li>
+<li><a href="#_how_do_i_ssh_into_the_instance">How do I SSH into the instance?</a></li>
+<li><a href="#other-regions">How do I find the <code>image-id</code> for other regions?</a></li>
+<li><a href="#_terminating_the_instance">Terminating the instance</a></li>
 </ul>
 
 </div>
@@ -608,191 +606,203 @@ You should have a basic understanding of what a database is.
 
 
 <div class="paragraph">
-<p>We live in a connected world.
-There are no isolated pieces of information, but rich, connected domains all around us.
-Only a database that embraces relationships as a core aspect of its data model is able to store, process, and query connections efficiently.
-While other databases compute relationships expensively at query time, a graph database stores connections as first class citizens, readily available for any "join-like" navigation operation.
-Accessing those already persistent connections is an efficient, constant-time operation and allows you to quickly traverse millions of connections per second per core.</p>
+<p>Before continuing with the guide make sure you&#8217;ve <a href="http://docs.aws.amazon.com/cli/latest/userguide/installing.html" target="_blank">installed the AWS Command Line Interface</a>.
+If you&#8217;re not comfortable using the command line you can <a href="https://aws.amazon.com/marketplace/pp/B071P26C9D" target="_blank">install Neo4j using the AWS web console</a>.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Independent of the total size of your dataset, graph databases excel at managing highly connected data and complex queries.
-Armed only with a pattern and a set of starting points, graph databases explore the larger neighborhood around the initial starting points&#8201;&#8212;&#8201;collecting and aggregating information from millions of nodes and relationships&#8201;&#8212;&#8201;leaving the billions outside the search perimeter untouched.</p>
+<p>Let&#8217;s get started!</p>
 </div>
 
-<iframe width="640" height="360" src="https://www.youtube.com/embed/-dCeFEqDkUI" frameborder="0" allowfullscreen></iframe>
 </div>
 </div>
-<div  id="property-graph" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>The Property Graph Model</h3>
+<div  id="_create_ec2_key_pair" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Create EC2 key pair</h3>
 
 
 <div class="paragraph">
-<p>If you’ve ever worked with an object model or an entity relationship diagram, the labeled property graph model will seem familiar.
-The property graph contains connected entities (the <em>nodes</em>) which can hold any number of attributes (key-value-pairs).
-Nodes can be tagged with labels representing their different roles in your domain.
-In addition to contextualizing node and relationship properties, labels may also serve to attach metadata&#8212;&#8203;index or constraint information&#8212;&#8203;to certain nodes.</p>
+<p>First we need to create an <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html" target="_blank">EC2 key pair</a> that we&#8217;ll use to connect to our instance via SSH.</p>
 </div>
 
-
-
-<div class="paragraph">
-<p><em>Relationships</em> provide directed, named semantically relevant connections between two node-entities.
-A relationship always has a direction, a type, a <em>start node</em>, and an <em>end node</em>.
-Like nodes, relationships can have any properties.
-In most cases, relationships have quantitative properties, such as weights, costs, distances, ratings, time intervals, or strengths.
-As relationships are stored efficiently, two nodes can share any number or type of relationships without sacrificing performance.
-Note that although they are directed, relationships can always be navigated regardless of direction.</p>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>export KEY_NAME="Neo4j-AWSMarketplace-Key"
+aws ec2 create-key-pair \
+  --key-name $KEY_NAME \
+  --query 'KeyMaterial' \
+  --output text &gt; $KEY_NAME.pem</code></pre>
 </div>
-
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/graphdb-gve.png" alt="graphdb gve">
-</p>
 </div>
 
 
 <div class="paragraph">
-<p><em>The building blocks of the Property Graph</em></p>
+<p>If you have an existing key that you&#8217;d like to use instead, you can set <code>KEY_NAME</code> to the name of that key pair and ignore the 2nd command.</p>
 </div>
 
+</div>
+<div  id="_create_security_group" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Create security group</h3>
 
 
 <div class="paragraph">
-<p>There is one core consistent rule in a graph database: "No broken links".
-Since a relationship always has a start and end node, you can’t delete a node without also deleting its associated relationships.
-You can also always assume that an existing relationship will never point to a non-existing endpoint.</p>
+<p>Now we&#8217;ll create a <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html" target="_blank">security group</a>, which will allow us to control access to our instance.
+Run the following command to create a new security group:</p>
 </div>
 
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/property_graph_model.png" alt="property graph model">
-</p>
-</div>
-<div class="ulist side-nav">
-<ul>
-<li>
-<a href="http://watch.neo4j.org/video/103466968">Webinar: Intro to Neo4j by Nicole White</a>
-</li>
-<li>
-<a href="/developer/guide-intro-to-graph-modeling">Intro to Graph Modeling</a>
-</li>
-<li>
-<a href="/online-course">Training: Online Intro Course</a>
-</li>
-<li>
-<a href="/learning-neo4j-book/">Book: Learning Neo4j by Rik Van Bruggen</a>
-</li>
-</ul>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="text"><code>export GROUP="neo4j-sg"
+aws ec2 create-security-group \
+  --group-name $GROUP \
+  --description "Neo4j security group"</code></pre>
 </div>
 </div>
-<div  id="_what_is_neo4j" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>What is Neo4j?</h3>
 
 
 <div class="paragraph">
-<p>Sponsored by Neo Technology, Neo4j is an open-source NoSQL graph database implemented in Java and Scala.
-With development starting in 2003, it has been publicly available since 2007.
-The source code and issue tracking are available on <a href="https://github.com/neo4j/neo4j">GitHub</a>, with support readily available on Stack Overflow and the Neo4j Google group.
-Neo4j is used today by hundreds of thousands of companies and organizations in almost all industries.
-Use cases include matchmaking, network management, software analytics, scientific research, routing, organizational and project management, recommendations, social networks, and more.</p>
+<p>Next let&#8217;s open Neo4j&#8217;s HTTP, HTTPS, and Bolt ports so we can access the server from our application.
+We&#8217;ll also open the SSH port so we can remotely access the instance.</p>
 </div>
 
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="text"><code>for port in 22 7474 7473 7687; do
+  aws ec2 authorize-security-group-ingress --group-name $GROUP --protocol tcp --port $port --cidr 0.0.0.0/0
+done</code></pre>
+</div>
+</div>
 
 
 <div class="paragraph">
-<p>Neo4j implements the Property Graph Model efficiently down to the storage level.
-As opposed to graph processing or in-memory libraries, Neo4j provides full database characteristics including ACID transaction compliance, cluster support, and runtime failover, making it suitable to use graph data in <strong>production scenarios</strong>.</p>
+<p>If you have an existing group that you&#8217;d like to use instead, set <code>GROUP</code> to the name of that group and ignore the rest of the commands.</p>
 </div>
 
+</div>
+<div  id="start-up-instance" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Start up the instance</h3>
 
 
 <div class="paragraph">
-<p>Some particular features make Neo4j very popular among users, developers, and DBAs:</p>
+<p>We&#8217;re now ready to start up a Neo4j instance.
+We&#8217;ll use the <code>image-id</code> for us-east-1 but there are <a href="#other-regions">corresponding image ids for other regions</a>.</p>
 </div>
 
-<div class="ulist">
-<ul>
-<li>
-Materializing of relationships at creation time, resulting in no penalties for complex runtime queries
-</li>
-<li>
-Constant time traversals for relationships in the graph both in depth and in breadth due to efficient representation of nodes and relationships
-</li>
-<li>
-All relationships in Neo4j are equally important and fast, making it possible to materialize and use new relationships later on to "shortcut" and speed up the domain data when new needs arise
-</li>
-<li>
-Compact storage and memory caching for graphs, resulting in efficient scale-up and billions of nodes in one database on moderate hardware
-</li>
-<li>
-Written on top of the JVM
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/neo4j-nosql.png" alt="neo4j nosql">
-</p>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="text"><code>aws ec2 run-instances \
+  --image-id ami-f03c4fe6
+  --count 1 \
+  --instance-type m3.medium \
+  --key-name $KEY_NAME \
+  --security-groups $GROUP \
+  --query "Instances[*].InstanceId"</code></pre>
 </div>
 </div>
-<div  id="_neo4j_editions" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Neo4j Editions</h3>
 
 
 <div class="paragraph">
-<p>Neo4j’s free and open-source <em>Community</em> edition is a high-performance, fully ACID-transactional database. The <em>Community</em> edition includes (but is not limited to) all the functionality described previously in this section.
-Neo4j&#8217;s <em>Enterprise</em> editions provide all of the functionality of the Community edition in addition to <strong>scalable clustering, fail-over, high-availability, live backups, and comprehensive monitoring</strong>.
-<em>Learn more about the <a href="/editions">Community and Enterprise editions</a>.</em></p>
-</div>
-
-<div class="ulist side-nav">
-<ul>
-<li>
-<a href="/developer/get-started/guide-neo4j-browser">Neo4j Browser Intro</a>
-</li>
-<li>
-<a href="/developer/cypher/">Cypher Query Language</a>
-</li>
-<li>
-<a href="/developer/language-guides">Neo4j Language Drivers</a>
-</li>
-<li>
-<a href="/editions">Community and Enterprise editions</a>
-</li>
-</ul>
-</div>
-</div>
-<div  id="_neo4j_server" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Neo4j Server</h3>
-
-
-<div class="paragraph">
-<p>You can download Neo4j from <code><a href="http://neo4j.com/download">http://neo4j.com/download</a></code> and install it as a server on all operating systems.
-By default, the Neo4j Server is bundled with an interactive, web-based database interface bound to <code><a href="http://localhost:7474" class="bare">http://localhost:7474</a></code>.
-The simplest way of getting started is to use Neo4j&#8217;s database browser to execute your graph queries (written in <a href="/developer/cypher">Cypher</a>) in a workbench-like fashion.
-Results are presented as either intuitive graph visualizations or as easy-to-read, exportable tables.</p>
+<p>We don&#8217;t yet have a Public DNS Name but it should be available in a few seconds.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>A remote Neo4j server can be accessed via its Cypher HTTP API, either directly or through one of the many available <a href="/developer/language-guides">language drivers</a>.
-For high performance special cases, you can write Neo4j server extensions in any JVM language to access Neo4j&#8217;s internal database engine directly without network overhead.</p>
+<p>We can run the following command to find out what it is:</p>
 </div>
 
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="text"><code>aws ec2 describe-instances \
+  --instance-ids [InstanceId] \
+  --query "Reservations[*].Instances[*].PublicDnsName"</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Now let&#8217;s navigate to <code>http://[PublicDnsName]:7474</code> and login with the user name <code>neo4j</code> and password <code>[InstanceId]</code>.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>We&#8217;ll be asked to update the password the first time we login.</p>
+</div>
+
+</div>
+<div  id="_how_do_i_ssh_into_the_instance" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>How do I SSH into the instance?</h3>
+
+
+<div class="paragraph">
+<p>You can run the following command to SSH into the instance:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="text"><code>ssh -i $KEY_NAME.pem ubuntu@[PublicDnsName]</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>You might get an error about the permissions on the pem file so don&#8217;t forget to make sure it isn&#8217;t accessible by any other users.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="text"><code>chmod 600 $KEY_NAME.pem</code></pre>
+</div>
+</div>
+</div>
+<div  id="other-regions" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>How do I find the <code>image-id</code> for other regions?</h3>
+
+
+<div class="paragraph">
+<p>If we&#8217;re in a different region than us-east-1, we can run the following command to find out the <code>image-id</code> for that region.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="text"><code>aws ec2 describe-images \
+  --filters "Name=product-code,Values=3yl6wt8a1ty4izxxfer68wkie" "Name=product-code.type,Values=marketplace" \
+  --query "Images[*].ImageId" \
+  --region [Region]</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>We can then substitute that <code>image-id</code> when <a href="#start-up-instance">starting up an instance</a>.</p>
+</div>
+
+</div>
+<div  id="_terminating_the_instance" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Terminating the instance</h3>
+
+
+<div class="paragraph">
+<p>Once we&#8217;ve finished using the instance we can run the following command to terminate it:</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>aws ec2 terminate-instances --instance-ids [InstanceId]</code></pre>
+</div>
+</div>
 </div>
                     </div>
                     <div class="large-3 large-pull-9 columns">
                            <ul style="padding-top: 0;" class="side-nav">
          <dl class="accordion">
-            <dd class="accordion-navigation active">
+            <dd class="accordion-navigation inactive">
                <a href="/developer/get-started/">
                   <h5>Get Started</h5>
                </a>
-               <div class="content active" id="panel1">
+               <div class="content inactive" id="panel1">
                   <ul>
                      <li><a href="/developer/get-started/graph-database/">What is a GraphDB?</a></li>
                      <li><a href="/developer/get-started/graph-db-vs-rdbms/">GraphDB vs RDBMS</a></li>
@@ -902,11 +912,11 @@ For high performance special cases, you can write Neo4j server extensions in any
                </dd>
             </dl>
             <dl class="accordion">
-               <dd class="accordion-navigation inactive">
+               <dd class="accordion-navigation active">
                   <a href="/developer/guide-cloud-deployment/">
                      <h5>Neo4j in the Cloud</h5>
                   </a>
-                  <div class="content inactive" id="panel9">
+                  <div class="content active" id="panel9">
                      <ul>
                         <li><a href="/developer/guide-cloud-deployment/neo4j-cloud-aws-ec2-ami/">Deploying to EC2</a></li>
                         <li><a href="https://neo4j.com/blog/deploy-neo4j-microsoft-azure-part-2">Deploying to Azure</a></li>

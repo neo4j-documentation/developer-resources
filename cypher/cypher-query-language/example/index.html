@@ -213,7 +213,7 @@ var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
 <div class="marquee blue">
     <div class="row text-center">
         <div class="medium-10 small-centered columns">
-            <h1 class="entry-title">What is a Graph Database?</h1>
+            <h1 class="entry-title">First Steps with Cypher</h1>
         </div>
     </div>
 </div>
@@ -226,7 +226,9 @@ var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
                     <ul class="breadcrumbs">
                         <li><a href="/developer">Developer Guides</a></li>
                         
-                        <li class="current"><a href="#">What is a Graph Database?</a></li>
+                        <li><a href="../">Guide</a></li>
+                        
+                        <li class="current"><a href="#">First Steps with Cypher</a></li>
                     </ul>
                 </div>
             </div>
@@ -574,215 +576,108 @@ ul.none li {
             <div>
                 <div class="row" style="padding-left: 0; padding-right: 0;">
                     <div class="large-9 large-push-3 columns guide-section-content">
-                        <div id="preamble columns medium-12">
-<div class="sectionbody">
-<div class="quoteblock abstract">
-<div class="title">Goals</div>
-<blockquote style="padding-left: 0;">
-This article is an introduction to graph databases in general and Neo4j in particular.
-</blockquote>
+                        <div  id="_create_a_record_for_yourself" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Create a Record for Yourself</h3>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CREATE (you:Person {name:"You"})
+RETURN you</code></pre>
 </div>
-<div class="quoteblock abstract">
-<div class="title">Prerequisites</div>
-<blockquote style="padding-left: 0;">
-You should have a basic understanding of what a database is.
-</blockquote>
 </div>
-
-
-<div class="label">Beginner</div>
-<hr/>
-
-<div class="toc">
-<h3 class="title">Overview</h3>
-
-<ul class="sectlevel2">
-<li><a href="#property-graph">The Property Graph Model</a></li>
-<li><a href="#_what_is_neo4j">What is Neo4j?</a></li>
-<li><a href="#_neo4j_editions">Neo4j Editions</a></li>
-<li><a href="#_neo4j_server">Neo4j Server</a></li>
-</ul>
-
-</div>
-<hr>
 
 
 <div class="paragraph">
-<p>We live in a connected world.
-There are no isolated pieces of information, but rich, connected domains all around us.
-Only a database that embraces relationships as a core aspect of its data model is able to store, process, and query connections efficiently.
-While other databases compute relationships expensively at query time, a graph database stores connections as first class citizens, readily available for any "join-like" navigation operation.
-Accessing those already persistent connections is an efficient, constant-time operation and allows you to quickly traverse millions of connections per second per core.</p>
+<p><code>CREATE</code> creates nodes with labels and properties.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Independent of the total size of your dataset, graph databases excel at managing highly connected data and complex queries.
-Armed only with a pattern and a set of starting points, graph databases explore the larger neighborhood around the initial starting points&#8201;&#8212;&#8201;collecting and aggregating information from millions of nodes and relationships&#8201;&#8212;&#8201;leaving the billions outside the search perimeter untouched.</p>
-</div>
-
-<iframe width="640" height="360" src="https://www.youtube.com/embed/-dCeFEqDkUI" frameborder="0" allowfullscreen></iframe>
-</div>
-</div>
-<div  id="property-graph" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>The Property Graph Model</h3>
-
-
-<div class="paragraph">
-<p>If you’ve ever worked with an object model or an entity relationship diagram, the labeled property graph model will seem familiar.
-The property graph contains connected entities (the <em>nodes</em>) which can hold any number of attributes (key-value-pairs).
-Nodes can be tagged with labels representing their different roles in your domain.
-In addition to contextualizing node and relationship properties, labels may also serve to attach metadata&#8212;&#8203;index or constraint information&#8212;&#8203;to certain nodes.</p>
+<p>You like <em>Neo4j</em>, right?</p>
 </div>
 
 
 
 <div class="paragraph">
-<p><em>Relationships</em> provide directed, named semantically relevant connections between two node-entities.
-A relationship always has a direction, a type, a <em>start node</em>, and an <em>end node</em>.
-Like nodes, relationships can have any properties.
-In most cases, relationships have quantitative properties, such as weights, costs, distances, ratings, time intervals, or strengths.
-As relationships are stored efficiently, two nodes can share any number or type of relationships without sacrificing performance.
-Note that although they are directed, relationships can always be navigated regardless of direction.</p>
+<p>Let&#8217;s find ourselves and add a new relationship to a new node.</p>
+</div>
+
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH  (you:Person {name:"You"})
+CREATE (you)-[like:LIKE]-&gt;(neo:Database {name:"Neo4j" })
+RETURN you,like,neo</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p><code>CREATE</code> can create single nodes, or more complex structures.</p>
+</div>
+
+</div>
+<div  id="_create_your_friends" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Create Your Friends</h3>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you:Person {name:"You"})
+FOREACH (name in ["Johan","Rajesh","Anna","Julia","Andrew"] |
+  CREATE (you)-[:FRIEND]-&gt;(:Person {name:name}))</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p><code>FOREACH</code> allows you to execute update operations for each element of a list.</p>
+</div>
+
+</div>
+<div  id="_find_your_friends" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Find Your Friends</h3>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you {name:"You"})-[:FRIEND]-&gt;(yourFriends)
+RETURN you, yourFriends</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p>Note that we get ourselves repeated for each path found in the graph.</p>
+</div>
+
+</div>
+<div  id="_create_second_degree_friends_and_expertise" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Create Second Degree Friends and Expertise</h3>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (neo:Database {name:"Neo4j"})
+MATCH (anna:Person {name:"Anna"})
+CREATE (anna)-[:FRIEND]-&gt;(:Person:Expert {name:"Amanda"})-[:WORKED_WITH]-&gt;(neo)</code></pre>
+</div>
+</div>
+
+
+<div class="paragraph">
+<p><code>CREATE</code> can also add more complex patterns.</p>
 </div>
 
 <div class="imageblock">
 <p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/graphdb-gve.png" alt="graphdb gve">
-</p>
-</div>
-
-
-<div class="paragraph">
-<p><em>The building blocks of the Property Graph</em></p>
-</div>
-
-
-
-<div class="paragraph">
-<p>There is one core consistent rule in a graph database: "No broken links".
-Since a relationship always has a start and end node, you can’t delete a node without also deleting its associated relationships.
-You can also always assume that an existing relationship will never point to a non-existing endpoint.</p>
-</div>
-
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/property_graph_model.png" alt="property graph model">
-</p>
-</div>
-<div class="ulist side-nav">
-<ul>
-<li>
-<a href="http://watch.neo4j.org/video/103466968">Webinar: Intro to Neo4j by Nicole White</a>
-</li>
-<li>
-<a href="/developer/guide-intro-to-graph-modeling">Intro to Graph Modeling</a>
-</li>
-<li>
-<a href="/online-course">Training: Online Intro Course</a>
-</li>
-<li>
-<a href="/learning-neo4j-book/">Book: Learning Neo4j by Rik Van Bruggen</a>
-</li>
-</ul>
-</div>
-</div>
-<div  id="_what_is_neo4j" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>What is Neo4j?</h3>
-
-
-<div class="paragraph">
-<p>Sponsored by Neo Technology, Neo4j is an open-source NoSQL graph database implemented in Java and Scala.
-With development starting in 2003, it has been publicly available since 2007.
-The source code and issue tracking are available on <a href="https://github.com/neo4j/neo4j">GitHub</a>, with support readily available on Stack Overflow and the Neo4j Google group.
-Neo4j is used today by hundreds of thousands of companies and organizations in almost all industries.
-Use cases include matchmaking, network management, software analytics, scientific research, routing, organizational and project management, recommendations, social networks, and more.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Neo4j implements the Property Graph Model efficiently down to the storage level.
-As opposed to graph processing or in-memory libraries, Neo4j provides full database characteristics including ACID transaction compliance, cluster support, and runtime failover, making it suitable to use graph data in <strong>production scenarios</strong>.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Some particular features make Neo4j very popular among users, developers, and DBAs:</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-Materializing of relationships at creation time, resulting in no penalties for complex runtime queries
-</li>
-<li>
-Constant time traversals for relationships in the graph both in depth and in breadth due to efficient representation of nodes and relationships
-</li>
-<li>
-All relationships in Neo4j are equally important and fast, making it possible to materialize and use new relationships later on to "shortcut" and speed up the domain data when new needs arise
-</li>
-<li>
-Compact storage and memory caching for graphs, resulting in efficient scale-up and billions of nodes in one database on moderate hardware
-</li>
-<li>
-Written on top of the JVM
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/neo4j-nosql.png" alt="neo4j nosql">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/first_steps_friends_network.jpg" alt="first steps friends network" width="400">
 </p>
 </div>
 </div>
-<div  id="_neo4j_editions" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Neo4j Editions</h3>
-
-
-<div class="paragraph">
-<p>Neo4j’s free and open-source <em>Community</em> edition is a high-performance, fully ACID-transactional database. The <em>Community</em> edition includes (but is not limited to) all the functionality described previously in this section.
-Neo4j&#8217;s <em>Enterprise</em> editions provide all of the functionality of the Community edition in addition to <strong>scalable clustering, fail-over, high-availability, live backups, and comprehensive monitoring</strong>.
-<em>Learn more about the <a href="/editions">Community and Enterprise editions</a>.</em></p>
-</div>
-
-<div class="ulist side-nav">
-<ul>
-<li>
-<a href="/developer/get-started/guide-neo4j-browser">Neo4j Browser Intro</a>
-</li>
-<li>
-<a href="/developer/cypher/">Cypher Query Language</a>
-</li>
-<li>
-<a href="/developer/language-guides">Neo4j Language Drivers</a>
-</li>
-<li>
-<a href="/editions">Community and Enterprise editions</a>
-</li>
-</ul>
+<div  id="_find_someone_in_your_network_who_can_help_you_learn_neo4j" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Find Someone in your Network Who Can Help You Learn Neo4j</h3>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>MATCH (you {name:"You"})
+MATCH (expert)-[:WORKED_WITH]-&gt;(db:Database {name:"Neo4j"})
+MATCH path = shortestPath( (you)-[:FRIEND*..5]-(expert) )
+RETURN db,expert,path</code></pre>
 </div>
 </div>
-<div  id="_neo4j_server" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Neo4j Server</h3>
-
-
-<div class="paragraph">
-<p>You can download Neo4j from <code><a href="http://neo4j.com/download">http://neo4j.com/download</a></code> and install it as a server on all operating systems.
-By default, the Neo4j Server is bundled with an interactive, web-based database interface bound to <code><a href="http://localhost:7474" class="bare">http://localhost:7474</a></code>.
-The simplest way of getting started is to use Neo4j&#8217;s database browser to execute your graph queries (written in <a href="/developer/cypher">Cypher</a>) in a workbench-like fashion.
-Results are presented as either intuitive graph visualizations or as easy-to-read, exportable tables.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>A remote Neo4j server can be accessed via its Cypher HTTP API, either directly or through one of the many available <a href="/developer/language-guides">language drivers</a>.
-For high performance special cases, you can write Neo4j server extensions in any JVM language to access Neo4j&#8217;s internal database engine directly without network overhead.</p>
-</div>
-
 </div>
                     </div>
                     <div class="large-3 large-pull-9 columns">

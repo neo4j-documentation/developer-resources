@@ -565,7 +565,9 @@ ul.none li {
 	font-size:3em;
 	padding-left:1em;
 }
-
+.button.apply {
+	font-size:1.5em;
+}
 </style>
 <link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/master/devicon.min.css">
  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -596,52 +598,157 @@ ul.none li {
 
 <div class="g-ytsubscribe" data-channelid="UCvze3hU6OZBkB1vkhH2lH9Q" data-layout="full" data-count="default"></div>
 </div>
-<div  id="_live_session" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Live session</h3>
+<div  id="_live" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Live</h3>
+<div class="row">
+	<div class="small-12">
+		<div class="live-videos-list">
+      There is no live session at the moment but check below for upcoming and previous sessions.
+    </div>
+	</div>
+</div>
+</div>
+<div  id="_upcoming_sessions" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Upcoming sessions</h3>
 
 
 <div class="paragraph">
-<p>Our <a href="https://www.meetup.com/Neo4j-Online-Meetup/events/237696549/">next live streamed event</a> is on 2nd March 2017 at 17:00 UTC.</p>
+<p>We&#8217;ve got the following online meetups coming up soon:</p>
 </div>
 
+<div class="row">
+	<div class="small-12">
+		<div class="upcoming-videos-list">
+      There are no upcoming sessions scheduled at the moment but check below for the videos from past sessions.
+    </div>
+	</div>
+</div>
+</div>
+<div  id="_previous_sessions" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Previous sessions</h3>
 
 
 <div class="paragraph">
-<p><a href="https://twitter.com/barrasadv">Jesus Barrasa</a>, Senior Pre Sales Engineer at Neo4j, and <a href="https://twitter.com/markhneedham">Mark Needham</a>, Software Engineer (Clustering) at Neo4j, will explore how the two graph worlds of semantic technologies and graph databases relate.</p>
+<p>You can watch videos from previous online meetups:</p>
 </div>
 
+<div class="row">
+	<div class="small-12 columns">
+		<ul class="past-videos-list item-list small-block-grid-1 medium-block-grid-3">
+		</ul>
+
+	</div>
+</div>
 
 
 <div class="paragraph">
-<p>Don&#8217;t forget to <a href="https://www.meetup.com/Neo4j-Online-Meetup/events/237696549/">register on the meetup page</a>.</p>
+<p>All videos are also available on the <a href="https://www.youtube.com/playlist?list=PL9Hl4pk2FsvVnz4oi0F8UXiD3nMNqsRO2" target="_blank">Neo4j Online Meetup playlist</a>.</p>
 </div>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/SvwIqzaoYMo" frameborder="0" allowfullscreen></iframe>
-</div>
-<div  id="_past_sessions" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Past sessions</h3>
+<script>
+    function googleApiClientReady() {
+        gapi.client.setApiKey("AIzaSyB3jZLnBi-Cqggq8BCq9xTV8YMgu-x_kTc");
+        gapi.client.load('youtube', 'v3', function() {
+            var requestOptions = {
+                    playlistId: "PL9Hl4pk2FsvVnz4oi0F8UXiD3nMNqsRO2",
+                    part: 'snippet',
+                    maxResults: 6
+            };
+
+            var request = gapi.client.youtube.playlistItems.list(requestOptions);
+            request.execute(function(response) {
+
+                videoString = "";
+                $.each(response['items'], function(i,v) {
+                    var id = v['snippet']['resourceId']['videoId'],
+                        thumbnail = v['snippet']['thumbnails']['medium'],
+                        title = v['snippet']['title'],
+                        description = v['snippet']['description'],
+                        video_id = v['snippet']['resourceId']['videoId'];
+
+                    if (i > 2) {
+                        videoString += '<li class="text-center extra-item" style="display:none">';
+                    } else {
+                        videoString += '<li class="text-center">';
+                    }
+
+                    videoString += '<a href="https://www.youtube.com/watch?v=' + video_id + '&list=PL9Hl4pk2FsvVnz4oi0F8UXiD3nMNqsRO2" target="_blank">';
+                        videoString += '<div class="videobox">';
+                            videoString += '<img src="' + thumbnail['url'] + '">';
+                            videoString += '<span></span>';
+                        videoString += '</div>';
+                    videoString += '</a>';
+                    videoString += '<h5>' + title + '</h5>';
+                    videoString += '</li>';
+
+                });
+                $(".past-videos-list").append(videoString);
+            });
+
+            var upcomingRequest = gapi.client.youtube.search.list({
+              part: 'snippet',
+              channelId: "UCvze3hU6OZBkB1vkhH2lH9Q",
+              maxResults: 1,
+              eventType: 'upcoming',
+              type: 'video'
+            });
+
+            upcomingRequest.execute(function(response) {
+              videoString = "";
+              $.each(response['items'], function(i,v) {
+
+                  var thumbnail = v['snippet']['thumbnails']['high'],
+                      title = v['snippet']['title'],
+                      description = v['snippet']['description'],
+                      video_id = v['id']['videoId'];
 
 
-<div class="paragraph">
-<p>Below you can watch videos of previous presentations.</p>
-</div>
+                  videoString += '<iframe width="560" height="315" src="https://www.youtube.com/embed/'  + video_id + '" frameborder="0" allowfullscreen></iframe>';
+                  videoString += "<hr />"
 
-<div  id="_exploring_trumpworld_with_neo4j" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Exploring TrumpWorld with Neo4j</h3>
+              });
+
+							if(videoString != "") {
+								$(".upcoming-videos-list").replaceWith(videoString);
+							}
+            });
+
+						var liveRequest = gapi.client.youtube.search.list({
+              part: 'snippet',
+              channelId: "UCvze3hU6OZBkB1vkhH2lH9Q",
+              maxResults: 1,
+              eventType: 'live',
+              type: 'video'
+            });
+
+            liveRequest.execute(function(response) {
+              videoString = "";
+              $.each(response['items'], function(i,v) {
+
+                  var thumbnail = v['snippet']['thumbnails']['high'],
+                      title = v['snippet']['title'],
+                      description = v['snippet']['description'],
+                      video_id = v['id']['videoId'];
 
 
-<div class="paragraph">
-<p>14th February 2017 at 17:00 UTC</p>
-</div>
+                  videoString += '<iframe width="560" height="315" src="https://www.youtube.com/embed/'  + video_id + '" frameborder="0" allowfullscreen></iframe>';
+                  videoString += "<hr />"
+
+              });
+
+							if(videoString != "") {
+								$(".live-videos-list").replaceWith(videoString);
+							}
+
+            });
+
+        });
+
+    };
+</script>
 
 
-
-<div class="paragraph">
-<p>In this talk <a href="https://twitter.com/mesirii">Michael Hunger</a>, Head of Developer Relations EMEA at Neo4j, showed us how to explore Buzzfeed&#8217;s TrumpWorld dataset.</p>
-</div>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/pW9boJoUxO0" frameborder="0" allowfullscreen></iframe>
-</div>
+<script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
 </div>
                     </div>
                     <div class="large-3 large-pull-9 columns">
@@ -735,6 +842,7 @@ ul.none li {
                   <div class="content " id="panel6">
                      <ul>
                         <li><a href="/developer/integration/ecosystem/">Tools &amp; Libs for Neo4j</a></li>
+                        <li><a href="/developer/integration/graphql/">GraphQL</a></li>
                         <li><a href="/developer/integration/docker/">Docker</a></li>
                         <li><a href="/developer/integration/apache-spark/">Apache Spark</a></li>
                         <li><a href="/developer/integration/elastic-search/">Elastic-Search</a></li>
@@ -751,11 +859,25 @@ ul.none li {
                   </a>
                   <div class="content inactive" id="panel7">
                      <ul>
-                        <li><a href="/developer/in-production/guide-cloud-deployment/">Cloud Deployment</a></li>
-                        <!--li><a href="/developer/in-production/guide-sizing-and-hardware-calculator/">Sizing + Hardware Calculator</a></li-->
+                        <li><a href="/developer/guide-cloud-deployment/">Cloud Deployment</a></li>
                         <li><a href="/developer/in-production/guide-performance-tuning/">Performance Tuning</a></li>
                         <li><a href="/developer/in-production/guide-clustering-neo4j/">Clustering Neo4j</a></li>
 	                    <li><a href="/graphacademy/online-course-prod/">In Production Course</a></li>
+                     </ul>
+                  </div>
+               </dd>
+            </dl>
+            <dl class="accordion">
+               <dd class="accordion-navigation inactive">
+                  <a href="/developer/guide-cloud-deployment/">
+                     <h5>Neo4j in the Cloud</h5>
+                  </a>
+                  <div class="content inactive" id="panel9">
+                     <ul>
+                        <li><a href="/developer/guide-cloud-deployment/neo4j-cloud-aws-ec2-ami/">Deploying to EC2</a></li>
+                        <li><a href="https://neo4j.com/blog/deploy-neo4j-microsoft-azure-part-2">Deploying to Azure</a></li>
+                        <li><a href="/developer/guide-cloud-deployment/guide-orchestration">Orchestration Tools</a></li>
+                        <li><a href="/developer/guide-cloud-deployment/neo4j-cloud-hosting-providers">Cloud Hosting Providers</a></li>
                      </ul>
                   </div>
                </dd>
