@@ -1,0 +1,49 @@
+= Neo4j on Orchestration Tools
+:slug: guide-orchestration
+:level: Intermediate
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 1
+:section: Neo4j in the Cloud
+:section-link: guide-cloud-deployment
+
+.Goals
+[abstract]
+This guide explains how to run Neo4j on orchestration frameworks such as Mesosphere DC/OS and Kubernetes.
+
+.Prerequisites
+[abstract]
+You should be familiar with the orchestration framework on which you want to deploy.
+
+toc::[]
+
+Orchestration systems are systems for automating the deployment, scaling, and management of containerized applications.
+You can follow the guides below to run Neo4j on some popular orchestration systems.
+
+=== Mesosphere DC/OS
+
+link:https://docs.mesosphere.com/[Mesosphere DC/OS^] is built around the long established link:http://mesos.apache.org/[Apache Mesos^] project.
+Mesos is used by companies such as Twitter, Apple, Netflix, or Airbnb to manage their production clusters.
+
+Neo4j is link:https://github.com/neo4j-contrib/neo4j-dcos[available as a Universe application^] and can be installed via the link:https://mesosphere.github.io/marathon/[Marathon container orchestration platform^].
+
+You can read more in the https://neo4j.com/blog/neo4j-mesosphere-dc-os/[release blog post^] or watch the presentation that Johannes Unterstein gave at the link:/developer/online-meetup/[Neo4j online meetup^].
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/qvJ7V33NfsA" frameborder="0" allowfullscreen></iframe>
+++++
+
+=== Kubernetes
+
+Kubernetes is an open-source system for automating deployment, scaling, and management of containerized applications that builds on 15 years of experience of running production workloads at Google.
+
+Neo4j core servers can be installed using the StatefulSet abstraction, which was introduced as a beta feature in v1.5.0.
+Read replicas can be installed using the replication controller abstraction.
+
+Mark Needham's https://github.com/mneedham/neo4j-kubernetes[neo4j-kubernetes^] repository has full instructions to get a cluster up and running.
+You can also watch Dippy Aggarwal's talk from GraphConnect San Francisco 2016.
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/GSfam8De7K0" frameborder="0" allowfullscreen></iframe>
+++++
