@@ -9,9 +9,9 @@ active[(@document.attr "section-link", "get-started")]=:active;
 <%= File.new("_templates/head_partial.erb").read %>
 <body>
 <%= File.new("_templates/top_bar_partial.erb").read %>
-<div class="marquee blue">
+<div class="marquee-neo">
     <div class="row text-center">
-        <div class="medium-10 small-centered columns">
+        <div class="columns">
             <h1 class="entry-title"><%= (doctitle(:sanitize => true) || (attr 'untitled-label')) %></h1>
         </div>
     </div>
@@ -23,7 +23,7 @@ active[(@document.attr "section-link", "get-started")]=:active;
             <div class="row" style="padding-top: 10px;">
                 <div class="columns large-12" style="padding-top:10px;">
                     <ul class="breadcrumbs">
-                        <li><a href="/developer">Developer Guides</a></li>
+                        <li><a href="/developer">Developer</a></li>
                         <% if ((@document.attr :section, 3) == 3) %>
                         <li><a href="../"><%= (@document.attr :section, "Guide") %></a></li>
                         <% end %>
