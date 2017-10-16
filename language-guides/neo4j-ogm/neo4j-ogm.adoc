@@ -28,7 +28,7 @@ When developing with Neo4j, please use JDK 8 and your favorite IDE.
 toc::[]
 
 // tag::intro[]
-=== Neo4j-OGM 
+=== Neo4j-OGM
 
 While using the Cypher query language alongside the Java driver works well for small projects and more advanced queries, the boilerplate of CRUD operations often gets tedious.
 
@@ -71,15 +71,12 @@ The Neo4j-OGM supports the features you would expect:
 | icon:play-circle[] Example-University | https://github.com/neo4j-examples/neo4j-ogm-university
 |===
 
-:version: {neo4j-ogm-version}
+:ogm-version: {neo4j-ogm-version}
 include::https://raw.githubusercontent.com/neo4j/neo4j-ogm/master/neo4j-ogm-docs/src/main/asciidoc/reference/getting-started.adoc[lines=3..-1,leveloffset=+1]
-
 
 === Minimal Code Snippet
 
 This code example is taken from the Example Project (see below).
-
-// todo replace with actual include
 
 [source,java]
 ----
@@ -95,7 +92,7 @@ public class Movie {
 @NodeEntity
 public class Actor extends DomainObject {
 
-   @GraphId
+   @Id @GeneratedValue
    private Long id;
 
    @Property(name="name")
@@ -108,10 +105,10 @@ public class Actor extends DomainObject {
 
 @RelationshipEntity(type="ACTED_IN")
 public class Role {
-    @GraphId   private Long relationshipId;
-    @Property  private String title;
-    @StartNode private Actor actor;
-    @EndNode   private Movie movie;
+    @Id @GeneratedValue  private Long relationshipId;
+    @Property            private String title;
+    @StartNode           private Actor actor;
+    @EndNode             private Movie movie;
 }
 ----
 
