@@ -8,6 +8,8 @@
 :section: Develop with Neo4j
 :section-link: language-guides
 
+include::../_includes/versions.txt[]
+
 .Goals
 [abstract]
 For Java developers who use the Spring Framework or Spring Boot, this guide introduces Spring integration but emphasizes the Spring Data Neo4j library.
@@ -58,7 +60,7 @@ Spring Data Neo4j integrates the link:../neo4j-ogm[Neo4j-OGM] library to provide
 Additionally it provides support for Spring Conversions, Transaction Handling, Spring-Data Repositories, Spring-Data REST and Spring-Boot.
 
 To get started, add Spring Data Neo4j as a dependency, then configure the necessary beans in your Java config.
-Then you can use Neo4jTemplate to manage your entities (optionally annotated) and define Spring-Data-Repositories as convenient interfaces to your persistence layer.
+Then you can annotate (optional) your entities and define Spring-Data-Repositories as convenient interfaces to your persistence layer.
 
 ==== Features
 
@@ -71,6 +73,75 @@ Then you can use Neo4jTemplate to manage your entities (optionally annotated) an
 * persistence lifecycle events
 
 ==== Quickstart
+
+.Spring-Data-Neo4j Dependency
+[source,xml,subs="verbatim,attributes"]
+----
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.data</groupId>
+        <artifactId>spring-data-neo4j</artifactId>
+        <version>{spring-data-neo4j-version}</version>
+    </dependency>
+</dependencies>
+----
+
+.Spring-Config
+[source,java]
+----
+@Configuration
+@EnableNeo4jRepositories("org.neo4j.cineasts.repository")
+@EnableTransactionManagement
+@ComponentScan("org.neo4j.cineasts")
+public class PersistenceContext {
+
+    @Override
+    public SessionFactory getSessionFactory() {
+        return new SessionFactory("org.neo4j.cineasts.domain");
+    }
+}
+----
+
+.Entities
+[source,java]
+----
+@NodeEntity
+public class Movie {
+
+  @Id @GeneratedValue Long id;
+
+  String title;
+
+  Person director;
+
+  @Relationship(type="ACTED_IN", direction = Relationship.INCOMING)
+  Set<Person> actors = new HashSet<>();
+}
+----
+
+.Declare a repository interface
+[source,java]
+----
+interface MovieRepository extends Neo4jRepository<Movie, Long> {
+
+  @Query("MATCH (m:Movie)<-[rating:RATED]-(user)
+          WHERE id(m) = {movieId} RETURN rating")
+  List<Rating> getRatings(@Param("movieID") Long movieId);
+
+  List<Movie> findByTitle(String title);
+}
+----
+
+.Use repository
+[source,java]
+----
+@Autowired MovieRepository repo;
+
+List<Movie> movie = repo.findByTitle("The Matrix");
+
+List<Rating> ratings = repo.getRatings(movieId);
+----
+
 We provide a https://github.com/neo4j-examples?q=sdn[number of example projects] using Spring Data Neo4j, Spring Boot and Web-Frameworks like Angular.js.
 
 :maven-sdn: http://search.maven.org/#search|ga|1|a%3A%22spring-data-neo4j%22
