@@ -13,11 +13,11 @@ LOGGER = Logger.new(STDOUT)
 require './html_transformer' # Neo Tech specific
 
 ASCIIDOC_TEMPLATES_DIR = ENV['ASCIIDOC_TEMPLATES_DIR'] || '_templates'
-IMAGE_BASE_URL = ENV['IMAGE_BASE_URL'] || '//s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/' # '.'
+IMAGE_BASE_URL = ENV['IMAGE_BASE_URL'] || 'http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/' # '.'
 EXAMPLES = ENV['EXAMPLES'] || 'https://github.com/neo4j-examples'
 MANUAL = ENV['MANUAL'] || 'http://neo4j.com/docs/developer-manual/current'
 OPSMANUAL = ENV['OPSMANUAL'] || 'http://neo4j.com/docs/operations-manual/current'
-GITHUB = ENV['GITHUB'] || 'https://github.com/neo4j-contrib/developer/tree/gh-pages' 
+GITHUB = ENV['GITHUB'] || 'https://github.com/neo4j-contrib/developer/tree/gh-pages'
 ASCIIDOC_ATTRIBUTES = %W(allow-uri-read
                          icons=font
                          linkattrs
@@ -47,7 +47,7 @@ renderer = AsciiPress::Renderer.new( # after_conversion: HtmlTransformer.method(
                                     })
 
 adoc_file_paths.each do |adoc_file_path|
-  dir = File.join('.', File.dirname(adoc_file_path))
+  dir = File.join('deploy', File.dirname(adoc_file_path))
   FileUtils.mkdir_p(dir)
   html_file_path = File.join(dir, 'index.html')
 

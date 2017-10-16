@@ -1,0 +1,178 @@
+= Neo4j Online Meetup
+:slug: online-meetup
+:toc:
+:toc-placement!:
+:toc-title: Topics
+:toclevels: 1
+:section: Contributing to Neo4j
+:section-link: resources
+:section-level: 1
+:video_playlist_key: PL9Hl4pk2FsvVnz4oi0F8UXiD3nMNqsRO2
+:youtube_api_key: AIzaSyB3jZLnBi-Cqggq8BCq9xTV8YMgu-x_kTc
+:youtube_channel_id: UCvze3hU6OZBkB1vkhH2lH9Q
+:num_videos: 6
+
+== Join us for online sessions streamed on YouTube Live
+
+In February 2017 we started running online sessions so that people in regions that don't have physical meetups can get fresh Neo4j content.
+
+We post new events on the link:https://www.meetup.com/Neo4j-Online-Meetup/[Neo4j Online Meetup] group so be sure to link:https://www.meetup.com/Neo4j-Online-Meetup/join[join the group] to be notified about these.
+
+You can also link:https://www.youtube.com/neo4j?sub_confirmation=1[subscribe to our YouTube channel].
+
+++++
+<script src="https://apis.google.com/js/platform.js"></script>
+
+<div class="g-ytsubscribe" data-channelid="UCvze3hU6OZBkB1vkhH2lH9Q" data-layout="full" data-count="default"></div>
+++++
+
+== Live
+
+++++
+<div class="row">
+	<div class="small-12">
+		<div class="live-videos-list">
+      There is no live session at the moment but check below for upcoming and previous sessions.
+    </div>
+	</div>
+</div>
+++++
+
+
+== Upcoming sessions
+
+We've got the following online meetups coming up soon:
+
+++++
+<div class="row">
+	<div class="small-12">
+		<div class="upcoming-videos-list">
+      There are no upcoming sessions scheduled at the moment but check below for the videos from past sessions.
+    </div>
+	</div>
+</div>
+++++
+
+== Previous sessions
+
+You can watch videos from previous online meetups:
+
+++++
+<div class="row">
+	<div class="small-12 columns">
+		<ul class="past-videos-list item-list small-block-grid-1 medium-block-grid-3">
+		</ul>
+
+	</div>
+</div>
+++++
+
+All videos are also available on the link:https://www.youtube.com/playlist?list=PL9Hl4pk2FsvVnz4oi0F8UXiD3nMNqsRO2[Neo4j Online Meetup playlist, window="_blank"].
+
+[subs=attributes]
+++++
+<script>
+    function googleApiClientReady() {
+        gapi.client.setApiKey("{youtube_api_key}");
+        gapi.client.load('youtube', 'v3', function() {
+            var requestOptions = {
+                    playlistId: "{video_playlist_key}",
+                    part: 'snippet',
+                    maxResults: {num_videos}
+            };
+
+            var request = gapi.client.youtube.playlistItems.list(requestOptions);
+            request.execute(function(response) {
+
+                videoString = "";
+                $.each(response['items'], function(i,v) {
+                    var id = v['snippet']['resourceId']['videoId'],
+                        thumbnail = v['snippet']['thumbnails']['medium'],
+                        title = v['snippet']['title'],
+                        description = v['snippet']['description'],
+                        video_id = v['snippet']['resourceId']['videoId'];
+
+                    if (i > 2) {
+                        videoString += '<li class="text-center extra-item" style="display:none">';
+                    } else {
+                        videoString += '<li class="text-center">';
+                    }
+
+                    videoString += '<a href="https://www.youtube.com/watch?v=' + video_id + '&list={video_playlist_key}" target="_blank">';
+                        videoString += '<div class="videobox">';
+                            videoString += '<img src="' + thumbnail['url'] + '">';
+                            videoString += '<span></span>';
+                        videoString += '</div>';
+                    videoString += '</a>';
+                    videoString += '<h5>' + title + '</h5>';
+                    videoString += '</li>';
+
+                });
+                $(".past-videos-list").append(videoString);
+            });
+
+            var upcomingRequest = gapi.client.youtube.search.list({
+              part: 'snippet',
+              channelId: "{youtube_channel_id}",
+              maxResults: 1,
+              eventType: 'upcoming',
+              type: 'video'
+            });
+
+            upcomingRequest.execute(function(response) {
+              videoString = "";
+              $.each(response['items'], function(i,v) {
+
+                  var thumbnail = v['snippet']['thumbnails']['high'],
+                      title = v['snippet']['title'],
+                      description = v['snippet']['description'],
+                      video_id = v['id']['videoId'];
+
+
+                  videoString += '<iframe width="560" height="315" src="https://www.youtube.com/embed/'  + video_id + '" frameborder="0" allowfullscreen></iframe>';
+                  videoString += "<hr />"
+
+              });
+
+							if(videoString != "") {
+								$(".upcoming-videos-list").replaceWith(videoString);
+							}
+            });
+
+						var liveRequest = gapi.client.youtube.search.list({
+              part: 'snippet',
+              channelId: "{youtube_channel_id}",
+              maxResults: 1,
+              eventType: 'live',
+              type: 'video'
+            });
+
+            liveRequest.execute(function(response) {
+              videoString = "";
+              $.each(response['items'], function(i,v) {
+
+                  var thumbnail = v['snippet']['thumbnails']['high'],
+                      title = v['snippet']['title'],
+                      description = v['snippet']['description'],
+                      video_id = v['id']['videoId'];
+
+
+                  videoString += '<iframe width="560" height="315" src="https://www.youtube.com/embed/'  + video_id + '" frameborder="0" allowfullscreen></iframe>';
+                  videoString += "<hr />"
+
+              });
+
+							if(videoString != "") {
+								$(".live-videos-list").replaceWith(videoString);
+							}
+
+            });
+
+        });
+
+    };
+</script>
+
+
+<script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+++++

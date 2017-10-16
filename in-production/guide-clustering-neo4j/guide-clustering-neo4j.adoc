@@ -32,16 +32,16 @@ The Neo4j High Availability Cluster is a fault tolerant, full master-slave repli
 Any data (graph or index) created on the master is propagated to the slaves depending on the settings of the master `ha.tx_push_factor` (number of slaves to actively push to during commit) and slaves `ha.pull_interval` (frequency of pulling updates from the master).
 
 [role=side-nav]
-* link:{opsmanual}/introduction/design-considerations/#_high_availability[Neo4j High Availability,role=docs]
-* link:{opsmanual}/tutorial/#ha-setup-tutorial[Tutorial Cluster Setup,role=docs]
+* link:{opsmanual}/clustering/high-availability/[Neo4j High Availability,role=docs]
+* link:{opsmanual}/tutorial/highly-available-cluster/[Tutorial Cluster Setup,role=docs]
 * link:http://jimwebber.org/2011/03/strategies-for-scaling-neo4j/[Strategies for Scaling Neo4j,role=blog]
 
 
 === Configuring a Two-Slave Cluster with an Arbiter
 
-There's a link:{opsmanual}/tutorial/#ha-setup-tutorial[step-by-step tutorial for setting up a HA cluster].
+There's a link:{opsmanual}/tutorial/highly-available-cluster/[step-by-step tutorial for setting up a HA cluster].
 For a two-node cluster, you'll actually want to run three separate machines, and use the Neo4j arbiter on the third.
-Details on the arbiter are available in the link:{opsmanual}/deployment/high-availability/#arbiter-instances[Neo4j Manual].
+Details on the arbiter are available in the link:{opsmanual}/clustering/high-availability/arbiter-instances/[Neo4j Operations Manual].
 The configuration for the arbiter is identical to that of a regular instance, with the exception of anything relating to the actual graph database itself (since an arbiter doesn't hold any data).
 
 The `ha.initial_hosts` property should be the same on all the instances, including the arbiter.
@@ -51,7 +51,7 @@ The arbiter should have a unique `ha.server_id` (`3` is fine).
 === Setting a Server in Slave-Only Mode
 
 // what is the new link?
-See the link:{opsmanual}/deployment/high-availability/#ha-configuration[documentation] on `ha.slave_only`.
+See the link:{opsmanual}/clustering/high-availability/configuration/[documentation] on `ha.slave_only`.
 
 You might want to configure a machine with that setting if it’s acting as a reporting instance but you need to make sure that two members don’t have that setting, or you won’t have any failover in the cluster.
 

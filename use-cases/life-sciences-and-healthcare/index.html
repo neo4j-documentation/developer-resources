@@ -13,7 +13,7 @@
 /* <![CDATA[ */
 var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
 /* ]]> */
-</script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/neo4j-download/js/download.js?ver=4.5'></script> <script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/cookie-law-info/js/cookielawinfo.js?ver=1.5.3'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/jquery-updater/js/jquery-migrate-1.3.0.min.js?ver=1.3.0'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/vendor/modernizr.min.js?ver=4.5'></script> <script type='text/javascript' src='/developer/assets/js/foundation.js'></script> <script type='text/javascript' src='/developer/assets/js/codemirror.min.js'></script> <script type='text/javascript' src='/developer/assets/js/neo_codemirror.js'></script> <script type='text/javascript' src='//use.typekit.net/rdt4xku.js?ver=4.5'></script> <script type='text/javascript' src='/developer/assets/js/misc.js'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/bundle.js?ver=2016.03.11'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/neo_calculator_v3.js?ver=4.5'></script> <link rel='https://api.w.org/' href="http://neo4j.com/wp-json/"/> <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://neo4j.com/xmlrpc.php?rsd"/> <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://neo4j.com/wp-includes/wlwmanifest.xml"/> <meta name="generator" content="WordPress 4.5"/> <link rel='shortlink' href="http://neo4j.com/?p=38241"/> <link rel="alternate" type="application/json+oembed" href="http://neo4j.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fneo4j.com%2Fdeveloper%2Fget-started%2F"/> <link rel="alternate" type="text/xml+oembed" href="http://neo4j.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fneo4j.com%2Fdeveloper%2Fget-started%2F&#038;format=xml"/> </head>
+</script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/neo4j-download/js/download.js?ver=4.5'></script> <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/cookie-law-info/js/cookielawinfo.js?ver=1.5.3'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/jquery-updater/js/jquery-migrate-1.3.0.min.js?ver=1.3.0'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/vendor/modernizr.min.js?ver=4.5'></script> <script type='text/javascript' src='/developer/assets/js/foundation.js'></script> <script type='text/javascript' src='/developer/assets/js/codemirror.min.js'></script> <script type='text/javascript' src='/developer/assets/js/neo_codemirror.js'></script> <script type='text/javascript' src='https://use.typekit.net/rdt4xku.js?ver=4.5'></script> <script type='text/javascript' src='/developer/assets/js/misc.js'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/bundle.js?ver=2016.03.11'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/neo_calculator_v3.js?ver=4.5'></script> <link rel='https://api.w.org/' href="http://neo4j.com/wp-json/"/> <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://neo4j.com/xmlrpc.php?rsd"/> <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://neo4j.com/wp-includes/wlwmanifest.xml"/> <meta name="generator" content="WordPress 4.5"/> <link rel='shortlink' href="http://neo4j.com/?p=38241"/> <link rel="alternate" type="application/json+oembed" href="http://neo4j.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fneo4j.com%2Fdeveloper%2Fget-started%2F"/> <link rel="alternate" type="text/xml+oembed" href="http://neo4j.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fneo4j.com%2Fdeveloper%2Fget-started%2F&#038;format=xml"/> </head>
 
 <body>
 <div class="top-bar-container contain-to-grid">
@@ -553,10 +553,24 @@ ul.none li {
 .admonitionblock td.icon .icon-caution:before{content:"\f06d";color:#bf3400}
 .admonitionblock td.icon .icon-important:before{content:"\f06a";color:#bf0000}
 
-
+.c2a-icons {
+/*	text-align:center;*/
+}
+.c2a-icons div {
+	display:inline-block;
+	font-size:0.6em;
+	width:48%;
+}
+.c2a-icons div i {
+	font-size:3em;
+	padding-left:1em;
+}
+.button.apply {
+	font-size:1.5em;
+}
 </style>
-
-
+<link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/master/devicon.min.css">
+ <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
             <div>
                 <div class="row" style="padding-left: 0; padding-right: 0;">
                     <div class="large-9 large-push-3 columns guide-section-content">
@@ -565,7 +579,7 @@ ul.none li {
 
 
 <div class="paragraph">
-<p><span class="image" style="float: left"><img src="//s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/icon-guide-theory.png" alt="icon guide theory"></span></p>
+<p><span class="image" style="float: left"><img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/icon-guide-theory.png" alt="icon guide theory"></span></p>
 </div>
 
 </div>
@@ -587,13 +601,13 @@ ul.none li {
 
 
 <div class="paragraph">
-<p>It started a long time ago with a <a href="http://neo4j.com/blog/graph-databases-in-life-sciences-workshop/">workshop at the University of Ghent</a> bringing together people from the field with graph database experts.</p>
+<p>It started a while time ago in 2012 with a <a href="http://neo4j.com/blog/graph-databases-in-life-sciences-workshop/">workshop at the University of Ghent</a> bringing together people from the field with graph database experts.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Following that fruitful exchange we started the <a href="http://groups.google.com/group/neo4j-biotech">Neo4j-Biotech Google Group</a> to encourage sharing and collaboration on that topic. If you are not yet a member, join today.</p>
+<p>Following that fruitful exchange we started the <a href="http://groups.google.com/group/neo4j-biotech">Neo4j-Biotech Google Group</a> to encourage sharing and collaboration on that topic. If you are not yet a member, please join today.</p>
 </div>
 
 
@@ -605,7 +619,7 @@ ul.none li {
 
 
 <div class="paragraph">
-<p>If you are taking your first steps towards using a graph database, we offer a dedicated Accelerator Program to jumpstart your efforts.</p>
+<p>If you are taking your first steps towards using a graph database, we offer support to jumpstart your efforts.</p>
 </div>
 
 <div class="toc">
@@ -614,40 +628,45 @@ ul.none li {
 <ul class="sectlevel1">
 <li><a href="#_neo4j_use_cases_in_life_sciences_and_healthcare">Neo4j Use Cases in Life Sciences and Healthcare</a>
 <ul class="sectlevel2">
-<li><a href="#_how_to_share_your_work_paper">How to share your work/paper</a></li>
-<li><a href="#_why_use_a_graph_database">Why use a graph database</a></li>
-<li><a href="#_neo4j_biotech_workshop">Neo4j Biotech Workshop</a></li>
-<li><a href="#_featured_projects">Featured Projects</a></li>
-<li><a href="#_project_catalogue">Project Catalogue</a></li>
-<li><a href="#_publications">Publications</a></li>
+<li><a href="#_why_use_a_graph_database">Why use a Graph Database</a></li>
+<li><a href="#_graph_databases_in_life_and_health_sciences_workshop_berlin_21_june_2017">Graph Databases in Life and Health Sciences Workshop: Berlin, 21 June 2017</a></li>
 <li><a href="#_life_sciences_and_healthcare_accelerator_program">Life Sciences and Healthcare Accelerator Program</a></li>
+<li><a href="#_featured_projects">Featured Projects</a></li>
+<li><a href="#_publications">Publications</a></li>
 </ul>
 </li>
 </ul>
 
 </div>
 <hr>
-<div  id="_how_to_share_your_work_paper" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>How to share your work/paper</h3>
-
-</div>
 <div  id="_why_use_a_graph_database" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Why use a graph database</h3>
-<iframe width="680" height="383" src="https://www.youtube.com/embed/V7f2tGsNSck?showinfo=0&controls=2&autohide=1" frameborder="0" allowfullscreen></iframe>
+<h3>Why use a Graph Database</h3>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/V7f2tGsNSck?showinfo=0&controls=2&autohide=1" frameborder="0" allowfullscreen></iframe>
 </div>
-<div  id="_neo4j_biotech_workshop" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Neo4j Biotech Workshop</h3>
+<div  id="_graph_databases_in_life_and_health_sciences_workshop_berlin_21_june_2017" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Graph Databases in Life and Health Sciences Workshop: Berlin, 21 June 2017</h3>
 
 
 <div class="paragraph">
-<p>Following the success of our past workshop, we want to organize a follow up event, this time in London at the XXXX. We are aiming for Q1/Q2 2017 as a date.
-If you want to participate or submit a talk or paper, please let us know via xxx.</p>
+<p>We are very pleased to announce our second workshop for researchers interested in sharing and learning about Graph Databases in Life and Health Sciences.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>In our past workshop in Ghent, we had topics covering</p>
+<p>We are inviting researchers, practitioners and developers to present and attend.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>More details, as well as registration information, can be found <a href="https://www.eventbrite.com/e/neo4j-life-health-sciences-day-berlin-tickets-33238223421">here</a>.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>In our <a href="http://neo4j.com/blog/graph-databases-in-life-sciences-workshop/">past workshop in Ghent</a>, we had topics covering</p>
 </div>
 
 <div class="ulist">
@@ -673,271 +692,6 @@ Connecting protein databases in a large graph model
 </ul>
 </div>
 </div>
-<div  id="_featured_projects" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Featured Projects</h3>
-<div  id="_the_hetnet_awakens_by_daniel_himmelstein" class="sect3 "  >
-<h4>The Hetnet Awakens by Daniel Himmelstein</h4>
-
-
-<div class="paragraph">
-<p>Daniel Himmelstein’s Thesis Seminar for his PhD in Biological &amp; Medical Informatics at UCSF.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Here are the <a href="https://slides.com/dhimmel/thesis-seminar">slides</a> and an <a href="http://blog.dhimmel.com/phd-exhibit">online adaptation of the PhD Exhibit</a>.
-Daniel was also interviewed on our <a href="http://blog.bruggen.com/2016/08/podcast-interview-with-daniel.html">Graphistania Podcast</a>.</p>
-</div>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/H8DfXop8K7g" frameborder="0" allowfullscreen></iframe>
-</div>
-<div  id="__a_href_https_skillsmatter_com_skillscasts_9246_proteomics_and_graph_databases_the_symbiosis_of_associations_proteomics_and_graph_databases_the_symbiosis_of_associations_a_by_alejandro_brenes_murillo" class="sect3 "  >
-<h4><a href="https://skillsmatter.com/skillscasts/9246-proteomics-and-graph-databases-the-symbiosis-of-associations">Proteomics and Graph Databases, the symbiosis of associations</a> by Alejandro Brenes Murillo</h4>
-
-
-<div class="paragraph">
-<p>The proteome is the entire set of proteins that are produced or modified by an organism. It is an element that varies with time, stress, environmental conditions or distinct requirements that a cell might have. Join this talk by Alejandro Brenes Murillo to see how graph databases can be useful for proteome analysis.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>At the Lamond Lab in the University of Dundee, scientists are interested in modelling and understanding protein behaviour under different conditions and dimensions of analysis.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>In order to achieve this goal, they use graph databases to integrate and model the proteomics data, and study its effect on a specific proteome. The dimensions of analysis are multiple, yet be it turnover, localisation, cell cycle, protein complexes or biological response to stimuli, discovering the behaviour of proteins is key to understanding how organisms function, and how disease affects them.</p>
-</div>
-
-<iframe allowfullscreen="" data-progress="true" frameborder="0" height="390" id="vimeo-player" mozallowfullscreen="" src="//player.vimeo.com/video/189049643?api=1&amp;title=0" webkitallowfullscreen="" width="640"></iframe>
-</div>
-<div  id="__a_href_https_skillsmatter_com_skillscasts_7302_big_data_in_genomics_how_neo4j_helps_to_develop_new_drugs_big_data_in_genomics_how_neo4j_helps_to_develop_new_drugs_a_by_martin_preusse" class="sect3 "  >
-<h4><a href="https://skillsmatter.com/skillscasts/7302-big-data-in-genomics-how-neo4j-helps-to-develop-new-drugs">Big Data in Genomics: How Neo4j helps to develop new drugs</a> by Martin Preusse</h4>
-<iframe allowfullscreen="" data-progress="true" frameborder="0" height="390" id="vimeo-player" mozallowfullscreen="" src="//player.vimeo.com/video/153280091?api=1&amp;title=0" webkitallowfullscreen="" width="640"></iframe>
-
-
-<div class="paragraph">
-<p>Biomedical research generates vast amounts of data. New experimental technologies like DNA sequencing, metabolomics and proteomics drive the fast growth of available information and lead to a better understanding of the molecular organization of life.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>But with big data comes a big question: How do we transform unstructured data into actionable knowledge? In the case of biomedical research, the key problem is to integrate the large pile of highly heterogenous data and use it for personalized therapies and drug development. Graph databases are an ideal way to represent biomedical knowledge and offer the necessary flexibility to keep up with scientific progress. A well-designed data model and Cypher queries can deliver in seconds what previously took days of manual analysis.</p>
-</div>
-
-</div>
-<div  id="_building_a_repository_of_biomedical_ontologies_with_neo4j_simon_jupp" class="sect3 "  >
-<h4>Building a Repository of Biomedical Ontologies with Neo4j - Simon Jupp</h4>
-
-
-<div class="paragraph">
-<p>In this lightning talk from GraphConnect Europe 2016, Simon Jupp of the European Bioinformatics Institute discusses the application they built to track ontologies. He also discusses why they chose Neo4j over various RDF and semantic web technologies, and provides some example queries.</p>
-</div>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/jZND2WYT4GE" frameborder="0" allowfullscreen></iframe>
-</div>
-<div  id="_data_management_in_systems_biology_medicine_irina_balaur_eisbm" class="sect3 "  >
-<h4>Data Management in Systems Biology &amp; Medicine - Irina Balaur, EISBM</h4>
-
-
-<div class="paragraph">
-<p>An Integrative Framework for Data Management in Systems Biology and Medicine: Strategies for personalised medicine involve integration of large amounts of biomedical data, specific to multiple spatial and temporal scales, (including molecular data and patient clinical data). We have been developing a graph-database approach implemented in Neo4j to facilitate management (integration, exploration, visualisation, interpretation) of diverse types of biological and biomedical data.</p>
-</div>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ukvVVMhJACE" frameborder="0" allowfullscreen></iframe>
-</div>
-<div  id="_graphconnect_sf_2015_graphs_are_feeding_the_world_tim_williamson_data_scientist_monsanto" class="sect3 "  >
-<h4>GraphConnect SF 2015 / Graphs Are Feeding The World, Tim Williamson, Data Scientist, Monsanto</h4>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/6KEvLURBenM" frameborder="0" allowfullscreen></iframe>
-</div>
-<div  id="__a_href_https_vimeo_com_77450061_graph_databases_in_life_sciences_bringing_biology_back_to_its_nature_a_by_thilo_muth" class="sect3 "  >
-<h4><a href="https://vimeo.com/77450061">Graph Databases in Life Sciences: Bringing Biology Back to Its Nature</a> by Thilo Muth</h4>
-
-
-<div class="paragraph">
-<p>Today&#8217;s life science research is about genes, proteins, metabolites, relationships, interactions and biological networks. Data storing and mining brings a huge potential for biologists, however classical storage formats such as SQL and Excel involve various issues, such as scalability and performance problems with data growth, complexity and accessibility. Finally, most of the storage models are far from biological reality: Graph databases and Neo4j meet the need in life sciences for an appropriate data and database model.</p>
-</div>
-
-<iframe src="https://player.vimeo.com/video/77450061" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-</div>
-<div  id="_opentreeoflife" class="sect3 "  >
-<h4>OpenTreeOfLife</h4>
-<div class="imageblock" style="float: left;">
-<p class="content">
-<img src="http://opentreeoflife.files.wordpress.com/2012/04/opentree-final-logo-copy.png?w=360&h=189" alt="opentree final logo copy">
-</p>
-</div>
-
-
-<div class="paragraph">
-<p><strong>The tree of life</strong> links all biodiversity through a shared evolutionary history.
-This project will produce the first online, comprehensive first-draft tree of all 1.8 million named species, accessible to both the public and scientific communities.
-Assembly of the tree will incorporate previously-published results, with strong collaborations between computational and empirical biologists to develop, test and improve methods of data synthesis.
-This initial tree of life will not be static; instead, we will develop tools for scientists to update and revise the tree as new data come in.
-Early release of the tree and tools will motivate data sharing and facilitate ongoing synthesis of knowledge.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p><strong>Biological research</strong> of all kinds, including studies of ecological health, environmental change, and human disease, increasingly depends on knowing how species are related to each other.
-Yet there is no single resource that unites knowledge of the tree of life.
-Instead, only small parts of the tree are individually available, generally as printed figures in journal articles.
-This project will provide the global community of scientists who study the tree of life with a means to share and combine their results, and will enable large-scale studies of Earth’s biodiversity.
-It will also create a resource where students, educators and citizens can go to explore and learn about life’s evolutionary history.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Read more on the <a href="http://blog.opentreeoflife.org/tag/neo4j/">OpenTreeOfLife Blog</a></p>
-</div>
-
-<iframe src="https://player.vimeo.com/video/67870035" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-<p><a href="https://vimeo.com/67870035">0606 - Open Tree of Life and Neo4j</a> from <a href="https://vimeo.com/neo4j">Neo Technology</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
-</div>
-</div>
-<div  id="_project_catalogue" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Project Catalogue</h3>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 16.6666%;">
-<col style="width: 50.0001%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Contact</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://knowing-health.com/">Startup: KNOWING – Turning Big Data into Personalized Therapies</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Martin Preusse</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Developing a software that can be used for result integration of any type of research data as well as be used to harvest data to identify biomarker and drug targets for personalized therapies.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div  id="_publications" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3>Publications</h3>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 10%;">
-<col style="width: 30%;">
-<col style="width: 30%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Title</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Year</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Authors</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Affiliation</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/26998997">miTALOS v2: Analyzing Tissue Specific microRNA Function</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Preusse M, Theis FJ, Mueller NS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Institute of Computational Biology, Helmholtz Zentrum München, Germany</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/27196054">An Integrated Data Driven Approach to Drug Repositioning Using Gene-Disease Associations</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Mullen J, Cockell SJ, Woollard P, Wipat A</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Newcastle University, United Kingdom</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/26708334">HitWalker2: visual analytics for precision medicine and beyond</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Bottomly D, McWeeney SK, Wilmot B</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Knight Cancer Institute, Oregon Health and Science University, USA</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/26657893">HRGRN: A Graph Search-Empowered Integrative Database of Arabidopsis Signaling Transduction, Metabolism and Gene Regulation Networks</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Dai X, Li J, Liu T, Zhao PX</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Plant Biology Division, The Samuel Roberts Noble Foundation, USA</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/27462371">Representing and querying disease networks using graph databases</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Lysenko A, Roznovăţ IA, Saqi M, Mazein A, Rawlings CJ, Auffray C</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">European Institute for Systems Biology and Medicine (EISBM), France</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/27587666">PanTools: representation, storage and exploration of pan-genomic data</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sheikhizadeh S, Schranz ME, Akdel M, de Ridder D, Smit S</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Bioinformatics Group, Wageningen University, The Netherlands</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/27627442">EpiGeNet: A Graph Database of Interdependencies Between Genetic and Epigenetic Events in Colorectal Cancer</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Balaur I, Saqi M, Barat A, Lysenko A, Mazein A, Rawlings CJ, Ruskin HJ, Auffray C</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">European Institute for Systems Biology and Medicine (EISBM), France</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://www.ncbi.nlm.nih.gov/pubmed/26272981">cyNeo4j: connecting Neo4j and Cytoscape</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Summer G, Kelder T, Ono K, Radonjic M, Heymans S, Demchak B</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Center for Heart Failure Research (CARIM), University Hospital Maastricht, The Netherlands</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/26383775">SimiRa: A tool to identify coregulation between microRNAs and RNA-binding proteins</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Preusse M, Marr C, Saunders S, Maticzka D, Lickert H, Backofen R, Theis F</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Helmholtz Zentrum München, Institute of Computational Biology, Germany</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/26262393">Constructing a Graph Database for Semantic Literature-Based Discovery</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Hristovski D, Kastrin A, Dinevski D, Rindflesch TC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Faculty of Medicine, University of Ljubljana, Slovenia</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/25708381">A systems biology approach toward understanding seed composition in soybean</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Li L, Hur M, Lee JY, Zhou W, Song Z, Ransom N, Demirkale CY, Nettleton D, Westgate M, Arendsee Z, Iyer V, Shanks J, Nikolau B, Wurtele ES</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Department of Genetics, Development and Cell Biology, Iowa State University, USA</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/25754863">Combining computational models, semantic annotations and simulation experiments in a graph database</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Henkel R, Wolkenhauer O, Waltemath D</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Department of Computer Science, University of Rostock, Germany</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/26305513">An alternative database approach for management of SNOMED CT and improved patient data queries</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Campbell WS, Pedersen J, McClay JC, Rao P, Bastola D, Campbell JR</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">University of Nebraska Medical Center, Department of Pathology and Microbiology, US</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/25520553">Semantically linking in silico cancer models</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2014</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Johnson D, Connor AJ, McKeever S, Wang Z, Deisboeck TS, Quaiser T, Shochat E</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Department of Computing, Imperial College London, London, UK</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://www.sciencedirect.com/science/article/pii/S1574954114001125">Global biotic interactions: An open infrastructure to share and analyze species-interaction datasets</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2014</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Jorrit H. Poelen, James D. Simons, Chris J. Mungall</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Center for Coastal Studies Natural Resource Center, USA</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://bioinformatics.oxfordjournals.org/content/early/2013/10/21/bioinformatics.btt549.full">Are graph databases ready for bioinformatics?</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2013</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Christian Theil Have and Lars Juhl Jensen</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Department of Metabolic Genetics, University of Copenhagen, Denmark</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <div  id="_life_sciences_and_healthcare_accelerator_program" class="sect2 columns medium-12" style='padding-left: 0;' >
 <h3>Life Sciences and Healthcare Accelerator Program</h3>
 
@@ -961,9 +715,380 @@ It will also create a resource where students, educators and citizens can go to 
 
 
 <div class="paragraph">
-<p><a href="https://goo.gl/forms/T9wkIZVms1XE7kNE3" class="label">Apply Here</a></p>
+<p><a href="https://goo.gl/forms/T9wkIZVms1XE7kNE3" class="button apply">Apply Here</a></p>
 </div>
 
+</div>
+<div  id="_featured_projects" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Featured Projects</h3>
+<div  id="_the_hetnet_awakens_understanding_disease_through_data_integration_and_open_science" class="sect3 "  >
+<h4>The Hetnet Awakens - Understanding Disease Through Data Integration and Open Science</h4>
+
+
+<div class="paragraph">
+<p><em>Daniel Himmelstein</em></p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Daniel Himmelstein’s Thesis Seminar for his PhD in Biological &amp; Medical Informatics at UCSF.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Here are the <a href="https://slides.com/dhimmel/thesis-seminar">slides</a> and an <a href="http://blog.dhimmel.com/phd-exhibit">online adaptation of the PhD Exhibit</a>.
+Daniel was also interviewed on our <a href="http://blog.bruggen.com/2016/08/podcast-interview-with-daniel.html">Graphistania Podcast</a> and created a fun <a href="http://neo4j.com/graphgist/c4eab62c-7f5e-4e17-8f75-811d65d83127">Graph Gist as live documentation</a>.</p>
+</div>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/H8DfXop8K7g" frameborder="0" allowfullscreen></iframe>
+</div>
+<div  id="_proteomics_and_graph_databases_the_symbiosis_of_associations" class="sect3 "  >
+<h4>Proteomics and Graph Databases, the symbiosis of associations</h4>
+
+
+<div class="paragraph">
+<p><em>Alejandro Brenes Murillo</em></p>
+</div>
+
+
+
+<div class="paragraph">
+<p>The proteome is the entire set of proteins that are produced or modified by an organism. It is an element that varies with time, stress, environmental conditions or distinct requirements that a cell might have. Join this talk by Alejandro Brenes Murillo to see how graph databases can be useful for proteome analysis.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>At the Lamond Lab in the University of Dundee, scientists are interested in modelling and understanding protein behaviour under different conditions and dimensions of analysis.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>In order to achieve this goal, they use graph databases to integrate and model the proteomics data, and study its effect on a specific proteome. The dimensions of analysis are multiple, yet be it turnover, localisation, cell cycle, protein complexes or biological response to stimuli, discovering the behaviour of proteins is key to understanding how organisms function, and how disease affects them.</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<a class="image" href="https://skillsmatter.com/skillscasts/9246-proteomics-and-graph-databases-the-symbiosis-of-associations"><img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads//alejandro_proteomics.jpg" alt="alejandro proteomics" width="560"></a>
+</p>
+</div>
+</div>
+<div  id="_big_data_in_genomics_how_neo4j_helps_to_develop_new_drugs" class="sect3 "  >
+<h4>Big Data in Genomics: How Neo4j helps to develop new drugs</h4>
+
+
+<div class="paragraph">
+<p><em>Martin Preusse</em></p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Biomedical research generates vast amounts of data. New experimental technologies like DNA sequencing, metabolomics and proteomics drive the fast growth of available information and lead to a better understanding of the molecular organization of life.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>But with big data comes a big question: How do we transform unstructured data into actionable knowledge? In the case of biomedical research, the key problem is to integrate the large pile of highly heterogenous data and use it for personalized therapies and drug development. Graph databases are an ideal way to represent biomedical knowledge and offer the necessary flexibility to keep up with scientific progress. A well-designed data model and Cypher queries can deliver in seconds what previously took days of manual analysis.</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<a class="image" href="https://skillsmatter.com/skillscasts/7302-big-data-in-genomics-how-neo4j-helps-to-develop-new-drugs"><img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads//preusse_genomics.jpg" alt="preusse genomics" width="560"></a>
+</p>
+</div>
+</div>
+<div  id="_building_a_repository_of_biomedical_ontologies_with_neo4j" class="sect3 "  >
+<h4>Building a Repository of Biomedical Ontologies with Neo4j</h4>
+
+
+<div class="paragraph">
+<p><em>Simon Jupp</em></p>
+</div>
+
+
+
+<div class="paragraph">
+<p>In this lightning talk from GraphConnect Europe 2016, Simon Jupp of the European Bioinformatics Institute discusses the application they built to track ontologies. He also discusses why they chose Neo4j over various RDF and semantic web technologies, and provides some example queries.</p>
+</div>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jZND2WYT4GE" frameborder="0" allowfullscreen></iframe>
+</div>
+<div  id="_data_management_in_systems_biology_medicine" class="sect3 "  >
+<h4>Data Management in Systems Biology &amp; Medicine</h4>
+
+
+<div class="paragraph">
+<p><em>Irina Balaur, EISBM</em></p>
+</div>
+
+
+
+<div class="paragraph">
+<p>An Integrative Framework for Data Management in Systems Biology and Medicine: Strategies for personalised medicine involve integration of large amounts of biomedical data, specific to multiple spatial and temporal scales, (including molecular data and patient clinical data). We have been developing a graph-database approach implemented in Neo4j to facilitate management (integration, exploration, visualisation, interpretation) of diverse types of biological and biomedical data.</p>
+</div>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ukvVVMhJACE" frameborder="0" allowfullscreen></iframe>
+</div>
+<div  id="_graphs_are_feeding_the_world" class="sect3 "  >
+<h4>Graphs Are Feeding The World</h4>
+
+
+<div class="paragraph">
+<p><em>Tim Williamson, Data Scientist, Monsanto</em></p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Presentation at GraphConnect SF 2015.</p>
+</div>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6KEvLURBenM" frameborder="0" allowfullscreen></iframe>
+</div>
+<div  id="_graph_databases_in_life_sciences_bringing_biology_back_to_its_nature" class="sect3 "  >
+<h4>Graph Databases in Life Sciences: Bringing Biology Back to Its Nature</h4>
+
+
+<div class="paragraph">
+<p><em>Thilo Muth</em></p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Today&#8217;s life science research is about genes, proteins, metabolites, relationships, interactions and biological networks. Data storing and mining brings a huge potential for biologists, however classical storage formats such as SQL and Excel involve various issues, such as scalability and performance problems with data growth, complexity and accessibility. Finally, most of the storage models are far from biological reality: Graph databases and Neo4j meet the need in life sciences for an appropriate data and database model.</p>
+</div>
+
+<iframe src="https://player.vimeo.com/video/77450061" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</div>
+<div  id="_open_tree_of_life" class="sect3 "  >
+<h4>Open Tree Of Life</h4>
+<div class="imageblock" style="float: left;">
+<p class="content">
+<img src="http://opentreeoflife.files.wordpress.com/2012/04/opentree-final-logo-copy.png?w=360&h=189" alt="opentree final logo copy">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p><strong>The tree of life</strong> links all biodiversity through a shared evolutionary history.
+This project will produce the first online, comprehensive first-draft tree of all 1.8 million named species, accessible to both the public and scientific communities.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Assembly of the tree will incorporate previously-published results, with strong collaborations between computational and empirical biologists to develop, test and improve methods of data synthesis.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>This initial tree of life will not be static; instead, we will develop tools for scientists to update and revise the tree as new data come in.
+Early release of the tree and tools will motivate data sharing and facilitate ongoing synthesis of knowledge.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><strong>Biological research</strong> of all kinds, including studies of ecological health, environmental change, and human disease, increasingly depends on knowing how species are related to each other.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Yet there is no single resource that unites knowledge of the tree of life.
+Instead, only small parts of the tree are individually available, generally as printed figures in journal articles.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>This project will provide the global community of scientists who study the tree of life with a means to share and combine their results, and will enable large-scale studies of Earth’s biodiversity.
+It will also create a resource where students, educators and citizens can go to explore and learn about life’s evolutionary history.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Read more on the <a href="http://blog.opentreeoflife.org/tag/neo4j/">OpenTreeOfLife Blog</a></p>
+</div>
+
+<iframe src="https://player.vimeo.com/video/67870035" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<p><a href="https://vimeo.com/67870035">0606 - Open Tree of Life and Neo4j</a> from <a href="https://vimeo.com/neo4j">Neo Technology</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+</div>
+</div>
+<div  id="_publications" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Publications</h3>
+<table id="publications" class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 10%;">
+<col style="width: 30%;">
+<col style="width: 30%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Title</th>
+<th class="tableblock halign-left valign-top">Year</th>
+<th class="tableblock halign-left valign-top">Authors</th>
+<th class="tableblock halign-left valign-top">Affiliation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gkx237">The Proteins API: accessing key integrated protein and genome information</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2017</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A. Nightingale, R. Antunes, E. Alpi, B. Bursteinas, L. Gonzales, W. Liu, J. Luo, G. Qi, E. Turner, and M. Martin</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EMBL-EBI, Wellcome Genome Campus, UK</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://biorxiv.org/content/biorxiv/early/2016/05/26/055525.full.pdf">Knowledge.Bio: A Web application for exploring, building and sharing webs of biomedical relationships mined from PubMed</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">R. Bruskiewich, K. Huellas-Bruskiewicz, F. Ahmed, R. Kaliyaperumal, M. Thompson, E. Schultes, K. M. Hettne, A. I. Su, and B. M. Good</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Department of Human Genetics, Leiden University Medical Center, The Netherlands</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://academic.oup.com/bioinformatics/article/doi/10.1093/bioinformatics/btw731/2557691/Recon2Neo4j-applying-graph-database-technologies">Recon2Neo4j: Applying graph database technologies for managing comprehensive genome-scale networks</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">I. Balaur, A. Mazein, M. Saqi, A. Lysenko, C. J. Rawlings, and C. Auffray</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">European Institute for Systems Biology and Medicine (EISBM), France</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-016-1394-x">STON: exploring biological pathways using the SBGN standard and graph databases</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V. Touré, A. Mazein, D. Waltemath, I. Balaur, M. Saqi, R. Henkel, J. Pellet, and C. Auffray</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">European Institute for Systems Biology and Medicine (EISBM), France</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/26998997">miTALOS v2: Analyzing Tissue Specific microRNA Function</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">M. Preusse, F. J. Theis, and N. S. Mueller</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Institute of Computational Biology, Helmholtz Zentrum München, Germany</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/27196054">An Integrated Data Driven Approach to Drug Repositioning Using Gene-Disease Associations</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">J. Mullen, S. J. Cockell, P. Woollard, and A. Wipat</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Newcastle University, United Kingdom</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/26708334">HitWalker2: visual analytics for precision medicine and beyond</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">D. Bottomly, S. K. McWeeney, and B. Wilmot</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Knight Cancer Institute, Oregon Health and Science University, USA</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/26657893">HRGRN: A Graph Search-Empowered Integrative Database of Arabidopsis Signaling Transduction, Metabolism and Gene Regulation Networks</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X. Dai, J. Li, T. Liu, and P. X. Zhao</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Plant Biology Division, The Samuel Roberts Noble Foundation, USA</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/27462371">Representing and querying disease networks using graph databases</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A. Lysenko, I. A. Roznovăţ, M. Saqi, A. Mazein, C. J. Rawlings, and C. Auffray</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">European Institute for Systems Biology and Medicine (EISBM), France</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/27587666">PanTools: representation, storage and exploration of pan-genomic data</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S. Sheikhizadeh, M. E. Schranz, M. Akdel, D. de Ridder, and S. Smit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bioinformatics Group, Wageningen University, The Netherlands</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/27627442">EpiGeNet: A Graph Database of Interdependencies Between Genetic and Epigenetic Events in Colorectal Cancer</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">I. Balaur, M. Saqi, A. Barat, A. Lysenko, A. Mazein, C. J. Rawlings, H. J. Ruskin, and C. Auffray</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">European Institute for Systems Biology and Medicine (EISBM), France</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://www.ncbi.nlm.nih.gov/pubmed/26272981">cyNeo4j: connecting Neo4j and Cytoscape</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">G. Summer, T. Kelder, K. Ono, M. Radonjic, S. Heymans, and B. Demchak</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Center for Heart Failure Research (CARIM), University Hospital Maastricht, The Netherlands</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.thinkmind.org/download.php?articleid=dbkda_2015_9_50_90009">Towards Implementing Semantic Literature-Based Discovery with a Graph Database</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">D. Hristovski, A. Kastrin, D. Dinevski, and T. C. Rindflesch</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Faculty of Medicine, University of Ljubljana, Slovenia</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://dl.acm.org/citation.cfm?id=2918100">Using Neo4j for Mining Protein Graphs: A Case Study</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">D. Hoksza and J. Jelinek</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Faculty of Mathematics and Physics, Charles University in Prague, Czech Republic</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://pubs.acs.org/doi/abs/10.1021/pr501246w">The MetaProteomeAnalyzer: A Powerful Open-Source Software Suite for Metaproteomics Data Analysis and Interpretation</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">T. Muth, A. Behne, R. Heyer, F. Kohrs, D. Benndorf, M. Hoffmann, M. Lehtevä, U. Reichl, L. Martens, and E. Rapp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Max Planck Institute for Dynamics of Complex Technical Systems, Magdeburg, Germany</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/26383775">SimiRa: A tool to identify coregulation between microRNAs and RNA-binding proteins</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">M. Preusse, C. Marr, S. Saunders, D. Maticzka, H. Lickert, R. Backofen, and F. Theis</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Helmholtz Zentrum München, Institute of Computational Biology, Germany</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/26262393">Constructing a Graph Database for Semantic Literature-Based Discovery</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">D. Hristovski, A. Kastrin, D. Dinevski, and T. C. Rindflesch</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Faculty of Medicine, University of Ljubljana, Slovenia</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/25708381">A systems biology approach toward understanding seed composition in soybean</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">L. Li, M. Hur, J. Y. Lee, W. Zhou, Z. Song, N. Ransom, C. Y. Demirkale, D. Nettleton, M. Westgate, Z. Arendsee, V. Iyer, J. Shanks, B. Nikolau, and E. S. Wurtele</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Department of Genetics, Development and Cell Biology, Iowa State University, USA</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/25754863">Combining computational models, semantic annotations and simulation experiments in a graph database</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">R. Henkel, O. Wolkenhauer, and D. Waltemath</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Department of Computer Science, University of Rostock, Germany</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/26305513">An alternative database approach for management of SNOMED CT and improved patient data queries</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">W. S. Campbell, J. Pedersen, J. C. McClay, P. Rao, D. Bastola, and J. R. Campbell</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">University of Nebraska Medical Center, Department of Pathology and Microbiology, US</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/25520553">Semantically linking in silico cancer models</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2014</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">D. Johnson, A. J. Connor, S. McKeever, Z. Wang, T. S. Deisboeck, T. Quaiser, and E. Shochat</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Department of Computing, Imperial College London, London, UK</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://www.sciencedirect.com/science/article/pii/S1574954114001125">Global biotic interactions: An open infrastructure to share and analyze species-interaction datasets</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2014</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">J. H. Poelen, J. D. Simons, and C. J. Mungall</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Center for Coastal Studies Natural Resource Center, USA</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://bioinformatics.oxfordjournals.org/content/early/2013/10/21/bioinformatics.btt549.full">Are graph databases ready for bioinformatics?</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2013</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Christian Theil Have and Lars Juhl Jensen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Department of Metabolic Genetics, University of Copenhagen, Denmark</p></td>
+</tr>
+</tbody>
+</table>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#publications').DataTable();
+} );
+</script>
 </div>
 </div>
                     </div>
@@ -1058,6 +1183,7 @@ It will also create a resource where students, educators and citizens can go to 
                   <div class="content " id="panel6">
                      <ul>
                         <li><a href="/developer/integration/ecosystem/">Tools &amp; Libs for Neo4j</a></li>
+                        <li><a href="/developer/integration/graphql/">GraphQL</a></li>
                         <li><a href="/developer/integration/docker/">Docker</a></li>
                         <li><a href="/developer/integration/apache-spark/">Apache Spark</a></li>
                         <li><a href="/developer/integration/elastic-search/">Elastic-Search</a></li>
@@ -1074,11 +1200,25 @@ It will also create a resource where students, educators and citizens can go to 
                   </a>
                   <div class="content inactive" id="panel7">
                      <ul>
-                        <li><a href="/developer/in-production/guide-cloud-deployment/">Cloud Deployment</a></li>
-                        <!--li><a href="/developer/in-production/guide-sizing-and-hardware-calculator/">Sizing + Hardware Calculator</a></li-->
+                        <li><a href="/developer/guide-cloud-deployment/">Cloud Deployment</a></li>
                         <li><a href="/developer/in-production/guide-performance-tuning/">Performance Tuning</a></li>
                         <li><a href="/developer/in-production/guide-clustering-neo4j/">Clustering Neo4j</a></li>
 	                    <li><a href="/graphacademy/online-course-prod/">In Production Course</a></li>
+                     </ul>
+                  </div>
+               </dd>
+            </dl>
+            <dl class="accordion">
+               <dd class="accordion-navigation inactive">
+                  <a href="/developer/guide-cloud-deployment/">
+                     <h5>Neo4j in the Cloud</h5>
+                  </a>
+                  <div class="content inactive" id="panel9">
+                     <ul>
+                        <li><a href="/developer/guide-cloud-deployment/neo4j-cloud-aws-ec2-ami/">Deploying to EC2</a></li>
+                        <li><a href="https://neo4j.com/blog/deploy-neo4j-microsoft-azure-part-2">Deploying to Azure</a></li>
+                        <li><a href="/developer/guide-cloud-deployment/guide-orchestration">Orchestration Tools</a></li>
+                        <li><a href="/developer/guide-cloud-deployment/neo4j-cloud-hosting-providers">Cloud Hosting Providers</a></li>
                      </ul>
                   </div>
                </dd>
@@ -1120,12 +1260,14 @@ It will also create a resource where students, educators and citizens can go to 
          </dl>
          </ul>
          <div class="accordion-navigation">
-            <div style="text-align:center">
-               <div><a href="https://github.com/neo4j/neo4j" target="_blank"><img style="width:33%" src="https://neo4j.com/wp-content/themes/neo4jweb/assets/images/github.png"/><br/>Star us on GitHub</a></div>
-               <div><a href="http://twitter.com/neo4j" target="_blank"> <img style="width:33%" src="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/twitter.png"/><br/>Follow us on Twitter</a></div>
-               <div><a href="http://neo4j.com/slack" target="_blank"><img style="width:33%" src="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/slack_icon.png"/><br/>Chat on Slack</a></div>
-               <div><a href="http://stackoverflow.com/questions/tagged/neo4j"  target="_blank"><img style="width:33%" src="https://neo4j.com/wp-content/themes/neo4jweb/assets/images/stackoverflow.png"/><br/>Ask on StackOverflow</a></div>
-               <div><a href="https://groups.google.com/forum/#!forum/neo4j"><img style="width:33%" src="https://neo4j.com/wp-content/themes/neo4jweb/assets/images/googlegroups.png"/><br/>Discuss in our Google Group </a></div>
+            <div class="c2a-icons">
+               <div><a href="https://github.com/neo4j/neo4j" target="_blank"><i class="fa fa-github" aria-hidden="true"></i><br/>Star us on GitHub</a></div>
+               <div><a href="http://twitter.com/neo4j" target="_blank"> <i class="fa fa-twitter" aria-hidden="true"></i><br/>Follow us on Twitter</a></div>
+               <div><a href="http://neo4j.com/developer/slack" target="_blank"><i class="fa fa-slack" aria-hidden="true"></i><br/>Chat on Slack</a></div>
+               <div><a href="http://stackoverflow.com/questions/tagged/neo4j"  target="_blank"><i class="fa fa-stack-overflow" aria-hidden="true"></i><br/>Ask on StackOverflow</a></div>
+               <div><a href="http://youtube.com/c/neo4j" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i><br/>Watch on YouTube</a></div>
+               <div><a href="https://meetup.com/Neo4j-Online-Meetup/"  target="_blank"><i class="fa fa-meetup" aria-hidden="true"></i><br/>Join our Live Meetup</a></div>
+               <div><a href="https://groups.google.com/forum/#!forum/neo4j"><i class="fa fa-users" aria-hidden="true"></i><br/>Discuss in our Group</a></div>
             </div>
          </div>
 

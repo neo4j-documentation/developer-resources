@@ -13,7 +13,7 @@
 /* <![CDATA[ */
 var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
 /* ]]> */
-</script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/neo4j-download/js/download.js?ver=4.5'></script> <script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/cookie-law-info/js/cookielawinfo.js?ver=1.5.3'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/jquery-updater/js/jquery-migrate-1.3.0.min.js?ver=1.3.0'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/vendor/modernizr.min.js?ver=4.5'></script> <script type='text/javascript' src='/developer/assets/js/foundation.js'></script> <script type='text/javascript' src='/developer/assets/js/codemirror.min.js'></script> <script type='text/javascript' src='/developer/assets/js/neo_codemirror.js'></script> <script type='text/javascript' src='//use.typekit.net/rdt4xku.js?ver=4.5'></script> <script type='text/javascript' src='/developer/assets/js/misc.js'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/bundle.js?ver=2016.03.11'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/neo_calculator_v3.js?ver=4.5'></script> <link rel='https://api.w.org/' href="http://neo4j.com/wp-json/"/> <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://neo4j.com/xmlrpc.php?rsd"/> <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://neo4j.com/wp-includes/wlwmanifest.xml"/> <meta name="generator" content="WordPress 4.5"/> <link rel='shortlink' href="http://neo4j.com/?p=38241"/> <link rel="alternate" type="application/json+oembed" href="http://neo4j.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fneo4j.com%2Fdeveloper%2Fget-started%2F"/> <link rel="alternate" type="text/xml+oembed" href="http://neo4j.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fneo4j.com%2Fdeveloper%2Fget-started%2F&#038;format=xml"/> </head>
+</script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/neo4j-download/js/download.js?ver=4.5'></script> <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/cookie-law-info/js/cookielawinfo.js?ver=1.5.3'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/jquery-updater/js/jquery-migrate-1.3.0.min.js?ver=1.3.0'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/vendor/modernizr.min.js?ver=4.5'></script> <script type='text/javascript' src='/developer/assets/js/foundation.js'></script> <script type='text/javascript' src='/developer/assets/js/codemirror.min.js'></script> <script type='text/javascript' src='/developer/assets/js/neo_codemirror.js'></script> <script type='text/javascript' src='https://use.typekit.net/rdt4xku.js?ver=4.5'></script> <script type='text/javascript' src='/developer/assets/js/misc.js'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/bundle.js?ver=2016.03.11'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/neo_calculator_v3.js?ver=4.5'></script> <link rel='https://api.w.org/' href="http://neo4j.com/wp-json/"/> <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://neo4j.com/xmlrpc.php?rsd"/> <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://neo4j.com/wp-includes/wlwmanifest.xml"/> <meta name="generator" content="WordPress 4.5"/> <link rel='shortlink' href="http://neo4j.com/?p=38241"/> <link rel="alternate" type="application/json+oembed" href="http://neo4j.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fneo4j.com%2Fdeveloper%2Fget-started%2F"/> <link rel="alternate" type="text/xml+oembed" href="http://neo4j.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fneo4j.com%2Fdeveloper%2Fget-started%2F&#038;format=xml"/> </head>
 
 <body>
 <div class="top-bar-container contain-to-grid">
@@ -553,10 +553,24 @@ ul.none li {
 .admonitionblock td.icon .icon-caution:before{content:"\f06d";color:#bf3400}
 .admonitionblock td.icon .icon-important:before{content:"\f06a";color:#bf0000}
 
-
+.c2a-icons {
+/*	text-align:center;*/
+}
+.c2a-icons div {
+	display:inline-block;
+	font-size:0.6em;
+	width:48%;
+}
+.c2a-icons div i {
+	font-size:3em;
+	padding-left:1em;
+}
+.button.apply {
+	font-size:1.5em;
+}
 </style>
-
-
+<link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/master/devicon.min.css">
+ <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
             <div>
                 <div class="row" style="padding-left: 0; padding-right: 0;">
                     <div class="large-9 large-push-3 columns guide-section-content">
@@ -565,8 +579,7 @@ ul.none li {
 <div class="quoteblock abstract">
 <div class="title">Goals</div>
 <blockquote style="padding-left: 0;">
-If you are a Java developer, and want to use a plain Java object graph mapper, then this guide introduces the Neo4j-OGM library.
-While this guide is not comprehensive, it will introduce the different APIs and link to the relevant resources.
+For Java developers that require a simple mechanism to manage their domain objects with Neo4j, this guide introduces the Neo4j Object Graph Mapping (OGM) library.   This is the same library that powers Spring Data Neo4j but can also be used independently of Spring as well.
 </blockquote>
 </div>
 <div class="quoteblock abstract">
@@ -586,7 +599,7 @@ When developing with Neo4j, please use JDK 8 and your favorite IDE.
 <h3 class="title">Overview</h3>
 
 <ul class="sectlevel2">
-<li><a href="#__span_class_icon_i_class_fa_fa_check_circle_o_i_span_neo4j_ogm"><span class="icon"><i class="fa fa-check-circle-o"></i></span> Neo4j-OGM</a></li>
+<li><a href="#_neo4j_ogm">Neo4j-OGM</a></li>
 <li><a href="#_features">Features</a></li>
 <li><a href="#neo4j-ogm">Resources</a></li>
 <li><a href="#reference:getting-started:versions">Versions</a></li>
@@ -600,44 +613,37 @@ When developing with Neo4j, please use JDK 8 and your favorite IDE.
 <hr>
 </div>
 </div>
-<div  id="__span_class_icon_i_class_fa_fa_check_circle_o_i_span_neo4j_ogm" class="sect2 columns medium-12" style='padding-left: 0;' >
-<h3><span class="icon"><i class="fa fa-check-circle-o"></i></span> Neo4j-OGM</h3>
+<div  id="_neo4j_ogm" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j-OGM</h3>
 
 
 <div class="paragraph">
-<p>Neo4j offers a rich set of integration possibilities for developers using Java or other JVM-languages using either Cypher via all APIs (Binary-Bolt, HTTP, Embedded) or the embedded Java API, e.g. for writing user defined procedures and functions.</p>
+<p>While using the Cypher query language alongside the Java driver works well for small projects and more advanced queries, the boilerplate of CRUD operations often gets tedious.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>While using the query language directly works well for small projects and more advanced queries, the boilerplate of CRUD operations gets tedious.</p>
+<p>That&#8217;s where object graph mappers come in; they take your existing domain objects (POJOs) and map them to Neo4j.
+The great benefit with this approach is that with graph databases, there is no data-model impedence mismatch like there is with relational databases.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>That&#8217;s where object graph mappers come in, they take your existing domain POJOs and map them to Neo4j.
-With a graph database that&#8217;s easier than with a relational database as there is no such data-model mismatch.</p>
+<p>Besides the Neo4j-OGM, there are also <a href="../spring-data-neo4j">Spring Data Neo4j</a>, <a href="../java#hibernate">Hibernate-OGM</a> and others.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>Besides the Neo4j-OGM introduced here, there are also <a href="../spring-data-neo4j">Spring Data Neo4j</a>, <a href="../java#hibernate">Hibernate-OGM</a> and others.</p>
+<p>We created the Neo4j-OGM as a standalone, simple object graph mapper for Java which also acts as the base for Spring Data Neo4j.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>We created the Neo4j-OGM as a standalone object graph mapper for Java as a base library for Spring Data Neo4j.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>The Neo4j-OGM uses Cypher consistently under the hood and supports several transport protocols - bolt, http and embedded.
-That&#8217;s why besides either the neo4j-java-driver, http-client or Neo4j itself it has no special dependencies.</p>
+<p>The Neo4j-OGM uses Cypher in a consistent manner under the hood and can communicate via several transport protocols - bolt, http and embedded.</p>
 </div>
 
 </div>
@@ -664,7 +670,7 @@ Fast class metadata scanning
 Optimized management of data loading and change tracking for minimal data transfers
 </li>
 <li>
-Multiple transports: <strong>binary protocol</strong>, HTTP and embedded
+Multiple transports: binary (bolt), HTTP and embedded
 </li>
 <li>
 Persistence lifecycle events
@@ -718,50 +724,129 @@ Query result projection to DTOs
 <p>Consult the version table to determine which version of the OGM to use with a particular version of Neo4j and related technologies.</p>
 </div>
 
-<table class="tableblock frame-topbot grid-all" style="width: 80%;">
+<div  id="_compatibility" class="sect3 "  >
+<h4>Compatibility</h4>
+<table class="tableblock frame-topbot grid-all spread">
 <colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Neo4j-OGM Version</th>
+<th class="tableblock halign-left valign-top">Neo4j OGM Version</th>
 <th class="tableblock halign-left valign-top">Neo4j Version</th>
-<th class="tableblock halign-left valign-top">Compatible with Spring Data Neo4j Version</th>
+<th class="tableblock halign-left valign-top">Bolt Version<sup>#</sup></th>
+<th class="tableblock halign-left valign-top">Spring Data Neo4j Version</th>
+<th class="tableblock halign-left valign-top">Spring Boot Version</th>
 </tr>
 </thead>
-<tfoot>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1.1.5<sup>*</sup></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.1.x, 2.2.x, 2.3.x</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4.0.x</p></td>
-</tr>
-</tfoot>
 <tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0.0+</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0.x, 3.1.x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.1.0+</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5.0.0+</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0.0+</p></td>
+</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2.1.0+</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2.3.x, 3.0.x, 3.1.x</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4.2.x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.1.0+</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4.2.0+</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.5.0+</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2.0.2+</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2.3.x, 3.0.x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.0.0+</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">4.1.2 - 4.1.6+</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.4.x</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2.0.1<sup>*</sup></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2.2.x, 2.3.x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.0.0-RC1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">4.1.0 - 4.1.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.4.x</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.1.5<sup>*</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.1.x, 2.2.x, 2.3.x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4.0.0+</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.4.x</p></td>
 </tr>
 </tbody>
 </table>
 
 
 <div class="paragraph">
-<p><sup>*</sup> <em>These versions are no longer actively developed or supported.</em></p>
+<p><sup>*</sup> <em>These versions are no longer actively developed or supported.</em><br></p>
 </div>
 
+
+
+<div class="paragraph">
+<p><sup>#</sup> <em>Not applicable to Embedded and HTTP drivers</em></p>
+</div>
+
+</div>
+<div  id="_transitive_dependencies" class="sect3 "  >
+<h4>Transitive dependencies</h4>
+
+
+<div class="paragraph">
+<p>The following table list transitive dependencies between specific versions of projects related to OGM.
+When reporting issues or asking for help on StackOverflow or neo4j-users slack channel always
+verify versions used (e.g through <code>mvn dependency:tree</code>) and report them as well.</p>
+</div>
+
+<table class="tableblock frame-topbot grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Spring Boot Version</th>
+<th class="tableblock halign-left valign-top">Spring Data Neo4j Version</th>
+<th class="tableblock halign-left valign-top">Neo4j OGM Version</th>
+<th class="tableblock halign-left valign-top">Bolt Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.5.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4.2.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.1.2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.1.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.4.6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4.1.7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0.5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.0.6</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+These versions can be overridden manually in <code>pom.xml</code> or <code>build.gradle</code> files.
+</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 <div  id="reference:getting-started:dependency-management" class="sect2 columns medium-12" style='padding-left: 0;' >
 <h3>Dependency Management</h3>
@@ -961,12 +1046,15 @@ You will find the implementations for all drivers as <a href="https://github.com
 </div>
 <div  id="_faq" class="sect2 columns medium-12" style='padding-left: 0;' >
 <h3>FAQ</h3>
-
-
-<div class="paragraph">
-<p>Upcoming.</p>
+<div class="qlist qanda">
+<ol>
+<li>
+<p><em>What is the difference between Neo4j OGM and Spring Data Neo4j (SDN)?</em></p>
+<p>Spring Data Neo4j (SDN) uses the OGM under the covers. It&#8217;s like Spring Data JPA, where JPA/Hibernate underly it.  Most
+of the power of SDN actually comes from the OGM.</p>
+</li>
+</ol>
 </div>
-
 </div>
                     </div>
                     <div class="large-3 large-pull-9 columns">
@@ -1060,6 +1148,7 @@ You will find the implementations for all drivers as <a href="https://github.com
                   <div class="content " id="panel6">
                      <ul>
                         <li><a href="/developer/integration/ecosystem/">Tools &amp; Libs for Neo4j</a></li>
+                        <li><a href="/developer/integration/graphql/">GraphQL</a></li>
                         <li><a href="/developer/integration/docker/">Docker</a></li>
                         <li><a href="/developer/integration/apache-spark/">Apache Spark</a></li>
                         <li><a href="/developer/integration/elastic-search/">Elastic-Search</a></li>
@@ -1076,11 +1165,25 @@ You will find the implementations for all drivers as <a href="https://github.com
                   </a>
                   <div class="content inactive" id="panel7">
                      <ul>
-                        <li><a href="/developer/in-production/guide-cloud-deployment/">Cloud Deployment</a></li>
-                        <!--li><a href="/developer/in-production/guide-sizing-and-hardware-calculator/">Sizing + Hardware Calculator</a></li-->
+                        <li><a href="/developer/guide-cloud-deployment/">Cloud Deployment</a></li>
                         <li><a href="/developer/in-production/guide-performance-tuning/">Performance Tuning</a></li>
                         <li><a href="/developer/in-production/guide-clustering-neo4j/">Clustering Neo4j</a></li>
 	                    <li><a href="/graphacademy/online-course-prod/">In Production Course</a></li>
+                     </ul>
+                  </div>
+               </dd>
+            </dl>
+            <dl class="accordion">
+               <dd class="accordion-navigation inactive">
+                  <a href="/developer/guide-cloud-deployment/">
+                     <h5>Neo4j in the Cloud</h5>
+                  </a>
+                  <div class="content inactive" id="panel9">
+                     <ul>
+                        <li><a href="/developer/guide-cloud-deployment/neo4j-cloud-aws-ec2-ami/">Deploying to EC2</a></li>
+                        <li><a href="https://neo4j.com/blog/deploy-neo4j-microsoft-azure-part-2">Deploying to Azure</a></li>
+                        <li><a href="/developer/guide-cloud-deployment/guide-orchestration">Orchestration Tools</a></li>
+                        <li><a href="/developer/guide-cloud-deployment/neo4j-cloud-hosting-providers">Cloud Hosting Providers</a></li>
                      </ul>
                   </div>
                </dd>
@@ -1122,12 +1225,14 @@ You will find the implementations for all drivers as <a href="https://github.com
          </dl>
          </ul>
          <div class="accordion-navigation">
-            <div style="text-align:center">
-               <div><a href="https://github.com/neo4j/neo4j" target="_blank"><img style="width:33%" src="https://neo4j.com/wp-content/themes/neo4jweb/assets/images/github.png"/><br/>Star us on GitHub</a></div>
-               <div><a href="http://twitter.com/neo4j" target="_blank"> <img style="width:33%" src="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/twitter.png"/><br/>Follow us on Twitter</a></div>
-               <div><a href="http://neo4j.com/slack" target="_blank"><img style="width:33%" src="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/slack_icon.png"/><br/>Chat on Slack</a></div>
-               <div><a href="http://stackoverflow.com/questions/tagged/neo4j"  target="_blank"><img style="width:33%" src="https://neo4j.com/wp-content/themes/neo4jweb/assets/images/stackoverflow.png"/><br/>Ask on StackOverflow</a></div>
-               <div><a href="https://groups.google.com/forum/#!forum/neo4j"><img style="width:33%" src="https://neo4j.com/wp-content/themes/neo4jweb/assets/images/googlegroups.png"/><br/>Discuss in our Google Group </a></div>
+            <div class="c2a-icons">
+               <div><a href="https://github.com/neo4j/neo4j" target="_blank"><i class="fa fa-github" aria-hidden="true"></i><br/>Star us on GitHub</a></div>
+               <div><a href="http://twitter.com/neo4j" target="_blank"> <i class="fa fa-twitter" aria-hidden="true"></i><br/>Follow us on Twitter</a></div>
+               <div><a href="http://neo4j.com/developer/slack" target="_blank"><i class="fa fa-slack" aria-hidden="true"></i><br/>Chat on Slack</a></div>
+               <div><a href="http://stackoverflow.com/questions/tagged/neo4j"  target="_blank"><i class="fa fa-stack-overflow" aria-hidden="true"></i><br/>Ask on StackOverflow</a></div>
+               <div><a href="http://youtube.com/c/neo4j" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i><br/>Watch on YouTube</a></div>
+               <div><a href="https://meetup.com/Neo4j-Online-Meetup/"  target="_blank"><i class="fa fa-meetup" aria-hidden="true"></i><br/>Join our Live Meetup</a></div>
+               <div><a href="https://groups.google.com/forum/#!forum/neo4j"><i class="fa fa-users" aria-hidden="true"></i><br/>Discuss in our Group</a></div>
             </div>
          </div>
 
