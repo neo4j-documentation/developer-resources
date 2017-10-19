@@ -185,21 +185,41 @@ $em->flush();
 [cols="1,4"]
 |===
 | icon:user[] Author | http://twitter.com/ikwattro[Christophe Willemsen]
-| icon:gift[] Package | `composer require graphaware/neo4j-php-ogm:^1.0@beta
+| icon:gift[] Package | `composer require graphaware/neo4j-php-ogm`
 | icon:github[] Source | https://github.com/graphaware/neo4j-php-ogm
 | icon:book[] Docs | https://github.com/graphaware/neo4j-php-ogm/blob/1.0/docs/01-intro.md
+|===
+
+=== Neo4j Symfony Bundle
+
+To provide a smooth integration between Neo4j and Symfony we’ve created the SymfonyNeo4jBundle. 
+It wraps the excellent PHP community client by Graphaware and creates a solid Symfony experience. 
+Thanks to the WebProfiler integration, you will see all your database calls, all the queries and their results, exceptions and statistics. 
+
+The bundle also integrates the client events with the Symfony event dispatcher. 
+It is not opinionated in how you are using Neo4j and using the OGM is optional. 
+Advanced Neo4j users will have full control over the client and what Cypher gets executed.
+
+[cols="1,4"]
+|===
+| icon:user[] Authors | http://twitter.com/tobiasnyholm[Tobias Nyholm], http://twitter.com/PandawanTech[Xavier Is] 
+| icon:github[] Source | https://github.com/neo4j-contrib/neo4j-symfony
+| icon:book[] Docs | https://github.com/neo4j-contrib/neo4j-symfony/blob/master/README.md
+| icon:play-circle[] | https://github.com/neo4j-examples/movies-symfony-php-bolt
+| icon:book[] Blog | https://www.sitepoint.com/introducing-the-neo4j-symfony-bundle/ 
 |===
 
 === NeoEloquent for Laravel
 
 Neo4j Graph Eloquent Driver for Laravel 4
 
-
 [cols="1,4"]
 |===
 | icon:user[] Author | https://github.com/Mulkave[Abed Halawi]
 | icon:github[] Source | https://github.com/Vinelab/NeoEloquent
 |===
+
+////
 
 === Neo4jPHP
 
@@ -243,8 +263,6 @@ A Neo4j Laravel 4.1 OGM Provider based on Neo4j-OGM-PHP.
 | icon:user[] Author | https://github.com/lrezek[Lukas Rezek]
 | icon:github[] Source | https://github.com/lrezek/Neo4Laravel
 |===
-
-////
 
 ==== neo4j-pdo
 
