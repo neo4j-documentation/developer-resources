@@ -17,7 +17,7 @@ IMAGE_BASE_URL = ENV['IMAGE_BASE_URL'] ||  '//s3.amazonaws.com/dev.assets.neo4j.
 EXAMPLES = ENV['EXAMPLES'] || 'https://github.com/neo4j-examples'
 MANUAL = ENV['MANUAL'] || 'http://neo4j.com/docs/developer-manual/current'
 OPSMANUAL = ENV['OPSMANUAL'] || 'http://neo4j.com/docs/operations-manual/current'
-GITHUB = ENV['GITHUB'] || 'https://github.com/neo4j-contrib/developer/tree/gh-pages'
+GITHUB = ENV['GITHUB'] || 'https://github.com/neo4j-contrib/developer-resources/tree/gh-pages'
 ASCIIDOC_ATTRIBUTES = %W(allow-uri-read
                          icons=font
                          linkattrs
