@@ -1,0 +1,75 @@
+= Graph Algorithms
+:slug: graph-algorithms
+:level: Intermediate
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 2
+:section: Neo4j Integrations
+:section-link: integration
+
+toc::[]
+
+== Introduction
+
+Graph algorithms are used to compute metrics for graphs, nodes, or relationships.
+
+They can provide insights on relevant entities (centralities, ranking) in the graph or inherent structures such as communities (community-detection, graph-partitioning, clustering).
+
+== Graph Algorithms Library
+
+Neo4j Graph Algorithms is a library that provides efficiently implemented, parallel versions of common graph algorithms for Neo4j 3.x exposed as Cypher procedures.
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/55uB_t0RKTE" frameborder="0" allowfullscreen></iframe>
+++++
+
+It currently contains implementations for the following algorithms:
+
+=== Centralities
+
+* Page Rank (`algo.pageRank`)
+
+* Betweenness Centrality (`algo.betweenness`)
+
+* Closeness Centrality (`algo.closeness`)
+
+=== Community Detection:
+
+* Louvain (`algo.louvain`)
+
+* Label Propagation (`algo.labelPropagation`)
+
+* (Weakly) Connected Components (`algo.unionFind`)
+
+* Strongly Connected Components (`algo.scc`)
+
+* Triangle Count / Clustering Coefficient (`algo.triangleCount`)
+
+=== Path Finding
+
+* Minimum Weight Spanning Tree (`algo.mst`)
+
+* All Pairs- and Single Source - Shortest Path (`algo.shortestPath`, `algo.allShortestPaths`)
+
+== Installation
+
+* Download the library from the https://github.com/neo4j-contrib/neo4j-graph-algorithms/releases[downloads page^] and put the jar into `$NEO4J_HOME/plugins`
+* Add `dbms.security.procedures.unrestricted=algo.*` to `$NEO4J_HOME/conf/neo4j.conf`
+* Restart Neo4j
+
+We're now ready to start using the graph algorithms.
+Run the following query to check that the algorithms library has been picked up by Neo4j:
+
+[source,cypher]
+```
+CALL dbms.procedures() YIELD name, signature, description
+WHERE name starts with "algo"
+RETURN name, signature, description
+```
+
+If we don't see any rows we'll need to revisit the installation instructions.
+
+== Further reading
+
+If you're interested in learning about the history of each algorithm and the use cases for which they're applicable, the https://neo4j-contrib.github.io/neo4j-graph-algorithms/#_algorithms_2[Algorithms section^] of the user guide is a good starting point. 
