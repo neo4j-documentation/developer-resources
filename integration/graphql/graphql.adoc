@@ -185,6 +185,13 @@ include::https://raw.githubusercontent.com/neo4j-graphql/neo4j-graphql/master/re
 
 In the repository, you can find a https://github.com/neo4j-graphql/neo4j-graphql/blob/master/movies.schema[movies schema] and https://github.com/neo4j-graphql/neo4j-graphql/blob/master/movies.graphql[accompanying queries], that uses some of those features.
 
+=== neo4j-graphql-js
+
+We've also created the https://github.com/neo4j-graphql/neo4j-graphql-js[neo4j-graphql-js^] npm package, which makes it easier to use GraphQL and Neo4j together.
+
+neo4j-graphql-js translates GraphQL queries to a single Cypher query, eliminating the need to write queries in GraphQL resolvers and for batching queries.
+It also exposes the Cypher query language through GraphQL via the @cypher schema directive.
+
 === GraphQL Support
 
 To demonstrate the combined power of a graph database (Neo4j) and GraphQL we also added the GraphQL extension to this server. Access the GraphQL community graph, including GraphiQL http://graphql.communitygraph.org/[here].
