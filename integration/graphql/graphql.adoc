@@ -1,4 +1,4 @@
-= GraphQL and Neo4j 
+= GraphQL and Neo4j
 :slug: graphql
 :level: Beginner
 :toc:
@@ -99,24 +99,21 @@ type Person {
 
 == GraphQL and Neo4j
 
-////
-=== Single Step Setup with neo4j-graphql-up
+=== GRANDstack
 
-To get you up and running quickly, we provide the `neo4j-graphql-up` command-line tool.
+http://grandstack.io/[GRANDstack^] is a stack for building GraphQL/Neo4j backed applications.
+GRAND stands for:
 
-----
-npm install -g neo4j-graphql-up
-neo4j-graphql up myfile.schema
-----
+* http://graphql.org/[GraphQL^] - A query language for APIs and a runtime for fulfilling those queries with your existing data.
+* https://reactjs.org/[React^] - A JavaScript library for building user interfaces
+* https://github.com/apollographql/apollo-client[Apollo Client^] - A fully-featured, production ready caching GraphQL client for every server or UI framework
+* Neo4j Database
 
-This will:
+https://twitter.com/lyonwj[Will Lyon^] facilitated a training session at GraphConnect NYC 2017 in which attendees built their first GRANDstack application.
 
-. Launch a Neo4j Sandbox
-. Install the neo4j-graphql extension
-. Install your schema file into the database
-. Provide you with URL and authentication
-. Scaffold a local React project with those settings applied
-////
+++++
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/b5H5ii0G5M5WC" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/neo4j/full-stack-development-with-neo4j-and-graphql" title="Full Stack Development with Neo4j and GraphQL" target="_blank">Full Stack Development with Neo4j and GraphQL</a> </strong> from <strong><a href="https://www.slideshare.net/neo4j" target="_blank">Neo4j - The Fastest and Most Scalable Native Graph Database</a></strong> </div>
+++++
 
 === Neo4j GraphQL extension
 
@@ -147,9 +144,9 @@ type Movie {
 
     director: Person @relation(name:"DIRECTED", direction:IN)
 
-    recommendation(first:Int = 3): [Movie] 
-      @cypher(statement:"MATCH (this)<-[r1:REVIEWED]-(:User)-[r2:REVIEWED]->(reco:Movie) 
-                         WHERE 3 <= r1.stars <= r2.stars 
+    recommendation(first:Int = 3): [Movie]
+      @cypher(statement:"MATCH (this)<-[r1:REVIEWED]-(:User)-[r2:REVIEWED]->(reco:Movie)
+                         WHERE 3 <= r1.stars <= r2.stars
                          RETURN reco, sum(r2.stars) as rating ORDER BY rating DESC")
 }
 
@@ -173,8 +170,8 @@ type Director extends Person {
 }
 
 type Mutations {
-    directed(movie:ID! director:ID!) : String 
-      @cypher(statement:"MATCH (m:Movie {title: $movie}), (d:Person {name: $director}) 
+    directed(movie:ID! director:ID!) : String
+      @cypher(statement:"MATCH (m:Movie {title: $movie}), (d:Person {name: $director})
                          MERGE (d)-[:DIRECTED]->(m)")
 }
 schema {
@@ -186,62 +183,13 @@ Have a look at the following "feature" table, to see what else is "in the box":
 
 include::https://raw.githubusercontent.com/neo4j-graphql/neo4j-graphql/master/readme.adoc[tags=features]
 
-In the repository, you can find a https://github.com/neo4j-graphql/neo4j-graphql/blob/master/movies.schema[movies schmema] and https://github.com/neo4j-graphql/neo4j-graphql/blob/master/movies.graphql[accompanying queries], that uses some of those features.
-
-
-== GraphQL Community Graph Hackathon
-
-image::https://github.com/neo4j-graphql/graphql-community/raw/master/images/graphql-community-graph.jpg[width=500]
-
-////
-=== The GraphQL Community 
-
-GraphQL was originally developed at Facebook for their mobile applications and has since been widely used, especially in the React community.
-
-GraphQL is defined as a language https://facebook.github.io/graphql/[specification^] with lots of detailed resources available.
-
-// Besides Facebook, Apollo (Meteor), Graph.Cool, Scaphold.io, and Reindex are leading innovation in the GraphQL community.
-
-Recently some larger sites (GitHub, Mattermark, Yelp) have been publishing APIs for developers not just as REST resources but also as GraphQL endpoints.
-
-// There are many learning resources, tutorials, example applications, libraries about GraphQL available, and the community is growing at a rapid pace.
-////
-
-=== What is a Community Graph?
-
-We found it very helpful and inspiring to bring the people and activities of the GraphQL-Community into one database with a GraphQL-API endpoint.
-
-It contains tweets, github-repositories, stackoverflow-questions and answers and meetup events and the users and tags related to them.
-
-No matter where you are active, your contributions should be visible.
-
-And everyone in the community should be able to find new content, recent topics, active people or new events easily. 
-
-image::https://github.com/neo4j-graphql/graphql-community/raw/master/images/graphiql.communitygraph.jpg[width=800,link="http://graphql.communitygraph.org/graphiql/",window="_blank"]
-
-=== Hackathon
-
-To learn more about what's important to the GraphQL community, *We'd love to challenge you!*
-
-We're running a world-wide community Hackathon, starting now and running until end of day Monday, May 22.
-
-Write a (mobile) demo, application, dashboard, visualization, timeline, react component, whatever you want against this GraphQL API, submit it here and also *TWEET* the link with link:https://twitter.com/search?f=tweets&vertical=default&q=%23graphql%20%23neo4j[*#graphql #neo4j*] hashtags.
-
-For the first 15 _valid_ submissions we offer a prize (a pair of AirPods or equivalent amazon-gift-card). 
-
-Please http://bit.ly/graphqlhackathon[submit your work in this survey^] and tell us about your experience building it and your thoughts about GraphQL.
-
-If you fill out the survey above, we'll send you a really cool graph t-shirt.
-
-If you are attending http://graphql-europe.com[*GraphQL-Europe*^] we'd love you to *come by our booth and tell and show us in person*.
-
-*Then you can get your t-shirt right away.*
+In the repository, you can find a https://github.com/neo4j-graphql/neo4j-graphql/blob/master/movies.schema[movies schema] and https://github.com/neo4j-graphql/neo4j-graphql/blob/master/movies.graphql[accompanying queries], that uses some of those features.
 
 === GraphQL Support
 
 To demonstrate the combined power of a graph database (Neo4j) and GraphQL we also added the GraphQL extension to this server. Access the GraphQL community graph, including GraphiQL http://graphql.communitygraph.org/[here].
 
-After authorising you'll be able to query the GraphQL community graph with your trusted tools like GraphiQL or Apollo-Client. 
+After authorising you'll be able to query the GraphQL community graph with your trusted tools like GraphiQL or Apollo-Client.
 You can also visualize the Schema using Voyager.
 
 image::https://github.com/neo4j-graphql/graphql-community/raw/master/images/graphql-community-query-leeb.jpg[width=600]
@@ -262,7 +210,7 @@ image::https://github.com/community-graph/graphql-community/raw/master/images/co
 
 image::https://github.com/community-graph/graphql-community/raw/master/images/community.graphql.cypher.table.jpg[width=600]
 
-If you are used to Neo4j you can use it right away by writing some link:/developer/cypher[Cypher^] statements. 
+If you are used to Neo4j you can use it right away by writing some link:/developer/cypher[Cypher^] statements.
 Here are (https://github.com/community-graph/dashboard[some suggestions^]).
 
 
