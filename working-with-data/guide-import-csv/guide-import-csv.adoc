@@ -149,8 +149,7 @@ Ideally, the page cache should be large enough to keep the whole database in mem
 
 ===== File-URLs
 
-* Make sure to use the right URLs.
-In particular for file URLs: On OSX and Unix use `+file:///path/to/data.csv+`, and on Windows use a URL similar to: `file:c:/path/to/data.csv`.
+* Make sure to use the right URLs for files: `+file:///data.csv+` or `+https://host/path/data.csv+` +
 The file URLs are relative to the _import_ directory (for location of the _import_ directory refer to the link:{opsmanual}/configuration/file-locations[Neo4j Operations Manual]).
 * Use `bin/cypher-shell` instead of the browser for better control.
 By default it connects to the database running on localhost but you can point it to a database anywhere over the network.
