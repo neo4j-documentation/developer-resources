@@ -11,7 +11,6 @@ require 'ascii_press'
 LOGGER = Logger.new(STDOUT)
 
 require './html_transformer' # Neo Tech specific
-require './wordpress_http_syncer' # Neo Tech specific
 
 ASCIIDOC_TEMPLATES_DIR = ENV['ASCIIDOC_TEMPLATES_DIR'] || '_templates'
 IMAGE_BASE_URL = ENV['IMAGE_BASE_URL'] ||  '//s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/'
@@ -48,7 +47,7 @@ renderer = AsciiPress::Renderer.new(after_conversion: HtmlTransformer.method(:tr
                                     })
 
 if ENV['BLOG_REST_HOSTNAME'] && ENV['BLOG_REST_USERNAME'] && ENV['BLOG_REST_PASSWORD'] && ENV['PUBLISH']
-  syncer = WordPressHttpSyncer.new(ENV['BLOG_REST_HOSTNAME'], ENV['BLOG_REST_USERNAME'], ENV['BLOG_REST_PASSWORD'], "developer", renderer, post_status: 'publish')
+  syncer = AsciiPress::WordPressHttpSyncer.new(ENV['BLOG_REST_HOSTNAME'], ENV['BLOG_REST_USERNAME'], ENV['BLOG_REST_PASSWORD'], "developer", renderer, post_status: 'publish')
 end
 
 if syncer
