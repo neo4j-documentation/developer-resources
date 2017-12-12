@@ -53,7 +53,7 @@ end
 
 if syncer
   puts "Syncing to WordPress"
-  syncer.sync(adoc_file_paths.take(10), {})
+  syncer.sync(adoc_file_paths, {})
 else
   adoc_file_paths.each do |adoc_file_path|
     dir = File.join('deploy', File.dirname(adoc_file_path))
