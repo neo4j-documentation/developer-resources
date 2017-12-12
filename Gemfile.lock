@@ -1,11 +1,12 @@
 GIT
   remote: https://github.com/mneedham/ascii_press.git
-  revision: 982274bad0864e22bdf04f390e69c7ffb6778c91
+  revision: 30c4df5874cfda47b3279c420ede2e37b421dbea
   specs:
     ascii_press (0.5.2)
       activesupport (>= 3.0)
       asciidoctor (~> 1.5.4)
       colorize (>= 0.7.7)
+      rest-client (>= 2.0.2)
       rubypress (~> 1.1.1)
 
 GEM
@@ -17,7 +18,7 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     asciidoctor (1.5.6.1)
-    coderay (1.1.1)
+    coderay (1.1.2)
     colorize (0.8.1)
     concurrent-ruby (1.0.5)
     diff-lcs (1.3)
@@ -44,7 +45,7 @@ GEM
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
     lumberjack (1.0.12)
-    method_source (0.8.2)
+    method_source (0.9.0)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
@@ -54,39 +55,37 @@ GEM
     notiffany (0.1.1)
       nenv (~> 0.1)
       shellany (~> 0.0)
-    pry (0.10.4)
+    pry (0.11.3)
       coderay (~> 1.1.0)
-      method_source (~> 0.8.1)
-      slop (~> 3.4)
-    rb-fsevent (0.9.8)
-    rb-inotify (0.9.8)
-      ffi (>= 0.5.0)
+      method_source (~> 0.9.0)
+    rb-fsevent (0.10.2)
+    rb-inotify (0.9.10)
+      ffi (>= 0.5.0, < 2)
     rest-client (2.0.2)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     retryable-rb (1.1.0)
-    rspec (3.6.0)
-      rspec-core (~> 3.6.0)
-      rspec-expectations (~> 3.6.0)
-      rspec-mocks (~> 3.6.0)
-    rspec-core (3.6.0)
-      rspec-support (~> 3.6.0)
-    rspec-expectations (3.6.0)
+    rspec (3.7.0)
+      rspec-core (~> 3.7.0)
+      rspec-expectations (~> 3.7.0)
+      rspec-mocks (~> 3.7.0)
+    rspec-core (3.7.0)
+      rspec-support (~> 3.7.0)
+    rspec-expectations (3.7.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.6.0)
-    rspec-mocks (3.6.0)
+      rspec-support (~> 3.7.0)
+    rspec-mocks (3.7.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.6.0)
-    rspec-support (3.6.0)
+      rspec-support (~> 3.7.0)
+    rspec-support (3.7.0)
     ruby_dep (1.5.0)
     rubypress (1.1.1)
       retryable-rb
     shellany (0.0.1)
-    slop (3.6.0)
-    thor (0.19.4)
+    thor (0.20.0)
     thread_safe (0.3.6)
-    tilt (2.0.7)
+    tilt (2.0.8)
     tzinfo (1.2.4)
       thread_safe (~> 0.1)
     unf (0.1.4)
@@ -101,7 +100,6 @@ DEPENDENCIES
   ascii_press!
   dotenv
   guard
-  rest-client
   rspec
   tilt
   xmlrpc

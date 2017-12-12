@@ -47,7 +47,13 @@ renderer = AsciiPress::Renderer.new(after_conversion: HtmlTransformer.method(:tr
                                     })
 
 if ENV['BLOG_REST_HOSTNAME'] && ENV['BLOG_REST_USERNAME'] && ENV['BLOG_REST_PASSWORD'] && ENV['PUBLISH']
-  syncer = AsciiPress::WordPressHttpSyncer.new(ENV['BLOG_REST_HOSTNAME'], ENV['BLOG_REST_USERNAME'], ENV['BLOG_REST_PASSWORD'], "developer", renderer, post_status: 'publish')
+  syncer = AsciiPress::WordPressHttpSyncer.new(
+    ENV['BLOG_REST_HOSTNAME'],
+    ENV['BLOG_REST_USERNAME'],
+    ENV['BLOG_REST_PASSWORD'],
+    "developer",
+    renderer,
+    post_status: 'publish')
 end
 
 if syncer
