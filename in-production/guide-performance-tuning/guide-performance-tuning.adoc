@@ -45,8 +45,8 @@ You can determine the total memory needed by summing up the sizes of the `$NEO4J
 
 To estimate the necessary page-cache size for a dataset to be imported, it is useful to run an import with a fraction (e.g. 1/100th) of the data and then multiply the resulting store-size by that fraction (x 100).
 
-The size of the page cache, e.g. `5G` is defined by the parameter `dbms.pagecache.memory` in the file `$NEO4J_HOME/conf/neo4j.conf`.
-By default, if not configured, Neo4j will use 50% of the available RAM in the system for its page cache.
+The size of the page cache, e.g. `5G` is defined by the parameter `dbms.memory.pagecache.size` in the file 
+`$NEO4J_HOME/conf/neo4j.conf`.  By default, if not configured, Neo4j will use 50% of the available RAM in the system for its page cache.
 
 === Heap Sizing
 
