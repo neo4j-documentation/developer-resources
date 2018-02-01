@@ -315,7 +315,7 @@ f=false,d=document;return{use_existing_jquery:function(){return use_existing_jqu
 <div class="marquee-neo">
     <div class="row text-center">
         <div class="columns">
-            <h1 class="entry-title">User Defined Procedures and Functions</h1>
+            <h1 class="entry-title">Graph Algorithms</h1>
         </div>
     </div>
 </div>
@@ -328,7 +328,7 @@ f=false,d=document;return{use_existing_jquery:function(){return use_existing_jqu
                     <ul class="breadcrumbs">
                         <li><a href="/developer">Developer</a></li>
                         
-                        <li class="current"><a href="#">User Defined Procedures and Functions</a></li>
+                        <li class="current"><a href="#">Graph Algorithms</a></li>
                     </ul>
                 </div>
             </div>
@@ -678,422 +678,179 @@ ul.none li {
                     <div class="large-9 large-push-3 columns guide-section-content">
                         <div id="preamble columns medium-12">
 <div class="sectionbody">
-<div class="quoteblock abstract">
-<div class="title">Goals</div>
-<blockquote style="padding-left: 0;">
-This guide explains how to use, create and deploy user defined procedures and functions, the extension mechanism of Cypher, Neo4j&#8217;s query language.
-It also covers existing, widely used procedure libraries
-</blockquote>
-</div>
-<div class="quoteblock abstract">
-<div class="title">Prerequisites</div>
-<blockquote style="padding-left: 0;">
-You should have learned to read and write statements in <a href="/developer/cypher/cypher-query-language">Cypher</a> and seen the need for additional capabilities.
-</blockquote>
-</div>
-
-
-<div class="label">Intermediate</div>
-<hr/>
-
 <div class="toc">
 <h3 class="title">Overview</h3>
 
 <ul class="sectlevel1">
-<li><a href="#_extending_cypher">Extending Cypher</a></li>
-<li><a href="#_what_are_procedures_and_functions">What are Procedures and Functions?</a></li>
-<li><a href="#_listing_using_functions_and_procedures">Listing &amp; Using Functions and Procedures</a></li>
-<li><a href="#_deploying_procedures_functions">Deploying Procedures &amp; Functions</a></li>
-<li><a href="#_procedure_and_function_gallery">Procedure and Function Gallery</a></li>
-<li><a href="#_developing_your_own_procedures_and_functions">Developing your own Procedures and Functions</a></li>
+<li><a href="#_introduction">Introduction</a></li>
+<li><a href="#_graph_algorithms_library">Graph Algorithms Library</a>
+<ul class="sectlevel3">
+<li><a href="#_centralities">Centralities</a></li>
+<li><a href="#_community_detection">Community Detection</a></li>
+<li><a href="#_path_finding">Path Finding</a></li>
+</ul>
+</li>
+<li><a href="#_installation">Installation</a></li>
+<li><a href="#_further_reading">Further reading</a></li>
 </ul>
 
 </div>
 <hr>
 </div>
 </div>
-<div  id="_extending_cypher" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Extending Cypher</h3>
+<div  id="_introduction" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Introduction</h3>
 
 
 <div class="paragraph">
-<p>Cypher is a quite powerful and expressive language, with first class graph pattern and collection support.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>But sometimes you need to do more than it currently offers, like additional graph algorithms, parallelization or custom conversions.</p>
+<p>Graph algorithms are used to compute metrics for graphs, nodes, or relationships.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>That&#8217;s why the ability to extend Cypher with User Defined Procedures and Functions was added to the Neo4j 3.0 and 3.1 releases.
-But not only users, even Neo4j itself provides and utilizes custom procedures.
-Many of the monitoring, introspection and security features exposed by Neo4j-Browser are implemented using procedures.</p>
+<p>They can provide insights on relevant entities (centralities, ranking) in the graph or inherent structures such as communities (community-detection, graph-partitioning, clustering).</p>
 </div>
 
-<div class="imageblock">
-<p class="content">
-<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/procedures-functions-bolt.jpg" alt="procedures functions bolt" width="600">
-</p>
 </div>
+<div  id="_graph_algorithms_library" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Graph Algorithms Library</h3>
+
+
+<div class="paragraph">
+<p>Neo4j Graph Algorithms is a library that provides efficiently implemented, parallel versions of common graph algorithms for Neo4j 3.x exposed as <a href="/developer/cypher/" target="_blank" rel="noopener">Cypher</a> procedures.</p>
 </div>
-<div  id="_what_are_procedures_and_functions" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>What are Procedures and Functions?</h3>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/55uB_t0RKTE" frameborder="0" allowfullscreen></iframe>
+
+
+<div class="paragraph">
+<p>It currently contains implementations for the following algorithms:</p>
+</div>
+
+<div  id="_centralities" class="sect3 "  >
+<h4>Centralities</h4>
+
+
+<div class="paragraph">
+<p>These algorithms determine the importance of distinct nodes in a network.</p>
+</div>
+
 <div class="ulist">
 <ul>
 <li>
-Functions are simple computations / conversions and return a single value
+Page Rank (<code>algo.pageRank</code>)
 </li>
 <li>
-Functions can be used in any expression or predicate
+Betweenness Centrality (<code>algo.betweenness</code>)
 </li>
 <li>
-Procedures are more complex operations and generate streams of results.
+Closeness Centrality (<code>algo.closeness</code>)
 </li>
 <li>
-Procedures must be used within the <code>CALL</code> clause and <code>YIELD</code> their result columns
-</li>
-<li>
-They can generate, fetch or compute data to make it available to later processing steps in your Cypher query
+Harmonic Centrality (<code>algo.harmonic</code>)
 </li>
 </ul>
 </div>
 </div>
-<div  id="_listing_using_functions_and_procedures" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Listing &amp; Using Functions and Procedures</h3>
+<div  id="_community_detection" class="sect3 "  >
+<h4>Community Detection</h4>
 
 
 <div class="paragraph">
-<p>There are a <a href="http://neo4j.com/docs/developer-manual/current/procedures/#built-in-procedures">number of built in procedures</a>, two of which are used to list available functions and procedures.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Run the following statements along to get a hang of the usage and see their results.</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CALL dbms.procedures()</code></pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>Call <code>dbms.functions()</code> to list functions.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Each procedure returns one or more columns of data.
-With <code>yield</code> these columns can be selected and also aliased and are then available in your Cypher statement.</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CALL dbms.procedures()
-YIELD name, signature, description as text
-WHERE name STARTS WITH 'db.'
-RETURN * ORDER BY name ASC</code></pre>
-</div>
-</div>
-
-
-<div class="paragraph">
-<p>Of course you can also process the result columns with other Cypher clauses.
-Here we group them by package.</p>
-</div>
-
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>CALL dbms.procedures()
-YIELD name, signature, description
-WITH split(name,".") AS parts
-RETURN parts[0..-1] AS package,  count(*) AS count,
-       collect(parts[-1]) AS names
-ORDER BY count DESC</code></pre>
-</div>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">package</th>
-<th class="tableblock halign-left valign-top">count</th>
-<th class="tableblock halign-left valign-top">names</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">["dbms","security"]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">16</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">["activateUser","addRoleToUser","changePassword",&#8230;&#8203;.]</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">["apoc","refactor"]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">["categorize","cloneNodes","from"&#8230;&#8203;.]</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">["apoc","load"]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">["csv","driver","jdbc","jdbcParams","json","jsoe"]</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">["db"]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">["awaitIndex","constraints","indexes","labels",..,"schema"]</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">["dbms"]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">["components","functions","queries","procedures",&#8230;&#8203;]</p></td>
-</tr>
-</tbody>
-</table>
-
-
-<div class="paragraph">
-<p>As of Neo4j 3.1, all functions available are directly part of the Cypher implementation, so User Defined Functions would only come from installed libraries.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>You can take any procedure library and deploy it to your server to make additional procedures and functions available.</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>Please also have a look at the <a href="http://neo4j.com/docs/developer-manual/current/extending-neo4j/procedures">procedure section in the Neo4j Manual</a>.</p>
-</div>
-
-</div>
-<div  id="_deploying_procedures_functions" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Deploying Procedures &amp; Functions</h3>
-
-
-<div class="paragraph">
-<p>If you built your own procedures or downloaded them from an community project, they are packaged in a jar-file.
-You can copy that file into the <code>$NEO4J_HOME/plugins</code> directory of your Neo4j server and restart.</p>
-</div>
-
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title=""></i>
-</td>
-<td class="content">
-<strong>A word of caution.</strong>
-As procedures and functions use the low level Java API they can access all Neo4j internals as well as the file system and machine.
-That&#8217;s why you should know which procedures you deploy and why.
-Only install procedures from trusted sources.
-If they are open source, check their source-code and best build them yourself.
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div  id="_procedure_and_function_gallery" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Procedure and Function Gallery</h3>
-
-
-<div class="paragraph">
-<p>In our <a href="../procedures-gallery">procedure and functions gallery</a> we describe some of the impressive procedure libraries built by our community.
-Check it out to see what&#8217;s already there.
-Many of your needs will already be covered by those, for example:</p>
+<p>These algorithms evaluate how a group is clustered or partitioned, as well as its tendency to strengthen or break apart.</p>
 </div>
 
 <div class="ulist">
 <ul>
 <li>
-graph algorithms
+Louvain (<code>algo.louvain</code>)
 </li>
 <li>
-index operations
+Label Propagation (<code>algo.labelPropagation</code>)
 </li>
 <li>
-database/api integration
+(Weakly) Connected Components (<code>algo.unionFind</code>)
 </li>
 <li>
-graph refactorings
+Strongly Connected Components (<code>algo.scc</code>)
 </li>
 <li>
-import and export
+Triangle Count / Clustering Coefficient (<code>algo.triangleCount</code>)
+</li>
+</ul>
+</div>
+</div>
+<div  id="_path_finding" class="sect3 "  >
+<h4>Path Finding</h4>
+
+
+<div class="paragraph">
+<p>These algorithms help find the shortest path or evaluate the availability and quality of routes.</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+Minimum Weight Spanning Tree (<code>algo.mst</code>)
 </li>
 <li>
-spatial index lookup
+All Pairs- and Single Source - Shortest Path (<code>algo.shortestPath</code>, <code>algo.allShortestPaths</code>)
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div  id="_installation" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Installation</h3>
+<div class="ulist">
+<ul>
+<li>
+Download the library from the <a href="https://github.com/neo4j-contrib/neo4j-graph-algorithms/releases" target="_blank" rel="noopener">downloads page</a> and put the jar into <code>$NEO4J_HOME/plugins</code>
 </li>
 <li>
-rdf import and export
+Add <code>dbms.security.procedures.unrestricted=algo.*</code> to <code>$NEO4J_HOME/conf/neo4j.conf</code>
 </li>
 <li>
-and many more
+Restart Neo4j
 </li>
 </ul>
 </div>
 
 
 <div class="paragraph">
-<p>Here are two cool examples of what you can do:</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>A procedure to load data from another database:</p>
+<p>We&#8217;re now ready to start using the graph algorithms.
+Run the following query to check that the algorithms library has been picked up by Neo4j:</p>
 </div>
 
 <div class="listingblock">
 <div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>WITH "jdbc:mysql://localhost:3306/northwind?user=root" as url
-CALL apoc.load.jdbc(url,"products") YIELD row
-RETURN row
-ORDER BY row.UnitPrice DESC
-LIMIT 20</code></pre>
+<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo"><code>CALL dbms.procedures() YIELD name, signature, description
+WHERE name starts with "algo"
+RETURN name, signature, description</code></pre>
 </div>
-</div>
-<div class="imageblock">
-<p class="content">
-<img src="https://raw.githubusercontent.com/neo4j-contrib/neo4j-apoc-procedures/3.2/docs/img/apoc-load-jdbc.jpg" alt="apoc load jdbc">
-</p>
 </div>
 
 
 <div class="paragraph">
-<p>Functions to format and parse timestamps of different resolutions:</p>
+<p>If we don&#8217;t see any rows we&#8217;ll need to revisit the installation instructions.</p>
 </div>
 
-<div class="listingblock">
-<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
-<pre style="font-size: 16px; font-weight: 100;"  class="code programlisting cm-s-neo" data-lang="cypher"><code>RETURN apoc.date.format(timestamp()) as time,
-       apoc.date.format(timestamp(),'ms','yyyy-MM-dd') as date,
-       apoc.date.parse('13.01.1975','s','dd.MM.yyyy') as unixtime,
-       apoc.date.parse('2017-01-05 13:03:07') as millis</code></pre>
 </div>
-</div>
-<table class="tableblock frame-all grid-all">
-<colgroup>
-<col>
-<col>
-<col>
-<col>
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">time</th>
-<th class="tableblock halign-left valign-top">date</th>
-<th class="tableblock halign-left valign-top">unixtime</th>
-<th class="tableblock halign-left valign-top">millis</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">"2017-01-05 13:06:39"</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">"2017-01-05"</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">158803200</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1483621387000</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div  id="_developing_your_own_procedures_and_functions" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Developing your own Procedures and Functions</h3>
+<div  id="_further_reading" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Further reading</h3>
 
 
 <div class="paragraph">
-<p>You can find details on writing and testing procedures in the <a href="http://neo4j.com/docs/developer-manual/current/procedures/#user-defined-procedures">Neo4j Manual</a>.</p>
+<p>We have an <a href="https://neo4j-contrib.github.io/neo4j-graph-algorithms/#_algorithms_2" target="_blank" rel="noopener">Algorithms section</a> in the user guide which goes into the history of each algorithm and the use cases for which they&#8217;re applicable.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>There is even an <a href="https://github.com/neo4j-examples/neo4j-procedure-template">example GitHub repository</a> with detailed documentation and comments that you can clone directly and use as a starting point.</p>
+<p>Our colleague Amy Holder has also written an excellent blog post - <a href="https://neo4j.com/blog/top-13-resources-graph-theory-algorithms/" target="_blank" rel="noopener">The Top 13 Resources for Understanding Graph Theory &amp; Algorithms</a> - in which she lists some of her favorite books and online courses.</p>
 </div>
 
-
-
-<div class="paragraph">
-<p>Here are just some initial tips:</p>
-</div>
-
-
-
-<div class="paragraph">
-<p>User-defined functions are simpler, so let&#8217;s start with them:</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-<code>@UserFunction</code> are annotated, public Java methods in a class
-</li>
-<li>
-their default name is package-name.method-name
-</li>
-<li>
-they return a single value
-</li>
-<li>
-are read only
-</li>
-</ul>
-</div>
-
-
-<div class="paragraph">
-<p>User defined procedures are similar:</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-<code>@Procedure</code> annotated, Java methods
-</li>
-<li>
-with an additional <code>mode</code> attribute (<code>READ, WRITE, DBMS</code>)
-</li>
-<li>
-return a Java 8 <code>Stream</code> of simple objects with <code>public</code> fields
-</li>
-<li>
-these fields names are turned into result columns available for <code>YIELD</code>
-</li>
-</ul>
-</div>
-
-
-<div class="paragraph">
-<p>These things are valid for both:</p>
-</div>
-
-<div class="ulist">
-<ul>
-<li>
-take <code>@Name</code> annotated parameters (with optional default values)
-</li>
-<li>
-can use an injected <code>@Context public GraphDatabaseService</code>
-</li>
-<li>
-run within transaction of the Cypher statement
-</li>
-<li>
-supported types for parameters and results are: <code>Long, Double, Boolean, String, Node, Relationship, Path, Object</code>
-</li>
-</ul>
-</div>
 </div>
                     </div>
                     <div class="large-3 large-pull-9 columns">
@@ -1116,11 +873,11 @@ supported types for parameters and results are: <code>Long, Double, Boolean, Str
             </dd>
          </dl>
             <dl class="accordion">
-               <dd class="accordion-navigation active">
+               <dd class="accordion-navigation inactive">
                   <a href="/developer/cypher/">
                      <h5>Cypher Query Language</h5>
                   </a>
-                  <div class="content active" id="panel2">
+                  <div class="content inactive" id="panel2">
                      <ul>
                         <li><a href="/developer/cypher/cypher-query-language/">Cypher Intro</a></li>
                         <li><a href="/developer/cypher/guide-sql-to-cypher/">From SQL to Cypher</a></li>
@@ -1180,11 +937,11 @@ supported types for parameters and results are: <code>Long, Double, Boolean, Str
                </dd>
             </dl>
             <dl class="accordion">
-               <dd class="accordion-navigation ">
+               <dd class="accordion-navigation active">
                   <a href="/developer/integration/">
                      <h5>Neo4j Tools &amp; Integrations</h5>
                   </a>
-                  <div class="content " id="panel6">
+                  <div class="content active" id="panel6">
                      <ul>
                         <li><a href="/developer/integration/ecosystem/">Tools &amp; Libs for Neo4j</a></li>
                         <li><a href="/developer/integration/graph-algorithms/">Graph Algorithms</a></li>

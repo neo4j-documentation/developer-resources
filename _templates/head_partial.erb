@@ -1,15 +1,114 @@
-<head> <meta charset="utf-8"/> <meta name="viewport" content="width=device-width, initial-scale=1.0"/> <meta name="msvalidate.01" content="8787022FB1E99E5BE4A2A32DAEB6B863"/> <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jweb/favicon.ico"/> <title>Developer</title>
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-WK23PSS');</script>
+<!-- End Google Tag Manager -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="msvalidate.01" content="B5163518CBE4A854B63801277FE5E35C" />
+    <meta name="google-site-verification" content="ucqagxjVuq0lJZeLKs0F5AppzK111lNt3IoxU6mzlJE" />    
+    <link rel="shortcut icon" href="https://neo4j.com/wp-content/themes/neo4jweb/favicon.ico" />
+    <link type="text/css" media="all" href="https://neo4j.com/wp-content/cache/autoptimize/css/autoptimize_96e369d64d8c32c6e8e12eaa0b99ba0c.css" rel="stylesheet" /><link type="text/css" media="screen" href="https://neo4j.com/wp-content/cache/autoptimize/css/autoptimize_46efe6163e4bb75a10afac1f94d83129.css" rel="stylesheet" /><title>What is a Graph Database? A Property Graph Model Intro</title>
 
-	 <meta name="description" content="Become an expert Neo4j developer with these introductory tutorials and guidelines that cover the entire development lifecycle, from download to deployment."/> <meta name="robots" content="noodp"/> <link rel="canonical" href="https://neo4j.com/developer/get-started/"/> <meta property="og:locale" content="en_US"/> <meta property="og:type" content="article"/> <meta property="og:title" content="Neo4j Tutorial: Developer Guidelines for Getting Started"/> <meta property="og:description" content="Become an expert Neo4j developer with these introductory tutorials and guidelines that cover the entire development lifecycle, from download to deployment."/> <meta property="og:url" content="https://neo4j.com/developer/get-started/"/> <meta property="og:site_name" content="Neo4j Graph Database"/> <meta property="article:publisher" content="https://www.facebook.com/neo4j.graph.database"/> <meta property="og:image" content="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/2014/10/icon-guide-theory.png"/> <meta property="og:image" content="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/twitter.png"/> <meta property="og:image" content="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/slack_icon.png"/> <meta property="og:image" content="https://neo4j.com/wp-content/themes/neo4jweb/assets/images/github.png"/> <meta property="og:image" content="https://neo4j.com/wp-content/themes/neo4jweb/assets/images/stackoverflow.png"/> <meta property="og:image" content="https://neo4j.com/wp-content/themes/neo4jweb/assets/images/googlegroups.png"/> <meta name="twitter:card" content="summary_large_image"/> <meta name="twitter:description" content="Become an expert Neo4j developer with these introductory tutorials and guidelines that cover the entire development lifecycle, from download to deployment."/> <meta name="twitter:title" content="Neo4j Tutorial: Developer Guidelines for Getting Started"/> <meta name="twitter:site" content="@neo4j"/> <meta name="twitter:image" content="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/2014/10/icon-guide-theory.png"/> <meta name="twitter:creator" content="@neo4j"/> <link rel="alternate" type="application/rss+xml" title="Neo4j Graph Database &raquo; Feed" href="https://neo4j.com/feed/"/> <link rel="alternate" type="application/rss+xml" title="Neo4j Graph Database &raquo; Comments Feed" href="https://neo4j.com/comments/feed/"/>
+<!-- Page hiding snippet  -->
+  <style>.async-hide { opacity: 0 !important} </style>
+  <script>(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+    h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+    (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+    })(window,document.documentElement,'async-hide','dataLayer',4000, {'GTM-PNLTLM5':true});
+  </script>
 
-<link rel='stylesheet' id='cookielawinfo-style-css' href="https://neo4j.com/wp-content/plugins/cookie-law-info/css/cli-style.css?ver=1.5.3" type='text/css' media='all'/>
-<!--link rel='stylesheet' id='font-awesome-four-css' href="https://neo4j.com/wp-content/plugins/font-awesome-4-menus/css/font-awesome.min.css?ver=4.5.0" type='text/css' media='all'/-->
- <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
- <link rel='stylesheet' id='foundation-css' href="https://neo4j.com/wp-content/cache/autoptimize/css/autoptimize_458e91545adca818dc3098684a0ab446.css" type='text/css' media='screen'/> <link rel='stylesheet' id='neo-codemirror-css' href="https://neo4j.com/wp-content/cache/autoptimize/css/autoptimize_7d813c0b0751383f6e801e8587c9b2db.css" type='text/css' media='screen'/>
+  <!-- Google Universal Tracker -->
+  <script type="text/javascript">
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    //Allow Linker
+    ga('create', 'UA-1192232-34','auto', {'allowLinker': true});
+    //Optimize snippet
+    ga('require', 'GTM-PNLTLM5');
+    ga('send', 'pageview');
+
+    // Load the plugin.
+    ga('require', 'linker');
+
+    // Define which domains to autoLink.
+    ga('linker:autoLink', ['neo4j.org','neo4j.com','neotechnology.com','graphdatabases.com','graphconnect.com']);
+  </script>
+  <!-- End Google Universal Tracker -->
+
+<!-- Start Visual Website Optimizer Asynchronous Code -->
+<script type='text/javascript'>
+var _vwo_code=(function(){
+var account_id=309585,
+settings_tolerance=2000,
+library_tolerance=2500,
+use_existing_jquery=false,
+/* DO NOT EDIT BELOW THIS LINE */
+f=false,d=document;return{use_existing_jquery:function(){return use_existing_jquery;},library_tolerance:function(){return library_tolerance;},finish:function(){if(!f){f=true;var a=d.getElementById('_vis_opt_path_hides');if(a)a.parentNode.removeChild(a);}},finished:function(){return f;},load:function(a){var b=d.createElement('script');b.src=a;b.type='text/javascript';b.innerText;b.onerror=function(){_vwo_code.finish();};d.getElementsByTagName('head')[0].appendChild(b);},init:function(){settings_timer=setTimeout('_vwo_code.finish()',settings_tolerance);var a=d.createElement('style'),b='body{opacity:0 !important;filter:alpha(opacity=0) !important;background:none !important;}',h=d.getElementsByTagName('head')[0];a.setAttribute('id','_vis_opt_path_hides');a.setAttribute('type','text/css');if(a.styleSheet)a.styleSheet.cssText=b;else a.appendChild(d.createTextNode(b));h.appendChild(a);this.load('//dev.visualwebsiteoptimizer.com/j.php?a='+account_id+'&u='+encodeURIComponent(d.URL)+'&r='+Math.random());return settings_timer;}};}());_vwo_settings_timer=_vwo_code.init();
+</script>
+<!-- End Visual Website Optimizer Asynchronous Code -->
+
+<!-- Pingdom RUM testing -->
+  <script>
+    var _prum = [['id', '56c4c51eabe53da82429d2ab'],
+             ['mark', 'firstbyte', (new Date()).getTime()]];
+    (function() {
+      var s = document.getElementsByTagName('script')[0]
+        , p = document.createElement('script');
+      p.async = 'async';
+      p.src = '//rum-static.pingdom.net/prum.min.js';
+      s.parentNode.insertBefore(p, s);
+    })();
+  </script>
+<!-- / yo ho ho -->
 
 
-  <script type='text/javascript'>
-/* <![CDATA[ */
-var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
-/* ]]> */
-</script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/neo4j-download/js/download.js?ver=4.5'></script> <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/cookie-law-info/js/cookielawinfo.js?ver=1.5.3'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/jquery-updater/js/jquery-migrate-1.3.0.min.js?ver=1.3.0'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/vendor/modernizr.min.js?ver=4.5'></script> <script type='text/javascript' src='/developer/assets/js/foundation.js'></script> <script type='text/javascript' src='/developer/assets/js/codemirror.min.js'></script> <script type='text/javascript' src='/developer/assets/js/neo_codemirror.js'></script> <script type='text/javascript' src='https://use.typekit.net/rdt4xku.js?ver=4.5'></script> <script type='text/javascript' src='/developer/assets/js/misc.js'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/bundle.js?ver=2016.03.11'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/neo_calculator_v3.js?ver=4.5'></script> <link rel='https://api.w.org/' href="http://neo4j.com/wp-json/"/> <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://neo4j.com/xmlrpc.php?rsd"/> <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://neo4j.com/wp-includes/wlwmanifest.xml"/> <meta name="generator" content="WordPress 4.5"/> <link rel='shortlink' href="http://neo4j.com/?p=38241"/> <link rel="alternate" type="application/json+oembed" href="http://neo4j.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fneo4j.com%2Fdeveloper%2Fget-started%2F"/> <link rel="alternate" type="text/xml+oembed" href="http://neo4j.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fneo4j.com%2Fdeveloper%2Fget-started%2F&#038;format=xml"/> </head>
+  
+<!-- This site is optimized with the Yoast SEO plugin v6.1.1 - https://yoa.st/1yg?utm_content=6.1.1 -->
+<meta name="description" content="Learn the basics of a graph database in general – and Neo4j in particular – in this introduction for database developers of all levels and backgrounds."/>
+<link rel="canonical" href="https://neo4j.com/developer/graph-database/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="What is a Graph Database? A Property Graph Model Intro" />
+<meta property="og:description" content="Learn the basics of a graph database in general – and Neo4j in particular – in this introduction for database developers of all levels and backgrounds." />
+<meta property="og:url" content="https://neo4j.com/developer/graph-database/" />
+<meta property="og:site_name" content="Neo4j Graph Database Platform" />
+<meta property="article:publisher" content="https://www.facebook.com/neo4j.graph.database" />
+<meta property="og:image" content="//neo4j.com/wp-content/uploads/graphdb-gve.png" />
+<meta property="og:image" content="//neo4j.com/wp-content/uploads/property_graph_model.png" />
+<meta property="og:image" content="//neo4j.com/wp-content/uploads/neo4j-nosql.png" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="Learn the basics of a graph database in general – and Neo4j in particular – in this introduction for database developers of all levels and backgrounds." />
+<meta name="twitter:title" content="What is a Graph Database? A Property Graph Model Intro" />
+<meta name="twitter:site" content="@neo4j" />
+<meta name="twitter:image" content="//neo4j.com/wp-content/uploads/graphdb-gve.png" />
+<meta name="twitter:creator" content="@bwmerkl" />
+<script type='application/ld+json'>{"@context":"http:\/\/schema.org","@type":"WebSite","@id":"#website","url":"https:\/\/neo4j.com\/","name":"Neo4j Graph Database Platform","potentialAction":{"@type":"SearchAction","target":"https:\/\/neo4j.com\/?s={search_term_string}","query-input":"required name=search_term_string"}}</script>
+<script type='application/ld+json'>{"@context":"http:\/\/schema.org","@type":"Organization","url":"https:\/\/neo4j.com\/developer\/graph-database\/","sameAs":["https:\/\/www.facebook.com\/neo4j.graph.database","http:\/\/instagram.com\/neo4j","https:\/\/www.linkedin.com\/company\/neo4j","https:\/\/www.youtube.com\/neo4j","https:\/\/www.pinterest.com\/neo4j\/","https:\/\/twitter.com\/neo4j"],"@id":"#organization","name":"Neo Technology","logo":"https:\/\/s3.amazonaws.com\/dev.assets.neo4j.com\/wp-content\/uploads\/20140926224303\/neo4j_logo-facebook.png"}</script>
+<!-- / Yoast SEO plugin. -->
+
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Neo4j Graph Database Platform &raquo; What is a Graph Database? Comments Feed" href="https://neo4j.com/developer/graph-database/feed/" />
+
+
+
+
+
+<script type='text/javascript' src='https://neo4j.com/wp-content/plugins/jquery-updater/js/jquery-3.2.1.min.js?ver=3.2.1'></script>
+<script type='text/javascript' src='https://neo4j.com/wp-content/plugins/cookie-law-info/js/cookielawinfo.js?ver=1.5.3'></script>
+<script type='text/javascript' src='https://neo4j.com/wp-content/plugins/jquery-updater/js/jquery-migrate-3.0.0.min.js?ver=3.0.0'></script>
+<script type='text/javascript' src='https://neo4j.com/wp-content/plugins/search-filter-pro/public/assets/js/chosen.jquery.min.js?ver=2.3.4'></script>
+<link rel='https://api.w.org/' href='https://neo4j.com/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://neo4j.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://neo4j.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.9.2" />
+<link rel='shortlink' href='https://neo4j.com/?p=38491' />
+<link rel="alternate" type="application/json+oembed" href="https://neo4j.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fneo4j.com%2Fdeveloper%2Fgraph-database%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://neo4j.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fneo4j.com%2Fdeveloper%2Fgraph-database%2F&#038;format=xml" />
+<!-- Stream WordPress user activity plugin v3.2.2 -->
+  
+</head>

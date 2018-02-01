@@ -47,7 +47,7 @@ renderer = AsciiPress::Renderer.new( # after_conversion: HtmlTransformer.method(
                                     })
 
 adoc_file_paths.each do |adoc_file_path|
-  dir = File.join('deploy', File.dirname(adoc_file_path))
+  dir = File.dirname(adoc_file_path)
   FileUtils.mkdir_p(dir)
   html_file_path = File.join(dir, 'index.html')
 
