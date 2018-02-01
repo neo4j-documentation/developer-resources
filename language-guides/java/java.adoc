@@ -170,7 +170,7 @@ As Cypher, like SQL, is a textual parametrizable query language that can return 
 
 The driver supports the new binary "Bolt" protocol of Neo4j 3.x, the transactional http endpoint and Neo4j embedded connections.
 
-[source, java]
+[source,text/x-java]
 ----
 // Connect
 Connection con = DriverManager.getConnection("jdbc:neo4j:bolt://localhost");
@@ -259,7 +259,7 @@ It supports setup fixtures, database comparisions and testing of both Neo4j Serv
 
 Example:
 
-[source,java]
+[source,text/x-java]
 ----
 ----
 
@@ -276,14 +276,14 @@ The Neo4j Manual has a complete section on this topic.
 
 You can obtain an instance of it like this:
 
-[source,java]
+[source,text/x-java]
 ----
 ----
 
 Please make sure that your transactions are all completed (closed after `failure` or `success` calls) and the database is shut down correctly. 
 Otherwise you might experience delays (transaction grace period) or leaks while tearing down your tests.
 
-[source,java]
+[source,text/x-java]
 ----
 ImpermanentGraphDatabase db = new TestGraphDatabaseFactory().newImpermanentDatabase();
 
@@ -303,7 +303,7 @@ Neo4j 2.2 introduces a {manual}/server-unmanaged-extensions-testing.html[new mod
 
 After adding `org.neo4j.test:neo4j-harness:${neo4j.version}` to your dependency setup you can use both a builder to create Neo4j server instances as well as a JUnit Rule to achieve the same:
 
-[source,java]
+[source,text/x-java]
 ----
 @Rule
 public Neo4jRule server = new Neo4jRule().withExtension("/test", TestResource.class);
@@ -338,7 +338,7 @@ It supports setup fixtures, database comparisions and testing of both Neo4j Serv
 
 Example:
 
-[source,java]
+[source,text/x-java]
 ----
 ----
 

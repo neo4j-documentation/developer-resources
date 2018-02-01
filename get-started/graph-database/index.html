@@ -717,6 +717,7 @@ You should have a basic understanding of what a database is.
 <p>Very simply, a graph database is a database designed to treat the relationships between data as a first-class citizen in the data model.</p>
 </div>
 
+<iframe width="640" height="360" src="https://www.youtube.com/embed/-dCeFEqDkUI" frameborder="0" allowfullscreen></iframe>
 </div>
 <div  id="_why_graph_databases" class="sect2 columns medium-12" style='padding-left: 0;' >
 <h3>Why Graph Databases?</h3>
@@ -740,7 +741,6 @@ While other databases compute relationships at query time through expensive JOIN
 <p>Independent of the total size of your dataset, graph databases excel at managing highly connected data and complex queries.  Armed only with a pattern and a set of starting points, graph databases explore the larger neighborhood around the initial starting points&#8201;&#8212;&#8201;collecting and aggregating information from millions of nodes and relationships&#8201;&#8212;&#8201;leaving the billions outside the search perimeter untouched.</p>
 </div>
 
-<iframe width="640" height="360" src="https://www.youtube.com/embed/-dCeFEqDkUI" frameborder="0" allowfullscreen></iframe>
 </div>
 <div  id="property-graph" class="sect2 columns medium-12" style='padding-left: 0;' >
 <h3>The Property Graph Model</h3>
@@ -1226,6 +1226,7 @@ MktoForms2.loadForm("//app-ab10.marketo.com", "710-RRC-335", 477, function(form)
 		<script type="text/javascript">
 			//<![CDATA[
 			jQuery(document).ready(function() {
+        CodeMirror.colorize(false, 'clang');
 				cli_show_cookiebar({
 					settings: '{"animate_speed_hide":"500","animate_speed_show":"500","background":"#fff","border":"#444","border_on":true,"button_1_button_colour":"#000","button_1_button_hover":"#000000","button_1_link_colour":"#fff","button_1_as_button":true,"button_2_button_colour":"#333","button_2_button_hover":"#292929","button_2_link_colour":"#1e73be","button_2_as_button":false,"font_family":"inherit","header_fix":false,"notify_animate_hide":true,"notify_animate_show":false,"notify_div_id":"#cookie-law-info-bar","notify_position_horizontal":"right","notify_position_vertical":"bottom","scroll_close":false,"scroll_close_reload":false,"showagain_tab":false,"showagain_background":"#fff","showagain_border":"#000","showagain_div_id":"#cookie-law-info-again","showagain_x_position":"100px","text":"#000","show_once_yn":false,"show_once":"20000"}'
 				});
@@ -1235,6 +1236,12 @@ MktoForms2.loadForm("//app-ab10.marketo.com", "710-RRC-335", 477, function(form)
 		
 		<script type='text/javascript' src='//use.typekit.net/rdt4xku.js?ver=4.9.2'></script>
 <script type='text/javascript' src='https://neo4j.com/wp-content/themes/neo4jweb/assets/js/dist.min.js?ver=20180112-1223'></script>
+
+<!-- load additional codemirror modes -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/mode/python/python.min.js" type="text/javascript"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/mode/php/php.min.js" type="text/javascript"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/mode/ruby/ruby.min.js" type="text/javascript"></script>
+
 <script type='text/javascript' src='https://neo4j.com/wp-content/themes/neo4jweb/assets/js/neo_calculator_v3.js?ver=4.9.2'></script>
 <script type='text/javascript' src='https://neo4j.com/wp-includes/js/wp-embed.min.js?ver=4.9.2'></script>
 <script>
@@ -1264,6 +1271,7 @@ var google_remarketing_only = true;
 <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/960313738/?value=1.00&amp;currency_code=USD&amp;label=HN1kCN7GnwcQivP0yQM&amp;guid=ON&amp;script=0"/>
 </div>
 </noscript>
+
 
 <!-- Send GA ClientID to Marketo iframe --> 
 <script>
