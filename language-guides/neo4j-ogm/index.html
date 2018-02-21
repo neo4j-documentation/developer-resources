@@ -848,8 +848,15 @@ Query result projection to DTOs
 </thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.1.0+</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.1.x, 3.2.x, 3.3.x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.5.0+ (compatible with 1.4.0+)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5.1.0+ (compatible with 5.0.0+)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0.0+</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3.0.0+</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3.1.x, 3.2.x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.1.x, 3.2.x, 3.3.x</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1.4.0+</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">5.0.0+</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2.0.0+</p></td>
@@ -925,7 +932,13 @@ verify versions used (e.g through <code>mvn dependency:tree</code>) and report t
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2.0.0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5.0.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5.1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.5.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5.0.0 (default for Spring Boot 2.0)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3.0.0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1.4.3</p></td>
 </tr>
@@ -1166,6 +1179,12 @@ You will find the implementations for all drivers as <a href="https://github.com
 <p><em>What is the difference between Neo4j OGM and Spring Data Neo4j (SDN)?</em></p>
 <p>Spring Data Neo4j (SDN) uses the OGM under the covers. It&#8217;s like Spring Data JPA, where JPA/Hibernate underly it.  Most
 of the power of SDN actually comes from the OGM.</p>
+</li>
+<li>
+<p><em>How are labels generated when using inheritance?</em></p>
+<p>All concrete classes generate a label, abstract classes and interfaces not.
+If any kind of class or interface gets annotated with @NodeEntity or @NodeEntity(label="customLabel") it will generate a label.
+Any class annotated with @Transient will not generate a label.</p>
 </li>
 </ol>
 </div>
@@ -1565,6 +1584,8 @@ var google_remarketing_only = true;
       });
  });
 </script>
+
+<script src="//cdn.getsmartcontent.com/GS9NJ03M.js"></script>
 
 <!-- Begin CrazyEgg Tracking -- Neo4j Account -->
 <script type="text/javascript">
