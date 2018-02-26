@@ -26,7 +26,7 @@ Let's get started!
 
 Select Neo4j from the Google Cloud Launcher console and click Launch on Compute Engine
 
-image::{img}launch-screen.png[width=900,float=center]
+image::{img}launch-screen.png[width=700,float=center]
 
 === Deploy Neo4j Enterprise
 
@@ -35,11 +35,11 @@ image::{img}launch-screen.png[width=900,float=center]
 * Select a number of core nodes in the cluster
 * Click Deploy
 
-image::{img}deploy-screen.png[width=900,float=center]
+image::{img}deploy-screen.png[width=700,float=center]
 
 * Once the deploy has finished, save the URL, username, and password for the next steps.
 
-image::{img}deployed-screen.png[width=900,float=center]
+image::{img}deployed-screen.png[width=700,float=center]
 
 === Start using Neo4j Browser
 
@@ -55,13 +55,13 @@ on the VMs themselves, so you can't lose it.
 To verify that the cluster has formed correctly, run the cypher statement 
 `CALL dbms.cluster.overview()`
 
-image::{img}working-cluster.png[width=900,float=center]
+image::{img}working-cluster.png[width=700,float=center]
 
 You will know that everything is working fine when you see one `LEADER` with the remainder of
 your nodes as `FOLLOWER`.  The IP addresses and endpoints will match what Compute Engine shows
 you for your running instances.
 
-image::{img}vm-instances.png[width=900,float=center]
+image::{img}vm-instances.png[width=700,float=center]
 
 === How do I SSH into the instance?
 
