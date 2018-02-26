@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/circleci-gh-pages
     docker:
-      - image: circleci/ruby:2.4.1-node
+      - image: circleci/ruby:2.5-node-browsers
     steps:
       - checkout
       - run: bundle install
