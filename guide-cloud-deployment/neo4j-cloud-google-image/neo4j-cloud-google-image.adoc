@@ -1,0 +1,149 @@
+= Hosting Neo4j on Google Compute Engine
+:slug: neo4j-cloud-google-image
+:level: Intermediate
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 1
+:section: Neo4j in the Cloud
+:section-link: guide-cloud-deployment
+
+.Goals
+[abstract]
+This guide explains how to deploy a single instance of Neo4j Enterprise on Google Cloud Platform.
+
+.Prerequisites
+[abstract]
+You should know how to run and operate Neo4j locally.
+Knowledge of link:/developer/language-guides[remote drivers] to access Neo4j from your application helps you connect to your cloud-hosted database.
+
+toc::[]
+
+Before continuing with the guide make sure you've https://cloud.google.com/sdk/downloads[installed the GCloud Command Line Interface^].
+
+Let's get started!
+
+=== Create Firewall Rules
+
+By default, Google won't let traffic in and out of instances unless we allow it.  So we
+begin by setting a simple firewall rule which will enable us to access the instance once
+it is launched:
+
+```
+gcloud compute firewall-rules create allow-neo4j-bolt-https \
+   --allow tcp:7473,tcp:7687 \
+   --source-ranges 0.0.0.0/0 \
+   --target-tags neo4j
+```
+
+This allows traffic into your node on port 7473 (HTTPS for Neo4j Browser) and 7687, which is
+the Bolt protocol for clients to work with the database.  The source IP range provided allows
+the entire internet to contact your new instance, which you may narrow.  The target tags
+specifies that this rule applies only to instances tagged `neo4j`.  When we launch our 
+instance, we'll take care to apply that tag to it.  In Google's Cloud Console, here's what
+your rule should look like:
+
+image::{img}firewall-rule.png[width=700,float=center]
+
+We don't have to open port 22 for SSH, that will already be done.
+
+=== Create a Google Compute Instance from the Neo4j Public Image
+
+Launching the instance is a single command:
+
+```
+gcloud config set project my-project-id
+gcloud compute instances create my-neo4j-instance \
+    --image neo4j-enterprise-1-3-3-3 \
+    --tags neo4j \
+    --image-project launcher-public
+```
+
+The first line simply sets your project configuration to ensure you know where you are launching
+your instance.  The second line launches an image found in a public project that we have provided.
+The image name `neo4j-enterprise-1-3-3-3` corresponds to an Ubuntu-based image that contains
+Neo4j 1:3.3.3.
+
+Note that the `gcloud` tool comes with many command line options that aren't covered here.
+https://cloud.google.com/sdk/gcloud/reference/compute/instances/create[consult the documentation]
+for a large number of options dealing with machine type, memory, available storage, and so on.
+
+The `--tags` argument is important, because it allows us to configure the correct network 
+permissions in the next step.  By default, Google will block all external access to the network
+services unless you open them.
+
+You'll know that the launch succeeded when you see output like this:
+
+```
+Created [https://www.googleapis.com/compute/v1/projects/testbed-187316/zones/us-east1-b/instances/my-neo4j-instance].
+NAME               ZONE        MACHINE_TYPE   PREEMPTIBLE  INTERNAL_IP  EXTERNAL_IP     STATUS
+my-neo4j-instance  us-east1-b  n1-standard-1               10.142.0.3   35.231.125.253  RUNNING
+```
+
+=== Access Your New Instance
+
+Navigate to `https://[External_IP]:7473` and login with the user name `neo4j` and password `neo4j`.
+You will be prompted to change the password immediately.
+
+Because you don't have a hostname configured or a valid SSL certificate by default, your browser
+will warn you that the certificate isn't trusted.  This is expected, you can configure a certificate
+later if you choose.
+
+=== How do I SSH into the instance?
+
+You can run the following command to SSH into the instance:
+
+[source,text]
+----
+gcloud compute ssh my-neo4j-instance
+----
+
+Inside of the VM, you can check the status of the neo4j service like this:
+
+[source,text]
+----
+$ sudo systemctl status neo4j
+● neo4j.service - Neo4j Graph Database
+   Loaded: loaded (/etc/systemd/system/neo4j.service; enabled; vendor preset: enabled)
+   Active: active (running) since Wed 2018-03-14 11:19:56 UTC; 15min ago
+ Main PID: 1290 (pre-neo4j.sh)
+    Tasks: 46
+   Memory: 325.7M
+      CPU: 20.690s
+   CGroup: /system.slice/neo4j.service
+           ├─1290 /bin/bash /etc/neo4j/pre-neo4j.sh
+           └─1430 /usr/bin/java -cp /var/lib/neo4j/plugins:/etc/neo4j:/usr/share/neo4j/lib/*:/var/lib/neo4j/plugins/* -server -XX:+UseG1GC 
+----
+
+=== Configuring your instance
+
+Google VMs can be configured via custom metadata key/values placed on the image.  The normal
+`neo4j.conf` file is used to configure the neo4j service inside of the VM, but when running on 
+google this is driven by a template file you'll find at `/etc/neo4j/neo4j.template`.
+
+That template contains certain variables, for example:
+
+[source,text]
+----
+dbms.logs.http.enabled=$dbms_logs_http_enabled
+----
+
+This means that you can set a custom metadata item on the instance with the key `dbms_logs_http_enabled`
+and its value will be substituted into `neo4j.conf` when the service starts.  Being able to set
+configuration items from outside of neo4j.conf is very convenient when you start integrating 
+neo4j together with other components.
+
+Within the google image, do not directly edit `/etc/neo4j/neo4j.conf`, because
+it will be replaced by template substitutions each time the service starts.  Instead, edit the
+template to suit your needs.
+
+If you customize metadata on the VM to configure neo4j, please remember you'll need to restart
+the neo4j system service, or restart the VM for those changes to take effect.
+
+=== Deleting the instance
+
+Once we've finished using the instance we can run the following command to delete it:
+
+```
+gcloud compute instances delete my-neo4j-instance
+```
