@@ -315,7 +315,7 @@ f=false,d=document;return{use_existing_jquery:function(){return use_existing_jqu
 <div class="marquee-neo">
     <div class="row text-center">
         <div class="columns">
-            <h1 class="entry-title">Neo4j Online Meetup</h1>
+            <h1 class="entry-title">Neo4j on Google Cloud Launcher</h1>
         </div>
     </div>
 </div>
@@ -328,7 +328,7 @@ f=false,d=document;return{use_existing_jquery:function(){return use_existing_jqu
                     <ul class="breadcrumbs">
                         <li><a href="/developer">Developer</a></li>
                         
-                        <li class="current"><a href="#">Neo4j Online Meetup</a></li>
+                        <li class="current"><a href="#">Neo4j on Google Cloud Launcher</a></li>
                     </ul>
                 </div>
             </div>
@@ -677,181 +677,230 @@ ul.none li {
             <div>
                 <div class="row" style="padding-left: 0; padding-right: 0;">
                     <div class="large-9 large-push-3 columns guide-section-content">
-                        <div  id="_join_us_for_online_sessions_streamed_on_youtube_live" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Join us for online sessions streamed on YouTube Live</h3>
+                        <div id="preamble columns medium-12">
+<div class="sectionbody">
+<div class="quoteblock abstract">
+<div class="title">Goals</div>
+<blockquote style="padding-left: 0;">
+This guide explains how to deploy a Neo4j Enterprise Causal Cluster via Google Cloud Launcher.
+</blockquote>
+</div>
+<div class="olist abstract">
+<div class="title">Prerequisites</div>
+<ol style="margin-left: 2.4rem;" class="abstract">
+<li>
+You have a Neo4j Enterprise license
+</li>
+<li>
+You should have familiarity with <a href="/docs/operations-manual/current/clustering/causal-clustering/introduction/">causal cluster architecture</a>.
+</li>
+<li>
+Knowledge of <a href="/developer/language-guides">remote drivers</a> to access Neo4j from your application helps you connect to your cloud-hosted database.
+</li>
+</ol>
+</div>
+<div class="toc">
+<h3 class="title">Overview</h3>
+
+<ul class="sectlevel2">
+<li><a href="#_select_neo4j_from_the_google_cloud_launcher_console">Select Neo4j from the Google Cloud Launcher console</a></li>
+<li><a href="#_deploy_neo4j_enterprise">Deploy Neo4j Enterprise</a></li>
+<li><a href="#_start_using_neo4j_browser">Start using Neo4j Browser</a></li>
+<li><a href="#_how_do_i_ssh_into_the_instance">How do I SSH into the instance?</a></li>
+<li><a href="#_your_cluster_default_configuration">Your Cluster Default Configuration</a></li>
+<li><a href="#_what_s_next">What&#8217;s Next</a></li>
+<li><a href="#_terminating_the_deployment">Terminating the Deployment</a></li>
+</ul>
+
+</div>
+<hr>
 
 
 <div class="paragraph">
-<p>In February 2017 we started running online sessions so that people in regions that don&#8217;t have physical meetups can get fresh Neo4j content.</p>
+<p>Let&#8217;s get started!</p>
+</div>
+
+</div>
+</div>
+<div  id="_select_neo4j_from_the_google_cloud_launcher_console" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Select Neo4j from the Google Cloud Launcher console</h3>
+
+
+<div class="paragraph">
+<p>Select Neo4j from the Google Cloud Launcher console and click Launch on Compute Engine</p>
+</div>
+
+<div class="imageblock" style="float: center;">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/launch-screen.png" alt="launch screen" width="700">
+</p>
+</div>
+</div>
+<div  id="_deploy_neo4j_enterprise" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Deploy Neo4j Enterprise</h3>
+<div class="ulist">
+<ul>
+<li>
+Choose a name for your Neo4j instance
+</li>
+<li>
+Choose a machine type
+</li>
+<li>
+Select a number of core nodes in the cluster
+</li>
+<li>
+Click Deploy
+</li>
+</ul>
+</div>
+<div class="imageblock" style="float: center;">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/deploy-screen.png" alt="deploy screen" width="700">
+</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+Once the deploy has finished, save the URL, username, and password for the next steps.
+</li>
+</ul>
+</div>
+<div class="imageblock" style="float: center;">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/deployed-screen.png" alt="deployed screen" width="700">
+</p>
+</div>
+</div>
+<div  id="_start_using_neo4j_browser" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Start using Neo4j Browser</h3>
+
+
+<div class="paragraph">
+<p>We&#8217;re now ready to start using Neo4j!</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>We post new events on the <a href="https://www.meetup.com/Neo4j-Online-Meetup/">Neo4j Online Meetup</a> group so be sure to <a href="https://www.meetup.com/Neo4j-Online-Meetup/join">join the group</a> to be notified about these.</p>
+<p>Use your browser to access the URL provided in the previous step, and log in with the initial
+username and password provided.   You may see an SSL warning screen, because the deployment
+out of the box uses an unsigned SSL certificate.</p>
 </div>
 
 
 
 <div class="paragraph">
-<p>You can also <a href="https://www.youtube.com/neo4j?sub_confirmation=1">subscribe to our YouTube channel</a>.</p>
+<p>The initial password is set to a strong random password, and is saved as a metadata entry
+on the VMs themselves, so you can&#8217;t lose it.</p>
 </div>
 
-<script src="https://apis.google.com/js/platform.js"></script>
-
-<div class="g-ytsubscribe" data-channelid="UCvze3hU6OZBkB1vkhH2lH9Q" data-layout="full" data-count="default"></div>
-</div>
-<div  id="_live" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Live</h3>
-<div class="row">
-	<div class="small-12">
-		<div class="live-videos-list">
-      There is no live session at the moment but check below for upcoming and previous sessions.
-    </div>
-	</div>
-</div>
-</div>
-<div  id="_upcoming_sessions" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Upcoming sessions</h3>
 
 
 <div class="paragraph">
-<p>We&#8217;ve got the following online meetups coming up soon:</p>
+<p>To verify that the cluster has formed correctly, run the cypher statement
+<code>CALL dbms.cluster.overview()</code></p>
 </div>
 
-<div class="row">
-	<div class="small-12">
-		<div class="upcoming-videos-list">
-      There are no upcoming sessions scheduled at the moment but check below for the videos from past sessions.
-    </div>
-	</div>
-</div>
-</div>
-<div  id="_previous_sessions" class="sect1 columns medium-12" style='padding-left: 0;' >
-<h3>Previous sessions</h3>
-
-
-<div class="paragraph">
-<p>You can watch videos from previous online meetups:</p>
-</div>
-
-<div class="row">
-	<div class="small-12 columns">
-		<ul class="past-videos-list item-list small-block-grid-1 medium-block-grid-3">
-		</ul>
-
-	</div>
+<div class="imageblock" style="float: center;">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/working-cluster.png" alt="working cluster" width="700">
+</p>
 </div>
 
 
 <div class="paragraph">
-<p>All videos are also available on the <a href="https://www.youtube.com/playlist?list=PL9Hl4pk2FsvVnz4oi0F8UXiD3nMNqsRO2" target="_blank" rel="noopener">Neo4j Online Meetup playlist</a>.</p>
+<p>You will know that everything is working fine when you see one <code>LEADER</code> with the remainder of
+your nodes as <code>FOLLOWER</code>.  The IP addresses and endpoints will match what Compute Engine shows
+you for your running instances.</p>
 </div>
 
-<script>
-    function googleApiClientReady() {
-        gapi.client.setApiKey("AIzaSyB3jZLnBi-Cqggq8BCq9xTV8YMgu-x_kTc");
-        gapi.client.load('youtube', 'v3', function() {
-            var requestOptions = {
-                    playlistId: "PL9Hl4pk2FsvVnz4oi0F8UXiD3nMNqsRO2",
-                    part: 'snippet',
-                    maxResults: 6
-            };
-
-            var request = gapi.client.youtube.playlistItems.list(requestOptions);
-            request.execute(function(response) {
-
-                videoString = "";
-                $.each(response['items'], function(i,v) {
-                    var id = v['snippet']['resourceId']['videoId'],
-                        thumbnail = v['snippet']['thumbnails']['medium'],
-                        title = v['snippet']['title'],
-                        description = v['snippet']['description'],
-                        video_id = v['snippet']['resourceId']['videoId'];
-
-                    if (i > 2) {
-                        videoString += '<li class="text-center extra-item" style="display:none">';
-                    } else {
-                        videoString += '<li class="text-center">';
-                    }
-
-                    videoString += '<a href="https://www.youtube.com/watch?v=' + video_id + '&list=PL9Hl4pk2FsvVnz4oi0F8UXiD3nMNqsRO2" target="_blank">';
-                        videoString += '<div class="videobox">';
-                            videoString += '<img src="' + thumbnail['url'] + '">';
-                            videoString += '<span></span>';
-                        videoString += '</div>';
-                    videoString += '</a>';
-                    videoString += '<h5>' + title + '</h5>';
-                    videoString += '</li>';
-
-                });
-                $(".past-videos-list").append(videoString);
-            });
-
-            var upcomingRequest = gapi.client.youtube.search.list({
-              part: 'snippet',
-              channelId: "UCvze3hU6OZBkB1vkhH2lH9Q",
-              maxResults: 1,
-              eventType: 'upcoming',
-              type: 'video'
-            });
-
-            upcomingRequest.execute(function(response) {
-              videoString = "";
-              $.each(response['items'], function(i,v) {
-
-                  var thumbnail = v['snippet']['thumbnails']['high'],
-                      title = v['snippet']['title'],
-                      description = v['snippet']['description'],
-                      video_id = v['id']['videoId'];
+<div class="imageblock" style="float: center;">
+<p class="content">
+<img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/vm-instances.png" alt="vm instances" width="700">
+</p>
+</div>
+</div>
+<div  id="_how_do_i_ssh_into_the_instance" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>How do I SSH into the instance?</h3>
 
 
-                  videoString += '<iframe width="560" height="315" src="https://www.youtube.com/embed/'  + video_id + '" frameborder="0" allowfullscreen></iframe>';
-                  videoString += "<hr />"
-
-              });
-
-							if(videoString != "") {
-								$(".upcoming-videos-list").replaceWith(videoString);
-							}
-            });
-
-						var liveRequest = gapi.client.youtube.search.list({
-              part: 'snippet',
-              channelId: "UCvze3hU6OZBkB1vkhH2lH9Q",
-              maxResults: 1,
-              eventType: 'live',
-              type: 'video'
-            });
-
-            liveRequest.execute(function(response) {
-              videoString = "";
-              $.each(response['items'], function(i,v) {
-
-                  var thumbnail = v['snippet']['thumbnails']['high'],
-                      title = v['snippet']['title'],
-                      description = v['snippet']['description'],
-                      video_id = v['id']['videoId'];
+<div class="paragraph">
+<p>On the deployment manager screen above, there is a button provided to SSH directly into the
+first node of the cluster.  Cluster members are just regular Google Compute Engine VMs.  As
+a result you can always access any of them via SSH; check your Compute Engine VMs, they will
+be named <code>cluster-name-vm-1</code>, <code>cluster-name-vm-2</code>, and so on.</p>
+</div>
 
 
-                  videoString += '<iframe width="560" height="315" src="https://www.youtube.com/embed/'  + video_id + '" frameborder="0" allowfullscreen></iframe>';
-                  videoString += "<hr />"
 
-              });
+<div class="paragraph">
+<p>Using the Google Cloud CLI, you can access them via:</p>
+</div>
 
-							if(videoString != "") {
-								$(".live-videos-list").replaceWith(videoString);
-							}
-
-            });
-
-        });
-
-    };
-</script>
+<div class="listingblock">
+<div class="content code-panel" style="width: 100%; height: auto; border: medium 1px;">
+<pre>gcloud compute ssh my-cluster-deploy-vm-1</pre>
+</div>
+</div>
+</div>
+<div  id="_your_cluster_default_configuration" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Your Cluster Default Configuration</h3>
 
 
-<script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+<div class="paragraph">
+<p>The following notes are provided on your default cluster configuration.</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+Ports 7687 (bolt) and 7473 (HTTPS access) are the only ports exposed to the entire internet.  Consider narrowing access to
+these ports to only your needed networks.  External unencrypted HTTP access is disabled by default.
+</li>
+<li>
+Ports 5000, 6000, and 7000 are enabled only for internal network access (<code>10.0.0.8</code>) as they are needed
+for internal cluster communication.
+</li>
+<li>
+Because cloud VMs can start and stop with different IP addresses, the configuration of these
+VMs is driven by a file in <code>/etc/neo4j/neo4j.template</code>.  Configuration changes should be made to
+the template, <strong>not</strong> to the <code>/etc/neo4j/neo4j.conf</code> file, which is overwritten with template
+substitutions at every startup.  The template allows you configure aspects of the cluster with
+VM metadata; see the "Custom Metadata" on any of your launched VMs for examples.  The template&#8217;s
+behavior and layout matches the usual <code>neo4j.conf</code> file.
+</li>
+</ul>
+</div>
+</div>
+<div  id="_what_s_next" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>What&#8217;s Next</h3>
+<div class="ulist">
+<ul>
+<li>
+Visit the <a href="/docs/operations-manual/current/">Neo4j Operations Manual</a> for information on how
+configure all aspects of your cluster
+</li>
+<li>
+Add users, and change passwords as necessary
+</li>
+<li>
+Consider creating DNS entries with Google to permit addressing your cluster with client applications
+under a single host name.
+</li>
+</ul>
+</div>
+</div>
+<div  id="_terminating_the_deployment" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Terminating the Deployment</h3>
+
+
+<div class="paragraph">
+<p>Should you need to, you can tear down this infrasructure by using the deployment manager to delete
+the deployment.  To ensure data safety, the disks that back the VMs will not be autodeleted if
+the cluster deployment is deleted.  These disks must be deleted separately, manually, if desired.</p>
+</div>
+
 </div>
                     </div>
                     <div class="large-3 large-pull-9 columns">
@@ -972,11 +1021,11 @@ ul.none li {
                </dd>
             </dl>
             <dl class="accordion">
-               <dd class="accordion-navigation inactive">
+               <dd class="accordion-navigation active">
                   <a href="/developer/guide-cloud-deployment/">
                      <h5>Neo4j in the Cloud</h5>
                   </a>
-                  <div class="content inactive" id="panel9">
+                  <div class="content active" id="panel9">
                      <ul>
                         <li><a href="/developer/guide-cloud-deployment/neo4j-cloud-aws-ec2-ami/">Deploying to EC2</a></li>
                         <li><a href="https://neo4j.com/blog/deploy-neo4j-microsoft-azure-part-2">Deploying to Azure</a></li>
@@ -987,11 +1036,11 @@ ul.none li {
                </dd>
             </dl>
          <dl class="accordion">
-            <dd class="accordion-navigation active">
+            <dd class="accordion-navigation ">
                <a href="/developer/resources/">
                   <h5>Documentation &amp; Resources</h5>
                </a>
-               <div class="content active" id="panel4">
+               <div class="content " id="panel4">
                   <ul>
 	                 <li><a href="/graphacademy/online-course-getting-started/">Getting Started Course</a></li>
 	                 <li><a href="/developer/resources/ruby-course/">Ruby / Rails Course</a></li>

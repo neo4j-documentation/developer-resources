@@ -14,7 +14,7 @@ This guide explains the example application we use to introduce the different Ne
 
 .Prerequisites
 [abstract]
-You should be familiar with link:/developer/get-started/graph-database[graph database concepts] and the property graph model. You should have link:/download[installed Neo4j] and made yourself familiar with our link:/developer/cypher[Cypher Query language].
+You should be familiar with link:/developer/get-started/graph-database[graph database concepts, window="_blank"] and the property graph model. You should have link:/download[installed Neo4j, window="_blank"] and made yourself familiar with our link:/developer/cypher[Cypher Query language, window="_blank"].
 
 [role=expertise]
 {level}
@@ -24,10 +24,11 @@ toc::[]
 // tag::intro[]
 == Example Project Description
 
-To demonstrate connection to and usage of Neo4j in different programming languages we've created an example application.
-It is a http://my-neo4j-movies-app.herokuapp.com/[simple, one-page webapp], that uses Neo4j's movie demo database (movie, actor, director) as data set.
-The same front-end web page in all applications consumes 3 REST endpoints provided by backend implemented in the different programming languages and drivers.
+To demonstrate connection to and usage of Neo4j in different programming languages, we've created a consistent example application.
+It is a http://my-neo4j-movies-app.herokuapp.com/[simple, one-page webapp], that uses Neo4j's movie demo database (movie, actor, director) as the data set.
+The same front-end web page consumes 3 REST endpoints provided by a backend implemented with the different programming languages and drivers.
 
+The image below shows the 3 REST end points that can be queried and the information it can return.
 * movie search by title
 * single movie listing
 * graph visualization of the domain
@@ -36,6 +37,8 @@ image::{img}movie_application.png[link="http://my-neo4j-movies-app.herokuapp.com
 
 === Domain Model
 
+The foundation for the project is built upon the domain model below. A person node participates (whether through ACTED_IN or DIRECTED_IN relationships) in a movie node. Various Cypher queries can be run to find nodes, relationships, or movies which the user is interested in.
+
 [source,cypher]
 ----
 (:Person {name})-[:ACTED_IN {roles}]->(:Movie {title,released})
@@ -43,7 +46,7 @@ image::{img}movie_application.png[link="http://my-neo4j-movies-app.herokuapp.com
 
 === GitHub
 
-The source code for all the different language examples is available on https://github.com/neo4j-examples?query=movies[GitHub] as individual repositories that can be cloned and directly used as starting points.
+The source code for all of the different language examples is available on https://github.com/neo4j-examples?query=movies[GitHub, window="_blank"] in individual repositories that can be cloned and directly used as starting points. Just click the link, search repositories for "movies", and choose the repo for your programming language to get started building your application with Neo4j!
 // end::intro[]
 
 === Webpage
@@ -54,25 +57,25 @@ For the search, that is the `/search?q=query` endpoint whose results are added a
 
 If you click on any of the movie titles, the right-side view is populated with the movie details.
 
-For the movie details it uses the `/movie/A%20Movie%20Title` endpoint and the results are rendered as panel title, image source, and unordered list for the crew.
+For the movie details, it uses the `/movie/A%20Movie%20Title` endpoint, and the results are rendered as panel title, image source, and unordered list for the crew.
 
 === Graph Visualization
 
-For the Graph Visualization we use http://d3js.org[d3.js]. Our `/graph` endpoint already returns the data in the format of "nodes" and "links"-list that d3 can use directly.
-We then apply the force-layout algorithm to render nodes as circles and relationships as lines, and add some minimal styling to the visualization to provide the movie title/person name as title attribute to the node circles which is shown as a tooltip.
+For the Graph Visualization, we use http://d3js.org[d3.js]. Our `/graph` endpoint already returns the data in the format of "nodes" and "links"-list that d3 can use directly.
+We then apply the 'force layout' algorithm to render nodes as circles and relationships as lines and add some minimal styling to the visualization that provides the movie title/person name as the title attribute to the node circles (shown as a tooltip).
 
 === Data Setup
 
 - Start your local Neo4j Server (http://neo4j.com/download[Download & Install])
 - Open the http://localhost:7474[Neo4j Browser].
-- Log in, remember the password
+- Log in and remember the password :)
 - Install the Movies dataset with `:play movies`
 - Click the large `CREATE` statement and hit the triangular "Run" button to insert the data.
 
 You can also choose to use our link:/sandbox[Neo4j Sandbox] or a link:/developer/in-production/guide-cloud-deployment[cloud-hosted Neo4j database].
 If you go this route, then you have to provide the URL to your Neo4j server in an environment variable `NEO4J_URL`.
 
-Alternatively you can run this Cypher `LOAD CSV` statement:
+Alternatively, you can run this Cypher `LOAD CSV` statement:
 
 [source,cypher]
 ----
@@ -96,9 +99,9 @@ curl http://localhost:8080/movie/The%20Matrix
           {"job": "directed", "role": null, "name": "Andy Wachowski"}, {"job": "produced", "role": null, "name": "Joel Silver"}]}
 ----
 
-The Cypher query is used, with the parameters `{title:"The Matrix"}`
+The Cypher query is used with the parameters `{title:"The Matrix"}`
 
-It matches the movie by title, then optionally finds all people working on that movie and returns the movie title and a crew-list consisting of a map with person-name, job identifier derived from the relationship-type and optionally a role for actors.
+It matches the movie by title, then finds all people working on that movie and returns the movie title and a crew-list consisting of a map with person-name, job identifier derived from the relationship-type, and optionally a role for actors.
 
 [source,cypher]
 ----
@@ -125,9 +128,9 @@ curl http://localhost:8080/search?q=matrix
  {"movie": {"released": 2003, "tagline": "Everything that has a beginning has an end", "title": "The Matrix Revolutions"}}]
 ----
 
-The Cypher query used, with the parameters `{query:"matrix"}`.
+The Cypher query used with the parameters `{query:"matrix"}`.
 
-The search movies query matches the movies by title with CONTAINS and then returns the movie nodes as a list of maps with the title, released and tagline entries.
+The search movies query matches the movies by title with CONTAINS and then returns the movie nodes as a list of maps with the title, released, and tagline entries.
 
 [source,cypher]
 ----
@@ -154,7 +157,7 @@ curl http://localhost:8080/graph[?limit=50]
 The Cypher query used finds all pairs of movies and actors and returns the movie title and a collection of all actor names as cast.
 A separate function then takes this result and converts it into the node- and link-list that d3 expects.
 
-The parameter `{limit:50}` is used to prevent the visualization from becoming a hairball.
+The parameter `{limit:50}` is used to prevent the visualization from becoming a hairball and returning too many results.
 
 [source,cypher]
 ----
@@ -215,8 +218,8 @@ heroku addons:open graphstory
 
 ----
 
-In the Graphenedb-UI use "Launch Neo4j Admin UI".
-In the Neo4j-Browser import the `:play movies` dataset as of the install instructions above.
+In the Graphenedb-UI, use "Launch Neo4j Admin UI".
+In the Neo4j-Browser, import the `:play movies` dataset as of the install instructions above.
 
 Make sure that username and password are provied as part of the URL, e.g. `bolt://user:password@host:port` or `http://user:password@host:port`.
 
