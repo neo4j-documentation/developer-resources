@@ -37,8 +37,9 @@ else
 end
 
 # AsciiPress.verify_adoc_slugs!(adoc_file_paths)
+publish = ENV['BLOG_REST_HOSTNAME'] && ENV['BLOG_REST_USERNAME'] && ENV['BLOG_REST_PASSWORD'] && ENV['PUBLISH']
 
-renderer = AsciiPress::Renderer.new(after_conversion: HtmlTransformer.method(:transform),
+renderer = AsciiPress::Renderer.new(after_conversion: (publish ? HtmlTransformer.method(:transform) : nil),
                                     asciidoc_options: {
                                       attributes: ASCIIDOC_ATTRIBUTES,
                                       header_footer: true,
@@ -46,23 +47,24 @@ renderer = AsciiPress::Renderer.new(after_conversion: HtmlTransformer.method(:tr
                                       template_dir: ASCIIDOC_TEMPLATES_DIR,
                                     })
 
-if ENV['BLOG_HOSTNAME'] && ENV['BLOG_USERNAME'] && ENV['BLOG_PASSWORD'] && ENV['PUBLISH']
-  syncer = AsciiPress::WordPressSyncer.new(ENV['BLOG_HOSTNAME'],
-                                           ENV['BLOG_USERNAME'],
-                                           ENV['BLOG_PASSWORD'],
-                                           'developer',
-                                           renderer,
-                                           delete_not_found: false,
-                                           post_status: 'publish',
-                                           logger: LOGGER)
+if publish
+  syncer = AsciiPress::WordPressHttpSyncer.new(
+    ENV['BLOG_REST_HOSTNAME'],
+    ENV['BLOG_REST_USERNAME'],
+    ENV['BLOG_REST_PASSWORD'],
+    "developer",
+    renderer,
+    post_status: 'publish')
 end
 
 if syncer
   puts "Syncing to WordPress"
   syncer.sync(adoc_file_paths, {})
 else
+  FileUtils.mkdir_p('developer')
+  `cp -r assets developer/`
   adoc_file_paths.each do |adoc_file_path|
-    dir = File.join('deploy', File.dirname(adoc_file_path))
+    dir = File.join('developer', File.dirname(adoc_file_path))
     FileUtils.mkdir_p(dir)
     html_file_path = File.join(dir, 'index.html')
 

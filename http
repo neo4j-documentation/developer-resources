@@ -1,7 +1,3 @@
 #!/bin/bash
-REPO=`pwd | sed -e 's/.*\/\(.*\)/\1/'`
-cd ..
-ln -s $REPO developer
 python -m SimpleHTTPServer&
-cd -
-open http://localhost:8000/developer/
+open http://localhost:8000/developer/get-started

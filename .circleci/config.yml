@@ -9,8 +9,8 @@ jobs:
       - run: bundle install
       - run: "./render_local.rb all"
       - run: sudo apt-get update && sudo apt-get install -y awscli
-      - run: cp -r ~/circleci-gh-pages/assets/ ~/circleci-gh-pages/deploy
-      - run: aws --region eu-west-1 s3 sync ~/circleci-gh-pages/deploy/ s3://developer-pages.neo4j.com/developer/ --delete
+      - run: cp -r ~/circleci-gh-pages/assets/ ~/circleci-gh-pages/developer
+      - run: aws --region eu-west-1 s3 sync ~/circleci-gh-pages/developer/ s3://developer-pages.neo4j.com/developer/ --delete
   publish:
     working_directory: ~/circleci-publish
     docker:
@@ -20,14 +20,14 @@ jobs:
       - run: bundle install
       - run:
           name: "Verify"
-          command: "./render_rest.rb all"
+          command: "./render.rb all"
           environment:
             ASCIIDOC_TEMPLATES_DIR: "_templates/wordpress"
       - run: sudo apt-get update && sudo apt-get install -y awscli
-      - run: aws --region eu-west-1 s3 sync ~/circleci-publish/deploy/ s3://developer-pages.neo4j.com/wp/ --delete
+      - run: aws --region eu-west-1 s3 sync ~/circleci-publish/developer/ s3://developer-pages.neo4j.com/wp/ --delete
       - run:
           name: "Publish"
-          command: "./render_rest.rb all"
+          command: "./render.rb all"
           environment:
             PUBLISH: true
             BLOG_HOSTNAME: neo4j.com
