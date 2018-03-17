@@ -2,25 +2,32 @@
 
 image:https://circleci.com/gh/neo4j-contrib/developer-resources.svg?style=svg["CircleCI", link="https://circleci.com/gh/neo4j-contrib/developer-resources"]
 
-This is the repository with the source content for the http://neo4j.com _developer resources_ section.
+This is the repository with the source content for the http://neo4j.com/developer _developer resources_ section.
 
-The content is written as textual format in http://asciidoctor.org[AsciiDoc] rendered with asciidoctor using templates to HTML and pushed to the `gh-pages` branch or to wordpress.
+The content is written as textual format in http://asciidoctor.org[AsciiDoc] rendered with asciidoctor using erb-templates to HTML and pushed to the `gh-pages` branch for preview and to the `publish` branch for publishing to WordPress.
 
-Install asciidoctor (1.5.1) ruby gems with `bundle install` in the main directory.
+Install asciidoctor (1.5.6.1) ruby gems with `rbenv exec bundle install` in the main directory. 
+You also need `ruby 2.5.0` installed on your system, e.g. via `rbenv install 2.5.0`. 
 
-You can render a single document to its `index.html` by calling `./render.rb path/to/doc.adoc` +
-(e.g. `./render.rb in-production/guide-cloud-deployment/guide-cloud-deployment.adoc`) or render all pages at once with just `./render.rb all`
+You can render a single document to its `index.html` by calling `rbenv exec ruby ./render.rb path/to/doc.adoc` +
+(e.g. `rbenv exec ruby ./render.rb in-production/guide-cloud-deployment/guide-cloud-deployment.adoc`) or render all pages at once with just `rbenv exec ruby ./render.rb all`
 
 You can open the generated `index.html` file locally to check the rendering/preview, or start the `http` script in the main directory (`./http`, for example), and then open: http://localhost:8000/developer/
 
-After commiting changes to head, you can push them to the publish branch: `git push origin HEAD:publish`.
-This will cause https://snap-ci.com/neo4j-contrib/developer/branch/publish[Snap CI] to push the changes to the web server.
+[WARNING]
+Please edit and preview on the `gh-pages` branch, only if you are satisfied or someone has reviewed your changes merge them into the `publish` branch.
+
+// After commiting changes to head, you can push them to the publish branch: `git push origin HEAD:publish`.
+This will cause https://circleci.com/gh/neo4j-contrib/developer-resources[Circle CI] to push the changes to the web server.
 
 === Guides
 
-Most of the documents in this developer resources section are organized as a guide.
+Most of the documents in this developer resources section are organized as a *guide*.
+
 Those guides come with a consistent structure and similar use of language and assets.
+
 Each of the guides lives in its own directory and is rendered into an `index.html` file for publication.
+
 You can run the rendering process by calling `render.rb` on the command line.
 
 A guide has this general structure:
@@ -34,7 +41,7 @@ A guide has this general structure:
 Please see the link:./guide_template.adoc[example guide template file] for a blueprint of the document structure needed.
 And as link:./guide_template.html[rendered document].
 
-==== Calls to Action
+==== Common Calls to Action
 
 * http://neo4j.com/events?type=Webinar[Webinar Registration]
 * http://neo4j.com/books[Book Downloads]
@@ -47,37 +54,26 @@ And as link:./guide_template.html[rendered document].
 ==== Internal and External Content
 
 * Other developer-resources and neo4j.com pages
-* http://neo4j.com/docs/chunked/stable[Manual Pages] and Articles
-* Blog Posts (http://neo4j.com/blog, http://blog.bruggen.com?view=mosaic[Rik], http://maxdemarzi.com[Max], http://www.markhneedham.com/blog/category/databases-2/neo4j/[Mark], http://www.kennybastani.com/[Kenny], http://jexp.de/blog[Michael], http://iansrobinson.com/[Ian], http://jimwebber.org/[Jim], ...)
-* http://neo4j.com/events?type=Meetup[Local Meetup Groups]
-* http://watch.neo4j.org[Webinar/Talk Recordings]
+* http://neo4j.com/docs/developer-manual[Developer Manual]
+* http://neo4j.com/docs/operations-manual[Operations Manual]
+* Blog Posts (http://neo4j.com/blog, http://blog.bruggen.com?view=mosaic[Rik], http://maxdemarzi.com[Max], http://www.markhneedham.com/blog/category/databases-2/neo4j/[Mark], http://www.kennybastani.com/[Kenny], http://jexp.de/blog[Michael], http://jimwebber.org/[Jim], ...)
+* https://neo4j.com/events/world/meetup/[Local Meetup Groups]
+* http://youtube.com/c/neo4j[Webinar/Talk Recordings]
 
 === Example Applications per Language, Stack and Driver
 
-To explain how to use Neo4j with different programming languages we provide an intro section per language, located in `language-guides/<language>/<language>.adoc`.
+To explain how to use Neo4j with different programming languages, we provide an intro section _per language_, located in `language-guides/<language>/<language>.adoc`.
 
 To show how the different drivers for that language would be used/integrated we also provide small example projects/setups in the `language-guides/<language>/<driver>` directories.
 
-The example application is a simple, single-page movies app based on the Neo4j-Movies dataset that comes with the Neo4j-Server (`:play movies` in the Neo4j-Browser).
+The example application is a simple, single-page movies app based on the Neo4j-Movies dataset that comes with Neo4j (`:play movie graph` in the Neo4j-Browser).
 
 See an example running http://my-neo4j-movies-app.herokuapp.com/[here on Heroku].
 
-The HTML page uses jQuery ajax requests to query 3 REST-Endpoints in the backend for `/search`, `/movie` and `/graph`
+The HTML page uses jQuery requests to query 3 HTTP-Endpoints in the backend for `/search`, `/movie` and `/graph`
 
 * `/search` lists the movies found by title
 * `/movie` returns details for a single movie
 * `/graph` renders the full graph as a basic d3-visualization
 
-This is our current list of projects:
-
-* java/jdbc
-* java/server-extension
-* python/py2neo (Thanks Nigel & Mark)
-* python/neo4j-rest-client (Thanks Javier)
-* clojure/neocons (Thanks Rohit)
-* go/cq (Thanks Wes)
-* perl/neo4p (Thanks Mark)
-* php/neoclient (Thanks Christophe)
-* php/neo4jphp (Thanks Josh)
-* ruby/neo4jrb and ruby/neo4j-core (Thanks Andreas)
-* donet/neo4jclient (Thanks Pierrick)
+This is our link:https://github.com/neo4j-examples?utf8=%E2%9C%93&q=movies-&type=&language=[current list of projects] on GitHub.
