@@ -54,15 +54,15 @@ Launching the instance is a single command:
 ```
 gcloud config set project my-project-id
 gcloud compute instances create my-neo4j-instance \
-    --image neo4j-enterprise-1-3-3-3 \
+    --image neo4j-enterprise-1-3-3-4 \
     --tags neo4j \
     --image-project launcher-public
 ```
 
 The first line simply sets your project configuration to ensure you know where you are launching
 your instance.  The second line launches an image found in a public project that we have provided.
-The image name `neo4j-enterprise-1-3-3-3` corresponds to an Ubuntu-based image that contains
-Neo4j 1:3.3.3.
+The image name `neo4j-enterprise-1-3-3-4` corresponds to an Ubuntu-based image that contains
+Neo4j 1:3.3.4.
 
 Note that the `gcloud` tool comes with many command line options that aren't covered here.
 https://cloud.google.com/sdk/gcloud/reference/compute/instances/create[consult the documentation]
