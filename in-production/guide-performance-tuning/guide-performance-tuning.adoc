@@ -55,10 +55,10 @@ The size of the available heap memory is an important aspect for the performance
 Generally speaking, it is beneficial to configure a large enough heap space to sustain concurrent operations.
 For many setups, a heap size between 8G and 16G is large enough to run Neo4j reliably.
 
-The heap memory size is determined by the parameters in `$NEO4J_HOME/conf/neo4j-wrapper.conf`, namely `dbms.memory.heap.initial_size` and `dbms.memory.heap.max_size` providing the heap size in Megabytes, e.g. `16000`.
+The heap memory size is determined by the parameters in `$NEO4J_HOME/conf/neo4j.conf`, namely `dbms.memory.heap.initial_size` and `dbms.memory.heap.max_size` providing the heap size as a number and a unit, for example `16G`.
 It is recommended to set these two parameters to the same size.
 
-For a more thorough discussion on this topic, refer to the link:{opsmanual}/performance/#heap-sizing[heap memory configuration section in the Neo4j Manual].
+For a more thorough discussion on this topic, refer to the link:{opsmanual}/performance/memory-configuration/#heap-sizing[heap memory configuration section in the Neo4j Operations Manual].
 That section also contains information about heap memory distribution and gabarge collection tuning.
 
 [role=side-nav]
