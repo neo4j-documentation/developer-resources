@@ -1,0 +1,1628 @@
+<!doctype html> <!--[if IE 9]>
+<html class="no-js ie9" lang="en">
+   <![endif]-->
+<html class="no-js" lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-WK23PSS');</script>
+<!-- End Google Tag Manager -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="msvalidate.01" content="B5163518CBE4A854B63801277FE5E35C" />
+    <meta name="google-site-verification" content="ucqagxjVuq0lJZeLKs0F5AppzK111lNt3IoxU6mzlJE" />    
+    <link rel="shortcut icon" href="https://neo4j.com/wp-content/themes/neo4jweb/favicon.ico" />
+    <link type="text/css" media="all" href="https://neo4j.com/wp-content/cache/autoptimize/css/autoptimize_96e369d64d8c32c6e8e12eaa0b99ba0c.css" rel="stylesheet" /><link type="text/css" media="screen" href="https://neo4j.com/wp-content/cache/autoptimize/css/autoptimize_46efe6163e4bb75a10afac1f94d83129.css" rel="stylesheet" /><title>What is a Graph Database? A Property Graph Model Intro</title>
+
+<!-- Page hiding snippet  -->
+  <style>.async-hide { opacity: 0 !important} </style>
+  <script>(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+    h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+    (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+    })(window,document.documentElement,'async-hide','dataLayer',4000, {'GTM-PNLTLM5':true});
+  </script>
+
+  <!-- Google Universal Tracker -->
+  <script type="text/javascript">
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    //Allow Linker
+    ga('create', 'UA-1192232-34','auto', {'allowLinker': true});
+    //Optimize snippet
+    ga('require', 'GTM-PNLTLM5');
+    ga('send', 'pageview');
+
+    // Load the plugin.
+    ga('require', 'linker');
+
+    // Define which domains to autoLink.
+    ga('linker:autoLink', ['neo4j.org','neo4j.com','neotechnology.com','graphdatabases.com','graphconnect.com']);
+  </script>
+  <!-- End Google Universal Tracker -->
+
+<!-- Start Visual Website Optimizer Asynchronous Code -->
+<script type='text/javascript'>
+var _vwo_code=(function(){
+var account_id=309585,
+settings_tolerance=2000,
+library_tolerance=2500,
+use_existing_jquery=false,
+/* DO NOT EDIT BELOW THIS LINE */
+f=false,d=document;return{use_existing_jquery:function(){return use_existing_jquery;},library_tolerance:function(){return library_tolerance;},finish:function(){if(!f){f=true;var a=d.getElementById('_vis_opt_path_hides');if(a)a.parentNode.removeChild(a);}},finished:function(){return f;},load:function(a){var b=d.createElement('script');b.src=a;b.type='text/javascript';b.innerText;b.onerror=function(){_vwo_code.finish();};d.getElementsByTagName('head')[0].appendChild(b);},init:function(){settings_timer=setTimeout('_vwo_code.finish()',settings_tolerance);var a=d.createElement('style'),b='body{opacity:0 !important;filter:alpha(opacity=0) !important;background:none !important;}',h=d.getElementsByTagName('head')[0];a.setAttribute('id','_vis_opt_path_hides');a.setAttribute('type','text/css');if(a.styleSheet)a.styleSheet.cssText=b;else a.appendChild(d.createTextNode(b));h.appendChild(a);this.load('//dev.visualwebsiteoptimizer.com/j.php?a='+account_id+'&u='+encodeURIComponent(d.URL)+'&r='+Math.random());return settings_timer;}};}());_vwo_settings_timer=_vwo_code.init();
+</script>
+<!-- End Visual Website Optimizer Asynchronous Code -->
+
+<!-- Pingdom RUM testing -->
+  <script>
+    var _prum = [['id', '56c4c51eabe53da82429d2ab'],
+             ['mark', 'firstbyte', (new Date()).getTime()]];
+    (function() {
+      var s = document.getElementsByTagName('script')[0]
+        , p = document.createElement('script');
+      p.async = 'async';
+      p.src = '//rum-static.pingdom.net/prum.min.js';
+      s.parentNode.insertBefore(p, s);
+    })();
+  </script>
+<!-- / yo ho ho -->
+
+
+  
+<!-- This site is optimized with the Yoast SEO plugin v6.1.1 - https://yoa.st/1yg?utm_content=6.1.1 -->
+<meta name="description" content="Learn the basics of a graph database in general – and Neo4j in particular – in this introduction for database developers of all levels and backgrounds."/>
+<link rel="canonical" href="https://neo4j.com/developer/graph-database/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="What is a Graph Database? A Property Graph Model Intro" />
+<meta property="og:description" content="Learn the basics of a graph database in general – and Neo4j in particular – in this introduction for database developers of all levels and backgrounds." />
+<meta property="og:url" content="https://neo4j.com/developer/graph-database/" />
+<meta property="og:site_name" content="Neo4j Graph Database Platform" />
+<meta property="article:publisher" content="https://www.facebook.com/neo4j.graph.database" />
+<meta property="og:image" content="//neo4j.com/wp-content/uploads/graphdb-gve.png" />
+<meta property="og:image" content="//neo4j.com/wp-content/uploads/property_graph_model.png" />
+<meta property="og:image" content="//neo4j.com/wp-content/uploads/neo4j-nosql.png" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="Learn the basics of a graph database in general – and Neo4j in particular – in this introduction for database developers of all levels and backgrounds." />
+<meta name="twitter:title" content="What is a Graph Database? A Property Graph Model Intro" />
+<meta name="twitter:site" content="@neo4j" />
+<meta name="twitter:image" content="//neo4j.com/wp-content/uploads/graphdb-gve.png" />
+<meta name="twitter:creator" content="@bwmerkl" />
+<script type='application/ld+json'>{"@context":"http:\/\/schema.org","@type":"WebSite","@id":"#website","url":"https:\/\/neo4j.com\/","name":"Neo4j Graph Database Platform","potentialAction":{"@type":"SearchAction","target":"https:\/\/neo4j.com\/?s={search_term_string}","query-input":"required name=search_term_string"}}</script>
+<script type='application/ld+json'>{"@context":"http:\/\/schema.org","@type":"Organization","url":"https:\/\/neo4j.com\/developer\/graph-database\/","sameAs":["https:\/\/www.facebook.com\/neo4j.graph.database","http:\/\/instagram.com\/neo4j","https:\/\/www.linkedin.com\/company\/neo4j","https:\/\/www.youtube.com\/neo4j","https:\/\/www.pinterest.com\/neo4j\/","https:\/\/twitter.com\/neo4j"],"@id":"#organization","name":"Neo Technology","logo":"https:\/\/s3.amazonaws.com\/dev.assets.neo4j.com\/wp-content\/uploads\/20140926224303\/neo4j_logo-facebook.png"}</script>
+<!-- / Yoast SEO plugin. -->
+
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Neo4j Graph Database Platform &raquo; What is a Graph Database? Comments Feed" href="https://neo4j.com/developer/graph-database/feed/" />
+
+
+
+
+
+<script type='text/javascript' src='https://neo4j.com/wp-content/plugins/jquery-updater/js/jquery-3.2.1.min.js?ver=3.2.1'></script>
+<script type='text/javascript' src='https://neo4j.com/wp-content/plugins/cookie-law-info/js/cookielawinfo.js?ver=1.5.3'></script>
+<script type='text/javascript' src='https://neo4j.com/wp-content/plugins/jquery-updater/js/jquery-migrate-3.0.0.min.js?ver=3.0.0'></script>
+<script type='text/javascript' src='https://neo4j.com/wp-content/plugins/search-filter-pro/public/assets/js/chosen.jquery.min.js?ver=2.3.4'></script>
+<link rel='https://api.w.org/' href='https://neo4j.com/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://neo4j.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://neo4j.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.9.2" />
+<link rel='shortlink' href='https://neo4j.com/?p=38491' />
+<link rel="alternate" type="application/json+oembed" href="https://neo4j.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fneo4j.com%2Fdeveloper%2Fgraph-database%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://neo4j.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fneo4j.com%2Fdeveloper%2Fgraph-database%2F&#038;format=xml" />
+<!-- Stream WordPress user activity plugin v3.2.2 -->
+  
+</head>
+
+<body>
+<div class="top-bar-container contain-to-grid">
+    <nav class="top-bar" data-topbar role="navigation">
+        <ul class="title-area">
+            <li class="name">
+                <h1><a href="https://neo4j.com/"><img
+                        src="https://neo4j.com/wp-content/themes/neo4jweb/assets/images/neo4j-logo-2015.png"/></a></h1>
+            </li>
+            <li class="toggle-topbar menu-icon"><a href="#"></a></li>
+        </ul>
+        <section class="top-bar-section">
+            <ul id="menu-top-nav" class="top-bar-menu right">
+                <li id="menu-item-36917"
+                    class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item active menu-item-36917">
+                    <a href="/developer/get-started">Developer</a></li>
+                <li id="menu-item-38286"
+                    class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-38286">
+                    <a href="https://neo4j.com/blog/">Blog</a></li>
+                <li id="menu-item-38817"
+                    class="menu-item menu-item-type-custom menu-item-object-custom menu-item-38817"><a
+                        href="//support.neo4j.com/hc">Support</a></li>
+                <li id="menu-item-36919"
+                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36919"><a
+                        href="https://neo4j.com/contact-us/">Contact Us</a></li>
+                <li id="menu-item-36921"
+                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36921"><a
+                        href="https://neo4j.com/download/">Download Neo4j</a></li>
+            </ul>
+            <ul class="right">
+                <li class="has-form hide-for-small">
+                    <form role="search" method="get" id="searchform" class="searchform" action="https://neo4j.com/">
+                        <input type="text" name="s" id="s"/><input type="image" id="searchsubmit"
+                                                                   src="https://neo4j.com/wp-content/themes/neo4jweb/assets/images/searchicon.png"/>
+                    </form>
+                </li>
+                <li class="header-widget has-dropdown">
+                    <a href="#"><span class="show-for-small-down">Menu</span> </a>
+                    <ul class="sub-menu dropdown">
+                        <div class="row header-widgets-container">
+                            <div class="medium-3 columns">
+                                <div class="menu-product-and-services-container">
+                                    <ul id="menu-product-and-services" class="menu">
+                                        <li id="menu-item-36967"
+                                            class="menu-item menu-item-type-custom menu-item-object-custom menu-item-36967">
+                                            <a href="/product">PRODUCT AND SERVICES</a></li>
+                                        <li id="menu-item-36966"
+                                            class="menu-item menu-item-type-custom menu-item-object-custom menu-item-36966">
+                                            <a href="https://neo4j.com/product">Neo4j Graph Database</a></li>
+                                        <li id="menu-item-38756"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38756">
+                                            <a href="https://neo4j.com/subscriptions/">Subscriptions</a></li>
+                                        <li id="menu-item-36971"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36971">
+                                            <a href="https://neo4j.com/neo4j-editions/">Compare Neo4j Editions</a></li>
+                                        <li id="menu-item-36974"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36974">
+                                            <a href="https://neo4j.com/professional-services/">Professional Services</a>
+                                        </li>
+                                        <li id="menu-item-38293"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38293">
+                                            <a href="https://neo4j.com/open-source-project/">Open Source Project</a></li>
+                                    </ul>
+                                </div>
+                                <div class="menu-partners-container">
+                                    <ul id="menu-partners" class="menu">
+                                        <li id="menu-item-36965"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36965">
+                                            <a href="https://neo4j.com/partners/">PARTNER PROGRAM</a></li>
+                                        <li id="menu-item-36963"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36963">
+                                            <a href="https://neo4j.com/neo4j-partner-program/">Become a Partner</a></li>
+                                        <li id="menu-item-38558"
+                                            class="menu-item menu-item-type-custom menu-item-object-custom menu-item-38558">
+                                            <a href="/partners/#find">Find a Partner</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="medium-3 columns">
+                                <div class="menu-customers-container">
+                                    <ul id="menu-customers" class="menu">
+                                        <li id="menu-item-36955"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36955">
+                                            <a href="https://neo4j.com/customers/">CUSTOMERS</a></li>
+                                    </ul>
+                                </div>
+                                <div class="menu-use-cases-container">
+                                    <ul id="menu-use-cases" class="menu">
+                                        <li id="menu-item-38559"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38559">
+                                            <a href="https://neo4j.com/use-cases/">USE CASES</a></li>
+                                        <li id="menu-item-38548"
+                                            class="menu-item menu-item-type-post_type menu-item-object-use_case menu-item-38548">
+                                            <a href="https://neo4j.com/use-cases/network-and-data-center-management/">Network
+                                                &#038; IT Operations Mgmt</a></li>
+                                        <li id="menu-item-38551"
+                                            class="menu-item menu-item-type-post_type menu-item-object-use_case menu-item-38551">
+                                            <a href="https://neo4j.com/use-cases/master-data-management/">Master Data
+                                                Management</a></li>
+                                        <li id="menu-item-38552"
+                                            class="menu-item menu-item-type-post_type menu-item-object-use_case menu-item-38552">
+                                            <a href="https://neo4j.com/use-cases/recommendations/">Recommendations</a>
+                                        </li>
+                                        <li id="menu-item-38550"
+                                            class="menu-item menu-item-type-post_type menu-item-object-use_case menu-item-38550">
+                                            <a href="https://neo4j.com/use-cases/social/">Social Network</a></li>
+                                        <li id="menu-item-38547"
+                                            class="menu-item menu-item-type-post_type menu-item-object-use_case menu-item-38547">
+                                            <a href="https://neo4j.com/use-cases/identity-and-access-management/">Identity
+                                                and Access Mgmt</a></li>
+                                        <li id="menu-item-38549"
+                                            class="menu-item menu-item-type-post_type menu-item-object-use_case menu-item-38549">
+                                            <a href="https://neo4j.com/use-cases/digital-asset-management/">Digital Asset
+                                                Management</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="medium-3 columns">
+                                <div class="menu-graphacademy-container">
+                                    <ul id="menu-graphacademy" class="menu">
+                                        <li id="menu-item-36957"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36957">
+                                            <a href="https://neo4j.com/graphacademy/">GRAPHACADEMY</a></li>
+                                        <li id="menu-item-36959"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36959">
+                                            <a href="https://neo4j.com/graphacademy/online-course/">Online Training</a>
+                                        </li>
+                                        <li id="menu-item-39349"
+                                            class="menu-item menu-item-type-custom menu-item-object-custom menu-item-39349">
+                                            <a href="/books/">Books</a></li>
+                                        <li id="menu-item-38761"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38761">
+                                            <a href="https://neo4j.com/resources/">Resources</a></li>
+                                    </ul>
+                                </div>
+                                <div class="menu-developer-container">
+                                    <ul id="menu-developer" class="menu">
+                                        <li id="menu-item-38292"
+                                            class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item menu-item-38292">
+                                            <a href="/developer/get-started">DEVELOPER</a></li>
+                                        <li id="menu-item-39699"
+                                            class="menu-item menu-item-type-custom menu-item-object-custom menu-item-39699">
+                                            <a href="/docs">Docs</a></li>
+                                    </ul>
+                                </div>
+                                <div class="menu-community-4-container">
+                                    <ul id="menu-community-4" class="menu">
+                                        <li id="menu-item-38291"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38291">
+                                            <a href="https://neo4j.com/community/">COMMUNITY</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="medium-3 columns">
+                                <div class="menu-neo4j-blog-container">
+                                    <ul id="menu-neo4j-blog" class="menu">
+                                        <li id="menu-item-38289"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-38289">
+                                            <a href="https://neo4j.com/blog/">Neo4j Blog</a></li>
+                                    </ul>
+                                </div>
+                                <div class="menu-events-container">
+                                    <ul id="menu-events" class="menu">
+                                        <li id="menu-item-36956"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36956">
+                                            <a href="https://neo4j.com/events/">EVENTS</a></li>
+                                    </ul>
+                                </div>
+                                <div class="menu-about-us-container">
+                                    <ul id="menu-about-us" class="menu">
+                                        <li id="menu-item-38561"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38561">
+                                            <a href="https://neo4j.com/company/">COMPANY</a></li>
+                                        <li id="menu-item-36950"
+                                            class="menu-item menu-item-type-custom menu-item-object-custom menu-item-36950">
+                                            <a href="https://neo4j.com/news">News</a></li>
+                                        <li id="menu-item-36951"
+                                            class="menu-item menu-item-type-custom menu-item-object-custom menu-item-36951">
+                                            <a href="https://neo4j.com/jobs">Jobs</a></li>
+                                        <li id="menu-item-38563"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38563">
+                                            <a href="https://neo4j.com/staff/">Staff</a></li>
+                                        <li id="menu-item-38288"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38288">
+                                            <a href="https://neo4j.com/contact-us/">Contact Us</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+    </nav>
+</div>
+
+<div class="marquee-neo">
+    <div class="row text-center">
+        <div class="columns">
+            <h1 class="entry-title">Neo4j Life Sciences and Healthcare Network</h1>
+        </div>
+    </div>
+</div>
+<article id="content" role="main">
+    <p class="lead">lead text</p>
+    <section class="row">
+        <div style="padding-left: 1em; padding-right: 1em;">
+            <div class="row" style="padding-top: 10px;">
+                <div class="columns large-12" style="padding-top:10px;">
+                    <ul class="breadcrumbs">
+                        <li><a href="/developer">Developer</a></li>
+                        
+                        <li class="current"><a href="#">Neo4j Life Sciences and Healthcare Network</a></li>
+                    </ul>
+                </div>
+            </div>
+            <style> .lead {
+    display: none;
+}
+
+section.row {
+    padding: 0;
+}
+
+ol li {
+    padding: 0;
+    margin: 0;
+}
+
+#content section.row {
+    max-width: 1024px;
+    padding-left: .5em;
+    padding-right: .5em;
+}
+
+.row {
+}
+
+#content section.row .accordion-navigation > a {
+    padding: 0 !important;
+}
+
+.accordion .content {
+    padding: 0;
+}
+
+.row .row {
+    margin: auto;
+}
+
+.columns.medium-12 {
+    padding-left: 0;
+}
+
+.fa-stack.fa-lg {
+    color: #0f5788;
+    display: block;
+    float: left;
+    height: 70px;
+    margin-right: 1em;
+    padding-right: 2em;
+    width: 50px;
+}
+
+h3 {
+    font-weight: normal;
+}
+
+strong, b {
+    font-weight: 600;
+    font-color: #333;
+}
+
+.calloutsection {
+    padding: 20px 0;
+}
+
+section {
+    padding: 40px 0 0 0;
+}
+
+.marquee {
+    height: auto;
+    margin-top: 1em;
+}
+
+#main-content .entry-title {
+    display: none;
+}
+
+#main-content .subheader {
+    display: none;
+}
+
+.marquee h1, .marquee h2 {
+    padding-top: 0;
+}
+
+#main-content .next-steps h5 {
+    font-size: 12px;
+}
+
+#main-content .next-steps h3 {
+    margin-bottom: 1em;
+}
+
+#main-content .content.active {
+    display: block;
+}
+
+#main-content .content {
+    display: none;
+}
+
+#main-content {
+    padding-top: 0;
+}
+
+.use-case .tab-container .content.active {
+    border-top: 1px solid rgba(15, 87, 136, 0.7);
+    padding: 2em 1em 1em;
+}
+
+.tabs dd > a:hover {
+    color: #3d5360;
+}
+
+.breadcrumbs > * a, .breadcrumbs > * span {
+    color: #0f5788;
+    text-transform: none;
+}
+
+.breadcrumbs > * {
+    text-transform: none;
+}
+
+.top-bar {
+    height: 80px;
+}
+
+#main-content .top-bar-section ul {
+    margin-top: 1em;
+}
+
+.panel-pod p {
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 26px;
+}
+
+.panel-pod > a {
+    display: block;
+    margin-bottom: 1em;
+}
+
+.panel-pod p a {
+    display: block;
+    margin-top: 1em;
+}
+
+.panel-pod {
+    text-align: left;
+}
+
+.tab-container {
+    margin-bottom: 2em;
+}
+
+.panel-pod img {
+    display: block;
+    margin: auto;
+}
+
+#content h4 {
+    font-weight: 100;
+    color: #0f5788;
+    font-size:1.2em;
+}
+
+#content h3 {
+    font-weight: 100;
+    color: #3d5360;
+    font-size:1.5em;
+}
+
+#content ul {
+    list-style: circle outside none;
+}
+
+#content .guide-section-content .large-12.columns > ul {
+    list-style: circle outside none !important;
+    margin-left: 1em !important;
+}
+
+.breadcrumbs > *:before {
+    content: "→";
+    color: #aaa;
+    margin: 0 0.75rem;
+    position: relative;
+    top: 0;
+}
+
+#content section.row .accordion-navigation > a {
+    background: url("https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/collapse.png") no-repeat scroll 100% 50% transparent;
+    border-bottom: 1px dashed #ddd;
+    padding: 0 !important;
+}
+
+.accordion-navigation.active > a {
+    background: url("https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/roll-up.png") no-repeat scroll 100% 50% transparent !important;
+}
+
+.accordion-navigation h5 {
+    font-weight: 100;
+    height: 2em;
+    line-height: 2em;
+    margin: 0;
+    font-size: 0.85em;
+}
+
+.content ul {
+    margin-top: 1em;
+}
+
+img.icon {
+    height: 1.4em;
+    width: auto;
+    margin-right: 0.25em;
+}
+
+.accordion ul {
+    list-style: circle outside none !important;
+    margin-left: 1.5em !important;
+}
+
+.accordion h5 {
+    color: #0f5788;
+    padding-left: .5em;
+}
+
+.accordion .active h5 {
+    background: url("https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/roll-up.png") no-repeat scroll 100% 50% #f9f9f9 !important;
+    color: #555;
+    font-weight: 300;
+}
+
+#content code {
+    font-weight:bold;
+}
+
+#content h3 {
+    margin-bottom:.5em
+}
+
+#content h5 {
+    font-weight:100
+}
+
+#content h4 {
+    font-weight:100
+}
+
+#content strong {
+    font-weight:400
+}
+
+#content h4 {
+    margin-bottom:1em
+}
+
+#content .title {
+    font-size:20px
+}
+
+#content .breadcrumbs {
+    margin-bottom:1.25rem;
+}
+
+ul.breadcrumbs {
+    margin-left: 0px;
+    list-style: none !important;
+}
+
+.marquee h1, .marquee h2 {
+    padding-top: 0;
+}
+
+.marquee {
+    height: auto;
+    margin-top: 1em;
+}
+div.side-nav {
+    clear: right;
+    float: right;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    width: 5em;
+    padding: 1em;
+    min-width: 16em;
+    border: 1px solid rgb(222, 222, 222);
+    height:auto;
+    position: absolute;
+    right: -20em;
+}
+
+span.label {
+	top: -3px; margin-right: 5px;
+}
+.bgblue {
+	background-color: #0f5788;
+}
+.bgorange {
+	background-color: #f58220;
+}
+hr {
+	margin-top: 0.5rem;
+}
+td.tableblock, td p.tableblock,th.tableblock, th p.tableblock {
+	margin-bottom: 0px;
+	line-height: 1em;
+}
+th.tableblock, th p.tableblock {
+	font-weight:bold;
+}
+
+td.valign-top {
+	vertical-align: top;
+}
+
+ul.none li {
+	list-style-type: none;
+}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note:before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip:before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning:before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution:before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important:before{content:"\f06a";color:#bf0000}
+
+.c2a-icons {
+/*	text-align:center;*/
+}
+.c2a-icons div {
+	display:inline-block;
+	font-size:0.6em;
+	width:48%;
+}
+.c2a-icons div i {
+	font-size:3em;
+	padding-left:1em;
+}
+.button.apply {
+	font-size:1.5em;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/master/devicon.min.css">
+ <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+            <div>
+                <div class="row" style="padding-left: 0; padding-right: 0;">
+                    <div class="large-9 large-push-3 columns guide-section-content">
+                        <div id="preamble columns medium-12">
+<div class="sectionbody">
+
+
+<div class="paragraph">
+<p><span class="image" style="float: left"><img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads/icon-guide-theory.png" alt="icon guide theory"></span></p>
+</div>
+
+</div>
+</div>
+<div  id="_neo4j_use_cases_in_life_sciences_and_healthcare" class="sect1 columns medium-12" style='padding-left: 0;' >
+<h3>Neo4j Use Cases in Life Sciences and Healthcare</h3>
+
+
+<div class="paragraph">
+<p>If you work in biology, biochemistry, pharmaceuticals, healthcare and other life sciences, you know that you work with highly-connected information. Unfortunately, many scientists still use relational databases and spreadsheets as their daily tools.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Here we want to present you with an alternative. Managing, storing and querying connected information is natural to a graph database like Neo4j. Learn how your research and practitioner colleagues utilized Neo4j to draw new insights or just be more efficient in their daily work.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>It started a while time ago in 2012 with a <a href="http://neo4j.com/blog/graph-databases-in-life-sciences-workshop/">workshop at the University of Ghent</a> bringing together people from the field with graph database experts.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Following that fruitful exchange we started the <a href="http://groups.google.com/group/neo4j-biotech">Neo4j-Biotech Google Group</a> to encourage sharing and collaboration on that topic. If you are not yet a member, please join today.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Now we want to take it to the next level by providing you with a platform to present your projects and papers both here and on our blog, and giving you the opportunity to connect with other Neo4j users in your field.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>If you are taking your first steps towards using a graph database, we offer support to jumpstart your efforts.</p>
+</div>
+
+<div class="toc">
+<h3 class="title">Overview</h3>
+
+<ul class="sectlevel1">
+<li><a href="#_neo4j_use_cases_in_life_sciences_and_healthcare">Neo4j Use Cases in Life Sciences and Healthcare</a>
+<ul class="sectlevel2">
+<li><a href="#_why_use_a_graph_database">Why use a Graph Database</a></li>
+<li><a href="#_graph_databases_in_life_and_health_sciences_workshop_berlin_21_june_2017">Graph Databases in Life and Health Sciences Workshop: Berlin, 21 June 2017</a></li>
+<li><a href="#_life_sciences_and_healthcare_accelerator_program">Life Sciences and Healthcare Accelerator Program</a></li>
+<li><a href="#_featured_projects">Featured Projects</a></li>
+<li><a href="#_publications">Publications</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+<hr>
+<div  id="_why_use_a_graph_database" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Why use a Graph Database</h3>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/V7f2tGsNSck?showinfo=0&controls=2&autohide=1" frameborder="0" allowfullscreen></iframe>
+</div>
+<div  id="_graph_databases_in_life_and_health_sciences_workshop_berlin_21_june_2017" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Graph Databases in Life and Health Sciences Workshop: Berlin, 21 June 2017</h3>
+
+
+<div class="paragraph">
+<p>We are very pleased to announce our second workshop for researchers interested in sharing and learning about Graph Databases in Life and Health Sciences.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>We are inviting researchers, practitioners and developers to present and attend.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>More details, as well as registration information, can be found <a href="https://www.eventbrite.com/e/neo4j-life-health-sciences-day-berlin-tickets-33238223421">here</a>.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>In our <a href="http://neo4j.com/blog/graph-databases-in-life-sciences-workshop/">past workshop in Ghent</a>, we had topics covering</p>
+</div>
+
+<div class="ulist">
+<ul>
+<li>
+Neo4j in metaproteonomics
+</li>
+<li>
+Graph databases in cancer research
+</li>
+<li>
+Project collaboration networks and recommendations
+</li>
+<li>
+Detailed studies of citation graphs
+</li>
+<li>
+Connecting protein databases in a large graph model
+</li>
+<li>
+"Reactome" database of human protein interaction pathways
+</li>
+</ul>
+</div>
+</div>
+<div  id="_life_sciences_and_healthcare_accelerator_program" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Life Sciences and Healthcare Accelerator Program</h3>
+
+
+<div class="paragraph">
+<p>The Neo4j Life Sciences and Healthcare Accelerator Program is designed to help researchers and practitioners in life sciences and healthcare-related sciences make sense of their data using Neo4j. Whether you are analyzing genome data, combining protein databases, investigating drug interactions or supporting practitioners with research or clinical information processing we want to help you find insights in connected (meta-)data.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>If you are accepted into the program, you will receive 1-on-1 assistance from Neo4j engineers to help you with data modeling, data import, writing Cypher queries or anything else that we can to make you successful with Neo4j.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>To get started just tell us about your project and how you think we might be able to help you.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><a href="https://goo.gl/forms/T9wkIZVms1XE7kNE3" class="button apply">Apply Here</a></p>
+</div>
+
+</div>
+<div  id="_featured_projects" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Featured Projects</h3>
+<div  id="_the_hetnet_awakens_understanding_disease_through_data_integration_and_open_science" class="sect3 "  >
+<h4>The Hetnet Awakens - Understanding Disease Through Data Integration and Open Science</h4>
+
+
+<div class="paragraph">
+<p><em>Daniel Himmelstein</em></p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Daniel Himmelstein’s Thesis Seminar for his PhD in Biological &amp; Medical Informatics at UCSF.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Here are the <a href="https://slides.com/dhimmel/thesis-seminar">slides</a> and an <a href="http://blog.dhimmel.com/phd-exhibit">online adaptation of the PhD Exhibit</a>.
+Daniel was also interviewed on our <a href="http://blog.bruggen.com/2016/08/podcast-interview-with-daniel.html">Graphistania Podcast</a> and created a fun <a href="http://neo4j.com/graphgist/c4eab62c-7f5e-4e17-8f75-811d65d83127">Graph Gist as live documentation</a>.</p>
+</div>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/H8DfXop8K7g" frameborder="0" allowfullscreen></iframe>
+</div>
+<div  id="_proteomics_and_graph_databases_the_symbiosis_of_associations" class="sect3 "  >
+<h4>Proteomics and Graph Databases, the symbiosis of associations</h4>
+
+
+<div class="paragraph">
+<p><em>Alejandro Brenes Murillo</em></p>
+</div>
+
+
+
+<div class="paragraph">
+<p>The proteome is the entire set of proteins that are produced or modified by an organism. It is an element that varies with time, stress, environmental conditions or distinct requirements that a cell might have. Join this talk by Alejandro Brenes Murillo to see how graph databases can be useful for proteome analysis.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>At the Lamond Lab in the University of Dundee, scientists are interested in modelling and understanding protein behaviour under different conditions and dimensions of analysis.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>In order to achieve this goal, they use graph databases to integrate and model the proteomics data, and study its effect on a specific proteome. The dimensions of analysis are multiple, yet be it turnover, localisation, cell cycle, protein complexes or biological response to stimuli, discovering the behaviour of proteins is key to understanding how organisms function, and how disease affects them.</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<a class="image" href="https://skillsmatter.com/skillscasts/9246-proteomics-and-graph-databases-the-symbiosis-of-associations"><img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads//alejandro_proteomics.jpg" alt="alejandro proteomics" width="560"></a>
+</p>
+</div>
+</div>
+<div  id="_big_data_in_genomics_how_neo4j_helps_to_develop_new_drugs" class="sect3 "  >
+<h4>Big Data in Genomics: How Neo4j helps to develop new drugs</h4>
+
+
+<div class="paragraph">
+<p><em>Martin Preusse</em></p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Biomedical research generates vast amounts of data. New experimental technologies like DNA sequencing, metabolomics and proteomics drive the fast growth of available information and lead to a better understanding of the molecular organization of life.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>But with big data comes a big question: How do we transform unstructured data into actionable knowledge? In the case of biomedical research, the key problem is to integrate the large pile of highly heterogenous data and use it for personalized therapies and drug development. Graph databases are an ideal way to represent biomedical knowledge and offer the necessary flexibility to keep up with scientific progress. A well-designed data model and Cypher queries can deliver in seconds what previously took days of manual analysis.</p>
+</div>
+
+<div class="imageblock">
+<p class="content">
+<a class="image" href="https://skillsmatter.com/skillscasts/7302-big-data-in-genomics-how-neo4j-helps-to-develop-new-drugs"><img src="http://dev.assets.neo4j.com.s3.amazonaws.com/wp-content/uploads//preusse_genomics.jpg" alt="preusse genomics" width="560"></a>
+</p>
+</div>
+</div>
+<div  id="_building_a_repository_of_biomedical_ontologies_with_neo4j" class="sect3 "  >
+<h4>Building a Repository of Biomedical Ontologies with Neo4j</h4>
+
+
+<div class="paragraph">
+<p><em>Simon Jupp</em></p>
+</div>
+
+
+
+<div class="paragraph">
+<p>In this lightning talk from GraphConnect Europe 2016, Simon Jupp of the European Bioinformatics Institute discusses the application they built to track ontologies. He also discusses why they chose Neo4j over various RDF and semantic web technologies, and provides some example queries.</p>
+</div>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jZND2WYT4GE" frameborder="0" allowfullscreen></iframe>
+</div>
+<div  id="_data_management_in_systems_biology_medicine" class="sect3 "  >
+<h4>Data Management in Systems Biology &amp; Medicine</h4>
+
+
+<div class="paragraph">
+<p><em>Irina Balaur, EISBM</em></p>
+</div>
+
+
+
+<div class="paragraph">
+<p>An Integrative Framework for Data Management in Systems Biology and Medicine: Strategies for personalised medicine involve integration of large amounts of biomedical data, specific to multiple spatial and temporal scales, (including molecular data and patient clinical data). We have been developing a graph-database approach implemented in Neo4j to facilitate management (integration, exploration, visualisation, interpretation) of diverse types of biological and biomedical data.</p>
+</div>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ukvVVMhJACE" frameborder="0" allowfullscreen></iframe>
+</div>
+<div  id="_graphs_are_feeding_the_world" class="sect3 "  >
+<h4>Graphs Are Feeding The World</h4>
+
+
+<div class="paragraph">
+<p><em>Tim Williamson, Data Scientist, Monsanto</em></p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Presentation at GraphConnect SF 2015.</p>
+</div>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6KEvLURBenM" frameborder="0" allowfullscreen></iframe>
+</div>
+<div  id="_graph_databases_in_life_sciences_bringing_biology_back_to_its_nature" class="sect3 "  >
+<h4>Graph Databases in Life Sciences: Bringing Biology Back to Its Nature</h4>
+
+
+<div class="paragraph">
+<p><em>Thilo Muth</em></p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Today&#8217;s life science research is about genes, proteins, metabolites, relationships, interactions and biological networks. Data storing and mining brings a huge potential for biologists, however classical storage formats such as SQL and Excel involve various issues, such as scalability and performance problems with data growth, complexity and accessibility. Finally, most of the storage models are far from biological reality: Graph databases and Neo4j meet the need in life sciences for an appropriate data and database model.</p>
+</div>
+
+<iframe src="https://player.vimeo.com/video/77450061" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</div>
+<div  id="_open_tree_of_life" class="sect3 "  >
+<h4>Open Tree Of Life</h4>
+<div class="imageblock" style="float: left;">
+<p class="content">
+<img src="http://opentreeoflife.files.wordpress.com/2012/04/opentree-final-logo-copy.png?w=360&h=189" alt="opentree final logo copy">
+</p>
+</div>
+
+
+<div class="paragraph">
+<p><strong>The tree of life</strong> links all biodiversity through a shared evolutionary history.
+This project will produce the first online, comprehensive first-draft tree of all 1.8 million named species, accessible to both the public and scientific communities.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Assembly of the tree will incorporate previously-published results, with strong collaborations between computational and empirical biologists to develop, test and improve methods of data synthesis.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>This initial tree of life will not be static; instead, we will develop tools for scientists to update and revise the tree as new data come in.
+Early release of the tree and tools will motivate data sharing and facilitate ongoing synthesis of knowledge.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p><strong>Biological research</strong> of all kinds, including studies of ecological health, environmental change, and human disease, increasingly depends on knowing how species are related to each other.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Yet there is no single resource that unites knowledge of the tree of life.
+Instead, only small parts of the tree are individually available, generally as printed figures in journal articles.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>This project will provide the global community of scientists who study the tree of life with a means to share and combine their results, and will enable large-scale studies of Earth’s biodiversity.
+It will also create a resource where students, educators and citizens can go to explore and learn about life’s evolutionary history.</p>
+</div>
+
+
+
+<div class="paragraph">
+<p>Read more on the <a href="http://blog.opentreeoflife.org/tag/neo4j/">OpenTreeOfLife Blog</a></p>
+</div>
+
+<iframe src="https://player.vimeo.com/video/67870035" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<p><a href="https://vimeo.com/67870035">0606 - Open Tree of Life and Neo4j</a> from <a href="https://vimeo.com/neo4j">Neo Technology</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+</div>
+</div>
+<div  id="_publications" class="sect2 columns medium-12" style='padding-left: 0;' >
+<h3>Publications</h3>
+<table id="publications" class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 10%;">
+<col style="width: 30%;">
+<col style="width: 30%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Title</th>
+<th class="tableblock halign-left valign-top">Year</th>
+<th class="tableblock halign-left valign-top">Authors</th>
+<th class="tableblock halign-left valign-top">Affiliation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gkx237">The Proteins API: accessing key integrated protein and genome information</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2017</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A. Nightingale, R. Antunes, E. Alpi, B. Bursteinas, L. Gonzales, W. Liu, J. Luo, G. Qi, E. Turner, and M. Martin</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EMBL-EBI, Wellcome Genome Campus, UK</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://biorxiv.org/content/biorxiv/early/2016/05/26/055525.full.pdf">Knowledge.Bio: A Web application for exploring, building and sharing webs of biomedical relationships mined from PubMed</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">R. Bruskiewich, K. Huellas-Bruskiewicz, F. Ahmed, R. Kaliyaperumal, M. Thompson, E. Schultes, K. M. Hettne, A. I. Su, and B. M. Good</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Department of Human Genetics, Leiden University Medical Center, The Netherlands</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://academic.oup.com/bioinformatics/article/doi/10.1093/bioinformatics/btw731/2557691/Recon2Neo4j-applying-graph-database-technologies">Recon2Neo4j: Applying graph database technologies for managing comprehensive genome-scale networks</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">I. Balaur, A. Mazein, M. Saqi, A. Lysenko, C. J. Rawlings, and C. Auffray</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">European Institute for Systems Biology and Medicine (EISBM), France</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-016-1394-x">STON: exploring biological pathways using the SBGN standard and graph databases</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V. Touré, A. Mazein, D. Waltemath, I. Balaur, M. Saqi, R. Henkel, J. Pellet, and C. Auffray</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">European Institute for Systems Biology and Medicine (EISBM), France</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/26998997">miTALOS v2: Analyzing Tissue Specific microRNA Function</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">M. Preusse, F. J. Theis, and N. S. Mueller</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Institute of Computational Biology, Helmholtz Zentrum München, Germany</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/27196054">An Integrated Data Driven Approach to Drug Repositioning Using Gene-Disease Associations</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">J. Mullen, S. J. Cockell, P. Woollard, and A. Wipat</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Newcastle University, United Kingdom</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/26708334">HitWalker2: visual analytics for precision medicine and beyond</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">D. Bottomly, S. K. McWeeney, and B. Wilmot</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Knight Cancer Institute, Oregon Health and Science University, USA</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/26657893">HRGRN: A Graph Search-Empowered Integrative Database of Arabidopsis Signaling Transduction, Metabolism and Gene Regulation Networks</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X. Dai, J. Li, T. Liu, and P. X. Zhao</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Plant Biology Division, The Samuel Roberts Noble Foundation, USA</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/27462371">Representing and querying disease networks using graph databases</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A. Lysenko, I. A. Roznovăţ, M. Saqi, A. Mazein, C. J. Rawlings, and C. Auffray</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">European Institute for Systems Biology and Medicine (EISBM), France</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/27587666">PanTools: representation, storage and exploration of pan-genomic data</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S. Sheikhizadeh, M. E. Schranz, M. Akdel, D. de Ridder, and S. Smit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bioinformatics Group, Wageningen University, The Netherlands</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/27627442">EpiGeNet: A Graph Database of Interdependencies Between Genetic and Epigenetic Events in Colorectal Cancer</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2016</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">I. Balaur, M. Saqi, A. Barat, A. Lysenko, A. Mazein, C. J. Rawlings, H. J. Ruskin, and C. Auffray</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">European Institute for Systems Biology and Medicine (EISBM), France</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://www.ncbi.nlm.nih.gov/pubmed/26272981">cyNeo4j: connecting Neo4j and Cytoscape</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">G. Summer, T. Kelder, K. Ono, M. Radonjic, S. Heymans, and B. Demchak</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Center for Heart Failure Research (CARIM), University Hospital Maastricht, The Netherlands</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.thinkmind.org/download.php?articleid=dbkda_2015_9_50_90009">Towards Implementing Semantic Literature-Based Discovery with a Graph Database</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">D. Hristovski, A. Kastrin, D. Dinevski, and T. C. Rindflesch</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Faculty of Medicine, University of Ljubljana, Slovenia</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://dl.acm.org/citation.cfm?id=2918100">Using Neo4j for Mining Protein Graphs: A Case Study</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">D. Hoksza and J. Jelinek</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Faculty of Mathematics and Physics, Charles University in Prague, Czech Republic</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://pubs.acs.org/doi/abs/10.1021/pr501246w">The MetaProteomeAnalyzer: A Powerful Open-Source Software Suite for Metaproteomics Data Analysis and Interpretation</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">T. Muth, A. Behne, R. Heyer, F. Kohrs, D. Benndorf, M. Hoffmann, M. Lehtevä, U. Reichl, L. Martens, and E. Rapp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Max Planck Institute for Dynamics of Complex Technical Systems, Magdeburg, Germany</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/26383775">SimiRa: A tool to identify coregulation between microRNAs and RNA-binding proteins</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">M. Preusse, C. Marr, S. Saunders, D. Maticzka, H. Lickert, R. Backofen, and F. Theis</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Helmholtz Zentrum München, Institute of Computational Biology, Germany</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/26262393">Constructing a Graph Database for Semantic Literature-Based Discovery</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">D. Hristovski, A. Kastrin, D. Dinevski, and T. C. Rindflesch</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Faculty of Medicine, University of Ljubljana, Slovenia</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/25708381">A systems biology approach toward understanding seed composition in soybean</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">L. Li, M. Hur, J. Y. Lee, W. Zhou, Z. Song, N. Ransom, C. Y. Demirkale, D. Nettleton, M. Westgate, Z. Arendsee, V. Iyer, J. Shanks, B. Nikolau, and E. S. Wurtele</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Department of Genetics, Development and Cell Biology, Iowa State University, USA</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/25754863">Combining computational models, semantic annotations and simulation experiments in a graph database</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">R. Henkel, O. Wolkenhauer, and D. Waltemath</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Department of Computer Science, University of Rostock, Germany</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/26305513">An alternative database approach for management of SNOMED CT and improved patient data queries</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">W. S. Campbell, J. Pedersen, J. C. McClay, P. Rao, D. Bastola, and J. R. Campbell</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">University of Nebraska Medical Center, Department of Pathology and Microbiology, US</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.ncbi.nlm.nih.gov/pubmed/25520553">Semantically linking in silico cancer models</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2014</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">D. Johnson, A. J. Connor, S. McKeever, Z. Wang, T. S. Deisboeck, T. Quaiser, and E. Shochat</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Department of Computing, Imperial College London, London, UK</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://www.sciencedirect.com/science/article/pii/S1574954114001125">Global biotic interactions: An open infrastructure to share and analyze species-interaction datasets</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2014</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">J. H. Poelen, J. D. Simons, and C. J. Mungall</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Center for Coastal Studies Natural Resource Center, USA</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://bioinformatics.oxfordjournals.org/content/early/2013/10/21/bioinformatics.btt549.full">Are graph databases ready for bioinformatics?</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2013</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Christian Theil Have and Lars Juhl Jensen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Department of Metabolic Genetics, University of Copenhagen, Denmark</p></td>
+</tr>
+</tbody>
+</table>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#publications').DataTable();
+} );
+</script>
+</div>
+</div>
+                    </div>
+                    <div class="large-3 large-pull-9 columns">
+                           <ul style="padding-top: 0;" class="side-nav">
+         <dl class="accordion">
+            <dd class="accordion-navigation inactive">
+               <a href="/developer/get-started/">
+                  <h5>Get Started</h5>
+               </a>
+               <div class="content inactive" id="panel1">
+                  <ul>
+                     <li><a href="/developer/get-started/graph-database/">What is a GraphDB?</a></li>
+                     <li><a href="/developer/get-started/graph-db-vs-rdbms/">GraphDB vs RDBMS</a></li>
+                     <li><a href="/developer/get-started/graph-db-vs-nosql/">GraphDB vs NOSQL</a></li>
+                     <li><a href="/developer/get-started/guide-neo4j-browser/">Neo4j Browser Intro</a></li>
+                     <li><a href="/graphacademy/online-course-getting-started/">Getting Started Course</a></li>
+                     <!--<li><a href="/developer/language-guides/">Language Drivers</a></li>-->
+                  </ul>
+               </div>
+            </dd>
+         </dl>
+            <dl class="accordion">
+               <dd class="accordion-navigation inactive">
+                  <a href="/developer/cypher/">
+                     <h5>Cypher Query Language</h5>
+                  </a>
+                  <div class="content inactive" id="panel2">
+                     <ul>
+                        <li><a href="/developer/cypher/cypher-query-language/">Cypher Intro</a></li>
+                        <li><a href="/developer/cypher/guide-sql-to-cypher/">From SQL to Cypher</a></li>
+                        <li><a href="/developer/cypher/guide-build-a-recommendation-engine/">Build a Recommendation Engine</a></li>
+                        <li><a href="/developer/cypher/procedures-functions/">User Defined Procedures & Functions</a></li>
+                        <li><a href="/graphacademy/online-course-getting-started/">Getting Started Course</a></li>
+                        <li><a href="/docs/cypher-refcard/current/">Cypher Refcard</a></li>
+                     </ul>
+                  </div>
+               </dd>
+            </dl>
+            <dl class="accordion">
+               <dd class="accordion-navigation inactive">
+                  <a href="/developer/data-modeling/">
+                     <h5>Data Modeling</h5>
+                  </a>
+                  <div class="content inactive" id="panel3">
+                     <ul>
+                        <li><a href="/developer/data-modeling/guide-data-modeling/">Graph Data Modeling Guidelines</a></li>
+                        <li><a href="/developer/data-modeling/graphgist/">Interactive Graph Models - GraphGist</a></li>
+                     </ul>
+                  </div>
+               </dd>
+            </dl>
+            <dl class="accordion">
+               <dd class="accordion-navigation inactive">
+                  <a href="/developer/working-with-data/">
+                     <h5>Working with Data</h5>
+                  </a>
+                  <div class="content inactive" id="panel4">
+                     <ul>
+                        <li><a href="/developer/working-with-data/guide-data-visualization/">Graph Visualization for Neo4j</a></li>
+                        <li><a href="/developer/working-with-data/guide-importing-data-and-etl/">Importing Data into Neo4j</a></li>
+                        <li><a href="/developer/working-with-data/guide-import-csv/">Importing CSV</a></li>
+                        <li><a href="/developer/working-with-data/example-data/">Example Datasets</a></li>
+                     </ul>
+                  </div>
+               </dd>
+            </dl>
+            <dl class="accordion">
+               <dd class="accordion-navigation inactive">
+                  <a href="/developer/language-guides/">
+                     <h5>Drivers &amp; Language Guides</h5>
+                  </a>
+                  <div class="content inactive" id="panel5">
+                     <ul>
+                        <li><a href="/developer/language-guides/java/">Java</a></li>
+                        <li><a href="/developer/language-guides/spring-data-neo4j/">Spring Framework</a></li>
+                        <li><a href="/developer/language-guides/dotnet/">.NET</a></li>
+                        <li><a href="/developer/language-guides/javascript/">JavaScript</a></li>
+                        <li><a href="/developer/language-guides/python/">Python</a></li>
+                        <li><a href="/developer/language-guides/ruby/">Ruby</a></li>
+                        <li><a href="/developer/language-guides/php/">PHP</a></li>
+                        <li><a href="/developer/language-guides/">All Neo4j Drivers</a></li>
+                     </ul>
+                  </div>
+               </dd>
+            </dl>
+            <dl class="accordion">
+               <dd class="accordion-navigation ">
+                  <a href="/developer/integration/">
+                     <h5>Neo4j Tools &amp; Integrations</h5>
+                  </a>
+                  <div class="content " id="panel6">
+                     <ul>
+                        <li><a href="/developer/integration/ecosystem/">Tools &amp; Libs for Neo4j</a></li>
+                        <li><a href="/developer/integration/graph-algorithms/">Graph Algorithms</a></li>
+                        <li><a href="/developer/integration/graphql/">GraphQL</a></li>
+                        <li><a href="/developer/integration/docker/">Docker</a></li>
+                        <li><a href="/developer/integration/apache-spark/">Apache Spark</a></li>
+                        <li><a href="/developer/integration/elastic-search/">Elastic-Search</a></li>
+                        <li><a href="/developer/integration/mongodb/">MongoDB</a></li>
+                        <li><a href="/developer/integration/cassandra/">Cassandra</a></li>
+                     </ul>
+                  </div>
+               </dd>
+            </dl>
+            <dl class="accordion">
+               <dd class="accordion-navigation inactive">
+                  <a href="/developer/in-production/">
+                     <h5>Neo4j In Production</h5>
+                  </a>
+                  <div class="content inactive" id="panel7">
+                     <ul>
+                        <li><a href="/developer/guide-cloud-deployment/">Cloud Deployment</a></li>
+                        <li><a href="/developer/in-production/guide-performance-tuning/">Performance Tuning</a></li>
+                        <li><a href="/developer/in-production/guide-clustering-neo4j/">Clustering Neo4j</a></li>
+	                    <li><a href="/graphacademy/online-course-prod/">In Production Course</a></li>
+                     </ul>
+                  </div>
+               </dd>
+            </dl>
+            <dl class="accordion">
+               <dd class="accordion-navigation inactive">
+                  <a href="/developer/guide-cloud-deployment/">
+                     <h5>Neo4j in the Cloud</h5>
+                  </a>
+                  <div class="content inactive" id="panel9">
+                     <ul>
+                        <li><a href="/developer/guide-cloud-deployment/neo4j-cloud-aws-ec2-ami/">Deploying to EC2</a></li>
+                        <li><a href="https://neo4j.com/blog/deploy-neo4j-microsoft-azure-part-2">Deploying to Azure</a></li>
+                        <li><a href="/developer/guide-cloud-deployment/guide-orchestration">Orchestration Tools</a></li>
+                        <li><a href="/developer/guide-cloud-deployment/neo4j-cloud-hosting-providers">Cloud Hosting Providers</a></li>
+                     </ul>
+                  </div>
+               </dd>
+            </dl>
+         <dl class="accordion">
+            <dd class="accordion-navigation ">
+               <a href="/developer/resources/">
+                  <h5>Documentation &amp; Resources</h5>
+               </a>
+               <div class="content " id="panel4">
+                  <ul>
+	                 <li><a href="/graphacademy/online-course-getting-started/">Getting Started Course</a></li>
+	                 <li><a href="/developer/resources/ruby-course/">Ruby / Rails Course</a></li>
+	                 <li><a href="/graphacademy/online-course-prod/">In Production Course</a></li>
+
+                     <li><a href="/docs/">Neo4j Documentation</a></li>
+                     <ul>
+	                 <li><a href="/docs/developer-manual/current/">Developer Manual</a></li>
+	                 <li><a href="/docs/java-reference/current/">Java Developer Reference</a></li>
+	                 <li><a href="/docs/operations-manual/current/">Operations Manual</a></li>
+                     <li><a href="/docs/cypher-refcard/current/">Cypher Refcard</a></li>
+                     </ul>
+                  </ul>
+               </div>
+            </dd>
+         </dl>
+         <dl class="accordion">
+            <dd class="accordion-navigation ">
+               <a href="/developer/contribute/">
+                  <h5>Contributing to Neo4j</h5>
+               </a>
+               <div class="content " id="panel8">
+                  <ul>
+	                    <!-- todo CLA, SO, GitHub, Building, Tools -->
+                     <!--li><a href="/developer/contribution/xxx">Contributing</a></li-->
+                  </ul>
+               </div>
+            </dd>
+         </dl>
+         </ul>
+         <div class="accordion-navigation">
+            <div class="c2a-icons">
+               <div><a href="https://github.com/neo4j/neo4j" target="_blank"><i class="fa fa-github" aria-hidden="true"></i><br/>Star us on GitHub</a></div>
+               <div><a href="http://twitter.com/neo4j" target="_blank"> <i class="fa fa-twitter" aria-hidden="true"></i><br/>Follow us on Twitter</a></div>
+               <div><a href="http://neo4j.com/developer/slack" target="_blank"><i class="fa fa-slack" aria-hidden="true"></i><br/>Chat on Slack</a></div>
+               <div><a href="http://stackoverflow.com/questions/tagged/neo4j"  target="_blank"><i class="fa fa-stack-overflow" aria-hidden="true"></i><br/>Ask on StackOverflow</a></div>
+               <div><a href="http://youtube.com/c/neo4j" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i><br/>Watch on YouTube</a></div>
+               <div><a href="https://meetup.com/Neo4j-Online-Meetup/"  target="_blank"><i class="fa fa-meetup" aria-hidden="true"></i><br/>Join our Live Meetup</a></div>
+               <div><a href="https://groups.google.com/forum/#!forum/neo4j"><i class="fa fa-users" aria-hidden="true"></i><br/>Discuss in our Group</a></div>
+            </div>
+         </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="row text-center hide-for-small hr-style">
+        <div class="medium-5 columns">
+            <hr>
+        </div>
+        <div class="medium-2 columns">
+            <object height="100%" width="100%"
+                    data="http://neo4j.com/wp-content/themes/neo4jweb/assets/images/hr-image.svg"
+                    type="image/svg+xml"></object>
+        </div>
+        <div class="medium-5 columns">
+            <hr>
+        </div>
+    </div>
+    <div class="row text-center show-for-small">
+        <div class="medium-12 columns">
+            <hr>
+        </div>
+    </div>
+    <section class="row">
+        <div class="medium-4 columns"></div>
+    </section>
+    <section class="row">
+        <div class="small-12 columns"></div>
+    </section>
+</article>
+<section class="bg-light lg">
+	<div class="row">
+	  <div class="medium-10 small-centered columns text-center">
+	    <h3>Stay Connected</h3>
+	    <p>Sign up to find out more about Neo4j's upcoming events &amp; meetups.</p>
+	  </div>
+	</div>
+	<div class="row">
+		<div class="medium-6 small-centered columns">
+		    <div class="row collapse">
+		      <div class="small-7 columns">
+				<script src="//app-ab10.marketo.com/js/forms2/js/forms2.min.js"></script>
+				<form id="mktoForm_519"></form>
+				<script>MktoForms2.loadForm("//app-ab10.marketo.com", "710-RRC-335", 519);</script>
+		      </div>
+		      <div class="small-5 columns">
+		        <a href="#" id="signupbody" class="button postfix">Sign Me Up &rsaquo;</a>
+		      </div>
+		    </div>
+	  </div>
+	</div>
+	<div class="row"><h3>&nbsp;</h3></div>
+</section>
+
+<style>
+	#mktoForm_519 button {display:none;}
+	.postfix.button {line-height: 2.3125rem;}
+</style>
+<script>
+	var btn = document.getElementById("signupbody");
+	btn.onclick = function(){
+	MktoForms2.getForm(519).submit();
+	};
+</script><!--FOOTER WIDGET -->
+    <footer id="footer">
+        
+<div class="footer-widgets">
+  <div class="row-1 row">
+    <div class="small-12 medium-8 columns footer-menus">
+      <div class="row-2 row">
+        <div class="footer-menu-widget small-6 medium-3 columns"><div class="menu-footer-menus-new-1-container"><ul id="menu-footer-menus-new-1" class="menu"><li id="menu-item-51837" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom menu-item-51837"><a href="/product/">PRODUCTS</a></li>
+<li id="menu-item-51838" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom menu-item-51838"><a href="/use-cases/">SOLUTIONS</a></li>
+<li id="menu-item-51839" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom menu-item-51839"><a href="/partners/">PARTNERS</a></li>
+</ul></div></div><div class="footer-menu-widget small-6 medium-3 columns"><div class="menu-footer-menus-new-2-container"><ul id="menu-footer-menus-new-2" class="menu"><li id="menu-item-51840" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom menu-item-51840"><a href="/customers/">CUSTOMERS</a></li>
+<li id="menu-item-51841" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom menu-item-51841"><a href="/graphacademy/">LEARN</a></li>
+<li id="menu-item-51842" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom menu-item-51842"><a href="/developer/get-started/">DEVELOPERS</a></li>
+</ul></div></div><div class="footer-menu-widget small-6 medium-3 columns"><div class="menu-footer-menus-new-4-container"><ul id="menu-footer-menus-new-4" class="menu"><li id="menu-item-60082" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-60082"><a href="https://neo4j.com/company/">COMPANY</a></li>
+<li id="menu-item-51846" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51846"><a href="/news/">News</a></li>
+<li id="menu-item-51847" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51847"><a href="/awards/">Awards</a></li>
+<li id="menu-item-51848" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51848"><a href="/jobs/">Jobs</a></li>
+<li id="menu-item-51849" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51849"><a href="/staff/">Staff</a></li>
+</ul></div></div>      </div>
+    </div>
+    <div class="small-12 medium-4 columns"><div>			<div class="textwidget"><div class="social-icons"><a href="https://www.linkedin.com/company/neo4j" title="Neo4j on LinkedIn" target="_blank"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-linkedin fa-stack-1x fa-inverse"></i></span></a>    <a  href="https://twitter.com/neo4j" title="Neo4j on Twitter" target="_blank"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-twitter fa-stack-1x fa-inverse"></i></span></a>   <a  href="https://youtube.com/neo4j" title="Neo4j on YouTube" target="_blank"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa  fa-youtube-play fa-stack-1x fa-inverse"></i></span></a>  <a  href="https://www.facebook.com/neo4j.graph.database" title="Neo4j on Facebook" target="_blank"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa  fa-facebook fa-stack-1x fa-inverse"></i></span></a>  <a  href="http://neo4j.com/slack" title="Neo4j Users on Slack" target="_blank"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa  fa-slack fa-stack-1x fa-inverse"></i></span></a> </div></div>
+		</div></div>
+  </div>
+  <div class="row">
+    <div><div class="small-12 medium-4 columns">			<div class="textwidget"><div class="copyright">
+<div class="logo-footer"></div>
+<p>© 2018 Neo4j, Inc.<br />
+<a href="/terms/">Terms</a> | <a href="/privacy- policy/">Privacy </a> | <a href="/sitemap/">Sitemap</a></p>
+<p>Neo4j<sup>® </sup>and Cypher<sup>®</sup><br />
+are registered trademarks<br />
+of Neo4j, Inc.</p>
+</div>
+</div>
+		</div><div class="small-12 medium-4 columns"><h2>GET NEO4J NEWS</h2>			<div class="textwidget"><div class="footer-form">
+<p>Keep up with the latest graph<br />
+database trends, tips &#038; events.</p>
+<div id="thks-footer"></div>
+<pre style="display:table;background-color: inherit;">
+<script src="//app-ab10.marketo.com/js/forms2/js/forms2.min.js"></script>
+<form id="mktoForm_477"></form>
+<script type="text/javascript">
+MktoForms2.loadForm("//app-ab10.marketo.com", "710-RRC-335", 477, function(form) {
+    form.onSuccess(function(values, followUpUrl) {
+    document.getElementById("signup").style.display = "none";
+    document.getElementById('thks-footer').innerHTML="<p>Thank you! Email Node added.</p>";
+    form.getFormElem().hide();
+    return false;
+    });
+});
+</script>
+<input id="signup" class="footer-form-submit" alt="Submit Email" src="/wp-content/themes/neo4jweb/assets/images/submit-arrow.svg" type="submit" />
+<script>
+  var btn = document.getElementById("signup");
+  btn.onclick = function(){
+    MktoForms2.getForm(477).submit();
+  };
+</script>
+<style>
+  #mktoForm_477 button {display:none;}
+  #mktoForm_477{margin-left:-20px;}
+  #mktoForm_477 input[type=email] {color: #fff;}
+</style>
+</pre>
+</div>
+</div>
+		</div><div class="small-12 medium-4 columns">			<div class="textwidget"><h5><a href="/contact-us">Contact Us &rarr;</a></h5>
+      <p>1-855-636-4532 <a href="mailto:info@neo4j.com">US <i class="fi-mail"></i></a><br />
+      +44 808 189 0493 <a href="mailto:uk@neo4j.com">UK <i class="fi-mail"></i></a><br />
+      Please email:  <a href="mailto:vertrieb@neo4j.com">Germany <i class="fi-mail"></i></a><br />
+      +33 (0) 8 05 08 03 44 <a href="mailto:ventes@neo4j.com">France <i class="fi-mail"></i></a><br />
+     <!-- +46 (0) 768 65 19 05  <a href="mailto:nordics@neo4j.com">Sweden <i class="fi-mail"></i></a>--></p></div>
+		</div></div>
+  </div>
+</div>
+
+<div class="contact-bar">
+  <div class="row">
+    <div class="columns text-center">
+      <a href="tel:1.855.636.4532" class="button feature-box_button" style="margin-top:0px"><span style="color:#30333a;">Contact Sales:</span> 1.855.636.4532</a>
+      <a href="/contact-us/" class="button feature-box_button" style="margin-top:0px">Email a graph expert</a>
+    </div>
+  </div>
+</div>    </footer>
+
+<!--/COPYRIGHT-->
+<a class="exit-off-canvas"></a>
+</div>
+</div>
+<div id="cookie-law-info-bar"><span>This website uses 'cookies' to give you the best, most relevant experience. Using this website means you’re OK with this. You can change which cookies are set at any time -  by clicking on <a href="http://neo4j.com/privacy-policy/cookies/" id="CONSTANT_OPEN_URL" target="_blank"  class="cli-plugin-main-link"  >more info</a>. <a href="#" id="cookie_action_close_header"  class="medium cli-plugin-button cli-plugin-main-button" >Accept</a> 
+</span></div>		
+		<script type="text/javascript">
+			//<![CDATA[
+			jQuery(document).ready(function() {
+        CodeMirror.colorize(false, 'clang');
+				cli_show_cookiebar({
+					settings: '{"animate_speed_hide":"500","animate_speed_show":"500","background":"#fff","border":"#444","border_on":true,"button_1_button_colour":"#000","button_1_button_hover":"#000000","button_1_link_colour":"#fff","button_1_as_button":true,"button_2_button_colour":"#333","button_2_button_hover":"#292929","button_2_link_colour":"#1e73be","button_2_as_button":false,"font_family":"inherit","header_fix":false,"notify_animate_hide":true,"notify_animate_show":false,"notify_div_id":"#cookie-law-info-bar","notify_position_horizontal":"right","notify_position_vertical":"bottom","scroll_close":false,"scroll_close_reload":false,"showagain_tab":false,"showagain_background":"#fff","showagain_border":"#000","showagain_div_id":"#cookie-law-info-again","showagain_x_position":"100px","text":"#000","show_once_yn":false,"show_once":"20000"}'
+				});
+			});
+			//]]>
+		</script>
+		
+		<script type='text/javascript' src='//use.typekit.net/rdt4xku.js?ver=4.9.2'></script>
+<script type='text/javascript' src='https://neo4j.com/wp-content/themes/neo4jweb/assets/js/dist.min.js?ver=20180112-1223'></script>
+
+<!-- load additional codemirror modes -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/mode/python/python.min.js" type="text/javascript"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/mode/php/php.min.js" type="text/javascript"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/mode/ruby/ruby.min.js" type="text/javascript"></script>
+
+<script type='text/javascript' src='https://neo4j.com/wp-content/themes/neo4jweb/assets/js/neo_calculator_v3.js?ver=4.9.2'></script>
+<script type='text/javascript' src='https://neo4j.com/wp-includes/js/wp-embed.min.js?ver=4.9.2'></script>
+<script>
+jQuery(document).foundation({
+ tab: {
+   callback : function (tab) {
+     $(window).trigger('resize');
+   }
+ }
+});
+</script>
+
+<!-- Google Code for Remarketing tag -->
+<!-- Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. For instructions on adding this tag and more information on the above requirements, read the setup guide: google.com/ads/remarketingsetup -->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 960313738;
+var google_conversion_label = "HN1kCN7GnwcQivP0yQM";
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/960313738/?value=1.00&amp;currency_code=USD&amp;label=HN1kCN7GnwcQivP0yQM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+
+
+<!-- Send GA ClientID to Marketo iframe --> 
+<script>
+  jQuery('#mkto_iframe').load(function() {
+    ga('create', 'UA-1192232-34', 'auto');
+      ga(function(tracker) {
+        var clientId = tracker.get('clientId');
+        var frameWindow = document.getElementById('mkto_iframe').contentWindow;
+        frameWindow.postMessage(clientId, 'https://go.neo4j.com');
+      });
+ });
+</script>
+
+<script src="//cdn.getsmartcontent.com/GS9NJ03M.js"></script>
+
+<!-- Begin CrazyEgg Tracking -- Neo4j Account -->
+<script type="text/javascript">
+setTimeout(function(){var a=document.createElement("script");
+var b=document.getElementsByTagName("script")[0];
+a.src=document.location.protocol+"//script.crazyegg.com/pages/scripts/0067/1012.js?"+Math.floor(new Date().getTime()/3600000);
+a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+</script>
+<!-- End CrazyEgg Tracking -->
+
+<script type="text/javascript">
+(function() {
+ var didInit = false;
+ function initMunchkin() {
+   if(didInit === false) {
+     didInit = true;
+     Munchkin.init('710-RRC-335');
+   }
+ }
+ var s = document.createElement('script');
+ s.type = 'text/javascript';
+ s.async = true;
+ s.src = '//munchkin.marketo.net/munchkin.js';
+ s.onreadystatechange = function() {
+   if (this.readyState == 'complete' || this.readyState == 'loaded') {
+     initMunchkin();
+   }
+ };
+ s.onload = initMunchkin;
+ document.getElementsByTagName('head')[0].appendChild(s);
+})();
+</script>
+
+
+</body>
+</html>
