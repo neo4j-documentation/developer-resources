@@ -12,33 +12,35 @@
 = image:{img}icon-mdm.png[] Language Guides
 
 
-This section of guides and tutorials is designed to provide detailed examples and steps of how to integrate Neo4j with your preferred programming language. In this section, we provide an introduction for getting the initial system setup complete (regardless of language) and an overview of the consistent movie example application to use for several languages and Neo4j drivers.
+These guides and tutorials are designed to provide detailed examples of how to integrate Neo4j with your preferred programming language.
+Neo4j *officially supports the drivers for .Net, Java, JavaScript and Python* for the binary Bolt protocol.
+Our community contributors provide drivers for all major programming languages for all protocols and APIs.
+In this section, we provide an introduction and a consistent example application for several languages and Neo4j drivers.
 
 
 == How to connect to Neo4j?
 
 
-If you've link:/download[installed] and started Neo4j Desktop on your system,
-you can already work interactively with the database via the built-in Neo4j Browser or on http://localhost:7474[localhost:7474].
+If you've link:/download[installed] and started Neo4j as a server on your system,
+you can already work interactively with the database via the built-in Neo4j Browser application on http://localhost:7474[localhost:7474].
 
-To build an application, you want to connect to Neo4j from your technology stack. This is very easy!
+To build an application, you want to connect to Neo4j from your technology stack. Fortunately it is very easy.
 
 
 [[bolt-drivers]]
 == The binary Bolt Protocol
 
-Starting with Neo4j 3.0, we support a binary protocol called Bolt.
-It is based on the PackStream serialization and supports protocol versioning, authentication and TLS via certificates. Bolt is faster than other protocols such as HTTP and REST because it uses binary instead of text transfer (JSON or XML), and it also allows a connection to remain open, removing the multi-step handshake protocol for every request.
+Starting with Neo4j 3.0 we support a binary protocol called Bolt.
+It is based on the PackStream serialization and supports protocol versioning, authentication and TLS via certificates.
 
 The binary protocol is enabled in Neo4j by default, so you can use any language driver that supports it.
 
-Neo4j officially provides drivers for link:dotnet[.Net], link:java[Java], link:javascript[JavaScript] and link:python[Python]. Thanks to the Neo4j contributor community, there are additional drivers for almost every popular programming language with various protocols and APIs, most of which mimic existing database driver idioms and approaches.
+Neo4j officially provides drivers for link:dotnet[.Net], link:java[Java], link:javascript[JavaScript] and link:python[Python].
 
-For a detailed overview of the official drivers, see the link:{manual}/drivers/[Neo4j Driver Manual]
+See also the for an detailed overview of the official drivers link:{manual}/drivers/[Neo4j Driver Manual]
 
-_And for more details on the protocol implementation, see the https://github.com/neo4j-contrib/boltkit[implementers documentation]._
+_For more details on the protocol implementation, see the https://github.com/neo4j-contrib/boltkit[implementers documentation]._
 
-////
 ++++
 <dl class="tabs" data-tab>
   <dd class="tab-title"><a href="#bolt-dotnet">.Net</a></dd>
@@ -91,11 +93,14 @@ For more details on other drivers see link:python[Neo4j with Python].
 ++++
 </div>
 ++++
-////
+
+
 == All Neo4j Drivers
 
 
-To get started with your stack now, choose your preferred programming language from the list below and follow along. Happy creating!
+Thanks to the Neo4j contributor community, there are additionally drivers for almost every popular programming language,
+most of which mimic existing database driver idioms and approaches.
+Get started with your stack now, see the dedicated page for more detail.
 
 
 [cols="5*",width=100]
@@ -119,14 +124,14 @@ To get started with your stack now, choose your preferred programming language f
 
 include::example-project/example-project.adoc[tags=intro]
 
-link:example-project[Read More, window="_blank"]
+link:example-project[Read More]
 
 
 == Using the HTTP API
 
 If you want to access Neo4j programmatically, you can also use the HTTP-API, which allow you to:
 
-* POST one or more Cypher statements with parameters (multiple per request to the server)
+* POST one or more Cypher statements with parameters, multiple per request to the server
 * Keep transactions open over multiple requests
 * Choose different result formats
 * Execute management operations or introspect the database

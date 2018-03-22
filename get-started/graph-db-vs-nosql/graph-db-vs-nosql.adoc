@@ -1,85 +1,82 @@
-= Neo4j Graphs from NoSQL Databases
+= How Graph Databases Relate To Other NoSQL Data Models
 :slug: graph-db-vs-nosql
 :level: Beginner
 :toc:
 :toc-placement!:
 :toc-title: Overview
 :toclevels: 1
-:section: Get Started -> Graphs and NoSQL Databases
+:section: What is Neo4j
 :section-link: get-started
 
-.Learning Goals
+.Goals
 [abstract]
-* Purpose/business need of NoSQL movement and how graph databases grew from it.
-* Differences (and similarities) between graph and NoSQL databases and data models.
+This guide quickly explains how graph databases are related to other NoSQL databases.
 
 .Prerequisites
 [abstract]
-* None, though recommended to have read the guide on link:/developer/get-started/graph-database[What is a Graph Database?].
+You need no prior knowledge of other NoSQL stores, although it might be helpful to have read the guide on link:/developer/get-started/graph-database[graph databases].
 
 [role=expertise]
 {level}
 
 toc::[]
 
-Although broadly named, the NoSQL ("Not only SQL") space brings together many interesting solutions offering different data models and database systems, each suitable for different use cases and shapes of data.
+Although unhelpfully named, the NoSQL ("Not only SQL") space brings together many interesting solutions offering different data models and database systems, each suitable for different use cases and shapes of data.
+
 With the advent of the NoSQL movement, the "one-size-fits-all" proposition of large relational systems was replaced by making conscious decisions about finding the right tool for the job.
 
-Though graph databases are a subset of the NoSQL category, most other NoSQL systems are *aggregate-oriented*, which means they provide only atomic operations within their natural aggregate, forming only one dedicated view of your data.
-Focusing on one aggregate at a time allows for easy sharding of bucketed data across a network of machines along the aggregate dimension - for instance, the *Document* in document databases.
-However, other projections have to be computed by crunching or duplicating your data.
+Most NoSQL systems are *aggregate oriented*, providing only atomic operations within their natural aggregate, which forms only one dedicated view of your data.
+Other projections have to be computed crunching or duplicating your data.
+Focusing on one aggregate at a time allows for easy sharding of bucketed data across a network of machines along the aggregate dimension, for instance the *Document* in Document Databases.
 
-While other NoSQL databases are well-equipped to handle a single, dedicated view of data, graph databases handle fine-grained networks of information that provide *any perspective* on your data that fits your use case.
-These perspectives can change and adapt to the business need. In addition, Neo4j also conforms to ACID standards (known and trusted by relational systems) that guarantee protected update transactions to that connected data.
+Graph databases handle fine-grained networks of information providing *any perspective* on your data that fits your use-cases.
+Known and trusted from relational systems, transactional guarantees protect updates of that connected data conforming to ACID standards.
 
 .NoSQL databases lack relationships
-In a quote from the _Graph Databases_ book (published by O'Reilly) the text explains why typical NoSQL databases struggle to provide the capabilities that graph databases are designed to handle.
-[NOTE]
-For a free eBook copy of this book, you can download http://graphdatabases.com/[here].
-
-[quote, "Graph Databases, O'Reilly"]
+[quote, "Jim Webber, Ian Robinson", "Graph Databases, O'Reilly"]
 Most NoSQL databases store sets of disconnected aggregates. *This makes it difficult to use them for connected data and graphs.* +
 One well-known strategy for adding relationships to such stores is to embed an aggregate's identifier inside the field belonging to another aggregate — effectively introducing foreign keys. +
 *But this requires joining aggregates at the application level, which quickly becomes prohibitively expensive.*
 
-////
+Let's compare graph databases to other NoSQL systems.
+
 ++++
 <iframe width="680" height="425" src="https://www.youtube.com/embed/5Tl8WcaqZoc?list=PL9Hl4pk2FsvUVugR_NxBMH-bBDkMJt32N" frameborder="0" allowfullscreen></iframe>
 ++++
-////
 
-== Neo4j in the NoSQL Ecosystem
+=== Neo4j in the NoSQL Ecosystem
 
-Because of the NoSQL movement, businesses of all sizes have a variety of modern options from which to build solutions relevant to their use cases.
+// TODO
+
+With the advent of the NoSQL movement, businesses of all sizes have a variety of modern options from which to build solutions relevant to their use cases.
 
 * Calculating average income? Ask a *relational database*.
 * Building a shopping cart? Use a *key-value Store*.
 * Storing structured product information? Store as a *document*.
 * Describing how a user got from point A to point B? Follow a *graph*.
 
-Let's compare graph databases to other database systems. The diagram below shows how each database type lines up, based upon size and depth. Graph databases match a smaller size with RDBMS, but excel to a level above on depth.
-
 image::{img}nosql-space.png[]
 
-== Key-Value Stores and Graph Databases
 
-The *key-value* model is great and highly-performant for lookups of huge amounts of both simple and complex values. A typical key-value structure is shown in the figure below.
+=== Relate Key-Value Stores with Graph Databases
+
+The *Key-Value* model is great and highly performant for lookups of huge amounts of simple or even complex values.
 
 image::{img}vs-key-value.png[]
 
-When the values themselves are interconnected, you've got a graph like the image below.
+When the values are themselves interconnected, you've got a graph.
 Neo4j lets you traverse quickly among all the connected values and find insights in the relationships.
 
 image::{img}as-key-value.png[]
 
-== Navigate Document Stores with Graph Databases
+=== Navigate Document Stores with Graph Databases
 
 The structured hierarchy of a *Document* accommodates a lot of schema-free data that can easily be represented as a tree.
-Although trees are a type of graph, a tree represents only one projection of your data defined by the that particular tree structure.
+Although trees are a type of graph, a tree represents only one projection of your data.
 
 image::{img}vs-document.png[]
 
-When referring to other documents (or contained elements) within that tree, you have a more expressive representation (a graph) of the same data that you can easily navigate with Neo4j.
-A graph data model lets more than one natural representation emerge dynamically as needed, shown in the diagram below.
+Refer to other documents (or contained elements) within that tree and you have a more expressive representation of the same data that you can easily navigate with Neo4j.
+A graph data model lets more than one natural representation emerge dynamically as needed.
 
 image::{img}as-document.png[]
