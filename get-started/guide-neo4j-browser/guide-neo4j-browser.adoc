@@ -8,45 +8,46 @@
 :section: Get Started
 :section-link: get-started
 :experimental:
-:neo4j-version: 2.3.0
+:neo4j-version: 3.3.4
 
 .Goals
 [abstract]
-This article demonstrates how to use the Neo4j browser for querying, visualization and data interaction.
+This article demonstrates how to use the Neo4j browser for querying, visualization, and data interaction.
 
 .Prerequisites
 [abstract]
-Please have link:/download[Neo4j downloaded] and installed. It helps if you read the section on link:/developer/get-started/graph-database[Graph Databases].
+Please have link:/download[Neo4j^] downloaded and installed.
+It also helps if you have read the section on link:/developer/get-started/graph-database[graph databases^].
 
 [role=expertise]
 {level}
 
 toc::[]
 
-:img: .
+//:img: .
 
 == Installing and Starting Neo4j Browser
 
-First, http://neo4j.org/download[download] Neo4j. 
-Use the provided installer, start the Neo4j Desktop App and start the database after (optionally) selecting a location for your database files.
-
-Alternatively unzip the downloaded file, and start Neo4j by following the instructions in the readme (`bin/neo4j start`).
-
+If you haven't already, http://neo4j.org/download[download^] Neo4j. 
+Using the provided instructions (shown when downloading), follow Step 1 to install and start the Neo4j Desktop application.
+Instructions can also be found in the readme (`bin/neo4j start`) after unzipping the downloaded file.
+Step 2 on the download page instructions shows you how to set up your first project and database and how to open the Neo4j in the browser.
 
 ****
-If you connect to Neo4j for the first time, you're asked to change the password for the default user account "neo4j/neo4j".
-
 [NOTE]
 Please remember the password. 
-In case you forget it, you have to remove the credentials file in `data/dbms/authorization`.
+If you forget it, you have to remove the credentials file in `data/dbms/authorization`.
 ****
 
-Open the URL http://localhost:7474 to start working with Neo4j and our query language, link:/developer/cypher[Cypher].
+Just to review, so far, we have shown two ways to interact with Neo4j.
 
-// tag::guide[]
+1) From Neo4j Desktop, you can open Neo4j Browser. This is done my clicking `<your project name>` in the Desktop screen, then click `Manage` on your database.
 
-Start by typing `:play intro` into the command-line and pressing kbd:[Enter]. 
-Please follow the guide to learn about our user interface.
+2) You can also access this from a regular browser window by typing http://localhost:7474 and signing in with Username: neo4j, Password: <your database password (set up in Desktop)>.
+
+Now that we can access the graph database, we can start working with data using our query language, link:/developer/cypher[Cypher^].
+
+For an introduction to Browser's features and navigation as Neo4j's user interface, you can type `:play intro` into the command-line and press kbd:[Enter] or click the play button (image:{img}cypher_run_button.jpg[width=25]).
 
 == Feedback & Questions
 
@@ -55,11 +56,60 @@ You can provide your name and send us a message.
 
 == Neo4j Browser Sync
 
-Neo4j Browser Sync is a new feature that allows you to synchronize your favorites, styling and settings to a cloud storage, so you can share it across machines and browsers.
+Neo4j Browser Sync is a feature that allows you to synchronize your favorites, styling, and settings to cloud storage, so you can share it across machines and browsers.
 
-image:://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/neo4j-browser-sync.png[width=500]
+image::{img}neo4j-browser-sync.png[width=500]
 
-Just log in with your GitHub, Twitter or Google account and synchronize your workplace to the cloud.
+You just need to click the cloud icon in the left-side menu and log in with your GitHub, Twitter, or Google account and synchronize your workplace to the cloud.
+
+== Built-in Guides
+
+If you want to learn more about Neo4j, Cypher, or the Neo4j browser before diving in, click on any of the helpful links shown after startup (commands also shown below).
+These are quick guides that introduce the different concepts.
+You can find more helpful links in the left sidebar of Neo4j in the "Documents" tab (icon:book[]).
+
+[%autowidth.spread]
+|===
+|*Title* |*Description* |*Command*
+|Intro |A guided tour of Neo4j browser |`:play intro`
+|Concepts |Graph database basics |`:play concepts`
+|Cypher |Neo4j's graph query language introduction |`:play cypher`
+|The Movie Graph |A mini graph model of connections between actors and movies |`:play movie graph`
+|The Northwind Database |A classic use case of RDBMS to graph with import instructions and queries |`:play northwind graph`
+|Custom Guides |Starting with Neo4j 2.3, you can use _:play <url>_ to play a custom guide |`:play
+
+http://guides.neo4j.com/graphgist/restaurant_recommendation.html`
+|===
+
+All you have to do is enter any of the above commands in the browser command line (at the top of the browser) and follow the accompanying guides to walk through the training or scenarios.
+To execute any of the queries provided within a browser guide, simply click on the query, and it will populate in the browser command line.
+Then, just press kbd:[Enter] or the Play button to execute the statement!
+Results of the query will populate in a panel right below the command line.
+
+== Styling Neo4j Browser Visualization
+
+As mentioned above, any queries you run in Neo4j Browser will populate your results below the command line.
+Query results are rendered either as a visual graph, a table format, or an ascii-table result.
+You can switch between those with the icons on the left side of the result frame.
+If you cannot see the whole graph or the results display too close together, you can adjust by moving the visual view and dragging nodes to rearrange them.
+To move the view to see more parts of the graph, just click an empty spot within the graph pane and drag it. To rearrange nodes, you can click and drag them around.
+
+The nodes will already have sensible captions assigned by the browser, which auto-selects a property from the property list to use as a caption.
+You can see all the properties of that element if you click on any node or relationship.
+Properties will appear below the visualization.
+Larger property sets might be collapsed into a subset, but there is a little triangle on the right to unfold them.
+
+For example, if you click on one of the `Movie` nodes in the MovieGraph (`:play movie graph`), then you can see its properties below the graph visual.
+The same applies for `Actor` nodes or the `ACTED_IN` relationships.
+If you click on any label or relationship *above* the graph visualization, you can then choose its styling in the area below the graph.
+Colors, sizes, and captions are selectable from there.
+
+To see this for yourself, you can click on the `Person` label above the graph and change the color, size, and captions of all nodes labeled with `Person`.
+The first image below shows changes to nodes labeled `Person`. The second image shows changes to relationships labeled `ACTED_IN`.
+
+image::{img}style_person_node.png[]
+
+image::{img}style_actedin_relationship.png[]
 
 == Useful Commands and Keyboard Shortcuts
 
@@ -97,162 +147,99 @@ m|:help keys
 |Toggle Editor to Full Screen
 |===
 
-== Built in Guides
+== Query and Command-Line Tips
 
-If you want to learn more first, click on any of the helpful links shown after startup: these are quick guides that introduce the different concepts.
-You find more helpful links in the left sidebar in the "Information" tab (icon:book[]).
+You can remove all accumulated output frames with `:clear`. The 'X' button at the top right of each pane removes that frame and aborts a (long-)running statement.
+The maximum number of frames that are kept is configurable in the Browser Settings from the left-side menu.
 
-|===
-| Intro | a guided tour of Neo4j browser | `:play intro`
-| Concepts | GraphDB 101 | `:play concepts`
-| Cypher | query language  introduction |`:play cypher`
-| The Movie Graph | a mini graph model with use-cases | `:play movie graph`
-| The Northwind Database | the classic demo database with import instructions & use-case queries | `:play northwind graph`
-| Custom Guides | starting with Neo4j 2.3 you can use `:play <url>` to play a custom guide | `:play http://guides.neo4j.com/graphgist/restaurant_recommendation.html` 
-|===
+If you want to review a past query, you can find the result pane and click the query above the graph visualisation to pull it back into the editor.
+The keyboard shortcuts listed above will help you work efficiently within the editor area.
 
-Import our sample movie graph by entering `:play movie graph`.
+You can also write and edit multi-line queries by switching to multi-line editing mode with kbd:[Shift+Enter], then kbd:[Enter] will create newlines.
 
-On the second slide click the large Cypher +CREATE ...+ statement, then hit the triangular `Run` button.
+kbd:[Ctrl+Up] and kbd:[Ctrl+Down] (Mac users, use the kbd:[Cmd] key) allows you to navigate command history, and you can access all command history with `:history`.
+The command history is persisted across browser restarts.
 
-After a few seconds the data is imported, and you'll see a subset of the movie data rendered as a graph.
+You can switch between `Graph`, `Table`, `Text`, and `Code` views to see the results in various formats by clicking the icons on the left of each pane.
 
-== Styling Neo4j Browser Visualization
-
-You can pan the visual view around and drag nodes to rearrange them.
-
-The nodes already have a sensible captions, it auto-selects a property from the property list to be rendered as caption.
-
-If you click on any node or relationship you see the properties of that element below the visualization, larger property sets might be folded in, there is a little triangle on the right to fold them out.
-
-E.g. you click on one of the Movies then you can see it's properties below the graph. 
-Same for actors or the `ACTED_IN` relationships.
-
-If you click on any label or relationship *above* the graph visualization, you can then chose its styling in the area below the graph.
-
-Colors, sizes and captions are selectable from there.
-
-For instance click on the `(Movies)` label above the graph and change the color, size and captions of nodes labeled with `Movie`.
-
-image::{img}style_node.jpg[]
-
-image::{img}style_relationship.jpg[]
-
-== Running Queries
-
-When you continue with the guide, you will see more queries.
-You can get them into the editor _by clicking on them_. 
-To execute, hit the triangular play button.
-
-Query results are rendered either as visual graph, tabular or ascii-table result.
-You can switch between those with the icons on the left side of the result frame.
-
-Remove all accumulated output frames with `:clear`, the cross removes a single frame and aborts a (long-)running statement.
-The maximum number of frames that are kept is configurable.
-
-You can click the small query above the graph visualisation to pull it back into the editor.
-
-Use the keyboard shortcuts listed above to work efficiently with the editor area.
-
-Navigate input history with kbd:[Ctrl+Up] and kbd:[Ctrl+Down], access all of it via `:history`. 
-The history will be persisted across browser restarts.
-
-You can switch between tabular, visual mode, query plan and x-ray mode for results with the icons on the left of each panel, 
-
+****
 [NOTE] 
-Don't worry if you don't see any output, you might just be in visual mode but returned tabular/scalar data, just switch the mode to tabular
+Don't worry if you don't see any output.
+You might just be in Graph mode, but had your query return tabular/scalar data.
+To see the results, just switch the mode to the Table view.
+****
 
+Query time is reported in the `Table` or `Code` views (*don't rely on that exact timing though*), and it includes the latency and deserialization costs, not just the actual query execution time.
 
-Query time is reported in the tabular view, *don't rely on that exact timing though* it includes the latency and (de-)serialization costs, not just the actual query execution time.
+You can also download the results as a CSV from the `Table`, `Text`, and `Code` views or download the graph as an SVG or PNG from the `Graph` view, as shown below.
 
-You can download the results as CSV from the tabular output panel (top right download icon), and as JSON (download icon above the panel).
-The graph visualization can be exported as PNG and SVG.
+.Download graph
+image:{img}download_graph.png[]
 
-If you enter fullscreen mode of a graph visualization you can zoom in and out.
-After a node is clicked it gets a halo, in which you can expand and remove nodes from the visualization. 
-You can also turn previously dragged nodes lose again.
+.Download CSV
+image:{img}download_csv.png[]
 
-== Meta Graph
+If you enter fullscreen mode of a graph visualization, you can zoom in and out.
+After a node is clicked, it gets a halo, where you can expand and remove nodes from the visualization.
+You can also turn previously dragged nodes loose again.
 
-In the left side drawer on the top database section (icon:database[]) you find the *currently used* node-labels and relationship types.
-Clicking on any of those runs a quick query to show you a sample of the graph using those.
+== Graph Metadata
 
-== Queries and Favorites
+In the left-side menu, the top icon is the database section (icon:database[]), where you can find the *currently used* node labels, relationship types, and property keys.
+Clicking on any one of those options runs a quick query to show you a sample of the graph with those elements.
 
-If you start with an empty frame, display some nodes and relationships, use the Favorites (icon:star-o[]) drawer on the left, click on the **Get Some Data** entry, and run the query.
-This executes the statement `MATCH (n) RETURN n limit 100` which fetches some nodes. 
+== Setting Favorites
 
-The browser helpfully also fetches and displays relationships between those nodes, *even if they were not part of your query result*.
-You can disable the latter behavior with the "Auto-Complete" switch in the bottom right corner.
-Then only relationships returned by the actual query will be shown.
+If you currently have an empty frame, you can display some nodes and relationships by using the Favorites (icon:star-o[]) in the left-side menu.
+Neo4j stores a few default favorites to get you started.
+Just click on the *Basic Queries*, then choose **Get Some Data** and run the query.
+This executes the statement `MATCH (n) RETURN n limit 100`, which fetches some nodes.
 
-You can save your own queries as favorites by "starring" them. 
-Use a comment `// comment` above your query to provide a title.
-Use folders to organize the favorites you can rearrange them by dragging and delete if they are no longer useful.
+You can save your own queries as favorites by "starring" them.
+Just populate the Browser command line with the query you want to favorite, then click the Favorites (icon:star-o[]) icon to the right of the command line.
+This will add the query to your Favorites list in the left-side menu.
+To run one of your Favorites, click on the left-side menu Favorites, choose the query, and run it.
+
+To provide a title or helpful info, you can use a comment `// comment` above your query to provide a title.
+
+Creating folders can help organize your favorites, and you can rearrange them by dragging or delete them if they are no longer useful.
 
 [NOTE]
 Your favorites, settings, and styles can be saved to the cloud with Neo4j Browser Sync.
 If you clear your browser cache, your local favorites will be removed.
 
-=== Advanced Styling 
+=== Advanced Styling
 
-////
-++++
-<iframe src="//player.vimeo.com/video/97204829?color=ff9933" width="685" height="500" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-++++
-////
-
-For more advanced styling you can bring up the style-viewer with `:style`, download the graph-style-sheet (GRASS), edit it offline and drag it back onto the drag-area of the viewer.
+For more advanced styling, you can bring up the style-viewer with `:style` and copy/paste the graph-style-sheet (GRASS) that is returned.
+You can edit this stylesheet offline, save the file as a .grass file, and drag it back onto the drag-area of the viewer.
 
 [NOTE]
-You can reset to the default styles with `:style reset`.
-Alternatively by clicking the "fire extinguisher" icon in the popup from `:style`.
+You can reset to the default styles with `:style reset` or by clicking the "fire extinguisher" icon in the popup from `:style`.
 
-Within the GRASS file you can change colors, fonts, sizes, outlines and titles per node-label and relationship-type.
+Within the GRASS file, you can change colors, fonts, sizes, outlines, and titles per node label and relationship type.
 It is also possible to combine multiple properties into a caption with `caption: '{name}, born in {born}';`
 
-image::{img}style_sheet_grass.jpg[]
-
-
-////
-== Some Tips and Tricks for Neo4j Browser
-
-* switch to multi-line editing mode with kbd:[Shift+Enter], then kbd:[Enter] will create newlines
-* execute with kbd:[Ctrl+Enter] (kbd:[Cmd+Enter] on OSX)
-* you can click on the query text above the graph visualization to get it back into the editor
-* Navigate history with kbd:[Ctrl+Up] and kbd:[Ctrl+Up], access all of it via `:history`. The history will be persisted across browser restarts
-* `ESC` puts the editor in fullscreen mode, useful for editing large queries
-* You can switch between tabular, visual mode, query plan and x-ray mode for results with the icons on the left of each panel, 
-** don't worry if you don't see any output, you might just be in visual mode but returned tabular/scalar data, just switch the mode to tabular
-** query time is reported in the tabular view, don't rely on that timing it includes the latency and (de-)serialization costs, not just the actual query execution time
-** you can download the results as CSV from the tabular output panel (top right download icon), and as JSON (download icon above the panel)
-* `:clear` removes all accumulated output frames, the cross icon removes a single frame and kills a running query. You can also expand a panel into fullscreen (helpful in visual mode)
-
-=== Favorites
-
-* if you want to save a snippet to your favorites (using the star button), make sure to add a comment line on top (`// ...`) which will be used as title for your snipppet
-* you can group your favorites into folders and order them with drag and drop and remove them again
-////
+image::{img}style_sheet_grass.png[]
 
 == Configuration
 
-* since Neo4j 2.3 there is a config drawer on the left (with the cog), no need for the `:config` command anymore
-* you can retrieve the current configuration with `:config`
-* the individual settings are configured with:
+The defaults for all the settings can adjusted at any time by going to the configuration option on the left-side menu.
+
+Some possible config changes and views are listed below.
+* You can retrieve the current configuration with `:config`.
+* Individual settings are configured with the following defaults:
 ** `:config maxNeighbours:100` - maxiumum number of neighbours for a node
 ** `:config maxRows:100` - maximum number of rows for the tabular result
 
 == Executing REST requests
 
-You can also execute REST requests with the Neo4j Browser, the command-syntax is +
-`:COMMAND /a/path {"some":"data"}`.
+You can also execute REST requests with the Neo4j in the browser. The command syntax is `:COMMAND /a/path {"some":"data"}`.
 The available commands are `:GET`, `:POST`, `:PUT` and `:DELETE`.
 
-A simple query would inspect the available endpoints of the database `:GET /db/data/`, the results are listed as formatted JSON.
-Then you can for instance retrieve all labels in the database with `:GET /db/data/labels`.
+A simple query like `:GET /db/data/` inspects the available endpoints of the database, with the returned results formatted in JSON.
+Then, you can retrieve all labels in the database with `:GET /db/data/labels`.
 
-To execute a Cypher statement you post to the transaction Cypher endpoint like this:
-
+To execute a Cypher statement, you post to the transaction Cypher endpoint like this:
 [source,javascript]
 ----
 :POST /db/data/transaction/commit {"statements":[
@@ -260,11 +247,11 @@ To execute a Cypher statement you post to the transaction Cypher endpoint like t
       "parameters":{"title":"Cloud Atlas"}}]}
 ----
 
-// end::guide[]
+There are endless possibilities to send and retrieve data using REST.
+In a later guide, you can create an application to interact with Neo4j and use REST endpoints for interaction between you and the database.
+See the https://neo4j.com/developer/language-guides/[Language Guides^] section for more information.
 
-////
-[role=side-nav]
-* link:/books[The Neo4j Bookshelf]
-* http://watch.neo4j.org[The Neo4j Video Library]
-* http://gist.neo4j.org/[GraphGists]
-////
+== Resources
+* https://neo4j.com/sandbox-v2/[Neo4j Sandbox^]
+* http://gist.neo4j.org/[GraphGists: Neo4j Use Case Examples^]
+* https://www.youtube.com/neo4j[Neo4j YouTube Channel^]
