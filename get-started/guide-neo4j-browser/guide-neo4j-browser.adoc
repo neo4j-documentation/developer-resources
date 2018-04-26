@@ -12,7 +12,7 @@
 
 .Goals
 [abstract]
-This article demonstrates how to use the Neo4j browser for querying, visualization, and data interaction.
+This article demonstrates how to use the Neo4j Browser for querying, visualization, and data interaction.
 
 .Prerequisites
 [abstract]
@@ -30,8 +30,8 @@ toc::[]
 
 If you haven't already, http://neo4j.org/download[download^] Neo4j. 
 Using the provided instructions (shown when downloading), follow Step 1 to install and start the Neo4j Desktop application.
-Instructions can also be found in the readme (`bin/neo4j start`) after unzipping the downloaded file.
-Step 2 on the download page instructions shows you how to set up your first project and database and how to open the Neo4j in the browser.
+Alternatively, after downloading the zipped server-only package, instructions can also be found in the readme (`bin/neo4j start`) after unzipping the downloaded file.
+Step 2 on the download page instructions shows you how to set up your first project and database and how to open the Neo4j Browser.
 
 ****
 [NOTE]
@@ -41,7 +41,7 @@ If you forget it, you have to remove the credentials file in `data/dbms/authoriz
 
 Just to review, so far, we have shown two ways to interact with Neo4j.
 
-1) From Neo4j Desktop, you can open Neo4j Browser. This is done my clicking `<your project name>` in the Desktop screen, then click `Manage` on your database.
+1) From Neo4j Desktop, you can open Neo4j Browser. This is done by clicking `<your project name>` in the Desktop screen, then click `Manage` on your database.
 
 2) You can also access this from a regular browser window by typing http://localhost:7474 and signing in with Username: neo4j, Password: <your database password (set up in Desktop)>.
 
@@ -51,7 +51,7 @@ For an introduction to Browser's features and navigation as Neo4j's user interfa
 
 == Feedback & Questions
 
-If you have feedback or questions on how to use the Neo4j Browser, there is a small messaging system in the configuration (icon:cog[]) drawer.
+If you have feedback or questions on how to use Neo4j Browser, there is a small messaging system in the configuration (icon:cog[]) drawer.
 You can provide your name and send us a message.
 
 == Neo4j Browser Sync
@@ -64,25 +64,29 @@ You just need to click the cloud icon in the left-side menu and log in with your
 
 == Built-in Guides
 
-If you want to learn more about Neo4j, Cypher, or the Neo4j browser before diving in, click on any of the helpful links shown after startup (commands also shown below).
+If you want to learn more about Neo4j, Cypher, or Neo4j Browser before diving in, click on any of the helpful links shown after startup (commands also shown below).
 These are quick guides that introduce the different concepts.
 You can find more helpful links in the left sidebar of Neo4j in the "Documents" tab (icon:book[]).
+
+To pin a particular pane to the top of the window (under command line) so that it stays at the top when you run queries after it, just click the pushpin button (image:{img}pin_button.png[width=25]).
+This is especially helpful for pinning guides to the top so they do not get pushed down to the bottom of the window as you run queries.
 
 [%autowidth.spread]
 |===
 |*Title* |*Description* |*Command*
-|Intro |A guided tour of Neo4j browser |`:play intro`
+|Intro |A guided tour of Neo4j Browser |`:play intro`
 |Concepts |Graph database basics |`:play concepts`
 |Cypher |Neo4j's graph query language introduction |`:play cypher`
 |The Movie Graph |A mini graph model of connections between actors and movies |`:play movie graph`
 |The Northwind Database |A classic use case of RDBMS to graph with import instructions and queries |`:play northwind graph`
-|Custom Guides |Starting with Neo4j 2.3, you can use _:play <url>_ to play a custom guide |`:play
+|Custom Guides |Use _:play <url>_ to play a custom guide (https://neo4j.com/developer/guide-create-neo4j-browser-guide/[custom guide documentation^])|`:play
 
 http://guides.neo4j.com/graphgist/restaurant_recommendation.html`
 |===
 
-All you have to do is enter any of the above commands in the browser command line (at the top of the browser) and follow the accompanying guides to walk through the training or scenarios.
-To execute any of the queries provided within a browser guide, simply click on the query, and it will populate in the browser command line.
+All you have to do is enter any of the above commands in the Browser command line (at the top of the pane) and follow the accompanying guides to walk through the training or scenarios.
+Guides are presented as slideshows that can be navigated by clicking the forward and back arrows in the pane to progress to the next or previous slide.
+To execute any of the queries provided within a Browser guide, simply click on the query, and it will populate in the command line.
 Then, just press kbd:[Enter] or the Play button to execute the statement!
 Results of the query will populate in a panel right below the command line.
 
@@ -156,9 +160,10 @@ If you want to review a past query, you can find the result pane and click the q
 The keyboard shortcuts listed above will help you work efficiently within the editor area.
 
 You can also write and edit multi-line queries by switching to multi-line editing mode with kbd:[Shift+Enter], then kbd:[Enter] will create newlines.
+You then need to run kbd:[Ctrl+Enter] or kbd:[Cmd+Enter] to run multi-line queries.
 
 kbd:[Ctrl+Up] and kbd:[Ctrl+Down] (Mac users, use the kbd:[Cmd] key) allows you to navigate command history, and you can access all command history with `:history`.
-The command history is persisted across browser restarts.
+The command history is persisted across Browser restarts.
 
 You can switch between `Graph`, `Table`, `Text`, and `Code` views to see the results in various formats by clicking the icons on the left of each pane.
 
@@ -201,12 +206,13 @@ This will add the query to your Favorites list in the left-side menu.
 To run one of your Favorites, click on the left-side menu Favorites, choose the query, and run it.
 
 To provide a title or helpful info, you can use a comment `// comment` above your query to provide a title.
+The Favorites menu uses your comment as the query name.
 
 Creating folders can help organize your favorites, and you can rearrange them by dragging or delete them if they are no longer useful.
 
 [NOTE]
 Your favorites, settings, and styles can be saved to the cloud with Neo4j Browser Sync.
-If you clear your browser cache, your local favorites will be removed.
+If you clear your Browser cache, your local favorites will be removed.
 
 === Advanced Styling
 
@@ -214,7 +220,7 @@ For more advanced styling, you can bring up the style-viewer with `:style` and c
 You can edit this stylesheet offline, save the file as a .grass file, and drag it back onto the drag-area of the viewer.
 
 [NOTE]
-You can reset to the default styles with `:style reset` or by clicking the "fire extinguisher" icon in the popup from `:style`.
+You can reset to the default styles with `:style reset`.
 
 Within the GRASS file, you can change colors, fonts, sizes, outlines, and titles per node label and relationship type.
 It is also possible to combine multiple properties into a caption with `caption: '{name}, born in {born}';`
@@ -233,7 +239,7 @@ Some possible config changes and views are listed below.
 
 == Executing REST requests
 
-You can also execute REST requests with the Neo4j in the browser. The command syntax is `:COMMAND /a/path {"some":"data"}`.
+You can also execute REST requests with Neo4j Browser. The command syntax is `:COMMAND /a/path {"some":"data"}`.
 The available commands are `:GET`, `:POST`, `:PUT` and `:DELETE`.
 
 A simple query like `:GET /db/data/` inspects the available endpoints of the database, with the returned results formatted in JSON.
