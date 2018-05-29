@@ -146,14 +146,19 @@ public class Role {
 
 	@EndNode
 	private Movie movie;
+}
 ----
 
 The repository interface allows the developer to create methods and queries needed for retrieving the data from the database.
-The interface extends the `Neo4jRepository`, which extends the Spring Data's `CRUDRepository` for persisting and retrieving data.
-Some queries can be derived for us (like the `findByTitle` method), but others must be specifically written and annotated with `@Query`.
 
-There are also a lot of other methods available by default, such as `findOne`, `findAll`, etc.
-For more information, see the https://projects.spring.io/spring-data-neo4j/[Spring Data Neo4j page^] and choose the latest https://projects.spring.io/spring-data-neo4j/[documentation link^] on the right side of the page.
+The interface extends the `Neo4jRepository`, which extends the Spring CRUDRepository for persisting and retrieving data.
+With the `CRUDRepository`, a lot of CRUD methods (such as `findOne`, `findAll`, `save`, `delete`, etc.) come already out-of-the-box.
+So, without even having to specify any method, basic data access is provided.
+
+In the following sample, you see two different kinds of custom methods.
+Some are defined in a specific pattern so that the queries can be derived for us (like the `findByTitle` method).
+Others must be specifically written and annotated with `@Query`.
+For more information, see the Spring Data Neo4j page and choose the latest https://projects.spring.io/spring-data-neo4j/[documentation link^] on the right side of the page.
 
 .Declare a repository interface
 [source,java]
