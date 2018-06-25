@@ -129,7 +129,7 @@ You can get system status for neo4j within the VM by executing:
 systemctl status neo4j
 ----
 
-An important thing to note about the AWS version of neo4j is that you should not modfiy the 
+An important thing to note about the AWS version of neo4j is that you should not modify the 
 /etc/neo4j/neo4j.conf file directly, but rather modify /etc/neo4j/neo4j.template.  Because the
 instance is dynamic and its IP may change over restarts, on AWS the normal configuration file is
 overwritten from that template each time the system service restarts.  The template file can be 
@@ -144,7 +144,7 @@ If we're in a different region than us-east-1, we can run the following command 
 ----
 aws ec2 describe-images \
   --filters "Name=name,Values=neo4j-enterprise-1-3.4.1*" \
-  --region us-west-2 --query "Images[*].ImageId"
+  --region us-east-1 --query "Images[*].ImageId"
 ----
 
 We can then substitute that `image-id` when link:#start-up-instance[starting up an instance].
