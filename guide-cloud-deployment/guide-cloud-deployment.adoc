@@ -22,14 +22,27 @@ Topics include:
 Amazon Elastic Compute Cloud (Amazon EC2) is a web service that provides secure, resizable compute capacity in the cloud.
 It is designed to make web-scale cloud computing easier for developers.
 
-Starting from version 3.2.0, link:https://aws.amazon.com/marketplace/pp/B071P26C9D[Neo4j can be installed from the AWS marketplace^].
+There are several options for running on EC2, depending on what you want to do, detailed below.
 
-If you're using an earlier version, installing Neo4j on any Debian or Ubuntu system can be accomplished by following the instructions on link:http://debian.neo4j.org[our Debian Repository].
+=== Enterprise Causal Cluster in AWS Marketplace
 
-For other Linux distributions, download the link:http://neo4j.com/download/other-releases[Neo4j tarball]; it can be uncompressed and run interactively.
-Our operations manual discusses several ways to run link:{opsmanual}/installation/linux/[Neo4j as system service on Linux].
+link:https://aws.amazon.com/marketplace/pp/B07D441G55[Neo4j Enterprise Causal Clusters] can be launched directly.
 
-* link:/developer/guide-cloud-deployment/neo4j-cloud-aws-ec2-ami[Deploying Neo4j on EC2 using a custom Neo4j AMI]
+This option launches a multi-VM clustered configuration, with the choice to configure a number of aspects of the
+cluster, including number of core nodes, read replicas, hardware sizing, encrypted EBS volumes, and other options.
+
+=== Launching Directly from an AMI
+
+Instructions for launching VMs directly using Amazon's command line tool are provided 
+in the article on link:/developer/guide-cloud-deployment/neo4j-cloud-aws-ec2-ami[Deploying Neo4j on EC2 using a custom Neo4j AMI].
+Using this method, both Community and Enterprise options are available.
+
+=== Community Edition in AWS Marketplace
+
+link:https://aws.amazon.com/marketplace/pp/B071P26C9D[Neo4j Community can be installed from the AWS marketplace^].
+
+We recommend that for security group settings, you select the option to "Create new security group based on seller settings".
+This will ensure that when the instance is launched, the default ports that need to be open will be.
 
 == [.label]#Guide →# Google Cloud Platform (GCP)
 
