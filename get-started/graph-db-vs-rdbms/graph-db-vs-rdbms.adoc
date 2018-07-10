@@ -157,7 +157,7 @@ WHERE Department.name = "IT Department"
 .Cypher Statement
 [source,cypher]
 ----
-MATCH (p:Person)<-[:WORKS_AT]-(d:Dept)
+MATCH (p:Person)-[:WORKS_AT]->(d:Dept)
 WHERE d.name = "IT Department"
 RETURN p.name
 ----

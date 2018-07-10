@@ -22,12 +22,9 @@ toc::[]
 
 == Overview
 
-Very simply, a graph database is a database designed for storing and retrieving data and the relationships among it.
-Rather than prioritizing a rigidly-formatted structure to force on the data and navigating the structure to analyze sets of data, a graph database directly connects each piece of data to those it is related to, elevating the relationships in the data model to equal importance with the data itself.
-
-++++
-<iframe width="680" height="425" src="https://www.youtube.com/embed/_D19h5s73Co" frameborder="0" allowfullscreen></iframe>
-++++
+Very simply, a graph database is a database designed to treat the relationships between data as equally important to the data itself.
+It is intended to hold data without constricting it to a pre-defined model.
+Instead, the data is stored like we first draw it out - showing how each individual entity connects with or is related to others.
 
 
 == Why Graph Databases?
@@ -40,14 +37,14 @@ While other databases compute relationships at query time through expensive JOIN
 Accessing nodes and relationships in a native graph database is an efficient, constant-time operation and allows you to quickly traverse millions of connections per second per core.
 
 Independent of the total size of your dataset, graph databases excel at managing highly-connected data and complex queries.
-With only with a pattern and a set of starting points, graph databases explore the larger neighborhood around those initial starting points -- collecting and aggregating information from millions of nodes and relationships -- and leaving any data outside the search perimeter untouched.
+With only a pattern and a set of starting points, graph databases explore the larger neighborhood around those initial starting points -- collecting and aggregating information from millions of nodes and relationships -- and leaving any data outside the search perimeter untouched.
 
 
 [[property-graph]]
 == The Property Graph Model
 
-As with most technologies, there are few different approaches to how the data is organized and what makes up the key components of a graph database.
-One such approach is the property graph model, where data is organized as nodes, relationships, and properties (metadata stored on the nodes or relationships).
+As with most technologies, there are few different approaches to what makes up the key components of a graph database.
+One such approach is the property graph model, where data is organized as nodes, relationships, and properties (data stored on the nodes or relationships).
 
 We will cover this model in more detail in the https://neo4j.com/developer/data-modeling/[Data Modeling section^] of these guides, but for now, we will briefly define the components that make up the property graph model.
 
@@ -75,7 +72,7 @@ The source code, written in Java and Scala, is available for free on https://git
 
 Neo4j is referred to as a native graph database because it efficiently implements the property graph model down to the storage level.
 This means that the data is stored exactly as you whiteboard it, and the database uses pointers to navigate and traverse the graph.
-In contrast to graph processing or in-memory libraries, Neo4j also provides full database characteristics, including ACID transaction compliance, cluster support, and runtime failover - making it suitable to use graph data in production scenarios.
+In contrast to graph processing or in-memory libraries, Neo4j also provides full database characteristics, including ACID transaction compliance, cluster support, and runtime failover - making it suitable to use graphs for data in production scenarios.
 
 Some of the following particular features make Neo4j very popular among developers, architects, and DBAs:
 
