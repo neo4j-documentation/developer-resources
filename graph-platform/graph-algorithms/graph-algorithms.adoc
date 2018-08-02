@@ -1,0 +1,65 @@
+= Neo4j Graph Algorithms
+:slug: graph-algorithms
+:level: Intermediate
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 2
+:section: Neo4j Graph Platform
+:section-link: graph-platform
+
+toc::[]
+
+== Introduction
+
+Graph algorithms are used to compute metrics for graphs, nodes, or relationships.
+
+They can provide insights on relevant entities (centralities, ranking) in the graph or inherent structures such as communities (community-detection, graph-partitioning, clustering).
+
+
+== Graph Algorithms Library
+
+Neo4j Graph Algorithms is a library that provides efficiently implemented, parallel versions of common graph algorithms for Neo4j 3.x exposed as link:/developer/cypher/[Cypher^] procedures.
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/55uB_t0RKTE" frameborder="0" allowfullscreen></iframe>
+++++
+
+It currently contains implementations for the following algorithms:
+
+include::https://github.com/neo4j-contrib/neo4j-graph-algorithms/raw/3.2/readme.adoc[tag=algorithms, leveloffset=1]
+
+
+== Installation
+
+The easiest way to install the Graph Algorithms library is from the Neo4j Desktop, which you can download from https://neo4j.com/download/[neo4j.com/download^].
+
+Once you have downloaded that and created a project, you can scroll down to the `Plugins` section, and click `Install` for the Graph Algorithms, and then click `Install` again on the pop-up message.
+
+image::{img}install.png[]
+
+For more detailed instructions you can read Jennifer Reif's blog post about https://medium.com/neo4j/explore-new-worlds-adding-plugins-to-neo4j-26e6a8e5d37e[adding plugins to Neo4j^].
+
+If you want to deploy Graph Algorithms outside of the Neo4j Desktop you can follow the instructions below:
+
+* Download the library from the https://github.com/neo4j-contrib/neo4j-graph-algorithms/releases[downloads page^] and put the jar into `$NEO4J_HOME/plugins`
+* Add `dbms.security.procedures.unrestricted=algo.\*` to `$NEO4J_HOME/conf/neo4j.conf`
+* Restart Neo4j
+
+We are now ready to start using the graph algorithms.
+Run the following query to check that the algorithms library has been picked up by Neo4j:
+
+[source,cypher]
+----
+CALL dbms.procedures() YIELD name, signature, description
+WHERE name starts with "algo"
+RETURN name, signature, description
+----
+
+If we don't see any rows, we will need to revisit the installation instructions.
+
+
+== Resources
+* https://neo4j.com/docs/graph-algorithms/current/algorithms/[Docs: Neo4j graph algorithms^]
+* https://neo4j.com/blog/top-13-resources-graph-theory-algorithms/[Blog: Top 13 Resources for Understanding Graph Theory & Algorithms^]
+* https://neo4j.com/whitepapers/graph-algorithms-neo4j-ebook/?ref=social-camp-sales-intro[Free ebook: Neo4j Graph Algorithms^]

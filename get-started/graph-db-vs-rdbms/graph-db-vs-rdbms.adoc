@@ -1,28 +1,28 @@
-= From Relational to Neo4j
+= Concepts: Relational to Graph
 :slug: graph-db-vs-rdbms
 :level: Beginner
 :toc:
 :toc-placement!:
 :toc-title: Overview
 :toclevels: 1
-:section: What is Neo4j
+:section: Getting Started
 :section-link: get-started
 
 .Goals
 [abstract]
-This guide explores the differences between relational and graph databases and their data models.
-It also gives a high-level overview of the relational and graph query languages, as well as three methods to import data from a relational store to a graph.
+This guide explores the concepts of graph databases from a relational developer's point of view.
+It aims to explain the conceptual differences between relational and graph database structures and data models.
+It also gives a high-level overview of how working with each database type is similar or different - from the relational and graph query languages to interacting with the database from applications.
 
 .Prerequisites
 [abstract]
-You should be familiar with the relational database model and understand the basics of the link:/developer/get-started/graph-database#property-graph[property-graph model].
+You should be familiar with the relational database model and understand the basics of the link:/developer/get-started/graph-database#property-graph[property-graph model^].
 It is also helpful to understand basic data modeling questions and concepts.
 
 [role=expertise]
 {level}
 
 toc::[]
-
 
 == Relational Databases
 
@@ -40,7 +40,7 @@ The image below shows this concept of connecting a Person (from Person table) to
 As you can probably see, this makes understanding the connections very cumbersome because you must know the person ID and department ID values (performing additional lookups to find them) in order to know which person connects to which departments. 
 Those types of costly join operations are often addressed by denormalizing the data to reduce the number of joins necessary, therefore breaking the data integrity of a relational database.
 
-image::{img}from_relational_model.png[]
+image::{img}relational_model.png[]
 
 Although not every use case is a good fit for this stringent data model, the lack of viable alternatives and the wide support for relational databases made it difficult for alternative models to break into the mainstream.
 However, the NoSQL era arrived in the market, filling some needs for users and businesses, but still missing the importance of the connections between data.
@@ -48,7 +48,7 @@ This is how graph databases were born.
 They were designed to provide the greatest advantage in the connected world we live in today.
 
 
-== From Relational to Graph Databases
+== Translating Your Relational Knowledge to Understand Graphs
 
 Unlike other database management systems, relationships are of equal importance in the graph data model to the data itself.
 This means we are not required to infer connections between entities using special properties such as foreign keys or out-of-band processing like map-reduce.
@@ -62,7 +62,6 @@ These relationship records are organized by type and direction and may hold addi
 Whenever you run the equivalent of a _JOIN_ operation, the graph database uses this list, directly accessing the connected nodes and eliminating the need for expensive search-and-match computations.
 
 This ability to pre-materialize relationships into the database structure allows Neo4j to provide performance of several orders of magnitude above others, especially for join-heavy queries, allowing users to leverage a _minutes to milliseconds_ advantage.
-
 
 ++++
 <iframe width="640" height="360" src="https://www.youtube.com/embed/NO3C-CWykkY?start=294" frameborder="0" allowfullscreen></iframe>
@@ -80,47 +79,23 @@ A graph is exactly that - a clear model of the domain, focused on the use cases 
 Let's compare the two data models to show how the structure differs between relational and graph.
 
 .Relational - Person and Department tables
-image:{img}relational_to_graph.png[]
+image:{img}relational_as_graph.png[]
 
 In the above relational example, we search the Person table on the left (potentially millions of rows) to find the user Alice and her person ID of 815. Then, we search the Person-Department table (orange middle table) to locate all the rows that reference Alice's person ID (815). Once we retrieve the 3 relevant rows, we go to the Department table on the right to search for the actual values of the department IDs (111, 119, 181).
 Now we know that Alice is part of the 4Future, P0815, and A42 departments.
 
 .Graph - Alice and 3 Departments as nodes
-image:{img}to_graph_model.png[]
+image:{img}relational_graph_model.png[]
 
 In the above graph version, we have a single node for Alice with a label of Person.
 Alice belongs to 3 different departments, so we create a node for each one and with a label of Department.
 To find out which departments Alice belongs to, we would search the graph for Alice's node, then traverse all of the BELONGS_TO relationships from Alice to find the Department nodes she is connected to.
 That's all we need - a single hop with no lookups involved.
 
-
-== Test your skills - Practice Example
-
-To give us another chance to practice, let's take a standard organizational domain and show how it would be modeled in a relational database vs. a graph database. To give yourself an extra challenge, try to create the graph data model on your own and then see how closely it lines up!
-
-.Organizational Domain - Relational Model
-image:{img}organization_relational.png[]
-
-
-=== Data Model Transformation Tips
-
-Here are some tips that help you with the transformation of the relational diagram above:
-
-- *_Table to Node Label_* - each entity table in the relational model becomes a label on nodes in the graph model.
-- *_Row to Node_* - each row in a relational entity table becomes a node in the graph.
-- *_Column to Node Property_* - columns (fields) on the relational tables become node properties in the graph.
-- *_Business primary keys only_* - remove technical primary keys, keep business primary keys.
-- *_Add Constraints/Indexes_* - add unique constraints for business primary keys, add indexes for frequent lookup attributes.
-- *_Foreign keys to Relationships_* - replace foreign keys to the other table with relationships, remove them afterwards.
-- *_No defaults_* - remove data with default values, no need to store those.
-- *_Clean up data_* - duplicate data in denormalized tables might have to be pulled out into separate nodes to get a cleaner model.
-- *_Index Columns to Array_* - indexed column names (like email1, email2, email3) might indicate an array property.
-- *_Join tables to Relationships_* - join tables are transformed into relationships, columns on those tables become relationship properties
-
-.Answer: Organizational Domain - Graph Model
-image:{img}organization_graph.png[]
-
-It is important to have an basic understanding of the graph model before you start to import data, as it becomes easier to hydrate that model or adjust it later, as needs change.
+****
+[NOTE]
+More information on this topic can be found in the https://neo4j.com/developer/data-modeling/[Data Modeling section^].
+****
 
 
 == Data Storage and Retrieval
@@ -132,12 +107,9 @@ Do graph databases have something similar?
 Yes!
 
 Cypher, Neo4j's declarative graph query language, is built on the basic concepts and clauses of SQL but has a lot of additional graph-specific functionality to make it easy to work with your graph model.
-It allows you to query and update the graph structures with concise statements.
-Cypher is centered around the graph patterns that are core to your use-cases, allowing visual representations of the data through the Cypher query syntax.
 
 If you have ever tried to write a SQL statement with a large number of joins, you know that you quickly lose sight of what the query actually does because of all the technical noise in SQL syntax.
-
-In Cypher, the syntax remains clean and focused on domain components and the connections among them, expressing the pattern to find or create data more visually and clearly.
+In Cypher, the syntax remains concise and focused on domain components and the connections among them, expressing the pattern to find or create data more visually and clearly.
 Other clauses outside of the basic pattern matching look very similar to SQL, as Cypher was built on the predecessor language's foundations.
 
 We will cover Cypher query language syntax in an upcoming guide, but let us look at a brief example of how a SQL query differs from a Cypher query.
@@ -168,27 +140,37 @@ You can find more about Cypher syntax in the upcoming guides for the https://neo
 ****
 
 
-== Importing Data from a Relational Database
+== Transitioning from Relational to Graph - In Practice
 
-When you have a good understanding of your graph data model and feel that it accurately represents the data as it exists today, you are ready to transfer the data from the relational structure to a graph!
+If you do decide to move your data from a relational to a graph database, the steps to transition your applications to use Neo4j are actually quite simple.
+You can connect to Neo4j with a driver or connector library designed for your stack or programing language, just as you can with other databases.
+Thanks to Neo4j and its community, there are Neo4j drivers that mimic existing database driver idioms and approaches for nearly any popular programing language.
 
-There are 3 main approaches to moving relational data to a graph.
-We will briefly cover how each operates here, but a more detailed walkthrough is in the linked pages.
+For instance, the Neo4j JDBC driver would be used like this to query the database for _John's departments_:
 
-*1)* https://neo4j.com/developer/guide-import-csv/[LOAD CSV^]: possibly the simplest way to import data from your relational database. 
-Requires a dump of individual entity-tables and join-tables formatted as CSV files.
+[source, clike]
+----
+Connection con = DriverManager.getConnection("jdbc:neo4j://localhost:7474/");
 
-*2)* https://neo4j-contrib.github.io/neo4j-apoc-procedures/[APOC^]: Awesome Procedures on Cypher.
-Created as an extension library to provide common procedures and functions to developers.
-Useful procedures include apoc.load.jdbc, apoc.load.csv, apoc.load.json, and others.
+String query =
+    "MATCH (:Person {name:{1}})-[:EMPLOYEE]-(d:Department) RETURN d.name as dept";
+try (PreparedStatement stmt = con.prepareStatement(QUERY)) {
+    stmt.setString(1,"John");
+    ResultSet rs = stmt.executeQuery();
+    while(rs.next()) {
+        String department = rs.getString("dept");
+        ....
+    }
+}
+----
 
-*3)* https://neo4j.com/blog/neo4j-etl-1-2-0-release-whats-new-and-demo/[ETL Tool^]: internally-built UI tool that translates relational to graph from a JDBC connection.
-Allows bulk data import for large data sets with a fast performance and simple user experience.
+****
+[NOTE]
+For more information, you can visit our pages for https://neo4j.com/developer/language-guides/[Building Applicatons^] to see how to connect to Neo4j using different programming languages.
+****
 
 
 == Resources
 * https://neo4j.com/resources/rdbms-developer-graph-white-paper/[Free eBook: Relational to Graph^]
 * https://dzone.com/refcardz/from-relational-to-graph-a-developers-guide[DZone Refcard: From Relational to Graph^]
-* https://neo4j.com/developer/guide-importing-data-and-etl/[Guide: Data Import^]
-* https://neo4j.com/docs/developer-manual/3.4/cypher/clauses/load-csv/[Developer Manual: LOAD CSV^]
-* https://medium.com/neo4j/tap-into-hidden-connections-translating-your-relational-data-to-graph-d3a2591d4026[Neo4j ETL Tool^]
+* https://neo4j.com/developer/data-modeling/[Data Modeling: Relational to Graph^]

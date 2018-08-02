@@ -1,0 +1,34 @@
+= Data Modeling
+:slug: data-modeling
+:section: Data Modeling
+:section-link: data-modeling
+:section-level: 1
+
+
+== Test your skills - Practice Example
+
+To give us another chance to practice, let's take a standard organizational domain and show how it would be modeled in a relational database vs. a graph database. To give yourself an extra challenge, try to create the graph data model on your own and then see how closely it lines up!
+
+.Organizational Domain - Relational Model
+image:{img}organization_relational.png[]
+
+
+=== Data Model Transformation Tips
+
+Here are some tips that help you with the transformation of the relational diagram above:
+
+- *_Table to Node Label_* - each entity table in the relational model becomes a label on nodes in the graph model.
+- *_Row to Node_* - each row in a relational entity table becomes a node in the graph.
+- *_Column to Node Property_* - columns (fields) on the relational tables become node properties in the graph.
+- *_Business primary keys only_* - remove technical primary keys, keep business primary keys.
+- *_Add Constraints/Indexes_* - add unique constraints for business primary keys, add indexes for frequent lookup attributes.
+- *_Foreign keys to Relationships_* - replace foreign keys to the other table with relationships, remove them afterwards.
+- *_No defaults_* - remove data with default values, no need to store those.
+- *_Clean up data_* - duplicate data in denormalized tables might have to be pulled out into separate nodes to get a cleaner model.
+- *_Index Columns to Array_* - indexed column names (like email1, email2, email3) might indicate an array property.
+- *_Join tables to Relationships_* - join tables are transformed into relationships, columns on those tables become relationship properties
+
+.Answer: Organizational Domain - Graph Model
+image:{img}organization_graph.png[]
+
+It is important to have an basic understanding of the graph model before you start to import data, as it becomes easier to hydrate that model or adjust it later, as needs change.

@@ -4,8 +4,9 @@
 :toc:
 :toc-placement!:
 :toclevels: 1
-:section: What is Neo4j
+:section: Getting Started
 :section-link: get-started
+
 
 .Goals
 [abstract]
@@ -37,7 +38,7 @@ While other databases compute relationships at query time through expensive JOIN
 Accessing nodes and relationships in a native graph database is an efficient, constant-time operation and allows you to quickly traverse millions of connections per second per core.
 
 Independent of the total size of your dataset, graph databases excel at managing highly-connected data and complex queries.
-With only a pattern and a set of starting points, graph databases explore the larger neighborhood around those initial starting points -- collecting and aggregating information from millions of nodes and relationships -- and leaving any data outside the search perimeter untouched.
+With only a pattern and a set of starting points, graph databases explore the neighboring data around those initial starting points -- collecting and aggregating information from millions of nodes and relationships -- and leaving any data outside the search perimeter untouched.
 
 
 [[property-graph]]
@@ -61,7 +62,7 @@ Due to the efficient way relationships are stored, two nodes can share any numbe
 Although they are stored in a specific direction, relationships can always be navigated efficiently in either direction.
 
 .Building blocks of the property graph model
-image:{img}graph_description.svg[]
+image:{img}property_graph_elements.png[]
 
 
 == What is Neo4j?
@@ -80,7 +81,7 @@ Some of the following particular features make Neo4j very popular among develope
 Now used by other databases like SAP HANA Graph and Redis graph via the http://www.opencypher.org/[openCypher project^].
 - *Constant time traversals* in big graphs for both depth and breadth due to efficient representation of nodes and relationships.
 Enables scale-up to billions of nodes on moderate hardware.
-- *Flexible* property graph schema that can adapt over time, making it possible to materialize and add new relationships later to "shortcut" and speed up the domain data when the business needs change.
+- *Flexible* property graph schema that can adapt over time, making it possible to materialize and add new relationships later to shortcut and speed up the domain data when the business needs change.
 - link:/developer/language-guides[*Drivers*^] for popular programming languages, including Java, JavaScript, .NET, Python, and many more.
 
 image::{img}neo4j_overview.svg[]
@@ -88,7 +89,7 @@ image::{img}neo4j_overview.svg[]
 
 == Neo4j Use Cases
 
-Neo4j is used today by thousands of https://neo4j.com/customers/[companies and organizations^] in almost all industries, including financial services, government, energy, technology, retail and manufacturing.
+Neo4j is used today by thousands of https://neo4j.com/customers/[companies and organizations^] in almost all industries, including financial services, government, energy, technology, retail, and manufacturing.
 The thriving, active community surrounding the technology continues to help us improve our product and services for developers and businesses alike.
 
 Learn more about different use cases and companies using them in the video below.
