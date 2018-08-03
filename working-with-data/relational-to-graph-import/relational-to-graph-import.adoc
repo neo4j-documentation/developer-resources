@@ -1,0 +1,28 @@
+= Working with Data
+:slug: working-with-data
+:section: Working with Data
+:section-link: working-with-data
+:section-level: 1
+
+== Importing Data from a Relational Database
+
+When you have a good understanding of your graph data model and feel that it accurately represents the data as it exists today, you are ready to transfer the data from the relational structure to a graph!
+
+There are 3 main approaches to moving relational data to a graph.
+We will briefly cover how each operates here, but a more detailed walkthrough is in the linked pages.
+
+*1)* https://neo4j.com/developer/guide-import-csv/[LOAD CSV^]: possibly the simplest way to import data from your relational database. 
+Requires a dump of individual entity-tables and join-tables formatted as CSV files.
+
+*2)* https://neo4j-contrib.github.io/neo4j-apoc-procedures/[APOC^]: Awesome Procedures on Cypher.
+Created as an extension library to provide common procedures and functions to developers.
+Useful procedures include apoc.load.jdbc, apoc.load.csv, apoc.load.json, and others.
+
+*3)* https://neo4j.com/blog/neo4j-etl-1-2-0-release-whats-new-and-demo/[ETL Tool^]: internally-built UI tool that translates relational to graph from a JDBC connection.
+Allows bulk data import for large data sets with a fast performance and simple user experience.
+
+
+== Resources
+* https://neo4j.com/developer/guide-importing-data-and-etl/[Guide: Data Import^]
+* https://neo4j.com/docs/developer-manual/3.4/cypher/clauses/load-csv/[Developer Manual: LOAD CSV^]
+* https://medium.com/neo4j/tap-into-hidden-connections-translating-your-relational-data-to-graph-d3a2591d4026[Neo4j ETL Tool^]

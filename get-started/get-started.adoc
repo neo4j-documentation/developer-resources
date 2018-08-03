@@ -1,123 +1,159 @@
-= Get Started
-:section: Get Started
+= Getting Started
+:section: Getting Started
 :section-link: get-started
 :section-level: 1
 :slug: get-started
 
-= image:{img}icon-guide-theory.png[] Get Started
+= image:{img}icon-guide-theory.png[] Getting Started
 
 Taking the first steps with Neo4j?
-Read our introductory tutorials and developer guides that cover all areas of your development work.
+
+These introductory tutorials and developer guides were written to guide you through much of your initial learning for Neo4j and give you resources to continue your education.
+If you have any questions or issues, feel free to mailto:devrel@neo4j.com[reach out to us^]!
 
 
 == Your First Steps
 
 Getting started with Neo4j is easy.
-Take your first steps in becoming an expert Neo4j developer.
+Take your first steps to become an expert Neo4j developer.
 
-1. link:/download[Install Neo4j,target=_blank] or link:/sandbox[Start a Sandbox Online]
-2. link:/developer/cypher[Learn to Create and Query Data] and link:/online-course[Take the Free Online Course]
-3. link:/developer/working-with-data/guide-importing-data-and-etl[Import Your Data]
-4. link:/developer/language-guides[Build an Application]
-5. Get Help on http://stackoverflow.com/questions/tagged/neo4j[StackOverflow], http://neo4j.com/slack[Slack], or http://neo4j.com/contact-us/[by contacting us]
-// 6. link:/developer/in-production[Deploy and Run your Database in Production]
+1. link:/download/[Install Neo4j^] or link:/sandbox/[Start a Sandbox Online^]
+2. link:/developer/cypher/[Learn to Create and Query Data with Cypher^]
+3. link:/developer/working-with-data/guide-importing-data-and-etl/[Import Your Data^]
+4. link:/developer/language-guides/[Build an Application^]
+5. Get Help on http://stackoverflow.com/questions/tagged/neo4j/[StackOverflow^], http://neo4j.com/slack/[Slack^], or mailto:devrel@neo4j.com[by contacting us^]
+
+
+== Developer Guide Overview
+
+We cover a variety of topics - from understanding graph database concepts to building applications that interact with Neo4j to running Neo4j in production.
+
+Videos, text, examples, and code are just some of the formats in which we deliver the information to encourage you and aid all learning styles.
 
 
 == What is a Graph Database?
 
-Connected information is everywhere in our world.
-Neo4j was build to efficiently store, handle and query highly connected elements in your data model.
-With a powerful and flexible data model you can represent your real-world, variably structured information without a loss of richness.
-The property graph model is easy to understand and handle, especially for object oriented and relational developers.
+Connected information is everywhere in the world around us.
+Neo4j was built to efficiently store, handle, and query highly-connected data in your data model.
+With a powerful and flexible data model, you can represent your real-world, variably-structured information without a loss of richness.
 
 ++++
 <iframe width="680" height="425" src="https://www.youtube.com/embed/_D19h5s73Co?showinfo=0&controls=2&autohide=1" frameborder="0" allowfullscreen></iframe>
 ++++
 
-* link:/developer/get-started/graph-database[What is a Graph Database?]
-* link:/developer/get-started/graph-database#property-graph[The Property Graph Model]
-* link:/developer/get-started/graph-database#_what_is_neo4j[Neo4j Features] and http://neo4j.com/editions/[Editions]
-* link:/developer/get-started/graph-db-vs-nosql[Comparison with other NoSQL Models]
-* link:/developer/data-modeling[Data Modeling Guides]
-* link:/graph-databases-book[Free e-Book: Graph Databases]
-
-//* http://neo4j.com/docs/stable/what-is-a-graphdb.html[What is a Graph Database?]
+[.button medium feature-box_button]#link:/developer/get-started/graph-database/[Learn More: What is a Graph Database?^]#
 
 
-== From Relational to Neo4j
+== What is the Neo4j Graph Platform?
 
-These guides explores the differences between relational and graph databases and their data models.
-In addition, we show how to integrate graph databases with relational databases and how to import data from a relational store.
+At Neo4j, we want to provide options to solve many different kinds of business and technical needs.
+Our goal is that our products are simple and fit your use case, whatever it may be.
+Whether you are relying upon graphs for transactions, market analysis, operations optimizations, or anything else, Neo4j strives to provide a seamless process for integrating our tools with the rest of your existing system.
 
-* link:/developer/get-started/graph-db-vs-rdbms[From Relational to Neo4j]
-* link:/developer/cypher/guide-sql-to-cypher[From SQL to Cypher]
-* link:/developer/working-with-data/guide-importing-data-and-etl[Importing relational Data]
+Capabilities in the Neo4j graph platform include aiding developers to import data to the graph, business analysts to explore the data with ease, and data scientists to make decisions based on analysis results.
+No matter your role within your organization, we want to put the power of the graph and Neo4j within reach to help you maximize business value and achieve technical needs.
 
-// * {manual}#capabilities-data-integration["Database Integration",role=docs] <-- No longer exists, find a new link
-* link:/resources/rdbms-developer-graph-white-paper/[Free e-Book Guide: Graph Databases for RDBMS Developers]
-//* http://dzone.com...[DZone RefCard: Relational to Graph]
-
-//* {manual}#examples-from-sql-to-cypher["From SQL to Cypher",role=docs]
+[.button medium feature-box_button]#link:/developer/graph-platform/[Learn More: What is the Neo4j Graph Platform?^]#
 
 
-== Cypher - a next-generation Query Language
+== Graph Data Modeling
+
+The richness of graph data and the performance of your queries depends closely on how the data is modeled.
+Data in Neo4j should resemble the real-world information and relationships, but data modeling focuses on understanding what questions the data will answer and what types of information you need from it.
+
+Your data model may also impact the queries you write and the performance of the results returned.
+Choosing to store certain pieces of data as properties versus separate nodes and determining how to structure your relationships is part of the process to maintain good data and maximize query performance.
+
+[.button medium feature-box_button]#link:/developer/data-modeling/[Learn More: Graph Data Modeling^]#
 
 
-We wanted to make querying graph data not only fun, but easy to learn, understand and use for everyone.
-That's why we created a human friendly, declarative query language which uses ASCII-Art to represent visual graph patterns to find or update.
+== Cypher - A Next-Generation Query Language
 
-* link:/developer/cypher[Learn all about Cypher]
-* link:/developer/cypher/guide-sql-to-cypher[Compare Cypher with SQL]
-* link:/online-course[Online Course: Get started with Cypher] 
-// TODO Cypher in 60' 
-* link:/docs/cypher-refcard/current/[Cypher Reference Card]
-// * {manual}#graphdb-neo4j-schema[Optional Schema]
+We wanted to make querying graph data not only fun, but easy to learn, understand, and use for everyone.
+That's why we created a human-friendly, declarative query language which uses ASCII-Art to represent visual graph patterns for finding or updating data in Neo4j.
 
-In 2015 http://openCypher.org[openCypher] launched as the open source project for developing the specification, reference-implementation and TCK of Cypher independently of Neo4j.
+Cypher was based on the power of SQL, but optimized specifically for graphs.
+The syntax is concise and straightforward, allowing users to easily write all the normal CRUD operations in a simple and maintainable way.
+
+[.button medium feature-box_button]#link:/developer/cypher/[Learn More: Cypher Query Language^]#
 
 
-== Language Drivers
+== Graph Visualization
+
+Visualizations often provide a better understanding of your data than textual formats can support.
+As one of our customers said of graph visualization, "I can look at a graph of transactions and fraudulent activity pops out for me."
+
+Neo4j offers methods for visualizing data, such as Neo4j Browser for developers, Neo4j Bloom for analysts and others looking for natural language search, and libraries for developers to embed graphs directly into their applications.
+We also have several partners providing additional options in this space to fit a variety of visualization needs.
+
+[.button medium feature-box_button]#link:/developer/working-with-data/guide-data-visualization/[Learn More: Graph Visualization^]#
+
+
+== Data Import
+
+If you are looking to bring data into Neo4j from another source, Neo4j has a variety of tools and partner applications for different approaches to the data import problem.
+We want to maximize value by simplifying the import process and allow you to start analyzing your graph data sooner.
+
+Our goal in this area to help developers transfer some of their own relevant data into Neo4j to see how it would look and what a graph database can help them do with it.
+We also have options for other types of data import, including integrations with other vendor products and tools.
+This area aids businesses to transport data from technology to technology as easily and smoothly as possible.
+
+[.button medium feature-box_button]#link:/developer/working-with-data/guide-import-csv/[Learn More: Data Import^]#
+
+
+== Drivers for Popular Programming Languages
 
 Developing applications using Neo4j is straightforward.
-Starting with Neo4j 3.0 and the new *binary "Bolt" protocol*, we provide officially supported drivers for *.Net, Java (also Spring), JavaScript and Python*.
+Using the *binary "Bolt" protocol*, we provide officially-supported drivers for languages such as *.Net, Java (also Spring), JavaScript, and Python*.
+Other drivers for the binary and the http protocol are developed by our active contributor community.
 
-Other drivers for the binary and the http protocol are developed by our active contributor community. 
+These drivers allow developers to build applications and integrations using the programming language(s) of their choice and easily interact with data in the Neo4j database.
 
-The following pages help you to work with Neo4j using your preferred programming languages and stacks.
-
-[cols="5*",width=100]
-|===
-
-| link:/developer/language-guides/dotnet[.NET]
-| link:/developer/language-guides/java[Java]
-| link:/developer/language-guides/spring-data-neo4j[Spring]
-| link:/developer/language-guides/javascript[JavaScript]
-| link:/developer/language-guides/python[Python]
-
-| link:/developer/language-guides/ruby[Ruby]
-| link:/developer/language-guides/php[PHP]
-| link:/developer/language-guides/r[R]
-| link:/developer/language-guides/go[Go]
-| link:/developer/language-guides/c[C / C++]
-
-| link:/developer/language-guides/clojure[Clojure]
-| link:/developer/language-guides/perl[Perl]
-| link:/developer/language-guides/haskell[Haskell]
-|
-|
-
-|===
+[.button medium feature-box_button]#link:/developer/language-guides/[Learn More: Language Drivers^]#
 
 
-== GraphAcademy
+== Extensions and Integrations
+
+Neo4j is supported by a rich ecosystem of libraries, tools, drivers, and guides provided by Neo4j, partners, users, and community contributors.
+We want to allow users the ability to integrate with familiar technologies and minimize pain associated with a rip-and-replace approach to solutions.
+
+This area continues to expand as the technology ecosystem and developer needs consistently grow.
+Before writing any new code, we recommend checking out GitHub and other resources to see if something has already been developed to solve your need.
+
+[.button medium feature-box_button]#link:/developer/integration/[Learn More: Extensions and Integrations^]#
 
 
-Our link:/graphacademy[Graph Academy] offers accessible education on a range of Neo4j related topics.
+== Deploying Neo4j
 
-* Online Course: link:/online-course[Getting Started with Neo4j & Cypher]
-* Neo4j experts share their insights: link:/events/#/events?type=Webinar[Check upcoming Webinars]
-* Learn from experienced instructors: link:/events/#/events?type=Training[Attend a Neo4j Training in Your City]
-* Explore and create live, interactive graph models in our link:/graphgists[GraphGist Gallery]
-* http://youtube.com/c/neo4j[Watch our Training Videos, Presentations & Screencasts]
-* Read the Neo4j link:{manual}[Developer Manual] or link:{opsmanual}[Operations Manual]
-* Explore all our link:/developer/resources[Learning Resources]
+If you are looking to run Neo4j in production environments, we provide various options for types of deployments and configurations.
+Neo4j provides options for causal clustering, performance tuning, cloud deployment, backups and failovers, and more.
+We also have tools to plan and manage your deployments and preferences, including a calculator to help you know how much hardware you will need to run your data in Neo4j.
+
+From local to cloud deployments and anything in between, we can help satisfy your preferences and requirements.
+While each implementation will have its own advantages and difficulties, the power to choose resides in the business and technical needs of your company.
+
+[.button medium feature-box_button]#link:/developer/in-production/[Learn More: Deploying Neo4j^]#
+
+
+== Reference Documentation
+
+The tutorials and guides in this site are meant to help you get up and running quickly while showing you how Neo4j integrates with a variety of programming languages and technologies.
+Our core reference documentation will help you as you write your queries and code.
+
+[.button medium feature-box_button]#link:/docs/[Neo4j Reference Docs^]#
+
+
+== Training: Neo4j GraphAcademy
+
+Neo4j GraphAcademy offers training classes online and in classrooms around the world.
+From the fundamentals to advanced Cypher, these classes target audiences at any skill level.
+
+[.button medium feature-box_button]#link:/graphacademy/[Neo4j GraphAcademy^]#
+
+
+== Contributing in Neo4j
+
+No matter your experience level, we would love to have your feedback and input on all things Neo4j!
+If you are looking to get involved, check out the different ways you can join our community and help improve our ecosystem and the open source community.
+
+[.button medium feature-box_button]#link:/developer/contribute/[Learn More: Contributing in Neo4j^]#
