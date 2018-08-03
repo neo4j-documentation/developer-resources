@@ -1,0 +1,2117 @@
+<!doctype html> <!--[if IE 9]> <html class="no-js ie9" lang="en"> <![endif]--> <html class="no-js" lang="en"> <head> <meta charset="utf-8"/> <meta name="viewport" content="width=device-width, initial-scale=1.0"/> <meta name="msvalidate.01" content="8787022FB1E99E5BE4A2A32DAEB6B863"/> <link rel="shortcut icon" href="http://neo4j.com/wp-content/themes/neo4jweb/favicon.ico"/> <title>Developer - Neo4j Graph Database</title> <script type="text/javascript">
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    //Allow Linker
+    ga('create', 'UA-1192232-34','auto', {'allowLinker': true});
+    ga('send', 'pageview');
+
+    // Load the plugin.
+    ga('require', 'linker');
+
+    // Define which domains to autoLink.
+    ga('linker:autoLink', ['neo4j.org','neo4j.com','neotechnology.com','graphdatabases.com','graphconnect.com']);
+  </script> <script type="text/javascript" id="inspectletjs">
+    window.__insp = window.__insp || [];
+    __insp.push(['wid', 656443939]);
+    (function() {
+      function ldinsp(){var insp = document.createElement('script'); insp.type = 'text/javascript'; insp.async = true; insp.id = "inspsync"; insp.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://cdn.inspectlet.com/inspectlet.js'; var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(insp, x); };
+      document.readyState != "complete" ? (window.attachEvent ? window.attachEvent('onload', ldinsp) : window.addEventListener('load', ldinsp, false)) : ldinsp();
+    })();
+  </script> <script>
+    var _prum = [['id', '56c4c51eabe53da82429d2ab'],
+             ['mark', 'firstbyte', (new Date()).getTime()]];
+    (function() {
+      var s = document.getElementsByTagName('script')[0]
+        , p = document.createElement('script');
+      p.async = 'async';
+      p.src = '//rum-static.pingdom.net/prum.min.js';
+      s.parentNode.insertBefore(p, s);
+    })();
+  </script> <meta name="description" content="Get Started with Neo4j. Access to developer resources featuring Cypher and use case examples, videos and Graphgists."/> <meta name="robots" content="noodp"/> <link rel="canonical" href="http://neo4j.com/developer/"/> <meta property="og:locale" content="en_US"/> <meta property="og:type" content="article"/> <meta property="og:title" content="(Neo4j)-[:LOVES]-(Developers)"/> <meta property="og:description" content="Get Started with Neo4j. Access to developer resources featuring Cypher and use case examples, videos and Graphgists."/> <meta property="og:url" content="http://neo4j.com/developer/"/> <meta property="og:site_name" content="Neo4j Graph Database"/> <meta property="article:publisher" content="https://www.facebook.com/neo4j.graph.database"/> <meta property="og:image" content="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/20151130214721/Screen-Shot-2016-02-26-at-12.18.29-PM.png"/> <meta name="twitter:card" content="summary_large_image"/> <meta name="twitter:description" content="Get Started with Neo4j. Access to developer resources featuring Cypher and use case examples, videos and Graphgists."/> <meta name="twitter:title" content="Developer - Neo4j Graph Database"/> <meta name="twitter:site" content="@neo4j"/> <meta name="twitter:image" content="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/20151130214721/Screen-Shot-2016-02-26-at-12.18.29-PM.png"/> <meta name="twitter:creator" content="@neo4j"/> <link rel="alternate" type="application/rss+xml" title="Neo4j Graph Database &raquo; Feed" href="http://neo4j.com/feed/"/> <link rel="alternate" type="application/rss+xml" title="Neo4j Graph Database &raquo; Comments Feed" href="http://neo4j.com/comments/feed/"/> <script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/neo4j.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.5"}};
+			!function(a,b,c){function d(a){var c,d,e,f=b.createElement("canvas"),g=f.getContext&&f.getContext("2d"),h=String.fromCharCode;if(!g||!g.fillText)return!1;switch(g.textBaseline="top",g.font="600 32px Arial",a){case"flag":return g.fillText(h(55356,56806,55356,56826),0,0),f.toDataURL().length>3e3;case"diversity":return g.fillText(h(55356,57221),0,0),c=g.getImageData(16,16,1,1).data,g.fillText(h(55356,57221,55356,57343),0,0),c=g.getImageData(16,16,1,1).data,e=c[0]+","+c[1]+","+c[2]+","+c[3],d!==e;case"simple":return g.fillText(h(55357,56835),0,0),0!==g.getImageData(16,16,1,1).data[0];case"unicode8":return g.fillText(h(55356,57135),0,0),0!==g.getImageData(16,16,1,1).data[0]}return!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i;for(i=Array("simple","flag","unicode8","diversity"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script> <style type="text/css"> img.wp-smiley, img.emoji { display: inline !important; border: none !important; box-shadow: none !important; height: 1em !important; width: 1em !important; margin: 0 .07em !important; vertical-align: -0.1em !important; background: none !important; padding: 0 !important; } </style> <link rel='stylesheet' id='cookielawinfo-style-css' href="http://neo4j.com/wp-content/plugins/cookie-law-info/css/cli-style.css?ver=1.5.3" type='text/css' media='all'/> <link rel='stylesheet' id='font-awesome-four-css' href="http://neo4j.com/wp-content/plugins/font-awesome-4-menus/css/font-awesome.min.css?ver=4.5.0" type='text/css' media='all'/> <link rel='stylesheet' id='foundation-css' href="http://neo4j.com/wp-content/themes/neo4jweb/assets/css/app.css?ver=2016.03.02" type='text/css' media='screen'/> <link rel='stylesheet' id='neo-codemirror-css' href="http://neo4j.com/wp-content/themes/neo4jweb/assets/css/codemirror-neo.css?ver=4.5" type='text/css' media='screen'/> <script type='text/javascript'>
+/* <![CDATA[ */
+var ajax_object = {"ajaxurl":"http:\/\/neo4j.com\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/neo4j-download/js/download.js?ver=4.5'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/jquery-updater/js/jquery-2.2.3.min.js?ver=2.2.3'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/cookie-law-info/js/cookielawinfo.js?ver=1.5.3'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/plugins/jquery-updater/js/jquery-migrate-1.3.0.min.js?ver=1.3.0'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/vendor/modernizr.min.js?ver=4.5'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/foundation.min.js?ver=4.5'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/vendor/codemirror.min.js?ver=4.5'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/neo_codemirror.js?ver=4.5'></script> <script type='text/javascript' src='//use.typekit.net/rdt4xku.js?ver=4.5'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/misc.js?ver=4.5'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/bundle.js?ver=2016.03.11'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/neo_calculator_v3.js?ver=4.5'></script> <link rel='https://api.w.org/' href="http://neo4j.com/wp-json/"/> <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://neo4j.com/xmlrpc.php?rsd"/> <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://neo4j.com/wp-includes/wlwmanifest.xml"/> <meta name="generator" content="WordPress 4.5"/> <link rel='shortlink' href="http://neo4j.com/?p=50818"/> <link rel="alternate" type="application/json+oembed" href="http://neo4j.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fneo4j.com%2Fdeveloper%2F"/> <link rel="alternate" type="text/xml+oembed" href="http://neo4j.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fneo4j.com%2Fdeveloper%2F&#038;format=xml"/> </head> <body> <header role="banner"> <div class="container"> <div class="row"> <div id="nav-position" class="columns"> <a class="skip-link" href="#content">Skip to Content</a> </div> </div> </div> <div class="top-bar-container contain-to-grid show-for-medium-up"> <nav class="top-bar secondary-nav" role="navigation"> <h2 class="show-for-sr">Quick Links</h2> <section class="top-bar-section"> <ul id="menu-top-nav" class="top-bar-menu right"><li id="menu-item-38286" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38286"><a href="http://neo4j.com/blog/">Blog</a></li> <li id="menu-item-38817" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-38817"><a href="//support.neo4j.com/hc/">Support</a></li> <li id="menu-item-53859" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-53859"><a href="http://neo4j.com/contact-us/">Contact Us</a></li> <li id="menu-item-36921" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36921"><a href="http://neo4j.com/download/">Download Neo4j</a></li> </ul> </section> </nav> </div> <div class="top-bar-container contain-to-grid sticky"> <nav class="top-bar" data-topbar role="navigation"> <h2 class="show-for-sr">Main Navigation</h2> <ul class="title-area"> <li class="name"> <h1><a href="http://neo4j.com/"><img src="http://neo4j.com/wp-content/themes/neo4jweb/assets/images/neo4j-logo-2015.png" alt="Neo4j Home"/></a></h1> </li> <li class="toggle-topbar menu-icon"><a href="#"><span class="show-for-sr">Menu</span></a></li> </ul> <section class="top-bar-section"> <ul class="right"> <li class="has-dropdown megamenu"> <a href="/product/">Products</a> <ul class="sub-menu dropdown dropdown-wrapper"> <div class="header-widgets-container"> <div class="row"> <div class="medium-4 nav-menu-widget columns"><li><label>Neo4j Graph Database</label></li><div class="menu-product-menu-1-container"><ul id="menu-product-menu-1" class="menu"><li id="menu-item-51974" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51974"><a href="http://neo4j.com/product/">What is Neo4j?</a></li> <li id="menu-item-51868" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51868"><a href="/whats-new-in-neo4j-2-3/">What&#8217;s New in Neo4j</a></li> <li id="menu-item-51869" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51869"><a href="/top-ten-reasons/">Why Neo4j?</a></li> <li id="menu-item-51870" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51870"><a href="/open-source-project/">Open Source</a></li> </ul></div></div><div class="medium-4 nav-menu-widget columns"><li><label>Neo4j for the Enterprise</label></li><div class="menu-product-menu-2-container"><ul id="menu-product-menu-2" class="menu"><li id="menu-item-51871" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51871"><a href="/licensing/">Licensing</a></li> <li id="menu-item-51872" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51872"><a href="/editions/">Compare Editions</a></li> <li id="menu-item-51873" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51873"><a href="/subscriptions/">Subscriptions</a></li> <li id="menu-item-51874" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51874"><a href="/professional-services/">Professional Services</a></li> </ul></div></div> </div> </div> </ul> </li> <li class="has-dropdown megameu"> <a href="/use-cases/">Solutions</a> <ul class="sub-menu dropdown dropdown-wrapper"> <div class="header-widgets-container"> <div class="row"> <div class="medium-4 nav-menu-widget columns"><li><label>by Use Case</label></li><div class="menu-solution-menu-1-container"><ul id="menu-solution-menu-1" class="menu"><li id="menu-item-51875" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51875"><a href="/use-cases/fraud-detection/">Fraud Detection</a></li> <li id="menu-item-51876" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51876"><a href="/use-cases/graph-based-search/">Graph Based Search</a></li> <li id="menu-item-51877" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51877"><a href="/use-cases/identity-and-access-management/">Identity and Access</a></li> <li id="menu-item-51878" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51878"><a href="/use-cases/master-data-management/">Master Data Management</a></li> <li id="menu-item-51879" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51879"><a href="/use-cases/network-and-it-operations/">Network and IT Operations</a></li> <li id="menu-item-51880" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51880"><a href="/use-cases/real-time-recommendation-engine/">Recommendation Engine</a></li> <li id="menu-item-51881" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51881"><a href="/use-cases/social-network/">Social Network</a></li> </ul></div></div><div class="medium-4 nav-menu-widget columns"><li><label>by Technology</label></li><div class="menu-solution-menu-2-container"><ul id="menu-solution-menu-2" class="menu"><li id="menu-item-51882" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51882"><a href="http://neo4j.com/neo4j-on-ibm-power8/">Neo4j on IBM POWER8</a></li> <li id="menu-item-51883" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51883"><a href="http://neo4j.com/graph-visualization-neo4j/">Graph Visualization</a></li> </ul></div></div> </div> </div> </ul> </li> <li class="has-dropdown megamenu"> <a href="/partners/">Partners</a> <ul class="sub-menu dropdown dropdown-wrapper"> <div class="header-widgets-container"> <div class="row"> <div class="medium-4 nav-menu-widget columns"><li><label>Neo4j Partner Program</label></li><div class="menu-partners-menu-1-container"><ul id="menu-partners-menu-1" class="menu"><li id="menu-item-51864" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51864"><a href="http://neo4j.com/partners/">Find a Partner</a></li> <li id="menu-item-53714" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-53714"><a href="http://neo4j.com/neo4j-partner-program/">Become a Neo4j Partner</a></li> <li id="menu-item-51865" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51865"><a href="http://neo4j.com/partners/oem-partner/">OEM Partner</a></li> </ul></div></div><div class="medium-4 nav-menu-widget columns"><li><label>Partner Portal</label></li><div class="menu-partners-menu-2-container"><ul id="menu-partners-menu-2" class="menu"><li id="menu-item-51867" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51867"><a href="http://partner.neo4j.com/">Access the Portal</a></li> </ul></div></div> </div> </div> </ul> </li> <li class="has-dropdown megamenu"> <a href="/customers/">Customers</a> <ul class="sub-menu dropdown dropdown-wrapper"> <div class="header-widgets-container"> <div class="row"> </div> </div> </ul> </li> <li class="has-dropdown"> <a href="/graphacademy/">Learn</a> <ul class="sub-menu dropdown dropdown-wrapper"> <div class="header-widgets-container"> <div class="row"> <div class="medium-4 nav-menu-widget columns"><li><label>Learn Neo4j</label></li><div class="menu-learn-menu-1-container"><ul id="menu-learn-menu-1" class="menu"><li id="menu-item-51850" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51850"><a href="/graphacademy/">GraphAcademy</a></li> <li id="menu-item-51851" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51851"><a href="http://neo4j.com/graphacademy/online-training/">Online Training</a></li> <li id="menu-item-51852" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51852"><a href="/graphacademy/neo4j-certification/">Neo4j Certification</a></li> <li id="menu-item-51853" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51853"><a href="/books/">Books</a></li> <li id="menu-item-51854" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51854"><a href="http://neo4j.com/resources/">Neo4j Resources</a></li> </ul></div></div><div class="medium-4 nav-menu-widget columns"><li><label>Learn Graph Databases</label></li><div class="menu-learn-menu-2-container"><ul id="menu-learn-menu-2" class="menu"><li id="menu-item-51855" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51855"><a href="/why-graph-databases/">Why Graph Databases?</a></li> <li id="menu-item-51856" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51856"><a href="graph-db-vs-rdbms/">Graph Database vs RDBMS</a></li> </ul></div></div><div class="medium-4 nav-menu-widget columns"><li><label>Events</label></li><div class="menu-learn-menu-3-container"><ul id="menu-learn-menu-3" class="menu"><li id="menu-item-51857" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51857"><a href="/events/">Calendar</a></li> <li id="menu-item-51858" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51858"><a href="http://neo4j.com/webinars/">Neo4j Webinars</a></li> <li id="menu-item-51859" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51859"><a href="/graphdays/">GraphDays</a></li> <li id="menu-item-52468" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-52468"><a href="http://neo4j.com/graphtalks/">GraphTalks</a></li> <li id="menu-item-51860" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51860"><a href="http://graphconnect.com/">GraphConnect</a></li> </ul></div></div> </div> </div> </ul> </li> <li class="has-dropdown"> <a href="./">Developers</a> <ul class="sub-menu dropdown dropdown-wrapper"> <div class="header-widgets-container"> <div class="row"> <div class="medium-4 nav-menu-widget columns"><li><label>Developer Guides</label></li><div class="menu-developers-menu-1-container"><ul id="menu-developers-menu-1" class="menu"><li id="menu-item-51828" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51828"><a href="get-started/">Get Started</a></li> <li id="menu-item-51829" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51829"><a href="cypher/">Cypher Query Language</a></li> <li id="menu-item-51830" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51830"><a href="data-modeling/">Data Modeling</a></li> <li id="menu-item-51831" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51831"><a href="language-guides/">Language Drivers</a></li> <li id="menu-item-51832" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51832"><a href="integration/">Tools &#038; Integration</a></li> <li id="menu-item-51833" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51833"><a href="in-production/">Neo4j in Production</a></li> </ul></div></div><div class="medium-4 nav-menu-widget columns"><li><label>Developer Resources</label></li><div class="menu-developers-menu-2-container"><ul id="menu-developers-menu-2" class="menu"><li id="menu-item-52106" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-52106"><a href="http://neo4j.com/docs/">Documentation</a></li> <li id="menu-item-53223" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-53223"><a href="http://neo4j.com/community/">Community</a></li> <li id="menu-item-51835" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51835"><a href="http://neo4j.com/sandbox/">Sandbox</a></li> <li id="menu-item-51836" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51836"><a href="http://neo4j.com/graphgists/">GraphGists</a></li> </ul></div></div> </div> </div> </ul> </li> <div class="nav-secondary-mobile"> <hr/> <ul id="menu-top-nav-1" class="top-bar-menu right"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38286"><a href="http://neo4j.com/blog/">Blog</a></li> <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-38817"><a href="//support.neo4j.com/hc/">Support</a></li> <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-53859"><a href="http://neo4j.com/contact-us/">Contact Us</a></li> <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36921"><a href="http://neo4j.com/download/">Download Neo4j</a></li> </ul> </div> <li class="has-form"> <form role="search" method="get" id="searchform" class="searchform" action="http://neo4j.com/"> <label class="show-for-sr">Search Terms</label> <input type="text" name="s" id="s" placeholder="Search"/> <input type="image" id="searchsubmit" width="20px" src="http://neo4j.com/wp-content/themes/neo4jweb/assets/images/search-icon.svg" alt="Submit Search"/> </form> </li> </ul> </section> </nav> </div> </header> <div class="developer">
+<section class="main-stage">
+	<div class="row main-stage-show">
+		<div class="small-12 medium-8 large-5 columns text-center">
+			<h2 style="font-family: Menlo, Monaco, Consolas, 'Courier New', Terminal, monospace">(Neo4j)-[:LOVES]-(Developers)</h2>
+			<h2>World's leading graph database, with native graph storage and processing.</h2>
+			<h2>Property graph model and Cypher query language makes it easy to understand.</h2>
+			<h2><b>Fast. Natural. Fun.</b></h2>
+		</div>
+		<div class="small-12 medium-4 large-7 show-for-large-up columns text-right">
+
+<div id="developer-main-stage-data-viz">
+	<div class="node-group node-0">
+		<div class="node">33.5K</div>
+		<div class="data">
+			<div class="num">33.5K</div>
+			<a href="http://neo4j.meetup.com/">Meetup group members <i class="fa fa-long-arrow-right fa-2"></i></a>
+		</div>
+	</div>
+	<div class="node-group node-1">
+		<div class="node">38.5K</div>
+		<div class="data">
+			<div class="num">38.5K</div>
+			<a href="https://github.com/neo4j/neo4j">commits to the Neo4j core <i class="fa fa-long-arrow-right fa-2"></i></a>
+		</div>
+	</div>
+	<div class="node-group node-2">
+		<div class="node">29K</div>
+		<div class="data">
+			<div class="num">29K</div>
+			<a href="http://neo4j.com/graphacademy/">people have taken the neo4j training <i class="fa fa-long-arrow-right fa-2"></i></a>
+		</div>
+	</div>
+	<div class="node-group node-3">
+		<div class="node">2M</div>
+		<div class="data">
+			<div class="num">2M+</div>
+			<a href="http://neo4j.com/download/">Downloads <i class="fa fa-long-arrow-right fa-2"></i></div>
+	</div>
+	<div class="node-group node-4">
+		<div class="node">100K</div>
+		<div class="data">
+			<div class="num">100K</div>
+			<a href="http://twitter.com/neo4j">tweets per year <i class="fa fa-long-arrow-right fa-2"></i></a>
+		</div>
+	</div>
+</div>
+
+		</div>
+	</div>
+	<div class="row main-stage-buttons">
+		<div class="small-12 medium-4 columns text-center">
+			<a href="/download/" class="button expand btn-download">Download</a>
+		</div>
+		<div class="small-12 medium-4 columns text-center">
+			<a href="/sandbox/" class="button expand btn-sandbox">Sandbox</a>
+		</div>
+		<div class="small-12 medium-4 columns text-center">
+			<a href="/developer/get-started/" class="button expand btn-docs">Docs</a>
+		</div>
+	</div>
+</section>
+<style>
+ol.install-instructions  {
+  color: white;
+}
+
+ol.install-instructions code {
+  font-size: 5px;
+}
+
+ol.install-instructions a {
+  color: white;
+  text-decoration: underline
+}
+
+.cypher-query {
+  padding-top: 10px;
+  padding-bottom: 15px;
+  font-size: 120%;
+}
+</style>
+
+<script type="text/javascript">
+    var vis_options = {
+        groups: {
+          people_highlighted: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf007',
+                size: 50,
+                color: '#fd756e'
+              }
+          },
+          people: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf007',
+                size: 50,
+                color: '#68bbf4'
+              }
+          },
+          server: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf233',
+                size: 50,
+                color: '#68bbf4'
+              }
+          },
+          server_highlighted: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf233',
+                size: 50,
+                color: '#fd756e'
+              }
+          },
+          disk: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf1c0',
+                size: 50,
+                color: '#68bbf4'
+              }
+          },
+          disk_highlighted: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf1c0',
+                size: 50,
+                color: '#fd756e'
+              }
+          },
+          code: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf121',
+                size: 50,
+                color: '#68bbf4'
+              }
+          },
+          code_highlighted: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf121',
+                size: 50,
+                color: '#fd756e'
+              }
+          },
+          account: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf19c',
+                size: 50,
+                color: '#68bbf4'
+              }
+          },
+          account_highlighted: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf19c',
+                size: 50,
+                color: '#fd756e'
+              }
+          },
+          SSN: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf292',
+                size: 50,
+                color: '#68bbf4'
+              }
+          },
+          SSN_highlighted: {
+              shape: 'icon',
+              icon: {
+                face: 'FontAwesome',
+                code: '\uf292',
+                size: 50,
+                color: '#fd756e'
+              }
+          },
+        },
+        edges: {
+            arrows: {to: {scaleFactor: 0.5}},
+            font: {align: 'bottom', face: 'courier', strokeWidth: 2, color: '#666666'},
+            color: "#6dcc9c",
+            width: 3
+        },
+        nodes: {
+            shape: 'dot',
+            size: 20,
+            font: {
+                size: 16,
+                color: '#000000'
+            },
+            borderWidth: 2
+        },
+        interaction: {
+          zoomView: false,
+        }
+    };
+
+
+
+      function renderGraph(event) {
+        var el = $("#sample-" + event.data.usecase + " .console")[event.data.index];
+        $.getJSON("./viz/" + event.data.usecase + "." + event.data.index + ".viz.json", function(d) {
+            d.nodes.forEach(function (n) {
+              n.title = n.label;
+              if (n.label == 'Person-Highlighted') {
+                n.group = 'people_highlighted';
+                n.label = n.name;
+              } else if (n.label == 'Person') {
+                n.group = 'people';
+                n.label = n.name;
+              } else if (n.label == 'Server') {
+                n.group = 'server';
+                n.label = n.name;
+              } else if (n.label == 'Disk') {
+                n.group = 'disk';
+                n.label = n.name;
+              } else if (n.label == 'Disk-Highlighted') {
+                n.group = 'disk_highlighted';
+                n.label = n.name;
+              } else if (n.label == 'Code') {
+                n.group = 'code';
+                n.label = n.name;
+              } else if (n.label == 'Code-Highlighted') {
+                n.group = 'code_highlighted';
+                n.label = n.name;
+              } else if (n.label == 'Server-Highlighted') {
+                n.group = 'server_highlighted';
+                n.label = n.name;
+              } else if (n.label == 'Account') {
+                n.group = 'account';
+                n.label = n.name;
+              } else if (n.label == 'SSN') {
+                n.group = 'SSN';
+                n.label = n.name;
+              } else if (n.label == 'Account-Highlighted') {
+                n.group = 'account_highlighted';
+                n.label = n.name;
+              } else if (n.label == 'SSN-Highlighted') {
+                n.group = 'SSN_highlighted';
+                n.label = n.name;
+              }
+            });
+            d.links.forEach(function (l) {
+              if (l.label && l.label == 'KNOWS-HIGHLIGHTED') {
+                l.color = '#fd756e';
+                l.label = 'KNOWS';
+              }
+            });
+            var g = {
+              nodes: d.nodes,
+              edges: d.links
+            };
+            var network = new vis.Network(el, g, vis_options);
+        });
+
+      };
+
+
+	$(document).ready(function() {
+    // social
+    $('#social-friends').click({usecase: 'social', index: 0}, renderGraph);
+    $('#social-common').click({usecase: 'social', index: 1}, renderGraph);
+    $('#social-paths').click({usecase: 'social', index: 2}, renderGraph);
+
+    // network
+    $('#network-main').click({usecase: 'network', index: 0}, renderGraph);
+    $('#network-impact').click({usecase: 'network', index: 0}, renderGraph);
+    $('#network-dependency').click({usecase: 'network', index: 1}, renderGraph);
+    $('#network-statistics').click({usecase: 'network', index: 2}, renderGraph);
+
+    // fraud
+    $('#fraud-main').click({usecase: 'fraud', index: 0}, renderGraph);
+    $('#fraud-transitive').click({usecase: 'fraud', index: 0}, renderGraph);
+    $('#fraud-investigation').click({usecase: 'fraud', index: 1}, renderGraph);
+    $('#fraud-insights').click({usecase: 'fraud', index: 2}, renderGraph);
+
+
+
+		$(".contact-button").click(function(e) {
+			window.location = "http://info.neotechnology.com/ContactUs.html"
+		});
+
+
+
+		$.each(["social","network","fraud"], function(i, usecase) {
+              $("#sample-" + usecase + " .runnable-example").each(function(i, runnable) {
+          var frag = $(runnable).attr("frag");
+          $.get("./viz/" + usecase + ".frag" + frag + ".txt", function(d) {
+            CodeMirror.colorize($(".cypher-query", runnable).text(d));
+            //CodeMirror.colorize($("#foo"));
+            //CodeMirror.runMode(d, 'application/x-cypher-query', $(".cypher-query"));
+          });
+          $(".run-example", runnable).click(function(e) {
+          });
+        });
+  });
+
+  // trigger first tabs displayed
+  $('#social-friends').trigger("click");
+  $('#network-impact').trigger("click");
+  $('#fraud-transitive').trigger("click");
+
+});
+
+</script>
+
+<section class="test-drive show-for-large-up">
+	<div class="row">
+		<div class="small-12 columns">
+
+			<h2>Test-Drive Neo4j with Cypher</h2>
+
+			<dl class="tabs" data-tab role="tablist">
+				<dd class="tab-title active" role="presentation"><a href="#sample-social" role="tab" tabindex="0" aria-selected="true" aria-controls="sample-social">Social</a></dd>
+				<dd class="tab-title" role="presentation"><a href="#sample-network" role="tab" tabindex="0" aria-selected="false" aria-controls="sample-network" id="network-main">Network Management</a></dd>
+				<dd class="tab-title" role="presentation"><a href="#sample-fraud" role="tab" tabindex="0" aria-selected="false" aria-controls="sample-fraud" id="fraud-main">Fraud Detection</a></dd>
+			</dl>
+			<div class="tabs-content">
+				<section role="tabpanel" aria-hidden="false" class="content active" id="sample-social">
+					<dl class="tabs minimalist" data-tab role="tablist">
+						<dd class="tab-title active" role="presentation"><a href="#friends" role="tab" tabindex="0" aria-selected="true" aria-controls="friends" id="social-friends">Friends of Friends</a></dd>
+						<dd class="tab-title" role="presentation"><a href="#common" role="tab" tabindex="0" aria-selected="false" aria-controls="common" id="social-common">Common Friends</a></dd>
+						<dd class="tab-title" role="presentation"><a href="#paths" role="tab" tabindex="0" aria-selected="false" aria-controls="paths" id="social-paths">Connecting Paths</a></dd>
+					</dl>
+					<div class="tabs-content">
+						<section role="tabpanel" aria-hidden="false" aria-selected="true" class="content active gexample" id="friends">
+							<div class="demo runnable-example row" frag="0">
+								<div class="small-6 columns">
+									<h3>
+										Friends of Friends
+									</h3>
+									<p>Find all of Joe's second-degree friends</p>
+									<pre class="cypher-query cm-s-neo" data-lang="cypher">
+									</pre>
+									<p>Joe knows Sally, and Sally knows Anna.  Bob is excluded from the result because, in addition to being a 2nd-degree friend through Sally, he's also a first-degree friend.</p>
+								</div>
+								<div class="small-6 columns">
+									<div class="console"></div>
+								</div>
+							</div>
+						</section>
+						<section role="tabpanel" aria-hidden="true" class="content gexample" id="common">
+							<div class="demo runnable-example row" frag="1">
+								<div class="small-6 columns">
+									<h3>
+										Common Friends
+									</h3>
+									<p>Find friends in common between Joe and Sally</p>
+									<pre class="cypher-query cm-s-neo" data-lang="cypher">
+									</pre>
+									<p>Joe and Sally both know Bob.<br /><br /><br /></p>
+								</div>
+								<div class="small-6 columns">
+									<div class="console"></div>
+								</div>
+							</div>
+						</section>
+						<section role="tabpanel" aria-hidden="true" class="content gexample" id="paths">
+							<div class="demo runnable-example row" frag="2">
+								<div class="small-6 columns">
+									<h3>
+										Connecting Paths
+									</h3>
+									<p>Find all paths, up to 6 degrees, between Joe and Billy</p>
+									<pre class="cypher-query cm-s-neo" data-lang="cypher">
+									</pre>
+									<p>There's actually only one path between Joe and Billy in this dataset, so that path is returned.<br /><br /><br /></p>
+								</div>
+								<div class="small-6 columns">
+
+									<div class="console"></div>
+
+								</div>
+							</div>
+						</section>
+							<dl class="tabs dark" data-tab role="tablist">
+								<dd class="tab-title no-click" role="presentation">See Code In:</dd>
+								<dd class="tab-title" role="presentation"><a href="#java" role="tab" tabindex="0" aria-selected="false" aria-controls="java">Java</a></dd>
+								<dd class="tab-title" role="presentation"><a href="#python" role="tab" tabindex="0" aria-selected="false" aria-controls="python">Python</a></dd>
+                                <dd class="tab-title" role="presentation"><a href="#ruby" role="tab" tabindex="0" aria-selected="false" aria-controls="ruby">Ruby</a></dd>
+                                <dd class="tab-title" role="presentation"><a href="#php" role="tab" tabindex="0" aria-selected="true" aria-controls="php">PHP</a></dd>
+                                <dd class="tab-title" role="presentation"><a href="#cs" role="tab" tabindex="0" aria-selected="false" aria-controls="c#">C#</a></dd>
+								<dd class="tab-title" role="presentation"><a href="#node" role="tab" tabindex="0" aria-selected="false" aria-controls="node#">Javascript</a></dd>
+							</dl>
+							<div class="tabs-content dark">
+								<section role="tabpanel" aria-hidden="false" class="content" id="php">
+									<div class="row">
+										<div class="small-8 columns">
+											<div class="code-container">
+												<pre style="height: 500px;"><code class="language-php">
+<?php
+/**
+ * To install Neo4j-PHP-Client, we use Composer
+ *
+ * $ curl -sS https://getcomposer.org/installer | php
+ * $ php composer.phar require graphaware/neo4j-php-client
+ *
+ */
+
+require __DIR__.'/vendor/autoload.php';
+
+use GraphAware\Neo4j\Client\ClientBuilder;
+
+// change to your hostname, port, username, password
+$neo4j_url = "bolt://neo4j:password@localhost";
+
+// setup connection
+$client = ClientBuilder::create()
+    ->addConnection('default', $neo4j_url)
+    ->build();
+
+// setup data
+$insert_query = <<<EOQ
+UNWIND {pairs} as pair
+MERGE (p1:Person {name:pair[0]})
+MERGE (p2:Person {name:pair[1]})
+MERGE (p1)-[:KNOWS]-(p2);
+EOQ;
+
+// friend data to insert
+$data = [["Jim","Mike"],["Jim","Billy"],["Anna","Jim"],
+          ["Anna","Mike"],["Sally","Anna"],["Joe","Sally"],
+          ["Joe","Bob"],["Bob","Sally"]];
+
+// insert data
+$client->run($insert_query, ["pairs" => $data]);
+
+
+// friend of friend: query
+$foaf_query = <<<EOQ
+MATCH (person:Person)-[:KNOWS]-(friend)-[:KNOWS]-(foaf)
+WHERE person.name = {name}
+  AND NOT (person)-[:KNOWS]-(foaf)
+RETURN foaf.name AS name
+EOQ;
+
+// friend of friend: build and execute query
+$params = ['name' => 'Joe'];
+$result = $client->run($foaf_query, $params);
+
+foreach ($result->records() as $record) {
+  echo $record->get('name') . PHP_EOL;
+}
+
+
+// common friends: query
+$common_friends_query = <<<EOQ
+MATCH (user:Person)-[:KNOWS]-(friend)-[:KNOWS]-(foaf:Person)
+WHERE user.name = {user} AND foaf.name = {foaf}
+RETURN friend.name AS friend
+EOQ;
+
+// common friends: build and execute query
+$params = ['user' => 'Joe', 'foaf' => 'Sally'];
+$result = $client->run($common_friends_query, $params);
+
+foreach ($result->records() as $record) {
+  echo $record->get('friend') . PHP_EOL;
+}
+
+
+// connecting paths: query
+$connecting_paths_query = <<<EOQ
+MATCH path = shortestPath((p1:Person)-[:KNOWS*..6]-(p2:Person))
+WHERE p1.name = {name1} AND p2.name = {name2}
+RETURN [n IN nodes(path) | n.name] as names
+EOQ;
+
+// connecting paths: build and execute query
+$params = ['name1' => 'Joe', 'name2' => 'Billy'];
+$result = $client->run($connecting_paths_query, $params);
+
+foreach ($result->records() as $record) {
+  print_r($record->get('names'));
+}
+												</code>
+												</pre>
+											</div>
+										</div>
+										<div class="small-4 columns">
+											<h3 class="subheader">Downloading and Installing PHP</h3>
+											<p><ol class="install-instructions">
+                                                                                           <li><a href="https://getcomposer.org/download/">Install Composer</a> from within web directory: <code>$ curl -sS https://getcomposer.org/installer | php</code></li>
+                                                                                           <li><a href="https://github.com/graphaware/neo4j-php-client">Install Neo4j-PHP-Client</a> from within web directory: <code>$ php composer.phar require neoxygen/neoclient</code></li>
+                                                                                           <li>Copy and paste code at left into php file and run</li>
+                                                                                           </ol></p>
+										</div>
+									</div>
+								</section>
+								<section role="tabpanel" aria-hidden="true" class="content" id="java">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-java">
+// javac -cp neo4j-java-driver*.jar:. Network.java
+// java -cp neo4j-java-driver*.jar:. Network
+
+import org.neo4j.driver.v1.*;
+import static org.neo4j.driver.v1.Values.parameters;
+
+import java.util.List;
+import static java.util.Arrays.asList;
+import static java.util.Collections.singletonMap;
+
+public class Social {
+
+    public static void main(String...args) {
+
+        Config noSSL = Config.build().withEncryptionLevel(Config.EncryptionLevel.NONE).toConfig();
+        Driver driver = GraphDatabase.driver("bolt://localhost",AuthTokens.basic("neo4j","test"),noSSL); // <password>
+        try (Session session = driver.session()) {
+
+              List data =
+              asList(asList("Jim","Mike"),asList("Jim","Billy"),asList("Anna","Jim"),
+              asList("Anna","Mike"),asList("Sally","Anna"),asList("Joe","Sally"),
+              asList("Joe","Bob"),asList("Bob","Sally"));
+
+              String insertQuery = "UNWIND {pairs} as pair " +
+               "MERGE (p1:Person {name:pair[0]}) " +
+               "MERGE (p2:Person {name:pair[1]}) " +
+               "MERGE (p1)-[:KNOWS]-(p2);";
+
+               session.run(insertQuery,singletonMap("pairs",data)).consume();
+
+               StatementResult result;
+
+               String foafQuery =
+               " MATCH (person:Person)-[:KNOWS]-(friend)-[:KNOWS]-(foaf) "+
+               " WHERE person.name = {name} " +
+               "   AND NOT (person)-[:KNOWS]-(foaf) " +
+               " RETURN foaf.name AS name ";
+               result = session.run(foafQuery, parameters("name","Joe"));
+               while (result.hasNext()) System.out.println(result.next().get("name"));
+
+               String commonFriendsQuery =
+               "MATCH (user:Person)-[:KNOWS]-(friend)-[:KNOWS]-(foaf:Person) " +
+               " WHERE user.name = {from} AND foaf.name = {to} " +
+               " RETURN friend.name AS friend";
+               result = session.run(commonFriendsQuery, parameters("from","Joe","to","Sally"));
+               while (result.hasNext()) System.out.println(result.next().get("friend"));
+
+               String connectingPathsQuery =
+               "MATCH path = shortestPath((p1:Person)-[:KNOWS*..6]-(p2:Person)) " +
+               " WHERE p1.name = {from} AND p2.name = {to} " +
+               " RETURN [n IN nodes(path) | n.name] as names";
+               result = session.run(connectingPathsQuery, parameters("from","Joe","to","Billy"));
+               while (result.hasNext()) System.out.println(result.next().get("names"));
+
+        }
+    }
+}
+</code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Java</h3>
+                                            <p><ol class="install-instructions">
+                                                                                           <li><a href="http://search.maven.org/#artifactdetails|org.neo4j.driver|neo4j-java-driver|1.0.0|jar">Download Neo4j Driver</a> </li>
+                                                                                           <li>Copy and paste code at left into <code>Social.java</code></li>
+                                                                                           <li>Run <code>javac -cp neo4j-java-driver-1.0.0.jar Social.java</code></li>
+                                                                                           <li>Run <code>java -cp neo4j-java-driver-1.0.0.jar:. Social</code></li>
+                                                                                           </ol></p>
+                                        </div>
+                                    </div>
+								</section>
+								<section role="tabpanel" aria-hidden="true" class="content" id="python">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-python">
+# pip install neo4j-driver
+
+from neo4j.v1 import GraphDatabase, basic_auth
+
+driver = GraphDatabase.driver("bolt://localhost", auth=basic_auth("neo4j", "<password>"))
+session = driver.session()
+
+# Insert data
+insert_query = '''
+UNWIND {pairs} as pair
+MERGE (p1:Person {name:pair[0]})
+MERGE (p2:Person {name:pair[1]})
+MERGE (p1)-[:KNOWS]-(p2);
+'''
+
+data = [["Jim","Mike"],["Jim","Billy"],["Anna","Jim"],
+          ["Anna","Mike"],["Sally","Anna"],["Joe","Sally"],
+          ["Joe","Bob"],["Bob","Sally"]]
+
+session.run(insert_query, parameters={"pairs": data})
+
+# Friends of a friend
+
+foaf_query = '''
+MATCH (person:Person)-[:KNOWS]-(friend)-[:KNOWS]-(foaf)
+WHERE person.name = {name}
+  AND NOT (person)-[:KNOWS]-(foaf)
+RETURN foaf.name AS name
+'''
+
+results = session.run(foaf_query, parameters={"name": "Joe"})
+for record in results:
+    print(record["name"])
+
+
+# Common friends
+
+common_friends_query = """
+MATCH (user:Person)-[:KNOWS]-(friend)-[:KNOWS]-(foaf:Person)
+WHERE user.name = {user} AND foaf.name = {foaf}
+RETURN friend.name AS friend
+"""
+
+results = session.run(common_friends_query, parameters={"user": "Joe", "foaf": "Sally"})
+for record in results:
+    print(record["friend"])
+
+# Connecting paths
+
+connecting_paths_query = """
+MATCH path = shortestPath((p1:Person)-[:KNOWS*..6]-(p2:Person))
+WHERE p1.name = {name1} AND p2.name = {name2}
+RETURN path
+"""
+
+results = session.run(connecting_paths_query, parameters={"name1": "Joe", "name2": "Billy"})
+for record in results:
+    print (record["path"])
+
+
+session.close()
+                                                </code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Python</h3>
+                                            <p><ol class="install-instructions">
+                                                                                           <li><a href="https://github.com/neo4j/neo4j-python-driver">Install neo4j-python-driver</a> using pip: <code>$ pip install neo4j-driver</code></li>
+                                                                                           <li>Copy and paste code at left into py file and run</li>
+                                                                                           </ol></p>
+                                        </div>
+                                    </div>
+								</section>
+                                <section role="tabpanel" aria-hidden="true" class="content" id="ruby">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-ruby"><?php $page = file_get_contents(get_template_directory() . "/includes/social-page.rb.txt"); print htmlspecialchars($page); ?></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Ruby</h3>
+                                            <p><ol class="install-instructions">
+                                                <li><a href="http://neo4jrb.io/">Install Neo4j.rb</a> using gem: <code>$ gem install neo4j-core</code></li>
+                                                <li>Copy and paste code at left into rb file and run</li>
+                                            </ol></p>
+                                        </div>
+                                    </div>
+                                </section>
+								<section role="tabpanel" aria-hidden="true" class="content" id="cs">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-csharp"><?php $page = file_get_contents(get_template_directory() . "/includes/social-page.cs.txt"); print htmlspecialchars($page); ?></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing C#</h3>
+                                            <p><ol class="install-instructions">
+                                                                                           <li><a href="https://dist.nuget.org/index.html">Install NuGet</a> </li>
+                                                                                           <li>Run the NuGet Package Manager Console</li>
+                                                                                           <li>Install the <a href="http://www.nuget.org/packages/Neo4jClient">Neo4jClient package</a>: <code>PM&gt; Install-Package Neo4jClient</code></li>
+                                                                                           <li>Copy and paste code at left into your .NET project, build, and run</li>
+                                                                                           </ol></p>
+                                        </div>
+                                    </div>
+								</section>
+                                <section role="tabpanel" aria-hidden="true" class="content" id="node">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-javascript">
+// npm install neo4j-driver
+var neo4j = require('neo4j-driver').v1;
+
+var driver = neo4j.driver("bolt://localhost", neo4j.auth.basic("neo4j", "<password>"));
+var session = driver.session();
+var queryCount = 0;
+
+var insertQuery =
+    "UNWIND {pairs} as pair \
+     MERGE (p1:Person {name:pair[0]}) \
+     MERGE (p2:Person {name:pair[1]}) \
+     MERGE (p1)-[:KNOWS]-(p2)";
+
+var foafQuery =
+    "MATCH (person:Person)-[:KNOWS]-(friend)-[:KNOWS]-(foaf) \
+     WHERE person.name = {name} \
+      AND NOT (person)-[:KNOWS]-(foaf) \
+     RETURN foaf.name AS name";
+
+var commonFriendsQuery =
+    "MATCH (user:Person)-[:KNOWS]-(friend)-[:KNOWS]-(foaf:Person) \
+     WHERE user.name = {name1} AND foaf.name = {name2} \
+     RETURN friend.name AS friend";
+
+var connectingPathsQuery =
+    "MATCH path = shortestPath((p1:Person)-[:KNOWS*..6]-(p2:Person)) \
+     WHERE p1.name = {name1} AND p2.name = {name2} \
+     RETURN [n IN nodes(path) | n.name] as names";
+
+var data = [["Jim","Mike"],["Jim","Billy"],["Anna","Jim"],
+    ["Anna","Mike"],["Sally","Anna"],["Joe","Sally"],
+    ["Joe","Bob"],["Bob","Sally"]];
+
+
+function query(query, params, message, column) {
+    session
+        .run(query, params)
+        .then(function(result) {
+            console.log(message);
+            result.records.forEach(function(record) {
+                console.log(record.get(column));
+            });
+
+            queryCount += 1;
+            if (queryCount > 2) {
+                session.close();
+                process.exit();
+            }
+        })
+        .catch(function(error){
+            console.log(error);
+        });
+}
+
+session
+    .run(insertQuery, {pairs: data})
+    .then(function(result) {
+        query(foafQuery, {name: "Joe"}, "Friends of friends of Joe: ", "name");
+        query(commonFriendsQuery, {name1: "Joe", name2: "Sally"}, "Common friends", "friend");
+        query(connectingPathsQuery, {name1: "Joe", name2:"Billy"}, "Connecting paths: ", "names");
+    })
+    .catch(function(error) {
+        console.log(error);
+    });
+                                                </code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Javascript</h3>
+                                            <p><ol class="install-instructions">
+                                                <li><a href="https://github.com/neo4j/neo4j-javascript-driver">Install neo4j-driver</a> using npm: <code>$ npm install --save neo4j-driver</code></li>
+                                                <li>Copy and paste code at left into js file and run</li>
+                                            </ol></p>
+                                        </div>
+                                    </div>
+                                </section>
+							</div>
+					</div>
+				</section>
+				<section role="tabpanel" aria-hidden="true" class="content" id="sample-network">
+          <dl class="tabs minimalist" data-tab role="tablist">
+            <dd class="tab-title active" role="presentation"><a href="#impact" role="tab" tabindex="0" aria-selected="true" aria-controls="impact" id="network-impact">Impact Analysis</a></dd>
+            <dd class="tab-title" role="presentation"><a href="#dependency" role="tab" tabindex="0" aria-selected="false" aria-controls="dependency" id="network-dependency">Dependency Analysis</a></dd>
+            <dd class="tab-title" role="presentation"><a href="#statistics" role="tab" tabindex="0" aria-selected="false" aria-controls="statistics" id="network-statistics">Statistics</a></dd>
+          </dl>
+          <div class="tabs-content">
+            <section role="tabpanel" aria-hidden="false" aria-selected="true" class="content active gexample" id="impact">
+              <div class="demo runnable-example row" frag="0">
+                <div class="small-6 columns">
+                  <h3>
+                    Impact Analysis
+                  </h3>
+                  <p>Find all services that depend on Server 1. These would be impacted by an outage of that server.</p>
+		  <pre class="cypher-query cm-s-neo" data-lang="cypher">
+		  </pre>
+                  <p>Only Webserver VM depends on Server 1.  Because we're looking at variable length paths of DEPENDS_ON relationships, we're also able to determine that Public Website would be impacted by an outage of Server 1.
+                </div>
+                <div class="small-6 columns">
+                  <div class="console"></div>
+                </div>
+              </div>
+            </section>
+            <section role="tabpanel" aria-hidden="true" class="content gexample" id="dependency">
+              <div class="demo runnable-example row" frag="1">
+                <div class="small-6 columns">
+                  <h3>
+                    Dependency Analysis
+                  </h3>
+                  <p>Find all services which the Public Website depends on to be operational.</p>
+		  <pre class="cypher-query cm-s-neo" data-lang="cypher">
+		  </pre>
+                  <p>The Public Website depends on the Database VM and the Webserver VM, which each depend on other services.</p>
+                </div>
+                <div class="small-6 columns">
+                  <div class="console"></div>
+                </div>
+              </div>
+            </section>
+            <section role="tabpanel" aria-hidden="true" class="content gexample" id="statistics">
+              <div class="demo runnable-example row" frag="2">
+                <div class="small-6 columns">
+                  <h3>
+                    Statistics
+                  </h3>
+                  <p>Find the most depended-upon component</p>
+		  <pre class="cypher-query cm-s-neo" data-lang="cypher">
+		  </pre>
+                  <p>As is the case in many data centers, the SAN is the most depended upon component.  All six other services directly or indirectly depend on it.</p>
+                </div>
+                <div class="small-6 columns">
+                  <div class="console"></div>
+                </div>
+              </div>
+            </section>
+                          <dl class="tabs dark" data-tab role="tablist">
+                <dd class="tab-title no-click" role="presentation">See Code In:</dd>
+                <dd class="tab-title" role="presentation"><a href="#java" role="tab" tabindex="0" aria-selected="false" aria-controls="java">Java</a></dd>
+                <dd class="tab-title" role="presentation"><a href="#python" role="tab" tabindex="0" aria-selected="false" aria-controls="python">Python</a></dd>
+                                <dd class="tab-title" role="presentation"><a href="#ruby" role="tab" tabindex="0" aria-selected="false" aria-controls="ruby">Ruby</a></dd>
+                                <dd class="tab-title" role="presentation"><a href="#php" role="tab" tabindex="0" aria-selected="true" aria-controls="php">PHP</a></dd>
+                                <dd class="tab-title" role="presentation"><a href="#cs" role="tab" tabindex="0" aria-selected="false" aria-controls="c#">C#</a></dd>
+                <dd class="tab-title" role="presentation"><a href="#node" role="tab" tabindex="0" aria-selected="false" aria-controls="node#">Javascript</a></dd>
+              </dl>
+              <div class="tabs-content dark">
+                <section role="tabpanel" aria-hidden="false" class="content" id="php">
+                  <div class="row">
+                    <div class="small-8 columns">
+                      <div class="code-container">
+                        <pre style="height: 500px;"><code class="language-php"><?php $page = file_get_contents(get_template_directory() . "/includes/network-page.php.txt"); print htmlspecialchars($page); ?></code></pre>
+                      </div>
+                    </div>
+                    <div class="small-4 columns">
+                      <h3 class="subheader">Downloading and Installing PHP</h3>
+                      <p><ol class="install-instructions">
+                                                                                           <li><a href="https://getcomposer.org/download/">Install Composer</a> from within web directory: <code>$ curl -sS https://getcomposer.org/installer | php</code></li>
+                                                                                           <li><a href="https://github.com/graphaware/neo4j-php-client">Install Neo4j-PHP-Client</a> from within web directory: <code>$ php composer.phar require neoxygen/neoclient</code></li>
+                                                                                           <li>Copy and paste code at left into php file and run</li>
+                                                                                           </ol></p>
+                    </div>
+                  </div>
+                </section>
+                <section role="tabpanel" aria-hidden="true" class="content" id="java">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-java"><?php $page = file_get_contents(get_template_directory() . "/includes/network-page.java.txt"); print htmlspecialchars($page); ?></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Java</h3>
+                                            <p><ol class="install-instructions">
+                                                                                           <li><a href="https://github.com/neo4j-contrib/neo4j-jdbc">Download Neo4j JDBC</a> </li>
+                                                                                           <li>Copy and paste code at left into <code>Social.java</code></li>
+                                                                                           <li>Run <code>javac Social.java</code></li>
+                                                                                           <li>Run <code>java -cp /path/to/neo4j-jdbc-2.3-SNAPSHOT-jar-with-dependencies.jar:. Social</code></li>
+                                                                                           </ol></p>
+                                        </div>
+                                    </div>
+                </section>
+                <section role="tabpanel" aria-hidden="true" class="content" id="python">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-python">
+# npm install neo4j-driver
+
+from neo4j.v1 import GraphDatabase, basic_auth
+
+driver = GraphDatabase.driver("bolt://localhost", auth=basic_auth("neo4j", "<password>"))
+session = driver.session()
+
+# Insert data
+insert_query = '''
+UNWIND {pairs} AS pair
+MERGE (s1:Service {name: pair[0]})
+MERGE (s2:Service {name: pair[1]})
+MERGE (s1)-[:DEPENDS_ON]->(s2);
+'''
+
+data = [["CRM", "Database VM"], ["Database VM", "Server 2"],
+       ["Server 2", "SAN"], ["Server 1", "SAN"], ["Webserver VM", "Server 1"],
+       ["Public Website", "Webserver VM"], ["Public Website", "Webserver VM"]]
+
+
+session.run(insert_query, parameters={"pairs": data})
+
+# Impact Analysis
+
+impact_query = '''
+MATCH (n:Service)<-[:DEPENDS_ON*]-(dependent:Service)
+WHERE n.name = {service_name}
+RETURN collect(dependent.name) AS dependent_services
+'''
+
+results = session.run(impact_query, parameters={"service_name": "Server 1"})
+for record in results:
+    print(record)
+
+
+# Dependency Analysis
+
+dependency_query = """
+MATCH (n:Service)-[:DEPENDS_ON*]->(downstream:Service)
+WHERE n.name = {service_name}
+RETURN collect(downstream.name) AS downstream_services
+"""
+
+results = session.run(dependency_query, {"service_name": "Public Website"})
+for record in results:
+    print(record)
+
+# Statistics
+
+stats_query = """
+MATCH (n:Service)<-[:DEPENDS_ON*]-(dependent:Service)
+RETURN n.name AS service, count(DISTINCT dependent) AS dependents
+ORDER BY dependents DESC
+LIMIT 1
+"""
+
+results = session.run(stats_query)
+for record in results:
+    print(record)
+
+
+session.close()
+                                                </code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Python</h3>
+                                            <p><ol class="install-instructions">
+                                                                                           <li><a href="https://github.com/neo4j/neo4j-python-driver">Install neo4j-python-driver</a> using pip: <code>$ pip install neo4j-driver</code></li>
+                                                                                           <li>Copy and paste code at left into py file and run</li>
+                                                                                           </ol></p>
+                                        </div>
+                                    </div>
+                </section>
+                                <section role="tabpanel" aria-hidden="true" class="content" id="ruby">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-ruby"><?php $page = file_get_contents(get_template_directory() . "/includes/network-page.rb.txt"); print htmlspecialchars($page); ?></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Ruby</h3>
+                                            <p><ol class="install-instructions">
+                                                <li><a href="http://neo4jrb.io/">Install Neo4j.rb</a> using gem: <code>$ gem install neo4j-core</code></li>
+                                                <li>Copy and paste code at left into rb file and run</li>
+                                            </ol></p>
+                                        </div>
+                                    </div>
+                                </section>
+                <section role="tabpanel" aria-hidden="true" class="content" id="cs">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-csharp"><?php $page = file_get_contents(get_template_directory() . "/includes/network-page.cs.txt"); print htmlspecialchars($page); ?></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing C#</h3>
+                                            <p><ol class="install-instructions">
+                                                                                           <li><a href="https://dist.nuget.org/index.html">Install NuGet</a> </li>
+                                                                                           <li>Run the NuGet Package Manager Console</li>
+                                                                                           <li>Install the <a href="http://www.nuget.org/packages/Neo4jClient">Neo4jClient package</a>: <code>PM&gt; Install-Package Neo4jClient</code></li>
+                                                                                           <li>This sample uses the Cypher LOAD CSV syntax to load data from a CSV file.  Copy and paste CSV content in 2nd comment in source code at left into c:/temp/services.csv</li>
+                                                                                           <li>Copy and paste code at left into your .NET project, build, and run</li>
+                                                                                           </ol></p>
+                                        </div>
+                                    </div>
+                </section>
+                                <section role="tabpanel" aria-hidden="true" class="content" id="node">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-javascript">
+// npm install neo4j-driver
+var neo4j = require('neo4j-driver').v1;
+
+var driver = neo4j.driver("bolt://localhost", neo4j.auth.basic("neo4j", "<password>"));
+var session = driver.session();
+var queryCount = 0;
+
+var insertQuery =
+    "UNWIND {pairs} AS pair \
+     MERGE (s1:Service {name: pair[0]}) \
+     MERGE (s2:Service {name: pair[1]}) \
+     MERGE (s1)-[:DEPENDS_ON]->(s2);";
+
+var impactQuery =
+    "MATCH (n:Service)<-[:DEPENDS_ON*]-(dependent:Service) \
+     WHERE n.name = {service_name} \
+     RETURN collect(dependent.name) AS dependent_services";
+
+var dependencyQuery =
+    "MATCH (n:Service)-[:DEPENDS_ON*]->(downstream:Service) \
+     WHERE n.name = {service_name} \
+     RETURN collect(downstream.name) AS downstream_services";
+
+var statsQuery =
+    "MATCH (n:Service)<-[:DEPENDS_ON*]-(dependent:Service) \
+     RETURN n.name AS service, count(DISTINCT dependent) AS dependents \
+     ORDER BY dependents DESC \
+     LIMIT 1";
+
+var data =
+    [["CRM", "Database VM"], ["Database VM", "Server 2"],
+        ["Server 2", "SAN"], ["Server 1", "SAN"], ["Webserver VM", "Server 1"],
+        ["Public Website", "Webserver VM"], ["Public Website", "Webserver VM"]];
+
+function query(query, params, message, column) {
+    session
+        .run(query, params)
+        .then(function(result) {
+            console.log(message);
+            result.records.forEach(function(record) {
+                if (column === 'dependents') {
+                    console.log(record.get(column).toInt());
+                } else {
+                    console.log(record.get(column));
+                }
+            });
+
+            queryCount += 1;
+            if (queryCount > 2) {
+                session.close();
+                process.exit();
+            }
+
+        })
+        .catch(function(error){
+            console.log(error);
+        });
+}
+
+session
+    .run(insertQuery, {pairs: data})
+    .then(function(result) {
+        query(impactQuery, {service_name: "Server 1"}, "Dependent services: ", "dependent_services");
+        query(dependencyQuery, {service_name: "Public Website"}, "Downstream services: ", "downstream_services");
+        query(statsQuery, {}, "Dependents: ", "dependents");
+    })
+    .catch(function(error) {
+        console.log(error);
+    });
+                                                </code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Javascript</h3>
+                                            <p><ol class="install-instructions">
+                                                <li><a href="https://github.com/neo4j/neo4j-javascript-driver">Install neo4j-driver</a> using npm: <code>$ npm install --save neo4j-driver</code></li>
+                                                <li>Copy and paste code at left into js file and run</li>
+                                            </ol></p>
+                                        </div>
+                                    </div>
+                                </section>
+              </div>
+
+          </div>
+        </section>
+				<section role="tabpanel" aria-hidden="true" class="content" id="sample-fraud">
+          <dl class="tabs minimalist" data-tab role="tablist">
+            <dd class="tab-title active" role="presentation"><a href="#transitive" role="tab" tabindex="0" aria-selected="true" aria-controls="transitive" id="fraud-transitive">Transitive Closure</a></dd>
+            <dd class="tab-title" role="presentation"><a href="#investigation" role="tab" tabindex="0" aria-selected="false" aria-controls="investigation" id="fraud-investigation">Investigation Targeting</a></dd>
+            <dd class="tab-title" role="presentation"><a href="#insights" role="tab" tabindex="0" aria-selected="false" aria-controls="insights" id="fraud-insights">Fast Insights</a></dd>
+          </dl>
+          <div class="tabs-content">
+            <section role="tabpanel" aria-hidden="false" class="content active gexample" id="transitive">
+              <div class="demo runnable-example row" frag="0">
+                <div class="small-6 columns">
+                  <h3>
+                    Transitive Closure
+                  </h3>
+                  <p>Given suspicions about Hank, find related information to investigate.</p>
+		  <pre class="cypher-query cm-s-neo" data-lang="cypher">
+		  </pre>
+                  <p>Hank shares an account with Abby.  Abby shares a SSN with Sophie and Max.  Given that we suspect Hank may be involved in fraudulent activity, we can flag the Cayman account, Sophie, and Abby as possible fraudulent entities.</p>
+                </div>
+                <div class="small-6 columns">
+                  <div class="console"></div>
+                </div>
+              </div>
+            </section>
+            <section role="tabpanel" aria-hidden="true" class="content gexample" id="investigation">
+              <div class="demo runnable-example row" frag="1">
+                <div class="small-6 columns">
+                  <h3>
+                    Investigation Targeting
+                  </h3>
+                  <p>Fraud rings often share fraudulent identifying information. Any person with connections to more than two entities in the graph are suspicious. Find large cliques to investigate further.</p>
+		  <pre class="cypher-query cm-s-neo" data-lang="cypher">
+		  </pre>
+                  <p>Sophie, Max and Abby all share a SSN, which is suspicious. Hank is also suspicious because he is sharing an account with Abby.</p>
+                </div>
+                <div class="small-6 columns">
+                  <div class="console"></div>
+                </div>
+              </div>
+            </section>
+            <section role="tabpanel" aria-hidden="true" class="content gexample" id="insights">
+              <div class="demo runnable-example row" frag="2">
+                <div class="small-6 columns">
+                  <h3>
+                    Fast Insights
+                  </h3>
+                  <p>Given that we've identified SSN 993-63-2634 as suspcious, find all associated accounts.</p>
+		  <pre class="cypher-query cm-s-neo" data-lang="cypher">
+		  </pre>
+                  <p>We see that the Cayman account #863 is the only account where a Person using this SSN owns the account.<br /><br /><br /></p>
+                </div>
+                <div class="small-6 columns">
+                  <div class="console"></div>
+                </div>
+              </div>
+            </section>
+                          <dl class="tabs dark" data-tab role="tablist">
+                <dd class="tab-title no-click" role="presentation">See Code In:</dd>
+                <dd class="tab-title" role="presentation"><a href="#java" role="tab" tabindex="0" aria-selected="false" aria-controls="java">Java</a></dd>
+                <dd class="tab-title" role="presentation"><a href="#python" role="tab" tabindex="0" aria-selected="false" aria-controls="python">Python</a></dd>
+                                <dd class="tab-title" role="presentation"><a href="#ruby" role="tab" tabindex="0" aria-selected="false" aria-controls="ruby">Ruby</a></dd>
+                                <dd class="tab-title" role="presentation"><a href="#php" role="tab" tabindex="0" aria-selected="true" aria-controls="php">PHP</a></dd>
+                                <dd class="tab-title" role="presentation"><a href="#cs" role="tab" tabindex="0" aria-selected="false" aria-controls="c#">C#</a></dd>
+                <dd class="tab-title" role="presentation"><a href="#node" role="tab" tabindex="0" aria-selected="false" aria-controls="node#">Javascript</a></dd>
+              </dl>
+              <div class="tabs-content dark">
+                <section role="tabpanel" aria-hidden="false" class="content" id="php">
+                  <div class="row">
+                    <div class="small-8 columns">
+                      <div class="code-container">
+                        <pre style="height: 500px;"><code class="language-php"><?php $page = file_get_contents(get_template_directory() . "/includes/fraud-page.php.txt"); print htmlspecialchars($page); ?></code></pre>
+                      </div>
+                    </div>
+                    <div class="small-4 columns">
+                      <h3 class="subheader">Downloading and Installing PHP</h3>
+                      <p><ol class="install-instructions">
+                                                                                           <li><a href="https://getcomposer.org/download/">Install Composer</a> from within web directory: <code>$ curl -sS https://getcomposer.org/installer | php</code></li>
+                                                                                           <li><a href="https://github.com/graphaware/neo4j-php-client">Install Neo4j-PHP-Client</a> from within web directory: <code>$ php composer.phar require neoxygen/neoclient</code></li>
+                                                                                           <li>Copy and paste code at left into php file and run</li>
+                                                                                           </ol></p>
+                    </div>
+                  </div>
+                </section>
+                <section role="tabpanel" aria-hidden="true" class="content" id="java">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-java"><?php $page = file_get_contents(get_template_directory() . "/includes/fraud-page.java.txt"); print htmlspecialchars($page); ?></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Java</h3>
+                                            <p><ol class="install-instructions">
+                                                                                           <li><a href="https://github.com/neo4j-contrib/neo4j-jdbc">Download Neo4j JDBC</a> </li>
+                                                                                           <li>Copy and paste code at left into <code>Social.java</code></li>
+                                                                                           <li>Run <code>javac Social.java</code></li>
+                                                                                           <li>Run <code>java -cp /path/to/neo4j-jdbc-2.3-SNAPSHOT-jar-with-dependencies.jar:. Social</code></li>
+                                                                                           </ol></p>
+                                        </div>
+                                    </div>
+                </section>
+                <section role="tabpanel" aria-hidden="true" class="content" id="python">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-python">
+# pip install neo4j-driver
+
+from neo4j.v1 import GraphDatabase, basic_auth
+
+driver = GraphDatabase.driver("bolt://localhost", auth=basic_auth("neo4j", "<password>"))
+session = driver.session()
+
+# Insert data
+insert_query = '''
+CREATE (hank:Person {name:"Hank"}),
+(abby:Person {name:"Abby"}),
+(max:Person {name:"Max"}),
+(sophie:Person {name: "Sophie"}),
+(jane:Person {name: "Jane"}),
+(bill:Person {name: "Bill"}),
+(ssn993632634:SSN {number: 993632634}),
+(ssn123456789:SSN {number: 123456789}),
+(ssn523252364:SSN {number: 523252364}),
+(chase:Account {bank: "Chase", number: 1523}),
+(bofa:Account {bank: "Bank of America", number: 4634}),
+(cayman:Account {bank: "Cayman", number: 863}),
+(bill)-[:HAS_SSN]->(ssn523252364),
+(bill)-[:HAS_ACCOUNT]->(bofa),
+(jane)-[:HAS_SSN]->(ssn123456789),
+(jane)-[:HAS_ACCOUNT]->(chase),
+(hank)-[:HAS_ACCOUNT]->(cayman),
+(abby)-[:HAS_ACCOUNT]->(cayman),
+(abby)-[:HAS_SSN]->(ssn993632634),
+(sophie)-[:HAS_SSN]->(ssn993632634),
+(max)-[:HAS_SSN]->(ssn993632634)
+'''
+
+session.run(insert_query)
+
+# Transitive Closure
+
+transitive_query = '''
+MATCH (n:Person)-[*]-(o)
+WHERE n.name = {name}
+RETURN DISTINCT o AS other
+'''
+
+results = session.run(transitive_query, parameters={"name": "Hank"})
+for record in results:
+    print(record["other"])
+
+
+# Investigation Targeting
+
+targeting_query = """
+MATCH (n:Person)-[*]-(o)
+WITH n, count(DISTINCT o) AS size
+WHERE size > 2
+RETURN n
+"""
+
+results = session.run(targeting_query)
+for record in results:
+    print(record["n"])
+
+# Fast Insights
+
+insights_query = """
+MATCH (ssn:SSN)<-[:HAS_SSN]-(:Person)-[:HAS_ACCOUNT]->(acct:Account)
+WHERE ssn.number = {flagged_ssn}
+RETURN acct
+"""
+
+results = session.run(insights_query, parameters={"flagged_ssn": 993632634})
+for record in results:
+    print(record["acct"])
+
+
+session.close()
+                                                </code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Python</h3>
+                                            <p><ol class="install-instructions">
+                                                                                           <li><a href="https://github.com/neo4j/neo4j-python-driver">Install neo4j-python-driver</a> using pip: <code>$ pip install neo4j-driver</code></li>
+                                                                                           <li>Copy and paste code at left into py file and run</li>
+                                                                                           </ol></p>
+                                        </div>
+                                    </div>
+                </section>
+                                <section role="tabpanel" aria-hidden="true" class="content" id="ruby">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-ruby"><?php $page = file_get_contents(get_template_directory() . "/includes/fraud-page.rb.txt"); print htmlspecialchars($page); ?></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Ruby</h3>
+                                            <p><ol class="install-instructions">
+                                                <li><a href="http://neo4jrb.io/">Install Neo4j.rb</a> using gem: <code>$ gem install neo4j-core</code></li>
+                                                <li>Copy and paste code at left into rb file and run</li>
+                                            </ol></p>
+                                        </div>
+                                    </div>
+                                </section>
+                <section role="tabpanel" aria-hidden="true" class="content" id="cs">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-csharp"><?php $page = file_get_contents(get_template_directory() . "/includes/fraud-page.cs.txt"); print htmlspecialchars($page); ?></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing C#</h3>
+                                            <p><ol class="install-instructions">
+                                                                                           <li><a href="https://dist.nuget.org/index.html">Install NuGet</a> </li>
+                                                                                           <li>Run the NuGet Package Manager Console</li>
+                                                                                           <li>Install the <a href="http://www.nuget.org/packages/Neo4jClient">Neo4jClient package</a>: <code>PM&gt; Install-Package Neo4jClient</code></li>
+                                                                                           <li>Copy and paste code at left into your .NET project, build and run</li>
+                                                                                           </ol></p>
+                                        </div>
+                                    </div>
+                </section>
+                                <section role="tabpanel" aria-hidden="true" class="content" id="node">
+                                    <div class="row">
+                                        <div class="small-8 columns">
+                                            <div class="code-container">
+                                                <pre style="height: 500px;"><code class="language-javascript">
+// npm install neo4j-driver
+var neo4j = require('neo4j-driver').v1;
+
+var driver = neo4j.driver("bolt://localhost", neo4j.auth.basic("neo4j", "<password>"));
+var session = driver.session();
+var queryCount = 0;
+
+var insertQuery =
+    "CREATE (hank:Person {name:'Hank'}), \
+    (abby:Person {name:'Abby'}), \
+    (max:Person {name:'Max'}), \
+    (sophie:Person {name: 'Sophie'}), \
+    (jane:Person {name: 'Jane'}), \
+    (bill:Person {name: 'Bill'}), \
+    (ssn993632634:SSN {number: 993632634}), \
+    (ssn123456789:SSN {number: 123456789}), \
+    (ssn523252364:SSN {number: 523252364}), \
+    (chase:Account {bank: 'Chase', number: 1523}), \
+    (bofa:Account {bank: 'Bank of America', number: 4634}), \
+    (cayman:Account {bank: 'Cayman', number: 863}), \
+    (bill)-[:HAS_SSN]->(ssn523252364), \
+    (bill)-[:HAS_ACCOUNT]->(bofa), \
+    (jane)-[:HAS_SSN]->(ssn123456789), \
+    (jane)-[:HAS_ACCOUNT]->(chase), \
+    (hank)-[:HAS_ACCOUNT]->(cayman), \
+    (abby)-[:HAS_ACCOUNT]->(cayman), \
+    (abby)-[:HAS_SSN]->(ssn993632634), \
+    (sophie)-[:HAS_SSN]->(ssn993632634), \
+    (max)-[:HAS_SSN]->(ssn993632634)";
+
+var transitiveQuery =
+    "MATCH (n:Person)-[*]-(o) \
+    WHERE n.name = {name} \
+    RETURN DISTINCT o AS other";
+
+var targetingQuery =
+    "MATCH (n:Person)-[*]-(o) \
+    WITH n, count(DISTINCT o) AS size \
+    WHERE size > 2 \
+    RETURN n";
+
+var insightsQuery =
+    "MATCH (ssn:SSN)<-[:HAS_SSN]-(:Person)-[:HAS_ACCOUNT]->(acct:Account) \
+    WHERE ssn.number = {ssn} \
+    RETURN acct";
+
+function query(query, params, message, column) {
+    session
+        .run(query, params)
+        .then(function(result) {
+            console.log(message);
+            result.records.forEach(function(record) {
+                console.log(record.get(column));
+            });
+
+            queryCount += 1;
+            if (queryCount > 2) {
+                session.close();
+                process.exit();
+            }
+        })
+        .catch(function(error){
+            console.log(error);
+        });
+}
+
+session
+    .run(insertQuery)
+    .then(function(result) {
+        query(transitiveQuery, {name: "Hank"}, "Transitive closure: ", "other");
+        query(targetingQuery, {}, "Investigation targeting: ", "n");
+        query(insightsQuery, {ssn: 993632634}, "Associated accounts: ", "acct");
+    })
+    .catch(function(error) {
+        console.log(error);
+    });
+                                                </code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="small-4 columns">
+                                            <h3 class="subheader">Downloading and Installing Javascript</h3>
+                                            <p><ol class="install-instructions">
+                                                <li><a href="https://github.com/neo4j/neo4j-javascript-driver">Install neo4j-driver</a> using npm: <code>$ npm install --save neo4j-driver</code></li>
+                                                <li>Copy and paste code at left into js file and run</li>
+                                            </ol></p>
+                                        </div>
+                                    </div>
+                                </section>
+              </div>
+
+				</section>
+			</div>
+
+		</div>
+	</div>
+</section><!-- .test-drive -->
+<section class="why-neo4j"> <div class="row"> <div class="small-12 columns">
+	<h2>Why Neo4j</h2>
+
+<dl class="tabs" data-tab="">
+	<dd class="text-center">
+		<a href="#panel2-1" aria-selected="false">
+		<div class="dev-icon whiteboard"></div>
+		<strong>Whiteboard Friendly</strong>
+		<p class="show-for-medium-up">The real world is a graph of relationships &mdash; not tables of columns and rows.</p></a>
+	</dd>
+	<dd class="text-center">
+		<a href="#panel2-2" aria-selected="false" tabindex="0">
+		<div class="dev-icon community"></div>
+		<strong>Global Community</strong>
+		<p class="show-for-medium-up">Support for popular languages &amp; frameworks. Learn from books, meetups, and trainings.</p></a>
+	</dd>
+	<dd class="text-center">
+		<a href="#panel2-3" aria-selected="false" tabindex="0">
+		<div class="dev-icon performance"></div>
+		<strong>Native Graph Performance</strong>
+		<p class="show-for-medium-up">Optimized graph storage and processing with the expressive Cypher query language.</p></a>
+	</dd>
+</dl>
+<div class="tabs-content">
+	<div class="content" id="panel2-1" aria-hidden="true">
+		<ul class="medium-block-grid-3">
+			<li><div class="num-cirlce">1</div> <div style="overflow:hidden">The <a href="/developer/graph-database/#property-graph">property graph data model</a> consists of nodes, relationships, properties and labels.</div></li>
+			<li><div class="num-cirlce">2</div> <div style="overflow:hidden">You can draw, model, query and visualize your data consistently.</div></li>
+			<li><div class="num-cirlce">3</div> <div style="overflow:hidden">By using the intuitive property graph model, the data model you use to reason about your project is the same in which you implement your application.</div></li>
+		</ul>
+	</div>
+	<div class="content" id="panel2-2" aria-hidden="true">
+		<ul class="medium-block-grid-3">
+			<li><div class="num-cirlce">1</div> <div style="overflow:hidden"><a href="/slack">Join</a> our public <a href="http://neo4j-users.slack.com">Slack channel</a> for real time graph discussions and feedback, or tag your question with <a href="http://stackoverflow.com/tags/neo4j">neo4j on StackOverflow</a> for help from other graphistas.</div></li>
+			<li><div class="num-cirlce">2</div> <div style="overflow:hidden">Learn more about Neo4j in one of our <a href="/graphacademy/online-training/">online trainings</a>, in person <a href="/graphacademy/">full-day training sessions</a> or <a href="http://neo4j.meetup.com">meetups</a>.</div></li>
+			<li><div class="num-cirlce">3</div> <div style="overflow:hidden">Confirm your graphista status by completing the <a href="/graphacademy/neo4j-certification/">Neo4j Professional</a> Certification Program.</div></li>
+		</ul>
+	</div>
+	<div class="content" id="panel2-3" aria-hidden="true">
+		<ul class="medium-block-grid-3">
+			<li><div class="num-cirlce">1</div> <div style="overflow:hidden"><a href="/blog/the-graph-space-jim-webber-graphconnect/">Native graph storage</a> allows for constant time local graph traversals. Query performance is not impacted by the size of the graph.</div></li>
+			<li><div class="num-cirlce">2</div> <div style="overflow:hidden">Define graph patterns in the <a href="/developer/cypher-query-language/">Cypher query language</a> and efficiently traverse your graph at millions of relationships per second.</div></li>
+			<li><div class="num-cirlce">3</div> <div style="overflow:hidden">Move batch processes into real time with the improved performance of native graph traversals.</div></li>
+		</ul>
+	</div>
+</div>
+</div> </div> </section>
+<section class="why-neo4j-made"> <div class="row"> <div class="small-12 columns">
+<h2>What It's Made of</h2>
+
+
+<dl class="tabs tab4 made-of-row-1" data-tab="" data-equalizer>
+	<dd class="text-center" data-equalizer-watch>
+		<a href="#panel3-1" aria-selected="false">
+		<p>Flexible Schema</p>
+	</a></dd>
+	<dd class="text-center" data-equalizer-watch>
+		<a href="#panel3-2" aria-selected="false" tabindex="0">
+		<p>ACID</p>
+	</a></dd>
+	<dd class="text-center" data-equalizer-watch>
+		<a href="#panel3-3" aria-selected="false" tabindex="0">
+		<p>Clustering for HA and Performance</p>
+	</a></dd>
+	<dd class="text-center" data-equalizer-watch>
+		<a href="#panel3-4" aria-selected="false" tabindex="0">
+		<p>Powerful Cypher Query Language</p>
+	</a></dd>
+</dl>
+<div class="tabs-content made-of-row-1">
+  <div class="content" id="panel3-1" aria-hidden="true">
+	<ul class="medium-block-grid-3">
+		<li><div class="num-cirlce">1</div> <div style="overflow:hidden">In the <a href="/developer/graph-database/#property-graph">property graph model</a>, objects are represented as nodes, with relationships connecting the nodes.  Both nodes and relationships can have name/value properties.</div></li>
+		<li><div class="num-cirlce">2</div> <div style="overflow:hidden"><a href="/docs/stable/query-set.html">Add</a> and <a href="/docs/stable/query-remove.html">remove</a> properties on the fly as your data model evolves, with <a href="/docs/stable/query-constraints.html">optional schema constraints</a> for flexibility.</div></li>
+		<li><div class="num-cirlce">3</div> <div style="overflow:hidden">No need for schema migrations.</div></li>
+	</ul>
+  </div>
+  <div class="content" id="panel3-2" aria-hidden="true">
+	<ul class="medium-block-grid-3">
+		<li><div class="num-cirlce">1</div> <div style="overflow:hidden">Neo4j is a transactional database for storing your critical data.  </div></li>
+		<li><div class="num-cirlce">2</div> <div style="overflow:hidden">While many NoSQL databases <a href="/blog/acid-vs-base-consistency-models-explained/">throw ACID out the door</a>, data reliability is a key design consideration for Neo4j.  If you don't have durability, how can you call yourself a database?</div></li>
+		<li><div class="num-cirlce">3</div> <div style="overflow:hidden">With <a href="/editions/">Neo4j Enterprise</a>, you have a configurable consistency model to balance performance and durability.</div></li>
+	</ul>
+  </div>
+  <div class="content" id="panel3-3" aria-hidden="true">
+	<ul class="medium-block-grid-3">
+		<li><div class="num-cirlce">1</div> <div style="overflow:hidden">Neo4j Enterprise can <a href="/developer/guide-clustering-neo4j/">scale</a> reads across dozens of machines, for ultimate performance with peak loads.</div></li>
+		<li><div class="num-cirlce">2</div> <div style="overflow:hidden">Support for <a href="/docs/stable/ha-how.html">master-slave replication</a> with master re-election and failover to keep your pager quiet at night.</div></li>
+		<li><div class="num-cirlce">3</div> <div style="overflow:hidden">Monitor your whole cluster with <a href="/docs/stable/metrics-extension.html">operational metrics</a> and integration with 3rd-party monitoring tools via Neo4j Metrics.</div></li>
+	</ul>
+  </div>
+  <div class="content" id="panel3-4" aria-hidden="true">
+	<ul class="medium-block-grid-3">
+		<li><div class="num-cirlce">1</div> <div style="overflow:hidden">Traverse your graph with <a href="/developer/cypher-query-language/">Cypher</a>, a declarative query language which defines graph patterns using ASCII-art for Graphs.  MATCH (me:Person)-[:KNOWS]-&gt;(you:Friend)</div></li>
+		<li><div class="num-cirlce">2</div> <div style="overflow:hidden">Natural patterns for <a href="/docs/stable/introduction-pattern.html#_variable_length">multi-level querying</a> mean you can forget nested JOINs.  The <a href="http://opencypher.org">openCypher</a> project ensures that Cypher will be the language for graphs across the industry.</div></li>
+		<li><div class="num-cirlce">3</div> <div style="overflow:hidden">Easy to learn for developers <a href="/developer/graph-db-vs-rdbms/">familiar with other query languages like SQL</a>, and easy for everyone to read.</div></li>
+	</ul>
+  </div>
+</div>
+
+<dl class="tabs tab4 made-of-row-2" data-tab="" data-equalizer>
+	<dd class="text-center" data-equalizer-watch>
+		<a href="#panel4-1" aria-selected="false">
+		<p>Neo4j Browser</p>
+	</a></dd>
+	<dd class="text-center" data-equalizer-watch>
+		<a href="#panel4-2" aria-selected="false" tabindex="0">
+		<p>Drivers for Popular Languages and Frameworks</p>
+	</a></dd>
+	<dd class="text-center" data-equalizer-watch>
+		<a href="#panel4-3" aria-selected="false" tabindex="0">
+		<p>Data Import</p>
+	</a></dd>
+	<dd class="text-center" data-equalizer-watch>
+		<a href="#panel4-4" aria-selected="false" tabindex="0">
+		<p>Cloud-Ready</p>
+	</a></dd>
+</dl>
+<div class="tabs-content made-of-row-2">
+  <div class="content" id="panel4-1" aria-hidden="true">
+	<ul class="medium-block-grid-3">
+		<li><div class="num-cirlce">1</div> <div style="overflow:hidden">Query and visualize your graph with the included <a href="/developer/guide-neo4j-browser/">Neo4j Browser</a> web application.  Tutorials help you get going quickly.</div></li>
+		<li><div class="num-cirlce">2</div> <div style="overflow:hidden">Discover patterns in your graph which can then be encoded into Cypher queries in your code for real-time decision making in your application.</div></li>
+		<li><div class="num-cirlce">3</div> <div style="overflow:hidden">Use the built-in graphical output of <a href="/docs/stable/how-do-i-profile-a-query.html">PROFILE and EXPLAIN</a> to fine-tune your queries before deploying to production.</div></li>
+	</ul>
+  </div>
+  <div class="content" id="panel4-2" aria-hidden="true">
+	<ul class="medium-block-grid-3">
+		<li><div class="num-cirlce">1</div> <div style="overflow:hidden">Whether you use Java, C#, Python, Ruby, JavaScript, PHP, R or Go, the Neo4j community has <a href="/developer/language-guides/">built drivers</a> to make interacting with Neo4j's HTTP APIs easy.</div></li>
+		<li><div class="num-cirlce">2</div> <div style="overflow:hidden">Support for popular frameworks, like <a href="/developer/spring-data-neo4j/">Spring Data</a>, <a href="https://neo4django.readthedocs.org/en/latest/">Django ORM</a>, <a href="https://github.com/Vinelab/NeoEloquent">Laravel</a>, <a href="/developer/java/#neo4j-jdbc">JDBC</a> and more.</div></li>
+		<li><div class="num-cirlce">3</div> <div style="overflow:hidden">Integrations with other database technologies and analytical tools, like <a href="/developer/mongodb/">MongoDB</a>, <a href="/developer/cassandra/">Cassandra</a>, <a href="/developer/elastic-search/">ElasticSearch</a> and <a href="/developer/apache-spark/">Spark/GraphX</a> for the polyglot environment.</div></li>
+	</ul>
+  </div>
+  <div class="content" id="panel4-3" aria-hidden="true">
+	<ul class="medium-block-grid-3">
+		<li><div class="num-cirlce">1</div> <div style="overflow:hidden">Easy to get your data into Neo4j in the world's most popular data format - CSV.</div></li>
+		<li><div class="num-cirlce">2</div> <div style="overflow:hidden"><a href="/developer/guide-import-csv/#_load_csv_for_medium_sized_datasets">LOAD CSV</a> functionality enables initial and incremental transactional loading of your data using Cypher for medium-size datasets up to 10M nodes and relationships.</div></li>
+		<li><div class="num-cirlce">3</div> <div style="overflow:hidden">For ultimate performance, the included <a href="/developer/guide-import-csv/#_super_fast_batch_importer_for_huge_datasets">neo4j-import tool</a> enables transaction-less loading of up to 1M records per second. The Windows PowerShell module provides support for high-performance loading via the <a href="/docs/stable/powershell.html#powershell-basic-examples">Import-CSV</a> command.</div></li>
+	</ul>
+  </div>
+  <div class="content" id="panel4-4" aria-hidden="true">
+	<ul class="medium-block-grid-3">
+		<li><div class="num-cirlce">1</div> <div style="overflow:hidden">Although some customers choose to run Neo4j behind their corporate firewalls, many use Neo4j in <a href="/developer/guide-cloud-deployment/">cloud environments</a> like AWS, Azure and Google Cloud Platform.</div></li>
+		<li><div class="num-cirlce">2</div> <div style="overflow:hidden">Partners provide <a href="/developer/guide-cloud-deployment/#_neo4j_cloud_hosting_providers">fully-hosted offerings</a> of Neo4j in the Cloud.</div></li>
+		<li><div class="num-cirlce">3</div> <div style="overflow:hidden"><a href="/developer/docker/">Official Docker image</a> simplifies automation and deployment, making it easy to get up and running with a single instance or a full HA cluster.  Try it out using the <a href="/sandbox/">Neo4j Sandbox</a>, or <a href="http://network.graphdemos.com/">explore your Twitter data in Neo4j</a>.</div></li>
+	</ul>
+  </div>
+</div>
+</div> </div> </section>
+<section class="upcoming-events">
+	<div class="row">
+		<div class="small-12 columns">
+			<h2>Upcoming Events Near You</h2>
+			<ul class="events-list item-list small-block-grid-1 medium-block-grid-3"></ul>
+		</div>
+	</div>
+	<div class="row">
+		<div class="small-12 columns text-center">
+			<a class="button more" href="/events/#/events" style="display:none">More Events</a>
+			<a id="events-list-btn" class="toggle-arrow" href=""></a>
+		</div>
+	</div>
+</section>
+
+<script>
+  var GEO_IP_SERVICE_URL = "http://freegeoip-1183212446.us-east-1.elb.amazonaws.com:8080/json/";
+
+  var eventsAdded = 0;
+  var eventsSource = [];
+  var sixWeeksFromNow = Date.now() + 42 * 24 * 3600 * 1000;
+  var eventsAddedUrls = [];
+
+  function addEvent(event) {
+      var date = Date.parse(event.Start.split(" ")[0]);
+      if (date > sixWeeksFromNow || eventsAdded > 8) return;
+      if ($.inArray(event.Url, eventsAddedUrls) > -1) return;
+
+      var dateString = new Date(date).toLocaleDateString();
+      var type_slug = "logo";
+      switch (event.Type) {
+        case "Conference":
+          type_slug = "conference"; break;
+        case "Training":
+          type_slug = "training"; break;
+        case "Meetup":
+          type_slug = "meetup"; break;
+        case "Webinar":
+          type_slug = "webinar"; break;
+      }
+
+    var eventString = "<li>";
+    if (eventsAdded > 2) {
+      var eventString = "<li class='extra-item' style='display:none'>";
+    }
+    eventString += "<a href='"+event.Url+"'><div class='small-4 columns text-center'><img class='event-icon' src='/wp-content/themes/neo4jweb/assets/images/events/event-" + type_slug + ".png'> <span class='event-type'>" + event.Type + "</div><div class='small-8 columns'>" + dateString + "<br>";
+    eventString += event.SourceTitle
+    if (event.City) {
+      eventString += "<div class='city'>" + event.City + "</div>";
+    }
+    if (event.Description)  {
+      eventString += "<div class='description'>" + event.Description.substring(0, 50) + "...</div>";
+    }
+    eventString += "</div></a>";
+    eventString += "</li>";
+    $("ul.events-list").append(eventString);
+    eventsAdded += 1;
+    eventsAddedUrls.push(event.Url);
+  }
+
+  function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = deg2rad(lat2-lat1);  // deg2rad below
+    var dLon = deg2rad(lon2-lon1);
+    var a =
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon/2) * Math.sin(dLon/2)
+      ;
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    var d = R * c; // Distance in km
+    return d;
+  }
+
+  function deg2rad(deg) {
+    return deg * (Math.PI/180)
+  }
+
+  function ofType(list, type) {
+    return list.filter(
+      function (e) {
+        return e.Type == type
+    });
+  };
+
+  /* Show events regardless of location, in case geocoding fails */
+  function shownextevents() {
+    $.get("./events/events.json",function(data) {
+      //var events = JSON.parse(data);
+      var events = data;
+      eventsSource = events;
+
+      var webinar = ofType(events, "Webinar");
+      if (webinar.length > 0) {
+        addEvent(webinar[0]);
+      }
+      for (eventNum = 0; eventNum < eventsSource.length && eventsAdded < 9; eventNum++) {
+        addEvent(eventsSource[eventNum]);
+      }
+    });
+  };
+
+
+  function geoip(info) {
+    if ((! "latitude" in info) || (! "longitude" in info) ) {
+      return shownextevents();
+    }
+    var lat1 = info.latitude;
+    var lon1 = info.longitude;
+    $.get("./events/events.json",function(data) {
+      //var events = JSON.parse(data);
+      var events = data;
+
+      events.forEach(function(event) {
+      if (event.Geo) {
+        var coords=event.Geo.split(",");
+        event.Distance = Math.round(getDistanceFromLatLonInKm(lat1,lon1,parseFloat(coords[0]),parseFloat(coords[1])));
+      } else {
+        // event.Distance = Infinity;
+        event.Distance = 400;
+      }
+      })
+      var eventsLang = events.filter(function(event) {
+        if ((! "Language" in event) || event.Language == "") {
+          return true;
+        }
+        if (event.Language.toLowerCase() == "en") {
+          return true;
+        }
+        if (! "languages" in navigator) {
+          return true;
+        }
+        $.each(navigator.languages, function(index, value) {
+          if (event.Language.toLowerCase() == value.toLowerCase()) {
+            return true;
+          }
+          if (value.toLowerCase().indexOf(event.Language.toLowerCase()) == 0) {
+            return true;
+          }
+        })
+        return false;
+      });
+      var near = eventsLang.filter(function(event) {
+        return event.Distance == Infinity || event.Distance < 1500;
+      }).sort(function (e1,e2) { return e1.Distance < e2.Distance ? -1 : e1.Distance == e2.Distance ? 0 : 1; });
+
+      eventsSource = near;
+
+      var meetup = ofType(near,"Meetup");
+      var conf = ofType(near,"Conference");
+      var training = ofType(near, "Training");
+      var webinar = ofType(eventsLang, "Webinar");
+
+      if (conf.length > 0) {
+        addEvent(conf[0]);
+      }
+      if (training.length > 0) {
+        addEvent(training[0]);
+      }
+      if (webinar.length > 0) {
+        addEvent(webinar[0]);
+      }
+      if (meetup.length > 0) {
+        addEvent(meetup[0]);
+      }
+      if (eventsAdded < 9) {
+        if (webinar.length > 1) {
+          addEvent(webinar[1]);
+        }
+      }
+      for (eventNum = 0; eventNum < eventsSource.length && eventsAdded < 9; eventNum++) {
+        addEvent(eventsSource[eventNum]);
+      }
+    });
+  };
+
+  $.ajax({
+      url: GEO_IP_SERVICE_URL
+  })
+  .done(function(data) {
+    geoip(data);
+  })
+  .fail(function() {
+    shownextevents();
+    for (eventNum = 0; eventNum < eventsSource.length && eventsAdded < 9; eventNum++) {
+      addEvent(eventsSource[eventNum]);
+    }
+  });
+
+</script>
+<script>
+    function googleApiClientReady() {
+        gapi.client.setApiKey("AIzaSyB3jZLnBi-Cqggq8BCq9xTV8YMgu-x_kTc");
+        gapi.client.load('youtube', 'v3', function() {
+            var requestOptions = {
+                    playlistId: "PL9Hl4pk2FsvUZsgKDpAYTFULjkygUGIpi",
+                    part: 'snippet',
+                    maxResults: 6
+            };
+
+            var request = gapi.client.youtube.playlistItems.list(requestOptions);
+            request.execute(function(response) {
+
+                videoString = "";
+                $.each(response['items'], function(i,v) {
+                    var id = v['snippet']['resourceId']['videoId'],
+                        thumbnail = v['snippet']['thumbnails']['medium'],
+                        title = v['snippet']['title'],
+                        description = v['snippet']['description'],
+                        video_id = v['snippet']['resourceId']['videoId'];
+
+                    if (i > 2) {
+                        videoString += '<li class="text-center extra-item" style="display:none">';
+                    } else {
+                        videoString += '<li class="text-center">';
+                    }
+
+                    videoString += '<a href="https://www.youtube.com/watch?v="' + video_id + '" target="_blank">';
+                        videoString += '<div class="videobox">';
+                            videoString += '<img src="' + thumbnail['url'] + '">';
+                            videoString += '<span></span>';
+                        videoString += '</div>';
+                    videoString += '</a>';
+                    videoString += '<h5>' + title + '</h5>';
+                    videoString += '</li>';
+
+                });
+
+                $(".videos-list").append(videoString);
+
+            })
+        });
+
+    };
+
+</script>
+
+<section class="helpful-videos">
+	<h2>Videos</h2>
+
+	<div class="row">
+		<div class="small-12 columns">
+			<ul class="videos-list item-list small-block-grid-1 medium-block-grid-3">
+			</ul>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="small-12 columns text-center">
+			<a class="button more" href="https://www.youtube.com/c/neo4j" style="display:none">More Videos</a>
+			<a id="videos-list-btn" class="toggle-arrow" href=""></a>
+		</div>
+	</div>
+</section>
+
+<script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+<section class="social-universe">
+	<div class="row">
+		<div class="small-12 columns">
+			<h2>Neo4j in the Social Universe</h2>
+		</div>
+	</div>
+	<div class="row">
+	</div>
+	<div class="row">
+		<div class="small-12 columns">
+
+			<div id="developer-social-universe-data-viz">
+				<div class="node-group node-0">
+					<div class="node"><i class="fa fa-slack fa-2x"></i></div>
+					<div class="data">
+						<img class="img-circle" src="https://c1.staticflickr.com/1/733/22370500865_138ff410e3_q.jpg">
+						44.3k public <a href="http://neo4j.com/slack" target="_blank">Slack</a> channel messages
+					</div>
+				</div>
+				<div class="node-group node-1">
+					<div class="node"><i class="fa fa-github fa-2x"></i></div>
+					<div class="data">
+						<img class="img-circle" src="https://c2.staticflickr.com/6/5459/17596767212_7ffdedf517_q.jpg">
+						3.2k <a href="https://github.com/search?q=neo4j&type=Repositories&utf8=%E2%9C%93" target="_blank">GitHub</a> repos about Neo4j
+					</div>
+				</div>
+				<div class="node-group node-2">
+					<div class="node"><i class="fa fa-twitter fa-2x"></i></div>
+					<div class="data">
+					<!--?php $developer_tweets = neo4j_display_local_tweet(); ?-->
+					<!--?php if ( $developer_tweets['icon'] ): ?-->
+						<!--a href="<?php echo $developer_tweets['icon_link']; ?>"><img class="img-circle img-twitter" src="<?php echo $developer_tweets['icon']; ?>"></a-->
+					<!--?php else: ?-->
+						<img class="img-circle img-twitter" src="https://pbs.twimg.com/profile_images/580798347734171649/FbkjM42a_bigger.png">
+					<!--?php endif; ?-->
+					<!--?php if ( $developer_tweets['text'] ): ?-->
+						<!--a href="<?php echo $developer_tweets['url'];?>"><b>@<?php echo $developer_tweets['screen_name']; ?></b></a>:  -->
+						<!--?php echo $developer_tweets['text']; ?-->
+					<!--?php else: ?-->
+						The world's leading graph database. Join us for <a href="/GraphConnect" class="tweet-url twitter-atreply pretty-link" dir="ltr" data-mentioned-user-id="0" rel="nofollow">@<b>GraphConnect</b></a> Europe on 26 April 2016 at the <a href="/QEIICentre" class="tweet-url twitter-atreply pretty-link" dir="ltr" data-mentioned-user-id="0" rel="nofollow">@<b>QEIICentre</b></a> in London: <a href="https://t.co/L5Ntlt5qGo" rel="nofollow" dir="ltr" data-expanded-url="http://graphconnect.com/" class="twitter-timeline-link" target="_blank" title="http://graphconnect.com/"></a>
+					<!--?php endif; ?-->
+					</div>
+				</div>
+				<div class="node-group node-3">
+					<div class="node"><i class="fa fa-stack-overflow fa-2x"></i></div>
+					<div class="data">
+						<img class="img-circle" src="https://c2.staticflickr.com/4/3933/15414963209_5d3da96e30_q.jpg">
+						1,638 developers have answered <a href="http://stackoverflow.com/tags/neo4j/topusers" target="_blank">StackOverflow</a> questions about Neo4j
+					</div>
+				</div>
+				<div class="node-group node-4">
+					<div class="node"><i class="fa fa-google fa-1x"></i></div>
+					<div class="data">
+						<img class="img-circle" src="https://c2.staticflickr.com/4/3740/10943213764_38f9ea5ed8_q.jpg">
+						7430 topics on <a href="https://groups.google.com/forum/#!forum/neo4j" target="_blank">Google Groups</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>
+<section class="graph-gist">
+	<h2>GraphGist Projects</h2>
+	<div class="row medium-uncollapse large-collapse graph-gist-row" data-equalizer>
+		<div class="small-12 medium-4 columns text-center" data-equalizer-watch>
+			<a href="/graphgist/122cdc26-ee79-4d30-ab17-540eb5218a5f">
+			<div class="graph-gist-poster" style="background-image: url('https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/20160227182751/credit-card-fraud-zoom-600x415.png');"></div>
+			<h3>Credit Card Fraud Detection</h3>
+			<p>Stop credit card thieves with graph databases.</p>
+			</a>
+		</div>
+		<div class="small-12 medium-4 columns text-center" data-equalizer-watch>
+			<a href="/graphgist/a7c915c8-a3d6-43b9-8127-1836fecc6e2f">
+			<div class="graph-gist-poster" style="background-image: url('https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/20160227182933/egfr-erk-pathway.png');"></div>
+			<h3>Movie Recommendation Graph</h3>
+			<p>Recommend movies with Neo4j and a little machine learning - using the k-NN and Cosine Similarity.</p>
+			</a>
+		</div>
+		<div class="small-12 medium-4 columns text-center" data-equalizer-watch>
+			<a href="/graphgist/2d20eadf-34d3-4d95-b4b0-fe4af76e7d1d">
+			<div class="graph-gist-poster" style="background-image: url('https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/20160227183604/allocation1024-resized-crushed.png');"></div>
+			<h3>Credit Card Fraud Detection</h3>
+			<p>Mobile data management for tracking usage and performance problems.</p>
+			</a>
+		</div>
+	</div>
+        <div class="row">
+                <div class="small-6 columns text-center">
+                        <a class="button more" href="/graphgists/">More GraphGists</a>
+                </div>
+                <div class="small-6 columns text-center">
+                        <a class="button more" href="https://portal.graphgist.org/about">Create your own GraphGist</a>
+                </div>
+        </div>
+</section>
+</div> <script>
+jQuery(document).ready(function() {
+
+	function developer_animations() {
+
+		// Events and Videos Toggling
+		$('.toggle-arrow').click(function() {
+			var btn_id = $(this).attr('id')
+			var btn_id = btn_id.replace(/-btn/i, "" );
+			if ($(this).hasClass("on")) {
+				$(this).add('on').removeClass("on");
+			} else {
+				$(this).addClass("on");
+			}
+			$('ul.' + btn_id + ' .extra-item').slideToggle("slow");
+			$(this).prev('.button.more').fadeToggle(500);
+		});
+
+		// Toggle tabs-content between the 2 why-neo4j rows
+		$(".made-of-row-1 a").click(function() {
+			$(".made-of-row-2 .active").removeClass("active")
+		});
+		$(".made-of-row-2 a").click(function() {
+			$(".made-of-row-1 .active").removeClass("active")
+		});
+
+
+		// Node Cycling for Main Stage and Social Universe
+
+		var divs_ms = $( "#developer-main-stage-data-viz .node-group" );
+		var divs_su = $( "#developer-social-universe-data-viz .node-group" );
+		var delay = 2500;
+		var pendingTimeouts = {};
+		var isMediumDevScreen;
+		isMediumDevScreen = function() {
+			return matchMedia(Foundation.media_queries['medium']).matches && !matchMedia(Foundation.media_queries.large).matches;
+		};
+
+		// Start Social Universe Twitter as active
+		$("#developer-social-universe-data-viz .node-group.node-2").addClass('active');
+
+		function cycle(divs) {
+			//if (isSmallDevScreen()) return;
+			if (isMediumDevScreen()) return;
+			cycleTimeout = setTimeout(function() {
+				var index = Math.floor(Math.random() * divs.length);
+				divs.removeClass('active')
+					.eq(index).addClass('active');
+				cycle(divs);
+			}, delay);
+			pendingTimeouts[cycleTimeout]=1;
+//			console.log(cycleTimeout);
+		}
+		cycle(divs_ms);
+
+		function clearAllTimeouts() {
+		  for (var t in pendingTimeouts) if (pendingTimeouts.hasOwnProperty(t)) {
+			clearTimeout(t);
+			delete pendingTimeouts[t];
+		  }
+		}
+
+		// Main Stage Hover Effects
+		$( "#developer-main-stage-data-viz .node" ).hover(
+		  function() {
+			clearAllTimeouts();
+			divs_ms.removeClass('active');
+			$(this).parent().addClass('active');
+		  }, function() {
+			cycle(divs_ms);
+		  }
+		);
+
+		// Social Universe Hover Effects
+		$( "#developer-social-universe-data-viz .node" ).hover(
+		  function() {
+			clearAllTimeouts();
+			divs_su.removeClass('active');
+			$(this).parent().addClass('active');
+		  }, function() {
+			cycle(divs_ms);
+		  }
+		);
+	}
+	developer_animations();
+
+});
+</script> <footer id="footer"> <div class="footer-widgets"> <div class="row-1 row"> <div class="small-12 medium-8 columns footer-menus"> <div class="row-2 row"> <div class="footer-menu-widget small-6 medium-3 columns"><div class="menu-footer-menus-new-1-container"><ul id="menu-footer-menus-new-1" class="menu"><li id="menu-item-51837" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom menu-item-51837"><a href="/product/">PRODUCTS</a></li> <li id="menu-item-51838" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom menu-item-51838"><a href="/use-cases/">SOLUTIONS</a></li> <li id="menu-item-51839" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom menu-item-51839"><a href="/partners/">PARTNERS</a></li> </ul></div></div><div class="footer-menu-widget small-6 medium-3 columns"><div class="menu-footer-menus-new-2-container"><ul id="menu-footer-menus-new-2" class="menu"><li id="menu-item-51840" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom menu-item-51840"><a href="/customers/">CUSTOMERS</a></li> <li id="menu-item-51841" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom menu-item-51841"><a href="/graphacademy/">LEARN</a></li> <li id="menu-item-51842" class="extra-margin menu-item menu-item-type-custom menu-item-object-custom menu-item-51842"><a href="get-started/">DEVELOPERS</a></li> </ul></div></div><div class="footer-menu-widget small-6 medium-3 columns"><div class="menu-footer-menus-new-4-container"><ul id="menu-footer-menus-new-4" class="menu"><li id="menu-item-51942" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51942"><a href="http://neo4j.com/company/">COMPANY</a></li> <li id="menu-item-51846" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51846"><a href="/news/">News</a></li> <li id="menu-item-51847" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51847"><a href="/awards/">Awards</a></li> <li id="menu-item-51848" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51848"><a href="/jobs/">Jobs</a></li> <li id="menu-item-51849" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51849"><a href="/staff/">Staff</a></li> </ul></div></div> </div> </div> <div class="small-12 medium-4 columns"><div> <div class="textwidget"><div class="social-icons"><a href="//www.linkedin.com/company/neo4j" title="Neo4j on LinkedIn" target="_blank"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-linkedin fa-stack-1x fa-inverse"></i></span></a> <a href="//twitter.com/neo4j" title="Neo4j on Twitter" target="_blank"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-twitter fa-stack-1x fa-inverse"></i></span></a> <a href="http://youtube.com/neo4j" title="Neo4j on YouTube" target="_blank"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i></span></a> <a href="//www.facebook.com/neo4j.graph.database" title="Neo4j on Facebook" target="_blank"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-facebook fa-stack-1x fa-inverse"></i></span></a> <a href="http://neo4j.com/slack" title="Neo4j Users on Slack" target="_blank"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-slack fa-stack-1x fa-inverse"></i></span></a> </div></div> </div></div> </div> <div class="row"> <div><div class="small-12 medium-4 columns"> <div class="textwidget"><div class="copyright"> <div class="logo-footer"></div> <p>&copy; 2016 Neo Technology, Inc.<br/> <a href="/terms/">Terms</a> | <a href="/privacy-%20policy/">Privacy </a> | <a href="/sitemap/">Sitemap</a></p> <p>Neo4j<sup>&#174;</sup>, Cypher<sup>&#174;</sup>, and <br/>Neo Technology<sup>&#174;</sup> <br/>are registered trademarks<br/> of Neo Technology, Inc.</p> </div></div> </div><div class="small-12 medium-4 columns"><h2>GET NEO4J NEWS</h2> <div class="textwidget"><div class="footer-form"> <p>Keep up with the latest graph <br>database trends, tips &amp; events.</p> <script src="//app-sjl.marketo.com/js/forms2/js/forms2.js"></script> <form id="mktoForm_477"></form> <script>
+MktoForms2.loadForm("//app-sjl.marketo.com", "773-GON-065", 477, function(form){
+  form.onSuccess(function(values, followUpUrl){
+    document.getElementById("signup").style.display = "none";
+    document.getElementById('thks-footer').innerHTML="<p>Thank you! Email Node added.</p> ";
+    ga('send', 'event', 'subscribe', 'submitted', 'footer-subscribe');
+    form.getFormElem().hide();
+    return false;
+  });
+});
+</script> <input id="signup" class="footer-form-submit" type="submit" src="/wp-content/themes/neo4jweb/assets/images/submit-arrow.svg/assets/images/submit-arrow.svg" alt="Submit Email"/> <div id="thks-footer">&nbsp;</div> <style> #mktoForm_477 button {display:none;} #mktoForm_477{margin-left:-20px;} </style> <script>
+  var btn = document.getElementById("signup");
+  btn.onclick = function(){
+    MktoForms2.getForm(477).submit();
+  };
+</script> </div></div> </div><div class="small-12 medium-4 columns"> <div class="textwidget"><h5><a href="/contact-us">Contact Us &rarr;</a></h5> <p>1-855-636-4532 <a href="mailto:info@neotechnology.com">US <i class="fi-mail"></i></a><br/> +44 808 189 0493 <a href="mailto:uk@neotechnology.com">UK <i class="fi-mail"></i></a><br/> Please email: <a href="mailto:vertrieb@neotechnology.com">Germany <i class="fi-mail"></i></a><br/> +33 (0) 8 05 08 03 44 <a href="mailto:ventes@neotechnology.com">France <i class="fi-mail"></i></a><br/> </p></div> </div></div> </div> </div> <div class="contact-bar"> <div class="row"> <div class="columns"> <span class="contact-bar-phone">Contact Sales: 1.855.636.4532</span> <span class="contact-bar-email"><a href="/contact-us/">Contact Us</a></span> </div> </div> </div> </footer> <a class="exit-off-canvas"></a> </div> </div> <div id="cookie-law-info-bar"><span>This website uses 'cookies' to give you the best, most relevant experience. Using this website means you’re OK with this. You can change which cookies are set at any time - by clicking on <a href="http://neo4j.com/privacy-policy/cookies/" id="CONSTANT_OPEN_URL" target="_blank" class="cli-plugin-main-link">more info</a>. <a href="#" id="cookie_action_close_header" class="medium cli-plugin-button cli-plugin-main-button">Accept</a> </span></div> <script type="text/javascript">
+			//<![CDATA[
+			jQuery(document).ready(function() {
+				cli_show_cookiebar({
+					settings: '{"animate_speed_hide":"500","animate_speed_show":"500","background":"#fff","border":"#444","border_on":true,"button_1_button_colour":"#000","button_1_button_hover":"#000000","button_1_link_colour":"#fff","button_1_as_button":true,"button_2_button_colour":"#333","button_2_button_hover":"#292929","button_2_link_colour":"#1e73be","button_2_as_button":false,"font_family":"inherit","header_fix":false,"notify_animate_hide":true,"notify_animate_show":false,"notify_div_id":"#cookie-law-info-bar","notify_position_horizontal":"right","notify_position_vertical":"bottom","scroll_close":false,"scroll_close_reload":false,"showagain_tab":false,"showagain_background":"#fff","showagain_border":"#000","showagain_div_id":"#cookie-law-info-again","showagain_x_position":"100px","text":"#000","show_once_yn":false,"show_once":"20000"}'
+				});
+			});
+			//]]>
+		</script> <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.2/d3.min.js?ver=4.5'></script> <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/json3/3.3.0/json3.min.js?ver=4.5'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/neo_d3.js?ver=4.5'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/vendor/visualization.js?ver=4.5'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/vendor/prism.js?ver=4.5'></script> <script type='text/javascript' src='http://neo4j.com/wp-content/themes/neo4jweb/assets/js/vendor/vis.min.js?ver=4.5'></script> <script type='text/javascript' src='http://neo4j.com/wp-includes/js/wp-embed.min.js?ver=4.5'></script> <script>
+jQuery(document).foundation({
+ tab: {
+   callback : function (tab) {
+     $(window).trigger('resize');
+   }
+ }
+});
+</script> <script src="http://neo4j.com/wp-content/themes/neo4jweb/assets/js/foundation/foundation.equalizer.js"></script> <script src="http://neo4j.com/wp-content/themes/neo4jweb/assets/js/foundation/foundation.clearing.js"></script> <script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 960313738;
+var google_conversion_label = "HN1kCN7GnwcQivP0yQM";
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script> <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script> <noscript> <div style="display:inline;"> <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/960313738/?value=1.00&amp;currency_code=USD&amp;label=HN1kCN7GnwcQivP0yQM&amp;guid=ON&amp;script=0"/> </div> </noscript> <script type="text/javascript">
+setTimeout(function(){var a=document.createElement("script");
+var b=document.getElementsByTagName("script")[0];
+a.src=document.location.protocol+"//script.crazyegg.com/pages/scripts/0034/3153.js?"+Math.floor(new Date().getTime()/3600000);
+a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+</script> <script type="text/javascript">
+(function() {
+ var didInit = false;
+ function initMunchkin() {
+   if(didInit === false) {
+     didInit = true;
+     Munchkin.init('773-GON-065');
+   }
+ }
+ var s = document.createElement('script');
+ s.type = 'text/javascript';
+ s.async = true;
+ s.src = '//munchkin.marketo.net/munchkin.js';
+ s.onreadystatechange = function() {
+   if (this.readyState == 'complete' || this.readyState == 'loaded') {
+     initMunchkin();
+   }
+ };
+ s.onload = initMunchkin;
+ document.getElementsByTagName('head')[0].appendChild(s);
+})();
+</script> </body> </html>
+<!-- Dynamic page generated in 0.461 seconds. -->
+<!-- Page not cached by WP Super Cache. Check your settings page. Not caching requests by known users. (See Advanced Settings page) -->
+
+<!--
+<div class="row" style="padding-left: 0; padding-right: 0; padding-top: 1em;">
+   <div class="large-9 large-push-3 columns guide-section-content">
+   %= content %>
+   </div>
+   <div class="large-3 large-pull-9 columns" id="dev-menu-nav">
+       %= File.new("_templates/menu_partial.erb").read.gsub(/[\w-]+-activate/) { |m| active[m.gsub(/-activate/,"")].to_s } % >
+   </div>
+</div>
+-->
