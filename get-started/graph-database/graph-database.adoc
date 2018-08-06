@@ -20,6 +20,7 @@ You should have a basic understanding of what a database is.
 {level}
 
 toc::[]
+:icons: font
 
 == Overview
 
@@ -61,8 +62,8 @@ In most cases, relationships have quantitative properties, such as weights, cost
 Due to the efficient way relationships are stored, two nodes can share any number or type of relationships without sacrificing performance.
 Although they are stored in a specific direction, relationships can always be navigated efficiently in either direction.
 
-.Building blocks of the property graph model
-image:{img}property_graph_elements.png[]
+.Building blocks of the property graph model (click to zoom)
+image:{img}property_graph_elements_larger.png[title="Click to zoom", link="{img}property_graph_elements_larger.png", window="_blank"]
 
 
 == What is Neo4j?
@@ -70,6 +71,8 @@ image:{img}property_graph_elements.png[]
 Neo4j is an open-source, NoSQL, native graph database that provides an ACID-compliant transactional backend for your applications.
 Initial development began in 2003, but it has been publicly available since 2007.
 The source code, written in Java and Scala, is available for free on https://github.com/neo4j/neo4j[GitHub^] or as a user-friendly https://neo4j.com/download/[desktop application download^].
+Neo4j has both a Community Edition and Enterprise Edition of the database.
+The Enterprise Edition includes all that Community Edition has to offer, plus extra enterprise requirements such as backups, clustering, and failover abilities.
 
 Neo4j is referred to as a native graph database because it efficiently implements the property graph model down to the storage level.
 This means that the data is stored exactly as you whiteboard it, and the database uses pointers to navigate and traverse the graph.
