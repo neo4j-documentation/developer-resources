@@ -17,9 +17,9 @@ You will understand how the data model is transformed behind-the-scenes and how 
 
 .Prerequisites
 [abstract]
-You should be familiar with Neo4j's link:/developer/get-started/graph-database#property-graph[property-graph data model^]and relational databases.
-It is also helpful to have read the link:/developer/get-started/graph-db-vs-rdbms/[Concepts: Relational to Neo4j guide^].
-We will focus on how to use this tool through the Neo4j Desktop application, so you should also know how to use the basic functionality of link:/developer/graph-platform/neo4j-desktop/[Neo4j Desktop^].
+You should be familiar with Neo4j's link:/developer/get-started/graph-database#property-graph[property-graph data model] and relational databases.
+It is also helpful to have read the link:/developer/get-started/graph-db-vs-rdbms/[Concepts: Relational to Neo4j guide].
+We will focus on how to use this tool through the Neo4j Desktop application, so you should also know how to use the basic functionality of link:/developer/graph-platform/neo4j-desktop/[Neo4j Desktop].
 
 [role=expertise]
 {level}
@@ -29,7 +29,7 @@ toc::[]
 == Installing and Setting Up the ETL Tool
 
 If you haven't already, http://neo4j.org/download[download^] Neo4j and use the provided instructions (shown when downloading) to get a project and database ready to run. 
-Then, you will need to [contact us^] for an activation key for the Neo4j ETL tool.
+Then, you will need to mailto:devrel@neo4j.com[contact us^] for an activation key for the Neo4j ETL tool.
 Once you receive the key, go to your Neo4j Desktop under the `User Profile` icon along the left.
 Click on the `+ Add Activation Key` link and copy/paste the ETL tool activation key into the white input box and click the `Add` button.
 
@@ -148,7 +148,8 @@ You can edit this mapping to clarify some of the weakly-named relationships.
 If you want to change anything from the relational model, such as property names and data types, you can change them here before the data is put into the graph.
 The image below shows an example of some changes.
 
-image::{img}etl10_update_model.png[]
+.Updated Graph Data Model (click to zoom)
+image:{img}etl10_update_model.png[title="Click to zoom", link="{img}etl10_update_model.png"]
 
 There are two ways you can also make edits behind-the-scenes.
 One is at this step, where the tool creates a mappings.json file under the database import directory.
@@ -179,7 +180,8 @@ After you choose your import method from the dropdown box, you can click the `Im
 The lower part of the screen shows the logs of what the tool is actually executing for you, and the status returned.
 If it is successful, you will see a screen similar to the one below (this example used the standard Neo4j Import method).
 
-image::{img}etl12_import_success.png[]
+.Importing (click to zoom)
+image:{img}etl12_import_success.png[title="Click to zoom", link="{img}etl12_import_success.png"]
 
 Now, you can query the Neo4j database or use Neo4j Browser to verify the data loaded to properly.
 Your relational data has now been transformed to a graph, and you can start analyzing your data!

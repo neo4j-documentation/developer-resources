@@ -1,0 +1,184 @@
+= Neo4j APOC Library
+:slug: apoc
+:level: Beginner
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 1
+:section: Neo4j Graph Platform
+:section-link: graph-platform
+:experimental:
+:neo4j-version: 3.4.0
+
+.Goals
+[abstract]
+Through this guide, you will learn about one of Neo4j's extension libraries - APOC.
+You will understand why the library was created and how to use it to extend the functionality of the database and Cypher for use in applications, querying, loading/exporting data, and nearly any other functionality you could imagine.
+
+.Prerequisites
+[abstract]
+You should be familiar with the Neo4j graph database and what Cypher is.
+This tool is used mostly through the Neo4j Desktop application and through the Neo4j Browser, so you should also know how to use the basic functionality of link:/developer/graph-platform/neo4j-desktop/[Neo4j Desktop] and link:/developer/neo4j-browser/[Neo4j Browser].
+
+[role=expertise]
+{level}
+
+toc::[]
+
+== What is APOC?
+
+APOC stands for **A**wesome **P**rocedures **o**n **C**ypher.
+Before APOC's release, developers needed to write their own procedures and functions for common functionality that Cypher or the Neo4j database had not yet implemented for support.
+Each developer might write his own version of these functions, causing a lot of duplication.
+
+So, one of our Neo4j developers created the APOC library as a standard utility library for common procedures and functions.
+This allowed developers across platforms and industries to use a standard library for common procedures and only write their own functionality for business logic and use-case-specific needs.
+
+The APOC library is believed to be the largest and most-widely used extension library for Neo4j.
+It includes over 450 standard procedures, providing functionality for utilities, conversions, graph updates, and more.
+They are well-supported and are very easy to run as separate functions or to include in Cypher queries.
+Before you begin to write adhoc functions for your application, be sure check APOC first to see if it exists there!
+
+
+== Installing the APOC Library
+
+If you haven't already, http://neo4j.org/download/[download] Neo4j and use the provided instructions (shown when downloading) to get a project and database ready to run. 
+Once you have a project and database to work within, there are two ways you can install APOC.
+
+*1)* At the project level - install the APOC plugin for all databases existing in the chosen project.
+
+*2)* At the database level - install the APOC plugin for a single chosen database.
+
+The images below walk you through both methods.
+For a video demonstration, see our APOC video series episode for https://youtu.be/b1Yr2nHNS4M[downloading and installing APOC^] on the Neo4j YouTube channel.
+
+.At the project level:
+image:{img}apoc_install_from_proj.png[]
+
+.At the database level:
+image:{img}apoc_install_from_db1.png[]
+
+image:{img}apoc_install_from_db2.png[]
+
+
+== Intro to Using the APOC Library
+
+Now that we have the library installed, there are a variety of ways we can interact with the various procedures and functions in the library.
+You can use them for parts of Cypher queries, or you can call them as standalone procedures from applications, scripts, command line, etc.
+We will cover more information about this in the sections below.
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/b1Yr2nHNS4M" frameborder="0" allowfullscreen></iframe>
+++++
+
+****
+[NOTE]
+If you watched the video above, don't feel intimidated by the Cypher in some of the examples.
+Those topics will be covered in the upcoming guide for the https://neo4j.com/developer/cypher/[Cypher Query Language].
+****
+
+
+== APOC Helpful Tips
+
+With so much to offer in the APOC library, it is easy to feel overwhelmed and unsure how to approach it.
+There are a variety of docs and blog posts that show how to use some of the procedures, which are linked at the bottom of this guide.
+To get started, though, let us take a look at some helpful ways to begin working with APOC.
+
+=== Command Syntax
+
+As mentioned above, there are two ways to use an APOC procedure - within a Cypher statement or as a regular function call.
+With either method, the same syntax is used, as noted below.
+
+[source,cypher]
+----
+CALL <package>.<subpackage>.<procedure>(<argument1>,<argument2>,...);
+----
+
+The `CALL` command is used to initiate the procedure call, followed by the name of the package to denote which package is being called (in this case, the APOC library).
+Like many programming language packages, we note subpackages to narrow the scope of what is being called.
+A real-life example of this syntax for calling an APOC procedure is explained below.
+
+[source,cypher]
+----
+CALL apoc.help('keyword')
+----
+
+=== CALL apoc.help('keyword')
+
+This is one of the best ways to start looking for procedures in APOC that will fit your need.
+Using the syntax from above, we are able to list the possible APOC procedures and basically search the library.
+In place of `keyword` in the parentheses, however, we can search for a type or category.
+
+For instance, take a look at the below example and screenshot.
+If we needed to find all of the procedures that could modify, convert, or deal with text in some way, we could run that APOC command and return the results from the screenshot.
+
+[source,cypher]
+----
+CALL apoc.help('text')
+----
+
+.Results for APOC procedures dealing with text
+image:{img}apoc_help_text.png[]
+
+This command also gives a description and sample implementation with parameters and their data types.
+
+****
+[TIP]
+For a comprehensive list of all the procedures, you can execute `CALL apoc.help('apoc')`.
+****
+
+
+== Common Examples and Usage
+
+There are endless opportunities for using provided procedures in APOC.
+While it is not possible to cover them fully here, we would like to highlight a few of the most-used ones and give you a feel for using them in real-life scenarios.
+
+* *apoc.date.format(dateForConversion, [timeUnit], [format]) —* convert an epoch time-value to a desired format.
+Can be useful for outputting to reports, showing on a web screen, including it in a URL as a parameter, and hundreds of other uses.
+There are also other procedures for various date/time conversions from and to other data types, as well as expiration dates and retrievals for current date.
+
+****
+[NOTE]
+Neo4j 3.4 released some date/time functionality as part of the core product.
+If you are using 3.4, you may not need APOC for common date/time work.
+For any users on previous versions, APOC is the best way to incorporate this functionality.
+More information about using the date/time functionality can be found in the resources at the bottom of this guide.
+****
+
+* *apoc.load.json(url) -* load data from a URL or a JSON-formatted file and use Cypher statements to create or update data in Neo4j database.
+Excellent for calling an API and dumping retrieved data into Neo4j.
+Other similar procedures exist for `apoc.load.jdbc` for a direct JDBC to a database, `apoc.load.xml` for xml data, and `apoc.load.csv` for CSV flat files.
+No matter what your data import needs might be, APOC is likely to have something to address them.
+
+////
+****
+[NOTE]
+For more information on using APOC for data import, check out our https://neo4j.com/developer/data-import/[Data Import section].
+****
+////
+* *apoc.periodic.iterate(query1, query2, {param1: value1}) —* used as a sort of batch loader.
+Can pull a list of results in the first query, then execute another query on each of those query1 results to update each one or retrieve other data for it.
+Can set parameters for batch size, variables, retry number, etc.
+There are a number of variations on this procedure for running background processes, managing threads, and committing/submitting/canceling processes.
+
+
+== Getting Help and Asking Questions about APOC
+
+If you have consulted the documentation, blogs, and other resources and still cannot solve how use APOC in a particular query or function, you can reach out to a variety of Neo4j and community experts.
+The different options and descriptions of each type are listed below.
+
+* https://neo4j.com/developer/slack/[Neo4j User Slack Channel^] - join the `\#neo4j-apoc` Slack channel to ask questions and have community and Neo4j experts from around the world answer at all hours in a chat-like format.
+* mailto:devrel@neo4j.com[Neo4j APOC Team Email^] - send an email to ask questions and receive answers from someone at Neo4j.
+Response time varies based on availability of team members.
+//* Neo4j Discourse forum - post questions and answer other users' posts in a message-based forum.
+* https://github.com/neo4j-contrib/neo4j-apoc-procedures[APOC GitHub project^] - post GitHub issues for items that are not working as documented or pull requests for additional features or updates.
+Issues will be prioritized and included in future releases of the APOC library.
+
+
+== Resources
+* https://neo4j-contrib.github.io/neo4j-apoc-procedures/[APOC Documentation^]
+* https://medium.com/neo4j/explore-new-worlds-adding-plugins-to-neo4j-26e6a8e5d37e[Installing Plugins: Blog post^]
+* https://www.youtube.com/watch?v=V1DTBjetIfk&list=PL9Hl4pk2FsvXEww23lDX_owoKoqqBQpdq[YouTube: APOC Video Series^]
+* https://www.adamcowley.co.uk/neo4j/temporal-native-dates/[Date/Time Functionality: Adam's blog post^]
+* https://neo4j.com/docs/developer-manual/3.4/cypher/syntax/temporal/[Date/Time Data Types: Neo4j documentation^]
+* https://neo4j.com/docs/developer-manual/3.4/cypher/functions/temporal/[Date/Time Functions: Neo4j documentation^]
