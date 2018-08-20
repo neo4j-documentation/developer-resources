@@ -53,12 +53,12 @@ The images below walk you through both methods.
 For a video demonstration, see our APOC video series episode for https://youtu.be/b1Yr2nHNS4M[downloading and installing APOC^] on the Neo4j YouTube channel.
 
 .At the project level:
-image:{img}apoc_install_from_proj.png[]
+image:{img}apoc_install_from_proj.png[link="{img}apoc_install_from_proj.png",role="popup-link"]
 
 .At the database level:
-image:{img}apoc_install_from_db1.png[]
+image:{img}apoc_install_from_db1.png[link="{img}apoc_install_from_db1.png",role="popup-link"]
 
-image:{img}apoc_install_from_db2.png[]
+image:{img}apoc_install_from_db2.png[link="{img}apoc_install_from_db2.png",role="popup-link"]
 
 
 == Intro to Using the APOC Library
@@ -118,7 +118,7 @@ CALL apoc.help('text')
 ----
 
 .Results for APOC procedures dealing with text
-image:{img}apoc_help_text.png[]
+image:{img}apoc_help_text.png[link="{img}apoc_help_text.png",role="popup-link"]
 
 This command also gives a description and sample implementation with parameters and their data types.
 
@@ -150,12 +150,11 @@ Excellent for calling an API and dumping retrieved data into Neo4j.
 Other similar procedures exist for `apoc.load.jdbc` for a direct JDBC to a database, `apoc.load.xml` for xml data, and `apoc.load.csv` for CSV flat files.
 No matter what your data import needs might be, APOC is likely to have something to address them.
 
-////
 ****
 [NOTE]
 For more information on using APOC for data import, check out our https://neo4j.com/developer/data-import/[Data Import section].
 ****
-////
+
 * *apoc.periodic.iterate(query1, query2, {param1: value1}) —* used as a sort of batch loader.
 Can pull a list of results in the first query, then execute another query on each of those query1 results to update each one or retrieve other data for it.
 Can set parameters for batch size, variables, retry number, etc.
@@ -167,7 +166,7 @@ There are a number of variations on this procedure for running background proces
 If you have consulted the documentation, blogs, and other resources and still cannot solve how use APOC in a particular query or function, you can reach out to a variety of Neo4j and community experts.
 The different options and descriptions of each type are listed below.
 
-* https://neo4j.com/developer/slack/[Neo4j User Slack Channel^] - join the `\#neo4j-apoc` Slack channel to ask questions and have community and Neo4j experts from around the world answer at all hours in a chat-like format.
+* https://neo4j.com/developer/slack/[Neo4j User Slack Channel^] - join the `#neo4j-apoc` Slack channel to ask questions and have community and Neo4j experts from around the world answer at all hours in a chat-like format.
 * mailto:devrel@neo4j.com[Neo4j APOC Team Email^] - send an email to ask questions and receive answers from someone at Neo4j.
 Response time varies based on availability of team members.
 //* Neo4j Discourse forum - post questions and answer other users' posts in a message-based forum.

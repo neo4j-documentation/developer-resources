@@ -43,16 +43,16 @@ Note that you may have another popup to agree to terms before it installs.
 The images below walk through each step.
 
 .Step 1
-image:{img}etl1_tool_add_license_key.png[]
+image:{img}etl1_tool_add_license_key.jpg[link="{img}etl1_tool_add_license_key.jpg",role="popup-link"]
 
 .Step 2
-image:{img}etl2_tool_add_app.png[]
+image:{img}etl2_tool_add_app.jpg[link="{img}etl2_tool_add_app.jpg",role="popup-link"]
 
 .Step 3
-image:{img}etl3_popup_add_app.png[300,300]
+image:{img}etl3_popup_add_app.png[300,300,link="{img}etl3_popup_add_app.jpg",role="popup-link"]
 
 .Step 4
-image:{img}etl4_tool_load_app.png[]
+image:{img}etl4_tool_load_app.png[link="{img}etl4_tool_load_app.jpg",role="popup-link"]
 
 
 == ETL Tool Steps and Process
@@ -78,7 +78,7 @@ We recommend already having a Neo4j database created, so that it's ready to for 
 If you don't, we recommend completing that step now.
 ****
 
-image::{img}etl5_tool_main_screen.png[]
+image::{img}etl5_tool_main_screen.jpg[link="{img}etl5_tool_main_screen.jpg",role="popup-link"]
 
 
 == Set Up Connection to Relational Database
@@ -86,7 +86,7 @@ image::{img}etl5_tool_main_screen.png[]
 To begin the ETL process, we need to tell the application which relational database we want to import the data from.
 The screenshot below shows how to start this step, with the red highlighting and numbering to show where to click and in what order.
 
-image::{img}etl6_tool_connections.png[]
+image::{img}etl6_tool_connections.jpg[link="{img}etl6_tool_connections.jpg",role="popup-link"]
 
 We recommend choosing the type of database from the dropdown box in the middle of the page, as that will determine some of the fields needed and will automatically fill in some of the values for you.
 Both the MySQL and PostgreSQL connections pre-populate much of the configurations for you.
@@ -95,7 +95,7 @@ For any of the other database options, you will just need one extra step to spec
 The image below shows the list of relational databases included in the tool.
 If you are using a database that is not specified in the dropdown list, you can still connect by choosing the `JDBC Driver` option and filling in the details.
 
-image::{img}etl7_db_options.png[]
+image::{img}etl7_db_options.jpg[link="{img}etl7_db_options.jpg",role="popup-link"]
 
 Once you have filled in the necessary info, click the `Test and Save Connection` button at the bottom.
 The results for whether it was successful or not will show in a blue (success) or red (error) message bar at the top of your window.
@@ -106,7 +106,7 @@ The results for whether it was successful or not will show in a blue (success) o
 The next step is to go to the next tab down on the left-side icon menu and choose which database you are importing from and which database you are importing to.
 In the screenshot below, you can see the list of relational databases at the top, and the Neo4j database options below them.
 
-image::{img}etl8_choose_dbs.png[]
+image::{img}etl8_choose_dbs.jpg[link="{img}etl8_choose_dbs.jpg",role="popup-link"]
 
 Choose your relational database, then the Neo4j database and verify the connection info on the right side for both databases.
 You can see in the screenshot that the Neo4j instance details are not populated because I hadn't selected that instance yet.
@@ -126,13 +126,13 @@ This is where the actual translation of the relational data into graph data happ
 There are three rules the tool uses to convert from relational to graph, as follows:
 
 * A *table with a foreign key* is treated as a *join* and imported as a *node with a relationship*
-image:{img}etl9_mapping_rule1.png[]
+image:{img}etl9_mapping_rule1.jpg[link="{img}etl9_mapping_rule1.jpg",role="popup-link"]
 
 * A *table with 2 foreign keys* is treated as a *join table* and imported as a *relationship*
-image:{img}etl9_mapping_rule2.png[]
+image:{img}etl9_mapping_rule2.jpg[link="{img}etl9_mapping_rule2.jpg",role="popup-link"]
 
 * A *table with >2 foreign keys* is treated as n *intermediate node* and imported as a *node with multiple relationships*
-image:{img}etl9_mapping_rule3.png[]
+image:{img}etl9_mapping_rule3.jpg[link="{img}etl9_mapping_rule3.jpg",role="popup-link"]
 
 Those rules create a graph data model like the one below.
 
@@ -142,14 +142,14 @@ This example is using the popular Northwind data set.
 You can download and test this data set as well from links at the bottom of this page.
 ****
 
-image::{img}etl10_mapping_sample.png[]
+image::{img}etl10_mapping_sample.jpg[link="{img}etl10_mapping_sample.jpg",role="popup-link"]
 
 You can edit this mapping to clarify some of the weakly-named relationships.
 If you want to change anything from the relational model, such as property names and data types, you can change them here before the data is put into the graph.
 The image below shows an example of some changes.
 
 .Updated Graph Data Model (click to zoom)
-image:{img}etl10_update_model.png[title="Click to zoom", link="{img}etl10_update_model.png"]
+image:{img}etl10_update_model.jpg[link="{img}etl10_update_model.jpg",role="popup-link"]
 
 There are two ways you can also make edits behind-the-scenes.
 One is at this step, where the tool creates a mappings.json file under the database import directory.
@@ -174,17 +174,18 @@ Each import method has certain requirements and advantages, which are listed bel
 * c. Cypher Shell - executes Cypher statements that are generated to an editable Cypher script. Graph database can be running.
 * d. Direct Cypher - has a direct BOLT connection for data import and also creates an editable Cypher script. Graph database can be running.
 
-image::{img}etl11_import_options.png[]
+image::{img}etl11_import_options.jpg[link="{img}etl11_import_options.jpg",role="popup-link"]
 
 After you choose your import method from the dropdown box, you can click the `Import` button in the lower right corner to start the load.
 The lower part of the screen shows the logs of what the tool is actually executing for you, and the status returned.
 If it is successful, you will see a screen similar to the one below (this example used the standard Neo4j Import method).
 
 .Importing (click to zoom)
-image:{img}etl12_import_success.png[title="Click to zoom", link="{img}etl12_import_success.png"]
+image:{img}etl12_import_success.jpg[link="{img}etl12_import_success.jpg",role="popup-link"]
 
 Now, you can query the Neo4j database or use Neo4j Browser to verify the data loaded to properly.
 Your relational data has now been transformed to a graph, and you can start analyzing your data!
+
 
 == How To Do This Example Yourself and Other ETL Options
 

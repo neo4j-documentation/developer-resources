@@ -44,23 +44,23 @@ Let us look at an example to demonstrate this.
 In the whiteboard drawing below, we have a data set about the movie "The Matrix".
 
 .Matrix - whiteboard model
-image:{img}matrix_whiteboard_model1.png[]
+image:{img}matrix_whiteboard_model1.png[link="{img}matrix_whiteboard_model1.png",role="popup-link"]
 
 Next, we formalize our entities a bit and match expected syntax for relationship types to create the node/relationship view for the property graph model.
 
 .Matrix - match node and relationship format of property graph model
-image:{img}matrix_whiteboard_model2.png[]
+image:{img}matrix_whiteboard_model2.png[link="{img}matrix_whiteboard_model2.png",role="popup-link"]
 
 For our next step, we add labels and determine properties of our nodes and relationships for the property graph model.
 
 .Matrix - add labels and properties
-image:{img}matrix_whiteboard_model3.png[]
+image:{img}matrix_whiteboard_model3.png[link="{img}matrix_whiteboard_model3.png",role="popup-link"]
 
 Finally, we can view this data model in Neo4j and ensure it matches what we drew on the whiteboard.
 Also, notice how it is nearly identical to the whiteboard model we initially designed.
 
 .Matrix - final model in Neo4j
-image:{img}matrix_whiteboard_model4.png[]
+image:{img}matrix_whiteboard_model4.png[link="{img}matrix_whiteboard_model4.png",role="popup-link"]
 
 The ability to easily whiteboard your data model makes the graph data model incredibly simple and visual.
 There is no need to draw up business model versions or explain ERD terms to business users.
@@ -82,7 +82,7 @@ We can use the information in this statement to build our model by identifying t
 Let us take the scenario into pieces and define them as parts of our property graph model.
 
 .Review - Property Graph Elements (click to zoom)
-image:{img}property_graph_elements.png[title="Click to zoom", link="{img}property_graph_elements.png"]
+image:{img}property_graph_elements.jpg[link="{img}property_graph_elements.jpg",role="popup-link"]
 
 
 === Nodes
@@ -119,7 +119,7 @@ Remember that a graph database takes each instance of an entity as a separate no
 ****
 
 .Graph Model - Nodes
-image:{img}modeling_johnsally_nodes.png[Extract Nodes, 500,500]
+image:{img}modeling_johnsally_nodes.jpg[400,400,link="{img}modeling_johnsally_nodes.jpg",role="popup-link"]
 
 
 === Labels
@@ -155,7 +155,7 @@ For *John* and *Sally*, we apply the role _Person_.
 For *Graph Databases*, we apply the role _Book_.
 
 .Graph Model - Labels
-image:{img}modeling_johnsally_labels.png[Apply labels, 500,500]
+image:{img}modeling_johnsally_labels.jpg[400,400,link="{img}modeling_johnsally_labels.jpg",role="popup-link"]
 
 
 === Relationships
@@ -192,7 +192,7 @@ To sum up our findings, our John and Sally nodes (labeled _Person_) can be conne
 John and Sally have both read the Graph Databases book, so we can connect each of their nodes (each labeled _Person_) to the Graph Databases node (labeled _Book_) with a +++<u>has read</u>+++ relationship.
 
 .Graph Model - Relationships
-image:{img}modeling_johnsally_relationships.png[Discover Relationships, 500,500]
+image:{img}modeling_johnsally_relationships.jpg[400,400,link="{img}modeling_johnsally_relationships.jpg",role="popup-link"]
 
 
 === Properties
@@ -220,7 +220,7 @@ For our John and Sally scenario, we can list some questions that we might want t
 From this list of questions, you can identify the attributes that we need to store on the entities within our data model in order to answer these questions.
 
 .Graph Model - Properties
-image:{img}modeling_johnsally_properties.png[Add properties to nodes and relationships, 500,500]
+image:{img}modeling_johnsally_properties.png[400,400,link="{img}modeling_johnsally_properties.jpg",role="popup-link"]
 
 With the final model, we now can answer each of the questions we defined in our list.
 Of course, we can grow and change the model over time and add/remove relationships, nodes, properties, and labels.
