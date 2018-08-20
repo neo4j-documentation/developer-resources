@@ -1,0 +1,123 @@
+= Model: Relational to Graph
+:slug: relational-to-graph-modeling
+:section-level: 1
+:level: Beginner
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 2
+:section: Graph Data Modeling
+:section-link: data-modeling
+
+.Goals
+[abstract]
+For those with a background in relational data modeling, this guide will help transfer your existing knowledge of the processes and components used for relational data modeling into graph data modeling.
+It will help to compare and contrast the steps of each process and help you identify where the data modeling is similar or different for each type of database.
+
+.Prerequisites
+[abstract]
+You should understand the basics of Neo4j's link:/developer/get-started/graph-database#property-graph[property graph data model] and be familiar with relational data modeling (including entity-relationship diagrams and other concepts).
+
+[role=expertise]
+{level}
+
+toc::[]
+
+== Modeling: From Relational to Graph
+
+If you are familiar with the relational data model that has tables, columns, relationship cardinalities, and other components, graph data modeling will not seem entirely foreign.
+The design of the data model still needs to be based upon requirements for access, queries, performance expectation, and business logic.
+However, the structure of a graph data model is laid out slightly differently.
+These differences were discussed in the link:/get-started/graph-db-vs-rdbms/[Concepts: RDBMS to Graph] section earlier in these guides.
+
+You may have an entirely new project that you want to create a graph data model, but are only familiar with how to create the relational model.
+Or you could already have an existing project with a relational model that you want to convert to graph.
+Either way, this guide will take existing knowledge of the relational data model and show you how to use that to create a graph model.
+
+
+== Relational and Graph Architecture
+
+As a quick overview, remember that relational databases rely upon index lookups and table joins to connect different entities.
+This quickly becomes a problem for performance, especially when there are several tables joined, millions of rows on tables, or complex queries that traverse various levels through subqueries.
+
+In our example from the concepts page, to find which departments Alice works for, you would need to query the `Person` table to find the row representing Alice, which is tied to a unique ID as the primary key.
+Then, your query would go to the associative entity table (`Person_Dept`) to find where her ID is tied to one or more department IDs.
+Finally, the query would check the `Department` table to find the actual values for those department IDs you found in the associative entity table.
+
+The image below reviews this example we just described.
+
+.Relational - Person and Department tables (click to zoom)
+image:{img}relational_model.png[title="Click to zoom", link="{img}relational_model.png"]
+
+In a graph, you do not need to worry about table joins and index lookups because graph data is structured by each, individual entity and its relationships with other individual entities.
+
+Ok, so how do we go from creating relational data models to a graph data model?
+
+
+== Data Model Transformation Tips
+
+Let us look at some of the key components in a relational data model and translate those into components of a graph data model.
+The steps to help you with the transformation of a relational diagram are listed below.
+
+- *_Table to Node Label_* - each entity table in the relational model becomes a label on nodes in the graph model.
+- *_Row to Node_* - each row in a relational entity table becomes a node in the graph.
+- *_Column to Node Property_* - columns (fields) on the relational tables become node properties in the graph.
+- *_Business primary keys only_* - remove technical primary keys, keep business primary keys.
+- *_Add Constraints/Indexes_* - add unique constraints for business primary keys, add indexes for frequent lookup attributes.
+- *_Foreign keys to Relationships_* - replace foreign keys to the other table with relationships, remove them afterwards.
+- *_No defaults_* - remove data with default values, no need to store those.
+- *_Clean up data_* - duplicate data in denormalized tables might have to be pulled out into separate nodes to get a cleaner model.
+- *_Index Columns to Array_* - indexed column names (like email1, email2, email3) might indicate an array property.
+- *_Join tables to Relationships_* - join tables are transformed into relationships, columns on those tables become relationship properties
+
+If you apply the items in the list above to our example finding Alice's departments, we can come to a graph like the one shown below.
+
+.Graph - Alice and 3 Departments as nodes (click to zoom)
+image:{img}relational_graph_model.png[title="Click to zoom", link="{img}relational_graph_model.png"]
+
+Though the two models have similarities such as categorizing data by using either a table structure or a label, the graph model does not confine data to a pre-defined and strict table/column layout.
+We will look at another example in the next section.
+
+
+== Organizational Domain Data Model
+
+To give us another chance to practice, we will use a standard organizational domain and show how it would be modeled in a relational database versus a graph database. To give yourself an extra challenge, try to create the graph data model on your own and then see how closely it lines up!
+
+.Organizational Domain - Relational Model
+image:{img}relational_org_chart.png[]
+
+
+=== Conversion Steps
+
+First, we can categorize our tables by main domain tables and associative entity tables by colors.
+Then, we can turn our table names into node labels.
+In this case, `Project`, `Person`, `Department`, and `Organization` become labels in our graph model.
+
+The rows on our tables become their own nodes and the columns in those rows become the properties on those nodes.
+For example, your row on the Person table will become a node with your name and date of birth as the properties on your node.
+Any indexed columns that allow multiple similar values will become an array (such as skill1, skill2, skill3 columns translate to three values stored in an array property on a node).
+
+If there are any technical primary keys (in other words, primary keys that were created simply to make the row unique - like a project_id in case there are multiple projects with the same title), then remove those and only keep the properties that are needed for the business requirements.
+You will also need to add unique constraints for the business primary keys in order to ensure the database will not allow duplicates.
+
+Foreign keys that would aid in relational join lookups are transformed into relationships, as they show the links between the nodes.
+Join tables (or associative entity tables) become relationships, as well, with any join table columns moved to relationship properties.
+
+Since you only store the needed properties in Neo4j, you do not need to store nulls and empty values, so you can remove any default values that may have been created in a relational model.
+
+Finally, any duplicate data created to normalize tables or de-normalize for simplicity's sake needs removed, as it is unneeded in a graph.
+
+After this process, your graph data model should look something like the image below.
+
+.Answer: Organizational Domain - Graph Model
+image:{img}graph_org_chart.png[]
+
+It is important to have an basic understanding of the graph model before you start to import data, as it becomes easier to hydrate that model or adjust it later, as needs change.
+In an upcoming guide, how you model your graph data can impact queries, performance, and model changes.
+
+
+== Resources
+* https://dzone.com/refcardz/from-relational-to-graph-a-developers-guide?chapter=1[DZone Refcard: From Relational to Graph^]
+* link:/developer/get-started/graph-db-vs-rdbms[Concepts: RDBMS to Graph]
+* link:/developer/cypher/guide-sql-to-cypher/[From SQL to Cypher]
+* link:/developer/get-started/graph-database#property-graph[Review: Property Graph Model]
