@@ -1,0 +1,59 @@
+= Importing Data from a JSON based REST API into Neo4j
+:slug: guide-import-rest
+:level: Intermediate
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 1
+:section: Working with Data
+:section-link: working-with-data
+
+.Goals
+[abstract]
+This article demonstrates some techniques for loading data from JSON based REST APIs into Neo4j.
+
+.Prerequisites
+[abstract]
+Before importing data from a JSON based REST API you should have installed the link:/developer/neo4j-apoc[APOC^] library.
+
+[role=expertise]
+{level}
+
+toc::[]
+
+== Importing JSON Data into Neo4j
+
+There are a plethora of JSON based Web APIs that we can import into Neo4j, and APOC's https://neo4j-contrib.github.io/neo4j-apoc-procedures/#_load_json_2[Load JSON^] procedure retrieves data from these APIs and turns it into map values ready for Cypher to consume.
+
+The APOC user guide provides a worked example showing how to https://neo4j-contrib.github.io/neo4j-apoc-procedures/#_load_json_stackoverflow_example[import data from StackOverflow into Neo4j^].
+
+== The Strava API
+
+Strava is an application used by runners and cyclists to record their activities and share them with their friends.
+This data is available to users via a https://developers.strava.com/[JSON based REST API^].
+
+Before we start calling the API we need to https://www.strava.com/settings/api[create an application^].
+We'll then be provided with an access token that we'll need to use in all our requests to the API.
+
+We can create a parameter in the link:/developer/neo4j-browser/[Neo4j Browser^] or Cypher shell by executing the following command:
+
+[source, cypher]
+----
+:params {stravaToken: "Bearer <insert-strava-token>"}
+----
+
+(don't forget to replace `<insert-strava-token>` with the token for your Strava application)
+
+== Working with a paginated endpoint
+
+We're interesting in importing the activities for the https://developers.strava.com/docs/reference/#api-Activities-getLoggedInAthleteActivities[logged in athlete^].
+That endpoint takes the following parameters:
+
+image::{img}api.jpg[]
+
+We're interested in `per_page`, where we can defined the number of activities returned per call to the endpoint, and `after`, where we can tell the API to only return results after a provided epoch timestamp.
+
+Let's imagine that we have more activities that we can return in one request to the API.
+We'll need to paginate to retrieve all our activities and import them into Neo4j.
+
+We could do this by using a scripting language and creating a loop inside which we make calls to that endpoint until we run out of activities to retrieve.
