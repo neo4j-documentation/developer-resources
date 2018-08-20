@@ -91,10 +91,13 @@ You can read more in the link:https://neo4j.com/blog/neo4j-microsoft-azure-marke
 
 * link:https://neo4j.com/blog/deploy-neo4j-microsoft-azure-part-2/[Step by step guide to deploying Neo4j on Azure^].
 
-== [.label]#Guide →# Kubernetes (Any Cloud)
+== [.label]#Guide →# Kubernetes and Docker (On any cloud)
+
+For docker users, Neo4j provides link:/developer/docker/[complete instructions] on using provided Docker containers.
 
 For users who wish to run Neo4j in kubernetes clusters, Neo4j provides a link:https://github.com/helm/charts/tree/master/stable/neo4j[public helm chart]
-which permits easy installation using standard `kubectl` and `helm` tools.
+which permits easy installation using standard `kubectl` and `helm` tools.  These kubernetes tools and approaches all take
+advantage of the standard Neo4j docker container mentioned above, but add clustering and coordination capabilities.
 
 For a walk-through of how to use the helm chart to get started quickly, please consult link:https://neo4j.com/blog/kubernetes-deploy-neo4j-clusters/[How to Use Kubernetes to Quickly Deploy Neo4j Clusters].
 
