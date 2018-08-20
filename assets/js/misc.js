@@ -8,6 +8,7 @@
         }
       })
       .ready(function () {
+
         var windowWidth = $(window).width(),
             windowHeight = $(window).height();
 

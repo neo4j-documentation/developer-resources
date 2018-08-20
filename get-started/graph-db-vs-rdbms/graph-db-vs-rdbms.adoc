@@ -41,7 +41,7 @@ As you can probably see, this makes understanding the connections very cumbersom
 Those types of costly join operations are often addressed by denormalizing the data to reduce the number of joins necessary, therefore breaking the data integrity of a relational database.
 
 .Relational Model (click to zoom)
-image:{img}relational_model.png[title="Click to zoom", link="{img}relational_model.png"]
+image:{img}relational_model.jpg[link="{img}relational_model.jpg",role="popup-link"]
 
 Although not every use case is a good fit for this stringent data model, the lack of viable alternatives and the wide support for relational databases made it difficult for alternative models to break into the mainstream.
 However, the NoSQL era arrived in the market, filling some needs for users and businesses, but still missing the importance of the connections between data.
@@ -80,13 +80,13 @@ A graph is exactly that - a clear model of the domain, focused on the use cases 
 Let's compare the two data models to show how the structure differs between relational and graph.
 
 .Relational - Person and Department tables (click to zoom)
-image:{img}relational_as_graph.png[title="Click to zoom", link="{img}relational_as_graph.png"]
+image:{img}relational_as_graph.jpg[link="{img}relational_as_graph.jpg",role="popup-link"]
 
 In the above relational example, we search the Person table on the left (potentially millions of rows) to find the user Alice and her person ID of 815. Then, we search the Person-Department table (orange middle table) to locate all the rows that reference Alice's person ID (815). Once we retrieve the 3 relevant rows, we go to the Department table on the right to search for the actual values of the department IDs (111, 119, 181).
 Now we know that Alice is part of the 4Future, P0815, and A42 departments.
 
 .Graph - Alice and 3 Departments as nodes (click to zoom)
-image:{img}relational_graph_model.png[title="Click to zoom", link="{img}relational_graph_model.png"]
+image:{img}relational_graph_model.jpg[link="{img}relational_graph_model.jpg",role="popup-link"]
 
 In the above graph version, we have a single node for Alice with a label of Person.
 Alice belongs to 3 different departments, so we create a node for each one and with a label of Department.
