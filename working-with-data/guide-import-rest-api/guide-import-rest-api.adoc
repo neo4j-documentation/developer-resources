@@ -23,7 +23,7 @@ toc::[]
 
 == Importing JSON Data into Neo4j
 
-There are a plethora of JSON based Web APIs that we can import into Neo4j, and APOC's https://neo4j-contrib.github.io/neo4j-apoc-procedures/#_load_json_2[Load JSON^] procedure retrieves data from these APIs and turns it into map values ready for Cypher to consume.
+There are a plethora of JSON based Web APIs that we can import into Neo4j, and the https://neo4j-contrib.github.io/neo4j-apoc-procedures/#_load_json_2[`apoc.load.json`^] procedure retrieves data from these APIs and turns it into map values ready for Cypher to consume.
 
 The APOC user guide provides a worked example showing how to https://neo4j-contrib.github.io/neo4j-apoc-procedures/#_load_json_stackoverflow_example[import data from StackOverflow into Neo4j^].
 
@@ -56,4 +56,102 @@ We're interested in `per_page`, where we can defined the number of activities re
 Let's imagine that we have more activities that we can return in one request to the API.
 We'll need to paginate to retrieve all our activities and import them into Neo4j.
 
-We could do this by using a scripting language and creating a loop inside which we make calls to that endpoint until we run out of activities to retrieve.
+Before we paginate the API let's first learn how to import one page worth of activities into Neo4j.
+The following query will return activities starting from the earliest timestamp:
+
+[source, cypher]
+----
+WITH after AS 0
+
+WITH 'https://www.strava.com/api/v3/athlete/activities?after=' + after AS uri
+CALL apoc.load.jsonParams(uri, {Authorization: $stravaToken}, null)
+YIELD value
+
+CREATE (run:Run {id: value.id})
+SET run.distance = toFloat(value.distance),
+    run.startDate = datetime(value.start_date_local),
+    run.elapsedTime = duration({seconds: value.elapsed_time})
+----
+
+We create a node with the label `Run` for each activity and set a few properties as well.
+The most interesting one for this example is `startDate` which we'll pass to the `after` parameter later on.
+
+This query will load the first 30 activities, but what if we want to get the next 30?
+We can change the first line of the query to find the most recent timestamp of any of our `Run` nodes and then pass that to the API.
+If there aren't any `Run` nodes then we can use a value of 0:
+
+[source, cypher]
+----
+OPTIONAL MATCH (run:Run)
+WITH run ORDER BY run.startDate DESC LIMIT 1
+WITH coalesce(run.startDate.epochSeconds, 0) AS after
+
+WITH 'https://www.strava.com/api/v3/athlete/activities?after=' + after AS uri
+CALL apoc.load.jsonParams(uri, {Authorization: $stravaToken}, null)
+YIELD value
+
+CREATE (run:Run {id: value.id})
+SET run.distance = toFloat(value.distance),
+    run.startDate = datetime(value.start_date_local),
+    run.elapsedTime = duration({seconds: value.elapsed_time})
+----
+
+We could continue to run this query manually, but it's about time that we automated it.
+
+== Automated API pagination using `apoc.periodic.commit`
+
+One way to do this is by using a scripting language and creating a loop inside which we make calls to that endpoint until we run out of activities to retrieve.
+If we're a bit creative we can achieve the same outcome with the https://neo4j-contrib.github.io/neo4j-apoc-procedures/#_apoc_periodic_commit[`apoc.periodic.commit`^] procedure.
+
+From the APOC documentation, this is the description of the periodic iterate procedure:
+
+[NOTE]
+====
+It is useful to run a query repeatedly in separate transactions until it doesn’t process and generates any results anymore.
+So you can iterate in batches over elements that don’t fulfil a condition and update them so that they do afterwards.
+====
+
+In our case the exit condition will be when we receive less than 30 activities from the API.
+Let's first update our query to return a value of `0` if less than 30 activities are returned and the actual count if it's 30:
+
+[source, cypher]
+----
+OPTIONAL MATCH (run:Run)
+WITH run ORDER BY run.startDate DESC LIMIT 1
+WITH coalesce(run.startDate.epochSeconds, 0) AS after
+
+WITH 'https://www.strava.com/api/v3/athlete/activities?after=' + after AS uri
+CALL apoc.load.jsonParams(uri, {Authorization: $stravaToken}, null)
+YIELD value
+
+CREATE (run:Run {id: value.id})
+SET run.distance = toFloat(value.distance),
+    run.startDate = datetime(value.start_date_local),
+    run.elapsedTime = duration({seconds: value.elapsed_time})
+
+RETURN CASE WHEN count(*) < 30 THEN 0 ELSE count(*) END AS count
+----
+
+All that's left to do now is wrap the whole thing in periodic commit:
+
+[source, cypher]
+----
+call apoc.periodic.commit("
+  OPTIONAL MATCH (run:Run)
+  WITH run ORDER BY run.startDate DESC LIMIT 1
+  WITH coalesce(run.startDate.epochSeconds, 0) AS after
+
+  WITH 'https://www.strava.com/api/v3/athlete/activities?after=' + after AS uri
+  CALL apoc.load.jsonParams(uri, {Authorization: $stravaToken}, null)
+  YIELD value
+
+  CREATE (run:Run {id: value.id})
+  SET run.distance = toFloat(value.distance),
+      run.startDate = datetime(value.start_date_local),
+      run.elapsedTime = duration({seconds: value.elapsed_time})
+
+  RETURN CASE WHEN count(*) < 30 THEN 0 ELSE count(*) END AS count
+", {stravaToken: $stravaToken})
+----
+
+This query will now send multiple commits to the API until we've loaded all our activities.
