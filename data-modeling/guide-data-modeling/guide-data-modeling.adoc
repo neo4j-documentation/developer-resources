@@ -1,6 +1,6 @@
-= Graph Data Modeling Guidelines
+= Graph Modeling Guidelines
 :slug: guide-data-modeling
-:level: Intermediate
+:level: Beginner
 :toc:
 :toc-placement!:
 :toc-title: Overview
@@ -15,7 +15,7 @@ You will be introduced to the basic process of designing a graph data model that
 
 .Prerequisites
 [abstract]
-You should have a firm understanding of the Neo4j's link:/developer/get-started/graph-database#property-graph[property graph data model], and its query language, link:/developer/cypher[Cypher].
+You should understand the basics of Neo4j's link:/developer/get-started/graph-database#property-graph[property graph data model].
 
 [role=expertise]
 {level}
@@ -24,234 +24,220 @@ toc::[]
 
 == Introduction
 
-Graph data modeling is the process in which a Neo4j user describes an arbitrary domain as a connected graph of nodes and relationships.
-From this description, a graph data model is designed to answer questions in the form of Cypher queries.
+If you have ever worked with an object model or an entity-relationship diagram, the labeled property graph model will seem familiar.
+
+Graph data modeling is the process in which a user describes an arbitrary domain as a connected graph of nodes and relationships with properties and labels.
+A Neo4j graph data model is designed to answer questions in the form of Cypher queries and solve business and technical problems by organizing a data structure for the graph database.
+
+
+== Graph Data Model = Whiteboard-Friendly
+
+The graph data model is often referred to as being "whiteboard-friendly".
+Typically, when designing a data model, people draw example data on the whiteboard and connect it to other data drawn to show how different items connect.
+The whiteboard model is then re-formatted and structured to fit normalized tables for a relational model.
+
+A similar process exists in graph data modeling, as well.
+However, instead of modifying the data model to fit a normalized table structure, the graph data model stays exactly as it was drawn on the whiteboard.
+This is where the graph data model gets its name for being "whiteboard-friendly".
+
+Let us look at an example to demonstrate this.
+In the whiteboard drawing below, we have a data set about the movie "The Matrix".
+
+.Matrix - whiteboard model
+image:{img}matrix_whiteboard_model1.png[]
+
+Next, we formalize our entities a bit and match expected syntax for relationship types to create the node/relationship view for the property graph model.
+
+.Matrix - match node and relationship format of property graph model
+image:{img}matrix_whiteboard_model2.png[]
+
+For our next step, we add labels and determine properties of our nodes and relationships for the property graph model.
+
+.Matrix - add labels and properties
+image:{img}matrix_whiteboard_model3.png[]
+
+Finally, we can view this data model in Neo4j and ensure it matches what we drew on the whiteboard.
+Also, notice how it is nearly identical to the whiteboard model we initially designed.
+
+.Matrix - final model in Neo4j
+image:{img}matrix_whiteboard_model4.png[]
+
+The ability to easily whiteboard your data model makes the graph data model incredibly simple and visual.
+There is no need to draw up business model versions or explain ERD terms to business users.
+Instead, the graph data model is easily understood by anyone.
 
 
 == Describing a Domain
 
-Consider the following description of the connection between two people: Sally and John.
+To better understand the process of designing a graph data model, let us take an example domain for a small set of data and walk through each step of how to create a graph data model from it.
+Consider the following scenario describing our example data entities and connections.
 
+.Scenario
 [quote]
-Two _people_, *John* and *Sally*, are +++<u>friends</u>+++. Both *John* and *Sally* have +++<u>read</u>+++ the _book_, *Graph Databases*.
+Two _people_, *Sally* and *John*, +++<u>are friends</u>+++.
+Both *John* and *Sally* +++<u>have read</u>+++ the _book_, *Graph Databases*.
 
-We can take this statement, identify components such as labels, nodes, and relationships, and use these to build our model.
+
+We can use the information in this statement to build our model by identifying the components as labels, nodes, and relationships.
+Let us take the scenario into pieces and define them as parts of our property graph model.
+
+.Review - Property Graph Elements (click to zoom)
+image:{img}property_graph_elements.png[title="Click to zoom", link="{img}property_graph_elements.png"]
 
 
 === Nodes
 
-The first entity that we'll identify in our domain are the nodes.
+The first entities that we will identify in our domain are the nodes.
+Nodes are one of two fundamental units that form a graph (the other fundamental unit is relationships).
 
-[quote, "3.1 Nodes", "docs.neo4j.org"]
-The fundamental units that form a graph are nodes and relationships.
-In Neo4j, both nodes and relationships can contain properties.
-Nodes are often used to represent entities, but depending on the domain relationships may be used for that purpose as well.
-Apart from properties and relationships, nodes can also be labeled with zero or more labels.
+Nodes are often used to represent entities, but can also represent other domain components, depending on the use case.
+Nodes can contain properties that hold name-value pairs of data.
+Nodes can be assigned roles or types using one or more labels.
 
-image::/docs/2.1.8/images/graphdb-nodes-overview.svg[Nodes]
+****
+[TIP]
+You can often find nodes for the graph model by identifying nouns in your domain.
+Entities such as a car, a person, a customer, a company, an asset, and others similar can be defined as nodes for a good starting point.
+****
 
 We can identify nodes as entities with a unique conceptual identity.
-In this case, these entities are outlined below in bold.
+In our scenario we began for Sally and John, these entities are outlined below in bold.
 
+.Scenario - Defining Nodes
 [quote]
 Two people, *John* and *Sally*, are friends.
 Both *John* and *Sally* have read the book, *Graph Databases*.
 
-Extracting the nodes:
-
-* *John*
-* *Sally*
+Extracting the nodes: +
+* *John* +
+* *Sally* +
 * *Graph Databases*
 
-image::{img}data-modeling-3.png[Extract Nodes]
+****
+[NOTE]
+Remember that a graph database takes each instance of an entity as a separate node (John and Sally would be two separate nodes, even though they are both people), and Graph Databases would be a separate node from another book.
+****
+
+.Graph Model - Nodes
+image:{img}modeling_johnsally_nodes.png[Extract Nodes, 500,500]
 
 
 === Labels
 
-Now that we have an idea of what our nodes will be, we decide what labels (if any) to assign our nodes.
+Now that we have an idea of what our nodes will be, we can decide what labels (if any) to assign our nodes to group or categorize them.
+The definition from https://neo4j.com/docs/developer-manual/current/[Neo4j's developer manual^] in the paragraph below best explains what labels do and how they are used in the graph data model.
 
-[quote, "3.4 Labels", "docs.neo4j.org"]
 A label is a named graph construct that is used to group nodes into sets.
 All nodes labeled with the same label belongs to the same set.
 Many database queries can work with these sets instead of the whole graph, making queries easier to write and more efficient.
 A node may be labeled with any number of labels, including none, making labels an optional addition to the graph.
 
-image::/docs/2.1.8/images/graphdb-labels.svg[Labels]
+****
+[TIP]
+Similar to how we found the nodes for our graph model by identifying the nouns in our scenario, you can identify labels by generic nouns or groups of persons, places, or things.
+General nouns that fit groups of items such as Vehicle, Person, Customer, Company, Asset, and similar terms can be used as labels in your graph.
+****
 
-First we'll start by identifying the roles of objects (John, Sally, Graph Databases) mentioned in the statement.
-We know that this statement is about two different types of objects:
+To find out if we can group objects in our Sally and John scenario, we will start by identifying the roles of our nodes (John, Sally, Graph Databases) mentioned in the statement.
+We can find two different types of objects in the statement, which are emphasized below.
 
+.Scenario - Defining Labels
 [quote]
 Two _people_, John and Sally, are friends.
 Both John and Sally have read the _book_, Graph Databases.
 
-Extracting the labels:
-
-* _Person_
+Extracting the labels: +
+* _Person_ +
 * _Book_
 
-image::{img}data-modeling-2.png[Extract labels]
+Now that we have identified both our nodes and labels, we can update our graph data model to assign the labels to the nodes they describe.
+For *John* and *Sally*, we apply the role _Person_.
+For *Graph Databases*, we apply the role _Book_.
 
-Now that we have identified both our nodes and labels, we can assign the labels to the nodes they describe.
-For *John* and *Sally* we apply the role _Person_.
-For *Graph Databases* we apply the role _Book_.
-
-image::{img}data-modeling-4.png[Apply labels]
+.Graph Model - Labels
+image:{img}modeling_johnsally_labels.png[Apply labels, 500,500]
 
 
 === Relationships
 
-Further, we can identify the interactions between these subjects:
+We now have our main entities and a way to group them, but we are still missing one vital piece of a graph database model - the relationships between the data!
 
-* *John* is a +++<u>friend</u>+++ of *Sally*
-* *Sally* is a +++<u>friend</u>+++ of *John*
-* *John* has +++<u>read</u>+++ *Graph Databases*
-* *Sally* has +++<u>read</u>+++ *Graph Databases*
+A relationship connects two nodes and allows us to find related nodes of data.
+It has a source node and a target node that shows the direction of the arrow.
+Although you must store a relationship in a particular direction, Neo4j has equal traversal performance in either direction, so you can query the relationship without specifying direction.
 
-Now that we have described the kinds of things in our domain as nodes with their labels, we can connect the nodes together to describe their interactions.
+The one core, consistent rule in a graph database is *"No broken links"*, ensuring that an existing relationship will never point to a non-existing endpoint.
+Since a relationship always has a start and end node, you cannot delete a node without also deleting its associated relationships.
 
-Pairs of nodes labeled _Person_ can be connected to each other by the +++<u>friend of</u>+++ relationship.
+****
+[TIP]
+Just as we have found nodes and labels by looking for nouns, you can often find relationships for the graph model by identifying actions or verbs in your domain.
+Actions such as DRIVES, HAS_READ, MANAGES, ACTED_IN, and others similar can be defined as differenty types of relationships to exist between nodes.
+****
 
-Pairs of nodes labeled _Book_ and _Person_ can be connected to each other by a +++<u>has read</u>+++ relationship.
+Let us identify the interactions (which are underlined in our scenario below) between the *John*, *Sally*, and *Graph Database* nodes.
+
+.Scenario - Defining Relationships
+[quote]
+Two people, Sally and John, +++<u>are friends</u>+++.
+Both John and Sally +++<u>have read</u>+++ the book, Graph Databases.
+
+Relationships between nodes: +
+* John +++<u>is friends with</u>+++ Sally +
+* Sally +++<u>is friends with</u>+++ John +
+* John +++<u>has read</u>+++ Graph Databases +
+* Sally +++<u>has read</u>+++ Graph Databases
+
+To sum up our findings, our John and Sally nodes (labeled _Person_) can be connected to each other by the +++<u>is friends with</u>+++ relationship.
+John and Sally have both read the Graph Databases book, so we can connect each of their nodes (each labeled _Person_) to the Graph Databases node (labeled _Book_) with a +++<u>has read</u>+++ relationship.
+
+.Graph Model - Relationships
+image:{img}modeling_johnsally_relationships.png[Discover Relationships, 500,500]
 
 
-=== Draw the Data Model
-
-Now that we have identified the kinds of relationships that can exist between labels of nodes, we can complete our graph data model.
-
-image::{img}data-modeling-1.png[Graph data model]
-
-
-== Answering Questions
+=== Properties
 
 We have gone through the process of creating a basic graph data model for the interactions between people and books.
 We can take this data model further by defining attributes of these entities as key-value properties.
 
+Properties are name-value pairs of data that you can store on nodes or on relationships.
+Most standard data types are supported as properties, with the full list published in our https://neo4j.com/docs/developer-manual/current/introduction/graphdb-concepts/#graphdb-neo4j-properties[Developer Manual documentation^].
 
-=== List your Questions
+Properties allow you to store relevant data about the node or relationship with the entity it describes.
+They can often be found by knowing what kinds of questions your use case needs to ask of your data.
 
-First, start by listing your questions that you want to answer about your data.
+For our John and Sally scenario, we can list some questions that we might want to answer about the data.
 
-* When did John and Sally become friends?
-* What is the average rating of the book Graph Databases?
-* Who is the author of the book Graph Databases?
+.Questions to ask of our John and Sally data model:
+* When did John and Sally become friends? Or how long have they been friends?
+* What is the average rating of the Graph Databases book?
+* Who is the author of the Graph Databases book?
 * How old is Sally?
 * How old is John?
 * Who is older, Sally or John?
-* Who read the book _Graph Databases_ first, Sally or John?
+* Who read the _Graph Databases_ book first, Sally or John?
 
-From these list of questions, you can identify the attributes that must belong to entities within your data model.
+From this list of questions, you can identify the attributes that we need to store on the entities within our data model in order to answer these questions.
 
-image::{img}data-modeling-5.png[Graph data model with properties]
+.Graph Model - Properties
+image:{img}modeling_johnsally_properties.png[Add properties to nodes and relationships, 500,500]
 
-[role=side-nav]
-* {manual}/introduction/#graphdb-neo4j-nodes[Manual: Nodes]
-* {manual}/introduction/#graphdb-neo4j-labels[Manual: Labels]
-// * {manual}#data-modeling-examples[Manual:Data Modeling Examples]
-* http://neo4j.com/graphgists/[Graph Model Examples]
-* http://vimeo.com/89075703[Video: New Opportunities for Connected Data]
+With the final model, we now can answer each of the questions we defined in our list.
+Of course, we can grow and change the model over time and add/remove relationships, nodes, properties, and labels.
+The flexibility and simplicity of the property graph data model allows users to easily review the data structure and update it according to the changing needs of the business.
 
 
-=== Create a Sample Dataset
+== Graph Data Modeling Design
 
-Now that we have a complete graph data model for our domain that sufficiently answers our questions, we can go about creating a sample dataset using Cypher.
+This guide is simply the introduction to data modeling using a simple, straightforward scenario.
+There are plenty of opportunities throughout the upcoming guides to practice modeling domains and analyzing changes to the model that might need to be made.
 
-[source, cypher]
-----
-// Create Sally
-CREATE (sally:Person { name: 'Sally', age: 32 })
-
-// Create John
-CREATE (john:Person { name: 'John', age: 27 })
-
-// Create Graph Databases book
-CREATE (gdb:Book { title: 'Graph Databases',
-                   authors: ['Ian Robinson', 'Jim Webber'] })
-
-// Connect Sally and John as friends
-CREATE (sally)-[:FRIEND_OF { since: 1357718400 }]->(john)
-
-// Connect Sally to Graph Databases book
-CREATE (sally)-[:HAS_READ { rating: 4, on: 1360396800 }]->(gdb)
-
-// Connect John to Graph Databases book
-CREATE (john)-[:HAS_READ { rating: 5, on: 1359878400 }]->(gdb)
-----
+Every data model is unique, depending on the use case and the types of questions that users need to answer with the data.
+Because of this, there is no "one-size-fits-all" approach to data modeling.
+Using best practices and careful modeling will provide the most valuable result in producing an accurate data model that benefits your processes and use case.
 
 
-=== Translate Questions to Cypher Queries
-
-Now that we have a sample dataset of our graph data model, we can translate our questions from earlier into queries.
-
-
-==== When did John and Sally become Friends?
-
-[source, cypher]
-----
-MATCH (sally:Person { name: 'Sally' })
-MATCH (john:Person { name: 'John' })
-MATCH (sally)-[r:FRIEND_OF]-(john)
-RETURN r.since AS friends_since
-----
-
-
-==== What is the average rating of _Graph Databases_?
-
-[source, cypher]
-----
-MATCH (gdb:Book { title: 'Graph Databases' })
-MATCH (gdb)<-[r:HAS_READ]-()
-RETURN avg(r.rating) AS average_rating
-----
-
-
-==== Who are the authors of _Graph Databases_?
-
-[source, cypher]
-----
-MATCH (gdb:Book { title: 'Graph Databases' })
-RETURN gdb.authors AS authors
-----
-
-
-==== How old is Sally?
-
-[source, cypher]
-----
-MATCH (sally:Person { name: 'Sally' })
-RETURN sally.age AS sally_age
-----
-
-
-==== How old is John?
-
-[source, cypher]
-----
-MATCH (john:Person { name: 'John' })
-RETURN john.age AS john_age
-----
-
-
-==== Who is older, Sally or John?
-
-[source, cypher]
-----
-MATCH (people:Person)
-WHERE people.name = 'John' OR people.name = 'Sally'
-RETURN people.name AS oldest
-ORDER BY people.age DESC
-LIMIT 1
-----
-
-
-==== Who Read _Graph Databases_ First, Sally or John?
-
-[source, cypher]
-----
-MATCH (people:Person)
-WHERE people.name = 'John' OR people.name = 'Sally'
-MATCH (people)-[r:HAS_READ]->(gdb:Book { title: 'Graph Databases' })
-RETURN people.name AS first_reader
-ORDER BY r.on
-LIMIT 1
-----
+== Resources
+* https://neo4j.com/blog/data-modeling-basics/[Blog post: Graph Data Modeling Basics^]
+* http://neo4j.com/graphgists/[GraphGists: Graph Model Examples^]
+* https://neo4j.com/blog/data-modeling-pitfalls/[Blog post: Data Modeling Pitfalls to Avoid^]
