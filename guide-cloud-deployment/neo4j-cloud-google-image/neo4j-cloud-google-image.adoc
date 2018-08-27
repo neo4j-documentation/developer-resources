@@ -115,30 +115,10 @@ $ sudo systemctl status neo4j
            └─1430 /usr/bin/java -cp /var/lib/neo4j/plugins:/etc/neo4j:/usr/share/neo4j/lib/*:/var/lib/neo4j/plugins/* -server -XX:+UseG1GC 
 ----
 
-=== Configuring your instance
+=== How your new virtual machine works
 
-Google VMs can be configured via custom metadata key/values placed on the image.  The normal
-`neo4j.conf` file is used to configure the neo4j service inside of the VM, but when running on 
-google this is driven by a template file you'll find at `/etc/neo4j/neo4j.template`.
-
-That template contains certain variables, for example:
-
-[source,text]
-----
-dbms.logs.http.enabled=$dbms_logs_http_enabled
-----
-
-This means that you can set a custom metadata item on the instance with the key `dbms_logs_http_enabled`
-and its value will be substituted into `neo4j.conf` when the service starts.  Being able to set
-configuration items from outside of neo4j.conf is very convenient when you start integrating 
-neo4j together with other components.
-
-Within the google image, do not directly edit `/etc/neo4j/neo4j.conf`, because
-it will be replaced by template substitutions each time the service starts.  Instead, edit the
-template to suit your needs.
-
-If you customize metadata on the VM to configure neo4j, please remember you'll need to restart
-the neo4j system service, or restart the VM for those changes to take effect.
+Please consult link:/developer/guide-cloud-deployment/neo4j-cloud-vms[Neo4j Cloud VMs] for details on internals of 
+Google VMs, including how to stop and start system services, configure Neo4j inside of the VM, and more.
 
 === Deleting the instance
 
