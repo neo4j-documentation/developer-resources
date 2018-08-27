@@ -120,20 +120,10 @@ You might get an error about the permissions on the pem file so don't forget to 
 chmod 600 $KEY_NAME.pem
 ----
 
-=== Interacting with the Neo4j Service
+=== How the AWS Virtual Machine Works
 
-You can get system status for neo4j within the VM by executing:
-
-[source,text]
-----
-systemctl status neo4j
-----
-
-An important thing to note about the AWS version of neo4j is that you should not modify the 
-/etc/neo4j/neo4j.conf file directly, but rather modify /etc/neo4j/neo4j.template.  Because the
-instance is dynamic and its IP may change over restarts, on AWS the normal configuration file is
-overwritten from that template each time the system service restarts.  The template file can be 
-edited as any normal neo4j.conf file.
+Please consult link:/developer/guide-cloud-deployment/neo4j-cloud-vms[Neo4j Cloud VMs] for details on internals of 
+AWS VMs, including how to stop and start system services, configure Neo4j inside of the VM, and more.
 
 [[other-regions]]
 === How do I find the `image-id` for other regions?
