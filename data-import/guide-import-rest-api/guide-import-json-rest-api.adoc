@@ -1,12 +1,12 @@
-= Importing Data from a JSON based REST API into Neo4j
+= Importing JSON Data from a REST API into Neo4j
 :slug: guide-import-json-rest-api
 :level: Intermediate
 :toc:
 :toc-placement!:
 :toc-title: Overview
 :toclevels: 1
-:section: Working with Data
-:section-link: working-with-data
+:section: Data Import
+:section-link: data-import
 
 .Goals
 [abstract]
@@ -33,20 +33,23 @@ Strava is an application used by runners and cyclists to record their activities
 This data is available to users via a https://developers.strava.com/[JSON based REST API^].
 
 Before we start calling the API we need to https://www.strava.com/settings/api[create an application^].
-We'll then be provided with an access token that we'll need to use in all our requests to the API.
+We will then be provided with an access token that we will need to use in all our requests to the API.
 
-We can create a parameter in the link:/developer/neo4j-browser/[Neo4j Browser^] or Cypher shell by executing the following command:
+We can create a parameter in the link:/developer/neo4j-browser/[Neo4j Browser] or Cypher shell by executing the following command:
 
 [source, cypher]
 ----
 :params {stravaToken: "Bearer <insert-strava-token>"}
 ----
 
-(don't forget to replace `<insert-strava-token>` with the token for your Strava application)
+****
+[IMPORTANT]
+Don't forget to replace `<insert-strava-token>` with the token for your Strava application.
+****
 
 == Working with a paginated endpoint
 
-We're interesting in importing the activities for the https://developers.strava.com/docs/reference/#api-Activities-getLoggedInAthleteActivities[logged in athlete^].
+We are interested in importing the activities for the https://developers.strava.com/docs/reference/#api-Activities-getLoggedInAthleteActivities[logged in athlete^].
 That endpoint takes the following parameters:
 
 image::{img}api.jpg[]
@@ -154,4 +157,4 @@ call apoc.periodic.commit("
 ", {stravaToken: $stravaToken})
 ----
 
-This query will now send multiple commits to the API until we've loaded all our activities.
+This query will now send multiple commits to the API until we have loaded all our activities.
