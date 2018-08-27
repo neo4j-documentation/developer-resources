@@ -1,0 +1,56 @@
+= Neo4j Cloud Virtual Machines
+:slug: neo4j-cloud-vms
+:level: Intermediate
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 1
+:section: Neo4j in the Cloud
+:section-link: guide-cloud-deployment
+
+.Goals
+[abstract]
+This guide describes how Neo4j deployed in cloud virtual machines operate, and how they differ from other installation platforms for Neo4j.
+
+== Basics and File Locations
+
+Neo4j cloud VMs are based off of the Ubuntu distribution of Linux.
+When Neo4j is installed on the VM, the method used to do this matches the link:https://neo4j.com/docs/operations-manual/current/installation/linux/debian/[Debian install instructions] provided in the Neo4j operations manual.
+
+Because cloud images are based on the standard Neo4j Debian package, file locations match the file locations described in the link:https://neo4j.com/docs/operations-manual/3.4/configuration/file-locations/[Neo4j Operations Manual], where `neo4j-home` is set to `/var/lib/neo4j`.
+
+The remainder of this page deals only with topics that are different from a standard Linux install.
+If you have any other question not covered by this page, please consult the Operations Manual for Linux installs.
+
+
+== VM configuration
+
+An important thing to note about cloud version of neo4j is that you should not modify the `/etc/neo4j/neo4j.conf` file directly, but rather modify `/etc/neo4j/neo4j.template`.
+The system service that restarts neo4j calls a shell script called `pre-neo4j.sh`.
+
+In cloud environments, much of the external configuration environment may change.
+A machine may have a different IP address or different set of tags when it restarts.
+Because of this dynamic nature, the `pre-neo4j.sh` script dynamically overwrites the normal `neo4j.conf` file each time the system service starts.
+As a result, you should configure the template used to do those substitutions and not the configuration file itself directly, as it will be automatically overwritten.
+
+
+== Configuration via Tags
+
+On cloud platforms, you may set general `neo4j.conf` configuration parameters as tags on the VM, which will be picked up and substituted into the configuration file.
+In this way, for example, you might set a tag on a VM of `dbms_backup_enabled` with the value `false`, in order to disable the backup port.
+Note that naming conventions for tags follow the same conventions as docker containers, and dots in a configuration parameter's name should be replaced by underscore characters.
+
+When changing VM tags, the configuration is not immediately applied to the Neo4j system service running inside of the VM.
+To affect these changes, please link:https://neo4j.com/docs/operations-manual/current/installation/linux/systemd/[restart the system service].
+
+
+== Interacting with the Neo4j Service
+
+You can get system status for neo4j within the VM by executing the following:
+
+[source,text]
+----
+systemctl status neo4j
+----
+
+For more information or help, feel free to reach out to us on the the link:https://community.neo4j.com/[Neo4j Community Forum^]!
