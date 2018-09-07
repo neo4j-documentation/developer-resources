@@ -20,5 +20,19 @@ $(document).ready( function() {
     app_id: "dt0ig5ab",
     hide_default_launcher: true
   });
+
+ var userInfo = Cookies.getJSON("com.neo4j.accounts.userInfo");
+ if (typeof userInfo !== 'undefined') {
+   var expiresAt = userInfo.exp;
+   var currentTime = Math.ceil((new Date()).getTime() / 1000);
+   if (expiresAt > currentTime) {
+     window.Intercom("update", {
+       app_id: "dt0ig5ab",
+       name: userInfo.name,
+       email: userInfo.email,
+       user_id: userInfo.sub
+     });
+   }
+ }
 });
 </script>
