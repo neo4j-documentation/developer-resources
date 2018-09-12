@@ -22,7 +22,7 @@ This guide provides an overview of options for connecting to Neo4j using Ruby. I
 
 .Prerequisites
 [abstract]
-You should be familiar with link:/developer/get-started/graph-database[graph database concepts] and the property graph model. You should have link:/download[installed Neo4j] and made yourself familiar with our link:/developer/cypher[Cypher Query language].
+You should be familiar with link:/developer/get-started/graph-database[graph database concepts] and the property graph model. You should have link:/download[installed Neo4j^] and made yourself familiar with our link:/developer/cypher[Cypher Query language].
 
 [role=expertise]
 {level}
@@ -31,30 +31,29 @@ toc::[]
 
 include::../_includes/sample_project.adoc[]
 
-// tag::intro[]
 === Neo4j for Rubyists
 
 There are three popular gems for Neo4j:
 
-
-neography (**link:https://github.com/maxdemarzi/neography[GitHub]**)::
+neography (**link:https://github.com/maxdemarzi/neography[GitHub^]**)::
   A thin wrapper for the REST API that also provides additional methods to simplify node and relationship CRUD. It is compatible with Neo4j Server 1.8 through 2.X.
 
-neo4j-core (**link:https://github.com/neo4jrb/neo4j-core[GitHub]**)::
+neo4j-core (**link:https://github.com/neo4jrb/neo4j-core[GitHub^]**)::
   A slightly heavier wrapper that provides a full Cypher DSL in addition to methods to simplify CRUD. It is compatible with Neo4j 2+ in both Server and Embedded modes.
 
-neo4j (**link:https://github.com/neo4jrb/neo4j[GitHub]**)::
+neo4j (**link:https://github.com/neo4jrb/neo4j[GitHub^]**)::
   An OGM based on the ideas of ActiveRecord that provides app-building tools that will make any Ruby on Rails user happy. It relies on neo4j-core and, as a result, is compatible with Neo4j 2+ in both Server and Embedded modes.
-
-// end::intro[]
 
 We also offer a quick online course to using Neo4j and Ruby. 
 
-Follow the guidance and videos here: link:/developer/ruby-course/[*Getting Started with Neo4j and Ruby*].
+Follow the guidance and videos here: link:/developer/ruby-course/[*Getting Started with Neo4j and Ruby*^].
+
 
 ==== Feature Comparison
 
-Each gem fills a different need, so the choice of a gem should be based on the plans for your app and its hosting. You may also want to review frequency of updates, versions of Neo4j supported, and size of the community. Here's a comparison chart of the these three gems to help make your decision.
+Each gem fills a different need, so the choice of a gem should be based on the plans for your app and its hosting.
+You may also want to review frequency of updates, versions of Neo4j supported, and size of the community.
+Here's a comparison chart of the these three gems to help make your decision.
 
 [options="header",frame="topbot"]
 |============================================
@@ -72,6 +71,7 @@ Each gem fills a different need, so the choice of a gem should be based on the p
 
 All of the gems provide full support for Neo4j transactions.
 
+
 === Deployment Considerations
 
 Very often, your gem choice may come down to how you want to deploy:
@@ -82,29 +82,35 @@ server::
 embedded::
   Connecting directly to the Neo4j database files from within your Ruby process (this requires JRuby)
 
-A separate Neo4j server is go-to choice for most developers, especially if they are used to other relational or NoSQL databases in frameworks such as Ruby on Rails. It allows you to have separate web and database servers and allows compatibility with popular PaaSes such as Heroku. If this sounds good to you, any of the popular gems are solid choices and you are free to consider whether you want a thin wrapper or the full framework experience.
+A separate Neo4j server is go-to choice for most developers, especially if they are used to other relational or NoSQL databases in frameworks such as Ruby on Rails.
+It allows you to have separate web and database servers and allows compatibility with popular PaaSes such as Heroku.
+If this sounds good to you, any of the popular gems are solid choices and you are free to consider whether you want a thin wrapper or the full framework experience.
 
-Neo4j Embedded and JRuby is less common but offers blazing fast performance and access to our core Java API. The downside is that JRuby has its own configuration and compatibility demands and hosting a Java app can be difficult. Thankfully, modern app servers such as Torquebox and a strong community provide far more options and resources now than ever before. If this is right for you, the Neo4j-core and Neo4j gems will offer what you need.
+Neo4j Embedded and JRuby is less common but offers blazing fast performance and access to our core Java API.
+The downside is that JRuby has its own configuration and compatibility demands and hosting a Java app can be difficult.
+Thankfully, modern app servers such as Torquebox and a strong community provide far more options and resources now than ever before.
+If this is right for you, the Neo4j-core and Neo4j gems will offer what you need.
+
 
 === Importing data
 
 There are many ways to import your existing data depending on how it is currently structured
 
- * link:http://neo4j.com/docs/stable/query-load-csv.html[**LOAD CSV**] is a clause built into Cypher which allows you to build your own import scripts
- * link:http://neo4j.com/docs/stable/import-tool.html[**neo4j-import**] is a binary command which comes with Neo4j and which takes files in a specific CSV format to import data very quickly
- * link:https://github.com/neo4jrb/neo4apis-activerecord[**neo4apis-activerecord**] is a good choice if you already have a project using `ActiveRecord`.  However it also works to import an existing SQL database even if you don't have any models defined
+ * link:http://neo4j.com/docs/stable/query-load-csv.html[**LOAD CSV**^] is a clause built into Cypher which allows you to build your own import scripts
+ * link:http://neo4j.com/docs/stable/import-tool.html[**neo4j-import**^] is a binary command which comes with Neo4j and which takes files in a specific CSV format to import data very quickly
+ * link:https://github.com/neo4jrb/neo4apis-activerecord[**neo4apis-activerecord**^] is a good choice if you already have a project using `ActiveRecord`.  However it also works to import an existing SQL database even if you don't have any models defined
 
-Get more information on our link:/developer/working-with-data/[Working With Data] page.
+Get more information on our link:/developer/data-import/[Data Import^] page.
 
 === Neography
 
-Written by our own http://twitter.com/maxdemarzi[Max De Marzi], Neography feels very familiar if you’re already used to Neo4j: it’s designed as a thin wrapper above our database APIs.
+Written by our own http://twitter.com/maxdemarzi[Max De Marzi^], Neography feels very familiar if you’re already used to Neo4j: it’s designed as a thin wrapper above our database APIs.
 
 It supports the Neo4j transactional Cypher endpoint as well as the existing REST API and even supports Neo4j-Spatial.
 
-* http://github.com/maxdemarzi/neography/[GitHub]
-* https://github.com/maxdemarzi/neography/wiki[Documentation]
-* http://maxdemarzi.com/category/neography/[Many blog posts with examples]
+* http://github.com/maxdemarzi/neography/[GitHub^]
+* https://github.com/maxdemarzi/neography/wiki[Documentation^]
+* http://maxdemarzi.com/category/neography/[Many blog posts with examples^]
 
 Compared to Neo4j-core, it is notable for its smaller footprint, fewer dependencies, and support for extensions to the REST API. It is the perfect choice for basic communication with a database or as a backend for a custom OGM.
 
@@ -119,38 +125,37 @@ node = neo.create_node("age" => 31, "name" => "Max")
 
 === Neo4j.rb
 
-The link:http://neo4jrb.io/[Neo4j.rb project] is made up of the following Ruby gems:
-
-// tag::neo4jrb-gems[]
+The link:http://neo4jrb.io/[Neo4j.rb project^] is made up of the following Ruby gems:
 
 ---
 
- * link:https://github.com/neo4jrb/neo4j[neo4j] A Object-Graph-Mapper (OGM) for the Neo4j graph database. It tries to follow API conventions established by ActiveRecord but with a Neo4j flavor.
- * link:https://github.com/neo4jrb/neo4j-core[neo4j-core] A low level driver for connecting to Neo4j. Used by the neo4j gem.
- * link:https://github.com/neo4jrb/neo4j-rake_tasks[neo4j-rake_tasks] A set of rake tasks for installing and managing a Neo4j database within your project. Used by the neo4j-core gem.
+ * link:https://github.com/neo4jrb/neo4j[neo4j^] A Object-Graph-Mapper (OGM) for the Neo4j graph database. It tries to follow API conventions established by ActiveRecord but with a Neo4j flavor.
+ * link:https://github.com/neo4jrb/neo4j-core[neo4j-core^] A low level driver for connecting to Neo4j. Used by the neo4j gem.
+ * link:https://github.com/neo4jrb/neo4j-rake_tasks[neo4j-rake_tasks^] A set of rake tasks for installing and managing a Neo4j database within your project. Used by the neo4j-core gem.
 
 ---
 
-// end::neo4jrb-gems[]
+https://github.com/andreasronge[Andreas Ronge^], one of our Swedish friends from Malmö, started writing his canonical Neo4j Ruby driver since before we hit 1.0.
 
-https://github.com/andreasronge[Andreas Ronge], one of our Swedish friends from Malmö, started writing his canonical Neo4j Ruby driver since before we hit 1.0.
+https://github.com/cheerfulstoic[Brian Underwood^] and https://github.com/subvertallchris[Chris Grigg^] joined the project and together released http://neo4j.com/blog/neo4j-rb-3-0-released/[version 3.0^] in September 2014.
+Neo4j.rb 3.0 won a Neo4j Graphie award for "Best Community Contribution" at the 2014 GraphConnect Conference.
 
-https://github.com/cheerfulstoic[Brian Underwood] and https://github.com/subvertallchris[Chris Grigg] joined the project and together released http://neo4j.com/blog/neo4j-rb-3-0-released/[version 3.0] in September 2014. Neo4j.rb 3.0 won a Neo4j Graphie award for "Best Community Contribution" at the 2014 GraphConnect Conference.
-
-Since then Brian and Chris have continued the effort to build new features, improve the API, and increase performance.  In addition to working actively on the http://neo4jrb.io/[Neo4j.rb project], Brian and Chris are very active community members, you can find them online on link:http://stackoverflow.com/questions/ask?tags=neo4j.rb+neo4j+ruby[Stack Overflow], link:https://gitter.im/neo4jrb/neo4j[Gitter], and Twitter as well as in person at meetups and Neo4j events.
+Since then, Brian and Chris have continued the effort to build new features, improve the API, and increase performance.
+In addition to working actively on the http://neo4jrb.io/[Neo4j.rb project^], Brian and Chris are very active community members. You can find them online, as well as in person at meetups and Neo4j events.
 
 Both projects support accessing Neo4j in embedded mode via JRuby and server mode via MRI.
 
-* http://neo4jrb.io/[Neo4j.rb Project Page]
-* http://neo4jrb.readthedocs.org/en/latest/[ReadTheDocs documentation]
-* link:/developer/ruby-course/[Getting Started with Neo4j and Ruby Course]
+* http://neo4jrb.io/[Neo4j.rb Project Page^]
+* http://neo4jrb.readthedocs.org/en/latest/[ReadTheDocs documentation^]
+* link:/developer/ruby-course/[Getting Started with Neo4j and Ruby Course^]
+
 
 ==== Neo4j-core
 
 Similar to Neography, Neo4j-core is a gem that provides low-level communication to a Neo4j server. In addition to basic database communicaton and node/relationship CRUD, Neo4j-core provides strong support for Neo4j 2.0's schema indexes, constraints, labels, and a strong Cypher DSL.
 
-* https://github.com/neo4jrb/neo4j-core[Github]
-* {examples}/movies-ruby-neo4j-core[Example project]
+* https://github.com/neo4jrb/neo4j-core[Github^]
+* {examples}/movies-ruby-neo4j-core[Example project^]
 
 How to get running:
 
@@ -166,14 +171,17 @@ session.query("MATCH (person:Person) RETURN person LIMIT 10")
 session.query.match(person: :Person).return(:person).limit(10).to_a
 ----
 
+
 ==== Neo4j
 
-The neo4j gem uses neo4j-core as an API to connect to the server and provides an ActiveRecord-like experience for use in frameworks. It adds modules allowing the creation of models that look and feel very similar to those found in vanilla Ruby on Rails. The gem builds on Neo4j-core's foundation to streamline all aspects of node and relationship CRUD and provides an extremely advanced, intuitive, flexible DSL for generating Cypher.
+The neo4j gem uses neo4j-core as an API to connect to the server and provides an ActiveRecord-like experience for use in frameworks.
+It adds modules allowing the creation of models that look and feel very similar to those found in vanilla Ruby on Rails.
+The gem builds on Neo4j-core's foundation to streamline all aspects of node and relationship CRUD and provides an extremely advanced, intuitive, flexible DSL for generating Cypher.
 
-* https://github.com/neo4jrb/neo4j[Github]
-* {examples}/movies-ruby-neo4jrb[Example project]
-* Twitter: http://twitter.com/neo4jrb[@neo4jrb], http://twitter.com/cheerfulstoic[Brian], http://twitter.com/subvertallchris[Chris], http://twitter.com/ronge[Andreas]
-* http://blog.brian-underwood.codes/[Many blog posts with examples]
+* https://github.com/neo4jrb/neo4j[Github^]
+* {examples}/movies-ruby-neo4jrb[Example project^]
+* Twitter: http://twitter.com/neo4jrb[@neo4jrb^], http://twitter.com/cheerfulstoic[Brian^], http://twitter.com/subvertallchris[Chris], http://twitter.com/ronge[Andreas^]
+* http://blog.brian-underwood.codes/[Many blog posts with examples^]
 
 How to get running:
 
@@ -196,11 +204,11 @@ person = Person.find_by(name: 'Jim')
 person.friends.books.to_a
 ----
 
+
 ==== Neo4j gem integrations
 
-// tag::neo4jrb-integrations[]
-
-There are many common gems that you'll want to use with your Neo4j database.  Many are supported for the Neo4j.rb project:
+There are many common gems that you'll want to use with your Neo4j database.
+Many are supported for the Neo4j.rb project:
 
 ++++
 <table style="width: 100%">
@@ -210,21 +218,21 @@ There are many common gems that you'll want to use with your Neo4j database.  Ma
 
 Authentication
 
- * link:https://github.com/neo4jrb/devise-neo4j[devise-neo4j]
+ * link:https://github.com/neo4jrb/devise-neo4j[devise-neo4j^]
 
 File Attachment
 
- * link:https://github.com/neo4jrb/neo4jrb-paperclip[neo4jrb-paperclip]
- * link:https://github.com/neo4jrb/carrierwave-neo4j[carrierwave-neo4j]
+ * link:https://github.com/neo4jrb/neo4jrb-paperclip[neo4jrb-paperclip^]
+ * link:https://github.com/neo4jrb/carrierwave-neo4j[carrierwave-neo4j^]
 
 Pagination
 
- * link:https://github.com/neo4jrb/neo4j-will_paginate_redux[neo4j-will_paginate_redux]
- * link:https://github.com/megorei/kaminari-neo4j[kaminari-neo4j]
+ * link:https://github.com/neo4jrb/neo4j-will_paginate_redux[neo4j-will_paginate_redux^]
+ * link:https://github.com/megorei/kaminari-neo4j[kaminari-neo4j^]
 
 ElasticSearch Integration
 
- * link:https://github.com/neo4jrb/neo4j-searchkick[neo4j-searchkick]
+ * link:https://github.com/neo4jrb/neo4j-searchkick[neo4j-searchkick^]
 
 ++++
 </td>
@@ -233,19 +241,19 @@ ElasticSearch Integration
 
 Admin User Interface
 
- * link:https://github.com/cheerfulstoic/rails_admin[rails_admin]
+ * link:https://github.com/cheerfulstoic/rails_admin[rails_admin^]
 
-Integration With the link:https://github.com/neo4j-contrib/spatial[Neo4j Spatial Plugin]
+Integration With the link:https://github.com/neo4j-contrib/spatial[Neo4j Spatial Plugin^]
 
- * link:https://github.com/neo4jrb/neo4jrb_spatial[neo4jrb_spatial]
+ * link:https://github.com/neo4jrb/neo4jrb_spatial[neo4jrb_spatial^]
 
 Ruby Object Manager
 
- * link:https://github.com/rom-rb/rom-neo4j[rom-neo4j]
+ * link:https://github.com/rom-rb/rom-neo4j[rom-neo4j^]
 
 Misc.
 
- * link:https://github.com/subvertallchris/neo4j-even_easier_id[neo4j-even_easier_id] (BSON UUIDs)
+ * link:https://github.com/subvertallchris/neo4j-even_easier_id[neo4j-even_easier_id^] (BSON UUIDs)
 
 ++++
 </td>
@@ -253,7 +261,6 @@ Misc.
 </table>
 ++++
 
-// end::neo4jrb-integrations[]
 
 === Other Drivers
 
@@ -263,5 +270,5 @@ To install: `gem install pacer`
 
 Express yourself clearly and model your application in terms you understand with Pacer – a JRuby gem for building embedded Neo4j applications. Pacer supports Neo4j 1.8 and 1.9 only.
 
-* http://github.com/pangloss/pacer[Pacer on GitHub]
+* http://github.com/pangloss/pacer[Pacer on GitHub^]
 * Author: Darrick Wiebe
