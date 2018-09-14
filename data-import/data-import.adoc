@@ -6,55 +6,40 @@
 
 == image:{img}icon-guide-practical.png[] Data Import
 
-These guides and tutorials are designed to help you understand how to work with your data and Neo4j.
-
-Topics include:
-
-* Data Import
-* Data Export
-* Graph Visualization
+These guides and tutorials are designed to help you understand how to import various types of data into Neo4j.
+From JSON to APIs to another database, you can retrieve data from nearly any source and use it to populate your graph.
 
 
-== [.label]#Guide →# Visualization
+== [.label]#Guide →# Importing CSV files
+
+One of the most common formats of data is in rows and columns on flat files.
+This spreadsheet format is used for a variety of imports and exports to/from relational databases, so it is easy to retrieve existing data this way.
+
+You can also use this format of data for Neo4j!
+The `LOAD CSV` command in Cypher allows us to specify a filepath, headers or not, different value delimiters, and the Cypher statements for how we want to model that tabular data in a graph.
+
+We will walk through the details of how to take any CSV file and import the data into Neo4j easily and quickly.
 
 
-This guide reviews the different tools available for visualizing graph-based data.
+== [.label]#Guide →# Importing API data
 
-* link:/developer/working-with-data/guide-data-visualization[Graph Data Visualization]
+There are now many data sources that use an API to expose data via a URL - many of these in JSON format.
+You can also import this type of data into Neo4j using the APOC standard extension library and executing the commands in the Neo4j Browser command line or in a script.
 
+The `apoc.load.json` command allows us to specify a URL path and any necessary parameters, followed by Cypher statements to model that tree-like data in a graph.
 
-== [.label]#Guide →# Data Import
-
-Existing data comes in many shapes and sizes, and is commonly stored in a relational database.
-This guide explores how to export data from a PostgreSQL database into Neo4j.
-
-* link:/developer/working-with-data/guide-importing-data-and-etl/[Importing Data from Relational Databases]
-* link:/developer/working-with-data/guide-import-csv/[CSV Import Guide]
-
-////
-== [.label.bgorange]#Resources →# Data Import
+This guide shows us how to retrieve data from a JSON-based REST API and import it into Neo4j.
 
 
-// * {manual}/cypher/#query-load-csv[Cypher LOAD CSV]
-* {manual}/cypher/#cypherdoc-importing-csv-files-with-cypher[Importing CSV files with Cypher]
+== [.label]#Guide →# Importing Example Data - Northwind
 
-* http://www.markhneedham.com/blog/?s=load+neo4j[Blog:Mark Needham on Data Import]
-* http://jexp.de/blog/?s=import+neo4j[Blog:Michael Hunger on Data Import]
+This guide will use a common relational data set (Northwind) and walk us through how to transform and import data from a relational database to Neo4j graph database.
 
-== [.label.bgorange]#External →# Blogs, Screencasts & Video Tutorials
+You will learn what steps are needed to retrieve the data from the relational data store and import the same data as a graph in Neo4j, as well as how to take the relational data model and convert it to graph in the process.
 
 
-* http://maxdemarzi.com/?s=visuali[Blog: Max de Marzi on Visualization]
+== [.label]#Guide →# Example Data Sets
 
-Videos:
-
-* http://watch.neo4j.org/video/53205761[Visualizing Graphs Max de Marzi]
-* http://watch.neo4j.org/video/77039000[Graph Visual Analysis]
-
-Visualization Partners:
-
-* http://watch.neo4j.org/video/73872784[How to use Linkurious to Explore and Visualize Graphs]
-* http://watch.neo4j.org/video/88289208[Visualizing Neo4j with KeyLines]
-* http://watch.neo4j.org/video/90897466[Visualizing Neo4j with Tom Sawyer Perspectives]
-
-////
+We want to provide some of our favorite data sets for you to practice your skills and learn more about importing and querying data in Neo4j!
+This guide shows a variety of open-source data sets that you can access and easily import.
+Happy learning!
