@@ -1,4 +1,4 @@
-= Modeling Designs & Tips
+= Modeling Designs
 :slug: modeling-designs
 :level: Beginner
 :toc:
@@ -198,69 +198,6 @@ This can also impact query performance, as you might have double the syntax need
 
 While this is definitely a possible option, you should know the maintenance costs and evaluate whether those costs are overcome by the performance improvements you will see for each needed query.
 If so, being able to use more than one data model is a great solution!
-
-
-== Tips and Tricks of Modeling
-
-As you may have found in reading this guide or in your own experience with graph data modeling, there is no right or wrong way to model your data.
-Some ways may be better-suited to your needs and more performant on the aspects you prioritize, but you have options.
-
-To find the best data model for your needs, it often helps to approach with a few techniques and make data model decisions from that analysis.
-We will talk about a few tips and tricks in the next paragraphs to help you decide upon your data model.
-
-=== Write Your Queries First
-
-Knowing the kinds of questions and queries you want to ask of your data is a great way to determining the structure of your data model.
-If you know your queries need to return results within a certain date range, then you probably should ensure that date is not a property on a node, but rather stored as a separate node or relationship.
-In contrast, finding similar class offerings to a current course might work well with a high-level category hierarchy that makes searching all classes within a subject topic more efficient.
-
-Even if you do not know the exact query syntax just yet, understanding the intention of the system or application you are building and then constructing the model around the business need will help you organize it in a more accurate way.
-
-=== Prioritize Queries
-
-It is very difficult (if not impossible) to find the perfect model for every query or functionality.
-As we talked about when using multiple models in your graph, there are tradeoffs.
-While you may improve certain things, there is no way to get a one-size-fits-all solution.
-
-Instead, you should determine which model _best_ suits your needs.
-You may not be able to max out performance on every individual query, but you may be able to get the most out of your system with certain resources, time, and code.
-
-To do this, you will need to decide which queries must absolutely have maximum performance and which capabilities are critical to provide value.
-This may be a tough decision, but no matter the technology you are working with, these decisions will exist in some facet or other.
-What makes Neo4j more valuable is that the model is flexible and able to change if your priorities adjust over time.
-
-=== Test it Out
-
-You may come across scenarios that you did not realize in the design stages.
-One of the best ways to find these is to actually test the model out.
-
-Loading portions of your data and executing tests and queries on the system will determine if the results you receive fit your needs or your expected performance.
-Again, Neo4j is flexible so that you can adjust the model or optimize your queries to fine-tune the outputs.
-
-Having trouble deciding between one or more models?
-Try creating a proof-of-concept test for each model and both together and see how they operate.
-What is complicated or what is not worth the hassle?
-Is there one that actually performs better in real life or does a multiple-data-model approach truly give you the best results?
-Sometimes, the best way to find out is to test it out with live data.
-
-=== Refactoring your Graph
-
-As mentioned in paragraphs above, changes are always possible with Neo4j.
-The data model is purposely flexible and easy to adjust for this very reason.
-Business needs and priorities tend to fluctuate.
-Users may also change their behaviors and cause shifts for the business.
-
-Cypher allows you to write queries to run mass updates across labels, add/remove properties, or insert additional nodes and relationships into the structure.
-There are also procedures to aid in batching queries and executing updates to cluster instances as available.
-
-For more information in this topic, check out the https://neo4j-contrib.github.io/neo4j-apoc-procedures/[APOC standard library^]!
-
-=== Other Concerns
-
-The size of your data set also can impact queries and performance.
-If you have a smaller data set, then you may not see much performance impact in more complex queries.
-It is only when the amount of your data grows that you may see increased impacts.
-This is where the data model and query optimizations become vital to maximizing the value from your system.
 
 
 == Resources
