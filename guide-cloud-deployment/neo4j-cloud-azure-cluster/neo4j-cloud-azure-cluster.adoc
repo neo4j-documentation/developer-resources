@@ -1,0 +1,129 @@
+= Neo4j Enterprise Causal Cluster on Microsoft Azure
+:slug: neo4j-cloud-azure-cluster
+:level: Intermediate
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 1
+:section: Neo4j in the Cloud
+:section-link: guide-cloud-deployment
+
+.Goals
+[abstract]
+This guide explains how to deploy a Neo4j Enterprise Causal Cluster via Microsoft Azure
+
+.Prerequisites
+[abstract]
+. You have a Neo4j Enterprise license, or a https://neo4j.com/lp/enterprise-cloud/?utm_content=azure-marketplace[trial license for Azure].
+. You should have familiarity with link:/docs/operations-manual/current/clustering/causal-clustering/introduction/[causal cluster architecture^].
+. Knowledge of link:/developer/language-guides[remote drivers] to access Neo4j from your application helps you connect to your cloud-hosted database.
+
+toc::[]
+
+Let's get started!
+
+== Select Neo4j from the Azure Marketplace
+
+Navigate to the https://azuremarketplace.microsoft.com/en-us/marketplace/[Azure Marketplace] and
+search for Neo4j and make sure to select Neo4j Enterprise Causal Cluster.
+
+https://azuremarketplace.microsoft.com/en-us/marketplace/apps/neo4j.neo4j-enterprise-causal-cluster?tab=Overview[This link] will take you 
+directly to the right marketplace entry.
+
+image::{img}marketplace-entry.png[width=700,float=center]
+
+Click "Get it Now".  A dialog will pop up providing basic details of the solution.  Click "Continue".
+
+== Configuring Your Cluster
+
+The next screen provides a description of the solution and some screenshots.  At the very bottom,
+the "Resource Manager" deployment approach will be pre-selected.  Click "Create".
+
+The first step is to configure some basics, shown below.
+image::{img}basics.png[float=center]
+
+The admin account name will be used for SSH access to the machines in your cluster.  We recommend
+creating a new resource group to hold the artifacts of your deployment.  Click "OK".
+
+In the next section, you need to choose a password for the Neo4j user.  You also select the number
+of core and read replica nodes in your cluster, along with the VM size, disk size/type, and IP allocation
+method.  
+
+The cluster size (core and read replica nodes, along with VM size) is the largest cost driver of
+the cluster.  You will be billed for Azure resource time only; as this is a "bring your own license"
+offering, you will not be billed hourly for the Neo4j software.
+
+image::{img}neo4j-settings.png[float=center]
+
+Make sure to choose a meaningful name for the Neo4j Cluster Name.  Most resources in the deployment
+will be named following this pattern.
+
+Click "OK" to continue.
+
+On the summary page, you will see a recap of all of your choices.  At this stage Azure runs
+a validation process; the most common reason that validation might fail is if you choose VMs
+that are too large and exceed your Azure quota.  These can be resolved by choosing smaller VMs
+or by increasing your VM quota.
+
+image::{img}summary.png[float=center]
+
+On the final screen you will be prompted to accept terms and conditions.  At the bottom of
+the page, click "Create".
+
+Your cluster deployment has now begun, and may typically take about 10 minutes to complete.
+You can monitor your deployment by checking the resource group you created and the "Deployments"
+menu underneath of that.
+
+image::{img}deploy-in-progress.png[float=center]
+
+== Start using Neo4j Browser
+
+After the deployment succeeds, we're now ready to start using Neo4j!
+
+Locate the IP address of any of the core VMs created as part of the deployment.  Use your browser 
+to access that IP or hostname as follows:
+
+```
+https://[MY-AZURE-IP]:7473/
+```
+
+You may log in with user "neo4j" and the Neo4j password you chose in the configuration step.
+
+You may see an SSL warning screen, because the deployment out of the box uses an unsigned SSL certificate.
+
+To verify that the cluster has formed correctly, run the cypher statement `CALL dbms.cluster.overview()`.
+
+== How do I SSH into the instance?
+
+You may SSH into any of the machines using the admin credentials chosen in the first step of
+the deployment, and the IP or hostname chosen as part of the deployment process.
+
+== How the Virtual Machines Work
+
+Please consult link:/developer/guide-cloud-deployment/neo4j-cloud-vms[Neo4j Cloud VMs] for details on internals of Google VMs, including how to stop and start system services, configure Neo4j inside of the VM and more.
+
+== Your Cluster Default Configuration
+
+The following notes are provided on your default cluster configuration.
+
+* Ports 7687 (bolt) and 7473 (HTTPS access) are the only ports exposed to the entire internet.
+Consider narrowing access to these ports to only your needed networks.
+External unencrypted HTTP access is disabled by default.
+* Ports 5000, 6000, and 7000 are enabled only for internal network access (`10.0.0.8`), as they are needed for internal cluster communication.
+
+== What's Next
+
+* Visit the link:/docs/operations-manual/current/[Neo4j Operations Manual^] for information on how
+configure all aspects of your cluster
+* Add users and change passwords as necessary
+* Consider creating DNS entries with Google to permit addressing your cluster with client applications under a single host name.
+
+== Terminating your Cluster
+
+Should you need to, you can tear down the infrastructure created by simply deleting the entire
+resource group you created as part of the deployment. 
+
+== Questions?
+
+You can ask questions and connect with other people launching Neo4j in the cloud at the 
+https://community.neo4j.com/c/neo4j-graph-platform/cloud[cloud topic on the Community Site].
