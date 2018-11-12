@@ -54,15 +54,18 @@ Launching the instance is a single command:
 ```
 gcloud config set project my-project-id
 gcloud compute instances create my-neo4j-instance \
-    --image neo4j-enterprise-1-3-3-4 \
+    --image neo4j-enterprise-1-3-4-9-apoc \
     --tags neo4j \
     --image-project launcher-public
 ```
 
 The first line simply sets your project configuration to ensure you know where you are launching
 your instance.  The second line launches an image found in a public project that we have provided.
-The image name `neo4j-enterprise-1-3-3-4` corresponds to an Ubuntu-based image that contains
-Neo4j 1:3.3.4.
+The image name `neo4j-enterprise-1-3-4-9-apoc` corresponds to an Ubuntu-based image that contains
+Neo4j 1:3.3.9, with the APOC plugin.
+
+If you get an "image not found" error, this may mean you are attempting to launch a version that
+Neo4j has not published.
 
 Note that the `gcloud` tool comes with many command line options that aren't covered here.
 https://cloud.google.com/sdk/gcloud/reference/compute/instances/create[consult the documentation]
@@ -127,3 +130,8 @@ Once we've finished using the instance we can run the following command to delet
 ```
 gcloud compute instances delete my-neo4j-instance
 ```
+
+=== Questions?
+
+You can ask questions and connect with other people launching Neo4j in the cloud at the 
+https://community.neo4j.com/c/neo4j-graph-platform/cloud[cloud topic on the Community Site].
