@@ -14,7 +14,7 @@ This guide explains how to deploy a Neo4j Enterprise Causal Cluster via Microsof
 
 .Prerequisites
 [abstract]
-. You have a Neo4j Enterprise license, or a https://neo4j.com/lp/enterprise-cloud/?utm_content=azure-marketplace[trial license for Azure].
+. You have a Neo4j Enterprise license, or a https://neo4j.com/lp/enterprise-cloud/?utm_content=azure-marketplace[trial license for Azure^].
 . You should have familiarity with link:/docs/operations-manual/current/clustering/causal-clustering/introduction/[causal cluster architecture^].
 . Knowledge of link:/developer/language-guides[remote drivers] to access Neo4j from your application helps you connect to your cloud-hosted database.
 
@@ -24,13 +24,13 @@ Let's get started!
 
 == Select Neo4j from the Azure Marketplace
 
-Navigate to the https://azuremarketplace.microsoft.com/en-us/marketplace/[Azure Marketplace] and
+Navigate to the https://azuremarketplace.microsoft.com/en-us/marketplace/[Azure Marketplace^] and
 search for Neo4j and make sure to select Neo4j Enterprise Causal Cluster.
 
-https://azuremarketplace.microsoft.com/en-us/marketplace/apps/neo4j.neo4j-enterprise-causal-cluster?tab=Overview[This link] will take you 
+https://azuremarketplace.microsoft.com/en-us/marketplace/apps/neo4j.neo4j-enterprise-causal-cluster?tab=Overview[This link^] will take you 
 directly to the right marketplace entry.
 
-image::{img}marketplace-entry.png[width=700,float=center]
+image::{img}marketplace-entry.png[width=700,float=center,link="{img}marketplace-entry.png",role="popup-link"]
 
 Click "Get it Now".  A dialog will pop up providing basic details of the solution.  Click "Continue".
 
@@ -40,7 +40,8 @@ The next screen provides a description of the solution and some screenshots.  At
 the "Resource Manager" deployment approach will be pre-selected.  Click "Create".
 
 The first step is to configure some basics, shown below.
-image::{img}basics.png[float=center]
+
+image::{img}basics.png[float=center,link="{img}basics.png",role="popup-link"]
 
 The admin account name will be used for SSH access to the machines in your cluster.  We recommend
 creating a new resource group to hold the artifacts of your deployment.  Click "OK".
@@ -53,7 +54,7 @@ The cluster size (core and read replica nodes, along with VM size) is the larges
 the cluster.  You will be billed for Azure resource time only; as this is a "bring your own license"
 offering, you will not be billed hourly for the Neo4j software.
 
-image::{img}neo4j-settings.png[float=center]
+image::{img}neo4j-settings.png[float=center,link="{img}neo4j-settings.png",role="popup-link"]
 
 Make sure to choose a meaningful name for the Neo4j Cluster Name.  Most resources in the deployment
 will be named following this pattern.
@@ -65,7 +66,7 @@ a validation process; the most common reason that validation might fail is if yo
 that are too large and exceed your Azure quota.  These can be resolved by choosing smaller VMs
 or by increasing your VM quota.
 
-image::{img}summary.png[float=center]
+image::{img}summary.png[float=center,link="{img}summary.png",role="popup-link"]
 
 On the final screen you will be prompted to accept terms and conditions.  At the bottom of
 the page, click "Create".
@@ -74,7 +75,7 @@ Your cluster deployment has now begun, and may typically take about 10 minutes t
 You can monitor your deployment by checking the resource group you created and the "Deployments"
 menu underneath of that.
 
-image::{img}deploy-in-progress.png[float=center]
+image::{img}deploy-in-progress.png[float=center,link="{img}deploy-in-progress.png",role="popup-link"]
 
 == Start using Neo4j Browser
 
@@ -126,4 +127,4 @@ resource group you created as part of the deployment.
 == Questions?
 
 You can ask questions and connect with other people launching Neo4j in the cloud at the 
-https://community.neo4j.com/c/neo4j-graph-platform/cloud[cloud topic on the Community Site].
+https://community.neo4j.com/c/neo4j-graph-platform/cloud[cloud topic on the Community Site^].
