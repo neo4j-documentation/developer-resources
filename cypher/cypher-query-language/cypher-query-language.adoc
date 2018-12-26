@@ -1,135 +1,347 @@
-= Intro to Cypher
+= Cypher Basics I
 :slug: cypher-query-language
 :level: Beginner
 :toc:
 :toc-placement!:
 :toc-title: Overview
-:toclevels: 2
+:toclevels: 1
 :section: Cypher Query Language
 :section-link: cypher
 
 .Goals
 [abstract]
-This guide explains the basic concepts of Cypher, Neo4j's query language.
+This guide explains the basic concepts of Cypher, Neo4j's graph query language.
 You should be able to read and understand Cypher queries after finishing this guide.
 
 .Prerequisites
 [abstract]
-You should have familiarized yourself with link:/developer/get-started/graph-database[Graph Databases] and the link:/developer/get-started/graph-database#property-graph[Property Graph Model].
+You should be familiar with link:/developer/get-started/graph-database[graph database] concepts and the link:/developer/get-started/graph-database#property-graph[property graph model].
 
 [role=expertise]
 {level}
 
 toc::[]
 
+== Why Cypher?
 
-== About Cypher
+We already know that Neo4j's property graph model is composed of nodes and relationships, which may also have properties associated with them.
+However, nodes and relationships are the simple components that build the most valuable and powerful piece of the property graph model - the pattern.
+Patterns are comprised of node and relationship elements and can express simple or complex traversals and paths.
 
-Cypher is a declarative, SQL-inspired language for describing patterns in graphs visually using an ascii-art syntax.
+Pattern recognition is fundamental to the way that the brain works.
+Because of this, humans are very good at working with patterns (think of visual diagrams or even memory-matching games).
+Cypher is also heavily based on patterns and is designed to recognize various versions of these patterns in data, making it a simple and logical language for users to learn.
 
-It allows us to state *what* we want to select, insert, update or delete from our graph data without requiring us to describe exactly *how* to do it.
+== Cypher Syntax
 
-image::{img}cypher_pattern_simple.png[]
+The video below walks through some background on Cypher, basic syntax, and some intermediate examples.
+The concepts in the video are discussed in the paragraphs below, as well as in upcoming guides.
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/l76udM3wB4U" frameborder="0" allowfullscreen></iframe>
+++++
+
+Since Cypher is designed to be human-readable, it's construct is based on English prose and iconography to make syntax visual and easily understood.
+For example, take a look at the simple graph data in the image below.
+How would you represent this data in English?
+_NOTE: the answer is in the paragraph below_
+
+image::{img}cypher_graph_v1.jpg[link="{img}cypher_graph_v1.jpg",role="popup-link"]
 
 
-=== Nodes
-
-Cypher uses ASCII-Art to represent patterns.
-We surround nodes with parentheses which look like circles, e.g. `(node)`.
-If we later want to refer to the node, we'll give it a variable like `(p)` for person or `(t)` for thing.
-In real-world queries, we'll probably use longer, more expressive variable names like `(person)` or `(thing)`.
-If the node is not relevant to your question, you can also use empty parentheses `()`.
-
-[TIP]
+[HINT]
 --
-Usually, the relevant *labels* of the node are provided to distinguish between entities and optimize execution, like `(p:Person)`.
+Jennifer likes Graphs. Jennifer is friends with Michael. Jennifer works for Neo4j.
 --
 
-We might use a pattern like `+(person:Person)-->(thing:Thing)+` so we can refer to them later, for example, to access properties like `person.name` and `thing.quality`.
+Cypher syntax will build upon this English-language structure we just created.
+In the next section, we will see exactly how to write this example in Cypher.
 
-The more general structure is:
+=== Cypher Comments
+
+As you work through this guide, you will see comments in the Cypher code to help explain the syntax or what a query is doing.
+Comments in Cypher are the same as in many programming languages.
+You can add comments by starting a line with `//` and putting text after the slashes.
+Just like in other languages, starting the line with two forward slashes will mean that anything on that line will become a comment.
+
+[HINT]
+--
+This is especially helpful to use in Neo4j Browser when saving queries.
+If you add a comment before the query, the comment automatically becomes the name of the saved query!
+--
+
+== Representing Nodes in Cypher
+
+Since Cypher uses ASCII-Art for patterns, we need a visual way to represent each component of our pattern above.
+We know that the main components of the property graph model are nodes and relationships.
+Remember that nodes are the data entities in your graph and that you can often identify nodes by finding the nouns or objects in your data model.
+In our example, `Jennifer`, `Michael`, `Graphs`, and `Neo4j` are our nodes.
+
+image::{img}cypher_graph_nodes.jpg[link="{img}cypher_graph_nodes.jpg",role="popup-link"]
+
+To depict nodes in Cypher, we surround the node with parentheses, e.g. `(node)`.
+Notice how the parentheses look similar to the circles that the visual representation uses for nodes in our data model.
+
+=== Node Variables
+
+If we later want to refer to the node, we can give it a variable like `(p)` for person or `(t)` for thing.
+In real-world queries, we might use longer, more expressive variable names like `(person)` or `(thing)`.
+Just like in programming language variables, you can name your variables what you want and reference them by that same name later in a query.
+
+If the node is not relevant to your return results, you can specify an anonymous node using empty parentheses `()`.
+This means that you will not be able to return this node later in the query.
+
+=== Node Labels
+
+If you remember from the property graph data model, you can also group similar nodes together by assigning a node label.
+Labels are kind of like tags and allow you to specify certain types of entities to look for or create.
+In our example, `Person`, `Technology`, and `Company` are the labels.
+
+You can kind of think of this like telling SQL which table to look for the particular row.
+Just like to tell SQL to query a person's information from a `Person` or `Employee` or `Customer` table, you can also tell Cypher to only check those labels for that information.
+This helps Cypher distinguish between entities and optimize execution for your queries.
+It is always better to use node labels in your queries, where possible.
+
+[NOTE]
+--
+If you do not specify a label for Cypher to filter out non-matching node categories, the query will check all of the nodes in the database!
+As you can imagine, this would be cumbersome if you had a very large graph.
+--
+
+=== Example: Nodes in Cypher
+
+Using our graph example above, let's see how we could specify our nodes.
+
+[source,cypher]
+----
+()                  //anonymous node (no label or variable) can refer to any node in the database
+(p:Person)          //using variable p and label Person
+(:Technology)       //no variable, label Technology
+(work:Company)      //using variable work and label Company
+----
+
+== Representing Relationships in Cypher
+
+To fully utilize the power of a graph database, we also need to express the relationships between our nodes.
+Relationships are represented in Cypher using an arrow `+-->+` or `+<--+` between two nodes.
+Notice how the syntax looks like the arrows and lines connecting our nodes in the visual representation.
+Additional information, such as how nodes are connected (relationship type) and any properties pertaining to the relationship, can be placed in square brackets inside of the arrow.
+
+In our example, the lines with `LIKES`, `IS_FRIENDS_WITH`, and `WORKS_FOR` between nodes are our relationships.
+
+image::{img}cypher_graph_rels.jpg[link="{img}cypher_graph_rels.jpg",role="popup-link"]
+
+Undirected relationships are represented with no arrow and just two dashes `+--+`.
+This means that the relationship can be traversed in either direction.
+While a direction *must* be inserted to the database, it can be matched with an undirected relationship where Cypher ignores any particular direction and retrieves the relationship and connected nodes, no matter what the physical direction is.
+This allows the queries to be flexible and not force the user to know the physical direction of the relationship stored in the database.
+
+[NOTE]
+--
+If data is stored with one relationship direction, and a query specifies the wrong direction, Cypher will not return any results.
+In these cases where you may not be sure of direction, it is better to use an undirected relationship and retrieve some results.
+
+[source,cypher]
+----
+//data stored with this direction
+CREATE (p:Person)-[:LIKES]->(t:Technology)
+
+//query relationship backwards will not return results
+MATCH (p:Person)<-[:LIKES]-(t:Technology)
+
+//better to query with undirected relationship unless sure of direction
+MATCH (p:Person)-[:LIKES]-(t:Technology)
+----
+--
+
+=== Relationship Types
+
+Relationship types categorize and add meaning to a relationship, similar to how labels group nodes.
+In our property graph data model, relationships show how nodes are connected and related to each other.
+You can usually identify relationships in your data model by looking for actions or verbs.
+
+You can specify any type of relationship you want between nodes, but we recommend good naming conventions using verbs and actions.
+Poor relationship type names make it more difficult to both read and write Cypher (remember, it should sound like English!).
+
+For example, let us look at the relationship types from our example graph.
+
+* `[:LIKES]` - makes sense when we put nodes on either side of the relationship (Jennifer LIKES Graphs)
+* `[:IS_FRIENDS_WITH]` - makes sense when we put nodes with it (Jennifer IS_FRIENDS_WITH Michael)
+* `[:WORKS_FOR]` - makes sense with nodes (Jennifer WORKS_FOR Neo4j)
+
+=== Relationship Variables
+
+Just as we did with nodes, if we want to refer to a relationship later in a query, we can give it a variable like `[r]` or `[rel]`.
+We can also use longer, more expressive variable names like `[likes]` or `[knows]`.
+If you do not need to reference the relationship later, you can specify an anonymous relationship using two dashes `+--+, +-->+, +<--+`.
+
+As an example, you could use either `+-[rel]->+` or `+-[rel:LIKES]->+` and call the `rel` variable later in your query to reference the relationship and its details.
+
+[NOTE]
+--
+If you forget the colon in front of a relationship type like this `+-[LIKES]->+`, it represents a variable (not a relationship type).
+Since no relationship type declared, Cypher will search all types of relationships.
+--
+
+== Node or Relationship Properties
+
+We have talked about how to write Cypher for nodes, relationships, and labels.
+The last piece of our property graph data model is for properties.
+Remember that properties are name-value pairs that provide additional details to our nodes and relationships.
+
+To represent these in Cypher, we can use curly braces within the parentheses of a node or the brackets of a relationship.
+The name and value of the property then go inside the curly braces.
+Our example graph has both a node property (`name`) and a relationship property (`since`).
+
+* Node property: `(p:Person {name: 'Jennifer'})`
+* Relationship property: `+-[rel:IS_FRIENDS_WITH {since: 2018}]->+`
+
+image::{img}cypher_graph_props.jpg[link="{img}cypher_graph_props.jpg",role="popup-link"]
+
+Properties can have values with a variety of data types.
+To see the full list that Cypher offers, see the Neo4j Developer Manual section on https://neo4j.com/docs/developer-manual/3.4/cypher/syntax/values/[values and types^].
+
+== Patterns in Cypher
+
+Nodes and relationships make up the building blocks for graph patterns.
+These building blocks can come together to express simple or complex patterns.
+Patterns are the most powerful capability of graphs.
+In Cypher, they can be written as a continuous path or separated into smaller patterns and tied together with commas.
+
+To show a pattern in Cypher, we need to combine the node and relationship syntaxes we have learned so far.
+Let us use our example of `Jennifer likes Graphs`.
+
+In Cypher, this pattern would look like the code below.
 
 [source, cypher]
 ----
-MATCH (node:Label) RETURN node.property
-
-MATCH (node1:Label1)-->(node2:Label2)
-WHERE node1.propertyA = {value}
-RETURN node2.propertyA, node2.propertyB
+(p:Person {name: "Jennifer"})-[rel:LIKES]->(g:Technology {type: "Graphs"})
 ----
 
-[role=side-nav]
-* link:/developer/cypher/guide-sql-to-cypher[SQL to Cypher]
-* link:/graphacademy/online-course[Free Online Training]
-* link:/docs/cypher-refcard/current/[Cypher Reference Card]
-* {manual}/cypher/[Manual: Cypher Reference]
+This bit of Cypher tells the pattern we want, but it does not tell whether we want to find that existing pattern or insert it as a new pattern.
+To tell Cypher what we want it to do with the pattern, we need to add some keywords.
 
-[WARNING]
---
-Please note that _node-labels_, _relationship-types_ and _property-names_ are *case-sensitive* in Cypher.
-All the other clauses, keywords and functions are not, but should be cased consistently according to the style used here.
---
+== Cypher Keywords
 
+Just like with most programming languages, there are a few words in Cypher reserved for specific actions in parts of a query.
+We need to be able to create, read, update, or delete data in Neo4j, and keywords help us accomplish that functionality.
+Let us look more in detail at two common keywords (more will be covered in upcoming guides).
 
-=== Relationships
+=== MATCH
 
-To fully utilize the power of our graph database we want to express more complex patterns between our nodes.
-Relationships are basically an arrow `+-->+` between two nodes.
-Additional information can be placed in square brackets inside of the arrow.
+The `MATCH` keyword in Cypher is what searches for an existing node, relationship, label, property, or pattern in the database.
+If you are familiar with SQL, `MATCH` works pretty much like `SELECT` in SQL.
 
-This can be
+You can find all node labels in the database, search for a particular node, find all the nodes with a particular relationship, look for patterns of nodes and relationships, and much more using `MATCH`.
 
-* relationship-types like `+-[:KNOWS|:LIKE]->+`
-* a variable name `+-[rel:KNOWS]->+` before the colon
-* additional properties `+-[{since:2010}]->+`
-* structural information for paths of variable length `+-[:KNOWS*..4]->+`
+=== RETURN
 
-To access information about a relationship, we can assign it a variable, for later reference.
-It is placed in front of the colon `+-[rel:KNOWS]->+` or stands alone `+-[rel]->+`.
+The `RETURN` keyword in Cypher specifies what values or results you might want to return from a Cypher query.
+You can tell Cypher to return nodes, relationships, node and relationship properties, or patterns in your query results.
+`RETURN` is not required when doing write procedures, but is needed for reads.
 
-[WARNING]
---
-If you forget the colon in front of a relationship-type, like this `+-[KNOWS]->+` it does represent a variable and the relationship has *no* relationship-type declared.
---
+The node and relationship variables we discussed earlier become important when using `RETURN`.
+In order to bring back nodes, relationships, properties, or patterns, you need to have variables specified in your `MATCH` clause for the data you want to return.
 
-General Syntax:
+== Cypher Examples
+
+Let us look at some examples of the syntax we have learned so far using `MATCH` and `RETURN` keywords.
+Each example will start with an explanation of what we are trying to achieve and have an image below of the results of the query run in Neo4j Browser.
+
+* *Example 1:* Find the labeled `Person` nodes in the graph.
+Note that we must use a variable like `p` for the `Person` node if we want retrieve the node in the `RETURN` clause.
 
 [source, cypher]
 ----
-MATCH (n1:Label1)-[rel:TYPE]->(n2:Label2)
-WHERE rel.property > {value}
-RETURN rel.property, type(rel)
+MATCH (p:Person)
+RETURN p
 ----
 
+image::{img}cypher_example1_labelvar.jpg[link="{img}cypher_example1_labelvar.jpg",role="popup-link"]
 
-=== Patterns
 
-Nodes and relationship expressions are the building blocks for more complex patterns.
-Patterns can be written continuously or separated with commas.
-You can refer to variables declared earlier or introduce new ones.
+* *Example 2:* Find `Person` nodes in the graph that have a name of 'Jennifer'.
+Remember that we can name our variable anything we want, as long as we reference that same name later.
 
-* friend-of-a-friend `+(user)-[:KNOWS]-(friend)-[:KNOWS]-(foaf)+`
-* shortest path: `+path = shortestPath( (user)-[:KNOWS*..5]-(other) )+`
-* collaborative filtering `+(user)-[:PURCHASED]->(product)<-[:PURCHASED]-()-[:PURCHASED]->(otherProduct)+`
-* tree navigation `+(root)<-[:PARENT*]-(leaf:Category)-[:ITEM]->(data:Product)+`
+[source, cypher]
+----
+MATCH (jenn:Person {name: 'Jennifer'})
+RETURN jenn
+----
 
-[TIP]
+image::{img}cypher_example2_labelprop.jpg[link="{img}cypher_example2_labelprop.jpg",role="popup-link"]
+
+
+* *Example 3:* Find which `Company` Jennifer works for.
+
+Explanation: we know we need to find Jennifer's `Person` node, and we need to find the `Company` node she is connected to.
+To do that, we need to follow the `WORKS_FOR` relationship from Jennifer's `Person` node to the `Company` node.
+We have also specified a label of `Company` so that the query will only look at nodes with that label.
+Since we only care about returning the company in this query, we need to give that node a variable (`company`) but do not need to give variables for the `Person` node or `WORKS_FOR` relationship.
+
+[source, cypher]
+----
+MATCH (:Person {name: 'Jennifer'})-[:WORKS_FOR]->(company:Company)
+RETURN company
+----
+
+image::{img}cypher_example3_returnnode.jpg[link="{img}cypher_example3_returnnode.jpg",role="popup-link"]
+
+
+* *Example 4:* Find which `Company` Jennifer works for, but this time, return only the name of the company.
+
+Explanation: this query is very similar to Example 3.
+Example 3 returned the entire `Company` node with all its properties.
+For this example, we still need to find Jennifer's company, but now we only care about its name.
+We will need to access the node's `name` property using the syntax `variable.property` to return the name value.
+
+[source, cypher]
+----
+MATCH (:Person {name: 'Jennifer'})-[:WORKS_FOR]->(company:Company)
+RETURN company.name
+----
+
+image::{img}cypher_example4_returnprop.jpg[link="{img}cypher_example4_returnprop.jpg",role="popup-link"]
+
+== Aliasing Return Values
+
+Not all properties are simple like our `company.name` example above.
+Some properties have poor names due to property length, multi-word descriptions, developer jargon, and other shortcuts.
+These naming conventions can be difficult to read, especially if they end up on reports and other user-facing interfaces.
+
+Just like with SQL, you can rename return results by using the `AS` keyword and aliasing the property with a cleaner name.
+We can look at a mocked-up example to list a customer's orders and the number of items in the order.
+
+[source,cypher]
+----
+//poorly-named property
+MATCH (kristen:Customer {name:'Kristen'})-[rel:PURCHASED]-(order:Order)
+RETURN order.orderId, order.orderDate, kristen.customerIdNo, order.orderTotalNoOfItems
+
+//cleaner printed results with aliasing
+MATCH (kristen:Customer {name:'Kristen'})-[rel:PURCHASED]-(order:Order)
+RETURN order.orderId AS OrderID, order.orderDate AS `Purchase Date`,
+       kristen.customerIdNo AS CustomerID, order.orderNumOfLineItems AS `Number Of Items`
+----
+
+.Results Without Aliases:
+image:{img}cypher_without_aliases.jpg[link="{img}cypher_without_aliases.jpg",role="popup-link"]
+
+.Results With Aliases:
+image:{img}cypher_with_aliases.jpg[link="{img}cypher_with_aliases.jpg",role="popup-link"]
+
+[NOTE]
 --
-Patterns can be used to `MATCH` and `CREATE` data, but also (evaluating to a list of paths) in expressions, predicates and results.
+You can specify return aliases that have spaces by using the backtick character before and after the alias (order.orderDate AS `Purchase Date`).
+If you do not have an alias that contains spaces, then you do not need to use backticks.
 --
 
-++++
-<object type="image/svg+xml" data="//s3.amazonaws.com/artifacts.opencypher.org/railroad/Pattern.svg"></object>
-++++
+=== Next Steps
 
-Let's try out what we've learned.
-See link:/graphgist/34b3cf4c-da1e-4650-81e4-3a7107336ac9[an interactive live example] of the exercise below.
+Now that you know how to write nodes, relationships, properties, and patterns in Cypher for reading existing data, you can begin exploring data that exists in a Neo4j database.
+We will look at more `MATCH` capabilities in an upcoming guide, as well as how to write Cypher for create, update, and delete operations with your data.
 
-include::example/first-steps-cypher.adoc[leveloffset=+1]
+=== Resources
 
-[role=side-nav]
-* link:/learning-neo4j-book/[Free Book: Learning Neo4j]
-* http://neo4j.com/graphgists[Live Graph Examples]
-* http://watch.neo4j.org/video/103466968[Webinar: Neo4j Intro by Nicole White]
-* https://www.airpair.com/neo4j/posts/getting-started-with-neo4j-and-cypher[Article: Getting Started with Neo4j and Cypher by Eve Freeman]
-
+* https://neo4j.com/docs/cypher-manual/current/clauses/match/[Neo4j Cypher Manual: MATCH^]
+* https://neo4j.com/docs/cypher-manual/current/clauses/return/[Neo4j Cypher Manual: RETURN^]
