@@ -1,0 +1,297 @@
+= Filtering Query Results
+:slug: filtering-query-results
+:level: Beginner
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 1
+:section: Cypher Query Language
+:section-link: cypher
+
+.Goals
+[abstract]
+Building on the Cypher Basics I and II guides, this guide continues with additional concepts of Cypher for filtering and query criteria.
+Upon finishing this guide, you should be able to filter results on properties and patterns for ranges and other expanded searches.
+
+.Prerequisites
+[abstract]
+You should be familiar with link:/developer/get-started/graph-database[graph database] concepts and the link:/developer/get-started/graph-database#property-graph[property graph model].
+This guide is a continuation of the link:/developer/cypher/cypher-query-language[Cypher Basics I] and link:/developer/cypher/cypher-basics-ii/[Cypher Basics II] sections.
+You should be familiar with those concepts before walking through this guide.
+
+[role=expertise]
+{level}
+
+toc::[]
+
+== Filtering Queries
+
+The Cypher you have written and learned so far has only tested properties with specific values.
+It has operated on the fact that those values must exist or no results will be returned.
+
+However, most of the time, developers are not querying for a narrow value and need more flexibility in retrieving data for ranges, partial values, or other criteria.
+Cypher provides this capability through the common `WHERE` clause.
+We will look at examples of different ways to apply the `WHERE` clause to retrieve various results, but many will be similar to standard uses of the same clause in other programming languages.
+
+All of our examples will continue with the graph example we have been using in the previous guides, but include some more data for some of our later queries.
+Below is an image of the new graph.
+
+We have added more `Person` nodes (blue) who `WORK_FOR` different `Company` nodes (red) and `LIKE` different `Technology` nodes.
+Each person could also have multiple `IS_FRIENDS_WITH` relationships to other people.
+This gives us a network of people, the companies they work for, and the technologies they like.
+
+image::{img}cypher_graph_v2.jpg[link="{img}cypher_graph_v2.jpg",role="popup-link"]
+
+[#where-clause]
+== The WHERE clause
+
+Cypher is designed to be flexible and easy-to-learn, so there is often more than one way to write syntax.
+This is also the case with the `WHERE` clause.
+You can write a query that looks for specific values, just like we have been doing in the last few guides, but you can also use the `WHERE` clause in the same manner.
+Both queries execute with the same performance, so which way you write them is entirely up to your preference and comfort.
+
+Below is a comparison of the syntax using our example from previous guides.
+Both queries will do the same thing and return the same results.
+
+[source, cypher]
+----
+//query using equality check in the MATCH clause
+MATCH (j:Person {name: 'Jennifer'})
+RETURN j
+
+//query using equality check in the WHERE clause
+MATCH (j:Person)
+WHERE j.name = 'Jennifer'
+RETURN j
+----
+
+[#filter-negative]
+=== Negating Properties
+
+Sometimes, you may want to return results that do not match a property value.
+In this case, you need to search for where value is not something using `WHERE NOT`.
+
+There are a few types of these comparisons that you can run in Cypher with the standard boolean operators `AND`, `OR`, `XOR`, and `NOT`.
+To show a comparison using `NOT`, we can write the opposite of the query example just above.
+
+[source, cypher]
+----
+//query using inequality check in the WHERE clause
+MATCH (j:Person)
+WHERE NOT j.name = 'Jennifer'
+RETURN j
+----
+
+[#filter-ranges]
+=== Querying Ranges of Values
+
+There are frequently queries where you want to look for data within a certain range.
+Date or number ranges can be used to check for events within a certain timeline, age values, or other uses.
+
+The syntax for this criteria is very similar to SQL and other programming language logic structures for checking ranges of values.
+Let's look at an example below.
+
+[source, cypher]
+----
+MATCH (p:Person)
+WHERE 3 <= p.yearsExp <= 7
+RETURN p
+----
+
+image::{img}cypher_filter_ranges.jpg[link="{img}cypher_filter_ranges.jpg",role="popup-link"]
+
+[#filter-exists]
+=== Testing if a Property Exists
+
+You may only be interested if a property exists on a node or relationship.
+For instance, you might want to check which customers in your system have Twitter handles, so you can show relevant content.
+Or, you could check if the all of your employees have a start date property to verify which entities might need updated.
+
+Remember: in Neo4j, a property only exists (is stored) if it has a value.
+A null property will not be stored.
+This ensures that only valuable, necessary information is retained for your nodes and relationships.
+
+To write this type of existence check, you simply need to use the `WHERE` clause and the `exists()` method for that property.
+The Cypher code is written in the block below.
+
+[source, cypher]
+----
+//Query1: find all users who have a birthdate property
+MATCH (p:Person)
+WHERE exists(p.birthdate)
+RETURN p.name
+
+//Query2: find all WORKS_FOR relationships that have a startYear property
+MATCH (p:Person)-[rel:WORKS_FOR]->(c:Company)
+WHERE exists(rel.startYear)
+RETURN p, rel, c
+----
+
+.Query1 Results:
+image:{img}cypher_filter_exists_nodeProp.jpg[link="{img}cypher_filter_exists_nodeProp.jpg",role="popup-link"]
+
+.Query2 Results:
+image:{img}cypher_filter_exists_relProp.jpg[link="{img}cypher_filter_exists_relProp.jpg",role="popup-link"]
+
+[#filter-strings]
+== Checking Strings - Partial Values, Fuzzy Searches, and More
+
+Some scenarios require query syntax that matches on partial values or broad categories within a string.
+To do this kind of query, you need some flexibility and options for string matching and searches.
+Whether you are looking for a string that starts with, ends with, or includes a certain value, Cypher offers the ability to handle it performantly and easily.
+
+There are a few keywords in Cypher used with the `WHERE` clause to test string property values.
+The `STARTS WITH` keyword allows you check the value of a property that begins with the string you specify.
+With the `CONTAINS` keyword, you can check if a specified string is part of a property value.
+The `ENDS_WITH` keyword checks the end of the property string for the value you specify.
+
+An example of each is in the Cypher block below.
+
+[source, cypher]
+----
+//check if a property starts with 'M'
+MATCH (p:Person)
+WHERE p.name STARTS WITH 'M'
+RETURN p.name
+
+//check if a property contains 'a'
+MATCH (p:Person)
+WHERE p.name CONTAINS 'a'
+RETURN p.name
+
+//check if a property ends with 'n'
+MATCH (p:Person)
+WHERE p.name ENDS WITH 'n'
+----
+
+You can also use regular expressions to test the value of strings.
+For example, you could look for all the `Person` nodes that share a first name or you could find all the classes with a certain department code.
+
+Let's look at an example.
+
+[source, cypher]
+----
+MATCH (p:Person)
+WHERE p.name =~ 'Jo.*'
+RETURN p.name
+----
+
+image::{img}cypher_filter_regex.jpg[link="{img}cypher_filter_regex.jpg",role="popup-link"]
+
+Just like in SQL and other languages, you can check if a property value is a value in a list.
+The `IN` keyword allows you to specify an array of values and validate a property's contents against each one in the list.
+
+Here is an example:
+
+[source, cypher]
+----
+MATCH (p:Person)
+WHERE p.yearsExp IN [1, 5, 6]
+RETURN p.name, p.yearsExp
+----
+
+image::{img}cypher_filter_list.jpg[link="{img}cypher_filter_list.jpg",role="popup-link"]
+
+[#filter-patterns]
+== Filtering on Patterns
+
+One thing that makes graph unique is its focus on relationships.
+Just as you can filter queries based on node labels or properties, you can also filter results based on relationships or patterns.
+This allows you to test if a pattern also has a certain relationship or doesn't, or if another pattern exists.
+
+The Cypher code below shows how this is done.
+
+[source, cypher]
+----
+//Query1: find which people are friends of someone who works for Neo4j
+MATCH (p:Person)-[r:IS_FRIENDS_WITH]->(friend:Person)
+WHERE exists((p)-[:WORKS_FOR]->(:Company {name: 'Neo4j'}))
+RETURN p, r, friend
+
+//Query2: find Jennifer's friends who do not work for a company
+MATCH (p:Person)-[r:IS_FRIENDS_WITH]->(friend:Person)
+WHERE p.name = 'Jennifer'
+AND NOT exists((friend)-[:WORKS_FOR]->(:Company))
+RETURN friend.name
+----
+
+.Query1 Results:
+image:{img}cypher_filter_exists_ptrn.jpg[link="{img}cypher_filter_list.jpg",role="popup-link"]
+
+.Query2 Results:
+image:{img}cypher_filter_notExists_ptrn.jpg[link="{img}cypher_filter_list.jpg",role="popup-link"]
+
+[#filter-optional]
+=== Optional Patterns
+
+There are cases where you might want to retrieve results from patterns, even if they do not match the entire pattern or all of the criteria.
+This is how an outer join in SQL functions.
+In Cypher, you can use an `OPTIONAL MATCH` pattern to try to match it, but if it doesn't find results, those rows will return `null` for those values.
+
+We can see how this would look in Cypher by querying for people whose name starts with a letter and who may work for a company.
+
+[source, cypher]
+----
+//find all people whose name starts with J and who may work for a company.
+MATCH (p:Person)
+WHERE p.name STARTS WITH 'J'
+OPTIONAL MATCH (p)-[:WORKS_FOR]-(other:Company)
+RETURN p.name, other.name
+----
+
+image::{img}cypher_filter_optMatch.jpg[link="{img}cypher_filter_optMatch.jpg",role="popup-link"]
+
+Notice that Joe is returned because his name starts with the letter 'J', but his company name is null.
+That is because he does not have a `WORKS_FOR` relationship to a company node.
+Since we used optional match, his `Person` node is still returned from the first match, but the second match is not found, so returns null.
+
+[NOTE]
+--
+To see the difference, try running the query without the `OPTIONAL` in front of the second match.
+You can see that Joe's row is no longer returned.
+That is because Cypher reads the statement with an `AND` match, so that the person must match the first criteria (name starts with 'J') and the second criteria (person works for a company).
+--
+
+[#filter-paths]
+== More Complex Patterns
+
+We are able to handle many simple graph queries, even at this point, but what happens when we want to extend our patterns past a single relationship?
+What if we wanted to know who else likes graphs besides Jennifer?
+
+We handle this functionality and many others by simply adding on to our first pattern or matching additional patterns.
+Let us look at a couple of examples.
+
+[source, cypher]
+----
+//Query1: find who likes graphs besides Jennifer
+MATCH (j:Person {name: 'Jennifer'})-[r:LIKES]-(graph:Technology {type: 'Graphs'})-[r2:LIKES]-(p:Person)
+RETURN p.name
+
+//Query2: find who likes graphs besides Jennifer that she is also friends with
+MATCH (j:Person {name: 'Jennifer'})-[:LIKES]->(:Technology {type: 'Graphs'})<-[:LIKES]-(p:Person),
+      (j)-[:IS_FRIENDS_WITH]-(p)
+RETURN p.name
+----
+
+.Query1 Results:
+image:{img}cypher_filter_extPattern.jpg[link="{img}cypher_filter_extPattern.jpg",role="popup-link"]
+
+.Query2 Results:
+image:{img}cypher_filter_twoPattern.jpg[link="{img}cypher_filter_twoPattern.jpg",role="popup-link"]
+
+Notice that on the second query, we used a comma after the first `MATCH` line and added another pattern to match on the next line.
+This allows us to chain together patterns, similar to when we used the `WHERE exists(<pattern>)` syntax above.
+With this structure, though, we can add multiple different patterns and link them together, allowing us to traverse various pieces of the graph with certain patterns.
+
+
+=== Next Steps
+
+We have seen how to use the `WHERE` clause to filter property values and how to search properties for partial values or string matches.
+Patterns helped us maneuver through the graph and check data for specific relationships or paths.
+In the next section, we will learn how to use aggregation in Cypher and how to do more with the return results.
+
+
+=== Resources
+
+* link:/docs/cypher-manual/current/clauses/where/[Neo4j Cypher Manual: Filtering with WHERE^]
+* link:/docs/cypher-manual/current/clauses/optional-match/[Neo4j Cypher Manual: OPTIONAL MATCH^]

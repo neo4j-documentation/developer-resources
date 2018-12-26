@@ -1,0 +1,473 @@
+= Cypher Style Guide
+:slug: cypher-style-guide
+:level: Beginner
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 1
+:section: Cypher Query Language
+:section-link: cypher
+
+.Goals
+[abstract]
+This guide will show some of the syntax recommendations for building clean, easy-to-read Cypher queries.
+At the end of this page, you will know how to improve readability of keywords, properties, labels, clauses, and other components.
+
+.Prerequisites
+[abstract]
+You should be familiar with link:/developer/cypher/cypher-query-language/[cypher patterns] and link:/developer/cypher/filtering-query-results/[filtering queries].
+
+[role=expertise]
+{level}
+
+toc::[]
+
+== Cypher Styles
+
+There are a few recommended ways to format and organize Cypher queries so that data naming and formatting is consistent and easy-to-read.
+The next few paragraphs will show the recommendations with some examples.
+
+
+== Styling in the Data Model
+
+Formatting nodes, relationships, labels, and properties help to make queries cleaner.
+If each of these components has a different style, then it is easy to pick out these items in a query and visually separate each to understand the syntax better.
+Let us look at each recommendation.
+
+=== Node Labels 
+
+Node labels are styled in CamelCase where the first letter of each word begins with a capital letter.
+They are also case-sensitive.
+This means that however you create them in the graph must match the queries you plan to run later.
+For instance, if you use incorrect camelcase when you create the label in the graph, then you will need to write your queries with the same incorrect camelcasing.
+
+[source,cypher]
+----
+(:Person)
+(:NetworkAddress)
+(:VeryDescriptiveLabel)
+----
+
+=== Relationship Types
+
+Relationship types are styled with all upper-case and use the underscore between words.
+They are case-sensitive, so queries syntax must match the format in which they were created in the database.
+
+[source,cypher]
+----
+[:FOLLOWS]
+[:ACTED_IN]
+[:IS_IN_LOVE_WITH]
+----
+
+=== Property Keys, Variables, Parameters, Aliases, and Functions
+
+Property keys, variables, parameters, aliases, and functions are styled in camelCase where the first letter of the component begins with a lower-case letter, and the first letter of each following word is a capital letter.
+All of these are also case-sensitive, so capitalization must match either what is in the database (properties), what is already defined in the query (variables, parameters, aliases), or Cypher definitions (functions).
+
+[source,cypher]
+----
+title
+size()
+businessAddress
+firstName
+customerAccountNumber
+allShortestPaths()
+----
+
+=== Clauses
+
+Clauses are styled in all capital letters, placed at the beginning of a new line, and are not case sensitive.
+It is possible to change casing (`mAtCh`), put multiple keywords on a line, or mistype clauses.
+Cypher will still execute the query.
+However, for readability and supportability of queries, we recommend clauses are in all capital letters and placed at the beginning of a new line.
+
+[source,cypher]
+----
+MATCH (n:Person)
+WHERE n.name = 'Bob'
+RETURN n;
+
+WITH "1980-01-01" as birthdate
+MATCH (person:Person)
+WHERE person.birthdate > birthdate
+RETURN person.name;
+----
+
+=== Keywords
+
+Keywords, similar to clauses, should be styled in all capital letters and are not case-sensitive, but do *not* need to be placed on a separate line.
+This includes words such as `DISTINCT`, `IN`, `STARTS WITH`, `CONTAINS`, `NOT`, `AS`, `AND`, and others.
+
+[source,cypher]
+----
+MATCH (p:Person)-[:VISITED]-(place:City)
+RETURN collect(DISTINCT place.name);
+
+MATCH (a:Airport)
+RETURN a.airportIdentifier as AirportCode;
+
+MATCH (c:Company)
+WHERE c.name CONTAINS 'Inc.'' AND c.startYear IN [1990, 1998, 2007, 2010]
+RETURN c;
+----
+
+== Indentation and Line Breaks
+
+As we started with above, separating clauses to new lines helps with readability of queries and breaking logic into visual blocks.
+We can also make queries a bit easier to read by indenting `ON CREATE` or `ON MATCH` and any subqueries.
+Each of these blocks is indented with 2 spaces on a new line.
+
+[source,cypher]
+----
+//indent 2 spaces on lines with ON CREATE or ON MATCH
+MATCH (p:Person {name: 'Alice'})
+MERGE (c:Company {name: 'Wayne Enterprises'})
+MERGE (p)-[rel:WORKS_FOR]-(c)
+  ON CREATE SET rel.startYear = date({year: 2018})
+  ON MATCH SET rel.updated = date()
+RETURN p, rel, c;
+
+//indent 2 spaces with braces for subqueries
+MATCH (p:Person)
+WHERE EXISTS {
+  MATCH (p)-->(c:Company)
+  WHERE c.name = 'Neo4j'
+}
+RETURN p.name;
+----
+
+Notice that in the query with a subquery, we use braces to group the subquery block (similar to methods or functions in other programming languages).
+The beginning curly brace is on the same line as the start of the subquery (`WHERE EXISTS`).
+The two lines of subquery (`MATCH...WHERE`) are indented with 2 spaces, and then the closing curly brace is on the next line with no indent.
+
+If the subquery is only one line, you do not need to put it on its own line or indent it.
+Instead, you can write it like the query below.
+These are the recommended guidelines if you need to use a subquery.
+
+[source,cypher]
+----
+//indent 2 spaces without braces for 1-line subqueries
+MATCH (p:Person)
+WHERE EXISTS { MATCH (p)-->(c:Company) }
+RETURN p.name
+----
+
+== Metacharacters
+
+Metacharacters include things like single or double quotes, backticks, and semicolons.
+In Cypher, there are special uses and recommended cases for using these characters.
+They are easily misused, so we will show what to avoid, as well as proper use of them.
+
+=== Single Quotes
+
+It is recommended to use single quotes for literal string values.
+There are exceptions to this rule, however, when single quotes are part of the string.
+If the string has both double and single quotes, use the form that creates the fewest escaped characters. In the case of a tie, preference is still to use single quotes.
+
+.Not as clean:
+[source,cypher]
+--
+RETURN 'Cypher\'s a nice language', "Mats\' quote: "statement"'
+--
+
+.Preferred Syntax:
+[source,cypher]
+--
+RETURN "Cypher's a nice language", 'Mats\' quote: "statement"'
+--
+
+=== Backticks
+
+Backticks should be avoided to escape characters and keywords.
+In the examples below, backticks are used to ignore special characters and spaces in properties and labels.
+
+If we follow the recommended styling guidelines on those components that we discussed above with camelcasing and joined words, then we should never see these types of backticks needed.
+Note that there are some cases with certain string values or other unusual syntax where backticks are appropriate.
+
+Cluttered syntax:
+[source,cypher]
+----
+MATCH (`odd-ch@racter$`:`Spaced Label` {`&property`: 42})
+RETURN labels(`odd-ch@racter$`)
+----
+
+Clean, recommended syntax:
+[source,cypher]
+----
+MATCH (node:NonSpacedLabel {property: 42})
+RETURN labels(node)
+----
+
+=== Semicolons
+
+Most of the time, there is no need to use a semicolon at the end of a Cypher query.
+Adding a semicolon to the end of a Cypher query is a redundant character because Cypher executes the block as an entire unit.
+
+The exception to this is when you have a Cypher script or a block with multiple, separate Cypher statements.
+In this case, you would need the semicolon to tell Cypher where the end of one query is and the beginning of the next query.
+This allows Cypher to execute each statement separately.
+
+[NOTE]
+--
+If you do not include a semicolon between a block with multiple statements, Cypher will try to execute them as a single statement, causing an error.
+--
+
+Unnecessary semicolon:
+[source,cypher]
+----
+MATCH (c:Company {name: 'Neo4j'})
+RETURN c;
+----
+
+Recommended syntax:
+[source,cypher]
+----
+MATCH (c:Company {name: 'Neo4j'})
+RETURN c
+----
+
+Recommended syntax for multi-query block:
+[source,cypher]
+----
+MATCH (c:Company {name: 'Neo4j'})
+RETURN c;
+
+MATCH (p:Person)
+WHERE p.name = 'Jennifer'
+RETURN p;
+
+MATCH (t:Technology)-[:LIKES]-(a:Person {name: 'Jennifer'})
+RETURN t.type;
+----
+
+== Null and Boolean Values
+
+The `null` value and boolean literals should be written in lower case in a query.
+
+Recommended syntax:
+[source,cypher]
+----
+//null and boolean values are lower case
+MATCH (p:Person)
+WHERE p.birthdate = null
+  SET missingBirthdate = true
+RETURN p
+----
+
+== Dealing with Patterns
+
+There are a few recommended styling practices for different scenarios using patterns.
+We will review those in the lines below.
+
+* *When you have patterns that wrap lines, it is recommended to break after arrows, not before.*
+
+Recommended:
+[source,cypher]
+----
+MATCH (:Person)-->(vehicle:Car)-->(:Company)<--
+      (:Country)
+RETURN count(vehicle)
+----
+
+* *Use anonymous nodes and relationships when the variable will not be used later in the query.*
+
+Recommended:
+[source,cypher]
+----
+MATCH (:Person {name: 'Kate'})-[:LIKES]-(c:Car)
+RETURN c.type
+----
+
+* *Chain patterns together to avoid repeating variables.*
+
+Unnecessary variable repeated:
+[source,cypher]
+----
+MATCH (:Person)-->(vehicle:Car), (vehicle:Car)-->(:Company)
+RETURN count(vehicle)
+----
+
+Recommended:
+[source,cypher]
+----
+MATCH (:Person)-->(vehicle:Car)-->(:Company)
+RETURN count(vehicle)
+----
+
+* *Put named nodes (that use variables) before anonymous nodes and relationships when possible and put anchor node (starting point or central focus) at the beginning of the `MATCH` clause.*
+
+Recommended:
+[source,cypher]
+----
+MATCH (manufacturer:Company)<--(vehicle:Car)<--()
+WHERE manufacturer.foundedYear < 2000
+RETURN vehicle.mileage
+----
+
+* *Prefer outgoing (left to right) pattern relationships to incoming pattern relationships.*
+
+Recommended:
+[source,cypher]
+----
+MATCH (:Person)-->(vehicle:Car)-->(:Company)<--(:Country)
+RETURN vehicle.mileage
+----
+
+== Spacing
+
+Whether spacing is used and where it is placed can have a big impact on the readability of queries.
+In the next few examples, we will show some comparisons of less effective spacing, as well as the recommmended practice.
+
+* *One space between label or type predicates and property predicates in patterns.*
+
+Ineffective spacing:
+[source,cypher]
+----
+MATCH (p:Person{name: 'Bob'})-[:KNOWS   {since: 2016}]->(other:Person)
+RETURN other.name
+----
+
+Recommended:
+[source,cypher]
+----
+MATCH (p:Person {name: 'Bob'})-[:KNOWS {since: 2016}]->(other:Person)
+RETURN other.name
+----
+
+* *No space in label predicates.*
+
+Ineffective spacing:
+[source,cypher]
+----
+MATCH (person    : Person  :  Owner  )
+RETURN person.name
+----
+
+Recommended:
+[source,cypher]
+----
+MATCH (person:Person:Owner)
+RETURN person.name
+----
+
+* *No space in patterns.*
+
+Ineffective spacing:
+[source,cypher]
+----
+MATCH (:Person) --> (:Vehicle)
+RETURN count(*)
+----
+
+Recommended:
+[source,cypher]
+----
+MATCH (:Person)-->(:Vehicle)
+RETURN count(*)
+----
+
+* *One space on either side of operators.*
+
+Ineffective spacing:
+[source,cypher]
+----
+MATCH (p:Person)-->(other:Person)
+WHERE p.name<>other.name
+RETURN length(p)
+----
+
+Recommended:
+[source,cypher]
+----
+MATCH (p:Person)-->(other:Person)
+WHERE p.name <> other.name
+RETURN length(p)
+----
+
+* *One space after each comma in lists and enumerations.*
+
+Ineffective spacing:
+[source,cypher]
+----
+WITH ['Sally','Mark','Alice'] as list
+MATCH (c:Customer),(e:Employee)
+WHERE c.name IN list
+AND (c)-[:IS_ASSIGNED_TO]-(e)
+RETURN c.name,e.name as customerContact
+----
+
+Recommended:
+[source,cypher]
+----
+WITH ['Sally', 'Mark', 'Alice'] as list
+MATCH (c:Customer), (e:Employee)
+WHERE c.name IN list
+AND (c)-[:IS_ASSIGNED_TO]-(e)
+RETURN c.name, e.name as customerContact
+----
+
+* *No padding space within function call parentheses.*
+
+Ineffective spacing:
+[source,cypher]
+----
+RETURN split( 'test', 'e' )
+----
+
+Recommended:
+[source,cypher]
+----
+RETURN split('test', 'e')
+----
+
+* *Use padding space within simple subquery expressions.*
+
+Ineffective spacing:
+[source,cypher]
+----
+MATCH (a:Person)
+WHERE EXISTS {(a)-->(b:Person)}
+RETURN a.name, collect(b.name) as friends
+----
+
+Recommended:
+[source,cypher]
+----
+MATCH (a:Person)
+WHERE EXISTS { (a)-->(b:Person) }
+RETURN a.name, collect(b.name) as friends
+----
+
+* *Map Literal recommendations -*
+** No space between opening brace and first key or between key and colon
+** One space between colon and value
+** No space between value and comma, but one space between comma and next key
+** No space between last value and closing brace
+
+Ineffective spacing:
+[source,cypher]
+----
+WITH { key1 :'value' ,key2  :  10 } AS map
+RETURN map
+----
+
+Recommended:
+[source,cypher]
+----
+WITH {key1: 'value', key2: 10} AS map
+RETURN map
+----
+
+
+=== Next Steps
+
+Now that you are familiar with recommended styling and formatting of Cypher syntax, you will be able to write cleaner and more readable queries.
+This is especially helpful for knowledge tranfers to other developers and supportability of the code.
+
+In the next guide, we will show how to ensure good data integrity using indexes and constraints to maintain uniqueness and query performance.
+
+
+=== Resources
+
+* link:/github.com/opencypher/openCypher/blob/master/docs/style-guide.adoc[Neo4j Cypher Style Guide^]
