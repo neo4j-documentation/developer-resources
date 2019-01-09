@@ -17,7 +17,7 @@ While this guide is not comprehensive, it will introduce the different APIs and 
 [abstract]
 You should be familiar with the link:/developer/get-started/graph-database[graph database concepts] and the property graph model.
 Having link:/download[installed Neo4j] and tried out our link:/developer/cypher[Cypher Query language] helps too.
-When developing with Neo4j, please use JDK 7 or 8 and your favorite IDE.
+When developing with Neo4j, please use Java 8 or 11 and your favorite IDE.
 
 [role=expertise]
 {level}
@@ -34,12 +34,10 @@ Neo4j offers a rich set of integration possibilities for developers using Java o
 
 The standalone Neo4j Server can be installed on any machine and then accessed via its *binary "Bolt" protocol* through our official driver or any bolt-enabled drivers.
 
-The server's additional HTTP API is used by many other integrations, using drivers or any other HTTP client library.
-
-You can also extend Neo4j by implementing *user defined procedures for Cypher* in Java or other JVM languages, writing *server extensions* which act as REST-endpoints or by embedding Neo4j into your own Java applications.
+You can also extend Neo4j by implementing *user defined procedures for Cypher* in Java or other JVM languages.
 
 [NOTE]
-Please note that starting with version 3.0 you need Java 8 to use Neo4j.
+Please note that starting with version 3.0 you need Java 8 to use Neo4j Server.
 
 // end::intro[]
 
@@ -63,7 +61,7 @@ It integrates tightly with the http://spring.io/[Spring Framework^] and offers O
 
 Features (based on Neo4j-OGM):
 
-* Spring Boot Integration (since 1.4)
+* Spring Boot Integration
 * annotation based object graph mapping
 * interface based repository support with annotated and derived finder methods
 * fast class metadata scanning
@@ -99,7 +97,7 @@ The connection to Neo4j handled by a driver layer, which can use the binary prot
 
 More detail can be found on the dedicated link:../neo4j-ogm[Neo4j OGM] page.
 
-
+////
 === Using Neo4j's Embedded Java API
 
 Being implemented in Java you can use Neo4j's link:/docs/java-reference/current/javadocs/[Java APIs^] also directly in your programs, much like HSQL or Derby. 
@@ -119,12 +117,18 @@ Because of its flexibility and performance, we also chose the Java API for exten
 * http://www.tutorialspoint.com/neo4j/neo4j_java_introduction.htm[Tutorialspoint step-by-step Introduction^]
 * http://www.informit.com/articles/article.aspx?p=2415371[Inform-IT Tutorial on Java-API^]
 * https://maxdemarzi.com/tag/java/[Articles on the JavaAPI by Max de Marzi^]
+////
 
 === User Defined Procedures and Functions
 
-link:/developer/cypher/procedures-functions[User Defined *Procedures* and *Functions*^] are now available within Cypher and encapsulate dedicated functionality.
+link:/developer/cypher/procedures-functions[User Defined *Procedures* and *Functions*^] are available within Cypher and encapsulate dedicated functionality.
 
 Just by annotating methods of a Java class and deploying the resulting jar file into your Neo4j installation, you can make new functionality easily available within the query language.
+
+To implement your procedures or functions you would use the Neo4j Embedded Java API.
+Besides an object-oriented API to the graph database, working with `Node`, `Relationship`, and `Path` objects, it also offers highly customizable, high-speed traversal- and graph-algorithm implementations.
+
+We don't provide code examples for the Java API on this page, because they are covered in detail in the link:/docs/java-reference/current[Java developers manual^].
 
 Neo4j uses that functionality itself for built-in procedures for meta-data, cluster-, query- and user-management and more.
 
@@ -142,7 +146,7 @@ To get you started we provided a https://github.com/neo4j-examples/neo4j-procedu
 
 More useful examples for user defined procedures can be found in our link:/developer/procedures-gallery/[procedure & function gallery].
 
-
+////
 [[server-extension]]
 === Extending Neo4j Server with a REST Server Extension
 
@@ -158,7 +162,7 @@ Their results are then collected and rendered in the required format, e.g. JSON,
 You test your server extensions using the link:/docs/java-reference/current/#server-unmanaged-extensions-testing[neo4j-harness^] tooling which allows to start an in-process Neo4j server to test against.
 
 This {examples}/movies-java-server-extension[example project] shows how you would do that for our movie application endpoints.
-
+////
 
 [[neo4j-jdbc]]
 === Using Neo4j Server with JDBC
@@ -237,130 +241,6 @@ At the bottom level of abstraction, a *native Java DSL* in the form of a fluent 
 |===
 
 
-////
-=== Cypher-DSL
-////
-
-////
-=== Tinkerpop
-////
-
-////
-
-----
-
-==== GraphAware Testing Framework
-
-The GraphAware testing framework was developed as part of customer engagements and represents real-world testing experience with Neo4j.
-
-It supports setup fixtures, database comparisions and testing of both Neo4j Server as well as embedded APIs.
-
-// TODO MORE
-
-Example:
-
-[source,text/x-java]
-----
-----
-
-==== NoSQL-Unit
-
-=== Testing Neo4j Applications
-
-Depending on the deployment mode, you test your Neo4j backed application differently.
-
-==== Unit Testing
-
-Applications using Neo4j in embedded mode and server extensions can be tested using the in-memory impermanent Graph Database instance.
-The Neo4j Manual has a complete section on this topic.
-
-You can obtain an instance of it like this:
-
-[source,text/x-java]
-----
-----
-
-Please make sure that your transactions are all completed (closed after `failure` or `success` calls) and the database is shut down correctly. 
-Otherwise you might experience delays (transaction grace period) or leaks while tearing down your tests.
-
-[source,text/x-java]
-----
-ImpermanentGraphDatabase db = new TestGraphDatabaseFactory().newImpermanentDatabase();
-
-// or
-
-ImpermanentGraphDatabase db = new TestGraphDatabaseFactory().newImpermanentDatabaseBuilder()
-        .setConfig(...).newGraphDatabase();
-----
-
-It also has a `cleanContent()` method which you can run between tests to clean out newly created data.
-
-If you use transaction around your test you can also rollback the transaction at the end to reset the database to its previous state.
-
-==== Testing Server Extensions
-
-Neo4j 2.2 introduces a {manual}/server-unmanaged-extensions-testing.html[new module] that makes it easier to test Neo4j Server and server extensions: `neo4j-harness`.
-
-After adding `org.neo4j.test:neo4j-harness:${neo4j.version}` to your dependency setup you can use both a builder to create Neo4j server instances as well as a JUnit Rule to achieve the same:
-
-[source,text/x-java]
-----
-@Rule
-public Neo4jRule server = new Neo4jRule().withExtension("/test", TestResource.class);
-
-@Test public void testWithRule() {
-   HTTP.Response response =
-           HTTP.withBaseUri(server.httpURI().toString())
-               // optional
-               .withHeaders("accept", "application/json").GET("test/foo/42");
-
-   assertEquals(200, response.status());
-   assertEquals(4711, response.<Map>content().get("value"));
-   
-}
-
-@Test public void testWithBuilder() {
-   try (ServerControls server TestServerBuilder.newInProcessBuilder().withConfig(...)
-                                    .withFixture(...).withExtension(...).newServer()) {
-
-      server.httpsUrl() ....
-   }
-}
-----
-
-==== GraphAware Testing Framework
-
-The GraphAware testing framework was developed as part of customer engagements and represents real-world testing experience with Neo4j.
-
-It supports setup fixtures, database comparisions and testing of both Neo4j Server as well as embedded APIs.
-
-// TODO MORE
-
-Example:
-
-[source,text/x-java]
-----
-----
-
-==== NoSQL-Unit
-
-Alex Soto's http://[NoSQL-Unit] allows testing of various NoSQL databases.
-
-For Neo4j it provides support for testing the embedded mode as well as Spring Data Neo4j.
-
-==== Testing with a real Neo4j Server
-
-If you don't want or can't use the server testing infrastructure mentioned above, 
-you can quickly spin up a Neo4j server for testing in a temporary directory.
-
-[NOTE]
-Just make sure that you set-up auth before either by disabling it or by pre-seeding the server with a known password by either copying a `data/dbms/auth` file or by calling the "change password endpoint" upfront with the default credentials.
-
-Travis CI (config) and also http://graphenedb.com[GrapheneDB] (API) provide options to provision Neo4j instances programmatically.
-
-////
-
-
 === Groovy & Grails: Neo4j Grails Plugin
 
 image::{img}grails.png[width=200,float=right]
@@ -381,6 +261,7 @@ The goal of GORM for Neo4j is to provide a 'as-complete-as-possible' GORM implem
 | icon:book[] Docs | http://grails.github.io/grails-data-mapping/latest/neo4j/
 |===
 
+////
 
 === Clojure: Neocons
 
@@ -396,16 +277,6 @@ An idiomatic, feature-rich Clojure client which supports (almost) all Neo4k REST
 | icon:book[] Docs | http://clojureneo4j.info/
 |===
 
-////
-
-==== http://github.com/wagjo/borneo[Borneo]
-
-Author: Jozef Wagner
-Clojure wrapper for Neo4j, a graph database, in embedded JVM mode.
-
-////
-
-
 === Scala: AnormCypher
 
 image::{img}scala.png[width=200,float="right"]
@@ -418,16 +289,23 @@ A Cypher-oriented Scala library modeled after the Play! framework's Anorm librar
 | icon:github[] Source | https://github.com/AnormCypher/AnormCypher
 | icon:book[] Docs | http://anormcypher.org
 |===
-
 ////
-==== Neo4j-Scala
 
-Author: Christopher Schmidt
+=== Scala: neotypes
 
-The Neo4j Scala wrapper library allows you use Neo4j's open source graph database through a domain-specific language.
+image::{img}scala.png[width=200,float="right"]
 
-* https://github.com/FaKod/neo4j-scala/[Source]
-////
+Scala lightweight, type-safe, asynchronous driver (not opinionated on side-effect implementation) for neo4j.
+The project aims to provide seamless integration with most popular scala infrastructures such as lightbend (Akka, Akka-http, Lagom, etc), typelevel (cats, http4s, etc), twitter (finch, etc)...
+
+[cols="1,4"]
+|===
+| icon:user[] Author | https://twitter.com/dimafeng[Dmitry Fedosov^]
+| icon:github[] Source | https://github.com/neotypes/neotypes
+| icon:book[] Docs | https://neotypes.github.io/neotypes/docs.html
+| icon:book[] Article | http://dimafeng.com/2018/12/27/neotypes-1/
+| icon:play-circle[] Example | https://github.com/neotypes/examples
+|===
 
 === JPA: Hibernate OGM
 
@@ -444,27 +322,3 @@ Hibernate Object/Grid Mapper (http://hibernate.org/ogm[OGM^]) with Neo4j Support
 | icon:play-circle[] Example | https://github.com/TimmyStorms/hibernate-ogm-neo4j-example
 |===
 
-
-////
-
-==== http://www.datanucleus.org/[DataNucleus Neo4j Plugin]
-
-// image::{img}DataNucleus16-300.jpg[]
-
-Author: Andy Jefferson
-
-datanucleus-neo4j provides persistence of Java objects to Neo4j. It builds on top of the basic persistence provided by datanucleus-core.
-
-
-==== Kundera
-
-Author: Amresh Amry
-
-Kundera is a JPA 2.0-compliant, object-datastore mapping library for NoSQL datastores.
-
-* https://github.com/impetus-opensource/Kundera[Source]
-* http://groups.google.com/group/kundera-discuss[Forum]
-* https://github.com/impetus-opensource/Kundera/wiki/Graph-Database-Support[Docs]
-* http://github.com/impetus-opensource/Kundera-Examples[Examples]
-
-////

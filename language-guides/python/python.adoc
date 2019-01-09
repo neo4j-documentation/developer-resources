@@ -45,7 +45,7 @@ include::../_includes/community-driver-notice.adoc[]
 For anyone working with https://www.python.org/[Python], the Neo4j community have contributed a range of driver options.
 These range from lightweight to comprehensive driver packages as well as libraries designed for use with web frameworks such as https://www.djangoproject.com/[Django].
 
-Both Python 2 and Python 3 are supported by most of the libraries listed here and this should help give more flexibility when putting together your Neo4j-based technology stack.
+While Python 3 is preferred, some drivers still support Python 2, please check with the individual project if you need it.
 
 While we do not provide a specific web framework recommendation, both the lightweight http://flask.pocoo.org/[Flask] and the more comprehensive https://www.djangoproject.com/[Django] frameworks are known to work well.
 
@@ -56,17 +56,18 @@ Many Pythonistas have invested a lot of time and love to develop these libraries
 image::{img}py2neo.200x200.png[float="right",width=100]
 
 Py2neo is a client library and comprehensive toolkit for working with Neo4j from within Python applications and from the command line.
-The core library has no external dependencies and has been carefully designed to be easy and intuitive to use.
+It has been carefully designed to be easy and intuitive to use.
 
 [cols="1,4"]
 |===
-| icon:user[] Author         | https://twitter.com/neonige[Nigel Small]
+| icon:user[] Author         | https://twitter.com/technige[Nigel Small]
 | icon:gift[] Package        | https://pypi.python.org/pypi/py2neo
 | icon:github[] Source       | https://github.com/nigelsmall/py2neo
 
-| icon:play-circle[] Example | {examples}/movies-python-py2neo-2.0
+| icon:play-circle[] Example | {examples}/movies-python-py2neo
 | icon:book[] Docs           | http://py2neo.org/
-| icon:code-fork[] Python    | 2.7 / 3.3 / 3.4
+| icon:code-fork[] Python    | 2.7 / 3.4+
+| Protocols | Bolt, Http
 |===
 
 .Installation
@@ -78,32 +79,32 @@ pip install py2neo
 .Example
 [source,python]
 ----
-from py2neo import Graph, Path
+from py2neo import Graph
 graph = Graph()
 
-tx = graph.cypher.begin()
+tx = graph.begin()
 for name in ["Alice", "Bob", "Carol"]:
     tx.append("CREATE (person:Person {name:{name}}) RETURN person", name=name)
 alice, bob, carol = [result.one for result in tx.commit()]
-
-friends = Path(alice, "KNOWS", bob, "KNOWS", carol)
-graph.create(friends)
 ----
 
 === Neomodel
 
 image::{img}neomodel.200x80.png[float="right",width=100]
 
-An Object Graph Mapper built on top of the Neo4j python driver. Familiar Django style node definitions with a powerful query API, thread safe and full transaction support. A Django plugin https://github.com/robinedwards/django-neomodel[django_nemodel] is also available.
+An Object Graph Mapper built on top of the Neo4j python driver. 
+Familiar Django style node definitions with a powerful query API, thread safe and full transaction support. 
+A Django plugin https://github.com/neo4j-contrib/django-neomodel[django_nemodel] is also available.
 
 [cols="1,4"]
 |===
-| icon:user[] Author         | Robin Edwards
+| icon:user[] Author         | Athanasios Anastasiou and Robin Edwards
 | icon:gift[] Package        | https://pypi.python.org/pypi/neomodel
-| icon:github[] Source       | http://github.com/robinedwards/neomodel
+| icon:github[] Source       | http://github.com/neo4j-contrib/neomodel
 
 | icon:book[] Docs           | http://neomodel.readthedocs.org/
 | icon:code-fork[] Python    | 2.7 / 3.3+
+| Protocols | Bolt
 |===
 
 .Example
@@ -125,81 +126,3 @@ harry_potter = Book(title='Harry potter and the..').save()
 rowling =  Author(name='J. K. Rowling').save()
 harry_potter.author.connect(rowling)
 ----
-
-=== Neo4jRestClient
-
-The main goal of neo4j-rest-client was to enable Python programmers already using Neo4j locally through python-embedded, to use the Neo4j REST server.
-So the syntax of neo4j-rest-client’s API is fully compatible with python-embedded.
-However, a new syntax is introduced in order to reach a more pythonic style and to enrich the API with the new features the Neo4j team introduces.
-
-
-[cols="1,4"]
-|===
-| icon:user[] Author         | https://twitter.com/versae[Javier de la Rosa]
-| icon:gift[] Package        | https://pypi.python.org/pypi/neo4jrestclient/
-| icon:github[] Source       | https://github.com/versae/neo4j-rest-client
-
-| icon:play-circle[] Example | {examples}/movies-python-neo4jrestclient
-| icon:book[] Docs           | http://neo4j-rest-client.readthedocs.org/
-|===
-
-=== Bulbflow
-
-image::{img}blubflow.200x200.png[float="right",width=100]
-
-Bulbs is an open-source Python persistence framework for graph databases and the first piece of a larger web development toolkit.
-It’s like an ORM for graphs.
-
-
-[cols="1,4"]
-|===
-| icon:user[] Author         | https://twitter.com/espeed[James Thornton]
-| icon:gift[] Package        | https://pypi.python.org/pypi/bulbs
-| icon:github[] Source       | https://github.com/espeed/bulbs
-
-| icon:book[] Docs           | http://bulbflow.org/
-| icon:code-fork[] Python    | 2.6 / 2.7 / 3.0 / 3.1 / 3.2
-|===
-
-////
-
-=== Neo4jdb-Python
-
-Implements the http://legacy.python.org/dev/peps/pep-0249/[Python DB API 2.0] for Neo4j.
-
-|===
-| Author:        | Jacob Hansson
-| Website:       | https://github.com/jakewins/neo4jdb-python
-| Source:        | https://github.com/jakewins/neo4jdb-python
-| Package:       | https://pypi.python.org/pypi/neo4jdb
-| Documentation: | https://github.com/jakewins/neo4jdb-python/blob/master/README.rst
-| Python:        | 2.6 / 2.7 / 3.2 / 3.3
-| Neo4j:         | 2.0 / 2.1
-|===
-
-=== Neo4django
-
-Neo4django is an Object Graph Mapper (OGM) for Django. Use familiar Django models and queries against Neo4j.
-
-|===
-| Author:        | Matt Luongo
-| Website:       | https://neo4django.readthedocs.org/
-| Source:        | http://github.com/scholrly/neo4django
-| Package:       | https://pypi.python.org/pypi/neo4django
-| Documentation: | https://neo4django.readthedocs.org/
-|===
-
-////
-
-
-== Further Reading
-
-* https://blog.safaribooksonline.com/2013/07/23/using-neo4j-from-python/[Using Neo4j from Python]
-* http://www.tsartsaris.gr/kivy2neo-sending-cypher-queries-from-a-kivy-app-to-a-neo4j-database[Using Neo4j from Kivy]
-* https://github.com/lycofron/pysql2neo4j[A script to automatically migrate relational databases to Neo4J]
-* http://tech.onefinestay.com/post/107881172672/py2neo-spatial[Py2neo Spatial]
-* https://www.youtube.com/watch?v=ps5RtmWKwLY&feature=youtu.be&noredirect=1[Holger Spill: An introduction to Python and graph databases with Neo4j]
-* http://www.markhneedham.com/blog/2015/01/10/python-nltkneo4j-analysing-the-transcripts-of-how-i-met-your-mother/[Python NLTK/Neo4j: Analysing the transcripts of How I Met Your Mother]
-* http://nicolewhite.github.io/neo4j-flask/index.html[Flask and Neo4j]
-* https://blog.ouseful.info/2016/04/11/getting-started-with-the-neo4j-graph-database-linking-neo4j-and-jupyter-scipy-docker-containers-using-docker-compose/[Using Jupyter and Neo4j with Docker]
-* http://nicolewhite.github.io/neo4j-jupyter/hello-world.html[Neo4j Jupyter Visualization Notebook]

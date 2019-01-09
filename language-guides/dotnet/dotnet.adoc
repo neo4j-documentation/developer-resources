@@ -39,14 +39,14 @@ With the Neo4j 3.0 release we are happy to provide an officially supported drive
 
 include::../_includes/dotnet-driver.adoc[]
 
-
+////
 [role=side-nav]
 * https://wintellectnow.com/Videos/Watch?videoId=getting-started-with-graph-databases-using-neo4j[Tutorial: Neo4j on .Net Now by Brian Lanham^]
 * http://blog.tatham.oddie.com.au/2014/02/11/podcast-graph-databases-and-neo4j-with-richard-and-carl-from-net-rocks/[Podcast: .Net Rocks with Tatham Oddie^]
 * link:/developer/in-production/guide-cloud-deployment#_windows_azure[Cloud Deployment to Azure]
 * https://chocolatey.org/packages?q=neo4j[Neo4j Chocolatey Package by Glenn Sarti^]
 * http://jim-salmons.github.io/neo4jcp/[Tool: Neo4j Control Panel by Jim Salmons^]
-
+////
 
 include::../_includes/sample_project.adoc[]
 
@@ -56,7 +56,7 @@ Members of the .NET community have invested a lot of time and love to develop al
 Powerful drivers like `Neo4jClient` showed early on how easy it is to connect to Neo4j from .NET
 
 
-==== Neo4jClient
+=== Neo4jClient
 
 A .NET client for Neo4j, which makes it easy to write Cypher queries in C# with IntelliSense.
 It also supports basic CRUD and legacy indexing.
@@ -65,13 +65,13 @@ It also supports basic CRUD and legacy indexing.
 |===
 | icon:github[] Source       | https://github.com/Readify/Neo4jClient
 | icon:user[] Authors        | http://twitter.com/cskardon[Chris Skardon^] http://twitter.com/tathamoddie[Tatham Oddie^]
-|                            | https://community.neo4j.com[Neo4j Online Community^]
 | icon:book[] Docs           | https://github.com/Readify/Neo4jClient/wiki[]
 | icon:play-circle[] Example | {examples}/movies-dotnet-neo4jclient
+| Protocol                   | Bolt, Http
 |===
 
 
-==== Cypher.NET
+=== Cypher.NET
 
 A .NET API for the Neo4j HTTP Transactional Endpoint (v2.0.0) exposes a strongly-typed Graph Query API based on the Neo4j Cypher query language.
 
@@ -80,4 +80,5 @@ A .NET API for the Neo4j HTTP Transactional Endpoint (v2.0.0) exposes a strongly
 | icon:github[] Source       |   https://github.com/mtranter/CypherNet
 | icon:user[] Authors        |   Mark Tranter
 | icon:rss[] Blog            |   http://mtranter.com/2013/09/21/cypher-net-a-neo4j-cypher-api
+| Protocol                   |   Http
 |===

@@ -1,0 +1,36 @@
+include::versions.txt[]
+
+++++
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/go/go.min.js"></script>
+++++
+
+The Neo4j Go driver is *officially supported* by Neo4j and connects to the database using the binary bolt protocol.
+It aims to be minimal, while being idiomatic to Go.
+The driver is based on the https://github.com/neo4j-drivers/seabolt[c-connector Seabolt] and has https://github.com/neo4j/neo4j-go-driver#requirements-1[additional build instructions].
+
+[source, shell, subs="attributes, specialcharacters"]
+----
+go get github.com/neo4j/neo4j-go-driver/neo4j
+----
+
+[source, go, subs="attributes"]
+----
+include::https://raw.githubusercontent.com/neo4j/neo4j-go-driver/{go-driver-version}/neo4j/test-integration/examples_test.go[tag=hello-world,indent=0]
+----
+
+[cols="3*"]
+|===
+| Name 
+| icon:tag[] Version 
+| icon:user[] Authors
+
+| neo4j-driver
+| {go-driver-version}
+| The Neo4j Team, Ali Ince
+
+| https://community.neo4j.com/c/drivers-stacks/go[Neo4j Online Community^]
+
+| {manual}/drivers/[icon:book[] Docs]
+| https://godoc.org/github.com/neo4j/neo4j-go-driver/neo4j[icon:code[] API]
+| https://github.com/neo4j/neo4j-go-driver[icon:github[] Source]
+|===

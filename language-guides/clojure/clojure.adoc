@@ -26,7 +26,7 @@ toc::[]
 
 image::{img}clojure.png[float=right]
 
-Clojure drivers either support Neo4j embedded on the JVM or use Neo4j Server via its HTTP APIs, like the impressive `neocons` project.
+Clojure drivers either support Neo4j embedded on the JVM or use Neo4j Server via its HTTP or Bolt APIs.
 
 // end::intro[]
 
@@ -36,9 +36,25 @@ include::../_includes/sample_project.adoc[]
 
 include::../_includes/community-driver-notice.adoc[]
 
+=== Neo4j-clj
+
+Clojure bindings for Bolt / the Java Neo4j driver, complete with Joplin support for managing database migrations. 
+
+[cols="1,4"]
+|===
+| icon:user[] Authors | Christian Betz
+| icon:play-circle[] Example Project | https://github.com/gorillalabs/neo4j-clj/blob/master/example/src/example/core.clj
+| icon:article[] Article | https://medium.com/neo4j/neo4j-clj-a-new-neo4j-library-for-clojure-2df1a2a45783
+| icon:github[] Source | https://github.com/gorillalabs/neo4j-clj
+| icon:book[] Docs | https://raw.githack.com/gorillalabs/neo4j-clj/master/docs/uberdoc.html
+| icon:video[] Video | https://www.youtube.com/watch?v=vIgoemc2kNM
+|===
+
+// https://clojars.org/gorillalabs/neo4j-clj
+
 === Neocons
 
-An idiomatic, feature-rich Clojure client which supports (almost) all Neo4j REST API, like the Cypher language improvements.
+An idiomatic, feature-rich Clojure client which supports the Http and Bolt APIs.
 
 [cols="1,4"]
 |===
@@ -49,13 +65,3 @@ An idiomatic, feature-rich Clojure client which supports (almost) all Neo4j REST
 | icon:book[] Docs | http://clojureneo4j.info/
 |===
 
-////
-
-==== Borneo
-
-Clojure wrapper for Neo4j, a graph database, in embedded JVM mode.
-
-* http://github.com/wagjo/borneo[Borneo on GitHub]
-* Author: Jozef Wagner
-
-////

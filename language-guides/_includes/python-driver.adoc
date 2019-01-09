@@ -7,16 +7,18 @@ include::versions.txt[]
 The Neo4j Python driver is *officially supported* by Neo4j and connects to the database using the binary protocol.
 It aims to be minimal, while being idiomatic to Python.
 
+WARNING: Support for Python 2 will be removed in the upcoming 2.0 release of the driver.
+
 [source, shell, subs="attributes, specialcharacters"]
 ----
-pip install neo4j-driver
+pip install neo4j
 ----
 
-[source, python]
+[source, python, subs="attributes, ]
 ----
-include::https://github.com/neo4j/neo4j-python-driver/raw/1.5/test/examples/hello_world_example.py[tag=hello-world-import]
+include::https://github.com/neo4j/neo4j-python-driver/raw/{python-driver-version}/test/examples/hello_world_example.py[tag=hello-world-import]
 
-include::https://github.com/neo4j/neo4j-python-driver/raw/1.5/test/examples/hello_world_example.py[tag=hello-world,indent=0]
+include::https://github.com/neo4j/neo4j-python-driver/raw/{python-driver-version}/test/examples/hello_world_example.py[tag=hello-world,indent=0]
 ----
 
 [cols="3*"]
@@ -27,13 +29,13 @@ include::https://github.com/neo4j/neo4j-python-driver/raw/1.5/test/examples/hell
 
 | neo4j-driver
 | {python-driver-version}
-| The Neo4j Team, http://twitter.com/neonige[Nigel Small]
+| The Neo4j Team, https://twitter.com/technige[Nigel Small]
 
-| https://pypi.python.org/pypi/neo4j-driver[icon:gift[] Package]
+| https://pypi.python.org/pypi/neo4j[icon:gift[] Package]
 |
-| https://community.neo4j.com[Neo4j Online Community^]
+| https://community.neo4j.com/c/drivers-stacks/python[Neo4j Online Community^]
 
 | {manual}/drivers/[icon:book[] Docs]
 | https://neo4j.com/docs/api/python-driver/current/[icon:code[] API]
-| http://github.com/neo4j/neo4j-python-driver[icon:github[] Source]
+| https://github.com/neo4j/neo4j-python-driver[icon:github[] Source]
 |===
