@@ -5,7 +5,8 @@ include::versions.txt[]
 ++++
 
 The Neo4j Java driver is *officially supported* by Neo4j and connects to the database using the binary protocol.
-It aims to be minimal, while being idiomatic to Java.
+It aims to be minimal, while being idiomatic to Java. 
+We support Java 8 and 11 for the driver.
 
 When using Maven, add this to your _pom.xml_ file:
 
@@ -25,11 +26,11 @@ compile 'org.neo4j.driver:neo4j-java-driver:{java-driver-version}'
 
 For other build systems, see {maven-artifact-info}[information available at Maven Central].
 
-[source,text/x-java]
+[source,java, subs="attributes, specialcharacters"]
 ----
-include::https://github.com/neo4j/neo4j-java-driver/raw/1.4/examples/src/main/java/org/neo4j/docs/driver/HelloWorldExample.java[tag=hello-world-import]
+include::https://github.com/neo4j/neo4j-java-driver/raw/{java-driver-version}/examples/src/main/java/org/neo4j/docs/driver/HelloWorldExample.java[tag=hello-world-import]
 
-include::https://github.com/neo4j/neo4j-java-driver/raw/1.4/examples/src/main/java/org/neo4j/docs/driver/HelloWorldExample.java[tag=hello-world]
+include::https://github.com/neo4j/neo4j-java-driver/raw/{java-driver-version}/examples/src/main/java/org/neo4j/docs/driver/HelloWorldExample.java[tag=hello-world]
 ----
 
 [cols="3*"]
@@ -44,7 +45,7 @@ include::https://github.com/neo4j/neo4j-java-driver/raw/1.4/examples/src/main/ja
 
 | {maven-artifact-info}[icon:gift[] Package]
 | {examples}/movies-java-bolt[icon:play-circle[] Example]
-| https://community.neo4j.com[Neo4j Online Community^]
+| https://community.neo4j.com/c/drivers-stacks/java[Neo4j Online Community^]
 
 | {manual}/drivers/[icon:book[] Docs]
 | https://neo4j.com/docs/api/java-driver/current/[icon:code[] API]

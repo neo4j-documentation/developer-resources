@@ -26,6 +26,31 @@ toc::[]
 
 image::{img}Rlogo.jpg[float=right]
 
+=== Neo4R
+
+The goal of {neo4r} is to provide a modern and flexible Neo4J driver for R.
+
+It’s modern in the sense that the results are returned as tibbles whenever possible, it relies on modern tools, and it is designed to work with pipes. 
+Our goal is to provide a driver that can be easily integrated in a data analysis workflow, especially by providing an API working smoothly with other data analysis (`{dplyr}` or `{purrr}`) and graph packages (`{igraph}`, `{ggraph}`, `{visNetwork}`…).
+
+It was developed by https://thinkr.fr/[ThinkR], led by Colin Fay.
+
+Currently it connects to Neo4j via Http but we plan to integrate it with the C-connector for Bolt, Seabolt.
+
+[cols="1,4"]
+|===
+| icon:user[] Author         | https://twitter.com/_ColinFay[Colin Fay]
+| icon:gift[] Package        | 
+| icon:github[] Source       | https://github.com/neo4j-rstats/neo4r
+| icon:github[] Neo4j-Rstats | https://github.com/neo4j-rstats/
+| icon:comments[] Neo4j Online Community | https://community.neo4j.com/c/drivers-stacks/r
+
+// | icon:play-circle[] Example | {examples}/movies-rstats-neo4r
+| icon:book[] Docs           | https://neo4j-rstats.github.io/user-guide/
+| Protocols | Http
+|===
+
+////
 === RNeo4j
 
 RNeo4j was written by our own data scientists https://twitter.com/_nicolemargaret[Nicole White^], to combine the analytics abilities of R with the interconnected data in Neo4j.
@@ -47,7 +72,7 @@ Compatible with Neo4j >= 2.0.
 
 | http://www.rdocumentation.org/packages/RNeo4j[icon:gift[] Package]
 |
-| https://community.neo4j.com[Neo4j Online Community^]
+| https://community.neo4j.com/c/drivers-stacks/r[Neo4j Online Community^]
 
 | http://nicolewhite.github.io/RNeo4j/[icon:book[] Docs]
 | http://github.com/nicolewhite/Rneo4j[icon:github[] Source]
@@ -68,3 +93,5 @@ Compatible with Neo4j >= 2.0.
 ** http://nicolewhite.github.io/2014/06/30/create-shiny-app-neo4j-graphene.html[Create a Shiny App Powered by a Neo4j Database^]
 ** http://nicolewhite.github.io/2014/07/19/meetup-cluster-analysis.html[A Cluster Analysis of London NoSQL Meetup Groups^]
 * http://www.markhneedham.com/blog/?s=rneo4j[Blog: Mark Needham on RNeo4j^]
+
+////
