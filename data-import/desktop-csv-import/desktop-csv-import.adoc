@@ -16,14 +16,14 @@ This tutorial is designed for you to follow along and step through the process.
 .Prerequisites
 [abstract]
 This guide builds upon the basic concepts discussed in earlier guides.
-You should be familiar with the following concepts:
+You should be familiar with the following:
 
 * link:/developer/get-started/graph-database/[What is a Graph Database?]
 * link:/developer/neo4j-desktop/[Neo4j Desktop]
 * link:/developer/cypher/cypher-query-language/[Cypher]
 * link:/developer/data-modeling/guide-data-modeling/[Property Graph Data Model]
 
-You should also have downloaded link:https://neo4j.com/download/[Neo4j Desktop^] and be familiar with navigating the application, as well as creating a starting a database.
+You should also have downloaded link:https://neo4j.com/download/[Neo4j Desktop^] and be familiar with navigating the application, as well as creating and starting a database.
 
 [NOTE]
 --
@@ -37,30 +37,30 @@ toc::[]
 
 == Neo4j Desktop Import
 
-Neo4j Desktop provides a more user-friendly interface than other methods for starting and creating Neo4j databases, adding or removing plugins, changing configurations, and other functionality.
-It also includes some shortcuts and easy access for importing flat files (such as CSVs) into a Neo4j instance.
+Neo4j Desktop provides a user-friendly interface for starting and creating Neo4j databases, adding or removing plugins, changing configurations, and other functionality.
+It also includes some shortcuts and easy access for importing files (such as CSVs) into Neo4j.
 
-In this guide, we will work with a zipped folder containing three CSV files and import the data to Neo4j using Neo4j Desktop.
-Our CSV files contain data for products, orders, and order line items.
-We will look at the exact information in the files in an upcoming paragraph.
+In this guide, we will work with a zipped folder containing three CSV files and import the data to a graph with Neo4j Desktop.
+The CSV files contain data for products, orders, and order line items.
+We will look at the data in the files in an upcoming paragraph.
 
 === 1. Creating and starting a database instance
 
 If you already know how to create a database instance and find the `Manage` page for the instance, you can skip to Step 2.
 
-We need to open the Neo4j Desktop application on your computer to begin.
-When you start the application, you should see something similar to the screenshot below.
+To begin, we need to open the Neo4j Desktop application on your computer.
+When you start the application, you should see something like the screen below.
 
 image::{img}desktop_mainscreen.jpg[link="{img}desktop_mainscreen.jpg",role="popup-link"]
 
-You may already have a database instance or two from other projects or exercises, but let's create a separate database for this import.
-To do that, you click on the section that says `Add Graph` in the image above.
-When you do that, you will see two buttons appear for creating a local graph or connecting to a remote graph.
+You may already have database instances from other projects or exercises, but let us create a separate database for this import.
+To do that, click on the section that says `Add Graph` in the image above.
+You should see two buttons appear for creating a local graph or connecting to a remote graph.
 
 image::{img}desktop_add_graph.jpg[link="{img}desktop_add_graph.jpg",role="popup-link"]
 
-Choose the `Create a Local Graph` button, and fill in some details on the entry form for your database.
-You can leave whatever version is defaulted in the last dropdown.
+Choose the `Create a Local Graph` and fill in details on the entry form for your database.
+For the dropdown field, you can leave whatever version is defaulted.
 Once that is complete, click `Create`.
 
 image::{img}desktop_db_details.jpg[link="{img}desktop_db_details.jpg",role="popup-link"]
@@ -70,7 +70,7 @@ You can start your database by clicking the `Start` button on it.
 
 image::{img}desktop_db_created.jpg[link="{img}desktop_db_created.jpg",role="popup-link"]
 
-When it starts, the button should change to `Stop` so you now see the screen below.
+When it starts, the button should change to `Stop` so you see the screen below.
 
 image::{img}desktop_start_db.jpg[link="{img}desktop_start_db.jpg",role="popup-link"]
 
@@ -111,18 +111,18 @@ Double-click on the zip file, and it should unzip and create a `desktop-csv-impo
 If you click on that folder, you should see 3 .csv files - products.csv, orders.csv, and order-details.csv.
 You can open each of the files to see what the data looks like.
 
-Now that our files are in the import folder, we can look at how to put the data from the files into our database.
-We will need to take the current table and column format in the CSV files and translate them into nodes and relationships for our graph model.
+Now that our files are in the import folder, we can look at how to put the data into our database.
+We will need to take the current table and column format in the CSV files and translate it into nodes and relationships.
 This can be done a few different ways, but we will use Cypher's `LOAD CSV` command in this guide.
 
 == LOAD CSV
 
-`LOAD CSV` is a built-in command in Cypher that allows us to read CSV files and append regular Cypher statements to translate the data to our property graph data model.
-You can also use `LOAD CSV` without creating the graph structure and just output samples, counts, or distributions.
-This helps us detect incorrect header column counts, delimiters, quotes, escapes or spelling of header names before the data is written and stored.
+`LOAD CSV` is a built-in command in Cypher that allows us to read CSV files and append regular Cypher statements to create or update the data as a graph.
+You can also use `LOAD CSV` without creating the graph to output samples, counts, or distributions.
+This helps us detect incorrect header column counts, delimiters, quotes, escapes, or spelling of header names before the data is written and stored.
 
 In the previous step, we downloaded the .zip file, copied it to our Neo4j import folder, and unzipped the file into a directory containing 3 CSVs.
-Before we insert anything into our graph database, let us take a look at the data in the csv files.
+Before we insert anything into our graph database, we should inspect the data in the files a bit.
 To do this, we can use the `LOAD CSV` command.
 If you opened the files previously, you may have noticed that two of the files have headers and one does not (products.csv).
 Let us see how to inspect each type of file.
@@ -153,7 +153,7 @@ Running these commands should return the following counts:
 
 Next, we can take a look at what the data looks like in the CSV files and how LOAD CSV sees it.
 The only line we need to change from our Cypher above is the `RETURN` statement.
-Since all of these files have a decent numbers of rows, we also use `LIMIT` to just get a sample of the whole file.
+Since all of these files have a decent numbers of rows, we will use `LIMIT` to only get a sample.
 
 [source, cypher]
 ----
@@ -197,10 +197,10 @@ We will look at the values in each CSV file to determine what needs to be conver
 
 .Products.csv
 The values in the products.csv files are for product ID, product name, and unit cost.
-Product ID looks to be an integer value that increases with each row, so we can convert this to an integer using the `toInteger()` function in Cypher.
-Product name can remain a string because it consists of characters.
+Product ID looks like an integer value that increases with each row, so we can convert this to an integer using the `toInteger()` function in Cypher.
+Product name can remain a string since it consists of characters.
 The final column is the product unit cost.
-Though the sample values from our inspection above are all whole numbers, we know that monetary amounts can have decimal place values, as well, so we will convert these values to floats using the `toFloat()` function.
+Though the sample values from our inspection are all whole numbers, we know that monetary amounts often have decimal place values, so we will convert these values to floats using the `toFloat()` function.
 
 We can see the Cypher to handle all of these conversions below; however, we are still not loading the values into Neo4j yet.
 We are just viewing the CSV files with converted values.
@@ -208,21 +208,21 @@ We are just viewing the CSV files with converted values.
 [source, cypher]
 ----
 LOAD CSV FROM 'file:///desktop-csv-import/products.csv' AS row
-RETURN toInteger(row[0]), row[1], toFloat(row[2])
+WITH toInteger(row[0]) AS productId, row[1] AS productName, toFloat(row[2]) AS unitCost
+RETURN productId, productName, unitCost
 LIMIT 3
 ----
 
 image::{img}desktop_import_products_convert.jpg[link="{img}desktop_import_products_convert.jpg",role="popup-link"]
 
-Note that we are using collection positions (row[0], row[1], row[2]) to refer to the columns in the row.
-In a file that has no headers, this is the way to reference values in each position.
-When we look at the next two files that have headers, you will see that we can use the column name to reference the value.
+Note that we are using collection positions (row[0], row[1], row[2]) to refer to the columns in the row and improve readability by using aliases to reference them in the return.
+In a file that has no headers, this is how to reference values in each position.
 
 .Orders.csv
 The values in the orders.csv (per the column names) are for orderID, orderDate, and shipCountry.
 Again, we can evaluate the values and determine any conversions to apply.
 
-OrderID looks like it is an integer, so we can convert that using the `toInteger()` function.
+OrderID looks like an integer, so we can convert that using the `toInteger()` function.
 The orderDate column is certainly in a date format and will require us to format it using the `datetime()` function.
 Finally, the shipCountry values are characters, so we can leave that as a string.
 
@@ -237,21 +237,22 @@ Just as we did with the last CSV file, let us look at the results of these conve
 [source, cypher]
 ----
 LOAD CSV WITH HEADERS FROM 'file:///desktop-csv-import/orders.csv' AS row
-RETURN toInteger(row.orderID), datetime(replace(row.orderDate,' ','T')), row.shipCountry
+WITH toInteger(row.orderID) AS orderId, datetime(replace(row.orderDate,' ','T')) AS orderDate, row.shipCountry AS country
+RETURN orderId, orderDate, country
 LIMIT 5
 ----
 
 image::{img}desktop_import_orders_convert.jpg[link="{img}desktop_import_orders_convert.jpg",role="popup-link"]
 
 There was one tricky thing with this CSV in the `orderDate` column.
-Neo4j's datetime format will accept many formats, but the time value must start with a `T`.
-The CSV file did not have the 'T' joining the date and time values but had a space between them instead.
+Neo4j's datetime uses the https://en.wikipedia.org/wiki/ISO_8601[ISO 8601^] format which uses the delimiter `T` between the date and time values.
+The CSV file does not have the 'T' joining the date and time values but has a space between them instead.
 We used the `replace()` function to change the space to the character 'T' and get the string into the expected format.
 Then, we wrapped the `datetime()` function around that to convert the changed string to a datetime value.
 
 .Order-details.csv
 The values in the order-details.csv (from column names) are for productID, orderID, and quantity.
-Let us look at which ones will need to be converted.
+Let us look at which ones need to be converted.
 
 Our product ID is also from our products.csv file, where we converted that value to an integer.
 We will do the same here to ensure we match formats.
@@ -265,7 +266,8 @@ Remember that we still are not loading any data yet.
 [source, cypher]
 ----
 LOAD CSV WITH HEADERS FROM 'file:///desktop-csv-import/order-details.csv' AS row
-RETURN toInteger(row.productID), toInteger(row.orderID), toInteger(row.quantity)
+WITH toInteger(row.productID) AS productId, toInteger(row.orderID) AS orderId, toInteger(row.quantity) AS quantityOrdered
+RETURN productId, orderId, quantityOrdered
 LIMIT 8
 ----
 
@@ -283,12 +285,12 @@ An important step we need before writing Cypher statements, though, is to determ
 After all, importing the data in the existing table and column data will not provide the value we want to achieve from a graph.
 To utilize the graph database fully, we need a graph data model.
 
-We do not need to analyze all the various ways we could organize the products and orders in our files, so we have provided the model we will use for this exercise below.
+Though there are a variety ways to organize the products and orders in our files, we will save that for another guide and use the below version of the model for this exercise.
 
 image::{img}desktop_import_data_model.jpg[link="{img}desktop_import_data_model.jpg",role="popup-link"]
 
 We have two nodes - one for a product and one for an order.
-Each of those nodes have properties that we have from our CSV files.
+Each of those nodes have properties from our CSV files.
 For the `Product`, we have ID, name, and unit cost.
 For the `Order`, we have ID, date/time, and country where it is going.
 
@@ -305,10 +307,10 @@ One final thing we need to think about before we create data in the graph is ens
 To handle this, we can use constraints.
 Just as with other databases, constraints ensure data integrity criteria is not violated, while simultaneously indexing the property with the constraint for faster query performance.
 
-In this exercise, we will add two constraints - one for `productId` and one for `orderId`.
-This will ensure when we create a new node of each of those types or a relationship to connect them, we know the entities are unique and indexed.
+There are cases for applying indexes to a database before any data and with existing data.
+In this exercise, we will add two constraints before we create any data - one for `productId` and one for `orderId`.
+This will ensure that, when we create a new node of each of those types or a relationship to connect them, we know the entities are unique and indexed.
 
-Good practice is to add any constraints and indexes before loading to avoid existing violations and ensure data is added to the index as it is created.
 Below is the Cypher for adding indexes.
 
 [source, cypher]
@@ -319,21 +321,32 @@ CREATE CONSTRAINT ON (o:Order) ASSERT o.id IS UNIQUE;
 
 === Cypher
 
-Now we are ready to create the Cypher for creating the data in the graph!
-We will use `CREATE` statements where we are sure that we will not have duplicate rows in our CSV file.
-For values we know exist in the database already, we will first use `MATCH` to find them before executing any updates or inserts.
+Now we are ready to write the Cypher for creating the data in the graph!
+We could use `CREATE` statements where we are sure that we will not have duplicate rows in our CSV file and use `MATCH` to find existing data for updates.
+However, since it is hard to completely scrub all data and import perfectly clean data from any source, we will use `MERGE` statements to check if the data exists before inserting.
+If the node or relationship exists, Cypher will match and return (without any writes), but if it does not exist, Cypher will insert it.
+Using `MERGE` can have some performance overhead, but often it is the better approach to maintain high data integrity.
+
+[NOTE]
+--
+*Why both constraints and MERGE?*
+Using constraints is different from using MERGE.
+Statements that create data in violation of the constraint will error, while statements that use `MERGE` will simply return existing values (no errors).
+If we use both, we avoid terminating our load statements due to constraint violations, and we also ensure we don't accidentally create duplicates in adhoc queries.
+--
 
 .Products
 To start, let us load the products into the graph.
 We start with our `LOAD CSV` statement from above, then we add the Cypher to create the data from the CSV into our graph model.
-We can use the `CREATE` statement, as we feel confident that we have our constraint in place, no duplicate rows in our file, and no existing data in our graph.
+We will use the `MERGE` statement to check if the `Product` already exists before we create it.
 The properties will be set to the converted values we handled earlier in this guide.
 
 [source, cypher]
 ----
 LOAD CSV FROM 'file:///desktop-csv-import/products.csv' AS row
-CREATE (p:Product {productId: toInteger(row[0])})
-  SET p.productName = row[1], p.unitCost = toFloat(row[2])
+WITH toInteger(row[0]) AS productId, row[1] AS productName, toFloat(row[2]) AS unitCost
+MERGE (p:Product {productId: productId})
+  SET p.productName = productName, p.unitCost = unitCost
 RETURN count(p)
 ----
 
@@ -352,14 +365,15 @@ image::{img}desktop_import_verify_products.jpg[link="{img}desktop_import_verify_
 
 .Orders
 Next, we can load the orders.
-Again, since we feel confident our constraint will catch violations and our CSV file data has no duplicates, we can use the `CREATE` statement to insert the data more efficiently.
+Again, since we want to verify we do not create duplicate `Order` nodes, we can use the `MERGE` statement.
 Just as with products, we start with the `LOAD CSV` command, then add Cypher statements and include our data conversions.
 
 [source, cypher]
 ----
 LOAD CSV WITH HEADERS FROM 'file:///desktop-csv-import/orders.csv' AS row
-CREATE (o:Order {orderId: toInteger(row.orderID)})
-  SET o.orderDateTime = datetime(replace(row.orderDate,' ','T')), o.shipCountry = row.shipCountry
+WITH toInteger(row.orderID) AS orderId, datetime(replace(row.orderDate,' ','T')) AS orderDate, row.shipCountry AS country
+MERGE (o:Order {orderId: orderId})
+  SET o.orderDateTime = orderDate, o.shipCountry = country
 RETURN count(o)
 ----
 
@@ -377,7 +391,7 @@ image::{img}desktop_import_verify_orders.jpg[link="{img}desktop_import_verify_or
 .Order-details
 Last, but not least, we create the relationship between the products and the orders.
 Since we expect all of our products and all of our orders to already exist in the graph (that data should have been loaded with the last two files), then we start with `MATCH` to find the existing `Product` and `Order` nodes.
-Then, since we know relationships do not yet exist in the graph, the `CREATE` statement will add the new relationship.
+Then, the `MERGE` statement will add the new relationship or match an existing one.
 
 As we found when we ran a count on the order-details file above, there are 2,155 rows in the CSV.
 While this is not a huge number for file imports, we decide to have Cypher periodically commit the data to the database to reduce the memory overhead of the transaction state.
@@ -389,9 +403,10 @@ You could decrease this number if you have a lot of memory already allocated to 
 ----
 USING PERIODIC COMMIT 500
 LOAD CSV WITH HEADERS FROM 'file:///desktop-csv-import/order-details.csv' AS row
-MATCH (p:Product {productId: toInteger(row.productID)})
-MATCH (o:Order {orderId: toInteger(row.orderID)})
-CREATE (o)-[rel:CONTAINS {quantityOrdered: toInteger(row.quantity)}]->(p)
+WITH toInteger(row.productID) AS productId, toInteger(row.orderID) AS orderId, toInteger(row.quantity) AS quantityOrdered
+MATCH (p:Product {productId: productId})
+MATCH (o:Order {orderId: orderId})
+MERGE (o)-[rel:CONTAINS {quantityOrdered: quantityOrdered}]->(p)
 RETURN count(rel)
 ----
 
@@ -399,7 +414,7 @@ Just as we did above, we can validate the data with the query below.
 
 [source, cypher]
 ----
-MATCH (p:Product)-[rel:CONTAINS]-(o:Order)
+MATCH (o:Order)-[rel:CONTAINS]->(p:Product)
 RETURN p, rel, o LIMIT 50
 ----
 
@@ -418,3 +433,5 @@ Practice makes perfect!
 If you work through this exercise again at a later time, feel free to increase the challenge by coming up with your own data model for these files or try to load some other CSV files to a graph.
 
 If you have any questions or need assistance using `LOAD CSV`, reach out to us on the https://community.neo4j.com/[Community Site^]!
+
+To learn more about `LOAD CSV` and its uses, check out our guide on link:/developer/data-import/guide-import-csv/[LOAD CSV].
