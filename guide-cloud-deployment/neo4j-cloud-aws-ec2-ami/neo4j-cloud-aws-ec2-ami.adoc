@@ -65,16 +65,48 @@ done
 If you have an existing group that you'd like to use instead, set `GROUP` to the name of that group and ignore the rest of the commands.
 
 
+[[locate-version]]
+== Locate the AMI ID you want to launch
+
+To start the instance, we'll need the ID of an Amazon Machine Image (AMI).
+
+Neo4j publishes many different versions, and the AMI ID depends on which region you want to launch in.  AMI IDs are specific
+to regions, so you need to locate the right ID for your version and region needs.  For that reason, in the instructions below
+we will provide just a placeholder AMI Here "ami-XYZ".  
+
+To get the right AMI ID, you can follow these instructions:
+
+* Open the AWS EC2 console, and select Images &gt; AMIs on the left-hand nav bar.
+* In the filter, select "Public images" and search for either "neo4j-enterprise" or "neo4j-community" depending on which
+version you'd like to use.
+* You'll know you're using the right one when you see the "Owner" field showing this number: 385155106615
+* Locate the version you want, and use the AMI ID in the script below.
+* As an example: Neo4j Enterprise 3.5.1 is AMI ID ami-009272c7ac939919d in region us-west-2.  As new versions are published,
+they will be mentioned in the https://community.neo4j.com/c/neo4j-graph-platform/cloud[the Cloud topic on the Neo4j community site]
+
+If you would like to use the CLI to do this same step, the following command locates all image 
+IDs and names for the images Neo4j publishes in us-east-1.  By changing the region, you can find 
+AMI IDs near you.
+
+[source,text]
+----
+aws ec2 describe-images \
+   --region us-east-1 \
+   --owner 385155106615 \
+   --query "Images[*].{ImageId:ImageId,Name:Name}"
+----
+
 [[start-up-instance]]
 == Start up the instance
 
 We are now ready to start up a Neo4j instance.
-We will use the `image-id` for us-east-1, but there are link:#other-regions[corresponding image ids for other regions].
+
+Make sure to substitute ami-XYZ with your chosen AMI ID from the directions above!
 
 [source,text]
 ----
 aws ec2 run-instances \
-  --image-id ami-2a652655 \
+  --image-id ami-XYZ \
   --count 1 \
   --instance-type m3.medium \
   --key-name $KEY_NAME \
@@ -127,24 +159,6 @@ chmod 600 $KEY_NAME.pem
 == How the AWS Virtual Machine Works
 
 Please consult link:/developer/guide-cloud-deployment/neo4j-cloud-vms[Neo4j Cloud VMs] for details on internals of AWS VMs, including how to stop and start system services, configure Neo4j inside of the VM, and more.
-
-
-[[other-regions]]
-== How do I find the `image-id` for other regions?
-
-If we're in a different region than us-east-1, we can run the following command to find out the `image-id` for that region.
-
-[source,text]
-----
-aws ec2 describe-images \
-  --filters "Name=name,Values=neo4j-enterprise-1-3.4.1*" \
-  --region us-east-1 --query "Images[*].ImageId"
-----
-
-We can then substitute that `image-id` when link:#start-up-instance[starting up an instance].
-
-This same filter command can be used to locate AMIs for neo4j-community.
-
 
 == Terminating the instance
 
