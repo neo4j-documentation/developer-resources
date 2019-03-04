@@ -6,22 +6,67 @@
 
 == image:{img}icon-guide-practical.png[] Graph Visualization
 
-These guides and tutorials are designed to help you understand how to display your graph data in Neo4j as a visualization.
+Neo4j is designed to be very visual in nature.
+Using nodes and relationships, users can easily model their data into something developers, analysts, and leaders alike can understand.
+The Cypher query language is also structured visually with ASCII-art to make query-building and maintenance easy to read and adapt.
 
+Graph visualization takes these capabilities one step further by drawing the graph in various formats so users can interact with the data using the familiar circles (nodes) and lines (relationships).
+With visualization tools, a full or partial graph can come to life and allow the user to explore it, setting various rules or views in order to analyze it from different perspectives.
 
-== [.label]#Guide →# Visualization
+The pages in this section are designed to help you understand how to display your graph data in Neo4j as a visualization using a variety of tools provided from open source, Neo4j, or partners.
+Each tool provides certain capabilities, so you can choose which one suits your needs best.
+We will also walk through how to use the tools to display your data in Neo4j.
+
+== Why Visualize a Graph?
+
+There are a variety of ways to view data in Neo4j without the pictorial representation.
+You can return results as json, xml, tabular formats.
+So why would someone choose to represent the data visually?
 
 A unique capability of graph data is that it is very easily shown in a visual format.
 A graph visualization provides additional value for data analysts and business users, as well as developers.
 Anyone reviewing the graph can see the connections, determine areas of interest, or quickly assess the current state and organization of the data.
 As you can imagine, this can provide insight where other types of data formats cannot, bringing enormous value.
+Visualizations help make anomalies or relevant patterns stand out to help human eyes and brains detect them, where other types of data formats might not highlight hidden structures as well.
 
-In this guide, we will review a few key visualization tools that help you visualize your graph-based data and are made available to users via open source, Neo4j, or partners.
-Each tool provides certain capabilities, so you can choose which one suits your needs best.
-We will also walk through how to use the tools to display your data in Neo4j.
+Let us look at a very rudimentary example of this using our movie data from the data modeling section.
+In the graph view below, we can easily pick out that `Lana Wachowski` directed both `Cloud Atlas` and `The Matrix` movies, where in the tabular representation, that information is not as clear or easy-to-find.
 
+.Graph
+image:{img}vis_movies_graph_format.jpg[link="{img}vis_movies_graph_format.jpg",role="popup-link"]
 
-* Visualization Partners:
-** https://youtu.be/SM8JlhFbi1s[How to use Linkurious to Explore and Visualize Graphs^]
-** http://watch.neo4j.org/video/88289208[Visualizing Neo4j with KeyLines^]
-** http://watch.neo4j.org/video/90897466[Visualizing Neo4j with Tom Sawyer Perspectives^]
+.Table
+image:{img}vis_movies_tabular_format.jpg[link="{img}vis_movies_tabular_format.jpg",role="popup-link"]
+
+Even if you feel that the relationship is not hard to find in the tabular format, imagine if we were looking at a graph that contained of these individuals' entire filmography careers, as well as hundreds of other actors, directors, and film crew members.
+The connections could easily be lost in a non-visual format.
+
+== Neo4j Visualization Tools and Products
+
+Neo4j has two main visualization tools that are built and designed to work specifically with data in Neo4j’s graph database: Neo4j Browser and Neo4j Bloom.
+Neo4j Browser, a developer-focused tool that allows developers to execute Cypher queries and visualize the results, is the default developer interface for both Enterprise and Community editions of Neo4j database.
+Neo4j Bloom is a commercially-licensed product that allows users to explore their graph data using natural language.
+We will briefly discuss the key details of each here.
+
+=== Neo4j Browser
+// TODO: add Neo4j Browser screen shot here
+
+As mentioned above, the Neo4j Browser comes out-of-the-box with all of Neo4j’s graph database offerings, including Neo4j Server (community and enterprise editions) and Neo4j Desktop (all OS versions).
+
+Its visualization functionality is designed to display a node-graph representation of the underlying data stored in the database in response to a given Cypher query, showing circles for nodes and lines for relationships.
+Neo4j Browser also provides some functionality for styling with color and size based on node labels and relationship types.
+You can also customize your own styles by importing a GRASS (graph-stylesheet) file for Neo4j Browser to reference.
+
+=== Neo4j Bloom
+// TODO: add Neo4j Bloom screenshot here
+
+Bloom is Neo4j’s standalone product for visualization that is accessible with a commercial license.
+This tool was designed for business analysts and other non-developers to interact with data stored in the graph database without writing any code.
+
+Users can use natural language to query the database and explore patterns, clusters, and traversals in their graph data.
+It is also possible to create different dissections of the graph (called perspectives) that allow users to view different aspects and slices of graph data for further analysis.
+
+== Resources
+* https://neo4j.com/developer/neo4j-browser/[Neo4j Browser]
+* https://neo4j.com/blog/introducing-neo4j-bloom-graph-data-visualization-for-everyone/[Blog post: Neo4j Bloom^]
+* https://medium.com/neo4j/hands-on-graph-data-visualization-bd1f055a492d[Blog post: Hands-on Graph Visualization^]
