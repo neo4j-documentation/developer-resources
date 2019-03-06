@@ -10,12 +10,12 @@ Neo4j is designed to be very visual in nature.
 Using nodes and relationships, users can easily model their data into something developers, analysts, and leaders alike can understand.
 The Cypher query language is also structured visually with ASCII-art to make query-building and maintenance easy to read and adapt.
 
-Graph visualization takes these capabilities one step further by drawing the graph in various formats so users can interact with the data using the familiar circles (nodes) and lines (relationships).
+Graph visualization takes these capabilities one step further by drawing the graph in various formats so users can interact with the data in a more user-friendly way.
 With visualization tools, a full or partial graph can come to life and allow the user to explore it, setting various rules or views in order to analyze it from different perspectives.
 
 The pages in this section are designed to help you understand how to display your graph data in Neo4j as a visualization using a variety of tools provided from open source, Neo4j, or partners.
 Each tool provides certain capabilities, so you can choose which one suits your needs best.
-We will also walk through how to use the tools to display your data in Neo4j.
+We will also show how to use the tools to display your data in Neo4j.
 
 == Why Visualize a Graph?
 
@@ -29,7 +29,7 @@ Anyone reviewing the graph can see the connections, determine areas of interest,
 As you can imagine, this can provide insight where other types of data formats cannot, bringing enormous value.
 Visualizations help make anomalies or relevant patterns stand out to help human eyes and brains detect them, where other types of data formats might not highlight hidden structures as well.
 
-Let us look at a very rudimentary example of this using our movie data from the data modeling section.
+Let us look at a very rudimentary example of this using our movie data from the earlier data modeling section guides.
 In the graph view below, we can easily pick out that `Lana Wachowski` directed both `Cloud Atlas` and `The Matrix` movies, where in the tabular representation, that information is not as clear or easy-to-find.
 
 .Graph
@@ -38,18 +38,19 @@ image:{img}vis_movies_graph_format.jpg[link="{img}vis_movies_graph_format.jpg",r
 .Table
 image:{img}vis_movies_tabular_format.jpg[link="{img}vis_movies_tabular_format.jpg",role="popup-link"]
 
-Even if you feel that the relationship is not hard to find in the tabular format, imagine if we were looking at a graph that contained of these individuals' entire filmography careers, as well as hundreds of other actors, directors, and film crew members.
-The connections could easily be lost in a non-visual format.
+Even if you feel that the relationship is not hard to find in the tabular format, imagine if we were looking at a graph that contained these individuals' entire filmography careers, as well as hundreds of other actors, directors, and film crew members.
+The connections could easily be lost in a non-visual presentation.
 
 == Neo4j Visualization Tools and Products
 
-Neo4j has two main visualization tools that are built and designed to work specifically with data in Neo4j’s graph database: Neo4j Browser and Neo4j Bloom.
+Neo4j has two main visualization tools that are built and designed to work specifically with data in Neo4j’s graph database: link:/developer/neo4j-browser/[Neo4j Browser] and https://neo4j.com/bloom/[Neo4j Bloom^].
 Neo4j Browser, a developer-focused tool that allows developers to execute Cypher queries and visualize the results, is the default developer interface for both Enterprise and Community editions of Neo4j database.
 Neo4j Bloom is a commercially-licensed product that allows users to explore their graph data using natural language.
 We will briefly discuss the key details of each here.
 
 === Neo4j Browser
-// TODO: add Neo4j Browser screen shot here
+
+image:{img}neo4j_browser_yelp.jpg[link="{img}neo4j_browser_yelp.jpg",role="popup-link"]
 
 As mentioned above, the Neo4j Browser comes out-of-the-box with all of Neo4j’s graph database offerings, including Neo4j Server (community and enterprise editions) and Neo4j Desktop (all OS versions).
 
@@ -58,7 +59,8 @@ Neo4j Browser also provides some functionality for styling with color and size b
 You can also customize your own styles by importing a GRASS (graph-stylesheet) file for Neo4j Browser to reference.
 
 === Neo4j Bloom
-// TODO: add Neo4j Bloom screenshot here
+
+image:{img}neo4j_bloom_yelp.jpg[link="{img}neo4j_bloom_yelp.jpg",role="popup-link"]
 
 Bloom is Neo4j’s standalone product for visualization that is accessible with a commercial license.
 This tool was designed for business analysts and other non-developers to interact with data stored in the graph database without writing any code.
