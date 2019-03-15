@@ -4,6 +4,8 @@
 :section-link: in-production
 :section-level: 1
 
+image::{img}neo4j-docker-image-now-in-beta-235x300.jpg[float="right"]
+
 .Goals
 [abstract]
 You will learn how to create and run a Neo4j graph database in a Docker container.
@@ -13,6 +15,7 @@ This tutorial is designed for you to follow along and step through the process.
 [abstract]
 This guide builds upon the basic concepts discussed in earlier guides and some knowledge of Docker.
 To better understand and utilize Neo4j with Docker, it helps to know the following:
+
 * link:/developer/get-started/graph-database/[What is a Graph Database?]
 * link:https://www.docker.com/resources/what-container[Docker: What is a Container?^]
 
@@ -27,6 +30,7 @@ The Neo4j Docker image includes some basic configuration defaults that should no
 If interested, the full list of default configurations for Neo4j in Docker can be found on https://github.com/neo4j/docker-neo4j/blob/master/src/3.5/docker-entrypoint.sh[the GitHub repository^].
 
 By default, the Docker image also exposes three ports for remote access:
+
 * 7474 for HTTP
 * 7473 for HTTPS
 * 7687 for Bolt
@@ -39,14 +43,14 @@ Retrieving and running Neo4j within a Docker container is very simple using one 
 You simply need to execute the basic `docker run` command with the `neo4j` image and specify any options or versions you want along with that.
 We will take a look at a few options available with the `docker run` command.
 
-[%autowidth.spread]
+[cols="15%,20%,65%"]
 |===
 |*Option* |*Description* |*Example*
-|`--name` |Name your container (avoids generic container id) |`docker run --name myneo4j neo4j`
+|`--name` |Name your container (avoids generic id) |`docker run --name myneo4j neo4j`
 |`-p` |Specify container ports to expose |`docker run -p7687:7687 neo4j`
-|`-d` |Detach container to run in background and print container ID |`docker run -d neo4j`
+|`-d` |Detach container to run in background |`docker run -d neo4j`
 |`-v` |Bind mount a volume |`docker run -v $HOME/neo4j/data:/data neo4j`
-|`--help` |Output full list of options for `docker run` |`docker run --help`
+|`--help` |Output full list of _docker run_ options |`docker run --help`
 |===
 
 Let us go ahead and create our Neo4j container by running the command below.
