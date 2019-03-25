@@ -1,8 +1,14 @@
 = How-To: Run Neo4j in Docker
 :slug: docker-run-neo4j
+:level: Beginner
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 1
 :section: Neo4j in Production
 :section-link: in-production
 :section-level: 1
+:sectanchors:
 
 image::{img}neo4j-docker-image-now-in-beta-235x300.jpg[float="right"]
 
@@ -23,6 +29,7 @@ You should also have downloaded link:https://www.docker.com/get-started[Docker^]
 
 [role=expertise]
 {level}
+
 toc::[]
 
 == Neo4j Docker Image
@@ -31,7 +38,7 @@ There is an official https://hub.docker.com/_/neo4j[Neo4j image on DockerHub^] w
 From the DockerHub repo, we can run Community Edition or Enterprise Edition with a variety of versions of the database.
 The list from Neo4j's options in dockerhub is shown below.
 
-image::{img}neo4j_dockerhub_versions.jpg[link="{img}neo4j_dockerhub_versions.jpg",role="popup-link"]
+image::{img}neo4j_dockerhub_versions.jpg[link="{img}neo4j_dockerhub_versions.jpg"]
 
 To determine which image we want, we need to piece together a few options.
 First, the `neo4j` tag starts each image name.
@@ -134,7 +141,8 @@ When we run this command, it will create and start the container.
 We can see this because it generates a container id like in the image below.
 Even though it creates a container id, you can reference the container using the `name` we set up in the command - `testneo4j`.
 
-image::{img}docker_run_neo4j.jpg[link="{img}docker_run_neo4j.jpg",role="popup-link"]
+.Click to zoom
+image:{img}docker_run_neo4j.jpg[link="{img}docker_run_neo4j.jpg",role="popup-link"]
 
 == Verifying Execution and Stopping the Container
 Once we execute the command above, Neo4j should be running in our Docker container!
@@ -145,7 +153,8 @@ You can verify this by running `docker ps`.
 If you do not see your container in the list when you run `docker ps`, you can run `docker ps -a` instead to see if the container crashed and any associated exit codes.
 --
 
-image::{img}neo4j_docker_ps.jpg[link="{img}neo4j_docker_ps.jpg",role="popup-link"]
+.Click to zoom
+image:{img}neo4j_docker_ps.jpg[link="{img}neo4j_docker_ps.jpg",role="popup-link"]
 
 The above image shows the results of the `docker ps` command, showing the container id, image:version, command, created duration, current status, exposed ports, and the container name.
 
@@ -154,18 +163,21 @@ To start it again, we can simply execute `docker start testneo4j`.
 Output of both those commands is shown in the image below.
 We have added `docker ps` commands in between the start and stop, so we can see the status of the container before and after each command.
 
-image::{img}docker_startstop_neo4j.jpg[link="{img}docker_startstop_neo4j.jpg",role="popup-link"]
+.Click to zoom
+image:{img}docker_startstop_neo4j.jpg[link="{img}docker_startstop_neo4j.jpg",role="popup-link"]
 
 If we did not create the container properly, and we want to start over, we will need to destroy the container before executing the docker run again with the same container name.
 Running the same run command that we did above will notify us that we cannot create another container with the same name as an existing container.
 This is shown in the output below.
 
-image::{img}docker_run_duplicate.jpg[link="{img}docker_run_duplicate.jpg",role="popup-link"]
+.Click to zoom
+image:{img}docker_run_duplicate.jpg[link="{img}docker_run_duplicate.jpg",role="popup-link"]
 
 In order to avoid this, we can destroy the old container first using the `docker rm testneo4j` command.
 Once we run this, we can use the same docker run command from earlier to create our container again.
 
-image::{img}docker_rm_neo4j.jpg[link="{img}docker_rm_neo4j.jpg",role="popup-link"]
+.Click to zoom
+image:{img}docker_rm_neo4j.jpg[link="{img}docker_rm_neo4j.jpg",role="popup-link"]
 
 == Executing Other Functionality in Neo4j Containers
 Once you are comfortable with creating, starting, and stopping the Docker container, you can start exploring other Neo4j functionality.
@@ -201,7 +213,8 @@ We can use the returning prompt to write and run various Cypher statements again
 The image below shows the command and prompt to access Cypher shell, as well as a query to see how many nodes are in the database (at this point, 0).
 The final command exits Cypher shell using `:exit` and returns to our bash prompt.
 
-image::{img}docker_cypher_shell.jpg[link="{img}docker_cypher_shell.jpg",role="popup-link"]
+.Click to zoom
+image:{img}docker_cypher_shell.jpg[link="{img}docker_cypher_shell.jpg",role="popup-link"]
 
 === Overriding Default Config
 If you do need to modify any of the preset configuration values, you can do so in 3 different ways.
