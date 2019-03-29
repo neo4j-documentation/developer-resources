@@ -1,0 +1,136 @@
+= Other Types of Graph Visualization
+:slug: other-graph-visualizations
+:level: Beginner
+:section: Graph Visualization
+:section-link: graph-visualization
+:toc:
+:toc-placement!:
+:toc-title: Overview
+:toclevels: 2
+
+image::{img}alternate_visualizations.jpg[link="{img}alternate_visualizations.jpg"]
+
+[role=expertise]
+{level}
+
+toc::[]
+
+== Alternative Ways to Visualize Graph Data
+
+Not all graph visualizations represent data in circles and lines for nodes and relationships.
+Users may want to view data in various chart-based, map-based, or 3D formats.
+There are tools available for these types of visualizations with Neo4j, as well, which we will cover in more detail throughout this guide.
+
+=== *Chart-based visualizations*
+
+Viewing data in familiar chart formats such as bar charts, histograms, pie charts, dials, meters and other representations might be preferred for various users and business needs.
+There are tools that support these types of charts for metrics and dashboarding.
+
+There are several open source tools available, but we will mention a few with links that we have used before.
+Feel free to explore others!
+
+* *amCharts*
+** Blog post: https://medium.com/neo4j/showing-charts-for-neo4j-query-results-using-amcharts-and-structr-efae0b7a04f0[Charts for Neo4j query results with amCharts+Structr^]
+
+image::{img}amcharts_structr.jpg[link="{img}amcharts_structr.jpg",role="popup-link"]
+
+* *Chart.js*
+** Blog post: https://neo4j.com/blog/charting-neo4j-3-0/[Charting Neo4j^]
+
+image::{img}chart_js_visualization.jpg[link="{img}chart_js_visualization.jpg",role="popup-link"]
+
+* *Nivo*
+** Blog post: https://medium.com/neo4j/working-with-neo4j-date-and-spatial-types-in-a-react-js-app-5475b5042b50[Neo4j Spatial with Nivo charts^]
+
+image::{img}nivo_charts_bar.jpg[link="{img}nivo_charts_bar.jpg",role="popup-link"]
+image::{img}nivo_charts_circle.jpg[link="{img}nivo_charts_circle.jpg",role="popup-link"]
+
+.*Tableau* by
+image:{img}tableau.png[link="{img}tableau.png",width=200]
+
+image::{img}tableau-neo4j.jpg[link="{img}tableau-neo4j.jpg",role="popup-link",float="right",width=350]
+
+Tableau is a data analysis tool that can take data from a variety of sources and blend or split the data based on user specification.
+You can set up a connection from Tableau to Neo4j using the web data connector integration project for the two technologies on GitHub.
+With this project, you can specify up to 5 Cypher queries to pull data from Neo4j and import to Tableau (which converts the data to tables).
+
+Once the data is in Tableau, the user can interact with a drag-and-drop Tableau GUI to aggregate, splice, and style various combinations of the data into colorized visualizations in countless formats.
+
+===== +++<u>Tableau Resources</u>+++
+* GitHub project: https://github.com/neo4j-contrib/neo4j-tableau[Tableau^]
+* Product information: https://www.tableau.com/[Tableau website^]
+
+=== *Map-based visualizations*
+
+image::{img}mapbox_visualization.jpg[link="{img}mapbox_visualization.jpg",role="popup-link",float="right",width=350]
+
+Graph data is an excellent fit for mapping and representing geographic data, as it is laid out by entities and connections (locations/points and routes to get to those locations).
+Neo4j can help plot latitude and longitude, polygon geometries, routes, as well as distances, so a tool to overlay a map visualization on the front-end of this data provides a great deal of value for interacting and exploring an area.
+
+Commercial tools by Tom Sawyer and Keylines both also support this type of visualization.
+
+.*Leaflet.js / Mapbox*
+Leaflet.js is an open source library that allows us to create multiple layers and show/hide various layers.
+It is designed to be interactive and function on mobile phones, as well as traditional devices.
+You can extend functionality with a variety of plugins, including Mapbox.
+With these tools, you can create a base map layer (such as map tiles) and data visualizations live in map layers that are plotted on top of the map tiles.
+Mapbox also gives you the capability to add an interactive map.
+
+===== +++<u>Leaflet.js Resources</u>+++
+* Leaflet.js website: https://leafletjs.com/[Leaflet.js^]
+* Blog post: https://www.lyonwj.com/2017/11/28/geocoding-paradise-papers-neo4j-spatial-visualization/[Leaflet.js to visualize Paradise Papers data^]
+* Blog post: https://medium.com/neo4j/working-with-neo4j-date-and-spatial-types-in-a-react-js-app-5475b5042b50[Using Leaflet.js and Mapbox to visualize spatial data in Neo4j^]
+* Example source code: https://github.com/johnymontana/spacetime-reviews[Leaflet/Mapbox spatial Neo4j^]
+* Example source code: https://github.com/johnymontana/osm-routing-app[Leaflet/Mapbox interactive map^]
+* Video: https://neo4j.com/graphconnect-2018/session/neo4j-spatial-mapping[GraphConnect spatial Neo4j with Leaflet/Mapbox^]
+
+=== *Heatmap visualizations*
+
+image::{img}heatmap_visualization.jpg[link="{img}heatmap_visualization.jpg",role="popup-link",float="right",width=350]
+
+A heatmap is a data visualization where colors are used to represent data values.
+It is often imposed on a map, but could also be on a matrix as well.
+When heatmaps are used on a map, pockets of activity may be spread out, so some form of interpolation is often used.
+
+We will the tool(s) we have encountered so far, but we will add to this as we interact with more.
+
+* *Leaflet.js plugins:*
+** Blog post: https://www.lyonwj.com/2017/11/28/geocoding-paradise-papers-neo4j-spatial-visualization/[Leaflet.js heatcanvas plugin^]
+
+=== *3D visualizations*
+
+image::{img}graph_vis_3d.jpg[link="{img}graph_vis_3d.jpg",role="popup-link",float="right",width=350]
+
+Adding a third dimension may increase some complexity in the visualization, but also adds value.
+Exploring your data in 3D can help navigate through large amounts of data better and more clearly.
+Clustering should also be more apparent in a 3D visualization because data can be more spread out when using the third dimension, where 2D can cause groups to overlap or display more closely.
+
+Kineviz (commercial tool) also supports this type of visualization.
+
+.*3d-force-graph*
+With this open source library, there are a couple of different components for handling the physics behind three dimensions and for actually rendering the visualization.
+The tool includes features for customizing styles of nodes and relationships, as well as container layouts, rendering controls, configuring simulation, and user interaction.
+The data structure required is similar to previous tools we have seen, with collections for nodes and relationships.
+
+===== +++<u>3d-force-graph Resources</u>+++
+* Blog post: https://medium.com/neo4j/visualizing-graphs-in-3d-with-webgl-9adaaff6fe43[Visualizing Graphs in 3D^]
+* Source code: https://github.com/vasturiano/3d-force-graph[3d-force-graph^]
+
+=== *Other categories*
+
+There are still other tools for visualization that may not necessarily fit into the categories we have discussed so far.
+Instead, they expand the current boundaries and find uniquely powerful ways to utilize graph technologies.
+Thinking outside the box increases the possibilities of graph even further!
+
+.*Graphileon*
+image:{img}graphileon-logo.png[link="{img}graphileon-logo.png",width=200]
+
+image::{img}graphileon_visualization.jpg[link="{img}graphileon_visualization.jpg",role="popup-link",float="right",width=350]
+
+Graphileon is a platform for building graphy applications by composing functions and UI elements.
+It can be harnessed by users such as consultants and designers for styling and dashboards.
+Developers can also integrate with other technologies to customize applications, embed views, or extend functionality.
+
+===== +++<u>Graphileon Resources</u>+++
+* Online meetup: https://youtu.be/O8waU4Vhcrs[Graphileon with topic extraction^]
+* Product information: https://graphileon.com/[Graphileon website^]
