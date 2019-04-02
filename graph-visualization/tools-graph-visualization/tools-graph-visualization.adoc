@@ -78,6 +78,8 @@ As the first line on D3’s website states "D3.js is a JavaScript library for ma
 You can bind different kinds of data to a DOM and then execute different kinds of functions on it.
 One of those functions includes generating an SVG, canvas, or HTML visualization from the data in the DOM.
 
+image::{img}d3_visualization.jpg[link="{img}d3_visualization.jpg",role="popup-link",float="right",width=350]
+
 Neo4j’s movie example applications use d3.js, and you can find a variety of other projects using Neo4j and d3.
 The complicated part of D3 (or any embeddable library that doesn’t have direct Neo4j connection) is converting your graph data into the expected map format.
 D3 expects two different collections of graph data - one for nodes[] and one for links[] (relationships).
@@ -105,6 +107,8 @@ For additional information and to see everything that is available, check out th
 .*Sigma.js*
 While some libraries are meant to include all the capabilities in one bundle, Sigma.js touts a highly-extensible environment where users can add extension libraries or plugins to provide additional capability.
 This library takes data in either https://github.com/jacomyal/sigma.js/tree/master/plugins/sigma.parsers.json[JSON^] or https://github.com/jacomyal/sigma.js/tree/master/plugins/sigma.parsers.gexf[GEXF^] formats.
+
+image::{img}sigmajs_visualization.jpg[link="{img}sigmajs_visualization.jpg",role="popup-link",float="right",width=350]
 
 Users can start from a very basic visualization right out of the box, and then begin adding custom functions and rendering for styling preferences.
 Once the requirements surpass what is possible there, users can write and use their own custom plugins for specific functionality.
@@ -134,17 +138,6 @@ You can customize styling and web page view with a variety of style components.
 * Website: http://js.cytoscape.org/[Cytoscape.js^]
 * Source code: https://github.com/cytoscape/cytoscape.js[Cytoscape.js Github^]
 
-.*3d-force-graph*
-The 3d-force-graph library works to render nodes and edges in 3D with Three.js and WebGL.
-There are also two components used for the algorithms behind it - d3-force-3d and ngraph.
-It uses an iterative approach for rendering in 3D and creates stunning, interactive visualizations.
-3d-force-graph also offers functionality for visualizations to use with virtual reality.
-
-===== +++<u>3d-force-graph Resources</u>+++
-* Source code: https://github.com/vasturiano/3d-force-graph[3d-force-graph Github^]
-* Author post: https://bl.ocks.org/vasturiano/02affe306ce445e423f992faeea13521[Example^]
-* Blog post: https://medium.com/neo4j/visualizing-graphs-in-3d-with-webgl-9adaaff6fe43[3d-force-graph+Neo4j^]
-
 === *3. Standalone product tools*
 
 Certain tools and products are designed as standalone applications that can connect to Neo4j and interact with the stored data without involving any code.
@@ -160,12 +153,16 @@ image:{img}kineviz-logo.png[link="{img}kineviz-logo.png",width=200]
 
 image::{img}kineviz_visualization.jpg[link="{img}kineviz_visualization.jpg",role="popup-link",float="right",width=350]
 
-GraphXR is a browser-based visualization tool that brings unprecedented speed, power, and flexibility to the exploration of data in 2D and XR.
-Animation, geospatial mapping, and time series playback reveal telling patterns.
-Parametric layouts bring quantitative data analysis to the graph environment.
-GraphXR’s dynamic data modeling offers multiple perspectives on the same information with a single click.
-Leverage the full capabilities of Cypher or the simplicity of keyword search.
-GraphXR supports applications in security, medicine, finance, and more.
+GraphXR is a start-to-finish web-based visualization platform for interactive analytics.
+For technical users, it's a highly flexible and extensible environment for conducting ad hoc analysis.
+For business users, it's an intuitive tool for code-free investigation and insight. 
+
+* Collect data from Neo4j, SQL dbs, CSVs, and Json. 
+* Cleanse and enrich with built-in tools as well as API calls. 
+* Analyze links, properties, time series, and spatial data within a unified, animated context. 
+* Save back to Neo4j, output as a report, or embed in your webpage. 
+
+GraphXR supports a wide range of applications including law enforcement, medical research, and knowledge management. 
 
 Kineviz also has a graph app version of this tool that can be installed in Neo4j Desktop.
 The blog post about the graph app is included in the resources below.
@@ -173,8 +170,6 @@ The blog post about the graph app is included in the resources below.
 ===== +++<u>GraphXR Resources</u>+++
 * Blog post: https://neo4j.com/blog/graphxr-graph-app-neo4j-desktop/[Adding GraphXR as a Graph App in Neo4j Desktop^]
 * Blog post: https://neo4j.com/blog/evaluating-investor-performance-using-neo4j-graphxr-and-ml/[Evaluating Investor Performance Using Neo4j, GraphXR and MLl^]
-* Blog post: https://medium.com/neo4j/neo4j-graph-visualization-like-a-pro-18651963ebd4[Visualizing Neo4j Database Contents Like a Pro!^]
-* Blog post: https://neo4j.com/blog/graphxr-graph-app-neo4j-desktop/[GraphXR as a Graph App in Neo4j Desktop^]
 * Product information: https://static1.squarespace.com/static/5c58b86e8dfc8c2d0d700050/t/5c6f46559140b7665401785b/1550796373803/GraphXR%2BDatasheet.pdf[GraphXR Datasheet^]
 
 .*yFiles* by
@@ -192,6 +187,7 @@ yWorks also has a graph app version of this tool that can be installed in Neo4j 
 ===== +++<u>yFiles Resources</u>+++
 * Blog post: https://www.yworks.com/blog/neo4j-Custom-Visualization-Solutions[Custom Visualization Solutions with yFiles and Neo4j^]
 * Blog post: https://www.yworks.com/blog/neo4j-visualization-like-a-pro[Visualizing Neo4j Database Content Like a Pro^]
+* Video: https://www.youtube.com/watch?v=br3momUyCsI[Introduction to yWorks and yFiles at the Neo4j Meetup, Tokyo, Japan^]
 * Product information: https://www.yworks.com/products/yfiles[yFiles Visualization Libraries^]
 
 .*Linkurious Enterprise* by
