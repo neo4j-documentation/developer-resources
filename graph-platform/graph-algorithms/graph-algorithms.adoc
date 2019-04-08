@@ -12,22 +12,83 @@ toc::[]
 
 == Introduction
 
-Graph algorithms are used to compute metrics for graphs, nodes, or relationships.
+image:{img}OReilly-Graph-Algorithms_v2_ol1.jpg[link="{img}OReilly-Graph-Algorithms_v2_ol1.jpg",role="popup-link",float="right",width="210px", margin-left:"2px"]
 
-They can provide insights on relevant entities (centralities, ranking) in the graph or inherent structures such as communities (community-detection, graph-partitioning, clustering).
+Graph algorithms provide one of the most potent approaches to analyzing connected data because their mathematical calculations are specifically built to operate on relationships.
+They describe steps to be taken to process a graph to discover its general qualities or specific quantities.
 
+In https://neo4j.com/graph-algorithms-book/[O'Reilly's Graph Algorithms Book^], Amy Hodler and Mark Needham take you on a guided tour of this topic, with examples in Apache Spark and Neo4j.
+
+link:https://neo4j.com/graph-algorithms-book/[Download your free copy^, role="medium button"]
 
 == Graph Algorithms Library
 
+
+++++
+<iframe style="float:right; width:50%; padding-left: 5px;"  src="https://www.youtube.com/embed/55uB_t0RKTE" frameborder="0" allowfullscreen></iframe>
+++++
+
+
 Neo4j Graph Algorithms is a library that provides efficiently implemented, parallel versions of common graph algorithms for Neo4j 3.x exposed as link:/developer/cypher/[Cypher] procedures.
+Michael Hunger explains more, and shows hands on examples in https://www.youtube.com/watch?v=55uB_t0RKTE[this Neo4j Online Meetup presentation^].
+
+
+The library contains implementations for the following types of algorithms:
+
+[subs=attributes]
+++++
+
+
+<div class="row-card">
+  <div class="column-card">
+    <div class="card" >
+        <div class="card-inner">
+        <a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/pathfinding/" target="_blank">
+        <img src="{img}Pathfinding-Algo-Icon.png" />
+        </a>
+        </div>
+
+        <div class="card-below"><a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/pathfinding/" target="_blank">Path Finding</a></div>
+    </div>
+  </div>
+  <div class="column-card">
+    <div class="card" >
+      <div class="card-inner">
+      <a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/community/" target="_blank">
+<img src="{img}Community-Algo-Icon.png" />
+</a>
+      </div>
+      <div class="card-below"><a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/community/" target="_blank">Community Detection</a></div>
+    </div>
+  </div>
+  <div class="column-card">
+    <div class="card" >
+      <div class="card-inner">
+      <a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/centrality/" target="_blank">
+      <img src="{img}Centrality-Algo-Icon.png" />
+      </a>
+      </div>
+
+        <div class="card-below"><a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/centrality/" target="_blank">Centrality</a></div>
+    </div>
+  </div>
+  <div class="column-card">
+  <div class="card" >
+   <div class="card-inner">
+   <a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/similarity/" target="_blank">
+         <img src="{img}Similarity-Algo-Icon.png" />
+         </a>
+          </div>
+
+          <div class="card-below">
+          <a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/similarity/" target="_blank">Similarity</a>
+          </div>
+</div>
+
+  </div>
+</div>
 
 ++++
-<iframe width="560" height="315" src="https://www.youtube.com/embed/55uB_t0RKTE" frameborder="0" allowfullscreen></iframe>
-++++
-
-It currently contains implementations for the following algorithms:
-
-include::https://github.com/neo4j-contrib/neo4j-graph-algorithms/raw/3.2/readme.adoc[tag=algorithms, leveloffset=1]
 
 
 == Installation
@@ -68,3 +129,55 @@ If we don't see any rows, we will need to revisit the installation instructions.
 * link:/docs/graph-algorithms/current/[Docs: Neo4j graph algorithms^]
 * https://neo4j.com/blog/top-13-resources-graph-theory-algorithms/[Blog: Top 13 Resources for Understanding Graph Theory & Algorithms^]
 * https://neo4j.com/whitepapers/graph-algorithms-neo4j-ebook/?ref=social-camp-sales-intro[Free ebook: Neo4j Graph Algorithms^]
+
+++++
+<style>
+* {
+  box-sizing: border-box;
+}
+
+
+/* Float four columns side by side */
+.column-card {
+  float: left;
+  width: 25%;
+  padding: 0 10px;
+}
+
+/* Remove extra left and right margins, due to padding in columns */
+.row-card {margin: 0 -5px;}
+
+/* Clear floats after the columns */
+.row-card:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the counter cards */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+
+  text-align: center;
+  height: 200px;
+}
+
+.card-inner {
+  background-size: 100% 100%;
+  background-repeat:no-repeat;
+  height: 150px;
+  padding: 16px;
+}
+
+.card-below {
+    height: 50px;
+    background-color: #efefef;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    padding: 2px;
+    width: 100%;
+}
+
+</style>
+++++
