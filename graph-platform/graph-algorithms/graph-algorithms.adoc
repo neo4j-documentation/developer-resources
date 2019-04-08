@@ -12,7 +12,7 @@ toc::[]
 
 == Introduction
 
-image:{img}OReilly-Graph-Algorithms_v2_ol1.jpg[link="{img}OReilly-Graph-Algorithms_v2_ol1.jpg",role="popup-link",float="right",width="210px", margin-left:"2px"]
+image:{img}OReilly-Graph-Algorithms_v2_ol1.jpg[Download your free copy, link="https://neo4j.com/graph-algorithms-book/",role="popup-link",float="right",width="210px", margin-left:"2px"]
 
 Graph algorithms provide one of the most potent approaches to analyzing connected data because their mathematical calculations are specifically built to operate on relationships.
 They describe steps to be taken to process a graph to discover its general qualities or specific quantities.
@@ -37,93 +37,117 @@ The library contains implementations for the following types of algorithms:
 
 [subs=attributes]
 ++++
-
-
 <div class="row-card">
-  <div class="column-card">
-    <div class="card" >
-        <div class="card-inner">
-        <a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/pathfinding/" target="_blank">
-        <img src="{img}Pathfinding-Algo-Icon.png" />
-        </a>
+    <div class="column-card">
+        <div class="card">
+            <div class="card-inner">
+                <a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/pathfinding/" target="_blank">
+                    <img src="{img}Pathfinding-Algo-Icon.png" />
+                </a>
+            </div>
+
+            <div class="card-below"><a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/pathfinding/"
+                    target="_blank">Path Finding</a></div>
+        </div>
+    </div>
+    <div class="column-card">
+        <div class="card">
+            <div class="card-inner">
+                <a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/community/" target="_blank">
+                    <img src="{img}Community-Algo-Icon.png" />
+                </a>
+            </div>
+            <div class="card-below"><a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/community/"
+                    target="_blank">Community Detection</a></div>
+        </div>
+    </div>
+    <div class="column-card">
+        <div class="card">
+            <div class="card-inner">
+                <a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/centrality/" target="_blank">
+                    <img src="{img}Centrality-Algo-Icon.png" />
+                </a>
+            </div>
+
+            <div class="card-below"><a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/centrality/"
+                    target="_blank">Centrality</a></div>
+        </div>
+    </div>
+    <div class="column-card">
+        <div class="card">
+            <div class="card-inner">
+                <a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/similarity/" target="_blank">
+                    <img src="{img}Similarity-Algo-Icon.png" />
+                </a>
+            </div>
+
+            <div class="card-below">
+                <a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/similarity/"
+                    target="_blank">Similarity</a>
+            </div>
         </div>
 
-        <div class="card-below"><a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/pathfinding/" target="_blank">Path Finding</a></div>
     </div>
-  </div>
-  <div class="column-card">
-    <div class="card" >
-      <div class="card-inner">
-      <a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/community/" target="_blank">
-<img src="{img}Community-Algo-Icon.png" />
-</a>
-      </div>
-      <div class="card-below"><a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/community/" target="_blank">Community Detection</a></div>
-    </div>
-  </div>
-  <div class="column-card">
-    <div class="card" >
-      <div class="card-inner">
-      <a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/centrality/" target="_blank">
-      <img src="{img}Centrality-Algo-Icon.png" />
-      </a>
-      </div>
-
-        <div class="card-below"><a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/centrality/" target="_blank">Centrality</a></div>
-    </div>
-  </div>
-  <div class="column-card">
-  <div class="card" >
-   <div class="card-inner">
-   <a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/similarity/" target="_blank">
-         <img src="{img}Similarity-Algo-Icon.png" />
-         </a>
-          </div>
-
-          <div class="card-below">
-          <a href="https://neo4j.com/docs/graph-algorithms/current/algorithms/similarity/" target="_blank">Similarity</a>
-          </div>
 </div>
-
-  </div>
-</div>
-
+<br />
 ++++
 
 
-== Installation
 
-The easiest way to install the Graph Algorithms library is from the Neo4j Desktop, which you can download from https://neo4j.com/download/[neo4j.com/download^].
 
-Once you have downloaded that and created a project, you can scroll down to the `Plugins` section, and click `Install` for the Graph Algorithms, and then click `Install` again on the pop-up message.
 
-.Install at Project Level
-image:{img}algo_install_from_proj.jpg[link="{img}algo_install_from_proj.jpg",role="popup-link"]
-image:{img}algo_install_from_proj2.jpg[link="{img}algo_install_from_proj2.jpg",role="popup-link"]
+== Getting Started
 
-.Install at Database Level
-image:{img}algo_install_from_db.jpg[link="{img}algo_install_from_db.jpg",role="popup-link"]
+There are several ways to get started with graph algorithms:
 
-For more detailed instructions you can read Jennifer Reif's blog post about https://medium.com/neo4j/explore-new-worlds-adding-plugins-to-neo4j-26e6a8e5d37e[adding plugins to Neo4j^].
+[subs=attributes]
+++++
+<div class="row-card">
+    <div class="column-card-3">
+        <div class="card">
+            <div class="card-inner">
+                <a href="https://neo4j.com/sandbox-v2/" target="_blank">
+                    <img src="https://thewindowsclub-thewindowsclubco.netdna-ssl.com/wp-content/uploads/2017/02/sandbox-icon-icon-sandbox-400x400.png" />
+                </a>
+            </div>
+            <div class="card-below"><a href="https://neo4j.com/sandbox-v2/"
+                    target="_blank">Sandbox</a></div>
+        </div>
+    </div>
+    <div class="column-card-3">
+        <div class="card">
+            <div class="card-inner">
+                <a href="https://neo4j.com/sandbox-v2/" target="_blank">
+                    <img src="{img}Neuler_Icon.png" />
+                </a>
+            </div>
 
-If you want to deploy Graph Algorithms outside of the Neo4j Desktop you can follow the instructions below:
+            <div class="card-below"><a href="https://neo4j.com/sandbox-v2/"
+                    target="_blank">Graph Algorithms Playground</a></div>
+        </div>
+    </div>
 
-* Download the library from the https://github.com/neo4j-contrib/neo4j-graph-algorithms/releases[downloads page^] and put the jar into `$NEO4J_HOME/plugins`
-* Add `dbms.security.procedures.unrestricted=algo.\*` to `$NEO4J_HOME/conf/neo4j.conf`
-* Restart Neo4j
+        <div class="column-card-3">
+            <div class="card">
+                <div class="card-inner">
+                    <a href="https://neo4j.com/docs/graph-algorithms/current/" target="_blank">
+                        <img src="http://www.bourgogne.ordre.medecin.fr/sites/default/files/domain-127/documents/documentation5.jpg" />
+                    </a>
+                </div>
 
-We are now ready to start using the graph algorithms.
-Run the following query to check that the algorithms library has been picked up by Neo4j:
+                <div class="card-below"><a href="https://neo4j.com/docs/graph-algorithms/current/"
+                        target="_blank">Docs</a></div>
+            </div>
+        </div>
+</div>
+<br />
+++++
 
-[source,cypher]
-----
-CALL dbms.procedures() YIELD name, signature, description
-WHERE name starts with "algo"
-RETURN name, signature, description
-----
+* https://neo4j.com/sandbox-v2/[Sandbox^] - No download required. Start using Neo4j Graph Algorithms within seconds with a built in guide and dataset.
 
-If we don't see any rows, we will need to revisit the installation instructions.
+* Graph Algorithms Playground - A Graph App that provides a UI on top of the Graph Algorithms Library so that you can use the algorithms without having to know the Cypher query language.
 
+* https://neo4j.com/docs/graph-algorithms/current/[Docs^] - dive straight in with the Neo4j Graph Algorithms Use Guide.
 
 == Resources
 * link:/docs/graph-algorithms/current/[Docs: Neo4j graph algorithms^]
@@ -136,11 +160,15 @@ If we don't see any rows, we will need to revisit the installation instructions.
   box-sizing: border-box;
 }
 
-
-/* Float four columns side by side */
 .column-card {
   float: left;
   width: 25%;
+  padding: 0 10px;
+}
+
+.column-card-3 {
+  float: left;
+  width: 33%;
   padding: 0 10px;
 }
 
@@ -163,10 +191,13 @@ If we don't see any rows, we will need to revisit the installation instructions.
 }
 
 .card-inner {
-  background-size: 100% 100%;
   background-repeat:no-repeat;
   height: 150px;
   padding: 16px;
+}
+
+.card-inner img {
+  max-height: 130px;
 }
 
 .card-below {
