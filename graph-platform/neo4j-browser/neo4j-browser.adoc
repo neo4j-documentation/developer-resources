@@ -9,6 +9,7 @@
 :section-link: graph-platform
 :experimental:
 :neo4j-version: 3.3.4
+:sectanchors:
 
 .Goals
 [abstract]
@@ -60,6 +61,7 @@ image::{img}neo4j-browser-sync.png[width=500]
 
 You just need to click the cloud icon in the left-side menu and log in with your GitHub, Twitter, or Google account and synchronize your workplace to the cloud.
 
+[#browser-guides]
 == Built-in Guides
 
 If you want to learn more about Neo4j, Cypher, or Neo4j Browser before diving in, click on any of the helpful links shown after startup (commands also shown below).
@@ -88,6 +90,7 @@ To execute any of the queries provided within a Browser guide, simply click on t
 Then, just press kbd:[Enter] or the Play button to execute the statement!
 Results of the query will populate in a panel right below the command line.
 
+[#browser-styling]
 == Styling Neo4j Browser Visualization
 
 As mentioned above, any queries you run in Neo4j Browser will populate your results below the command line.
@@ -113,6 +116,7 @@ image::{img}style_person_node.png[]
 
 image::{img}style_actedin_relationship.png[]
 
+[#browser-commands]
 == Useful Commands and Keyboard Shortcuts
 
 |===
@@ -149,8 +153,10 @@ m|:help keys
 |Toggle Editor to Full Screen
 |===
 
+[#browser-tips]
 == Query and Command-Line Tips
 
+.Query Tips
 You can remove all accumulated output frames with `:clear`. The 'X' button at the top right of each pane removes that frame and aborts a (long-)running statement.
 The maximum number of frames that are kept is configurable in the Browser Settings from the left-side menu.
 
@@ -160,9 +166,17 @@ The keyboard shortcuts listed above will help you work efficiently within the ed
 You can also write and edit multi-line queries by switching to multi-line editing mode with kbd:[Shift+Enter], then kbd:[Enter] will create newlines.
 You then need to run kbd:[Ctrl+Enter] or kbd:[Cmd+Enter] to run multi-line queries.
 
+.Command Tips
 kbd:[Ctrl+Up] and kbd:[Ctrl+Down] (Mac users, use the kbd:[Cmd] key) allows you to navigate command history, and you can access all command history with `:history`.
 The command history is persisted across Browser restarts.
 
+You can put several Cypher statements into the command line input (with semicolons to separate statements) and run as a block by enabling the multi-statement query setting.
+To do this, go to the `Settings` tab on your Neo4j Browser window and make sure the box is checked for `Enable multi statement query editor`.
+These steps are shown in the image below.
+
+image::{img}enable_multiline_queries.jpg[width=300,link="{img}enable_multiline_queries.jpg",role="popup-link"]
+
+.Output, Export, & Visualization Tips
 You can switch between `Graph`, `Table`, `Text`, and `Code` views to see the results in various formats by clicking the icons on the left of each pane.
 
 ****
@@ -185,12 +199,6 @@ image:{img}download_csv.png[]
 If you enter fullscreen mode of a graph visualization, you can zoom in and out.
 After a node is clicked, it gets a halo, where you can expand and remove nodes from the visualization.
 You can also turn previously dragged nodes loose again.
-
-You can put several Cypher statements into the command line input (with semicolons to separate statements) and run as a block by enabling the multi-statement query setting.
-To do this, go to the `Settings` tab on your Neo4j Browser window and make sure the box is checked for `Enable multi statement query editor`.
-These steps are shown in the image below.
-
-image::{img}enable_multiline_queries.jpg[]
 
 == Graph Metadata
 
@@ -218,7 +226,6 @@ Creating folders can help organize your favorites, and you can rearrange them by
 Your favorites, settings, and styles can be saved to the cloud with Neo4j Browser Sync.
 If you clear your Browser cache, your local favorites will be removed.
 
-
 === Advanced Styling
 
 For more advanced styling, you can bring up the style-viewer with `:style` and copy/paste the graph-style-sheet (GRASS) that is returned.
@@ -231,7 +238,6 @@ Within the GRASS file, you can change colors, fonts, sizes, outlines, and titles
 It is also possible to combine multiple properties into a caption with `caption: '{name}, born in {born}';`
 
 image::{img}style_sheet_grass.png[]
-
 
 == Configuration
 
@@ -247,7 +253,6 @@ You can also see current stats on your database, such as store sizes, ID allocat
 To do this, just type the command `:sysinfo` on the command line.
 
 image::{img}sysinfo_stats.png[]
-
 
 == Executing REST requests
 
