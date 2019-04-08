@@ -18,7 +18,7 @@ toc::[]
 == Types of Graph Visualization
 
 There are 3 architectural categories into which most of our graph visualization tools fall.
-We will discuss each of these categories in detail and provide some pros and cons of the different architectures.
+We will discuss how each of these categories handles the exported data and provide some pros and cons of the different architectures.
 Depending on the visualization needs, one of these categories may define the set of tools you can choose to implement as a solution to your business needs.
 
 === *1. Embeddable tools with built-in Neo4j connections*
@@ -69,7 +69,7 @@ The rest of the content will be generated from that.
 
 These libraries offer the ability to embed graph visualization in an application, but without connecting directly to Neo4j.
 An advantage here is that we can populate our visualization with data sent from an API application that connects to the database, ensuring the client application is not querying the database directly.
-The downside of that however is that we often must transform the results from Neo4j into the format expected by these libraries.
+The downside, however, is that we often must transform the results to export from Neo4j into the format expected by these libraries.
 
 We can get a closer look at these tools in the next paragraphs.
 
@@ -81,7 +81,7 @@ One of those functions includes generating an SVG, canvas, or HTML visualization
 image::{img}d3_visualization.jpg[link="{img}d3_visualization.jpg",role="popup-link",float="right",width=350]
 
 Neo4j’s movie example applications use d3.js, and you can find a variety of other projects using Neo4j and d3.
-The complicated part of D3 (or any embeddable library that doesn’t have direct Neo4j connection) is converting your graph data into the expected map format.
+The complicated part of D3 (or any embeddable library that doesn’t have direct Neo4j connection) is converting your graph data into the expected map format for export.
 D3 expects two different collections of graph data - one for nodes[] and one for links[] (relationships).
 Each of these maps includes arrays of properties for each node and relationship that d3 then converts into circles and lines.
 Version 4 and 5 of d3.js also support force-directed graphs, where the visualization adjusts to the user’s view pane.
@@ -106,7 +106,7 @@ For additional information and to see everything that is available, check out th
 
 .*Sigma.js*
 While some libraries are meant to include all the capabilities in one bundle, Sigma.js touts a highly-extensible environment where users can add extension libraries or plugins to provide additional capability.
-This library takes data in either https://github.com/jacomyal/sigma.js/tree/master/plugins/sigma.parsers.json[JSON^] or https://github.com/jacomyal/sigma.js/tree/master/plugins/sigma.parsers.gexf[GEXF^] formats.
+This library takes exported data in either https://github.com/jacomyal/sigma.js/tree/master/plugins/sigma.parsers.json[JSON^] or https://github.com/jacomyal/sigma.js/tree/master/plugins/sigma.parsers.gexf[GEXF^] formats.
 
 image::{img}sigmajs_visualization.jpg[link="{img}sigmajs_visualization.jpg",role="popup-link",float="right",width=350]
 
@@ -182,12 +182,13 @@ The yFiles libraries enable you to easily create sophisticated graph-based appli
 They support the widest range of desktop and web technologies and layout algorithms with the highest quality and performance.
 With the wide-ranging extensibility and large feature set, all your visualization needs can be satisfied.
 
-yWorks also has a graph app version of this tool that can be installed in Neo4j Desktop.
+yWorks also provides a free graph explorer app that is based on the yFiles technology.
+It can be installed in Neo4j Desktop.
 
 ===== +++<u>yFiles Resources</u>+++
 * Blog post: https://www.yworks.com/blog/neo4j-Custom-Visualization-Solutions[Custom Visualization Solutions with yFiles and Neo4j^]
 * Blog post: https://www.yworks.com/blog/neo4j-visualization-like-a-pro[Visualizing Neo4j Database Content Like a Pro^]
-* Video: https://www.youtube.com/watch?v=br3momUyCsI[Introduction to yWorks and yFiles at the Neo4j Meetup, Tokyo, Japan^]
+* Webinar: https://www.youtube.com/watch?v=uDZD3tOTrFc[Technical intro to yFiles with Neo4j^]
 * Product information: https://www.yworks.com/products/yfiles[yFiles Visualization Libraries^]
 
 .*Linkurious Enterprise* by
