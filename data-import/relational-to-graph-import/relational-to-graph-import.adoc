@@ -45,16 +45,18 @@ Requires a dump of individual entity-tables and join-tables formatted as CSV fil
 *2)* https://neo4j-contrib.github.io/neo4j-apoc-procedures/[APOC^]: Awesome Procedures on Cypher.
 Created as an extension library to provide common procedures and functions to developers.
 This library is especially helpful for complex transformations and data manipulations.
-Useful procedures include apoc.load.jdbc, apoc.load.csv, apoc.load.json, and others.
+Useful procedures include apoc.load.jdbc, apoc.load.json, and others.
 
 *3)* https://medium.com/neo4j/neo4j-etl-tool-1-3-1-release-white-winter-2fc3c794d6a5[ETL Tool^]: internally-built UI tool that translates relational to graph from a JDBC connection.
 Allows bulk data import for large data sets with a fast performance and simple user experience.
 
 *4)* https://medium.com/neo4j/getting-started-with-kettle-and-neo4j-32ff15b991f9[Kettle^]: open-source tool for enterprise-scale data export and import.
+Handles a variety of data sources and large data sets easily and organizes the data flow process.
 
-*5)* Other ETL tools: there are also a few vendor and community tools available for similar etl processes and GUI interaction for getting data from various sources into and out of Neo4j.
+*5)* Other ETL tools: there are also a few vendor and community tools available for similar etl processes and GUI interaction for getting data in various formats into and out of Neo4j.
+Some of these tools also can map out the flow and transformation of data through the system.
 
-*6)* link:/developer/language-guides/[Programmatic via drivers]: ability to retrieve data from a relational data and use the bolt protocol to write it to Neo4j through one of the drivers with your programming language of choice.
+*6)* link:/developer/language-guides/[Programmatic via drivers]: ability to retrieve data from a relational database (or other tabular structure) and use the bolt protocol to write it to Neo4j through one of the drivers with your programming language of choice.
 
 [NOTE]
 --
@@ -141,9 +143,12 @@ Open-source options such as Talend or Nifi offer simple processes for simple pro
 
 === Import Programmatically with Drivers
 
-//info
+For importing data using a programming language, you can use the Neo4j driver for your preferred language and execute Cypher statements to/from the database.
+This process is also helpful if you do not have access to the Cypher shell or if the data is not available as an accessible file.
 
-== Resources
-* https://neo4j.com/developer/guide-importing-data-and-etl/[Guide: Data Import^]
-* https://neo4j.com/docs/developer-manual/3.4/cypher/clauses/load-csv/[Developer Manual: LOAD CSV^]
-* https://medium.com/neo4j/tap-into-hidden-connections-translating-your-relational-data-to-graph-d3a2591d4026[Neo4j ETL Tool^]
+You can set up the driver connection to Neo4j, and then execute Cypher statements that pass from the application-level through the driver and to the database for various operations - including large amounts of inserts and updates.
+Using the driver and programming language can be very useful for incremental updates to data passed from other systems into Neo4j.
+
+===== +++<u>Driver Import Resources</u>+++
+* Blog post: https://medium.com/neo4j/5-tips-tricks-for-fast-batched-updates-of-graph-structures-with-neo4j-and-cypher-73c7f693c8cc[Tips and Tricks for Fast-Batched Import with Neo4j^]
+* Documentation: https://neo4j.com/docs/driver-manual/current/[Neo4j Driver Manual^]
