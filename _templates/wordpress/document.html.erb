@@ -5,13 +5,36 @@
 active[(@document.attr "section-link", "get-started")]=:active;
 %>
 <%=  File.new("_templates/style_partial.erb").read %>
-<div class="row" style="padding-left: 0; padding-right: 0; padding-top: 1em;">
-   <div class="large-9 large-push-3 columns guide-section-content">
-   <%= content %>
-   </div>
-   <div class="large-3 large-pull-9 columns" id="dev-menu-nav">
-      <%= File.new("_templates/menu_partial.erb").read.gsub(/[\w-]+-activate/) { |m| active[m.gsub(/-activate/,"")].to_s } %>
-   </div>
+<div class="content-wrapper">
+  <div class="dev-menu-nav">
+    <%= File.new("_templates/menu_partial.erb").read.gsub(/[\w-]+-activate/) { |m| active[m.gsub(/-activate/,"")].to_s } %>
+  </div>
+  <div class="guide-section-content">
+    <%= content %>
+  </div>
+  <div class="guide-toc">
+    <ul class="side-nav">
+      <dl class="accordion">
+        <dd class="accordion-navigation active">
+          <h5>Getting Started</h5>
+          <div class="toc content active">
+            <ul>
+              <li>Your First Steps</li>
+              <li>Developer Guide Overview</li>
+              <li>What is a Graph Database?</li>
+              <li>What is the Neo4j Graph Platform?</li>
+              <li>Graph Data Modeling</li>
+              <li>Cypher Query Language</li>
+              <li>Data Import</li>
+              <li>Graph Visualization</li>
+              <li>Blah</li>
+            </ul>
+          </div>
+        </dd>
+      </dl>
+    </ul>
+  </div>
+  <div class="clearfix"></div>
 </div>
 
 <script>
