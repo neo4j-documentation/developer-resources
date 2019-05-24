@@ -9,36 +9,8 @@ active[(@document.attr "section-link", "get-started")]=:active;
   <div class="dev-menu-nav">
     <%= File.new("_templates/menu_partial.erb").read.gsub(/[\w-]+-activate/) { |m| active[m.gsub(/-activate/,"")].to_s } %>
   </div>
-  <div class="guide-section-content" data-spy="scroll" data-target=".nav" data-offset="0">
+  <div class="guide-section-content" data-spy="scroll" data-target=".nav .nav-link" data-offset="0">
     <%= content %>
-  </div>
-  <div class="guide-toc">
-    <ul class="side-nav">
-      <dl class="accordion">
-        <dd class="accordion-navigation active">
-          <h5>Getting Started</h5>
-          <div id="nav" class="toc content active">
-            <ul class="nav nav-pills flex-column">
-              <li class="nav-item"><a class="nav-link" href="#anchor1">Anchor1</a></li>
-              <li class="nav-item"><a class="nav-link" href="#anchor2">Anchor2</a></li>
-              <li class="nav-item"><a class="nav-link" href="#anchor3">Anchor3</a></li>
-              <li class="nav-item"><a class="nav-link" href="#anchor4">Anchor4</a></li>
-              <li class="nav-item"><a class="nav-link" href="#anchor5">Anchor5</a></li>
-              <li class="nav-item"><a class="nav-link" href="#anchor6">Anchor6</a></li>
-              <li class="nav-item"><a class="nav-link" href="#anchor7">Anchor7</a></li>
-              <li class="nav-item"><a class="nav-link" href="#anchor8">Anchor8</a></li>
-              <li class="nav-item"><a class="nav-link" href="#anchor9">Anchor9</a></li>
-              <li class="nav-item"><a class="nav-link" href="#anchor10">Anchor10</a></li>
-              <li class="nav-item"><a class="nav-link" href="#anchor11">Anchor11</a></li>
-              <li class="nav-item"><a class="nav-link" href="#anchor12">Anchor12</a></li>
-              <li class="nav-item"><a class="nav-link" href="#anchor13">Anchor13</a></li>
-              <li class="nav-item"><a class="nav-link" href="#anchor14">Anchor14</a></li>
-              <li class="nav-item"><a class="nav-link" href="#anchor15">Anchor15</a></li>
-            </ul>
-          </div>
-        </dd>
-      </dl>
-    </ul>
   </div>
   <div class="clearfix"></div>
 </div>

@@ -12,22 +12,32 @@ if (checklist = (option? :checklist) ? 'checklist' : nil)
       marker_checked = '&#10003;'
       marker_unchecked = '&#10063;'
     end
-  end
+  end 
 end %><div<%= @id && %( id="#{@id}") %> class="<%= ['ulist',checklist,@style,role].compact * ' ' %>"><%
 if title? %>
-<div class="title"><%= title %></div><%
+<div class="title"><%= title %></div><% 
+end
+if @parent.class == 'toc' %>
+  <ul class="nav nav-pills flex-column" data-spy="affix" data-offset-top="100"><%
+  items.each do |item| %>
+  <li class="nav-item">
+    <%= item.text %><%
+    if item.blocks? %>
+      <%= item.content %><% 
+    end %>
+  </li></ul><%
+  end
+else %>
+  <ul<%= (style_class = checklist || @style) ? %( class="#{style_class}") : nil %>><%
+  items.each do |item| %>
+  <li><%
+    if checklist && (item.attr? :checkbox) %><%= %(#{(item.attr? :checked) ? marker_checked : marker_unchecked} #{item.text}) %><%
+    else %><%= item.text %><%
+    end %><%
+    if item.blocks? %>
+      <%= item.content %><%
+    end %>
+  </li></ul><%
+  end
 end %>
-<ul<%= (style_class = checklist || @style) ? %( class="#{style_class}") : nil %>><%
-items.each do |item| %>
-<li>
-<%
-  if checklist && (item.attr? :checkbox) %><%= %(#{(item.attr? :checked) ? marker_checked : marker_unchecked} #{item.text}) %><%
-  else %><%= item.text %><%
-  end %><%
-  if item.blocks? %>
-<%= item.content %><%
-  end %>
-</li><%
-end %>
-</ul>
 </div>

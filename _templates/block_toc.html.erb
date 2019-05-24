@@ -1,21 +1,30 @@
 <%#encoding:UTF-8%><%
 if @document.attr? :toc
   toc_id = @id
+  toc_class = 'guide-toc'
   toc_role = (attr :role, (@document.attr 'toc-class', 'toc'))
   toc_title_id = nil
   toc_title = title? ? title : (@document.attr 'toc-title')
   toc_levels = (attr? :levels) ? (attr :levels).to_i : (@document.attr :toclevels, 2).to_i
   if !toc_id && (@document.embedded? || !(@document.attr? 'toc-placement'))
-    toc_id = 'toc'
+    toc_id = 'guide-toc'
     toc_title_id = 'toctitle'
   end
-%><div<%= toc_id && %( id="#{toc_id}") %> class="<%= toc_role %>"><%
+%><div<%= toc_id && %(id="#{toc_id}") %> <%= toc_class && %(class="#{toc_class}") %>>
+    <ul class="side-nav">
+      <dl class="accordion">
+        <dd class="accordion-navigation active"><%
   if toc_title %>
-<h3 class="title"<%= toc_title_id && %( id="#{toc_title_id}") %>><%= toc_title %></h3><%
+  <h5 <%= toc_title_id && %( id="#{toc_title_id}") %>><%= toc_title %></h3><%
   end %>
+  <div id="nav" class="toc content active">
 <% toc = converter.convert_with_options @document, 'outline', :toclevels => toc_levels %>
 <%= toc %>
 <%
 end %>
+        </div>
+      </dd>
+    </dl>
+  </ul>
 </div>
 <hr>
