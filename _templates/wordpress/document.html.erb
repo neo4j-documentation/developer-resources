@@ -6,10 +6,10 @@ active[(@document.attr "section-link", "get-started")]=:active;
 %>
 <%=  File.new("_templates/style_partial.erb").read %>
 <div class="content-wrapper">
-  <div class="dev-menu-nav">
+  <div class="dev-menu-nav large-2 hide-for-medium-only hide-for-small-only columns">
     <%= File.new("_templates/menu_partial.erb").read.gsub(/[\w-]+-activate/) { |m| active[m.gsub(/-activate/,"")].to_s } %>
   </div>
-  <div class="guide-section-content" data-spy="scroll" data-target=".nav .nav-link" data-offset="0">
+  <div class="guide-section-content large-8 columns">
     <h1 class="entry-title"><%= (doctitle(:sanitize => true) || (attr 'untitled-label')) %></h1>
     <%= content %>
   </div><%
@@ -24,7 +24,7 @@ active[(@document.attr "section-link", "get-started")]=:active;
       toc_id = 'guide-toc'
       toc_title_id = 'toctitle'
     end
-    %><div<%= toc_id && %(id="#{toc_id}") %> <%= toc_class && %(class="#{toc_class}") %>>
+    %><div<%= toc_id && %(id="#{toc_id}") %> <%= toc_class && %(class="#{toc_class} large-2 hide-for-medium-only hide-for-small-only columns") %>>
         <ul class="side-nav">
           <dl class="accordion">
             <dd class="accordion-navigation active"><%
