@@ -1,17 +1,12 @@
 = Getting Started with Neo4j and Ruby
 :slug: ruby-course
 :level: Intermediate
-:toc:
-:toc-placement!: manual
-:toc-title: Overview
-:toclevels: 3
 :section: Using Neo4j from Ruby
 :section-link: resources
-
-[role="pull-right"]
---
-toc::[]
---
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 ++++
 <style>
@@ -79,11 +74,13 @@ Ruby on Rails and Sinatra examples are given but any web framework (or lack ther
 You should have Ruby installed on your system.
 Some experience with Ruby and/or Rails is suggested.
 
+[#ruby-course]
 Let's say you would like to write a web application to track entities for yourself or your organization.
 Being a good link:https://en.wikipedia.org/wiki/Don%27t_repeat_yourself[DRY^] programmer you might decide that what you want is an _asset portal_: an application which gives you an GUI for browsing and editing entities while also making it easy to define new assets.
 This guide will show you how you might start creating such an application using Ruby on Rails and Neo4j.
 
-=== Why Neo4j?
+[#neo4j-ruby]
+== Why Neo4j?
 
 Neo4j is the world's most popular _graph database_.
 This offers a number of advantages:
@@ -96,7 +93,8 @@ This offers a number of advantages:
 Rubyists generally prefer tools which are developer friendly and which don't bother you with details until it's neccessary.
 Neo4j makes it easy to create nodes and relationships in whatever way seems most natural, but you can also change the structure of your database with a query.
 
-=== Introduction to Neo4j
+[#intro-neo4j]
+== Introduction to Neo4j
 
 Connected information is everywhere in our world.
 Neo4j was built to efficiently store, handle, and query highly-connected elements in your data model.
@@ -122,7 +120,7 @@ The property graph model consists of:
 
 While relationships are directional, querying relationships in either direction has no associated performance cost.
 
-==== Cypher
+=== Cypher
 
 Cypher is Neo4j's built-in query language.
 Cypher queries look like the following code block:
@@ -173,7 +171,8 @@ While it's possible to get started using the Neo4j.rb without learning Cypher, i
 Also, since the Neo4j.rb project works by making Cypher queries to Neo4j it is good to understand Cypher as your queries get more complex.
 There is a link:/developer/cypher[Cypher tutorial] if you would like to learn more.
 
-==== Neo4j in Ruby
+[#rb-project]
+== Neo4j in Ruby
 
 For this guide, we will be using the Neo4j.rb project.
 The project consists of the following gems:
@@ -182,8 +181,8 @@ include::../../language-guides/ruby/ruby.adoc[tags=neo4jrb-gems^]
 
 Specifically in this guide, we will be using the `ActiveNode` and `ActiveRel` modules from the `neo4j` gem to model nodes and relationships from our database.
 
-
-=== Setup
+[#project-setup]
+== Setup
 
 The following example is in Ruby on Rails, but there is a link:#_an_example_sinatra_application[Sinatra example^] below.
 
@@ -227,6 +226,9 @@ To see an example of setting up Neo4j in Rails, check out this short screencast.
 ++++
 <iframe width="560" height="315" src="https://www.youtube.com/embed/n0P0pOP34Mw?rel=0" frameborder="0" allowfullscreen></iframe>
 ++++
+
+[#create-models]
+== Create Basic Models
 
 In this guide, we will be setting up different `ActiveNode` models, which will serve as assets.
 This is a textbook example of where we can use class inheritance in Neo4j.rb.
@@ -353,6 +355,9 @@ def book_params
 end
 ----
 
+[#run-migrations]
+== Running the migrations
+
 Now that we have created our scaffolding, let's run the migrations to create constraints for our models and start up our Rails server:
 
 [source,bash]
@@ -365,13 +370,13 @@ open http://localhost:3000/books
 From there, you can create, update, browse, and delete books via the scaffolding.
 You can visit `/books`, `/users`, and `/categories` to get entry points into the various sections.
 
-=== The Fun Stuff
+[#power-up]
+== The Fun Stuff
 
 If you just wanted to do simple CRUD operations, there are plenty of other databases to choose from.
 How can we do something a bit more fun using the power of Neo4j?
 
-
-==== Eager Loading
+=== Eager Loading
 
 First, let's look at a performance improvement, which is not available from `ActiveRecord`.
 When you go to your list of books, you should see something like this in your log:
@@ -445,6 +450,9 @@ First, the books are loaded, and then separate queries are made to get all of th
 With `ActiveRecord`, you would need to specify an `includes` in order to make this happen rather than having each entity loaded individually.
 `ActiveNode`, on the other hand, makes the assumption that if you refer to an association from a list of items, you are almost certainly going to want that association for all of the objects.
 
+[#step-further]
+== One Step Further
+
 But we can do better!
 Now, modify the `index` action of the `BooksController` like so:
 
@@ -488,7 +496,8 @@ Completed 200 OK in 46ms (Views: 43.6ms)
 
 What we get is a list of `Book` objects that are pre-populated with authors and categories.
 
-==== Recommendations
+[#recommendations]
+== Recommendations
 
 You may have heard that Neo4j makes building recommendations from your data easy.
 Let's take a look at how we might make some recommendations.
@@ -501,7 +510,6 @@ To learn more about associations, check out this short screencast.
 ++++
 <iframe width="560" height="315" src="https://www.youtube.com/embed/veqIfIqtoNc?rel=0" frameborder="0" allowfullscreen></iframe>
 ++++
-
 
 First, change the `category` association for the `Book` model:
 
@@ -582,6 +590,9 @@ Whew!
 
 Now, with the ability for a book to have many categories and for a category to have many books, you can have a much better picture about recommending books.
 
+[#query-recommendations]
+== Querying for Recommendations
+
 It is simple to get a start on querying potential recommendations.
 Try running this in your Rails console:
 
@@ -608,6 +619,9 @@ For more information about association chaining, check out this short screencast
 ++++
 <iframe width="560" height="315" src="https://www.youtube.com/embed/pUAl9ov22j4?rel=0" frameborder="0" allowfullscreen></iframe>
 ++++
+
+[#category-query]
+== Finding Shared Categories
 
 What if you wanted to list every book and find out, for every other book with which it shares a category, how many categories it shares?
 
@@ -649,7 +663,6 @@ We can also display these recommendations in our app like so:
 <td><%= (@recommendations[book.isbn] || []).map(&:title).to_sentence %></td>
 ----
 
-
 Of course, we don't want to put too much logic in the controller, so we can extract this to a model class method:
 
 .app/controllers/books_controller.rb
@@ -683,7 +696,8 @@ For example, if we had a `recent` scope which only gave us books from the past t
 Book.recent.recommendations
 ----
 
-=== Doing More
+[#doing-more]
+== Doing More
 
 Are you getting into the idea of using Neo4j?
 Great!
@@ -691,7 +705,7 @@ If you still have a lot of questions, there are a number of resources to help yo
 
 For the fastest help or answers to questions, take a look at or reach out to us on our https://community.neo4j.com[Neo4j Online Community^]!
 
-==== An example Sinatra application
+=== An example Sinatra application
 
 .app.rb
 [source,ruby]
@@ -745,20 +759,19 @@ For the example view, see the one from link:https://github.com/neo4j-examples/ne
 
 You can also view Sintra example applications for the link:https://github.com/neo4j-examples/movies-ruby-neo4j-core[neo4j-core^] and link:https://github.com/neo4j-examples/movies-ruby-neo4jrb[neo4j^] gems.
 
-
-==== The asset_portal application
+=== The asset_portal application
 
 You can find the result of this guide in its link:https://github.com/neo4j-examples/neo4jrb_guide_asset_portal[GitHub repository^].
 If you would like to play with a more developed application, check out our link:https://github.com/neo4j-examples/asset_portal[asset_portal] app.
 The project introduces a single `AssetController` to avoid the duplication from this guide and also uses other tools like link:http://semantic-ui.com/[Semantic UI^] for a cleaner interface.
 
-==== Getting Help
+=== Getting Help
 
 The maintainers of the `Neo4j.rb` project love to help!
 There is a wonderful link:https://community.neo4j.com[Neo4j Online Community^] if you have questions about installation, configuration, Cypher, or any topic.
 You can also check out the link:http://neo4jrb.io/[Neo4j Ruby website^] and the link:http://neo4jrb.readthedocs.org/[documentation^].
 
-==== More Screencasts
+=== More Screencasts
 
 In addition to the screencasts embedded in this guide, there are two others to help you learn more about the `Neo4j.rb` project:
 
@@ -768,9 +781,9 @@ In addition to the screencasts embedded in this guide, there are two others to h
 <iframe width="560" height="315" src="https://www.youtube.com/embed/UFiWqPdH7io?rel=0" frameborder="0" allowfullscreen></iframe>
 ++++
 
-==== Integrations with other gems
+=== Integrations with other gems
 
-include::../../language-guides/ruby/ruby.adoc[tags=neo4jrb-integrations]
+* link:/developer/ruby/[Building Applications with Ruby]
 
 ////
 == Unimplemented ideas:

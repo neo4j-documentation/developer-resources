@@ -1,12 +1,12 @@
 = Cypher Basics II
 :slug: cypher-basics-ii
 :level: Beginner
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Cypher Query Language
 :section-link: cypher
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -22,8 +22,7 @@ You will need to read that guide before continuing with the current section.
 [role=expertise]
 {level}
 
-toc::[]
-
+[#cypher-crud-operations]
 == Create, Update, and Delete Operations
 
 In the last guide, we learned how to represent nodes, relationships, labels, properties, and patterns in Cypher for read queries.
@@ -93,6 +92,7 @@ CREATE (j:Person {name: 'Jennifer'})-[rel:IS_FRIENDS_WITH]->(m:Person {name: 'Ma
 We will learn a few ways to ensure unique inserts and to maintain data integrity, so do not worry about how to do that just yet.
 --
 
+[#cypher-update]
 == Updating Data with Cypher
 
 Maybe you already have a node or relationship in the data, but you want to modify its properties.
@@ -137,6 +137,7 @@ image::{img}cypher_graph_addRelProp.jpg[link="{img}cypher_graph_addRelProp.jpg",
 If we wanted to return a graph view on the above query, we could add variables to the nodes for `p:Person` and `c:Company` and write the return line as `RETURN p, rel, c`.
 --
 
+[#cypher-delete]
 == Deleting Data with Cypher
 
 Another operation for us to cover is how to delete data in Cypher.
@@ -216,6 +217,7 @@ SET n.birthdate = null
 
 image::{img}cypher_graph_delProp.jpg[link="{img}cypher_graph_delProp.jpg",role="popup-link"]
 
+[#cypher-merge]
 == Avoiding Duplicate Data Using MERGE
 
 We briefly mentioned in an earlier section that there are some ways in Cypher to avoid creating duplicate data.
@@ -288,12 +290,14 @@ MERGE (m:Person {name: 'Mark'})-[r:IS_FRIENDS_WITH]-(j:Person {name:'Jennifer'})
 RETURN m, r, j
 ----
 
-=== Next Steps
+[#cypher-next-steps]
+== Next Steps
 
 Now that you have learned how to write create, read, update, and delete statement in Cypher, you can interact with data to get it into and out of Neo4j in a variety of ways.
 The next guide will show you how to handle filtering in Neo4j to return results with various criteria and to run fuzzy searches using ranges and partial values.
 
-=== Resources
+[#cypher-resources]
+== Resources
 
 * link:/docs/cypher-manual/current/clauses/create/[Neo4j Cypher Manual: CREATE^]
 * link:/docs/cypher-manual/current/clauses/set/[Neo4j Cypher Manual: SET^]

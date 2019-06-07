@@ -1,14 +1,14 @@
 = Neo4j APOC Library
 :slug: neo4j-apoc
 :level: Beginner
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Neo4j Graph Platform
 :section-link: graph-platform
 :experimental:
 :neo4j-version: 3.4.0
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -23,10 +23,7 @@ This tool is used mostly through the Neo4j Desktop application and through the N
 [role=expertise]
 {level}
 
-toc::[]
-
-== What is APOC?
-
+[#about-apoc]
 APOC stands for **A**wesome **P**rocedures **o**n **C**ypher.
 Before APOC's release, developers needed to write their own procedures and functions for common functionality that Cypher or the Neo4j database had not yet implemented for support.
 Each developer might write his own version of these functions, causing a lot of duplication.
@@ -39,7 +36,7 @@ It includes over 450 standard procedures, providing functionality for utilities,
 They are well-supported and are very easy to run as separate functions or to include in Cypher queries.
 Before you begin to write adhoc functions for your application, be sure check APOC first to see if it exists there!
 
-
+[#installing-apoc]
 == Installing the APOC Library
 
 If you haven't already, http://neo4j.org/download/[download] Neo4j and use the provided instructions (shown when downloading) to get a project and database ready to run. 
@@ -60,7 +57,7 @@ image:{img}apoc_install_from_db1.png[link="{img}apoc_install_from_db1.png",role=
 
 image:{img}apoc_install_from_db2.png[link="{img}apoc_install_from_db2.png",role="popup-link"]
 
-
+[#apoc-intro]
 == Intro to Using the APOC Library
 
 Now that we have the library installed, there are a variety of ways we can interact with the various procedures and functions in the library.
@@ -77,7 +74,7 @@ If you watched the video above, don't feel intimidated by the Cypher in some of 
 Those topics will be covered in the upcoming guide for the https://neo4j.com/developer/cypher/[Cypher Query Language].
 ****
 
-
+[#apoc-tips]
 == APOC Helpful Tips
 
 With so much to offer in the APOC library, it is easy to feel overwhelmed and unsure how to approach it.
@@ -127,7 +124,7 @@ This command also gives a description and sample implementation with parameters 
 For a comprehensive list of all the procedures, you can execute `CALL apoc.help('apoc')`.
 ****
 
-
+[#apoc-examples]
 == Common Examples and Usage
 
 There are endless opportunities for using provided procedures in APOC.
@@ -160,7 +157,7 @@ Can pull a list of results in the first query, then execute another query on eac
 Can set parameters for batch size, variables, retry number, etc.
 There are a number of variations on this procedure for running background processes, managing threads, and committing/submitting/canceling processes.
 
-
+[#apoc-help]
 == Getting Help and Asking Questions about APOC
 
 If you have consulted the documentation, blogs, and other resources and still cannot solve how use APOC in a particular query or function, you can reach out to a variety of Neo4j and community experts.
@@ -170,7 +167,7 @@ The different options and descriptions of each type are listed below.
 * https://github.com/neo4j-contrib/neo4j-apoc-procedures[APOC GitHub project^] - post GitHub issues for items that are not working as documented or pull requests for additional features or updates.
 Issues will be prioritized and included in future releases of the APOC library.
 
-
+[#apoc-resources]
 == Resources
 * https://neo4j-contrib.github.io/neo4j-apoc-procedures/[APOC Documentation^]
 * https://medium.com/neo4j/explore-new-worlds-adding-plugins-to-neo4j-26e6a8e5d37e[Installing Plugins: Blog post^]

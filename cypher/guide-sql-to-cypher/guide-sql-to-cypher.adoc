@@ -1,12 +1,12 @@
 = From SQL to Cypher - A hands-on Guide
 :slug: guide-sql-to-cypher
 :level: Beginner
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Cypher Query Language
 :section-link: cypher
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -22,10 +22,8 @@ Importing the data is covered in our link:/developer/working-with-data/guide-imp
 [role=expertise]
 {level}
 
-toc::[]
-
-
-=== A few words about Cypher
+[#cypher-for-sql-dev]
+== A few words about Cypher
 
 Cypher is like SQL a declarative, textual query language, but for graphs.
 
@@ -60,8 +58,8 @@ The openCypher project also provides syntax diagrams that you're used to from SQ
 <object type="image/svg+xml" data="//s3.amazonaws.com/artifacts.opencypher.org/railroad/Pattern.svg"></object>
 ++++
 
-
-=== Data Model Transformation
+[#cypher-sql-data-model]
+== Data Model Transformation
 
 Relational databases store data in tables with fixed structure (schema), each column having a name, type, length, constraints etc.
 References between tables are represented by repeating the primary key of one table as column in another as a foreign key.
@@ -78,11 +76,8 @@ Rows of entity tables are converted into nodes and foreign-key relationships and
 
 It is important to have an good understanding of the graph model before you start to import data, then it just becomes the task of hydrating that model.
 
-[role=side-nav]
-* link:/developer/get-started/graph-db-vs-rdbms["Data Model Transformation",role=guide]
-
-
-=== Data Import
+[#cypher-sql-data-import]
+== Data Import
 
 Most relational databases allow an easy export of tables to CSV files, e.g. in Postgres `COPY (SELECT * FROM customers) TO '/tmp/customers.csv' WITH CSV header;`.
 Those files can come from single tables, but might also represent a set of joined tables with some duplicate data.
@@ -96,8 +91,8 @@ They can be imported by using Cypher's `LOAD CSV` capability, which we explain i
 If you are a developer you can also just connect to the relational database with your regular driver, load the data from there with SQL.
 And directly create the graph structure by using a Neo4j driver for your stack to send the equivalent, parametrized Cypher update statements to Neo4j.
 
-
-=== Cypher is all about Patterns
+[#cypher-sql-patterns]
+== Cypher is all about Patterns
 
 As already mentioned, the essence of your Cypher statements are the patterns you are are interested in.
 
@@ -113,31 +108,28 @@ Patterns are used both for querying as well as updating the graph structures.
 They are usually used in the `MATCH` clause, but can also be treated as expressions or predicates.
 That's especially helpful when making sure that certain patterns shouldn't exist.
 
-
-=== Northwind Example Model
+[#cypher-sql-northwind]
+== Northwind Example Model
 
 The well known Northwind database represents the data storage of a retail application.
 You'll find customers, products, orders, employees, shippers and categories as well as their interactions.
 
 Please refer to the relational and graph model below when considering the data structures in the following queries.
 
-
-==== Relational model
+=== Relational model
 
 image::{img}Northwind_diagram.jpg[]
 
-
-==== Graph Model
+=== Graph Model
 
 image::{img}northwind_graph_simple.png[width=800]
 
-
-=== Querying the Data Step by Step
+[#cypher-sql-queries]
+== Querying the Data Step by Step
 
 The intent of this guide is to introduce Cypher by comparing it with the equivalent SQL statements, so that your existing SQL knowledge allows your to understand it immediately.
 
-
-==== Find all Products
+=== Find all Products
 
 _Select and Return Records_
 
@@ -189,8 +181,7 @@ LIMIT 10;
 
 // table
 
-
-==== Find single Product by Name
+=== Find single Product by Name
 
 _Filter by Equality_
 
@@ -236,8 +227,7 @@ CREATE INDEX ON :Product(productName);
 CREATE INDEX ON :Product(unitPrice);
 ----
 
-
-==== Filter Products
+=== Filter Products
 
 _Filter by List/Range_
 
@@ -289,8 +279,7 @@ You can also use a regular expression, like `p.productName =~ "C.*"`.
 
 // table
 
-
-==== Joining Products with Customers
+=== Joining Products with Customers
 
 _Join Records, Distinct Results_
 
@@ -319,8 +308,7 @@ RETURN distinct c.companyName;
 
 // table
 
-
-==== New Customers without Orders yet
+=== New Customers without Orders yet
 
 _Outer Joins, Aggregation_
 
@@ -354,8 +342,7 @@ ORDER BY volume DESC;
 
 // table
 
-
-==== Top-Selling Employees
+=== Top-Selling Employees
 
 _Aggregation, Grouping_
 
@@ -389,8 +376,7 @@ ORDER BY cnt DESC LIMIT 10
 
 //table
 
-
-==== Employee Territories
+=== Employee Territories
 
 _Collecting Master-Detail Queries_
 
@@ -423,8 +409,7 @@ RETURN t.description, collect(e.lastName);
 
 //table
 
-
-==== Product Categories
+=== Product Categories
 
 _Hierarchies and Trees, Variable Length Joins_
 
@@ -465,7 +450,6 @@ RETURN p.name
 
 //table
 
-
 There is much more to Cypher than shown in this short section.
 Hopefully the comparison with SQL helped you to understand the concepts.
 If you are intrigued by the possibilities and want to try and learn more, just link:/download[install Neo4j] on your machine and use the links to our different Cypher learning resources.
@@ -487,11 +471,9 @@ LIMIT 5
 
 also introduce order by, limit
 
-
 ==== Find all Products in Category X
 
 discuss graph patterns with relationships
-
 
 ==== Hierarchy
 
@@ -507,3 +489,6 @@ discuss graph patterns with relationships
 
 ////
 
+[#cypher-resources]
+== Resources
+* link:/developer/get-started/graph-db-vs-rdbms["Data Model Transformation",role=guide]

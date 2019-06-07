@@ -1,12 +1,12 @@
 = Using Neo4j from PHP
 :slug: php
 :level: Intermediate
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 2
 :section: Develop with Neo4j
 :section-link: language-guides
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -21,9 +21,8 @@ You should have link:/download[installed Neo4j^] and made yourself familiar with
 [role=expertise]
 {level}
 
-toc::[]
-
-=== Neo4j for PHP Developers
+[#neo4j-php]
+== Neo4j for PHP Developers
 
 image::{img}php_logo.png[float=right,width=300]
 
@@ -36,15 +35,15 @@ If you have any questions, you can always find a community member around on the 
 
 Members of the PHP community have invested a lot of time and love to develop all these drivers, so please if you use them, provide feedback to the authors.
 
-include::../_includes/sample_project.adoc[]
-
-=== Getting started tutorials 
+[#php-tutorials]
+== Getting started tutorials 
 
 * link:http://www.sitepoint.com/discover-graph-databases-neo4j-php/[Discover Graph Database with Neo4j and PHP^]
 * link:http://www.sitepoint.com/adding-social-network-features-php-app-neo4j/[Adding social newtork features to a PHP application with Neo4j^]
 * link:http://www.sitepoint.com/efficient-user-timelines-php-application-neo4j/[Efficient User timelines in a PHP application with Neo4j^]
 
-=== Using Neo4j in a standalone PHP environment
+[#standalone-php]
+== Using Neo4j in a standalone PHP environment
 
 If you prefer to develop without frameworks, these libraries are made for you:
 ////
@@ -56,10 +55,9 @@ The Client is located at https://github.com/graphaware/neo4j-php-client and embr
 
 Concerning documentation, currently I have only the README.
 ////
-include::../_includes/community-driver-notice.adoc[]
 
-
-=== GraphAware PHP Client
+[#graphaware-php]
+== GraphAware PHP Client
 
 GraphAware PHP Client is a powerful and flexible PHP Client for Neo4j with MultiDB support, full High-Availability support for Neo4j Enterprise, and a convenient object formatter for handling graph results.
 The 4.0 release contains the following features:
@@ -98,8 +96,8 @@ foreach ($result->getRecords() as $record) {
 | icon:book[] Docs | https://github.com/graphaware/neo4j-php-client/blob/master/README.md
 |===
 
-
-=== GraphAware Neo4j-PHP-OGM
+[#graphaware-ogmphp]
+== GraphAware OGM for Neo4j and PHP
 
 GraphAware Neo4j-PHP-OGM is an object graph mapper for Neo4j in PHP. Highly inspired by Doctrine2, it uses annotations
 to defined mapping and all the operations to the graph are centralized via an EntityManager.
@@ -171,7 +169,6 @@ $movie = $em->getRepository(Movie::class)->findOneBy('title', 'The Matrix');
 $user->rateMovie($movie, '4.5');
 $em->persist($user);
 $em->flush();
-
 ---- 
 
 [cols="1,4"]
@@ -182,8 +179,8 @@ $em->flush();
 | icon:book[] Docs | https://github.com/graphaware/neo4j-php-ogm/blob/1.0/docs/01-intro.md
 |===
 
-
-=== Neo4j Symfony Bundle
+[#neo4j-symfony]
+== Neo4j Symfony Bundle
 
 To provide a smooth integration between Neo4j and Symfony we’ve created the SymfonyNeo4jBundle. 
 It wraps the excellent PHP community client by Graphaware and creates a solid Symfony experience. 
@@ -202,7 +199,8 @@ Advanced Neo4j users will have full control over the client and what Cypher gets
 | icon:book[] Blog | https://www.sitepoint.com/introducing-the-neo4j-symfony-bundle/ 
 |===
 
-=== NeoEloquent for Laravel
+[#neoeloquent-lib]
+== NeoEloquent for Laravel
 
 Neo4j Graph Eloquent Driver for Laravel 4
 
@@ -273,9 +271,10 @@ A PHP adapter for Neo4j REST API Cypher endpoint.
 * Author: https://github.com/endyjasmi[Endy Jasmi^]
 ////
 
-=== Applications built with PHP and Neo4j
+[#apps-neo4jphp]
+== Applications built with PHP and Neo4j
 
-==== Omnomhub
+=== Omnomhub
 
 Like for Github, but for recipes!
 
@@ -285,7 +284,7 @@ Like for Github, but for recipes!
 | icon:github[] Source | https://github.com/Omnomhub/omnomhub
 |===
 
-==== Thesaurus Manager
+=== Thesaurus Manager
 
 If you want to built your own thesaurus, this app is made for you
 
@@ -296,7 +295,7 @@ If you want to built your own thesaurus, this app is made for you
 | icon:github[] Source | https://github.com/okulbilisim/thesaurus-manager
 |===
 
-==== Graphgen
+=== Graphgen
 
 Graph generation engine based on a Cypher DSL
 
@@ -306,3 +305,9 @@ Graph generation engine based on a Cypher DSL
 | icon:github[] Source | https://github.com/graphaware/graphgen
 | icon:book[] Docs | http://graphgen.graphaware.com
 |===
+
+[#php-example]
+include::../_includes/sample_project.adoc[]
+
+[#php-community]
+include::../_includes/community-driver-notice.adoc[]

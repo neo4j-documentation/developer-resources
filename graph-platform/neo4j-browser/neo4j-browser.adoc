@@ -1,15 +1,14 @@
 = Neo4j Browser User Interface Guide
 :slug: neo4j-browser
 :level: Beginner
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Neo4j Graph Platform
 :section-link: graph-platform
 :experimental:
 :neo4j-version: 3.3.4
 :sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -23,10 +22,7 @@ It also helps if you have read the section on link:/developer/get-started/graph-
 [role=expertise]
 {level}
 
-toc::[]
-
-== Installing and Starting Neo4j Browser
-
+[#install-neo4j-browser]
 If you haven't already, link:/download/[download^] Neo4j. 
 Using the provided instructions (shown when downloading), follow Step 1 to install and start the Neo4j Desktop application.
 Alternatively, after downloading the zipped server-only package, instructions can also be found in the readme (`bin/neo4j start`) after unzipping the downloaded file.
@@ -48,11 +44,13 @@ Now that we can access the graph database, we can start working with data using 
 
 For an introduction to Browser's features and navigation as Neo4j's user interface, you can type `:play intro` into the command-line and press kbd:[Enter] or click the play button (image:{img}cypher_run_button.jpg[width=25]).
 
+[#neo4j-feedback]
 == Feedback & Questions
 
 If you have feedback or questions on how to use Neo4j Browser, there is a small messaging system in the configuration (icon:cog[]) drawer.
 You can provide your name and send us a message.
 
+[#browser-sync]
 == Neo4j Browser Sync
 
 Neo4j Browser Sync is a feature that allows you to synchronize your favorites, styling, and settings to cloud storage, so you can share it across machines and browsers.
@@ -200,11 +198,13 @@ If you enter fullscreen mode of a graph visualization, you can zoom in and out.
 After a node is clicked, it gets a halo, where you can expand and remove nodes from the visualization.
 You can also turn previously dragged nodes loose again.
 
+[#browser-metadata]
 == Graph Metadata
 
 In the left-side menu, the top icon is the database section (icon:database[]), where you can find the *currently used* node labels, relationship types, and property keys.
 Clicking on any one of those options runs a quick query to show you a sample of the graph with those elements.
 
+[#browser-favorites]
 == Setting Favorites
 
 If you currently have an empty frame, you can display some nodes and relationships by using the Favorites (icon:star-o[]) in the left-side menu.
@@ -226,6 +226,7 @@ Creating folders can help organize your favorites, and you can rearrange them by
 Your favorites, settings, and styles can be saved to the cloud with Neo4j Browser Sync.
 If you clear your Browser cache, your local favorites will be removed.
 
+[#browser-styling-adv]
 === Advanced Styling
 
 For more advanced styling, you can bring up the style-viewer with `:style` and copy/paste the graph-style-sheet (GRASS) that is returned.
@@ -239,6 +240,7 @@ It is also possible to combine multiple properties into a caption with `caption:
 
 image::{img}style_sheet_grass.png[]
 
+[#browser-config]
 == Configuration
 
 The defaults for all the settings can adjusted at any time by going to the configuration option on the left-side menu.
@@ -254,6 +256,7 @@ To do this, just type the command `:sysinfo` on the command line.
 
 image::{img}sysinfo_stats.png[]
 
+[#browser-rest]
 == Executing REST requests
 
 You can also execute REST requests with Neo4j Browser. The command syntax is `:COMMAND /a/path {"some":"data"}`.
@@ -274,6 +277,7 @@ There are endless possibilities to send and retrieve data using REST.
 In a later guide, you can create an application to interact with Neo4j and use REST endpoints for interaction between you and the database.
 See the link:/developer/language-guides/[Language Guides] section for more information.
 
+[#browser-resources]
 == Resources
 * https://neo4j.com/sandbox-v2/[Neo4j Sandbox^]
 * http://gist.neo4j.org/[GraphGists: Neo4j Use Case Examples^]

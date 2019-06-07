@@ -1,12 +1,12 @@
 = Building a Recommendation Engine with Cypher
 :slug: guide-build-a-recommendation-engine
 :level: Beginner
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Cypher Query Language
 :section-link: cypher
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -19,14 +19,14 @@ You should have a basic understanding of the link:/developer/get-started/graph-d
 [role=expertise]
 {level}
 
-toc::[]
-
+[#cypher-demo]
 This demo explains how to use a basic dataset of _Actors_ acting in _Movies_ to create recommendations with a graph database.
 
 By following the relationships between the people and movies in a meaningful manner you can determine co-occurences, frequencies, and relevant nodes in the graph.
 This is the basis for many recommendation engines.
 
-=== Recommendation for Collaboration of Actors
+[#actor-recommendation]
+== Recommendation for Collaboration of Actors
 
 You can follow along by link:/download[installing and starting] Neo4j server, opening it on `http://localhost:7474` then inserting the movie dataset via the `:play movie graph` command.
 Go to the second slide, click the query, and run it.
@@ -46,12 +46,8 @@ MERGE (p)-[:ACTED_IN {roles:split(line.roles,";")}]->(m)
 RETURN count(*);
 ----
 
-[role=side-nav]
-* link:/graphacademy/online-course[Online Cypher Training]
-* link:/use-cases/recommendations/[Recommendation Use Cases]
-* link:/developer/data-modeling/guide-data-modeling[Intro to Graph Modeling]
-
-=== Basic Queries
+[#recommendation-queries]
+== Basic Queries
 
 //table
 
@@ -87,8 +83,8 @@ RETURN coActor.name
 
 //table
 
-
-=== Collaborative Filtering
+[#collaborative-filtering]
+== Collaborative Filtering
 
 We can now turn this "co-actor" query into a recommendation query by following those relationships another step out to find the "co-co-actors", i.e. the second-degree actors in Tom's network with whom he has not acted.
 
@@ -121,8 +117,8 @@ LIMIT 5
 One of those "co-co-actors" is _Tom Cruise_.
 Now let's see which movies and actors are between the two Toms.
 
-
-=== Connection Paths
+[#recommendation-paths]
+== Connection Paths
 
 [source,cypher]
 ----
@@ -145,6 +141,7 @@ You can also watch the video of Andreas running these queries live on our main e
 <iframe width="640" height="480" src="//www.youtube.com/embed/qbZ_Q-YnHYo" frameborder="0" allowfullscreen></iframe>
 ++++
 
+[#recommend-others]
 === Restaurant Recommendation
 
 Imagine a graph like this: a few friends with their favorite restaurants, their cuisines and locations.
@@ -194,7 +191,11 @@ The people in your graph are connected to their attributes with weighted relatio
 * http://maxdemarzi.com/2013/04/19/match-making-with-neo4j/[Match Making with Neo4j (mdm)]
 ////
 
+[#cypher-resources]
 == Resources
 * https://www.youtube.com/channel/UCvze3hU6OZBkB1vkhH2lH9Q/search?query=recommendation[Neo4j Videos: Building Recommendation Engines^]
 * http://www.slideshare.net/bachmanm/recommendations-with-neo4j[Michal Bachman Slides: Recommendation Engines with Neo4j^]
 * http://maxdemarzi.com/2014/01/31/neo4j-spatial-part-1/[Restaurant Recommendation by Max de Marzi^]
+* link:/graphacademy/online-course[Online Cypher Training]
+* link:/use-cases/recommendations/[Recommendation Use Cases]
+* link:/developer/data-modeling/guide-data-modeling[Intro to Graph Modeling]

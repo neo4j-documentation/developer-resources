@@ -3,6 +3,7 @@
 :level: Beginner
 :section: Getting Started
 :section-link: get-started
+:sectanchors:
 :toc:
 :toc-placement!:
 :toc-title: Overview
@@ -22,6 +23,7 @@ It is also helpful to understand basic data modeling questions and concepts.
 [role=expertise]
 {level}
 
+[#relational-vs-graph]
 Relational databases have been the work horse of software applications since the 80's, and continue as such to this day.
 They store highly-structured data in tables with predetermined columns of specific types and many rows of those defined types of information.
 Due to the rigidity of their organization, relational databases require developers and applications to strictly structure the data used in their applications.
@@ -44,7 +46,7 @@ However, the NoSQL era arrived in the market, filling some needs for users and b
 This is how graph databases were born.
 They were designed to provide the greatest advantage in the connected world we live in today.
 
-
+[#relational-to-graph]
 == Translating Relational Knowledge to Graphs
 
 Unlike other database management systems, relationships are of equal importance in the graph data model to the data itself.
@@ -64,6 +66,7 @@ This ability to pre-materialize relationships into the database structure allows
 <iframe width="640" height="360" src="https://www.youtube.com/embed/NO3C-CWykkY?start=294" frameborder="0" allowfullscreen></iframe>
 ++++
 
+[#rdbms-graph-model]
 == Data Model Differences
 
 As you can probably imagine from the structural differences discussed above, the data models for relational versus graph are very different.
@@ -93,6 +96,7 @@ That's all we need - a single hop with no lookups involved.
 More information on this topic can be found in the https://neo4j.com/developer/data-modeling/[Data Modeling section^].
 ****
 
+[#rdbms-graph-query]
 == Data Storage and Retrieval
 
 Querying relational databases is easy with SQL - a declarative query language that allows both easy ad-hoc querying in a database tool, as well as use-case-specific querying from application code.
@@ -134,6 +138,7 @@ RETURN p.name
 You can find more about Cypher syntax in the upcoming guides for the https://neo4j.com/developer/cypher/[Cypher Query Language^] and transitioning https://neo4j.com/developer/guide-sql-to-cypher/[from SQL to Cypher^].
 ****
 
+[#rdbms-graph-practice]
 == Transitioning from Relational to Graph - In Practice
 
 If you do decide to move your data from a relational to a graph database, the steps to transition your applications to use Neo4j are actually quite simple.
@@ -163,6 +168,7 @@ try (PreparedStatement stmt = con.prepareStatement(QUERY)) {
 For more information, you can visit our pages for https://neo4j.com/developer/language-guides/[Building Applicatons^] to see how to connect to Neo4j using different programming languages.
 ****
 
+[#rdbms-graph-resources]
 == Resources
 * https://neo4j.com/resources/rdbms-developer-graph-white-paper/[Free eBook: Relational to Graph^]
 * https://dzone.com/refcardz/from-relational-to-graph-a-developers-guide[DZone Refcard: From Relational to Graph^]

@@ -29,7 +29,7 @@ active[(@document.attr "section-link", "get-started")]=:active;
           <dl class="accordion">
             <dd class="accordion-navigation active"><%
               if toc_title %>
-                <h5 <%= toc_title_id && %( id="#{toc_title_id}") %>><%= toc_title %></h3><%
+                <h3<%= toc_title_id && %(id="#{toc_title_id}") %>><%= toc_title %></h3><%
               end %>
               <div id="nav" class="toc content active">
                 <% toc = converter.convert_with_options @document, 'outline', :toclevels => toc_levels %>

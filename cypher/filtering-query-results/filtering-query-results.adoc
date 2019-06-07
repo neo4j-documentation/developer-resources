@@ -1,12 +1,12 @@
 = Filtering Query Results
 :slug: filtering-query-results
 :level: Beginner
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Cypher Query Language
 :section-link: cypher
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -22,8 +22,7 @@ You should be familiar with those concepts before walking through this guide.
 [role=expertise]
 {level}
 
-toc::[]
-
+[#cypher-filtering]
 == Filtering Queries
 
 The Cypher you have written and learned so far has only tested properties with specific values.
@@ -42,7 +41,7 @@ This gives us a network of people, the companies they work for, and the technolo
 
 image::{img}cypher_graph_v2.jpg[link="{img}cypher_graph_v2.jpg",role="popup-link"]
 
-[#where-clause]
+[#cypher-where]
 == The WHERE clause
 
 Cypher is designed to be flexible and easy-to-learn, so there is often more than one way to write syntax.
@@ -283,14 +282,14 @@ Notice that on the second query, we used a comma after the first `MATCH` line an
 This allows us to chain together patterns, similar to when we used the `WHERE exists(<pattern>)` syntax above.
 With this structure, though, we can add multiple different patterns and link them together, allowing us to traverse various pieces of the graph with certain patterns.
 
-
+[#cypher-next-steps]
 === Next Steps
 
 We have seen how to use the `WHERE` clause to filter property values and how to search properties for partial values or string matches.
 Patterns helped us maneuver through the graph and check data for specific relationships or paths.
 In the next section, we will learn how to use aggregation in Cypher and how to do more with the return results.
 
-
+[#cypher-resources]
 === Resources
 
 * link:/docs/cypher-manual/current/clauses/where/[Neo4j Cypher Manual: Filtering with WHERE^]
