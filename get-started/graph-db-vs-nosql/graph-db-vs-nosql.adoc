@@ -1,12 +1,13 @@
 = Concepts: NoSQL to Graph
 :slug: graph-db-vs-nosql
 :level: Beginner
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Getting Started
 :section-link: get-started
+:sectanchors:
+:toc:
+:toc-placement!:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -19,10 +20,7 @@ You need no prior knowledge of other NoSQL databases, although it is helpful to 
 [role=expertise]
 {level}
 
-toc::[]
-
-== NoSQL Databases
-
+[#nosql-vs-graph]
 Although unhelpfully named, the NoSQL ("Not only SQL") space brings together many interesting solutions offering different data models and database systems, each more suitable than traditional SQL solutions for certain use cases and shapes of data.
 
 With the advent of the NoSQL movement, the "one-size-fits-all" proposition of large relational systems was replaced by conscious decisions about finding the right tool for the job.
@@ -46,8 +44,8 @@ The well-known and trusted transactional guarantees from relational systems also
 
 Let's compare the graph data model to other NoSQL models.
 
-
-== Translating Your NoSQL Knowledge to Understand Graphs
+[#nosql-to-graph]
+== Translating NoSQL Knowledge to Graphs
 
 With the advent of the NoSQL movement, businesses of all sizes have a variety of modern options from which to build solutions relevant to their use cases.
 
@@ -63,8 +61,8 @@ The other types of databases fall somewhere in between those ranges.
 
 image::{img}database_compare.jpg[500,500,link="{img}database_compare.jpg",role="popup-link"]
 
-
-=== Data Model Differences: Key-Value Store vs. Graph
+[#keyvalue-graph-model]
+== Key-Value vs. Graph: Data Model Differences
 
 The *key-value* model is great and highly performant for lookups of huge amounts of simple or even complex values.
 The image below shows how a typical key-value store is structured.
@@ -79,8 +77,8 @@ The graph version below shows how each key is related to a single value and how 
 .Key-Value as Graph (click to zoom)
 image:{img}key_value_as_graph.jpg[500,500,link="{img}key_value_as_graph.jpg",role="popup-link"]
 
-
-=== Data Model Differences: Document Stores vs. Graph
+[#document-graph-model]
+== Document vs. Graph: Data Model Differences
 
 The structured hierarchy of a *Document* model accommodates a lot of schema-free data that can easily be represented as a tree.
 Although trees are a type of graph, a tree represents only one projection or perspective of your data.
@@ -96,7 +94,7 @@ The graph version below demonstrates how moving this data to a graph structure a
 .Document as Graph (click to zoom)
 image:{img}document_as_graph.jpg[500,500,link="{img}document_as_graph.jpg",role="popup-link"]
 
-
+[#nosql-graph-resources]
 == Resources
 * https://dzone.com/articles/nosql-database-types-1[DZone: NoSQL Database Types^]
 * https://neo4j.com/blog/aggregate-stores-tour/?ref=blog[Blog post: Tour of Aggregate Stores^]

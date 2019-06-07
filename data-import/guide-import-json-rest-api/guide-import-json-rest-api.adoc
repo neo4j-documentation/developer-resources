@@ -1,12 +1,12 @@
 = Importing JSON Data from a REST API into Neo4j
 :slug: guide-import-json-rest-api
 :level: Intermediate
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Data Import
 :section-link: data-import
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -19,14 +19,14 @@ Before importing data from a JSON-based REST API you should have installed the l
 [role=expertise]
 {level}
 
-toc::[]
-
+[#import-json]
 == Importing JSON Data into Neo4j
 
 There are a plethora of JSON-based Web APIs that we can import into Neo4j, and we can use one of the https://neo4j-contrib.github.io/neo4j-apoc-procedures/#_load_json_2[Load JSON^] procedures to retrieve data from these APIs and turn it into map values ready for Cypher to consume.
 
 The APOC user guide provides a worked example showing how to https://neo4j-contrib.github.io/neo4j-apoc-procedures/#_load_json_stackoverflow_example[import data from StackOverflow into Neo4j^].
 
+[#strava-api]
 == The Strava API
 
 Strava is an application used by runners and cyclists to record their activities and share them with their friends.
@@ -47,6 +47,7 @@ We can create a parameter in the link:/developer/neo4j-browser/[Neo4j Browser] o
 Don't forget to replace `<insert-strava-token>` with the token for your Strava application.
 ****
 
+[#paginated-endpoint]
 == Working with a paginated endpoint
 
 We are interested in importing the activities for the https://developers.strava.com/docs/reference/#api-Activities-getLoggedInAthleteActivities[athlete who is logged in^].
@@ -101,6 +102,7 @@ SET run.distance = toFloat(value.distance),
 
 We could continue to run this query manually, but it's about time that we automated it.
 
+[#auto-pagination]
 == Automated API pagination
 
 One way to do this is by using a scripting language and creating a loop inside which we make calls to that endpoint until we run out of activities to retrieve.
@@ -158,6 +160,7 @@ call apoc.periodic.commit("
 
 This query will now send multiple commits to the API until we have loaded all our activities.
 
+[#import-api-resources]
 == Resources
 * https://neo4j-contrib.github.io/neo4j-apoc-procedures/#_load_json_stackoverflow_example[APOC Documentation: StackOverflow JSON Data Example^]
 * https://neo4j-contrib.github.io/neo4j-apoc-procedures/#_load_json_2[APOC Documentation: Load JSON^]

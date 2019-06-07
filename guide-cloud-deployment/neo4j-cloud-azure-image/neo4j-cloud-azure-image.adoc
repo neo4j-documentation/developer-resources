@@ -1,12 +1,12 @@
 = Hosting Neo4j on Microsoft Azure
 :slug: neo4j-cloud-azure-image
 :level: Intermediate
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Neo4j in the Cloud
 :section-link: guide-cloud-deployment
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -17,13 +17,13 @@ This guide explains how to deploy a single instance of Neo4j Enterprise on Micro
 You should know how to run and operate Neo4j locally.
 Knowledge of link:/developer/language-guides[remote drivers] to access Neo4j from your application helps you connect to your cloud-hosted database.
 
-toc::[]
-
+[#azure-image]
 Before continuing with the guide make sure you've https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest[installed the Azure Command Line Interface^].
 
 Let's get started!
 
-=== Neo4j in the Azure Marketplace
+[#marketplace-azure]
+== Neo4j in the Azure Marketplace
 
 In the https://azuremarketplace.microsoft.com/en-us/marketplace/[Azure Marketplace], Neo4j
 has multiple offerings.  For single-node instances, the correct one is called 
@@ -41,7 +41,8 @@ evaluation license, you can https://neo4j.com/lp/enterprise-cloud/?utm_content=a
 
 Click the "Create" button.
 
-=== Configuring Your Instance
+[#config-instance]
+== Configuring Your Instance
 
 On the next page, fill out all of the details for the VM you want to create.  The most important
 settings to consider are Size, which controls the available CPU and memory, and optionally "Disks"
@@ -66,15 +67,17 @@ for you, so unless you have custom requirements, you won't need to change anythi
 
 After your deployment succeeds, it may take a minute or two for the Neo4j service to come up.
 
-=== Access Your New Instance
+[#access-instance]
+== Access Your New Instance
 
 Navigate to the resource group that you used, and locate the VM you created.  It will be named
 after the name you chose in the initial configuration step.  Locate the VM's IP address and
 then use your browser to connect to Neo4j via:
 
-```
+[source,shell]
+----
 https://[MY_AZURE_IP]:7473/
-```
+----
 
 The default username/password for your instance is neo4j/neo4j, and Neo4j will force you to 
 change it on your first login.  Make sure to change this password right after deployment.
@@ -85,7 +88,8 @@ later if you choose.
 
 Bolt clients may connect to this same IP address on port 7687 as normal.
 
-=== How do I SSH into the instance?
+[#ssh-instance]
+== How do I SSH into the instance?
 
 You can use any SSH client as normal to connect to the public IP of your instance.  Use the
 administrative user credentials (password or SSH key) configured during the launch.  This user
@@ -93,7 +97,7 @@ will have sudo access on the machine.
 
 Inside of the VM, you can check the status of the neo4j service like this:
 
-[source,text]
+[source,shell]
 ----
 $ sudo systemctl status neo4j
 ● neo4j.service - Neo4j Graph Database
@@ -108,19 +112,22 @@ $ sudo systemctl status neo4j
            └─1430 /usr/bin/java -cp /var/lib/neo4j/plugins:/etc/neo4j:/usr/share/neo4j/lib/*:/var/lib/neo4j/plugins/* -server -XX:+UseG1GC 
 ----
 
-=== How your new virtual machine works
+[#vm-workings]
+== How your new virtual machine works
 
 Please consult link:/developer/guide-cloud-deployment/neo4j-cloud-vms[Neo4j Cloud VMs] for details on internals of 
 Azure VMs, including how to stop and start system services, configure Neo4j inside of the VM, and more.
 
-=== Deleting the instance
+[#delete-instance]
+== Deleting the instance
 
 When you're finished with the instance, if you chose to deploy into a new resource group,
 simply delete the entire resource group and everything will be removed for you.   If you deployed
 into an existing resource group, you will need to delete the resources that are part of the
 deployment individually.
 
-=== Questions?
+[#azure-resources]
+== Questions?
 
 You can ask questions and connect with other people launching Neo4j in the cloud at the 
-https://community.neo4j.com/c/neo4j-graph-platform/cloud[cloud topic on the Community Site].
+https://community.neo4j.com/c/neo4j-graph-platform/cloud[cloud topic on the Community Site^].

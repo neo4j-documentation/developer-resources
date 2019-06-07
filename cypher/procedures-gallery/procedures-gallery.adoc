@@ -1,13 +1,13 @@
 = Procedures & Functions Gallery
 :slug: procedures-gallery
 :level: Intermediate
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Cypher Query Language
 :section-link: cypher
 :apoc: https://neo4j-contrib.github.io/neo4j-apoc-procedures/
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -20,8 +20,7 @@ You should know what user defined procedures and functions are and how to use th
 [role=expertise]
 {level}
 
-toc::[]
-
+[#apoc-library]
 == Awesome Procedures on Cypher (APOC)
 
 With the advent of user defined procedures, many capabilities could be added to Cypher with ease.
@@ -165,6 +164,7 @@ Recently added Neo4j Browser guides make parts of that documentation available w
 
 Just run: `:play http://guides.neo4j.com/apoc` within your Neo4j browser to learn interactively.
 
+[#apoc-spatial]
 == Neo4j Spatial Procedures
 
 The http://github.com/neo4j-contrib/spatial[neo4j-spatial] library has been with Neo4j for a long time.
@@ -193,7 +193,6 @@ Below are some of the most commonly used procedures grouped by type. You can fin
 | utilities | asGeometry, asExternalGeometry, decodeGeometry, getFeatureAttributes 
 | import | importShapefile(uri), importShapefileToLayer(layer, uri)
 |===
-
 
 ////
 
@@ -264,6 +263,7 @@ MATCH (district)<-[:REPRESENTS]-(legislator:Legislator)
 RETURN district.state, legislator.govtrackID, legislator.lastName, l.currentParty AS party
 ----
 
+[#apoc-rdf]
 == Semantic Web (RDF / Ontology) Procedures
 
 Neo4j Consultant Jesus Barrasa wrote a number of procedures for importing and managing semantic web data.
@@ -285,9 +285,7 @@ image::https://jesusbarrasa.files.wordpress.com/2016/06/screen-shot-2016-06-09-a
 
 You can find them https://github.com/jbarrasa/neosemantics[here on GitHub], for more detail see his https://jesusbarrasa.wordpress.com/?s=procedure[blog post series].
 
-
-// == Procedures for GraphAware Graph Modules
-
+[#apoc-custom]
 == Developing your own Procedures and Functions
 
 === Writing your first Function

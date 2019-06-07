@@ -1,12 +1,12 @@
 = User Defined Procedures and Functions
 :slug: procedures-functions
 :level: Intermediate
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Cypher Query Language
 :section-link: cypher
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -20,9 +20,7 @@ You should have learned to read and write statements in link:/developer/cypher/c
 [role=expertise]
 {level}
 
-toc::[]
-
-
+[#cypher-extension]
 == Extending Cypher
 
 Cypher is a quite powerful and expressive language, with first class graph pattern and collection support.
@@ -35,6 +33,7 @@ Many of the monitoring, introspection and security features exposed by Neo4j-Bro
 
 image::{img}procedures-functions-bolt.jpg[width=600]
 
+[#procedures-functions]
 == What are Procedures and Functions?
 
 * Functions are simple computations / conversions and return a single value
@@ -44,6 +43,7 @@ image::{img}procedures-functions-bolt.jpg[width=600]
 * Procedures must be used within the `CALL` clause and `YIELD` their result columns
 * They can generate, fetch or compute data to make it available to later processing steps in your Cypher query
 
+[#cypher-list-extension]
 == Listing & Using Functions and Procedures
 
 There are a link:{manual}/procedures/#built-in-procedures[number of built in procedures], two of which are used to list available functions and procedures.
@@ -97,6 +97,7 @@ You can take any procedure library and deploy it to your server to make addition
 
 Please also have a look at the link:{manual}/extending-neo4j/procedures[procedure section in the Neo4j Manual].
 
+[#deploy-extension]
 == Deploying Procedures & Functions
 
 If you built your own procedures or downloaded them from an community project, they are packaged in a jar-file.
@@ -109,6 +110,7 @@ That's why you should know which procedures you deploy and why.
 Only install procedures from trusted sources. 
 If they are open source, check their source-code and best build them yourself.
 
+[#procedure-function-gallery]
 == Procedure and Function Gallery
 
 In our link:../procedures-gallery[procedure and functions gallery] we describe some of the impressive procedure libraries built by our community.
@@ -155,6 +157,7 @@ RETURN apoc.date.format(timestamp()) as time,
 |"2017-01-05 13:06:39"|"2017-01-05"|158803200 |1483621387000
 |===
 
+[#custom-extension]
 == Developing your own Procedures and Functions
 
 // === Writing your first Function
@@ -187,7 +190,6 @@ These things are valid for both:
 * supported types for parameters and results are: `Long, Double, Boolean, String, Node, Relationship, Path, Object`
 
 ////
-
 User-defined functions are simpler, so let's look at one here:
 
 * `@UserFunction` annotated, named Java Methods
@@ -213,9 +215,7 @@ public String uuid() {
 cp $GROOVY_HOME/lib/groovy-2.*.jar $NEO4J_HOME/plugins/
 $GROOVY_HOME/groovyc function.groovy && jar cf $NEO4J_HOME/plugins/uuid.jar UDF.class
 
-
 @Grab(value="org.neo4j:neo4j:3.1.0-BETA1",initClass=false)
-
 
 class UDF {
    @UserFunction("create.uuid")
@@ -223,7 +223,6 @@ class UDF {
    def String uuid() { UUID.randomUUID().toString() }
 }
 ////
-
 
 ////
 .use the function like this

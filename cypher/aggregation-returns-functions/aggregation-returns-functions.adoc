@@ -1,12 +1,12 @@
 = Aggregation, Returns, & Functions
 :slug: aggregation-returns-functions
 :level: Beginner
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Cypher Query Language
 :section-link: cypher
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -22,8 +22,7 @@ You should be familiar with link:/developer/cypher/cypher-query-language[MATCH],
 [role=expertise]
 {level}
 
-toc::[]
-
+[#cypher-example]
 == Recap: Our Example Graph
 
 All of our examples will continue with the graph example we have been using in the previous guides.
@@ -31,7 +30,7 @@ Below is an image of the graph to familiarize yourself with the nodes and relati
 
 image::{img}cypher_graph_v2.jpg[link="{img}cypher_graph_v2.jpg",role="popup-link"]
 
-
+[#cypher-aggregate]
 == Aggregation in Cypher
 
 Helpful aggregation operations, such as calculating averages, sums, percentiles, minimum/maximum, and counts are available in Cypher.
@@ -122,7 +121,7 @@ image:{img}cypher_agg_size.jpg[link="{img}cypher_agg_size.jpg",role="popup-link"
 .Query6 Results:
 image:{img}cypher_agg_sizePath.jpg[link="{img}cypher_agg_sizePath.jpg",role="popup-link"]
 
-[#results-clause]
+[#cypher-results-output]
 == Manipulating Results and Output
 
 Results from a query may only show part of the answer you were looking for in the data or may not be in the best format for easily viewing and understanding.
@@ -349,14 +348,14 @@ Try mixing up the query by removing the `ORDER BY` and `LIMIT` lines and then ad
 Notice that only removing the `ORDER BY` line pulls the starting 3 values from the list, getting a random sampling of the return results.
 --
 
-
+[#cypher-next-steps]
 === Next Steps
 
 This guide has shown how to do more with Cypher by combining clauses and keywords for aggregating and returning data.
 We have seen how to use functions in Cypher and some of the operations offered.
 In the next section, we will learn how to maintain data integrity by using constraints and increase query performance with indexes.
 
-
+[#cypher-resources]
 === Resources
 
 * link:/docs/cypher-manual/current/clauses/[Neo4j Cypher Manual: WITH, UNWIND, & More^]

@@ -1,15 +1,14 @@
 = Neo4j ETL Tool
 :slug: neo4j-etl
 :level: Beginner
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Neo4j Graph Platform
 :section-link: graph-platform
 :experimental:
 :neo4j-version: 3.4.6
 :sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -25,10 +24,7 @@ We will focus on how to use this tool through the Neo4j Desktop application, so 
 [role=expertise]
 {level}
 
-toc::[]
-
-== Installing and Setting Up the ETL Tool
-
+[#install-neo4j-etl]
 If you haven't already, http://neo4j.org/download[download^] Neo4j and use the provided instructions (shown when downloading) to get a project and database ready to run.
 
 ****
@@ -76,6 +72,7 @@ Now that the application is all set up, there are only a few steps to import dat
 3. Verify schema mapping and make adjustments to graph data model.
 4. Import the data with a chosen import method.
 
+[#etl-load-project]
 == Pre-Steps: Loading ETL Tool and Choosing a Project
 
 When you first load the ETL Tool, you will see a default project and the database instances in that project.
@@ -118,6 +115,7 @@ image::{img}etl7_connection_db_options.jpg[link="{img}etl7_connection_db_options
 Once you have filled in the form, click the `Test and Save Connection` button at the bottom.
 The results for whether it was successful or not will show in a blue (success) or red (error) message bar at the top of your window.
 
+[#etl-db-import]
 == Choose the 'From' and 'To' Databases for Import
 
 To begin the ETL process, we need to tell the application which relational database we want as the source and which Neo4j database we want as the target.
@@ -178,6 +176,7 @@ If successful, you can click `Next` to go to the import step.
 
 image::{img}etl11c_save_mapping_next.jpg[link="{img}etl11c_save_mapping_next.jpg",role="popup-link"]
 
+[#etl-import-method]
 == Choose an Import Method and Import the Data
 
 There are 2 ways that the ETL Tool can import data to Neo4j.
@@ -206,7 +205,7 @@ To continue, you can upgrade the database or use the https://github.com/neo4j-co
 Now, you can query the Neo4j database or use Neo4j Browser to verify the data loaded to properly.
 Your relational data has now been transformed to a graph!
 
-
+[#neo4j-etl-options]
 == How To Do This Example Yourself and Other ETL Options
 
 If you want to test the ETL Tool, and you do not already have a data set, you can use the Northwind example, as we did here.
@@ -220,7 +219,7 @@ We have included links to download both PostgreSQL and MySQL, if you don't alrea
 There are also other options for ETL.
 Feel free to check out some https://neo4j.com/developer/integration/[partner integrations^], the https://neo4j.com/docs/developer-manual/3.4/cypher/clauses/load-csv/[LOAD CSV^] functionality, and the https://neo4j-contrib.github.io/neo4j-apoc-procedures/[APOC developer library^].
 
-
+[#etl-resources]
 == Resources
 * https://medium.com/@jennifer.reif/tap-into-hidden-connections-translating-your-relational-data-to-graph-d3a2591d4026[Walkthrough: Blog post^]
 * https://medium.com/neo4j/neo4j-etl-tool-1-3-1-release-white-winter-2fc3c794d6a5[Latest release notes^]

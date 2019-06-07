@@ -1,13 +1,13 @@
 = Tutorial: Import Data Into Neo4j
 :slug: guide-importing-data-and-etl
 :level: Beginner
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Data Import
 :section-link: data-import
 :northwind: ../../data/northwind
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -22,10 +22,8 @@ If you link:/download[download] and install the Neo4j server you'll be able to f
 [role=expertise]
 {level}
 
-toc::[]
-
-
-=== Northwind Introduction
+[#about-northwind]
+== Northwind Introduction
 
 In this guide, we will be using the link:https://code.google.com/p/northwindextended/downloads/detail?name=northwind.postgre.sql&can=2&q=[NorthWind dataset], a commonly-used SQL dataset.
 Although the NorthWind dataset is often used to demonstrate SQL and relational databases, it is graphy enough to be interesting for us.
@@ -34,8 +32,8 @@ The following is an entity-relationship diagram of the Northwind dataset:
 
 image::{img}Northwind_diagram.jpg[]
 
-
-=== Developing a Graph Model
+[#northwind-graph-model]
+== Developing a Graph Model
 
 When deriving a graph model from a relational model, we should keep the following guidelines in mind:
 
@@ -46,8 +44,7 @@ In this dataset, the following graph model serves as a first iteration:
 
 image::{img}northwind_graph_simple.png[width=800]
 
-
-==== How does the Graph Model Differ from the Relational Model?
+=== How does the Graph Model Differ from the Relational Model?
 
 * There are no nulls.
 ** In the relational version, to track the employee hierarchy we have a null entry in the 'ReportsTo' column if they don't report to anybody. In the graph version we just don't define a relationship.
@@ -55,8 +52,8 @@ image::{img}northwind_graph_simple.png[width=800]
 * It describes the relationships in more detail. For example, we know that an employee SOLD an order rather than having a foreign key relationship between the Orders and Employees tables. We could also choose to add more metadata about that relationship should we wish.
 * It will often be more normalised. For example, addresses have been denormalised in several of the tables but in a future version of the graph model we might choose to make addresses nodes in their own rights.
 
-
-=== Exporting the Data to CSV
+[#export-csv]
+== Exporting the Data to CSV
 
 Now that we know what we'd like our graph to look like, we need to extract the data from PostgreSQL so we can create it as a graph.
 The easiest way to do that is to export the appropriate tables in CSV format.
@@ -68,8 +65,8 @@ The PostgreSQL 'copy' command lets us execute a SQL query and write the result t
 include::{northwind}/export_csv.sql[]
 ----
 
-
-=== Importing the Data using Cypher
+[#import-with-cypher]
+== Importing the Data using Cypher
 
 After we've exported our data from PostgreSQL, we'll use Cypher's link:{manual}/cypher/#query-load-csv[LOAD CSV] command to transform the contents of the CSV file into a graph structure.
 
@@ -88,12 +85,10 @@ Next, we'll create indexes on the just-created nodes to ensure their quick looku
 include::{northwind}/import_csv.cypher[tags=indexes]
 ----
 
-
 [source, cypher]
 ----
 include::{northwind}/import_csv.cypher[tags=constraints]
 ----
-
 
 As the indexes are created after the nodes are inserted, their population happens asynchronously, so we use `schema await` (a shell command) to block until they are populated.
 
@@ -131,14 +126,12 @@ image::{img}northwind_graph_sample.png[]
 
 We can now query the resulting graph.
 
-
-=== Querying the Graph
+[#query-northwind]
+== Querying the Graph
 
 One question we might be interested in is:
 
-
-==== Which Employee had the Highest Cross-Selling Count of 'Chocolade' and Which Product?
-
+.Which Employee had the Highest Cross-Selling Count of 'Chocolade' and Which Product?
 [source, cypher]
 ----
 MATCH (choc:Product {productName:'Chocolade'})<-[:PRODUCT]-(:Order)<-[:SOLD]-(employee),
@@ -162,9 +155,7 @@ employee.employeeId,other.productName,count
 
 We might also like to answer the following question:
 
-
-==== How are Employees Organized? Who Reports to Whom?
-
+.How are Employees Organized? Who Reports to Whom?
 [source, cypher]
 ----
 MATCH path = (e:Employee)<-[:REPORTS_TO]-(sub)
@@ -188,9 +179,7 @@ Notice that employee No. 5 has people reporting to them but also reports to empl
 
 Let's investigate that a bit more:
 
-
-==== Which Employees Report to Each Other Indirectly?
-
+.Which Employees Report to Each Other Indirectly?
 [source, cypher]
 ----
 MATCH path = (e:Employee)<-[:REPORTS_TO*]-(sub)
@@ -215,9 +204,7 @@ e.EmployeeID:sub.EmployeeID:via
 2:9:[5]
 |===
 
-
-==== How Many Orders were Made by Each Part of the Hierarchy?
-
+.How Many Orders were Made by Each Part of the Hierarchy?
 [source, cypher]
 ----
 MATCH (e:Employee)
@@ -240,18 +227,15 @@ e.EmployeeID:reports:totalOrders
 9:[]:107
 |===
 
-
-=== Updating the Graph
+[#update-northwind-graph]
+== Updating the Graph
 
 Now if we wanted to update our graph data, we have to first find the relevant information and then update or extend the graph structures.
 
 // price update
-
 // add new product
 
-
-==== Janet is now reporting to Steven
-
+.Janet is now reporting to Steven
 We need to find Steven first, and Janet and her `REPORTS_TO` relationship.
 Then we remove the existing relationship and create a new one to Steven.
 
@@ -269,7 +253,8 @@ RETURN *;
 This single relationship change is all you need to update a part of the organizational hierarchy.
 All subsequent queries will immediately use the new structure.
 
-//[role=side-nav]
+[#import-northwind-resources]
+== Resources
 * link:{github}/data/northwind[Northwind SQL, CSV and Cypher data files] link:{github}/data/northwind/northwind.zip[(zip)]
 * link:/developer/cypher/guide-sql-to-cypher[From SQL to Cypher]
 * link:/developer/working-with-data/guide-import-csv[Import CSV Guide]

@@ -1,23 +1,20 @@
 = Neo4j and GraphQL
 :slug: graphql
 :level: Beginner
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 2
 :section: Neo4j Graph Platform
 :section-link: graph-platform
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
-toc::[]
-
-== About GraphQL
-
+[#about-graphql]
 image::https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/GraphQL_Logo.svg/200px-GraphQL_Logo.svg.png[float=right,width=200]
 
 GraphQL is a specification for querying a slice of an application graph, retrieving a tree of data that perfectly matches a front-end view, regardless of where that data was pulled from.
 It covers tree-based read queries, mutations for updates, and subscriptions for live updates.
 
-
+[#graphql-queries]
 == GraphQL Queries
 
 Queries in GraphQL form a tree structure, based upon entities and relevant attributes.
@@ -62,7 +59,7 @@ query {
 }
 ----
 
-
+[#graphql-type-system]
 == GraphQL as a Contract
 
 At a high level, GraphQL builds a *contract* between front-end and back-end, based on the agreed-upon type system, which forms an application data model in the form of a graph.
@@ -75,7 +72,7 @@ There is no prescription to restrict where the backend data comes from or how it
 GraphQL queries return data in a tree form that perfectly matches the frontend view hierarchy.
 If the application data is a graph, then the perfect backend is a graph database with native support for resolving GraphQL queries - Neo4j.
 
-
+[#graphql-schema]
 == Schema
 
 The type system is often declared in schema (IDL) files which contain entities, their attributes, interfaces, and enumerations, as well as mutations and subscriptions.
@@ -98,7 +95,7 @@ type Person {
 }
 ----
 
-
+[#grandstack]
 == The GRANDstack
 
 http://grandstack.io/[GRANDstack^] is a full-stack development integration for building graph-based applications.
@@ -116,7 +113,7 @@ https://twitter.com/lyonwj[Will Lyon^] facilitated a training session at GraphCo
 <iframe src="//www.slideshare.net/slideshow/embed_code/key/9VHFIXAMkXz01n" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/neo4j/full-stack-development-with-neo4j-and-graphql" title="Full Stack Development with Neo4j and GraphQL" target="_blank">Full Stack Development with Neo4j and GraphQL</a> </strong> from <strong><a href="https://www.slideshare.net/neo4j" target="_blank">Neo4j - The Fastest and Most Scalable Native Graph Database</a></strong> </div>
 ++++
 
-
+[#neo4j-graphql-java]
 == Java Extension: neo4j-graphql
 
 image::https://github.com/neo4j-graphql/graphql-community/raw/master/images/neo4j-graphql-logo.png[width=200,float=right]
@@ -186,7 +183,7 @@ include::https://raw.githubusercontent.com/neo4j-graphql/neo4j-graphql/master/re
 
 In the repository, you can find a https://github.com/neo4j-graphql/neo4j-graphql/blob/master/movies.schema[movies schema^] and https://github.com/neo4j-graphql/neo4j-graphql/blob/master/movies.graphql[accompanying queries^] that use some of those features.
 
-
+[#neo4j-graphql-js]
 == JavaScript Implementation: neo4j-graphql-js
 
 We have also created the https://github.com/neo4j-graphql/neo4j-graphql-js[neo4j-graphql-js^] npm package, which makes it easier to use GraphQL and Neo4j together.
@@ -194,7 +191,7 @@ We have also created the https://github.com/neo4j-graphql/neo4j-graphql-js[neo4j
 Neo4j-graphql-js translates GraphQL queries to a single Cypher query, eliminating the need to write queries in GraphQL resolvers and for batching queries.
 It also exposes the Cypher query language through GraphQL via the @cypher schema directive.
 
-
+[#graphql-support]
 == GraphQL Support
 
 To demonstrate the combined power of a graph database (Neo4j) and GraphQL, we also added the GraphQL extension to this server. Access the GraphQL community graph, including GraphiQL http://graphql.communitygraph.org/[here^].
@@ -208,7 +205,7 @@ image::https://github.com/neo4j-graphql/graphql-community/raw/master/images/grap
 
 You can find the https://github.com/neo4j-graphql/graphql-community/blob/master/community-graph.schema[schema for the data] and several GraphQL queries and screenshots of your tools in action https://github.com/neo4j-graphql/graphql-community#screenshots[in this repository^].
 
-
+[#graphql-neo4j-data]
 === Raw Data Access
 
 The raw graph data is publicly accessible here via the Neo4j Browser (http://107.170.69.23:7474 username/pwd: graphql/graphql).
@@ -220,7 +217,7 @@ image::https://github.com/community-graph/graphql-community/raw/master/images/co
 If you are used to Neo4j you can use it right away by writing some link:/developer/cypher[Cypher] statements.
 Here are (https://github.com/community-graph/dashboard[some suggestions^]).
 
-
+[#graphql-resources]
 == Resources
 * http://github.com/neo4j-graphql[Report issues in GitHub^]
 * https://community.neo4j.com[Join the Neo4j Online Community to ask questions and post content^]

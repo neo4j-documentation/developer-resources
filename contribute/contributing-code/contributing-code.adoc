@@ -1,7 +1,11 @@
 = Contributing Code
 :slug: contributing-code
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
-[[contributing-code-intro]]
+[#code-contrib]
 == Intro
 
 The Neo4j community is a free software and open source community centered around software and components for the Neo4j Graph Database.
@@ -11,20 +15,20 @@ The Neo4j community is an open community, in so far as it welcomes any member th
 Contribution can be in many forms (documentation, discussions, bug reports).
 This document outlines the rules of governance for a contributor of code.
 
-[[contributing-code-governance-fundamentals]]
+[#governance]
 == Governance Fundamentals
 
 In a nutshell, you need to be aware of the following fundamentals if you wish to contribute code:
 
-* All software published by the Neo4j project must have been contributed under the Neo4j Code link:../cla[Contributors License Agreement].
+* All software published by the Neo4j project must have been contributed under the Neo4j Code link:../cla[Contributors License Agreement^].
 * Neo4j is a free software and open source community.
-  As a contributor, you are free to place your work under any license that has been approved by either the http://www.fsf.org/[Free Software Foundation] or the http://opensource.org[Open Source Initiative].
+  As a contributor, you are free to place your work under any license that has been approved by either the http://www.fsf.org/[Free Software Foundation^] or the http://opensource.org[Open Source Initiative^].
   You still retain copyright, so in addition to that license you can of course release your work under any other license (for example a fully proprietary license), just not on the Neo4j infrastructure.
 * The Neo4j software is split into components.
   A Git repository holds either a single or multiple components.
 * The source code should follow the Neo4j Code Style and "fit in" with the Neo4j infrastructure as much as is reasonable for the specific component.
 
-[[contributing-code-contributor-roles]]
+[#contrib-roles]
 == Contributor Roles
 
 Every individual that contributes code does so in the context of a role (a single individual can have multiple roles).
@@ -43,7 +47,7 @@ The role defines their responsibilities and privileges:
 ** define new components and assign component maintainership,
 ** drive, mentor and coach Neo4j component development.
 
-[[contributing-code-workflow]]
+[#workflow]
 == Contribution Workflow
 
 Code contributions to Neo4j are normally done via Github Pull Requests, following the workflow shown below.
@@ -57,7 +61,7 @@ Please check the <<contributing-code-pull-requests,pull request checklist>> befo
 . <<contributing-code-commit-messages,Commit changes>>.
 . <<contributing-code-pull-requests,Send pull request>>.
 
-[[contributing-code-pull-requests]]
+[#pr-checklist]
 == Pull Request Checklist
 
 . <<contributing-code-intro-the-fast-track,Sign the CLA>>.
@@ -66,7 +70,7 @@ Please check the <<contributing-code-pull-requests,pull request checklist>> befo
 . <<contributing-code-tests,Run all relevant tests>>.
 . Send the request!
 
-[[contributing-code-tests]]
+[#code-tests]
 == Unit Tests
 
 You have a much higher chance of getting your changes accepted if you supply us with small, readable unit tests covering the code you've written.
@@ -95,12 +99,12 @@ public void myTest()
 }
 --------------------------------------------
 
-[[contributing-code-code-style]]
+[#code-styles]
 == Code Style
 
 The Neo4j Code style is maintained at http://neo4j.github.io/.
 
-[[contributing-code-commit-messages]]
+[#commit-messages]
 == Commit Messages
 
 Please take some care in providing good commit messages; an excellent summary of good practices can be found at http://chris.beams.io/posts/git-commit/.
@@ -114,7 +118,7 @@ Please also consider the following guidelines:
   If you have to redo work, you might want to clean up your commit log before doing a pull request.
 * If you fix a bug or an issue that's related to a ticket, then refer to the ticket in the message.
   For example, _"Added this and then changed that. This fixes #14."_
-  Just mentioning #xxx in the commit will connect it to the GitHub issue with that number, see https://github.com/blog/831-issues-2-0-the-next-generation[GitHub issues].
+  Just mentioning #xxx in the commit will connect it to the GitHub issue with that number, see https://github.com/blog/831-issues-2-0-the-next-generation[GitHub issues^].
   Any of these synonyms will also work:
   ** fixes #xxx
   ** fixed #xxx
@@ -126,17 +130,17 @@ Please also consider the following guidelines:
   Don't be too brief but don't provide too much detail, either.
   That's what `git diff` is for.
 
-[[contributing-code-intro-the-fast-track]]
+[#sign-cla]
 == Signing the CLA
 
 One crucial aspect of contributing is the link:../cla[Contributors License Agreement].
 In short: make sure to sign the CLA, or the Neo4j project won't be able to accept your contribution.
 
-[[contributing-code-no-merging]]
+[#use-rebase]
 == Don't merge, use rebase instead!
 
 Because we would like each contribution to be contained in a single commit, merge commits are not allowed inside a pull request.
 Merges are messy, and should only be done when necessary, e.g. when merging a branch into master to remember where the code came from.
 
 If you want to update your development branch to incorporate the latest changes from master, use `git rebase`.
-For details on how to use rebase, see Git manual on rebase: http://git-scm.com/book/en/Git-Branching-Rebasing[the Git Manual].
+For details on how to use rebase, see Git manual on rebase: http://git-scm.com/book/en/Git-Branching-Rebasing[the Git Manual^].

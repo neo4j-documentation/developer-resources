@@ -1,12 +1,12 @@
 = Using Neo4j from Erlang and Elixir
 :slug: erlang_elixir
 :level: Intermediate
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 2
 :section: Develop with Neo4j
 :section-link: language-guides
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -21,16 +21,11 @@ You should have link:/download[installed Neo4j] and made yourself familiar with 
 [role=expertise]
 {level}
 
-toc::[]
-
-// tag::intro[]
-=== Neo4j for Erlang/Elixir Developers
+[#neo4j-erlang-elixir]
+== Neo4j for Erlang/Elixir Developers
 
 image::{img}erlang.png[float=right,width=150]
 image::{img}elixir.png[float=left,width=150]
-
-
-// end::intro[]
 
 Members of the Erlang and Elixir community have invested a lot of time and love to develop these drivers, so please if you use them, provide feedback to the authors.
 
@@ -38,6 +33,7 @@ include::../_includes/sample_project.adoc[]
 
 include::../_includes/community-driver-notice.adoc[]
 
+[#elixir-bolt]
 === Elixir Bolt.Sips Driver
 
 Neo4j driver for Elixir wrapped around the Bolt protocol.
@@ -57,8 +53,8 @@ Features:
 | icon:book[] Docs | http://hexdocs.pm/bolt_sips/
 |===
 
-
-=== Neo4j.Sips
+[#elixir-rest-wrapper]
+== Neo4j.Sips
 
 A simple Elixir wrapper around the Neo4j graph database REST API.
 It is aiming to help Elixir developers to play with Neo4j, and to eventually become the main support for a future https://github.com/elixir-lang/ecto[Ecto] adapter.

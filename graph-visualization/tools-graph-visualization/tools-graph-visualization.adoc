@@ -3,25 +3,25 @@
 :level: Beginner
 :section: Graph Visualization
 :section-link: graph-visualization
+:sectanchors:
 :toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 2
+:toc-title: Contents
+:toclevels: 1
 
 image::{img}graph_cluster_distant_wide.jpg[link="{img}graph_cluster_distant_wide.jpg"]
 
 [role=expertise]
 {level}
 
-toc::[]
-
+[#graph-vis-types]
 == Types of Graph Visualization
 
 There are 3 architectural categories into which most of our graph visualization tools fall.
 We will discuss how each of these categories handles the exported data and provide some pros and cons of the different architectures.
 Depending on the visualization needs, one of these categories may define the set of tools you can choose to implement as a solution to your business needs.
 
-=== *1. Embeddable tools with built-in Neo4j connections*
+[#embed-graph-vis]
+== *1. Embeddable tools with built-in Neo4j connections*
 
 These kinds of tools can be included as a dependency within an application and can easily be configured and styled for your application and Neo4j.
 Each is easily connected to an instance of the graph database using configuration properties and allows you to style the visualization based on nodes, relationships, or specific properties.
@@ -65,7 +65,8 @@ The rest of the content will be generated from that.
 * Documentation: https://github.com/Nhogs/popoto/wiki[Popoto.js^]
 * Website: http://www.popotojs.com/[popoto.js^]
 
-=== *2. Embeddable libraries without direct Neo4j connection*
+[#embed-lib-vis]
+== *2. Embeddable libraries without direct Neo4j connection*
 
 These libraries offer the ability to embed graph visualization in an application, but without connecting directly to Neo4j.
 An advantage here is that we can populate our visualization with data sent from an API application that connects to the database, ensuring the client application is not querying the database directly.
@@ -138,7 +139,8 @@ You can customize styling and web page view with a variety of style components.
 * Website: http://js.cytoscape.org/[Cytoscape.js^]
 * Source code: https://github.com/cytoscape/cytoscape.js[Cytoscape.js Github^]
 
-=== *3. Standalone product tools*
+[#neo4j-vis-vendors]
+== *3. Standalone product tools*
 
 Certain tools and products are designed as standalone applications that can connect to Neo4j and interact with the stored data without involving any code.
 These applications are built with non-developers in mind - for business analysts, data scientists, managers, and other users to interact with Neo4j in a node-graph format.
@@ -205,7 +207,7 @@ Organizations such as the French Ministry of Economy and Finance, Zurich Insuran
 * Blog post: https://linkurio.us/blog/stolen-credit-cards-and-fraud-detection-with-neo4j/[Fraud detection with Neo4j and Linkurious^]
 * Blog post: https://neo4j.com/blog/detect-investigate-financial-crime-patterns-linkurious/[Detect and Investigate Financial Crime with Neo4j and Linkurious^]
 * Webinar: https://www.youtube.com/watch?v=SM8JlhFbi1s[How to visualize Neo4j with Linkurious^]
-* Solution: https://linkurio.us/product/[Linkurious Enterprise + Neo4j^]
+* Solution: https://linkurio.us/solution/neo4j/[Linkurious Enterprise + Neo4j^]
 * Product datasheet https://linkurio.us/wp-content/uploads/2019/04/Linkurious_Enterprise_Technical_Datasheet.pdf[Linkurious Enterprise^]
 
 .*Graphistry* by

@@ -1,12 +1,12 @@
 = Guide: Example Dataset
 :slug: example-data
 :level: Intermediate
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Data Import
 :section-link: data-import
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -20,9 +20,8 @@ You should be comfortable installing and importing data into Neo4j.
 [role=expertise]
 {level}
 
-toc::[]
-
-=== Data Sets
+[#data-sets]
+== Data Sets
 
 We want to cover data sets from the different domains.
 For each of the data sets we want to provide a description, the graph model and some use-case queries.
@@ -33,8 +32,8 @@ This is work in progress, so some data sets might not be updated with that infor
 [TIP]
 Have fun, and send us feedback to feedback@neo4j.com or raise https://github.com/neo4j-contrib/developer/issues[an issue] if something doesn't work as expected.
 
-
-=== Loading Data from Source
+[#load-data-source]
+== Loading Data from Source
 
 The most reliable way to get a dataset into Neo4j is to import it from the raw sources.
 Then you are independent of database and store-versions, which you otherwise have to upgrade.
@@ -42,7 +41,7 @@ That's why we provided raw data (CSV, JSON, XML) for many of the data sets, acco
 
 You would import the data using a command-line client like `neo4j-shell` or https://github.com/nicolewhite/cycli[CyCli] a modern, colorful Neo4j client, which understands the same file format.
 
-
+[source, shell]
 ----
 $NEO4J_HOME/bin/neo4j-shell -file import-file.cypher
 
@@ -54,7 +53,8 @@ cycli -f import-file.cypher
 // todo screenshot cycli
 // todo import screencast
 
-=== Using a copy of a Neo4j database
+[#load-db-copy]
+== Using a copy of a Neo4j database
 
 Other data sets are provided as compressed copy (zip) of a Neo4j datastore.
 You can find the datastore files in `$NEO4J_HOME/data/databases/[graph.db]` or in the directory you selected at startup.
@@ -72,9 +72,8 @@ $NEO4J_HOME/bin/neo4j-shell -path /path/to/graph.db
 ----
 
 // TODO CSV Datasets !!
-
-=== The Data Sets
-
+[#fun-datasets]
+== Pop Culture Datasets
 ////
 
 s3cmd ls s3://example-data.neo4j.org/3.0-datasets/ | awk '{ split($4,a,"/");print "| a[5] | desc                       | src                     | http://" a[3] "/" a[4] "/" a[5] "[" a[5] " (" int($3/1024/1024) "MB)]"}'
@@ -123,8 +122,8 @@ You can find the free ebook for the O'Reilly book here:
 //|Neo Permissions (560MB) | Check permissions from files and folders to users and groups in this link:http://maxdemarzi.com/?s=PERMISSION+RESOLUTION[ACL example]. | link:https://github.com/maxdemarzi/neo_permissions/blob/master/performance/src/test/resources/simulations/RandomPermissions.scala[GitHub] | link:https://dl.dropboxusercontent.com/u/57740873/datasets/neo_permissions.tar.gz[neo_permissions.tar.gz]
 
 ////
-
-=== Neo4j Graph Gists
+[#data-graphgists]
+== Neo4j Graph Gists
 
 http://neo4j.com/graphgists[Neo4j Graph Gist examples] are a great source for datasets to get started, as they not only come with the example data setup, but also explanations and use case queries.
 
@@ -134,7 +133,8 @@ http://neo4j.com/graphgists[Neo4j Graph Gist examples] are a great source for da
 * [LDBC Large Dataset Generator]
 ////
 
-=== Public Datasets with Instructions
+[#public-data]
+== Public Datasets with Instructions
 
 These are not prebuilt data-stores but existing data sets (mostly CSV) to be imported.
 
@@ -153,8 +153,8 @@ The linked articles and repositories also provide instructions for the import.
 * http://jexp.de/blog/2014/10/flexible-neo4j-batch-import-with-groovy/[Kaggle Publication Dataset]
 * https://medium.com/@christophewillemsen/github-events-analysis-with-neo4j-18bc6ffcab01[GitHub Event Data]
 
-
-=== Avid Bloggers on Data Import
+[#data-resources]
+== Avid Bloggers on Data Import
 
 * http://www.markhneedham.com/blog/?s=neo4j+import[Mark Needham]
 * http://blog.bruggen.com/search/label/import[Rik van Bruggen]

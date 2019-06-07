@@ -1,12 +1,12 @@
 = Cypher Basics I
 :slug: cypher-query-language
 :level: Beginner
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Cypher Query Language
 :section-link: cypher
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -20,8 +20,7 @@ You should be familiar with link:/developer/get-started/graph-database[graph dat
 [role=expertise]
 {level}
 
-toc::[]
-
+[#why-cypher]
 == Why Cypher?
 
 We already know that Neo4j's property graph model is composed of nodes and relationships, which may also have properties associated with them.
@@ -32,6 +31,7 @@ Pattern recognition is fundamental to the way that the brain works.
 Because of this, humans are very good at working with patterns (think of visual diagrams or even memory-matching games).
 Cypher is also heavily based on patterns and is designed to recognize various versions of these patterns in data, making it a simple and logical language for users to learn.
 
+[#cypher-syntax]
 == Cypher Syntax
 
 The video below walks through some background on Cypher, basic syntax, and some intermediate examples.
@@ -70,6 +70,7 @@ This is especially helpful to use in Neo4j Browser when saving queries.
 If you add a comment before the query, the comment automatically becomes the name of the saved query!
 --
 
+[#cypher-nodes]
 == Representing Nodes in Cypher
 
 Since Cypher uses ASCII-Art for patterns, we need a visual way to represent each component of our pattern above.
@@ -120,6 +121,7 @@ Using our graph example above, let's see how we could specify our nodes.
 (work:Company)      //using variable work and label Company
 ----
 
+[#cypher-relationships]
 == Representing Relationships in Cypher
 
 To fully utilize the power of a graph database, we also need to express the relationships between our nodes.
@@ -183,6 +185,7 @@ If you forget the colon in front of a relationship type like this `+-[LIKES]->+`
 Since no relationship type declared, Cypher will search all types of relationships.
 --
 
+[#cypher-properties]
 == Node or Relationship Properties
 
 We have talked about how to write Cypher for nodes, relationships, and labels.
@@ -201,6 +204,7 @@ image::{img}cypher_graph_props.jpg[link="{img}cypher_graph_props.jpg",role="popu
 Properties can have values with a variety of data types.
 To see the full list that Cypher offers, see the Neo4j Developer Manual section on https://neo4j.com/docs/developer-manual/3.4/cypher/syntax/values/[values and types^].
 
+[#cypher-patterns]
 == Patterns in Cypher
 
 Nodes and relationships make up the building blocks for graph patterns.
@@ -221,6 +225,7 @@ In Cypher, this pattern would look like the code below.
 This bit of Cypher tells the pattern we want, but it does not tell whether we want to find that existing pattern or insert it as a new pattern.
 To tell Cypher what we want it to do with the pattern, we need to add some keywords.
 
+[#cypher-keywords]
 == Cypher Keywords
 
 Just like with most programming languages, there are a few words in Cypher reserved for specific actions in parts of a query.
@@ -243,6 +248,7 @@ You can tell Cypher to return nodes, relationships, node and relationship proper
 The node and relationship variables we discussed earlier become important when using `RETURN`.
 In order to bring back nodes, relationships, properties, or patterns, you need to have variables specified in your `MATCH` clause for the data you want to return.
 
+[#cypher-examples]
 == Cypher Examples
 
 Let us look at some examples of the syntax we have learned so far using `MATCH` and `RETURN` keywords.
@@ -303,6 +309,7 @@ RETURN company.name
 
 image::{img}cypher_example4_returnprop.jpg[link="{img}cypher_example4_returnprop.jpg",role="popup-link"]
 
+[#cypher-aliases]
 == Aliasing Return Values
 
 Not all properties are simple like our `company.name` example above.
@@ -336,12 +343,14 @@ You can specify return aliases that have spaces by using the backtick character 
 If you do not have an alias that contains spaces, then you do not need to use backticks.
 --
 
-=== Next Steps
+[#cypher-next-steps]
+== Next Steps
 
 Now that you know how to write nodes, relationships, properties, and patterns in Cypher for reading existing data, you can begin exploring data that exists in a Neo4j database.
 We will look at more `MATCH` capabilities in an upcoming guide, as well as how to write Cypher for create, update, and delete operations with your data.
 
-=== Resources
+[#cypher-resources]
+== Resources
 
 * https://neo4j.com/docs/cypher-manual/current/clauses/match/[Neo4j Cypher Manual: MATCH^]
 * https://neo4j.com/docs/cypher-manual/current/clauses/return/[Neo4j Cypher Manual: RETURN^]

@@ -1,12 +1,12 @@
 = How-To: Import CSV Data with Neo4j Desktop
 :slug: desktop-csv-import
 :level: Intermediate
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Data Import
 :section-link: data-import
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -33,8 +33,7 @@ Related screenshots and filepaths for Windows are coming soon!
 [role=expertise]
 {level}
 
-toc::[]
-
+[#about-desktop-import]
 == Neo4j Desktop Import
 
 Neo4j Desktop provides a user-friendly interface for starting and creating Neo4j databases, adding or removing plugins, changing configurations, and other functionality.
@@ -44,7 +43,8 @@ In this guide, we will work with a zipped folder containing three CSV files and 
 The CSV files contain data for products, orders, and order line items.
 We will look at the data in the files in an upcoming paragraph.
 
-=== 1. Creating and starting a database instance
+[#start-db]
+== 1. Creating and starting a database
 
 If you already know how to create a database instance and find the `Manage` page for the instance, you can skip to Step 2.
 
@@ -82,7 +82,8 @@ image::{img}desktop_manage_db.jpg[link="{img}desktop_manage_db.jpg",role="popup-
 The top panel in the image above shows some basic functions you can execute on the database.
 The next step will show us how to use this panel to put our files in the `Import` folder.
 
-=== 2. Putting CSV files in the expected folder
+[#csv-location]
+== 2. Putting CSV files in the expected folder
 
 First, download this https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/desktop-csv-import.zip[zip file^] containing 3 CSV files for products, orders, and order details.
 We will need to put these files in a folder that Neo4j expects for imports.
@@ -115,6 +116,7 @@ Now that our files are in the import folder, we can look at how to put the data 
 We will need to take the current table and column format in the CSV files and translate it into nodes and relationships.
 This can be done a few different ways, but we will use Cypher's `LOAD CSV` command in this guide.
 
+[#loadcsv-desktop]
 == LOAD CSV
 
 `LOAD CSV` is a built-in command in Cypher that allows us to read CSV files and append regular Cypher statements to create or update the data as a graph.
@@ -151,6 +153,9 @@ Running these commands should return the following counts:
 * 830 rows for orders.csv
 * 2155 rows for order-details.csv
 
+[#inspect-files]
+== View Data with LOAD CSV
+
 Next, we can take a look at what the data looks like in the CSV files and how LOAD CSV sees it.
 The only line we need to change from our Cypher above is the `RETURN` statement.
 Since all of these files have a decent numbers of rows, we will use `LIMIT` to only get a sample.
@@ -180,7 +185,8 @@ Notice that the orders.csv and the order-details.csv return in a different forma
 This is because those files have headers, so the column names are returned with the values for those rows.
 Since the products.csv does not have column names, then `LOAD CSV` just returns the plain data row from the file.
 
-=== Data types
+[#data-types]
+== Data types
 
 The `LOAD CSV` command reads all values as a string.
 No matter how the value appears in a file, it will be loaded as a string with `LOAD CSV`.
@@ -273,6 +279,7 @@ LIMIT 8
 
 image::{img}desktop_import_details_convert.jpg[link="{img}desktop_import_details_convert.jpg",role="popup-link"]
 
+[#loading-data]
 == Loading the data!
 
 Now that we have determined that the CSV file data looks ok, and we have verified how `LOAD CSV` sees the data and converted any non-string values, we are almost ready to create the data in our graph database!
@@ -319,7 +326,8 @@ CREATE CONSTRAINT ON (p:Product) ASSERT p.id IS UNIQUE;
 CREATE CONSTRAINT ON (o:Order) ASSERT o.id IS UNIQUE;
 ----
 
-=== Cypher
+[#write-statements]
+== Cypher
 
 Now we are ready to write the Cypher for creating the data in the graph!
 We could use `CREATE` statements where we are sure that we will not have duplicate rows in our CSV file and use `MATCH` to find existing data for updates.
@@ -420,6 +428,7 @@ RETURN p, rel, o LIMIT 50
 
 image::{img}desktop_import_verify_details.jpg[link="{img}desktop_import_verify_details.jpg",role="popup-link"]
 
+[#import-wrapup]
 == Wrapping up
 
 Congratulations!

@@ -1,20 +1,12 @@
 = Using Neo4j from Ruby
 :slug: ruby
 :level: Intermediate
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 2
 :section: Develop with Neo4j
 :section-link: language-guides
-
-++++
-<style>
-  pre.code {
-    white-space: pre-wrap;
-  }
-</style>
-++++
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -29,17 +21,13 @@ You should have link:/download[installed Neo4j^] and made yourself familiar with
 [role=expertise]
 {level}
 
-toc::[]
-
-include::../_includes/sample_project.adoc[]
-
-include::../_includes/community-driver-notice.adoc[]
-
-=== Neo4j for Rubyists
+[#neo4j-ruby]
+== Neo4j for Rubyists
 
 Neo4j has been accessible from Ruby long before version 1.0, first using JRuby on the JVM and then on MRI via the HTTP and now Bolt protocols.
 
-=== Neo4j.rb
+[#neo4jrb-lib]
+== Neo4j.rb
 
 The link:http://neo4jrb.io/[Neo4j.rb project^] is made up of the following Ruby gems:
 
@@ -72,7 +60,7 @@ History:
 
 3. Starting in 2017, the team around https://github.com/klobuczek[Heinrich Klobuczek] contributed to the project and from *fall 2018 Heinrich took over the Neo4j.rb project as the primary maintainer*.
 
-==== Gem: Neo4j-core
+=== Gem: Neo4j-core
 
 Neo4j-core is a gem that provides low-level communication to a Neo4j server. In addition to basic database communicaton and node/relationship CRUD, Neo4j-core provides strong support for Neo4j's schema indexes, constraints, labels, and a strong Cypher DSL.
 
@@ -90,7 +78,7 @@ session.query("MATCH (person:Person) RETURN person LIMIT 10")
 session.query.match(person: :Person).return(:person).limit(10).to_a
 ----
 
-==== Gem: Neo4j
+=== Gem: Neo4j
 
 The neo4j gem uses neo4j-core as an API to connect to the server and provides an ActiveRecord-like experience for use in frameworks.
 It adds modules allowing the creation of models that look and feel very similar to those found in vanilla Ruby on Rails.
@@ -117,7 +105,8 @@ person = Person.find_by(name: 'Jim')
 person.friends.books.to_a
 ----
 
-=== Deployment Considerations
+[#ruby-deploy]
+== Deployment Considerations
 
 Very often, your gem choice may come down to how you want to deploy:
 
@@ -137,7 +126,8 @@ The downside is that JRuby has its own configuration and compatibility demands a
 Thankfully, modern app servers such as Torquebox and a strong community provide far more options and resources now than ever before.
 If this is right for you, the Neo4j-core and Neo4j gems will offer what you need.
 
-==== Neo4j gem integrations
+[#gem-integrations]
+== Neo4j gem integrations
 
 There are many common gems that you'll want to use with your Neo4j database.
 Many are supported for the Neo4j.rb project:
@@ -176,3 +166,9 @@ Ruby Object Manager
 Misc.
 
  * link:https://github.com/subvertallchris/neo4j-even_easier_id[neo4j-even_easier_id^] (BSON UUIDs)
+
+[#ruby-example]
+include::../_includes/sample_project.adoc[]
+
+[#ruby-community-driver]
+include::../_includes/community-driver-notice.adoc[]

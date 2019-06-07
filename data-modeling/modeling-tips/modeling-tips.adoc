@@ -1,12 +1,12 @@
 = Graph Modeling Tips
 :slug: modeling-tips
 :level: Beginner
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Graph Data Modeling
 :section-link: data-modeling
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -20,8 +20,7 @@ You should understand link:/developer/get-started/graph-database[what a graph da
 [role=expertise]
 {level}
 
-toc::[]
-
+[#modeling-tips]
 == Tips and Tricks of Modeling
 
 As you may have found in reading the modeling guides or in your own experience with graph data modeling, there is no right or wrong way to model your data.
@@ -30,6 +29,7 @@ Some ways may be better-suited to your needs and more performant on the aspects 
 To find the best data model for your needs, it often helps to approach with a few techniques and make data model decisions from that analysis.
 We will talk about a few tips and tricks in the next paragraphs to help you decide upon your data model.
 
+[#modeling-queries]
 == Write Your Queries First
 
 Knowing the kinds of questions and queries you want to ask of your data is a great way to determining the structure of your data model.
@@ -38,6 +38,7 @@ In contrast, for a university progam domain, finding similar class offerings to 
 
 Even if you do not know the exact query syntax just yet, understanding the intention of the system or application you are building and then constructing the model around the business need will help you organize it in a more accurate way.
 
+[#prioritize-queries]
 == Prioritize Queries
 
 It is very difficult (if not impossible) to find the perfect model for every query or functionality.
@@ -51,6 +52,7 @@ To do this, you will need to decide which queries must absolutely have maximum p
 This may be a tough decision, but no matter the technology you are working with, these decisions will exist in some facet or other.
 What makes Neo4j more valuable is that the model is flexible and able to change if your priorities adjust over time.
 
+[#test-model]
 == Test it Out
 
 You may come across scenarios that you did not realize in the design stages.
@@ -65,6 +67,7 @@ What is complicated or what is not worth the hassle?
 Is there one that actually performs better in real life or does a multiple-data-model approach truly give you the best results?
 Sometimes, the best way to find out is to test it out with live data.
 
+[#refactor-model]
 == Refactoring your Graph
 
 As mentioned in above and in other guides, changes are always possible with Neo4j.
@@ -77,6 +80,7 @@ There are also procedures to aid in batching queries and executing updates to cl
 
 For more information in this topic, check out the https://neo4j-contrib.github.io/neo4j-apoc-procedures/[APOC standard library^]!
 
+[#model-concerns]
 == Other Concerns
 
 The size of your data set also can impact queries and performance.
@@ -84,6 +88,6 @@ If you have a smaller data set, then you may not see much performance impact in 
 It is only when the amount of your data grows that you may see increased impacts.
 This is where the data model and query optimizations become vital to maximizing the value from your system.
 
-
+[#modeling-resources]
 == Resources
 * https://community.neo4j.com/[Ask Questions on the Neo4j Community Site!^]

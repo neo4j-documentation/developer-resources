@@ -1,12 +1,12 @@
 = Graph Modeling Guidelines
 :slug: guide-data-modeling
 :level: Beginner
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 2
 :section: Graph Data Modeling
 :section-link: data-modeling
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -20,8 +20,7 @@ You should understand the basics of Neo4j's link:/developer/get-started/graph-da
 [role=expertise]
 {level}
 
-toc::[]
-
+[#modeling-intro]
 == Introduction
 
 If you have ever worked with an object model or an entity-relationship diagram, the labeled property graph model will seem familiar.
@@ -29,7 +28,7 @@ If you have ever worked with an object model or an entity-relationship diagram, 
 Graph data modeling is the process in which a user describes an arbitrary domain as a connected graph of nodes and relationships with properties and labels.
 A Neo4j graph data model is designed to answer questions in the form of Cypher queries and solve business and technical problems by organizing a data structure for the graph database.
 
-
+[#whiteboard-friendly]
 == Graph Data Model = Whiteboard-Friendly
 
 The graph data model is often referred to as being "whiteboard-friendly".
@@ -66,7 +65,7 @@ The ability to easily whiteboard your data model makes the graph data model incr
 There is no need to draw up business model versions or explain ERD terms to business users.
 Instead, the graph data model is easily understood by anyone.
 
-
+[#describe-domain]
 == Describing a Domain
 
 To better understand the process of designing a graph data model, let us take an example domain for a small set of data and walk through each step of how to create a graph data model from it.
@@ -84,8 +83,8 @@ Let us take the scenario into pieces and define them as parts of our property gr
 .Review - Property Graph Elements (click to zoom)
 image:{img}property_graph_elements.jpg[link="{img}property_graph_elements.jpg",role="popup-link"]
 
-
-=== Nodes
+[#model-nodes]
+== Nodes
 
 The first entities that we will identify in our domain are the nodes.
 Nodes are one of two fundamental units that form a graph (the other fundamental unit is relationships).
@@ -121,8 +120,8 @@ Remember that a graph database takes each instance of an entity as a separate no
 .Graph Model - Nodes
 image:{img}modeling_johnsally_nodes.jpg[400,400,link="{img}modeling_johnsally_nodes.jpg",role="popup-link"]
 
-
-=== Labels
+[#add-labels]
+== Labels
 
 Now that we have an idea of what our nodes will be, we can decide what labels (if any) to assign our nodes to group or categorize them.
 The definition from https://neo4j.com/docs/developer-manual/current/[Neo4j's developer manual^] in the paragraph below best explains what labels do and how they are used in the graph data model.
@@ -157,8 +156,8 @@ For *Graph Databases*, we apply the role _Book_.
 .Graph Model - Labels
 image:{img}modeling_johnsally_labels.jpg[400,400,link="{img}modeling_johnsally_labels.jpg",role="popup-link"]
 
-
-=== Relationships
+[#define-rels]
+== Relationships
 
 We now have our main entities and a way to group them, but we are still missing one vital piece of a graph database model - the relationships between the data!
 
@@ -194,8 +193,8 @@ John and Sally have both read the Graph Databases book, so we can connect each o
 .Graph Model - Relationships
 image:{img}modeling_johnsally_relationships.jpg[400,400,link="{img}modeling_johnsally_relationships.jpg",role="popup-link"]
 
-
-=== Properties
+[#fillin-properties]
+== Properties
 
 We have gone through the process of creating a basic graph data model for the interactions between people and books.
 We can take this data model further by defining attributes of these entities as key-value properties.
@@ -226,7 +225,7 @@ With the final model, we now can answer each of the questions we defined in our 
 Of course, we can grow and change the model over time and add/remove relationships, nodes, properties, and labels.
 The flexibility and simplicity of the property graph data model allows users to easily review the data structure and update it according to the changing needs of the business.
 
-
+[#graph-design]
 == Graph Data Modeling Design
 
 This guide is simply the introduction to data modeling using a simple, straightforward scenario.
@@ -236,7 +235,7 @@ Every data model is unique, depending on the use case and the types of questions
 Because of this, there is no "one-size-fits-all" approach to data modeling.
 Using best practices and careful modeling will provide the most valuable result in producing an accurate data model that benefits your processes and use case.
 
-
+[#modeling-resources]
 == Resources
 * https://neo4j.com/blog/data-modeling-basics/[Blog post: Graph Data Modeling Basics^]
 * http://neo4j.com/graphgists/[GraphGists: Graph Model Examples^]

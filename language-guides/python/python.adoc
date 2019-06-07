@@ -1,12 +1,12 @@
 = Using Neo4j from Python
 :slug: python
 :level: Intermediate
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Develop with Neo4j
 :section-link: language-guides
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -22,19 +22,17 @@ While it is not comprehensive, it aims to introduce the available drivers and li
 [role=expertise]
 {level}
 
+[#neo4j-python]
+== Neo4j and Python
+
 image::{img}python-logo.png[width=300,float="right"]
 
-toc::[]
-
-// tag::intro[]
 Neo4j can be installed on any system and then accessed via its binary and HTTP APIs. 
 
 You can use the official binary driver for Python (neo4j-python-driver) or connect via HTTP with any of our community drivers.
 
-// end::intro[]
-
-[[neo4j-python-driver]]
-=== icon:check-circle-o[] Neo4j Python Driver
+[#python-driver]
+== Neo4j Python Driver
 
 include::../_includes/python-driver.adoc[]
 
@@ -51,7 +49,8 @@ While we do not provide a specific web framework recommendation, both the lightw
 
 Many Pythonistas have invested a lot of time and love to develop these libraries, so if you use them, please provide feedback to the authors and help us improve.
 
-=== Py2neo
+[#py2neo-lib]
+== Py2neo
 
 image::{img}py2neo.200x200.png[float="right",width=100]
 
@@ -88,7 +87,8 @@ for name in ["Alice", "Bob", "Carol"]:
 alice, bob, carol = [result.one for result in tx.commit()]
 ----
 
-=== Neomodel
+[#neomodel-lib]
+== Neomodel
 
 image::{img}neomodel.200x80.png[float="right",width=100]
 
