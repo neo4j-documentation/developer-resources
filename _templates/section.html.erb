@@ -15,7 +15,8 @@ if slevel.zero?
 <%= content %><%
 else
   snum = @numbered && @caption.nil? && slevel <= (@document.attr 'sectnumlevels', 3).to_i ? %(#{sectnum} ) : nil
-  hlevel = slevel == 1 ? 3 : slevel + 1
+  hlevel = slevel + 1
+  # hlevel = slevel == 1 ? 2 : slevel + 1
   cols = slevel <= 2 ? "columns medium-12" : ""
   marginFix = slevel <= 2 ? "style='padding-left: 0;'" : ""
 

@@ -1,13 +1,12 @@
 = How to set up a Neo4j Cluster
 :slug: guide-clustering-neo4j
 :level: Advanced
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Neo4j in Production
 :section-link: in-production
-
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -23,21 +22,14 @@ A sound understanding of Neo4j's APIs, link:../guide-performance-tuning[tuning],
 [role=expertise]
 {level}
 
-toc::[]
-
-
-=== Data Synchronization between master and slaves
+[#neo4j-cluster]
+== Data Synchronization between master and slaves
 
 The Neo4j High Availability Cluster is a fault tolerant, full master-slave replication setup.
 Any data (graph or index) created on the master is propagated to the slaves depending on the settings of the master `ha.tx_push_factor` (number of slaves to actively push to during commit) and slaves `ha.pull_interval` (frequency of pulling updates from the master).
 
-[role=side-nav]
-* link:{opsmanual}/clustering/high-availability/[Neo4j High Availability,role=docs]
-* link:{opsmanual}/tutorial/highly-available-cluster/[Tutorial Cluster Setup,role=docs]
-* link:http://jimwebber.org/2011/03/strategies-for-scaling-neo4j/[Strategies for Scaling Neo4j,role=blog]
-
-
-=== Configuring a Two-Slave Cluster with an Arbiter
+[#cluster-config]
+== Configuring a Two-Slave Cluster with an Arbiter
 
 There's a link:{opsmanual}/tutorial/highly-available-cluster/[step-by-step tutorial for setting up a HA cluster].
 For a two-node cluster, you'll actually want to run three separate machines, and use the Neo4j arbiter on the third.
@@ -47,7 +39,7 @@ The configuration for the arbiter is identical to that of a regular instance, wi
 The `ha.initial_hosts` property should be the same on all the instances, including the arbiter.
 The arbiter should have a unique `ha.server_id` (`3` is fine).
 
-
+[#follow-server]
 === Setting a Server in Slave-Only Mode
 
 // what is the new link?
@@ -55,8 +47,8 @@ See the link:{opsmanual}/clustering/high-availability/configuration/[documentati
 
 You might want to configure a machine with that setting if it’s acting as a reporting instance but you need to make sure that two members don’t have that setting, or you won’t have any failover in the cluster.
 
-
-=== Backing Up a Cluster Server
+[#backup-cluster]
+== Backing Up a Cluster Server
 
 Neo4j Server must be configured to run a backup service.
 This is enabled via the configuration parameter `online_backup_enabled`, and is enabled by default.
@@ -71,8 +63,8 @@ Additional details can be found link:{opsmanual}/backup/#backup-introduction[in 
 
 image::{img}neo4j-logo.png[]
 
-
-=== Mending Procedure for Master
+[#mend-leader]
+== Mending Procedure for Master
 
 * Shut down all members of the cluster and stop any load against the cluster
 * On the master instance, copy the `data/graph.db` folder as a backup
@@ -99,14 +91,15 @@ MATCH (n) WHERE id(n) = <your node id> DELETE n
 * Set org.neo4j.server.database.mode to HA
 * Start the server
 
-
-=== Mending Procedure for Slaves
+[#follower-mend]
+== Mending Procedure for Slaves
 
 * On each slave, remove the `data/graph.db` folder
 * Start the slave, and watch `data/graph.db` for it to copy the store from the master
 * Once copying is done, move to do the same thing on the second slave
 
-[role=side-nav]
-* link:/books[The Neo4j Bookshelf]
-* link:http://watch.neo4j.org[The Neo4j Video Library]
-* link:http://gist.neo4j.org/[GraphGists]
+[#cluster-resources]
+== Resources
+* link:{opsmanual}/clustering/high-availability/[Neo4j High Availability,role=docs]
+* link:{opsmanual}/tutorial/highly-available-cluster/[Tutorial Cluster Setup,role=docs]
+* link:http://jimwebber.org/2011/03/strategies-for-scaling-neo4j/[Strategies for Scaling Neo4j,role=blog^]

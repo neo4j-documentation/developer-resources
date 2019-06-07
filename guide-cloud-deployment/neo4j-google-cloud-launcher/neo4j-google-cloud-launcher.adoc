@@ -1,12 +1,12 @@
 = Neo4j on GCP Marketplace
 :slug: neo4j-google-cloud-launcher
 :level: Intermediate
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Neo4j in the Cloud
 :section-link: guide-cloud-deployment
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -18,18 +18,17 @@ This guide explains how to deploy a Neo4j Enterprise Causal Cluster via GCP Mark
 . You should have familiarity with link:/docs/operations-manual/current/clustering/causal-clustering/introduction/[causal cluster architecture^].
 . Knowledge of link:/developer/language-guides[remote drivers] to access Neo4j from your application helps you connect to your cloud-hosted database.
 
-toc::[]
-
+[#gcloud-launch]
 Let's get started!
 
-
+[#marketplace-gcp]
 == Select Neo4j in GCP Marketplace
 
 Select Neo4j from the Google Cloud Launcher console and click `Launch` on Compute Engine.
 
 image::{img}launch-screen.png[width=700,float=center]
 
-
+[#enterprise-deploy]
 == Deploy Neo4j Enterprise
 
 * Choose a name for your Neo4j instance
@@ -43,7 +42,7 @@ image::{img}deploy-screen.png[width=700,float=center]
 
 image::{img}deployed-screen.png[width=700,float=center]
 
-
+[#start-neo4j]
 == Start using Neo4j Browser
 
 We're now ready to start using Neo4j!
@@ -64,7 +63,7 @@ The IP addresses and endpoints will match what Compute Engine shows you for your
 
 image::{img}vm-instances.png[width=700,float=center]
 
-
+[#ssh-instance]
 == How do I SSH into the instance?
 
 On the deployment manager screen above, there is a button provided to SSH directly into the first node of the cluster.
@@ -75,16 +74,17 @@ They should be named `cluster-name-vm-1`, `cluster-name-vm-2`, and so on.
 
 Using the Google Cloud CLI, you can access them via the following command:
 
+[source,shell]
 ----
 gcloud compute ssh my-cluster-deploy-vm-1
 ----
 
-
+[#vm-workings]
 == How the Virtual Machines Work
 
 Please consult link:/developer/guide-cloud-deployment/neo4j-cloud-vms[Neo4j Cloud VMs] for details on internals of Google VMs, including how to stop and start system services, configure Neo4j inside of the VM and more.
 
-
+[#default-config]
 == Your Cluster Default Configuration
 
 The following notes are provided on your default cluster configuration.
@@ -98,6 +98,7 @@ Configuration changes should be made to the template, **not** to the `/etc/neo4j
 The template allows you configure aspects of the cluster with VM metadata (see the "Custom Metadata" on any of your launched VMs for examples).
 The template's behavior and layout matches the usual `neo4j.conf` file.
 
+[#next-steps]
 == What's Next
 
 * Visit the link:/docs/operations-manual/current/[Neo4j Operations Manual^] for information on how
@@ -105,7 +106,7 @@ configure all aspects of your cluster
 * Add users and change passwords as necessary
 * Consider creating DNS entries with Google to permit addressing your cluster with client applications under a single host name.
 
-
+[#terminate-deploy]
 == Terminating the Deployment
 
 Should you need to, you can tear down this infrasructure by using the deployment manager to delete
@@ -113,6 +114,7 @@ the deployment.
 To ensure data safety, the disks that back the VMs will not be autodeleted if the cluster deployment is deleted.
 These disks must be deleted separately, and manually, if desired.
 
+[#gcp-resources]
 == Questions?
 
 You can ask questions and connect with other people launching Neo4j in the cloud at the 

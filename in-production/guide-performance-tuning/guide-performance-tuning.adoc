@@ -1,12 +1,12 @@
 = Neo4j Performance Tuning
 :slug: guide-performance-tuning
 :level: Intermediate
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Neo4j in Production
 :section-link: in-production
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -20,8 +20,7 @@ If you are a developer you should be accustomed to the graph data model and have
 [role=expertise]
 {level}
 
-toc::[]
-
+[#memory-config]
 == Memory Configuration guidelines
 
 An in-depth description on this topic is available in the link:{opsmanual}/performance/#memory-tuning[Neo4j Operations Manual].
@@ -61,13 +60,7 @@ It is recommended to set these two parameters to the same size.
 For a more thorough discussion on this topic, refer to the link:{opsmanual}/performance/memory-configuration/#heap-sizing[heap memory configuration section in the Neo4j Operations Manual].
 That section also contains information about heap memory distribution and gabarge collection tuning.
 
-[role=side-nav]
-* {opsmanual}[Operations,role=manual]
-* {opsmanual}/performance/[Configuration & Performance,role=manual]
-// * http://maxdemarzi.com/2013/11/25/scaling-up/[Scaling Up Neo4j,role=blog]
-* link:/support[Neo4j Professional Support]
-
-
+[#logical-logs]
 == Logical Logs
 
 Logical transaction logs in Neo4j are used in scenarios when the database needs to be recovered after a unclean shutdown.
@@ -78,6 +71,7 @@ The amount of log files or the used space can be configured.
 
 It is recommended that the `dbms.tx_log.rotation.retention_policy` parameter is set to `7 days`
 
+[#open-files]
 == Number of Open Files
 
 The usual default of `1024` for the open file limit is often not enough, especially when many indexes are used or a server installation sees too many connections (network sockets also count against that limit).
@@ -85,3 +79,10 @@ Users are therefore encouraged to increase that limit to a realistic value of `4
 Setting this value via the `ulimit` command is only possible for the current session.
 
 To set the value system wide you have to follow the link:{opsmanual}/installation/linux/tarball/#linux-open-files[instructions] for your platform.
+
+[#tuning-resources]
+== Resources
+* {opsmanual}[Operations,role=manual]
+* {opsmanual}/performance/[Configuration & Performance,role=manual]
+// * http://maxdemarzi.com/2013/11/25/scaling-up/[Scaling Up Neo4j,role=blog]
+* link:/support[Neo4j Professional Support]

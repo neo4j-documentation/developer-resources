@@ -5,13 +5,42 @@
 active[(@document.attr "section-link", "get-started")]=:active;
 %>
 <%=  File.new("_templates/style_partial.erb").read %>
-<div class="row" style="padding-left: 0; padding-right: 0; padding-top: 1em;">
-   <div class="large-9 large-push-3 columns guide-section-content">
-   <%= content %>
-   </div>
-   <div class="large-3 large-pull-9 columns" id="dev-menu-nav">
-      <%= File.new("_templates/menu_partial.erb").read.gsub(/[\w-]+-activate/) { |m| active[m.gsub(/-activate/,"")].to_s } %>
-   </div>
+<div class="content-wrapper">
+  <div class="dev-menu-nav large-2 hide-for-medium-only hide-for-small-only columns">
+    <%= File.new("_templates/menu_partial.erb").read.gsub(/[\w-]+-activate/) { |m| active[m.gsub(/-activate/,"")].to_s } %>
+  </div>
+  <div class="guide-section-content large-8 columns">
+    <h1 class="entry-title"><%= (doctitle(:sanitize => true) || (attr 'untitled-label')) %></h1>
+    <%= content %>
+  </div><%
+  if @document.attr? :toc
+    toc_id = @id
+    toc_class = 'guide-toc'
+    toc_role = (attr :role, (@document.attr 'toc-class', 'toc'))
+    toc_title_id = nil
+    toc_title = title? ? title : (@document.attr 'toc-title')
+    toc_levels = (attr? :levels) ? (attr :levels).to_i : (@document.attr :toclevels, 2).to_i
+    if !toc_id && (@document.embedded? || !(@document.attr? 'toc-placement'))
+      toc_id = 'guide-toc'
+      toc_title_id = 'toctitle'
+    end
+    %><div<%= toc_id && %(id="#{toc_id}") %> <%= toc_class && %(class="#{toc_class} large-2 hide-for-medium-only hide-for-small-only columns") %>>
+        <ul class="side-nav">
+          <dl class="accordion">
+            <dd class="accordion-navigation active"><%
+              if toc_title %>
+                <h3<%= toc_title_id && %(id="#{toc_title_id}") %>><%= toc_title %></h3><%
+              end %>
+              <div id="nav" class="toc content active">
+                <% toc = converter.convert_with_options @document, 'outline', :toclevels => toc_levels %>
+                <%= toc %>
+                <% end %>
+              </div>
+            </dd>
+          </dl>
+        </ul>
+      </div>
+    <div class="clearfix"></div>
 </div>
 
 <script>

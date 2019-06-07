@@ -1,14 +1,13 @@
 = How-To: Run Neo4j in Docker
 :slug: docker-run-neo4j
 :level: Beginner
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Neo4j in Production
 :section-link: in-production
 :section-level: 1
 :sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 image::{img}neo4j-docker-image-now-in-beta-235x300.jpg[float="right"]
 
@@ -30,8 +29,7 @@ You should also have downloaded link:https://www.docker.com/get-started[Docker^]
 [role=expertise]
 {level}
 
-toc::[]
-
+[#neo4j-docker]
 == Neo4j Docker Image
 
 There is an official https://hub.docker.com/_/neo4j[Neo4j image on DockerHub^] we can use to give us a standard, ready-to-run package of Neo4j.
@@ -55,6 +53,7 @@ You need to have a valid commercial license in order to use the Enterprise Editi
 Using an enterprise Docker image will require you to accept the official Enterprise license agreement.
 --
 
+[#config-docker]
 == Neo4j Configuration
 
 The Neo4j Docker image includes some basic configuration defaults that should not need adjustment for most cases.
@@ -70,6 +69,7 @@ We will use these ports to connect to Neo4j inside the container, accessing it f
 
 It is also possible to create a custom Docker image with Neo4j included, but we will not cover that here.
 
+[#docker-run]
 == Run Docker with Neo4j
 
 Retrieving and running Neo4j within a Docker container is very simple using one of the provided images.
@@ -144,6 +144,7 @@ Even though it creates a container id, you can reference the container using the
 .Click to zoom
 image:{img}docker_run_neo4j.jpg[link="{img}docker_run_neo4j.jpg",role="popup-link"]
 
+[#container-status]
 == Verifying Execution and Stopping the Container
 Once we execute the command above, Neo4j should be running in our Docker container!
 You can verify this by running `docker ps`.
@@ -179,6 +180,7 @@ Once we run this, we can use the same docker run command from earlier to create 
 .Click to zoom
 image:{img}docker_rm_neo4j.jpg[link="{img}docker_rm_neo4j.jpg",role="popup-link"]
 
+[#commands-exec]
 == Executing Other Functionality in Neo4j Containers
 Once you are comfortable with creating, starting, and stopping the Docker container, you can start exploring other Neo4j functionality.
 Much of the other typical Neo4j processes for importing data, adding plugins, and interacting via Neo4j Browser work the same way as with any other Neo4j installation with the proper directory volumes mounted.
@@ -264,6 +266,7 @@ docker run \
     neo4j:latest
 ----
 
+[#wrap-up]
 == Wrapping Up
 Congratulations!
 You have successfully created and started a Neo4j graph database in a Docker container!

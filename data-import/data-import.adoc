@@ -3,14 +3,17 @@
 :section: Data Import
 :section-link: data-import
 :section-level: 1
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
-== image:{img}icon-guide-practical.png[] Data Import
-
+[#about-import]
 These guides and tutorials are designed to help you understand how to import various types of data into Neo4j.
 From JSON to APIs to another database, you can retrieve data from nearly any source and use it to populate your graph.
 
-
-== [.label]#Guide →# Importing CSV files
+[#import-csv]
+== Importing CSV files
 
 One of the most common formats of data is in rows and columns on flat files.
 This spreadsheet format is used for a variety of imports and exports to/from relational databases, so it is easy to retrieve existing data this way.
@@ -20,8 +23,8 @@ The `LOAD CSV` command in Cypher allows us to specify a filepath, headers or not
 
 We will walk through the details of how to take any CSV file and import the data into Neo4j easily and quickly.
 
-
-== [.label]#Guide →# Importing API data
+[#import-api]
+== Importing API data
 
 There are now many data sources that use an API to expose data via a URL - many of these in JSON format.
 You can also import this type of data into Neo4j using the APOC standard extension library and executing the commands in the Neo4j Browser command line or in a script.
@@ -30,15 +33,15 @@ The `apoc.load.json` command allows us to specify a URL path and any necessary p
 
 This guide shows us how to retrieve data from a JSON-based REST API and import it into Neo4j.
 
-
-== [.label]#Guide →# Importing Example Data - Northwind
+[#import-northwind]
+== Importing Example Data - Northwind
 
 This guide will use a common relational data set (Northwind) and walk us through how to transform and import data from a relational database to Neo4j graph database.
 
 You will learn what steps are needed to retrieve the data from the relational data store and import the same data as a graph in Neo4j, as well as how to take the relational data model and convert it to graph in the process.
 
-
-== [.label]#Guide →# Example Data Sets
+[#import-examples]
+== Example Data Sets
 
 We want to provide some of our favorite data sets for you to practice your skills and learn more about importing and querying data in Neo4j!
 This guide shows a variety of open-source data sets that you can access and easily import.

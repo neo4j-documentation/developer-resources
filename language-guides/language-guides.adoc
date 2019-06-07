@@ -1,25 +1,22 @@
 = Drivers & Language Guides
 :slug: language-guides
 :level: Intermediate
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 2
 :section: Develop with Neo4j
 :section-link: language-guides
 :section-level: 2
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
-= image:{img}icon-mdm.png[] Drivers & Language Guides
-
-
+[#neo4j-app-dev]
 These guides and tutorials are designed to provide detailed examples of how to integrate Neo4j with your preferred programming language.
 Neo4j *officially supports the drivers for .Net, Java, JavaScript, Go, and Python* for the binary Bolt protocol.
 Our community contributors provide drivers for all major programming languages for all protocols and APIs.
 In this section, we provide an introduction and a consistent example application for several languages and Neo4j drivers.
 
-
+[#connect-neo4j]
 == How to connect to Neo4j?
-
 
 If you've link:/download[installed] and started Neo4j as a server on your system,
 you can already work interactively with the database via the built-in Neo4j Browser application on http://localhost:7474[localhost:7474].
@@ -27,8 +24,7 @@ you can already work interactively with the database via the built-in Neo4j Brow
 To build an application, you want to connect to Neo4j from your technology stack.
 Fortunately it is very easy using a driver which connects to Neo4j via Bolt or Http.
 
-
-[[bolt-drivers]]
+[#bolt-protocol]
 == The binary Bolt Protocol
 
 Starting with Neo4j 3.0 we support a binary protocol called Bolt.
@@ -43,12 +39,12 @@ You can find detailed information about the official drivers in the link:{manual
 
 _For more details on the protocol implementation, see the https://github.com/neo4j-contrib/boltkit[implementers documentation]._
 
+[#neo4j-drivers]
 == All Neo4j Drivers
 
 Thanks to the Neo4j contributor community, there are additionally drivers for almost every popular programming language,
 most of which mimic existing database driver idioms and approaches.
 Get started with your stack now, see the dedicated page for more detail.
-
 
 [cols="5*",width=100]
 |===
@@ -75,6 +71,7 @@ include::example-project/example-project.adoc[tags=intro]
 
 link:example-project[Read More]
 
+[#http-api]
 == Using the HTTP API
 
 If you want to access Neo4j programmatically, you can also use the HTTP-API, which allow you to:

@@ -1,12 +1,12 @@
 = Guide to Cypher Basics
 :slug: guide-cypher-basics
 :level: Beginner
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Cypher Query Language
 :section-link: cypher
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -20,10 +20,8 @@ You should have familiarized yourself with link:/developer/get-started/graph-dat
 [role=expertise]
 {level}
 
-toc::[]
-
-
-=== Pop-Cultural Connections
+[#cypher-basics]
+== Pop-Cultural Connections
 _The Movie Graph_ is a mini graph application containing actors and directors that are related through the movies they've collaborated on.
 It is available in your Neo4j Browser if you execute `:play movie-graph`.
 It is helpful if you run the queries as you go along, but you should understand them even so.
@@ -42,8 +40,8 @@ This guide will show you how to:
 * link:/developer/guide-intro-to-graph-modeling[Intro to Graph Modeling]
 ////
 
-
-=== Create
+[#cypher-movie-create]
+== Create
 
 Hidden below this text is a giant code block containing a single Cypher query statement composed of multiple `CREATE` clauses.
 This will create the movie graph.
@@ -52,8 +50,8 @@ This will create the movie graph.
 
 <<CYPHER,+:help Cypher+>>, <<CREATE,+:help CREATE+>>
 
-
-=== Find
+[#cypher-movie-find]
+== Find
 
 Example queries for finding individual nodes.
 
@@ -64,8 +62,7 @@ Example queries for finding individual nodes.
 
 <<MATCH,+:help MATCH+>>, <<WHERE,+:help WHERE+>>, <<RETURN,+:help RETURN+>>
 
-
-==== Find the Person Named "Tom Hanks"...
+=== Find the Person Named "Tom Hanks"...
 
 [source, cypher]
 ----
@@ -77,8 +74,7 @@ RETURN tom
 //graph_result
 //table
 
-
-==== Find the Movie Titled "Cloud Atlas"...
+=== Find the Movie Titled "Cloud Atlas"...
 
 [source, cypher]
 ----
@@ -90,8 +86,7 @@ RETURN cloudAtlas
 
 //table
 
-
-==== Find 10 People...
+=== Find 10 People...
 
 [source, cypher]
 ----
@@ -101,8 +96,7 @@ RETURN people.name LIMIT 10
 
 // table
 
-
-==== Find Movies Released in the 1990s...
+=== Find Movies Released in the 1990s...
 
 [source, cypher]
 ----
@@ -113,8 +107,8 @@ RETURN nineties.title
 
 //table
 
-
-=== Query
+[#cypher-movie-query]
+== Query
 
 Finding patterns within the graph.
 
@@ -125,7 +119,7 @@ Finding patterns within the graph.
 <<MATCH,+:help MATCH+>>
 
 
-==== List All Tom Hanks Movies...
+=== List All Tom Hanks Movies...
 
 [source, cypher]
 ----
@@ -138,7 +132,7 @@ RETURN tom,tomHanksMovies
 //table
 
 
-==== Who Directed "Cloud Atlas"?
+=== Who Directed "Cloud Atlas"?
 
 [source, cypher]
 ----
@@ -149,7 +143,7 @@ RETURN directors.name
 //table
 
 
-==== Tom Hanks' Co-Actors...
+=== Tom Hanks' Co-Actors...
 
 [source, cypher]
 ----
@@ -162,7 +156,7 @@ RETURN tom, m, coActors
 //table
 
 
-==== How People are Related to "Cloud Atlas"...
+=== How People are Related to "Cloud Atlas"...
 
 [source, cypher]
 ----
@@ -172,8 +166,8 @@ RETURN people.name, Type(relatedTo), relatedTo
 
 //table
 
-
-=== Solve the Six Degrees Question
+[#cypher-paths]
+== Solve the Six Degrees Question
 
 You've heard of the classic "Six Degrees of Kevin Bacon"?
 That is simply a shortest path query called the "Bacon Path".
@@ -198,7 +192,7 @@ RETURN DISTINCT hollywood
 //table
 
 
-==== The Bacon Path to Meg Ryan
+=== The Bacon Path to Meg Ryan
 
 [source, cypher]
 ----
@@ -212,8 +206,8 @@ RETURN p
 
 //table
 
-
-=== Clean Up
+[#cypher-movie-cleanup]
+== Clean Up
 
 When you're done experimenting, you can remove the movie data set.
 
@@ -227,7 +221,7 @@ This will remove all Person and Movie nodes!
 * <<DELETE,+:help DELETE+>>
 
 
-==== Delete All Movie and Person Nodes and their Relationships
+=== Delete All Movie and Person Nodes and their Relationships
 
 //output
 
@@ -238,8 +232,7 @@ OPTIONAL MATCH (a)-[r1]-(), (m)-[r2]-()
 DELETE a,r1,m,r2
 ----
 
-
-==== Prove that the Movie Graph is Gone
+=== Prove that the Movie Graph is Gone
 
 [source, cypher]
 ----

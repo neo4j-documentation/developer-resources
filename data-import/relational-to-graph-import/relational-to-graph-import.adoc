@@ -8,6 +8,10 @@
 :section: Data Import
 :section-link: data-import
 :section-level: 1
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -22,8 +26,7 @@ It is also helpful to know the differences between link:/developer/graph-db-vs-r
 [role=expertise]
 {level}
 
-toc::[]
-
+[#import-relational]
 == Importing Data from a Relational Database
 
 Often, when in a company setting, you have existing data in a system that will need transferred or manipulated for a new project.
@@ -34,6 +37,7 @@ Very simply, you will need to export data from the existing system(s), handle an
 Depending on the particular environment you are working in, different tools for importing relational to graph may provide better or faster solutions than others.
 In this guide, we want to discuss all of the options and why you can or should choose some over others for your use case.
 
+[#relational-import-tools]
 == Relational to Graph Import Tools
 
 There are 3 main approaches to moving relational data to a graph.
@@ -64,7 +68,8 @@ You should create and understand your link:/developer/data-modeling/[graph data 
 If you do not have a good data model, then jumping into the import can cause frustration on data cleanup later.
 --
 
-=== LOAD CSV
+[#relational-load-csv]
+== LOAD CSV
 
 This built-in Cypher function allows users to take existing or exported CSV files and load them into Neo4j with Cypher statements to read, transform, and import the data to the graph database.
 It allows the user to run statements individually or run them batched in a Cypher script.
@@ -78,7 +83,8 @@ For those cases, you might need to add an `APOC` procedure to the `LOAD CSV` sta
 * Guide: link:/developer/guide-import-csv/[CSV Import]
 * Docs Tutorial: link:/docs/getting-started/current/cypher-intro/load-csv/[LOAD CSV for import^]
 
-=== APOC
+[#relational-apoc]
+== APOC
 
 APOC is Neo4j's utility library for handling data import, as well as data transformations and manipulations.
 From converting values to altering the data model, this library can manage it all, allowing you to combine and chain procedures in order to get exactly the results you are looking for.
@@ -97,7 +103,8 @@ The downside to using this library for complicated scenarios is that it may resu
 * Videos: https://youtu.be/e8UfOHJngQA[APOC Video Series^]
 * Source code: https://github.com/neo4j-contrib/neo4j-apoc-procedures[Github project^]
 
-=== ETL Tool
+[#relational-etl-tool]
+== ETL Tool
 
 Neo4j's ETL tool provides a simple GUI that allows you to load data from nearly any type of relational database to a Neo4j instance.
 The process has you set up a JDBC connection to nearly any type of relational database, then does some auto-mapping to a graph data model rendered as a visualization that you can edit to your use case.
@@ -112,7 +119,8 @@ It is a community-driven tool, so updates are made as needed and not on a schedu
 * Blog post: https://medium.com/neo4j/tap-into-hidden-connections-translating-your-relational-data-to-graph-d3a2591d4026[Translating Relational Data to Graph^]
 * Source code: https://github.com/neo4j-contrib/neo4j-etl[Github project^]
 
-=== Kettle
+[#relational-kettle]
+== Kettle
 
 This highly diverse and flexible data loading tool has several connection options to and from Neo4j, as well as capabilities to generate CSV files from other systems to load into your graph database.
 Its goal is to help you create and manage a simple, self-describing, and maintainable data integration process from beginning to end.
@@ -130,7 +138,8 @@ Cooperation with Neo4j simply requires the plugins for our graph data integratio
 * Neo4j Plugins: https://github.com/knowbi/knowbi-pentaho-pdi-neo4j-output/releases/[Integrate Kettle with Neo4j^]
 * Blog post: https://medium.com/neo4j/getting-started-with-kettle-and-neo4j-32ff15b991f9[Getting Started with Kettle and Neo4j^]
 
-=== Other ETL Tools
+[#relational-other-tools]
+== Other ETL Tools
 
 There are a few other data integration tools provided by other individuals or companies that work well with Neo4j.
 Open-source options such as Talend or Nifi offer simple processes for simple processes with already-familiar tools.
@@ -141,7 +150,8 @@ Open-source options such as Talend or Nifi offer simple processes for simple pro
 * Blog post: https://neo4j.com/blog/fun-with-music-neo4j-and-talend/[Fun with music, Talend, and Neo4j^]
 * Source code: https://github.com/jonathantelfer/nifi-neo4j[Apache Nifi / Neo4j Connector^]
 
-=== Import Programmatically with Drivers
+[#relational-drivers]
+== Import Programmatically with Drivers
 
 For importing data using a programming language, you can use the Neo4j driver for your preferred language and execute Cypher statements to/from the database.
 This process is also helpful if you do not have access to the Cypher shell or if the data is not available as an accessible file.

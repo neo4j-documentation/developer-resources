@@ -1,12 +1,12 @@
 = Modeling Designs
 :slug: modeling-designs
 :level: Beginner
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 1
 :section: Graph Data Modeling
 :section-link: data-modeling
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -21,8 +21,7 @@ You should understand link:/developer/get-started/graph-database[what a graph da
 [role=expertise]
 {level}
 
-toc::[]
-
+[#model-impact]
 == Why the Data Model Makes a Difference
 
 As with any database, the data model that you design is important in determining the logic your queries and the structure of data in storage.
@@ -45,7 +44,7 @@ It is simply up to the developers and architects to determine the structure of t
 
 In the next few paragraphs, we will introduce a few different ways to look at different data sets and show how each impacts queries and performance for traversing graph data.
 
-
+[#property-vs-relationship]
 == Property vs Relationship
 
 One of the earliest decisions you may encounter is whether to model something as a property on a node or as a relationship to a separate node.
@@ -104,7 +103,7 @@ Neither version of the data model is worse or better, but the 'best' option high
 If you plan to do analysis on individual items and return only details about that entity (like genres on a particular movie), then the first data model would serve perfectly well for your needs.
 However, if you need to run analysis to find common ground between entities or look at a group of nodes, then the second data model would definitely improve performance of those types of queries.
 
-
+[#complex-models]
 == Complex Data Structures
 
 As many of us can probably agree, not all data models are simple and straightforward.
@@ -148,7 +147,7 @@ In a relational store, attempting to categorize and relate all of these complica
 The graph model allowed them to model this heavily dynamic universe and track all of the changing connections throughout their data.
 For this use case, graph was the perfect fit.
 
-
+[#model-time-versions]
 == Time-bound Data and Versioning
 
 One way to model time-specific data and relationships is by including data in the relationship type.
@@ -182,7 +181,7 @@ Tracking changes in the data structure or showing a current and past value can b
 For instance, if you wanted to create a new effective-dated relationship between a person and their current address, but also retain past addresses, you could use the same principle of including a date in the relationship type.
 To find the current address of the person, the query would look for the most recently dated relationship.
 
-
+[#multiple-models]
 == Taking the Best of Both Worlds
 
 Sometimes, you might find that one model works really well for one scenario you need, but another model is better for something else.
@@ -199,7 +198,7 @@ This can also impact query performance, as you might have double the syntax need
 While this is definitely a possible option, you should know the maintenance costs and evaluate whether those costs are overcome by the performance improvements you will see for each needed query.
 If so, being able to use more than one data model is a great solution!
 
-
+[#modeling-resources]
 == Resources
 * https://maxdemarzi.com/2015/08/26/modeling-airline-flights-in-neo4j/[Max's blog post: Modeling airline flights^]
 * https://maxdemarzi.com/2017/05/24/flight-search-with-neo4j/[Follow-up blog post: Flight search^]

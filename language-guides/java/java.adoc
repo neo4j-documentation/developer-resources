@@ -1,12 +1,12 @@
 = Using Neo4j from Java
 :slug: java
 :level: Intermediate
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 2
 :section: Develop with Neo4j
 :section-link: language-guides
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -22,13 +22,10 @@ When developing with Neo4j, please use Java 8 or 11 and your favorite IDE.
 [role=expertise]
 {level}
 
+[#neo4j-java]
+== Neo4j for Java Developers
+
 image::{img}java.jpg[float=right,width=200]
-
-toc::[]
-
-
-// tag::intro[]
-=== Neo4j for Java Developers
 
 Neo4j offers a rich set of integration possibilities for developers using Java or other JVM-languages.
 
@@ -39,18 +36,16 @@ You can also extend Neo4j by implementing *user defined procedures for Cypher* i
 [NOTE]
 Please note that starting with version 3.0 you need Java 8 to use Neo4j Server.
 
-// end::intro[]
-
 include::../_includes/sample_project.adoc[]
 
 
-[[neo4j-java-driver]]
-=== icon:check-circle-o[] Neo4j Java Driver
+[#java-driver]
+== Neo4j Java Driver
 
 include::../_includes/java-driver.adoc[]
 
-
-=== Spring Data Neo4j
+[#java-spring]
+== Spring Data Neo4j
 
 image::{img}sdn.png[float="right"]
 
@@ -71,9 +66,8 @@ Features (based on Neo4j-OGM):
 
 More detail can be found on the dedicated link:../spring-data-neo4j[Spring Data Neo4j] page.
 
-
-[[neo4j-ogm]]
-=== Object-Graph-Mapping with Neo4j-OGM
+[#java-ogm]
+== Object-Graph-Mapping with Neo4j-OGM
 
 Developing Java Business Applications often requires mapping rich domain models to your database.
 The Neo4j-OGM library is a pure Java library that can persist (annotated) domain objects using Neo4j.
@@ -119,7 +113,8 @@ Because of its flexibility and performance, we also chose the Java API for exten
 * https://maxdemarzi.com/tag/java/[Articles on the JavaAPI by Max de Marzi^]
 ////
 
-=== User Defined Procedures and Functions
+[#custom-proc-func]
+== User-Defined Procedures and Functions
 
 link:/developer/cypher/procedures-functions[User Defined *Procedures* and *Functions*^] are available within Cypher and encapsulate dedicated functionality.
 
@@ -164,8 +159,8 @@ You test your server extensions using the link:/docs/java-reference/current/#ser
 This {examples}/movies-java-server-extension[example project] shows how you would do that for our movie application endpoints.
 ////
 
-[[neo4j-jdbc]]
-=== Using Neo4j Server with JDBC
+[#neo4j-jdbc]
+== Using Neo4j Server with JDBC
 
 Being a Java developer you're probably familiar with JDBC as a way to work with relational databases, either directly or via abstractions like Spring's `JDBCTemplate` or MyBatis.
 Many tools for ETL, Report Generators, Business Intelligence, and data management also use JDBC drivers to interact with relational databases.
@@ -210,8 +205,8 @@ Just grab the https://github.com/neo4j-contrib/neo4j-jdbc/releases/latest[JAR of
 include::../_includes/community-driver-notice.adoc[]
 
 
-[[jcypher]]
-=== JCypher
+[#java-jcypher]
+== JCypher
 
 JCypher provides seamlessly integrated Java access to Neo4j at different levels of abstraction:
 
@@ -240,8 +235,8 @@ At the bottom level of abstraction, a *native Java DSL* in the form of a fluent 
 | icon:book[] Article | https://neo4j.com/blog/jcypher-focus-on-your-domain-model-not-how-to-map-it-to-the-database/
 |===
 
-
-=== Groovy & Grails: Neo4j Grails Plugin
+[#neo4j-grails]
+== Groovy & Grails: Neo4j Grails Plugin
 
 image::{img}grails.png[width=200,float=right]
 
@@ -262,7 +257,6 @@ The goal of GORM for Neo4j is to provide a 'as-complete-as-possible' GORM implem
 |===
 
 ////
-
 === Clojure: Neocons
 
 image::{img}clojure.png[float=right]
@@ -290,8 +284,8 @@ A Cypher-oriented Scala library modeled after the Play! framework's Anorm librar
 | icon:book[] Docs | http://anormcypher.org
 |===
 ////
-
-=== Scala: neotypes
+[#neo4j-scala]
+== Scala: neotypes
 
 image::{img}scala.png[width=200,float="right"]
 
@@ -307,7 +301,8 @@ The project aims to provide seamless integration with most popular scala infrast
 | icon:play-circle[] Example | https://github.com/neotypes/examples
 |===
 
-=== JPA: Hibernate OGM
+[#ogm-hibernate]
+== JPA: Hibernate OGM
 
 Hibernate Object/Grid Mapper (http://hibernate.org/ogm[OGM^]) with Neo4j Support.
 
@@ -321,4 +316,3 @@ Hibernate Object/Grid Mapper (http://hibernate.org/ogm[OGM^]) with Neo4j Support
 | icon:book[] Article | http://in.relation.to/Bloggers/QueryImprovementsAndBetterNeo4jSupportHibernateOGM410Beta6IsOut[Blog], http://in.relation.to/Bloggers/HibernateOGM410Beta5IsOutJPQLQueriesForNeo4jAndMore[JPL Queries^]
 | icon:play-circle[] Example | https://github.com/TimmyStorms/hibernate-ogm-neo4j-example
 |===
-

@@ -1,12 +1,12 @@
 = Using Neo4j from Go
 :slug: go
 :level: Intermediate
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 2
 :section: Develop with Neo4j
 :section-link: language-guides
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -21,19 +21,15 @@ You should have link:/download[installed Neo4j] and made yourself familiar with 
 [role=expertise]
 {level}
 
-toc::[]
-
-// tag::intro[]
-=== Neo4j for Go Developers
+[#neo4j-go]
+== Neo4j for Go Developers
 
 image::{img}GO.jpg[width=150,float=right]
 
 You can use the official driver for Go (neo4j-go-driver) or connect via Bolt or HTTP with any of our community drivers.
 
-// end::intro[]
-
-[[neo4j-javascript-driver]]
-=== icon:check-circle-o[] Neo4j Go Driver
+[#go-driver]
+== Neo4j Go Driver
 
 include::../_includes/go-driver.adoc[]
 
@@ -41,7 +37,8 @@ include::../_includes/sample_project.adoc[]
 
 include::../_includes/community-driver-notice.adoc[]
 
-=== Golang Neo4J Bolt Driver
+[#golang-bolt]
+== Golang Neo4J Bolt Driver
 
 This implementation attempts to follow the best practices as per the Bolt specification, but also implements compatibility with Golang's `sql.driver` interface.
 
@@ -66,7 +63,6 @@ Features
 |===
 
 ////
-
 === CQ
 
 A database/sql implementation for Cypher inspired by the http://golang.org/pkg/database/sql/[database/sql^] package which provides idiomatic go database access.
@@ -80,5 +76,4 @@ Cypher is close enough to SQL that it seems to fit pretty well in the database/s
 | icon:book[] Docs | https://github.com/go-cq/cq/tree/master/readme.md
 | icon:play-circle[] Example Project | {examples}/movies-go-cq
 |===
-
 ////

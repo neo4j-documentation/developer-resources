@@ -2,12 +2,12 @@
 :slug: relational-to-graph-modeling
 :section-level: 1
 :level: Beginner
-:toc:
-:toc-placement!:
-:toc-title: Overview
-:toclevels: 2
 :section: Graph Data Modeling
 :section-link: data-modeling
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
 
 .Goals
 [abstract]
@@ -21,8 +21,7 @@ You should understand the basics of Neo4j's link:/developer/get-started/graph-da
 [role=expertise]
 {level}
 
-toc::[]
-
+[#rdbms-to-graph-model]
 == Modeling: From Relational to Graph
 
 If you are familiar with the relational data model that has tables, columns, relationship cardinalities, and other components, graph data modeling will not seem entirely foreign.
@@ -34,7 +33,7 @@ You may have an entirely new project that you want to create a graph data model,
 Or you could already have an existing project with a relational model that you want to convert to graph.
 Either way, this guide will take existing knowledge of the relational data model and show you how to use that to create a graph model.
 
-
+[#rdbms-graph-architecture]
 == Relational and Graph Architecture
 
 As a quick overview, remember that relational databases rely upon index lookups and table joins to connect different entities.
@@ -53,7 +52,7 @@ In a graph, you do not need to worry about table joins and index lookups because
 
 Ok, so how do we go from creating relational data models to a graph data model?
 
-
+[#model-transformation]
 == Data Model Transformation Tips
 
 Let us look at some of the key components in a relational data model and translate those into components of a graph data model.
@@ -78,14 +77,13 @@ image:{img}relational_graph_model.jpg[link="{img}relational_graph_model.jpg",rol
 Though the two models have similarities such as categorizing data by using either a table structure or a label, the graph model does not confine data to a pre-defined and strict table/column layout.
 We will look at another example in the next section.
 
-
+[#org-domain-model]
 == Organizational Domain Data Model
 
 To give us another chance to practice, we will use a standard organizational domain and show how it would be modeled in a relational database versus a graph database. To give yourself an extra challenge, try to create the graph data model on your own and then see how closely it lines up!
 
 .Organizational Domain - Relational Model
 image:{img}relational_org_chart.jpg[link="{img}relational_org_chart.jpg",role="popup-link"]
-
 
 === Conversion Steps
 
@@ -115,7 +113,7 @@ image:{img}graph_org_chart.jpg[600,600,link="{img}graph_org_chart.jpg",role="pop
 It is important to have an basic understanding of the graph model before you start to import data, as it becomes easier to hydrate that model or adjust it later, as needs change.
 In an upcoming guide, how you model your graph data can impact queries, performance, and model changes.
 
-
+[#modeling-resources]
 == Resources
 * https://dzone.com/refcardz/from-relational-to-graph-a-developers-guide?chapter=1[DZone Refcard: From Relational to Graph^]
 * link:/developer/get-started/graph-db-vs-rdbms[Concepts: RDBMS to Graph]
