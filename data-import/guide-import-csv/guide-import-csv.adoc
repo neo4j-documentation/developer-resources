@@ -10,65 +10,366 @@
 
 .Goals
 [abstract]
-This article demonstrates how to import CSV data into Neo4j and solutions to potential issues that might arise during this process.
+This article demonstrates different approaches to importing CSV data into Neo4j and solutions to potential issues that might arise during this process.
 
 .Prerequisites
 [abstract]
-Before importing data you should have modeled the first iteration of your domain in the link:/developer/data-modeling/guide-data-modeling[property graph model].
-And to use `LOAD CSV` efficiently it pays off to be comfortable with our link:/developer/cypher[query language, Cypher].
+Before importing data, you should be familiar with what a link:/developer/graph-database/[graph database] is, how to construct a link:/developer/guide-data-modeling/[property graph data model], and some basics of the link:/developer/cypher[Cypher query language].
+All of these skills are a part of the data import process.
 
 [role=expertise]
 {level}
 
+CSV is a file of comma-separated values, often viewed in Excel or some other spreadsheet tool.
+There can be other types of values as the delimiter, but the most standard is the comma.
+Many systems and processes today already convert their data into CSV format for file outputs to other systems, human-friendly reports, and other needs.
+
+Having Neo4j able to read and handle this type of file can help simplify the process of getting data from other types of formats and other systems into Neo4j due to its standard file format that humans and systems are already familiar with using and handling.
+
+== Ways to Import CSV Files
+
+There are a few different approaches to get CSV data into Neo4j, each with varying criteria and functionality.
+The option you choose will depend on the data set size, as well as your degree of comfort with various tools.
+
+Let us see some of the ways Neo4j can read and import CSV files!
+
+1. `LOAD CSV` Cypher command: this command is a great starting point and handles small- to medium-sized data sets (up to 10 million records).
+2. `neo4j-admin` bulk import tool: command line tool useful for straightforward loading of large data sets.
+3. Kettle import tool: maps and executes steps for the data process flow and works well for very large data sets, especially if developers are already familiar with using this tool.
+
+We will take a brief view of each one of these tools, how they operate, and how to get started with a general use case.
+More documentation and information for each will also be included for help on more complex scenarios.
+Data quality can also be an issue for any type of data import to any system, so we will cover a few of these potential difficulties and how to solve them.
+
+[#import-load-csv]
+== LOAD CSV command with Cypher
+
+The `LOAD CSV` clause is provided as part of the Cypher query language.
+Our [Cypher manual] contains a page devoted to its usage, and a variety of Neo4j's blogs, videos, solutions, and other material utilizes this command.
+It is simple to use and widely applicable.
+`LOAD CSV` is not just your basic data ingestion mechanism because it combines multiple aspects into a single operation.
+
+* Supports loading / ingesting CSV data from an URI
+* Directly maps input data into complex graph/domain structure
+* Handles data conversion
+* Supports complex computations
+* Creates or merges entities, relationships, and structure
+
+--
+[NOTE]
+For better control, you can run `LOAD CSV` commands with `cypher-shell` instead of in the browser.
+By default, cypher-shell connects to the database running on localhost, but you can point it to a database anywhere over the network.
+For more information, visit the manual page on link:/docs/operations-manual/3.5/tools/cypher-shell/[Cypher shell^].
+--
+
+=== Reading CSV Files
+
+`LOAD CSV` can handle local and remote files, and there is some syntax associated with each.
+This can be an easy thing to miss and end up with an access error, so we will try to clarify the rules here.
+
+*Local files* are referenced with a `file:///` prefix before the file name.
+Neo4j security has a default setting that local files can only be read from the Neo4j import directory, which is different based on your operating system.
+File locations for each OS are listed in our link:{opsmanual}/configuration/file-locations[Neo4j Operations Manual^].
+We recommend putting files in Neo4j's _import_ directory, as it keeps the environment secure.
+However, if you need to be able to access files in other locations, you can find out which setting to alter in our link:/docs/cypher-manual/current/clauses/load-csv/#query-load-csv-introduction[manual^].
+
+.Examples:
+----
+//Example 1 - file directly placed in import directory (import/data.csv)
+LOAD CSV FROM "file:///data.csv"
+
+//Example 2 - file placed in subdirectory within import directory (import/northwind/customers.csv)
+LOAD CSV FROM "file:///northwind/customers.csv"
+----
+
+*Web-hosted files* can be referenced directly with their URL, like `+https://host/path/data.csv+`.
+`LOAD CSV` can handle redirects, but not if the redirect includes a change in web protocol (e.g. from HTTP to HTTPS).
+However, permissions must be set so that an external source can read the file.
+For more information about access related to online file imports, see this link:/developer/kb/import-csv-locations/[knowledge base article^].
+
+.Examples:
+----
+//Example 1 - website
+LOAD CSV FROM 'https://neo4j.com/docs/cypher-manual/3.5/csv/artists.csv'
+
+//Example 2 - Dropbox
+LOAD CSV WITH HEADERS FROM 'https://docs.google.com/spreadsheets/d/<yourFilePath>'
+----
+
+=== Important Tips for LOAD CSV
+
+There are a few things to keep in mind with `LOAD CSV` and a few helpful tips for handling the variety of data scenarios you are likely to encounter.
+
+* Newer versions of Neo4j will most likely be faster due to continued optimization.
+* All data from the CSV file is read as a string, so you need to use `toInteger()`, `toFloat()`, `split()` or similar functions to convert values.
+* Check your Cypher import statement for typos. Labels, property names, relationship-types, and variables are *case-sensitive*.
+* The cleaner the data, the easier the load. Try to handle complex cleanup/manipulation before load.
+
+=== Converting Data Values with LOAD CSV
+
+Cypher has some scrubbing and conversion capabilities to help with data cleanup.
+These are extremely useful for handling missing data or splitting a field into multiple values for the graph.
+
+First, remember that Neo4j does not store null values.
+Null or empty fields in a CSV files can be skipped or replaced with default values in `LOAD CSV`. 
+
+.Example
+----
+//skip null values
+LOAD CSV WITH HEADERS FROM 'file:///data.csv' AS row
+WITH row WHERE row.Company IS NOT NULL
+MERGE (c:Company {companyId: row.Id})
+
+//set default for null values
+LOAD CSV WITH HEADERS FROM 'file:///data.csv' AS row
+MERGE (c:Company {companyId: row.Id, hqLocation: coalesce(row.Location, "Unknown")})
+
+//change empty strings to null values (not stored)
+LOAD CSV WITH HEADERS FROM 'file:///data.csv' AS row
+MERGE (c:Company {companyId: row.Id})
+SET c.emailAddress =  CASE WHEN trim(row.Email) <> "" THEN row.Email ELSE null END
+----
+
+Next, if you have a field in the CSV that is a list of items that you want to split, you can use the Cypher `split()` function to separate arrays in a cell.
+
+.Example
+----
+//split string of employee skills into separate nodes
+LOAD CSV FROM 'file:///data.csv' AS row
+MERGE (e:Employee {employeeId: row.Id})
+WITH row, e, split(row.skills, ',') AS skills
+UNWIND skills AS skill
+MERGE (s:Skill {name: skill})
+MERGE (e)-[r:HAS_EXPERIENCE]->(s);
+
+//split list of game scores into nodes and relationships
+LOAD CSV FROM 'file:///data.csv' AS row
+WITH row, split(row.Scores, "-") AS scores
+UNWIND scores AS score
+MERGE (t:Team {name: row.name})
+MERGE (g:Game {gameId: row.GameId})
+ ON CREATE SET g.gameDate = date(row.GameDate), g.score = score
+MERGE (t)-[:PLAYED]->(g);
+----
+
+Conditional conversions can be achieved with `CASE`.
+You saw one example of this when we were checking for null values or empty strings, but let us look at another example.
+
+.Example
+----
+//set businessType property based on shortened value in CSV
+LOAD CSV WITH HEADERS FROM 'file:///data.csv' AS row
+WITH row, CASE row.type
+WHEN 'P'
+ THEN row.type = 'Public'
+WHEN 'R'
+ THEN row.type = 'Private'
+WHEN 'G'
+ THEN row.type = 'Government'
+ELSE row.type = 'Other' END AS type
+MERGE (c:Company {companyId: row.CompanyId})
+SET c.businessType = type
+----
+
+=== Optimizing LOAD CSV for Performance
+
+Often, there are ways to improve performance during data load, which can be especially helpful when dealing with large amounts of data or complex loading.
+While some recommmendations are for indexes or configuration adjustments, you can also load data in chunks, allowing memory and transaction state to clear between sections.
+
+To improve inserting or updating unique entities into your graph (using `MERGE` or `MATCH` with updates), you can create indexes and constraints declared for each of the labels and properties you plan to merge or match on.
+
+--
+[NOTE]
+For best performance, always `MATCH` and `MERGE` on a single label with the indexed primary-key property.
+--
+
+You should also separate node and relationship creation into separate statements.
+For instance, instead of the following:
+
+[source,cypher]
+----
+MERGE (e:Employee {employeeId: row.employeeId})-[r:WORKS_FOR]->(c:Company {companyId: row.companyId})
+----
+
+You can write it like this:
+
+[source,cypher]
+----
+MERGE (e:Employee {employeeId: row.employeeId})
+MERGE (c:Company {companyId: row.companyId})
+MERGE (e)-[r:WORKS_FOR]->(c)
+----
+
+This way, the individual node insertion is easy (just searching for a single node or relationship each statement), rather than checking if an entire pattern exists with all the properties and labels being searched at once.
+Also, this means there is less of a chance of error from bad data or mistypes!
+
+There may be some scenarios where the amount of data being loaded is a lot, and you need to handle some complex relationships or updates.
+In these cases, there are a couple of different approaches you can use to combat running out of memory during the data load.
+
+1. Batch the import into sections with `PERIODIC COMMIT`.
+This clause can be added before the import statement to tell Cypher to only process so many rows of the file before clearing memory and transaction state.
+This avoids the `Out Of Memory` error that can occur with heavy processing.
+For more information, see the link:/docs/cypher-manual/current/query-tuning/using/#query-using-periodic-commit-hint[manual page^] on `PERIODIC COMMIT`.
+
+.Example
+----
+USING PERIODIC COMMIT 500
+LOAD CSV WITH HEADERS FROM 'file:///data.csv' AS row
+MERGE (pet:Pet {petId: row.PetId})
+MERGE (owner:Owner {ownerId: row.OwnerId})
+ ON CREATE SET owner.name = row.OwnerName
+MERGE (pet)-[r:OWNED_BY]->(owner)
+----
+
+2. Adjust configuration for the database on heap and memory.
+To help handle larger and/or more complex transactions, you can increase a couple of the configuration settings for the database and restart the instance for them to take effect. In `neo4j.conf`:
+* `dbms.memory.heap.initial_size` and `dbms.memory.heap.max_size`: set to at least 4G.
+* `dbms.memory.pagecache.size`: ideally, value large enough to keep the whole database in memory.
+
+===== +++<u>LOAD CSV Resources</u>+++
+* link:/developer/desktop-csv-import/[HowTo: Import CSV in Neo4j Desktop]
+* link:/docs/cypher-manual/current/clauses/load-csv/[Cypher Manual: LOAD CSV^]
+* link:/developer/guide-importing-data-and-etl/[Example: Import Northwind Data Set]
+* link:https://youtu.be/Eh_79goBRUk[Video: LOAD CSV in the Real World^]
+
+[#batch-importer]
+== Batch Importer For Large Datasets
+
+`LOAD CSV` is great for importing small- or medium-sized data (for instance, up to around 10M records).
+However, for data sets larger than this, we have access to a command line bulk importer.
+The `neo4j-admin import` tool allows you to import CSV data to an empty database by specifying node files and relationship files.
+
+We want to use it to import order data into Neo4j: _customers, orders, and ordered products_.
+
+The tool is located in `<neo4j-home>/bin/neo4j-admin` and is used as follows:
+
+[source, shell]
+----
+bin/neo4j-admin import --nodes:Product "import/products.csv"                                          --nodes:Order "import/orders.csv"                                              --relationships:CONTAINS "import/order_details.csv"
+----
+
+The first few rows of data used for this import look like this:
+
+.products.csv
+[options="header"]
+|===
+| productId:ID,ProductName
+| 1,Chai
+| 2,Chang
+|===
+
+.orders.csv
+[options="header"]
+|===
+| orderId:ID,CustomerID,EmployeeID
+| 10248,VINET,5
+| 10249,TOMSP,6
+|===
+
+.order_details.csv
+[options="header"]
+|===
+| :START_ID,:END_ID,UnitPrice,Quantity:int,Discount:float
+| 10248,11,14,12,0
+| 10248,42,9.8,10,0
+| 10248,72,34.8,5,0
+| 10249,14,18.6,9,0
+|===
+
+--
+[NOTE]
+If you call the `bin/neo4j-admin import` without parameters it will list a comprehensive help page.
+--
+
+
+We specify a `--nodes` and `--relationships` parameter for each of the nodes and relationships we want to include in our graph.
+In this case, we want nodes for `Product` entities and other nodes for `Order` entities.
+We want to create one relationship with a type of `CONTAINS` between the nodes, and we have specified the `:START_ID` and `:END_ID` in the relationship CSV file for it to look up those nodes.
+
+A *header row* in the first file of the group is required, it might even be contained in a single-line file which might be easier to handle and edit than a multi-gigabyte text file.
+Compressed files are supported too.
+
+. The `products.csv` is imported directly as nodes with the `:Product` label and the properties are taken directly from the file.
+. Same for the `:Order` entities in the next `--nodes` parameter.
+. Line item relationships typed `:CONTAINS` are created from `order_details.csv`, relating orders with the contained products via their IDs.
+
+The column names are used for property names of the nodes and relationships, there is some extra markup for specific columns.
+
+* `productId:ID` - global id column by which the node is looked up for later
+** if you have repeated ids across entities, provide the entity in parentheses, like `:ID(Order)`
+* `:START_ID`, `:END_ID` - relationship file columns referring to the node ids
+** for id-groups, use `:END_ID(Order)`
+* all other columns are treated as properties but skipped if empty or annotated with `:IGNORE`
+* type conversion is possible by suffixing the name, e.g. by `:INT`, `:BOOLEAN`, etc. (can see this in each of our files)
+
+For more details on this header format and the tool, see the documentation in the link:{opsmanual}/tools/import/[Neo4j Manual^] and the accompanying link:{opsmanual}/tutorial/import-tool/[tutorial^].
+
 [#data-load-quality]
 == CSV Data Quality
 
-=== Real World Data Considerations
+Real-world data is messy.
+Any time you work with data, you will see some values that need cleaned up or transformed before you move it to another system.
+We always recommend verifying data cleanliness yourself, even if another person has reviewed and approved it.
+Small syntax errors, format descriptions, consistency or correct quoting, and even differing assumptions on data requirements or standards can easily cause hours of cleanup down the road.
 
-Real world data is messy.
-Don't assume what someone told you is in a CSV file is actually, in there, don't rely on format descriptions, consistency or correct quoting.
-Only trust data validity that you checked yourself.
+We will highlight some of the data quality issues easily missed when loading data from other systems into Neo4j and try to help avoid problems with data import and cleanup.
 
 === Common Pitfalls
 
-* BOM byte order mark (2 UTF-8) bytes at the beginning of a file <- remove them
-* Binary zeros or other non-text-characters dispersed throughout the file <- remove them
-* Inconsisent line breaks - mixed Windows and Unix linebreaks <- make sure they are consistent, best choose Unix style
-* Header inconsistent with data (missing, too many columns, different delimiter in header) <- fix headers
-* Special character in non-quoted text <- make sure unusual text is always quoted
-* Unexpected newlines in quoted and unquoted text-fields <- either quote text or remove newlines
-* stray quotes - standalone double or single quote in the middle of non-quoted text, or non-escaped quotes in quoted text <- escape or remove stray quotes
+*Headers are inconsistent with data (missing, too many columns, different delimiter in header)*
+Verify headers match the data in the file.
+If you need to adjust formatting, delimiters, columns, etc., fixing headers now will save a great deal of time later, as you can earily reference columns and values based on file header rows.
 
+*Extra or missing quotes throughout file*
+Standalone double or single quotes in the middle of non-quoted text or non-escaped quotes in quoted text can cause issues reading the file for loading, causing the input to be broken in the wrong places and loaded incorrectly (or failing).
+It is best to either escape or remove stray quotes.
+You can escape them with standard escape characters, documented in the link:/developer/cypher-style-guide/#cypher-metacharacters[Cypher style guide] and a link:/developer/kb/parsing-of-quotes-for-load-csv-and-or-import/[knowledgebase article^].
+
+*Special or Newline characters in file*
+Special characters in a flat file need to be marked with quotes in order for the characters to be read correctly.
+When dealing with any special characters in a file, ensure they are quoted or remove them.
+For newline characters in quoted or unquoted fields, either add quotes for these, as well, or remove the newline characters.
+
+*Inconsisent line breaks*
+One thing that computers do not handle well is inconsisten data.
+If you have inconsistent line breaks in the file (odd places or mixing Windows and Unix linebreak syntaxes), this will cause problems reading the file.
+Ensure line breaks are consistent throughout.
+We recommend choosing the Unix style for compatibility with Linux systems (common format for import tools).
+
+*Binary zeros, BOM byte order mark (2 UTF-8 bytes) at beginning of file, or other non-text characters*
+Any unusual characters or tool-specific formatting (Excel or Word) will often cause problems reading and analyzing files.
+These unusual characters are sometimes hidden in application tools, but become easily apparent in basic editors.
+We will discuss ways to find these types of issues in the next section, but if you come across these types of characters in your file, it is best to remove them entirely.
+
+//LEFT OFF HERE!
 === Tools
 
-There are a number of tools that help you check and validate your CSV data files.
+As mentioned above, certain applications have all kinds of special formatting that comes with them in order to make documents look nice, but this hidden extra code is not handled by regular file readers and scripts.
+It will usually error with an error finding an "unexpected" character or end-of-file.
+Other times, it is hard to find small syntax changes or make broad adjustments for files having a lot of data in them
 
-The most basic is hexdump, and the hex-mode of editors like vi, emacs, UltraEdit and Notepad++.
+For handling these types of situations or to speed up any type of data cleanup,there are a number of tools that help you check and validate your CSV data files.
 
-But there are other tools available, that are more end-user friendly.
+Basic tools, such as hexdump, vi, emacs, UltraEdit, and Notepad++ work well for handling shortcut-based commands for editing and manipulating files.
+However, these may not be the most efficient or user-friendly for those new to these tools.
 
-==== CSVKit
+Thankfully, there are also other options available that can assist in data cleanup and formatting.
+We will list a few with links here.
 
-http://csvkit.readthedocs.org/en/0.9.0/[CSVKit] is a set of Python tools that provide statistics (csvstat), search (csvgrep), ... and more for your CSV files.
-Especially `csvstat` is very helpful to get an overview and statistic over your file, if you know your domain and data you can immediately spot inaccuracies.
-Field length is important as excess field length indicates stray quotes.
+* link:https://csvkit.readthedocs.io/en/latest/[CSVKit^] - a set of Python tools that provides statistics (csvstat), search (csvgrep), and more for your CSV files.
+`csvstat` is very helpful to get an overview and statistics over your file, if you know your domain and data you can immediately spot inaccuracies.
+For instance, showing excess field length can indicate stray quotes.
 
-==== CSVLint
+* link:http://csvlint.io/[CSVLint^] - an online service to validate CSV files.
+You can upload the file or provide an URL to load it.
+There is also the option to provide additional schema information.
 
-http://csvlint.io/[CSVLint] is an online service to validate CSV files.
-You can upload the file or provide an URL to load it from, there is the option to provide additional schema information.
+* link:https://www.papaparse.com/[Papa Parse^] - a comprehensive Javascript library for CSV parsing that allows you to stream CSV data and provides good, human-readable error reporting on issues.
+In the https://www.papaparse.com/demo[demo^] area, you can test your files or use the library directly.
 
-==== Papa Parse
-
-http://papaparse.com/[Papa Parse] is a comprehensive Javascript library for CSV parsing, that allows you to stream CSV data and files even with your browser and provides good, human readable error reporting on issues.
-In the http://papaparse.com/demo[Demo] area you can test your files yourself or use the library directly.
-There is also a http://papaparse.com/faq#nodejs[fork called BabyParse] running on node.js.
-
-==== Cypher
-
-What Cypher sees, is what will be imported, so you can use that to your advantage.
-You can use `LOAD CSV` without creating graph structure and just output samples, counts or distributions.
-So it is also possible to detect incorrect header column counts, delimiters, quotes, escapes or spelling of header names.
+* link:/developer/desktop-csv-import/#inspect-files[Cypher] - what Cypher sees is what will be imported, so you can use that to your advantage.
+Using `LOAD CSV` without creating graph structure will just output samples, counts, or distributions to help you analyze exactly what is in the file and what Cypher will actually load.
+This format makes it possible to detect incorrect header column counts, delimiters, quotes, escapes, or header name spellings.
 
 [source, cypher]
 ----
@@ -77,215 +378,24 @@ LOAD CSV FROM "file-url" AS line
 RETURN count(*);
 
 // check first few raw lines
-LOAD CSV FROM "file-url" AS line WITH line
+LOAD CSV FROM "file-url" AS line
 RETURN line
 LIMIT 5;
 
 // check first 5 line-sample with header-mapping
-LOAD CSV WITH HEADERS FROM "file-url" AS line WITH line
+LOAD CSV WITH HEADERS FROM "file-url" AS line
 RETURN line
 LIMIT 5;
 ----
 
-[#import-load-csv]
-== LOAD CSV for Medium Sized Datasets
-
-=== The real secret of LOAD CSV.
-
-It is not just your basic data ingestion mechanism, but actually **an ETL Power Tool**. Why?
-
-It combines multiple aspects in a single operation:
-
-* supports loading / ingesting CSV data from an URI
-* direct mapping of input data into complex graph/domain structure
-* data conversion
-* supports complex computations
-* create or merge data, relationships and structure
-
-=== Important Tips for LOAD CSV
-
-* Always use the latest version of Neo4j, it will most probably be faster than earlier ones.
-
-==== Data Quality and Conversion
-
-* See the data quality section above
-* Empty fields have to be skipped or replaced with default values during `LOAD CSV`
-* All data from the CSV file is read as a string, you have to use `toInt`, `toFloat`, `split` or similar functions to convert
-* Split arrays in a cell by delimiter using `split` (combine with extract for conversions)
-* Check your Cypher import statement for typos: labels, property names and relationship-types are *case-sensitive*
-* Conditional conversions can be achieved with `CASE`
-
-==== Indexing and Performance
-
-* Make sure to have indexes and constraints declared and ONLINE for entities you want to `MATCH` or `MERGE` on
-* Always `MATCH` and `MERGE` on a single label and the indexed primary-key property
-* Prefix your load statements with `USING PERIODIC COMMIT 10000`
-* If possible, separate node creation from relationship creation into different statements +
-  If your import is slow or runs into memory issues, see
-  http://www.markhneedham.com/blog/2014/10/23/neo4j-cypher-avoiding-the-eager/[Mark's blog post on Eager loading].
-
-==== Memory Config
-
-* Make sure to set the heap size to a sufficient value.
-You do this by setting `dbms.memory.heap.initial_size` and `dbms.memory.heap.max_size` to at least 4G in `neo4j.conf`.
-* Ensure that the page cache is sufficient.
-You do this by setting `dbms.memory.pagecache.size` in `neo4j.conf`.
-Ideally, the page cache should be large enough to keep the whole database in memory.
-
-==== File-URLs
-
-* Make sure to use the right URLs for files: `+file:///data.csv+` or `+https://host/path/data.csv+` +
-The file URLs are relative to the _import_ directory (for location of the _import_ directory refer to the link:{opsmanual}/configuration/file-locations[Neo4j Operations Manual]).
-* Use `bin/cypher-shell` instead of the browser for better control.
-By default it connects to the database running on localhost but you can point it to a database anywhere over the network.
-
-[#load-csv-walkthrough]
-== Step by Step Example for LOAD CSV
-
-In our guide on link:/developer/working-with-data/guide-importing-data-and-etl[ETL import from a relational database] we explain how to import CSV data step by step, from data modeling, creating indexes to writing the individual LOAD CSV statements.
-
-// TODO should we show how to import the customers, orders, products here ??
-
-[[load-csv-webinar]]
-=== Webinar "LOAD CSV in the Real World"
-
-In this very hands-on webinar https://twitter.com/_nicolemargaret[Nicole White], shows how to use `LOAD CSV` to import a real world dataset (consumer complaints from https://data.consumerfinance.gov/dataset/Consumer-Complaints/x94z-ydhh[consumerfinance.gov]) into Neo4j.
-
-After a quick modeling discussion she walks through the steps of preparing indexes and constraints and then imports one part of the dataset at a time into Neo4j.
-
-++++
-<iframe src="//player.vimeo.com/video/112447027?byline=0&amp;portrait=0" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-++++
-
-You can find all scripts and data on https://github.com/nicolewhite/consumer_complaints[her GitHub account].
-
-[NOTE]
---
-* link:/developer/working-with-data/guide-importing-data-and-etl[Importing Northwind] using LOAD CSV
-* LOAD CSV in the http://neo4j.com/docs/stable/query-load-csv.html[Neo4j Manual]
-* Blog Series on LOAD CSV http://jexp.de/blog/2014/06/load-csv-into-neo4j-quickly-and-successfully/[Part 1], http://jexp.de/blog/2014/10/load-cvs-with-success/[Part 2]
-* http://www.markhneedham.com/blog/?s=load+csv+neo4j[LOAD CSV Tips] by Mark Needham
-// * Example Northwind Dataset on https://github.com/neo4j-contrib/northwind-neo4j[GitHub]
-* Blog Post: http://jexp.de/blog/2014/06/using-load-csv-to-import-git-history-into-neo4j/[Import git-log data into Neo4j]
---
-
-[#batch-importer]
-== Super Fast Batch Importer For Huge Datasets
-
-`LOAD CSV` is great for importing small - medium sized data, i.e. up to the 10M records range.
-For large data sets, i.e. in the 100B records range, we have access to a specialized bulk importer.
-
-We want to use it to import similar order data into Neo4j: _customers, orders and contained products_.
-
-The tool is located in `path/to/neo4j/bin/neo4j-import` and is used as follows:
-
-[source, shell]
-----
-bin/neo4j-import --into retail.db --id-type string \
-                 --nodes:Customer customers.csv --nodes products.csv  \
-                 --nodes orders_header.csv,orders1.csv,orders2.csv \
-                 --relationships:CONTAINS order_details.csv \
-                 --relationships:ORDERED customer_orders_header.csv,orders1.csv,orders2.csv
-----
-
-The first few rows of data used for this import look like this:
-
-.customers.csv
-[options="header"]
-|===
-| customerId:ID(Customer) | name
-| 23 | Delicatessen Inc
-| 42 | Delicous Bakery
-|===
-
-.products.csv
-[options="header"]
-|===
-| productId:ID(Product) | name | price | :LABEL
-| 11 | Chocolate | 10 | Product;Food
-|===
-
-.orders_header.csv,orders1.csv,orders2.csv
-[options="header"]
-|===
-| orderId:ID(Order) | date | total | customerId:IGNORE
-| 1041 | 2015-05-10 | 130 | 23
-| 1042 | 2015-05-12 | 20 | 42
-|===
-
-.order_details.csv
-[options="header"]
-|===
-| :START_ID(Order) | amount | price | :END_ID(Product)
-| 1041 | 13 | 130 | 11
-| 1042 | 2 | 20 | 11
-|===
-
-.customer_orders_header.csv,orders1.csv,orders2.csv
-[options="header"]
-|===
-| :END_ID(Order) | date:IGNORE | total:IGNORE | :START_ID(Customer)
-| 1041 | 2015-05-10 | 130 | 23
-| 1042 | 2015-05-12 | 20 | 42
-|===
-
-If you call the `neo4j-import` script without parameters it will list a comprehensive help page.
-
-The `--into retail.db` is obviously the target database, which must not contain an existing database.
-
-The repeated `--nodes` and `--relationships` parameters are groups of multiple (potentially split) csv-files of the same entity, i.e. with the same column structure.
-
-All files per group are treated as if they could just be concatenated to form a single large file.
-A *header row* in the first file of the group is required, it might even be contained in a single-line file which might be easier to handle and edit than a multi-gigabyte text file.
-Compressed files are supported too.
-
-. The `customers.csv` is imported directly as nodes with the `:Customer` label and the properties are taken directly from the file.
-. Same for the products, where the node-labels are taken from the `:LABEL` column.
-. The order nodes are taken from 3 files, one header and two content files.
-
-. Line item relationships typed `:CONTAINS` are created from `order_details.csv`, relating orders with the contained products via their id's.
-. Orders are connected to customers by using the orders csv files again, but this time with a different header, which :IGNORE's the non-relevant columns
-
-The `--id-type string` is indicating that all `:ID` columns contain alphanumeric values (there is an optimization for numeric-only id's).
-
-The column names are used for property-names of your nodes and relationships, there is some extra markup for specific columns
-
-* `name:ID` - global id column by which the node is looked up for later reconnecting,
-** if property name is left off it will be not stored (temporary), this is what the `--id-type` refers to
-** if you have repeated ids across entities you have to provide the entity (id-group) in parentheses like `:ID(Order)`
-** if your ids are globally unique you can leave that off
-* `:LABEL` - label column for nodes, multiple labels can be separated by delimiter
-* `:START_ID`, `:END_ID` - relationship file columns referring to the node ids, for id-groups use `:END_ID(Order)`
-* `:TYPE` - relationship-type column
-* all other columns are treated as properties but skipped if empty or annotated with :IGNORE
-* type conversion is possible by suffixing the name, e.g. by `:INT`, `:BOOLEAN`, etc.
-
-For more details on this header format and the tool, see the extensive documentation in the link:{opsmanual}/tools/import/[Neo4j Manual] and the accompanying link:{opsmanual}/tutorial/import-tool/[tutorial].
-
-And the resulting output would look like this:
-
-[source, shell]
-----
-[INPUT------|ENCODER--------|WRITER: W:24.59 MB/s--------------------------]  4M
-Calculate dense nodes
-[INPU|CALCULATOR-----------------------------------------------------------]  3M
-Relationships
-[INPU|ENCODER-----------------------------------------------------------|WR]  4M
-Node first rel
-
-Relationship back link
-[LINKER--------------------------------------------------------------------]  3M
-Node counts
-
-Relationship counts
-
-IMPORT DONE. Took: 58s 124ms
-----
-
 [#import-csv-resources]
-== Resources
-* link:{opsmanual}/tools/import/["Manual: Import Tool",role=docs]
-* link:{opsmanual}/tutorial/import-tool/["Manual: Import Tool Tutorial"]
-* link:/developer/data-modeling/guide-data-modeling[Intro to Graph Modeling]
-* http://www.intelliwareness.org/?p=583["Article: Importing Medicare Provider and Payment Data",role=blog]
-* http://blog.graphenedb.com/blog/2015/01/13/importing-data-into-neo4j-via-csv/[Article: LOAD CSV Intro with GrapheneDB]
+== CSV Import Resources
+
+* link:{opsmanual}/tools/import/[Manual: Import Tool^]
+* link:{opsmanual}/tutorial/import-tool/[Manual: Import Tool Tutorial^]
+* link:/developer/kb/?tag=load-csv[Knowledgebase Articles: LOAD CSV^]
+* link:/developer/guide-importing-data-and-etl/[Example: Importing Northwind with LOAD CSV]
+* link:https://neo4j.com/developer/desktop-csv-import/[HowTo: Import CSV with Neo4j Desktop]
+* link:https://github.com/neo4j-contrib/northwind-neo4j[GitHub project: Northwind CSV files^]
+* link:https://www.jexp.de/blog/[Blog: Michael Hunger^]
+* link:https://markhneedham.com/blog/tag/cypher/[Blog: Mark Needham^]
