@@ -1,4 +1,4 @@
-= Guide: Example Dataset
+= Guide: Example Datasets
 :slug: example-data
 :level: Intermediate
 :section: Data Import
@@ -7,90 +7,190 @@
 :toc:
 :toc-title: Contents
 :toclevels: 1
+:sandbox: https://neo4j.com/sandbox-v2
+:sandbox-script: https://github.com/neo4j-contrib/sandbox-guides/tree/maste
 
 .Goals
 [abstract]
-There's lots of example datasets for Neo4j.
-This guide outlines some of them.
+This Guide introduces different example datasets for Neo4j and demonstrates how to import and explore them.
 
 .Prerequisites
 [abstract]
-You should be comfortable installing and importing data into Neo4j.
+You should be comfortable installing Neo4j (Desktop, Docker) or spinning up an instance in the cloud.
 
 [role=expertise]
 {level}
 
 [#data-sets]
-== Data Sets
+== Datasets
 
-We want to cover data sets from the different domains.
-For each of the data sets we want to provide a description, the graph model and some use-case queries.
-
-[NOTE]
-This is work in progress, so some data sets might not be updated with that information yet.
+For getting started with using Neo4j it's helpful to use example datasets relevant to your domain and use-cases.
+For each we want to provide a description, the graph model and some use-case queries.
 
 [TIP]
-Have fun, and send us feedback to feedback@neo4j.com or raise https://github.com/neo4j-contrib/developer/issues[an issue] if something doesn't work as expected.
+Have fun, and send us feedback to devrel@neo4j.com or raise https://github.com/neo4j-contrib/developer/issues[an issue for the site] if something doesn't work as expected.
 
-[#load-data-source]
-== Loading Data from Source
+[#built-in-examples]
+== Built-In Examples
 
-The most reliable way to get a dataset into Neo4j is to import it from the raw sources.
-Then you are independent of database and store-versions, which you otherwise have to upgrade.
-That's why we provided raw data (CSV, JSON, XML) for many of the data sets, accompanied by import scripts.
+Neo4j Browser comes with two built-in examples, which you can create and explore using interactive slideshows.
 
-You would import the data using a command-line client like `neo4j-shell` or https://github.com/nicolewhite/cycli[CyCli] a modern, colorful Neo4j client, which understands the same file format.
+The *"Movies"* example, is launched via the `:play movie-graph` command and contains a small graph of movies and people related to those movies as actors, directors, producers etc.
 
-[source, shell]
-----
-$NEO4J_HOME/bin/neo4j-shell -file import-file.cypher
+image::{img}browser-example-guides-movies.png[link=https://neo4j.com/developer/guide-neo4j-browser/#_built_in_guides]
 
-# or
+The *"Northwind"* example, is run via `:play northwind-graph` and contains an traditional retail-system with products, orders, customers, suppliers and employees.
+It walks you through the import of the data and incrementally complex queries using the available data.
 
-cycli -f import-file.cypher
-----
+image::{img}browser-example-guides-northwind.png[link=https://neo4j.com/developer/guide-neo4j-browser/#_built_in_guides]
 
-// todo screenshot cycli
-// todo import screencast
+[#neo4j-sandbox]
+== Neo4j Sandboxes
 
-[#load-db-copy]
-== Using a copy of a Neo4j database
+To explore a wide variety of datasets in an *online setup* without a local installation, you can use the Neo4j sandbox: https://neo4j.com/sandbox
 
-Other data sets are provided as compressed copy (zip) of a Neo4j datastore.
-You can find the datastore files in `$NEO4J_HOME/data/databases/[graph.db]` or in the directory you selected at startup.
-Please stop your Neo4j server and uncompress the store-files into the appropriate directory.
+Each sandbox is available for at least 3 days after creation and can also be remotely accessed from applications using any Neo4j driver.
 
-[WARNING]
-For some data sets the Neo4j version they were built with might be older than your Neo4j version.
-Then you might need to configure Neo4j to upgrade your database automatically, by setting `dbms.allow_upgrade=true` in `$NEO4J_HOME/conf/neo4j.config`
+image::{img}neo4j-sandboxes.png[link=https://neo4j.com/sandbox-v2]
 
-You can also run neo4j-shell on the extracted directory directly:
+Except for the "blank" sandbox, all other sandboxes come prepopulated with the domain data and focus on use-case specific queries.
 
-[source, shell]
-----
-$NEO4J_HOME/bin/neo4j-shell -path /path/to/graph.db
-----
+The use-cases range from 
 
-// TODO CSV Datasets !!
-[#fun-datasets]
-== Pop Culture Datasets
-////
-
-s3cmd ls s3://example-data.neo4j.org/3.0-datasets/ | awk '{ split($4,a,"/");print "| a[5] | desc                       | src                     | http://" a[3] "/" a[4] "/" a[5] "[" a[5] " (" int($3/1024/1024) "MB)]"}'
+* movie recommendations, 
+* network management, 
+* investigative data from the ICIJ Panama Papers to 
+* crime investigation and 
+* social networks optionally using your own Twitter account.
 
 ////
+// potential example for Ryan
+[%autowidth,opts=header,cols="a,a,m,a"]
+|===
+| name | description | guide | import script
+| image:https://neo4jsandbox.com/img/recommendations-icon-pink.png[link={sandbox}/recommendations,width=64] 
+  {sandbox}/recommendations[Recommendations^] 
+| Generate personalized real-time recommendations using a dataset of movie reviews.
+| :play sandbox/recommendations 
+| link:{sandbox-script}/...[Download Script^]
+
+
+| image:https://neo4jsandbox.com/img/network-management-icon-grey.png[link={sandbox}/network-management,width=64] +
+  {sandbox}/network-management[Network Management^] 
+| Dependency analysis and root cause analysis with graphs will save time, money, and reduce headaches!
+| :play sandbox/network-management 
+| link:{sandbox-script}/network-management/network-management.cypher[Download Script^]
+
+| image:https://neo4jsandbox.com/img/pole-icon.png[link={sandbox}/pole,width=64] +
+  {sandbox}/pole[Crime Investigation^]
+| Explore connections in crime data using the POLE – Person, Object, Location, Event – model in a public dataset from Manchester, U.K.
+| :play sandbox/pole 
+| link:{sandbox-script}/....cypher[Download Script^]
 
 |===
+////
+
+[#guide-examples]
+== Other Guide Examples
+
+Other examples that you can quickly run within your own Neo4j Browser are:
+
+* `:play got` Game of Thrones Interactions
+* `:play nasa` NASA knowledge graph example
+* `:play ukcompanies` UK company registration, property ownership, political donations
+* `:play stackoverflow` Stack Overflow users, tags and Q&A data
+* `	` BBC Good Foods recipe data
+* `:play listings` Airbnb listings data
+* `:play football_transfers` Football (Soccer) transfer data
+// :play twitter-neo4j-stream
+// `:play life-science-import` drug and genome data import and repurposing examples
+
+[#graph-gallery]
+== Graph Gallery
+
+Even broader is the selection of graph examples that have been *provided by Neo4j users*.
+
+NOTE: Disclaimer: These examples are not curated and might not always represent the best graph data model.
+
+You can find a featured selection grouped by industry and use case at https://neo4j.com/graphgists
+
+image::{img}neo4j-graphgists.png[link=https://neo4j.com/graphgists]
+
+Those examples are presented in a more long-form style that also discusses data modeling and use an temporary Neo4j store in the background.
+
+To execute these examples within your Neo4j Desktop, install the *"Graph Gallery"* app from: https://install.graphapp.io
+
+Then you can search and browse all available examples locally and run them against your *local* databases.
+
+image::{img}graph-examples.png[link=https://install.graphapp.io]
+
+[#means-data-import]
+== Means of Data Import
+
+[#load-data-source]
+=== Loading Data from Source Data
+
+The most reliable way to get a dataset into Neo4j is to import it from the raw sources.
+Then you are independent of database versions, which you otherwise might have to upgrade.
+That's why we provided raw data (CSV, JSON, XML) for several of the datasets, accompanied by import scripts in Cypher.
+	
+You would run the Cypher script using a command-line client like `cypher-shell`.
+
+image::{img}cypher-import-shell.png[]					
+
+.Run Cypher Shell from the "Terminal" tab of your Graph in Neo4j Desktop
+[source, shell]
+----
+./bin/cypher-shell -u neo4j -p "password" < import-file.cypher
+----
+
+You can also drag and drop or paste the script into Neo4j Browser (check that multi-statement editor is enabled in the settings) and run it from there.
+
+image::{img}cypher-import-browser.png[]
+
+CSV data can be imported using either `LOAD CSV` clause in Cypher or `neo4j-admin import --mode csv` for initial bulk imports of large datasets.
+
+For JSON, XML, XLS etc. you need to have the https://neo4j.com/labs/apoc[APOC^] utility library installed, which comes with a https://neo4j-contrib.github.io/neo4j-apoc-procedures/#export-import[number of procedures for importing data^] also from other databases.
+
+[#load-db-copy]
+=== Using a copy or dump of a Neo4j database
+
+Other datasets are provided as dump of a Neo4j datastore.
+
+1. Please stop your Neo4j server.
+2. Then you can import the file using the `./bin/neo4j-admin load  --force true --from file.dump` command.
+
+[WARNING]
+The Neo4j version of some of the datasets  might be older than your Neo4j version.
+Then you might need to configure Neo4j to upgrade your database automatically, by setting `dbms.allow_upgrade=true` in your Neo4j settings, or directly in `$NEO4J_HOME/conf/neo4j.conf`
+
+[#example-datasets]
+== Large Data Dumps
+
+// export URL=example-data.neo4j.org/3.0-datasets/; aws s3 ls s3://${URL} | awk -v url=$URL '{ split($4,a,".");print "* http://" url $4 "[" a[1] " (" int($3/1024/1024) "MB)]"}'
+
+[#stack-overflow]
+=== Stack Overflow
+
+This is a graph-import of the Stack Overflow archive with 16.4M questions, 52k tags and 8.9M users (http://example-data.neo4j.org/so.dump[Stack Overflow Dump (6.2GB)]).
+This graph is pretty big, for best full scale querying you'd need a page-cache and heap of 
+
+Here is an https://towardsdatascience.com/tagoverflow-correlating-tags-in-stackoverflow-66e2b0e1117b[article explaining the data model] and some exploratory analysis we ran on the data.
+
+image::https://cdn-images-1.medium.com/max/1600/0*lOrKWCLdlLGG4BXe.jpg[]
+
+The database is also available as a https://f6087a21.databases.neo4j.io/browser/[Neo4j Online Database^] with username "stackoverflow" and password "stackoverflow".
+
+////
+|===
 |Title | Description | Code | Download
-|Jim Webber's Doctor Who Data Set | The Dr.Who universe of doctors, actors, enemies and props from the Neo4j Koans Tutorial. | link:http://github.com/jimwebber/neo4j-tutorial[GitHub]| link:http://example-data.neo4j.org/files/drwho.zip[drwho.zip]
+|Jim Webber's Doctor Who Dataset | The Dr.Who universe of doctors, actors, enemies and props from the Neo4j Koans Tutorial. | link:http://github.com/jimwebber/neo4j-tutorial[GitHub]| link:http://example-data.neo4j.org/files/drwho.zip[drwho.zip]
 |Movie Database | 12k movies, 50k actors. Original Source: http://TheMovieDB.org[TheMovieDB] | link:https://github.com/neo4j-examples/cineasts-spring-data-neo4j[GitHub] | http://example-data.neo4j.org/3.0-datasets/cineasts.tgz[cineasts_12k_movies_50k_actors.tgz (14MB)]
 |The Musicbrainz main entities | Most of the interesting entities (800,000 Artists, 12,000,000 Tracks, 1,200,000 Releases, 75,000 Record Labels) from the link:http://musicbrainz.org[Musicbrainz dataset].| link:/blog/musicbrainz-in-neo4j-part-1/[Blog Post]
 | http://example-data.neo4j.org/3.0-datasets/musicbrainz.tgz[musicbrainz_21.tgz (4.5GB)]
 |===
 
-////
-
-[[graph-databases]]
+[#graph-databases]
 ==== Datasets from the Book "Graph Databases"
 
 You can find the free ebook for the O'Reilly book here:
@@ -121,42 +221,37 @@ You can find the free ebook for the O'Reilly book here:
 //|ConceptNet 5 (243MB) | ConceptNet is a link:http://maxdemarzi.com/2013/05/13/knowledge-bases-in-neo4j/[semantic network] built from nodes representing concepts, and labeled relationships between them| link:https://github.com/maxdemarzi/neo_concept[GitHub] | link:https://dl.dropboxusercontent.com/u/57740873/conceptnet.graph.db.zip[conceptnet.graph.db.zip]
 //|Neo Permissions (560MB) | Check permissions from files and folders to users and groups in this link:http://maxdemarzi.com/?s=PERMISSION+RESOLUTION[ACL example]. | link:https://github.com/maxdemarzi/neo_permissions/blob/master/performance/src/test/resources/simulations/RandomPermissions.scala[GitHub] | link:https://dl.dropboxusercontent.com/u/57740873/datasets/neo_permissions.tar.gz[neo_permissions.tar.gz]
 
-////
-[#data-graphgists]
-== Neo4j Graph Gists
-
-http://neo4j.com/graphgists[Neo4j Graph Gist examples] are a great source for datasets to get started, as they not only come with the example data setup, but also explanations and use case queries.
-
-////
 === Graph Generators
 
 * [LDBC Large Dataset Generator]
+
 ////
+	
+[#data-import-articles]
+== Articles on Neo4j Example Datasets
 
-[#public-data]
-== Public Datasets with Instructions
-
-These are not prebuilt data-stores but existing data sets (mostly CSV) to be imported.
+These are not prebuilt data-stores but existing datasets (mostly CSV) to be imported.
 
 The linked articles and repositories also provide instructions for the import.
 
-* http://neo4j.com/blog/analyzing-panama-papers-neo4j/[The Panama Papers]
-* link:/developer/working-with-data/guide-importing-data-and-etl[Northwind Database Import]
-* http://neo4j.com/blog/import-10m-stack-overflow-questions/[Importing Stack Overflow into Neo4j]
-* https://dl.dropboxusercontent.com/u/14493611/the_universe_is_a_graph.html[The Cosmic Web of Galaxies]
-* http://www.markhneedham.com/blog/2015/04/14/spark-generating-csv-files-to-import-into-neo4j/[Chicago Crime Dataset]
-* http://www.markhneedham.com/blog/?s=himym[How I met your Mother Series]
+* https://medium.com/neo4j/tagged/data[Developer Blog - Import/Export^]
+* https://medium.com/neo4j/finding-influencers-and-communities-in-the-graph-community-e3d691296325[Twitter Social Graph Import^]
+* https://medium.com/neo4j/graph-databases-for-journalists-5ac116fe0f54[Using Neo4j to explore public contracting data^]
+* https://neo4j.com/blog/analyzing-panama-papers-neo4j/[The Panama Papers^]
+* https://neo4j.com/developer/guide-importing-data-and-etl/[Northwind Database Import]
+* https://neo4j.com/blog/import-10m-stack-overflow-questions/[Importing Stack Overflow into Neo4j]
 * https://github.com/caesar0301/awesome-public-datasets[Awesome Public Datasets]
-* link:/developer/working-with-data/guide-import-csv#load-csv-webinar[Consumer Complaint Data]
-* https://github.com/mneedham/neo4j-worldcup[Football(Soccer) Worldcup], http://worldcup.neo4j.org/the-world-cup-graph-domain-model/[Data Model]
-* https://gist.github.com/nicolewhite/cc178bf2a761d7ac3a20[Flight & Airline, Music, Train Schedules]
-* http://jexp.de/blog/2014/10/flexible-neo4j-batch-import-with-groovy/[Kaggle Publication Dataset]
 * https://medium.com/@christophewillemsen/github-events-analysis-with-neo4j-18bc6ffcab01[GitHub Event Data]
+* https://medium.com/neo4j/whats-cooking-approaches-for-importing-bbc-goodfood-information-into-neo4j-64a481906172[Series: Importing BBC goodfood information into Neo4j^]
+* https://medium.com/neo4j/importing-rdfs-owl-ontologies-into-neo4j-23e4e28ebbad[Importing RDFS/OWL ontologies into Neo4j^]
+* https://medium.com/neo4j/importing-mapping-metaphor-into-neo4j-90ac9ead4d44[Importing Mapping Metaphor into Neo4j^]
+* https://medium.com/@aejefferson/methods-for-loading-data-into-a-remote-neo4j-instance-part-1-abea3328dedf[Series: Methods for Loading Data into a Remote Neo4j Instance^]
 
 [#data-resources]
 == Avid Bloggers on Data Import
 
+* https://tbgraph.wordpress.com/?s=import[Tomasz Bratanic]
 * http://www.markhneedham.com/blog/?s=neo4j+import[Mark Needham]
 * http://blog.bruggen.com/search/label/import[Rik van Bruggen]
 * http://www.lyonwj.com/?s=import[William Lyon]
-* http://jexp.de/blog?s=import[Michael Hunger]
+* https://medium.com/@mesirii[Michael Hunger]
