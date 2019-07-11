@@ -7,6 +7,7 @@
 :toc:
 :toc-title: Contents
 :toclevels: 1
+:icons: font
 
 image::{img}graph_cluster_distant_wide.jpg[link="{img}graph_cluster_distant_wide.jpg"]
 
@@ -35,11 +36,17 @@ Also, this typically means that our client application is connecting directly to
 
 Let us look at some of the tools in this category.
 
-.*Neovis.js*
+.icon:flask[] *Neovis.js*
 This library was designed to combine JavaScript visualization and Neo4j in a seamless integration.
 Connection to Neo4j is simple and straightforward, and because it is built with Neo4j’s property graph model in mind, the data format Neovis expects aligns with the database.
 Customizing and coloring styles based on labels, properties, nodes, and relationships is defined in a single configuration object.
 Neovis.js can be used without writing Cypher and with minimal JavaScript for integrating into your project.
+
+====
+[NOTE]
+icon:flask[size=2x] The Neovis library is one of our Neo4j Labs projects.
+To learn more about Neo4j Labs, visit our https://neo4j.com/labs/[Labs page^].
+====
 
 To maximize functionality and data analysis capabilities through visualization, you can also combine this library with the graph algorithms library in Neo4j to style the visualization to align with results of algorithms such as page rank, centrality, communities, and more.
 Below, we see a graph visualization of Game Of Thrones character interactions rendered by neovis.js, and enhanced using Neo4j graph algorithms by applying link:/docs/graph-algorithms/current/algorithms/page-rank/[pagerank^] and link:/docs/graph-algorithms/current/algorithms/community/[community detection^] algorithms to the styling of the visualization.
