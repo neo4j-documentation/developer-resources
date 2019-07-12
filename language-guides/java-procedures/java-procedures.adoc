@@ -1,0 +1,39 @@
+= Procedures and Functions
+:slug: java-procedures
+:level: Intermediate
+:section: Develop with Neo4j
+:section-link: language-guides
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
+
+include::../_includes/versions.txt[]
+
+[#custom-proc-func]
+== User-Defined Procedures and Functions
+
+link:/developer/cypher/procedures-functions[User Defined *Procedures* and *Functions*^] are available within Cypher and encapsulate dedicated functionality.
+
+Just by annotating methods of a Java class and deploying the resulting jar file into your Neo4j installation, you can make new functionality easily available within the query language.
+
+To implement your procedures or functions you would use the Neo4j Embedded Java API.
+Besides an object-oriented API to the graph database, working with `Node`, `Relationship`, and `Path` objects, it also offers highly customizable, high-speed traversal- and graph-algorithm implementations.
+
+We don't provide code examples for the Java API on this page, because they are covered in detail in the link:/docs/java-reference/current[Java developers manual^].
+
+Neo4j uses that functionality itself for built-in procedures for meta-data, cluster-, query- and user-management and more.
+
+Several libraries already provide new capabilities using procedures and functions, here is an example from the link:/developer/cypher/procedures-gallery#apoc[APOC] library.
+
+[source,cypher]
+----
+MATCH (start:City {name: 'Berlin'}),(end:City {name: 'Malmö'})
+CALL apoc.algo.dikjstra(start, end, "ROUTE","distance") yield path, weight
+RETURN path
+ORDER BY weight ASC LIMIT 10
+----
+
+To get you started we provided a https://github.com/neo4j-examples/neo4j-procedure-template[template project^] and documentation in the link:/docs/java-reference/current/#procedures[Java developer manual^].
+
+More useful examples for user defined procedures can be found in our link:/developer/procedures-gallery/[procedure & function gallery].
