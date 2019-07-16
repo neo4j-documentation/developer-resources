@@ -1,4 +1,4 @@
-= Building a Recommendation Engine with Cypher
+= Tutorial: Build a Cypher Recommendation Engine
 :slug: guide-build-a-recommendation-engine
 :level: Beginner
 :section: Cypher Query Language
@@ -10,194 +10,173 @@
 
 .Goals
 [abstract]
-This guide explains how to leverage connections in your data to gather insights and start recommending currently unrelated but relevant facts to your nodes in focus.
+This guide shows how to use the relationships in your data to gather insights and recommend new entities that do not currently have a direct relationship based on the other relationships and network in the graph.
 
 .Prerequisites
 [abstract]
-You should have a basic understanding of the link:/developer/get-started/graph-database#property-graph[property graph model]. Having link:/download[downloaded] and installed the Neo4j server helps you code along with the examples.
+You should have a basic understanding of the link:/developer/get-started/graph-database#property-graph[property graph model]. Having Neo4j Desktop link:/download[downloaded^] and installed will allow you code along with the examples.
 
 [role=expertise]
 {level}
 
-[#cypher-demo]
-This demo explains how to use a basic dataset of _Actors_ acting in _Movies_ to create recommendations with a graph database.
+[#cypher-tutorial]
+This tutorial explains how to use a basic dataset of _Actors_ acting in _Movies_ in a graph database to show recommendations for other actors to work with or similar movies to watch.
 
-By following the relationships between the people and movies in a meaningful manner you can determine co-occurences, frequencies, and relevant nodes in the graph.
-This is the basis for many recommendation engines.
+By following the meaningful relationships between the people and movies, you can determine occurences of actors working together, the frequency of actors working with one another, and the movies they have in common in the graph.
+This structure forms the basis for many recommendation engines.
 
-[#actor-recommendation]
-== Recommendation for Collaboration of Actors
+[#recommendation-setup]
+== Setting Up
 
-You can follow along by link:/download[installing and starting] Neo4j server, opening it on `http://localhost:7474` then inserting the movie dataset via the `:play movie graph` command.
-Go to the second slide, click the query, and run it.
+You can follow along by link:/developer/neo4j-desktop/[starting Neo4j Desktop] and opening link:/developer/neo4j-browser/[Neo4j Browser].
+For a complete walkthrough of those steps, you can read this https://medium.com/neo4j/neo4j-get-off-the-ground-in-30min-or-less-3a226a0d48b1[blog post^].
 
-In this guide we will load the dataset using `LOAD CSV`
+Once you have a running instance of Neo4j, you populate the movie dataset by typing `:play movie graph` into the Neo4j Browser command line and clicking the play button (image:{img}cypher_run_button.jpg[width=25]).
 
-//hide
-//setup
-[source,cypher]
-----
-LOAD CSV WITH HEADERS FROM "https://neo4j-contrib.github.io/developer-resources/cypher/movies_actors.csv" AS line
-WITH line
-WHERE line.job = "ACTED_IN"
-MERGE (m:Movie {title:line.title}) ON CREATE SET m.released = toInt(line.released), m.tagline = line.tagline
-MERGE (p:Person {name:line.name}) ON CREATE SET p.born = toInt(line.born)
-MERGE (p)-[:ACTED_IN {roles:split(line.roles,";")}]->(m)
-RETURN count(*);
-----
+image::{img}cytutorial_neo4j_browser.jpg[link="{img}cytutorial_neo4j_browser.jpg",role="popup-link"]
+
+Go to the second slide (using the right arrow) of the pane that appears below the command line, click the query, and run it.
+
+image::{img}cytutorial_movie_browser_guide.jpg[link="{img}cytutorial_movie_browser_guide.jpg",role="popup-link"]
+
+You should see a result pane in Neo4j like the one below.
+
+image::{img}cytutorial_movie_graph.jpg[link="{img}cytutorial_movie_graph.jpg",role="popup-link"]
+
+This data has been created and stored in the database so we can query it.
+The next section will show you how to write some queries to explore the data you just created.
 
 [#recommendation-queries]
 == Basic Queries
 
-//table
-
-You should be able to run a query like this to find a single actor like _Tom Hanks_.
+Before we start recommending things, we need to find out what is interesting in our data to see what kinds of things we can and want to recommend.
+To start, let us run a query like this to find a single actor like _Tom Hanks_.
 
 [source,cypher]
 ----
-MATCH (tom:Person {name:"Tom Hanks"})
+MATCH (tom:Person {name: 'Tom Hanks'})
 RETURN tom
 ----
 
-//table
+image::{img}cytutorial_match_tomhanks.jpg[link="{img}cytutorial_match_tomhanks.jpg",role="popup-link"]
 
-Similarly, you should be able to retrieve all his movies with a single query.
-Your results should already look like a graph.
-
-[source,cypher]
-----
-MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]->(movie:Movie)
-RETURN tom, movie
-----
-
-//graph_result
-
-Of course Tom has colleagues who acted with him in his movies.
-This "co-actor" statement looks like this:
+Now that we found an actor we are interested in, we can retrieve all his movies by starting from the `Tom Hanks` node and following the `ACTED_IN` relationships.
+Your results should look like a graph.
 
 [source,cypher]
 ----
-MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]->(:Movie)<-[:ACTED_IN]-(coActor:Person)
+MATCH (tom:Person {name: 'Tom Hanks'})-[r:ACTED_IN]->(movie:Movie)
+RETURN tom, r, movie
+----
+
+image::{img}cytutorial_tomhanks_movies.jpg[link="{img}cytutorial_tomhanks_movies.jpg",role="popup-link"]
+
+Of course, Tom has colleagues who acted with him in his movies.
+A statement to find Tom's co-actors looks like this:
+
+[source,cypher]
+----
+MATCH (tom:Person {name: 'Tom Hanks'})-[:ACTED_IN]->(:Movie)<-[:ACTED_IN]-(coActor:Person)
 RETURN coActor.name
 ----
 
-//table
+image::{img}cytutorial_tomhanks_coactors.jpg[link="{img}cytutorial_tomhanks_coactors.jpg",role="popup-link"]
 
 [#collaborative-filtering]
-== Collaborative Filtering
+== Recommendations with Collaborative Filtering
 
-We can now turn this "co-actor" query into a recommendation query by following those relationships another step out to find the "co-co-actors", i.e. the second-degree actors in Tom's network with whom he has not acted.
+We can now turn the co-actor query above into a recommendation query by following those relationships another step out to find the "co-co-actors", i.e. the second-degree actors in Tom's network.
+This will show us all the actors Tom may not have worked with yet, and we can specify a criteria to be sure he hasn't directly acted with that person.
 
 [source,cypher]
 ----
-MATCH (tom:Person)-[:ACTED_IN]->(movie1)<-[:ACTED_IN]-(coActor:Person),
-         (coActor)-[:ACTED_IN]->(movie2)<-[:ACTED_IN]-(coCoActor:Person)
-WHERE tom.name = "Tom Hanks"
-AND   NOT    (tom)-[:ACTED_IN]->(movie2)
+MATCH (tom:Person {name: 'Tom Hanks'})-[:ACTED_IN]->(movie1:Movie)<-[:ACTED_IN]-(coActor:Person)-[:ACTED_IN]->(movie2:Movie)<-[:ACTED_IN]-(coCoActor:Person)
+WHERE tom <> coCoActor
+AND NOT (tom)-[:ACTED_IN]->(:Movie)<-[:ACTED_IN]-(coCoActor)
 RETURN coCoActor.name
 ----
 
-//table
-For a collaborative filtering, you often take frequencies of occurrences into account to find the people or things that appear most frequently in your network.
-Also you'd probably want to state that _Tom Hanks_ *never* worked with the recommended people, not just not in movies that his co-actors worked in.
+image::{img}cytutorial_tomhanks_cocoactors.jpg[link="{img}cytutorial_tomhanks_cocoactors.jpg",role="popup-link"]
+
+You probably noticed that a few names appear multiple times.
+This is because there are multiple paths to follow from _Tom Hanks_ to these actors.
+
+To see which co-co-actors appear most often in Tom's network, we can take frequency of occurrences into account by counting the number of paths between _Tom Hanks_ and each coCoActor and ordering them by highest to lowest value.
 
 [source,cypher]
 ----
-MATCH (tom:Person)-[:ACTED_IN]->(movie1)<-[:ACTED_IN]-(coActor:Person),
-         (coActor)-[:ACTED_IN]->(movie2)<-[:ACTED_IN]-(coCoActor:Person)
-WHERE tom.name = "Tom Hanks"
-AND   NOT    (tom)-[:ACTED_IN]->()<-[:ACTED_IN]-(coCoActor)
-RETURN coCoActor.name, count(distinct coCoActor) as frequency
+MATCH (tom:Person {name: 'Tom Hanks'})-[:ACTED_IN]->(movie1:Movie)<-[:ACTED_IN]-(coActor:Person)-[:ACTED_IN]->(movie2:Movie)<-[:ACTED_IN]-(coCoActor:Person)
+WHERE tom <> coCoActor
+AND NOT (tom)-[:ACTED_IN]->(:Movie)<-[:ACTED_IN]-(coCoActor)
+RETURN coCoActor.name, count(coCoActor) as frequency
 ORDER BY frequency DESC
 LIMIT 5
 ----
 
-//table
+image::{img}cytutorial_tomhanks_cocoactors_freq.jpg[link="{img}cytutorial_tomhanks_cocoactors_freq.jpg",role="popup-link"]
 
 One of those "co-co-actors" is _Tom Cruise_.
-Now let's see which movies and actors are between the two Toms.
+Now let's see which movies and actors are between the two Toms so we can find out who can introduce them.
 
-[#recommendation-paths]
-== Connection Paths
+=== Exploring the Paths
 
 [source,cypher]
 ----
-MATCH (tom:Person)-[:ACTED_IN]->(movie1)<-[:ACTED_IN]-(coActor:Person),
-         (coActor)-[:ACTED_IN]->(movie2)<-[:ACTED_IN]-(cruise:Person)
-WHERE tom.name = "Tom Hanks" and cruise.name = "Tom Cruise"
-AND   NOT    (tom)-[:ACTED_IN]->(movie2)
+MATCH (tom:Person {name: 'Tom Hanks'})-[:ACTED_IN]->(movie1:Movie)<-[:ACTED_IN]-(coActor:Person)-[:ACTED_IN]->(movie2:Movie)<-[:ACTED_IN]-(cruise:Person {name: 'Tom Cruise'})
+WHERE NOT (tom)-[:ACTED_IN]->(:Movie)<-[:ACTED_IN]-(cruise)
 RETURN tom, movie1, coActor, movie2, cruise
 ----
 
-//graph_result
+image::{img}cytutorial_tomhanks_tomcruise.jpg[link="{img}cytutorial_tomhanks_tomcruise.jpg",role="popup-link"]
 
-This returns multiple _Bacon-Paths_, even with _Kevin Bacon_ himself.
+As you can see, this returns multiple paths.
+If you have ever played the https://en.wikipedia.org/wiki/Six_Degrees_of_Kevin_Bacon[six degrees of Kevin Bacon^] game, this concept of seeing how many hops exist between people is exactly what graphs depict.
+You will notice that our results even return a path with _Kevin Bacon_ himself.
 
-So with two simple Cypher statements we created already two recommendation algorithms: *Who you should know* and *How you get to know them*.
-
-You can also watch the video of Andreas running these queries live on our main example movie dataset.
-
-++++
-<div class="responsive-embed">
-<iframe width="640" height="480" src="//www.youtube.com/embed/qbZ_Q-YnHYo" frameborder="0" allowfullscreen></iframe>
-</div>
-++++
+With these two simple Cypher statements, we already created two recommendation algorithms - *who to meet/work with next* and *how to meet them*.
 
 [#recommend-others]
-=== Restaurant Recommendation
+== Other Recommendations
 
-Imagine a graph like this: a few friends with their favorite restaurants, their cuisines and locations.
+You could apply the same ideas you learned here to many other uses for recommending products and services, finding restaurants or activities you might like, or connecting with other colleagues who share similar interests of skills.
+We will mention a few specifically here with resources you can use to find more information.
+
+=== Restaurant Recommendations
+
+We have a graph of a few friends with their favorite restaurants, cuisines, and locations.
 
 image::{img}restaurant-recommendation.png[]
 
-A practical question to answer here, formulated in http://neo4j.com/blog/why-the-most-important-part-of-facebook-graph-search-is-graph/[Graph Search] slang:
+A practical question to answer here, formulated as a http://neo4j.com/blog/why-the-most-important-part-of-facebook-graph-search-is-graph/[graph search^], is:
 
 ----
-Sushi restaurants in New York that my friends like
+What Sushi restaurants are in New York that my friends like?
 ----
 
 How could we translate that into the appropriate Cypher statement?
 
 [source,cypher]
 ----
-MATCH (person:Person)-[:IS_FRIEND_OF]->(friend),
-      (friend)-[:LIKES]->(restaurant:Restaurant),
-      (restaurant)-[:LOCATED_IN]->(loc:Location),
-      (restaurant)-[:SERVES]->(type:Cuisine)
-
-WHERE person.name = 'Philip'
-  AND loc.location = 'New York'
-  AND type.cuisine = 'Sushi'
-
+MATCH (person:Person {name: 'Philip'})-[:IS_FRIEND_OF]->(friend)-[:LIKES]->(restaurant:Restaurant)-[:LOCATED_IN]->(loc:Location {location: 'New York'}),
+      (restaurant)-[:SERVES]->(type:Cuisine {type: 'Sushi'})
 RETURN restaurant.name, count(*) AS occurrence
 ORDER BY occurrence DESC
 LIMIT 5
 ----
 
-Other factors that can be easily integrated in this query are favorites, allergies, ratings and closeness to my current position.
+Other factors that can be easily integrated in this query are favorites, allergies, ratings, and distance from my current position.
 
-////
+=== More Recommendation Solutions
 
-=== Dating / Job Search
+* https://medium.com/neo4j/whats-cooking-approaches-for-importing-bbc-goodfood-information-into-neo4j-64a481906172[Recipe and Food Recommendations^]
+* link:/sandbox-v2/[Sandbox: Recommend Movies by Reviews^]
+* link:/graphgist/beer-amp-breweries-graphgist[GraphGist: Beer and Breweries Recommendations^]
+* link:/graphgist/northwind-recommendation-engine[GraphGist: Northwind Product Recommendations^]
 
-Match making with a graph database relies on extracting the relevant attributes of people (or jobs) as attribute nodes to allow for matches across those.
-The people in your graph are connected to their attributes with weighted relationships that allow for aggregation and filtering.
-
-[source,cypher]
-----
-----
-
-[role=side-nav]
-//* link:/use-cases/recommendations/dating/[Dating Examples]
-* http://http://watch.neo4j.org/video/86754045["5 Graphs of Love",role=video]
-* http://maxdemarzi.com/2013/04/19/match-making-with-neo4j/[Match Making with Neo4j (mdm)]
-////
-
-[#cypher-resources]
+[#recommendation-resources]
 == Resources
 * https://www.youtube.com/channel/UCvze3hU6OZBkB1vkhH2lH9Q/search?query=recommendation[Neo4j Videos: Building Recommendation Engines^]
+* link:/use-cases/real-time-recommendation-engine/[Recommendation Use Cases^]
+* link:/graphacademy/online-training/[Online Training: Learn Cypher with Intro to Neo4j^]
 * http://www.slideshare.net/bachmanm/recommendations-with-neo4j[Michal Bachman Slides: Recommendation Engines with Neo4j^]
-* http://maxdemarzi.com/2014/01/31/neo4j-spatial-part-1/[Restaurant Recommendation by Max de Marzi^]
-* link:/graphacademy/online-course[Online Cypher Training]
-* link:/use-cases/recommendations/[Recommendation Use Cases]
-* link:/developer/data-modeling/guide-data-modeling[Intro to Graph Modeling]
+* link:/graphgists/?category=real-time-recommendations[GraphGist: All Recommendation Engines^]
