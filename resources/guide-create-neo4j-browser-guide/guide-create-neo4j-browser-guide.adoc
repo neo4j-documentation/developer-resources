@@ -1,10 +1,10 @@
-= Create a Custom Neo4j Browser Guide
+= Tutorial: Create a Custom Browser Guide
 :slug: guide-create-neo4j-browser-guide
 :section: Contributing to Neo4j
 :section-link: resources
 :section-level: 1
 :level: intermediate
-:play: http://localhost:7474/browser?cmd=play&arg=
+:play: https://localhost:7474/browser?cmd=play&arg=
 :sectanchors:
 :toc:
 :toc-title: Contents
@@ -12,92 +12,106 @@
 
 .Goals
 [abstract]
-This guide explains how to create an educational guide (slideshow) for the Neo4j browser, that enables your audience to explore your database and model interactively.
+This guide explains how to create a walkthrough (in slideshow format) for the Neo4j Browser that enables your audience to explore your database and model interactively.
 
 .Prerequisites
 [abstract]
-You should have a good understanding of link:/developer/cypher[Cypher] and the link:/developer/get-started/guide-neo4j-browser[Neo4j Browser] and link:/developer/data-modeling/guide-data-modeling[graph data modeling] for your domain.
-It's beneficial if you previously created a http://neo4j.com/graphgists[GraphGist].
-Web development experience helps in creating compelling guides.
+You should have a good understanding of link:/developer/cypher-query-language/[Cypher] and the link:/developer/neo4j-browser[Neo4j Browser] and link:/developer/guide-data-modeling[graph data modeling] for your domain.
+Other helpful knowledge (though not required) includes creating a link:/graphgists[GraphGist^] and familiarity with web user experience.
 
 [role=expertise]
 {level}
 
 [#custom-guide]
-== Introduction
+If you are familiar with the Neo4j Browser, chances are that you have used our interactive browser guides to learn concepts, load data, and explore your graph.
+The popular {play}movie%20graph[`:play movie graph`^] browser guide is just one example of this.
 
-In Neo4j 2.3 we introduced the ability to run custom "slideshows" in the Neo4j Browser, similar to the existing {play}movie%20graph[`:play movie graph`^].
-
-These guides allow to provide a guided tour to a data set or use case.
-Your users can interactively *read* through the slideshow, *execute* statements to import or query the data or look at pictures, videos or other media for detailed explanations.
+These guides help you provide a guided tour to a data set or use case to those connecting to Neo4j.
+Your users can interactively read through the slideshow, execute statements to import and query the data, or look at pictures and other media for detailed explanations.
 You can also inlcude special links for interacting with the Neo4j browser.
 
-We use these guides ourselves in many areas:
+There are a variety of uses for the browser guides ranging from personal development to sharing knowledge with colleagues or other developers.
+Companies can even use these as onboarding or training tools for employees.
+We use these guides ourselves in many areas, including those listed below.
 
-* http://neo4j.com/sandbox[The new Neo4j Sandbox^]
-* http://neo4j.com/graphacademy[Online and classroom training^]
-* Meetups and presentations, e.g. Data Journalism {play}http://guides.neo4j.com/ddj/[`:play http://guides.neo4j.com/ddj/`^]
-* Exploration of interesting datasets, +
-like TrumpWorld {play}http://guides.neo4j.com/trumpworld[`:play http://guides.neo4j.com/trumpworld`^]
-* Rendering http://portal.graphgist.org[GraphGists^] as Guides
+* link:/sandbox-v2/[Neo4j Sandbox^] - each sandbox comes with a built-in, default guide to help you get started with whichever sandbox you chose!
+* link:/graphacademy/[Online and classroom training^] - using these published guides in the classroom allows attendees to work through the material at their own pace and have access to the guide 24/7 after class ends.
+* Meetups and presentations - presenters can blend slides with code for a better live experience on stage.
+* Exploration of interesting datasets - publish all resources (data model, import, queries) in one place and refer back to that work whenever you need to.
+* Rendering https://portal.graphgist.org[GraphGists^] as guides - converting GraphGists to browser guides allows you to access them inside your development environment and code alongside, rather than simply reading.
 
-image::{img}browser-guide-northwind.jpg[]
+.Example Northwind dataset guide
+image:{img}browser-guide-northwind.jpg[link="{img}browser-guide-northwind.jpg",role="popup-link"]
 
-Others have used them too, here a few examples:
+Here are a few of our favorite examples using Neo4j browser guides:
 
-* The https://offshoreleaks.icij.org/pages/database[Panama Papers Download^] comes with a comprehensive guide
-* http://blog.bruggen.com/search/label/beergraphguide[Rik van Bruggens Beer Graph^]
-* Daniel Himmelsteins https://thinklab.com/discussion/hosting-hetionet-in-the-cloud-creating-a-public-neo4j-instance/216[Protein Networks (Hetnet)^]
-* Will Lyons Game of Thrones Graph: {play}http://guides.neo4j.com/got[`:play http://guides.neo4j.com/got`^]
-* https://twitter.com/graphcommons/status/815999498245853185[GraphCommons Graphs^]
+* The https://offshoreleaks.icij.org/pages/database[Panama Papers download^] comes with a comprehensive guide
+* http://blog.bruggen.com/search/label/beergraphguide[Rik van Bruggens beer graph^]
+* Daniel Himmelsteins https://think-lab.github.io/d/216/[Protein Networks (Hetnet)^]
+* Will Lyons Game of Thrones Graph: {play}https://guides.neo4j.com/got[`:play https://guides.neo4j.com/got`^]
+* https://twitter.com/graphcommons/status/815999498245853185[GraphCommons graphs^]
+* Data Journalism: {play}https://guides.neo4j.com/ddj/[`:play https://guides.neo4j.com/ddj/`^]
 
 [#browser-guides]
 == Technical Background
 
 The browser guides are simple HTML pages with one section per slide.
-The users can interactively page through the slideshow, execute statements from `<pre/>` areas to import or query the data or look at pictures, videos or other media for detailed explanations.
-Of course you can use other HTML elements like tables, bullets, links etc.
+Each section of the slideshow is encompassed in `<slide/>` tags, which users can interactively page to view content.
+We can include statements for users to execute for importing or querying the data by putting them inside `<pre/>` tag areas. 
+Pictures and other media for detailed explanations are enclosed in `<img/>` and other media tags.
+You can use other standard HTML elements to include tables, bullets, links, etc.
 There are some special CSS classes that interact actions within Neo4j Browser, e.g. for `:play` or `:help` commands.
 
 image::{img}browser-guide-form-fields.jpg[link="{play}northwind%20graph"]
 
-Since Neo4j 3.1 it is also possible to provide *form-fields* within the guides whose input is automatically included in the text on slides and in statements.
-This is similar to the built-in {play}query%20template[`:play query template`^]
+We can also use form fields within the guides to automatically populate the input in the text on slides and in statements.
+This is similar to the built-in {play}query%20template[`:play query template`^].
 
-The guides can be hosted anywhere, for security reasons you have to *whitelist any domain* besides `guides.neo4j.com` and `localhost` in your `$NEO4J_HOME/conf/neo4j.conf`.
+[#host-guide]
+== Hosting the Browser Guide
 
+The guides can be hosted anywhere.
+For security reasons, Neo4j's standard config is setup to accept files hosted on `guides.neo4j.com` and `localhost`.
+However, if you want to host the guide elsewhere, you will need to *whitelist* the other domain in your `$NEO4J_HOME/conf/neo4j.conf` along with the default whitelists, as shown below.
+
+[source,shell]
 ----
-# comma separated list of base-urls, or * for everything
-browser.remote_content_hostname_whitelist=http://example.com
-----
-
-The server hosting the guide has to support proper CORS headers for both GET and OPTIONS requests, because the Neo4j Browser accesses a foreign URL.
-So unfortunately GitHub pages and Dropbox folders don't work, but S3 can be configured to work well enough (or a custom Python or Java webserver).
-
-[WARNING]
-For security reasons, Javascript and Angular tags are stripped from the HTML, even from whitelisted sources.
-
-[WARNING]
-If your Neo4j instance is accessed via a `https://` URL, only guides hosted on `https://` URLs will render.
-Currently, as of April 2017, guides.neo4j.com does not support `https`.
-
-You can also provide your guide as a startup URL in two ways:
-
-.add play command as setting in neo4j.conf
-----
-browser.post_connect_cmd=play <guide url or name>
-
-browser.post_connect_cmd=play http://guides.neo4j.com/apoc
-# or
-browser.post_connect_cmd=play intro
+#comma-separated list of base-urls, or * for everything
+browser.remote_content_hostname_whitelist=https://example.com,https://guides.neo4j.com,localhost
 ----
 
-.use URL parameters in a link, like we do on this page
+The server hosting the guide is required to support proper CORS headers for both `GET` and `OPTIONS` requests because the Neo4j Browser accesses a foreign URL.
+This means that GitHub pages and Dropbox folders do not work, but Amazon S3 (or a custom Python or Java webserver) can be configured to work well enough.
+
+[NOTE]
+--
+1. For security reasons, Javascript and Angular tags are stripped from the HTML, even from whitelisted sources.
+
+2. If your Neo4j instance is accessed via an `https://` URL, only guides hosted on `https://` URLs will render.
+--
+
+You can also set your guide to display on Browser startup in two ways:
+
+.1. Add play command as setting in neo4j.conf
+[source,shell]
+----
+browser.post_connect_cmd=:play test
+----
+
+[NOTE]
+--
+The Browser will search for a guide URL based on the host site plus guide name.
+For instance, the configuration setting above will look for a guide at the path `https://guides.neo4j.com/test`.
+This also works with guides in folders (i.e. `https://guides.neo4j.com/folder/test`).
+--
+
+.2. Use URL parameters in a link to open Browser and pre-fill command to the guide
+[source,shell]
 [subs=attributes]
 ----
 {play}&lt;guide url or name&gt;
 
-{play}http://guides.neo4j.com/got
+{play}https://guides.neo4j.com/got
 
 {play}northwind%20graph
 ----
@@ -107,38 +121,46 @@ browser.post_connect_cmd=play intro
 
 The HTML format is https://github.com/neo4j-contrib/neo4j-guides/blob/master/docs/html-guides.adoc[described in detail here^].
 Don't worry, you do not have to create the HTML manually.
-Although you can fine tune the generated HTML from the next step afterwards.
+Although, you can fine-tune the generated HTML from the next step afterwards.
 
-To make it easier to create Browser Guides, we created a https://github.com/neo4j-contrib/neo4j-guides[simple tooling repository^] that uses AsciiDoc as source format and a HTML template with the slide structure.
+To make it easier to create Browser guides, we created a https://github.com/neo4j-contrib/neo4j-guides[simple tooling repository^] that uses AsciiDoc as source format and an HTML template with the slide structure.
 
-AsciiDoc is used in many places, e.g. for O'Reilly books, many Documentation Manuals (ours too), these developer pages, our http://neo4j.com/developer/kb[knowledge base], http://portal.graphgist.org/about[GraphGists^] but also in Readme's and Wiki's on GitHub.
-It was developed for technical documentation, and is more powerful than Markdown.
+AsciiDoc is used in many places, including for O'Reilly books, various documentation manuals (such as ours), these developer pages, our link:/developer/kb[knowledge base^], https://portal.graphgist.org/about[GraphGists^], but also in Readme and Wiki files on GitHub.
+It was developed for technical documentation and is more powerful than markdown.
 
 You can find a simple https://github.com/neo4j-contrib/graphgist/blob/master/gists/syntax.adoc[syntax overview here^].
 
-We use the http://asciidoctor.org[AsciiDoctor] toolchain and a variant of its https://github.com/asciidoctor/asciidoctor-backends/tree/master/erb/html5[HTML5 erb-templates^].
+We use the https://asciidoctor.org[AsciiDoctor^] toolchain and a variant of its https://github.com/asciidoctor/asciidoctor-backends/tree/master/erb/html5[HTML5 erb-templates^].
 
-Our process is straightforward. 
+Our process is straightforward.
 
-1. Just find or create a simple AsciiDoc file (see below) and convert it to the slide-html. 
-2. Each second-level header is turned into a new slide, and `[source,cypher]` blocks into clickable statements.
-3. Otherwise all regular HTML transformations apply.
-4. For deep details on the AsciiDoc syntax, please see the http://asciidoctor.org/docs/user-manual/[AsciiDoctor User Manual^]
+1. Find or create a simple AsciiDoc file (see below) and convert it to the slide-html. 
+2. Turn each second-level header into a new slide and turn `[source,cypher]` blocks into clickable statements.
+3. Follow any other regular HTML transformations for other content.
+4. For deeper details on the AsciiDoc syntax, please see the https://asciidoctor.org/docs/user-manual/[AsciiDoctor User Manual^].
 
 [#example-guide]
 == Worked Example
 
-Clone and enter our repository and start editing your first guide.
+We will briefly step through an test guide as an example.
+You can later create your own custom guides for your material using these same steps.
+
+1. Clone and open the guide repository.
 
 [source,shell]
 ----
 git clone https://github.com/neo4j-contrib/neo4j-guides
+#SSH command is `git clone git@github.com:neo4j-contrib/neo4j-guides.git`
 cd neo4j-guides
-edit adoc/test.adoc
 ----
 
-.test.adoc
-[.small,indent=0]
+2. Find the `adoc` directory and create a file called `test.adoc` inside it.
+
+image::{img}custom_guide_test.jpg[link="{img}custom_guide_test.jpg",role="popup-link"]
+
+3. Insert the contents below into the newly created `test.adoc` file and save the changes.
+
+[source,shell,.small]
 ----
  = A Test Guide
  
@@ -155,12 +177,12 @@ edit adoc/test.adoc
  ++++
  
  == Second Slide: Statements
- 
+
  === Creating Data
  
  The area below becomes a clickable statement.
  
- [source,cypher]
+ [source,shell]
  ----
  CREATE (db:Database {name:"Neo4j"})
  RETURN db
@@ -183,54 +205,73 @@ edit adoc/test.adoc
  
  == Third Slide: Links
  
- * http://neo4j.com/developer/cypher[Learn more about Cypher]
+ * https://neo4j.com/developer/cypher[Learn more about Cypher]
  * pass:a[<a help-topic='keys'>Help Keys</a>]
- * pass:a[<a play-topic='http://guides.neo4j.com/'>Another Guide</a>]
+ * pass:a[<a play-topic='https://guides.neo4j.com/'>Another Guide</a>]
  
- image::https://avatars3.githubusercontent.com/u/201120[width=100,link="http://example.com"]
+ image::https://avatars3.githubusercontent.com/u/201120[width=100,link="https://example.com"]
 ----
 
-After saving the file, pass it to the `run.sh` script to convert to the HTML slides.
+4. Pass the `test.adoc` file to the `run.sh` script (as shown below) to convert to the HTML slides.
 
 [source,shell]
 ----
 ./run.sh adoc/test.adoc html/test.html
 
-# optional arguments, leveloffset - to change the heading level up or down, base-url and additional attributes
-./run.sh path/to/test.adoc path/to/test.html [+1] http://example.com/guides/test
+#optional arguments, leveloffset - to change the heading level up or down, base-url and additional attributes
+./run.sh path/to/test.adoc path/to/test.html [+1] https://example.com/guides/test
 
-# run the local python server to serve on localhost:8001
+#run the local python server to serve on localhost:8001
 python http-server.py
 ----
 
-Test in your local browser: 
-{play}http://localhost:8001/html/test.html[`:play http://localhost:8001/html/test.html`^]
+5. Test the test guide in your local browser: 
+{play}https://localhost:8001/html/test.html[`:play https://localhost:8001/html/test.html`^]
+
+6. Upload the file to your target server.
 
 [source,shell]
 ----
-# then upload the file to your target server, e.g.
+#Example target server
 s3cmd put -P html/test.html s3://guides.example.com/test
 ----
 
-And test it again: `:play http://guides.example.com/test`
+7. And test the guide one last time: `:play https://guides.example.com/test`
 
 image::{img}browser-guide-demo.gif[]
 
+Congratulations!
+You have created your own custom browser guide to share your knowledge about Neo4j and can use these steps to create other helpful guides.
+
 [#gdoc-guide]
-== Guide from GDOC
+== Creating Guides from Google Docs
 
 Something that is also really useful is to create guides from a collaboratively edited Google document.
+We will briefly explain how to do this.
 
-Just create a Google document with AsciiDoc content (like the one above) for collaborative editing.
-Make it publicly readable - in sharing settings enable: "everyone with link can read".
+You can simply create a Google document with AsciiDoc content (like the one above) for collaborative editing.
+Make it publicly readable - in sharing settings, enable: "everyone with link can read".
 
-Get the download URL from "Download as Plain Text" and render to a browser guide like we did before.
+In the document, choose `File`, `Download as >`, `Plain Text (.txt)`.
+
+image::{img}gdownload_plaintxt.jpg[link="{img}gdownload_plaintxt.jpg",role="popup-link"]
+
+Then find the browser downloads and copy the link address of your Google Doc download.
+
+image::{img}chrome_downloads_link_address.jpg[link="{img}chrome_downloads_link_address.jpg",role="popup-link"]
+
+Render the Google Doc to a browser guide, like we did before.
+An example using a script is shown below.
 
 .gdoc2guide.sh
+[source,shell]
 ----
+#use the download id (not full link) to set the document id
 id=${1-"1HY3AX6dvd8UtJhp5XAsyFsQ0oyC6Z0pbwJvkyr4WHtM"}
+#choose a name for your guide
 name=${2-network}
-# use your plain-text download link format here
+
+#use your full plain-text download link format here
 url="https://docs.google.com/a/neotechnology.com/document/export?format=txt&id=${id}"
 
 curl -sL "$url" -o adoc/$name.adoc 
@@ -238,266 +279,144 @@ curl -sL "$url" -o adoc/$name.adoc
 s3cmd put -P html/$name.html s3://guides.neo4j.com/$name
 ----
 
-////
-==== Introduction
-
-* idea
-* built in guides
-* capabilities
-* format
-* hosting
-* whitelist
-* auto-play command
-* url-param cmd=play&args=
-
-==== Creating Process
-
-* AsciiDoc to Guide
-** 2nd level header to slide
-** cypher code blocks
-** tables, bullets, images
-** javascript / angular attributes are stripped from the HTML source
-** iframes are possible
-** automatic form fields
-* neo4j-guides repository
-
-
-=== Guide HTML Format
-
-Explaining the HTML Format https://github.com/neo4j-contrib/neo4j-guides/blob/master/docs/html-guides.adoc
-
-=== AsciiDoc to Guide
-
-Guide Generator ADOC-> Guides https://github.com/neo4j-contrib/neo4j-guides
-
-=== Guides with HTML / Jade
-
-ABK's guides with Jade: https://github.com/neo4j-contrib/guides
-
-:play http://guides.neo4j.com/grid-template.html
-:play http://guides.neo4j.com/guide-library.html
-:play http://guides.neo4j.com/how-to-guide.html
-:play http://guides.neo4j.com/index.html
-:play http://guides.neo4j.com/interactive-template.html
-:play http://guides.neo4j.com/northwind-graph-dev.html
-:play http://guides.neo4j.com/slide-template.html
-:play http://guides.neo4j.com/start.html
-:play http://guides.neo4j.com/browser.html
-////
-
 [#sample-collection]
 == Example Collection
 
+In this section, we will list some of our existing and most popular browser guides we have created for users to learn and discover Neo4j.
+We hope that these will show some examples of things you can do with your own custom guides and encourage you to create and publish more alongside ours.
+
+This type of resource can help spread knowledge about Neo4j and the different kinds of things it can do and the problems it can solve.
+It can also show others how you went about constructing your graph model, importing your data set, and exploring that data as a graph.
+
 === Sandbox
 
-The new http://neo4j.com/sandbox[Neo4j Sandbox] uses Browser Guides to guide the user through the dataset presented.
+image::{img}sandbox_use_cases_2019.jpg[link="{img}sandbox_use_cases_2019.jpg",role="popup-link",float="right",width=350]
 
-image::{img}browser-guide-sandbox.jpg[link="http://neo4j.com/sandbox"]
+The new link:/sandbox/[Neo4j Sandbox^] uses Browser guides to step the user through the dataset presented for a particular use case.
+These guides are displayed when the sandbox is loaded and shows the steps for the data set background, model, loading, and querying.
+Some of our sandboxes even incorporate extensions and other tools, such as graph algorithms, APOC, and Bloom.
 
-////
-[cols="a,3a"]
+=== ICIJ Panama Papers Guide
+
+image::{img}browser-guide-panama-papers.jpg[link="{img}browser-guide-panama-papers.jpg",role="popup-link",float="right",width=350]
+
+The award-winning, investigative work around the link:/blog/icij-neo4j-unravel-panama-papers/[Panama Papers^] leak by the journalists of the https://www.icij.org/[ICIJ^] who used Neo4j to analyze terabytes of unstructured and structured data.
+The ICIJ went on to release follow-ups to the initial leak with the Paradise Papers, Offshore Leaks, and Bahamas Leaks.
+
+All of the data for these investigations is available as a https://offshoreleaks.icij.org/pages/database[database download^].
+We also have a sandbox on the link:/sandbox/[Paradise Papers^] that includes a comprehensive browser guide to explore the vast network of offshore.
+
+=== GraphGist Portal
+
+image::{img}browser-guide-graphgist.jpg[link="{img}browser-guide-graphgist.jpg",role="popup-link",float="right",width=350]
+
+If you are not familiar with our link:/developer/graphgist/[GraphGists^], they are designed as a way for the Neo4j community to share their use cases and graphs with others.
+Our regular GraphGists are published on web pages and often include information about the project such as data model, sample queries, and project background.
+These pages are also designed to be interactive, so that visitors can execute queries and see results in the page.
+
+The https://portal.graphgist.org[GraphGist Portal^] is a separate website external to Neo4j and displays all of the GraphGists.
+The portal also provides a few additional features, most notably that it allows any GraphGist to be viewed as a browser guide.
+
+All you need to do to launch any one of these GraphGists as a browser guide is click on the GraphGist you are interested in from the GraphGists tab at the top, and then click `Run this gist in the Neo4j console` link on the right hand sidebar.
+This will bring up a smaller window with the `:play` command to run the guide in the Neo4j Browser and any potential whitelisting settings.
+
+You can also execute this Browser guide that lists a few of the GraphGist guides to check out: {play}https://guides.neo4j.com/graphgists/[`:play https://guides.neo4j.com/graphgists/`^]
+
+=== Built-in Training Guides
+
+Neo4j has created a few starter guides for those new to Neo4j to show them how to use it.
+Topics ranging from understanding what graph is to Cypher to modeling to import are provided with the links listed below.
+
+[options="header"]
 |===
-| Use Case | Guide URL
-| Blank | {play}http://guides.neo4j.com/sandbox/blank-sandbox[`:play http://guides.neo4j.com/sandbox/blank-sandbox`^]
-| Legis Graph |{play}http://guides.neo4j.com/sandbox/legis-graph[`:play http://guides.neo4j.com/sandbox/legis-graph`^]
-| Movie Recommendations | {play}http://guides.neo4j.com/sandbox/recommendations[`:play http://guides.neo4j.com/sandbox/recommendations`^]
-// | Retail Recommendations | {play}http://guides.neo4j.com/sandbox/retail-recommendations[`:play http://guides.neo4j.com/sandbox/retail-recommendations`^]
-| Trumpworld | {play}http://guides.neo4j.com/sandbox/trumpworld[`:play http://guides.neo4j.com/sandbox/trumpworld`^]
-//| US Elections | {play}http://guides.neo4j.com/sandbox/us-elections-2016[`:play http://guides.neo4j.com/sandbox/us-elections-2016`^]
-| Network Management | {play}http://guides.neo4j.com/sandbox/network-management[`:play http://guides.neo4j.com/sandbox/network-management`^]
-| Twitter | {play}http://guides.neo4j.com/twitter-neo4j/[`:play http://guides.neo4j.com/twitter-neo4j/`^]
+| Guide Name | Browser Command
+| Neo4j Browser Intro | `:play intro`
+| Neo4j Concepts | `:play concepts`
+| About Cypher | `:play fundamentals`
+| Intro to Cypher | `:play cypher`
+| The Movie Graph | `:play movie-graph`
+| Import: Relational to Graph | `:play northwind-graph`
+| Data Modeling: Flights | `:play modeling_airports`
 |===
-////
-
-=== Panama Papers Guide
-
-The award winning investigative work around the https://neo4j.com/blog/icij-neo4j-unravel-panama-papers/["Panama Papers"^] leak by the journalists of the ICIJ is available as an online database.
-
-It is also available as a https://neo4j.com/sandbox/[*Neo4j Panama Papers Sandbox*] with a comprehensive browser guide to explore the vast network of shell company connections.
-
-image::{img}browser-guide-panama-papers.jpg[]
-
-{play}https://cloudfront-files-1.publicintegrity.org/offshoreleaks/neo4j/guide/index.html[`:play https://cloudfront-files-1.publicintegrity.org/offshoreleaks/neo4j/guide/index.html`^]
-
-////
-[NOTE]
-You need to whitelist the source hostname.
-----
-browser.remote_content_hostname_whitelist=https://cloudfront-files-1.publicintegrity.org
-----
-////
-
-=== GraphGists
-
-image::{img}browser-guide-graphgist.jpg[float=right]
-
-The http://portal.graphgist.org[GraphGist Portal] allows any GraphGist to be viewed as a browser guide.
-
-Just click the  "Run this gist in the Neo4j console" link on the right hand sidebar, e.g.
-
-{play}http://portal.graphgist.org/graph_gists/trumpworld-graph/graph_guide[`:play http://portal.graphgist.org/graph_gists/trumpworld-graph/graph_guide`^]
-
-[NOTE]
-You need to whitelist the source hostname.
-----
-browser.remote_content_hostname_whitelist=http://portal.graphgist.org
-----
-
-And then chose any http://portal.graphgist.org/graph_gists[Graph Gist from the portal] to render in your browser, or check out this selection: {play}http://guides.neo4j.com/graphgists/[`:play http://guides.neo4j.com/graphgists/`^]
-
-////
-==== Training Classes
-
-Guides for Classroom Training: https://github.com/neo4j-contrib/training/
-Neo4j Fundamentals  :play http://guides.neo4j.com/fundamentals/
-Intro: Relational to Graph: :play http://guides.neo4j.com/intro/
-Advanced Cypher :play http://guides.neo4j.com/advanced_cypher/
-// old advanced training :play http://guides.neo4j.com/advanced/
-Recommendation Training: :play http://guides.neo4j.com/reco
-:play http://guides.neo4j.com/reco/file
-// old modeling training :play http://guides.neo4j.com/modeling/
-Modeling Flights: :play http://guides.neo4j.com/modeling_airports
-
-Online Training Cypher Guide:
-https://github.com/neo-technology/training-slides/tree/master/online/cypher/60-Minute-Cypher
-:play http://guides.neo4j.com/cypher
-////
 
 === APOC
 
-image::{img}browser-guide-apoc.jpg[float=right]
+image::{img}browser-guide-apoc.jpg[link="{img}browser-guide-apoc.jpg",role="popup-link",float=right,width=350]
 
-The https://github.com/neo4j-contrib/neo4j-apoc-procedures[APOC procedure library] comes with a lot of useful functionality for Neo4j.
-For an "interactive" manual, some of the https://github.com/neo4j-contrib/neo4j-apoc-procedures/blob/3.1/docs/guides.adoc[original documentation] was turned into guides.
+We mentioned above that some of the Neo4j extensions and tools also had Browser guides.
+One of Neo4j's most popular libraries is link:/developer/neo4j-apoc/[APOC] (Awesome Procedures on Cypher).
+This project is packed full of useful procedures and functions for text manipulation, graph refactoring, data import, and more.
+It is also part of our link:/labs/[Neo4j Labs^] projects.
 
-* APOC Guides: {play}http://guides.neo4j.com/apoc/[`:play http://guides.neo4j.com/apoc/`^]
-* Loading Data with Apoc {play}http://guides.neo4j.com/apocload/[`:play http://guides.neo4j.com/apocload/`^]
+Some of the https://neo4j-contrib.github.io/neo4j-apoc-procedures/[Github documentation^] content for APOC was turned into guides as an interactive manual.
+The Browser guide versions include background on the project and how to install APOC, as well as a few key procedures for loading different kinds of data, converting dates, and handling batching and background operations.
+
+* APOC guide: {play}https://guides.neo4j.com/apoc/[`:play apoc`^]
 
 === Beer Graph Guide - Rik Van Bruggen
 
-++++
-<div class="responsive-embed">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/jIT3O_fO7Tk" frameborder="0" allowfullscreen></iframe>
-</div>
-++++
+Rik van Bruggen demonstrates in detail how to turn a data set or GraphGist into a proper Browser guide in the links provided.
 
-Rik van Bruggen demonstrates in detail how to turn a data set or GraphGist into a proper Browser Guide.
-
-http://blog.bruggen.com/2016/03/the-beergraphguide-in-neo4j-browser.html
-http://blog.bruggen.com/2016/03/an-easier-better-tastier-beergraphguide.html
+* Blog post: http://blog.bruggen.com/2016/03/the-beergraphguide-in-neo4j-browser.html[Making the BeerGraphGuide for Neo4j Browser^]
+* Blog post: http://blog.bruggen.com/2016/03/an-easier-better-tastier-beergraphguide.html[Improving the BeerGraphGuide^]
+* YouTube video: https://www.youtube.com/embed/jIT3O_fO7Tk[BeerGraphGuide^]
 
 === HetNet Protein Networks - Daniel Himmelstein
 
-Daniel used Browser Guides to represent the topic of his PhD thesis - Protein Networks in a Graph Database.
+image::https://cloud.githubusercontent.com/assets/1117703/16320501/216f2626-3966-11e6-8a0d-215f70b44be2.png[link="https://cloud.githubusercontent.com/assets/1117703/16320501/216f2626-3966-11e6-8a0d-215f70b44be2.png",role="popup-link",float="right",width=350]
 
-image::https://cloud.githubusercontent.com/assets/1117703/16320501/216f2626-3966-11e6-8a0d-215f70b44be2.png[]
+Daniel used Browser guides to represent the topic of his PhD thesis - protein networks in a graph database.
+In https://think-lab.github.io/d/216/[this article^], he details the process of setting up a public server for hosting the dataset, as well as the steps involved in creating the guides.
+Daniel also presented his research at GraphConnect San Francisco in https://www.youtube.com/watch?v=jwhAlNgjvMA[this video^].
 
-He https://thinklab.com/discussion/hosting-hetionet-in-the-cloud-creating-a-public-neo4j-instance/216[details the process] of setting up a public server for hosting the dataset as well as the steps involved in creating the guides in this article.
+=== Game of Thrones Character Interactions - Andrew Beveridge/Will Lyon
 
-Daniel also presented about his research at https://www.youtube.com/watch?v=jwhAlNgjvMA[GraphConnect San Francisco].
+Based on the popular https://en.wikipedia.org/wiki/Game_of_Thrones[Game of Thrones^] book series, mathematicians Andrew Beveridge and Jie Shan published the https://networkofthrones.wordpress.com/["Network of Thrones"^] research paper on interactions of characters in the books.
+Because a graph database follows the principles of network science, Will Lyon at Neo4j requested and received permission to take the published data and put it into Neo4j for analysis.
 
-=== Game of Thrones Guide
+Using this fun and familiar dataset, Will created a https://www.lyonwj.com/2016/06/26/graph-of-thrones-neo4j-social-network-analysis/[blog post^] that explains how to import the data into Neo4j and then expands into data science concepts of social network analysis and graph algorithms.
+Since then, Andrew Beveridge has released all https://networkofthrones.wordpress.com/data/[data^] for the existing book volumes, as well as for all seasons of the TV series version.
 
-After the mathematicians Andrew Beveridge and Jie Shan published the "Network of Thrones" reseearch paper, William Lyon took the data (with permission) of co-occurrence of characters in volume 3 of "Game of Thrones" and turned it into a Neo4j Graph database.
+The related "Graph of Thrones" Browser guide draws from the foundation of Will's original blog post, but also introduces the link:/developer/graph-algorithms/[Neo4j graph algorithms] library.
+This library is another one of Neo4j's popular extensions and includes algorithms for path-finding, centralities, communities, and more.
+Like link:/developer/neo4j-apoc/[APOC], the graph algorithms library is also part of link:/labs/[Neo4j Labs^].
 
-Using that popular dataset Will explains the basic workings of a graph database and then expands into http://www.lyonwj.com/2016/06/26/graph-of-thrones-neo4j-social-network-analysis/[data science with social network analysis and graph algorithms].
+* Graph of Thrones intro guide: {play}https://guides.neo4j.com/got[`:play https://guides.neo4j.com/got`^]
 
-The guide turns Wills blog post into an interactive experience.
-// You can find https://github.com/johnymontana/graph-of-thrones[his repository here].
+We also created a separate Graph of Thrones guide that aims to incorporate more of the universe with data from a variety of sources.
 
-{play}http://guides.neo4j.com/got[`:play http://guides.neo4j.com/got`^]
+* Graph of Thrones universe guide: {play}https://guides.neo4j.com/got/index.html[`:play https://guides.neo4j.com/got/index.html`^]
 
-We also created a separate "Game of Thrones" guide that aims at recreating the whole universe using data from a variety of sources.
-It uses this https://docs.google.com/presentation/d/1bXXR-7rJMvM56Fc52qme1kriQPIFDHUQ3PzhwPkKzSY/edit#slide=id.g147007f109_0_125[set of accompanying slides] to teach about Neo4j.
+=== Graph Commons
 
-{play}http://guides.neo4j.com/got/index.html[`:play http://guides.neo4j.com/got/index.html`^]
+https://graphcommons.com/[Graph Commons^], a website to create and share data networks, has a Neo4j example that can be played as a Browser guide using the URL shown below.
 
-// :play http://guides.neo4j.com/got_wwc/
-////
-==== Twitter
+{play}https://graphcommons.com/graphs/1a93e8fa-e3ce-4ec7-ba16-814b867d1bcb/neo4j[`:play https://graphcommons.com/graphs/1a93e8fa-e3ce-4ec7-ba16-814b867d1bcb/neo4j`^]
 
-TODO link to network / sandbox
+[NOTE]
+--
+You need to add the GraphCommons URL to the whitelist config, along with the default whitelists.
 
+[source,shell]
 ----
-:play http://guides.neo4j.com/twitter-neo4j/
+browser.remote_content_hostname_whitelist=https://graphcommons.com,https://guides.neo4j.com,localhost
 ----
-Twitter Election Graph :play http://guides.neo4j.com/twitterElection/
-
-==== Exploring Shipping Data
-
-* `:play http://guides.neo4j.com/shipping/`
-
-==== Graphs in Data Journalism
-
-Graphs in Data Journalism: `:play http://guides.neo4j.com/ddj/`
-
-* Finding Insights in Campaign Finance Data With Graphs `:play http://guides.neo4j.com/nicar2017`
-* IRE Fundamentals of graph databases + https://github.com/johnymontana/neo4j-datasets/tree/master/us-fec-elections-2016[US Congress + FEC Data] `:play http://guides.neo4j.com/ire2016/`
-
-==== Field
-
-POLE database `:play http://guides.neo4j.com/field/pole.html`
-
-==== Trumpworld:
-
-TODO text, link to blog posts, link to trumpworld-graph repo
-
-https://github.com/johnymontana/neo4j-datasets/tree/master/trumpworld/src
-
-----
-:play http://guides.neo4j.com/trumpworld
-----
-
-// :play http://guides.neo4j.com/trump_wwc
-// :play http://guides.neo4j.com/trumpworld-simple/
-
-==== Legis Graph:
-
-TODO blog posts / repo
-
-----
-:play http://guides.neo4j.com/legisgraph/
-:play http://guides.neo4j.com/legisgraphalgo/
-----
-
-==== Short Term Rental Listings (AirBNB)
-
-https://github.com/johnymontana/neo4j-datasets/tree/master/airbnb/src/guide
-
-----
-:play http://guides.neo4j.com/listings/
-----
-
-==== RDF
-
-TODO link / url
-
-* RDF vs LPG: The data models `:play http://guides.neo4j.com/rdf-graphs/`
-* RDF A worked example: `:play http://guides.neo4j.com/rdf/rdf-to-neo-worked.html`
-////
-
-=== Graph-Commons
-// https://twitter.com/graphcommons/status/815999498245853185
+--
 
 ++++
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">How to import a graph from <a href="https://twitter.com/graphcommons">@graphcommons</a> into your <a href="https://twitter.com/neo4j">@neo4j</a> <a href="https://twitter.com/hashtag/graphdb?src=hash">#graphdb</a> <a href="https://twitter.com/hashtag/gif?src=hash">#gif</a> <a href="https://t.co/oKzSo4wKXw">https://t.co/oKzSo4wKXw</a> <a href="https://t.co/P5PI0xIRn4">pic.twitter.com/P5PI0xIRn4</a></p>&mdash; Graph Commons (@graphcommons) <a href="https://twitter.com/graphcommons/status/815999498245853185">January 2, 2017</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 ++++
 
-Also you've probably seen it, http://graphcommons.com[Graph Commons] supports the Neo4j browser, play the URL in the Neo4j browser (note the `/neo4j` at the end):
-
-{play}https://graphcommons.com/graphs/1a93e8fa-e3ce-4ec7-ba16-814b867d1bcb/neo4j[`:play https://graphcommons.com/graphs/1a93e8fa-e3ce-4ec7-ba16-814b867d1bcb/neo4j`^]
-
-[NOTE]
-You need to whitelist the source.
-----
-browser.remote_content_hostname_whitelist=https://graphcommons.com/graphs/
-----
-
 === jQAssistant
 
-The http://jqassistant.org[Software analytics tool], uses a guide to explore any scanned software project.
+The https://jqassistant.org[jQAssistant^] software analytics tool uses a guide to explore any scanned software project.
+The relevant Neo4j Browser guide with jQAssistant is listed below.
 
-// https://docs.google.com/document/d/16ecoO9OybalYNzG0kWiOENLk_q6_ou-qf1eyzFu5nUE/edit
+{play}https://guides.neo4j.com/jqassistant[`:play https://guides.neo4j.com/jqassistant`^]
 
-{play}http://guides.neo4j.com/jqassistant[`:play http://guides.neo4j.com/jqassistant`^]
+== Resources
+
+* link:/developer/neo4j-browser/[Neo4j Browser Intro]
+* link:/graphgists/[GraphGist interactive guides^]
+* https://portal.graphgist.org/[GraphGist portal^]

@@ -73,7 +73,8 @@ File locations for each OS are listed in our link:{opsmanual}/configuration/file
 We recommend putting files in Neo4j's _import_ directory, as it keeps the environment secure.
 However, if you need to access files in other locations, you can find out which setting to alter in our link:/docs/cypher-manual/current/clauses/load-csv/#query-load-csv-introduction[manual^].
 
-.Examples:
+.Examples
+[source,cypher]
 ----
 //Example 1 - file directly placed in import directory (import/data.csv)
 LOAD CSV FROM "file:///data.csv"
@@ -86,7 +87,8 @@ LOAD CSV FROM "file:///northwind/customers.csv"
 However, permissions must be set so that an external source can read the file.
 For more information about access related to online file imports, see this link:/developer/kb/import-csv-locations/[knowledge base article^].
 
-.Examples:
+.Examples
+[source,cypher]
 ----
 //Example 1 - website
 LOAD CSV FROM 'https://neo4j.com/docs/cypher-manual/3.5/csv/artists.csv'
@@ -113,6 +115,7 @@ First, remember that Neo4j does not store null values.
 Null or empty fields in a CSV files can be skipped or replaced with default values in `LOAD CSV`.
 
 .Example
+[source,cypher]
 ----
 //skip null values
 LOAD CSV WITH HEADERS FROM 'file:///data.csv' AS row
@@ -132,6 +135,7 @@ SET c.emailAddress = CASE trim(row.Email) WHEN "" THEN null ELSE row.Email END
 Next, if you have a field in the CSV that is a list of items that you want to split, you can use the Cypher `split()` function to separate arrays in a cell.
 
 .Example
+[source,cypher]
 ----
 //split string of employee skills into separate nodes
 LOAD CSV FROM 'file:///data.csv' AS row
@@ -145,6 +149,7 @@ Conditional conversions can be achieved with `CASE`.
 You saw one example of this when we were checking for null values or empty strings, but let us look at another example.
 
 .Example
+[source,cypher]
 ----
 //set businessType property based on shortened value in CSV
 LOAD CSV WITH HEADERS FROM 'file:///data.csv' AS row
@@ -208,6 +213,7 @@ This clause can be added before the `LOAD CSV` clause to tell Cypher to only pro
 For more information, see the link:/docs/cypher-manual/current/query-tuning/using/#query-using-periodic-commit-hint[manual page^] on `PERIODIC COMMIT`.
 
 .Example
+[source,cypher]
 ----
 USING PERIODIC COMMIT 500
 LOAD CSV WITH HEADERS FROM 'file:///data.csv' AS row

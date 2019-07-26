@@ -1,12 +1,14 @@
-= Using Neo4j from Erlang and Elixir
-:slug: erlang_elixir
+= Erlang and Elixir: Neo4j Community Driver
+:slug: erlang-elixir
 :level: Intermediate
-:section: Develop with Neo4j
+:section: Drivers & Language Guides
 :section-link: language-guides
 :sectanchors:
 :toc:
 :toc-title: Contents
 :toclevels: 1
+
+include::../_includes/community-driver-notice.adoc[]
 
 .Goals
 [abstract]
@@ -15,8 +17,8 @@ While this guide is not comprehensive it will introduce the different drivers an
 
 .Prerequisites
 [abstract]
-You should be familiar with link:/developer/get-started/graph-database[graph database concepts] and the property graph model.
-You should have link:/download[installed Neo4j] and made yourself familiar with our link:/developer/cypher[Cypher Query language].
+You should be familiar with link:/developer/get-started/graph-database/[graph database concepts] and the property graph model.
+You should have link:/download/[installed Neo4j^] and made yourself familiar with our link:/developer/cypher-query-language/[Cypher query language].
 
 [role=expertise]
 {level}
@@ -27,23 +29,20 @@ You should have link:/download[installed Neo4j] and made yourself familiar with 
 image::{img}erlang.png[float=right,width=150]
 image::{img}elixir.png[float=left,width=150]
 
-Members of the Erlang and Elixir community have invested a lot of time and love to develop these drivers, so please if you use them, provide feedback to the authors.
+Members of the Erlang and Elixir community have invested a lot of time and love to develop these drivers, so if you use them, please provide feedback to the authors.
 
 include::../_includes/sample_project.adoc[]
-
-include::../_includes/community-driver-notice.adoc[]
 
 [#elixir-bolt]
 === Elixir Bolt.Sips Driver
 
 Neo4j driver for Elixir wrapped around the Bolt protocol.
 
-Features:
-
-* It is using: Bolt. Neo4j's newest network protocol, designed for high-performance
-* Supports transactions, simple and complex Cypher queries with or w/o parameters
-* Connection pool implementation using: "A hunky Erlang worker pool factory", aka: http://github.com/devinus/poolboy[Poolboy] :)
-* Supports Neo4j 3.0.x
+.Features:
+* It uses Bolt, Neo4j's standard network protocol, designed for high-performance
+* Supports transactions, as well as simple and complex Cypher queries with or without parameters
+* Connection pool implementation using "A hunky Erlang worker pool factory", aka: http://github.com/devinus/poolboy[Poolboy^] :)
+* Supports Neo4j 3.0.x and forward
 
 |===
 | icon:user[] Author | http://twitter.com/florin[Florin Patrascu]
@@ -57,7 +56,7 @@ Features:
 == Neo4j.Sips
 
 A simple Elixir wrapper around the Neo4j graph database REST API.
-It is aiming to help Elixir developers to play with Neo4j, and to eventually become the main support for a future https://github.com/elixir-lang/ecto[Ecto] adapter.
+It aims to help Elixir developers to play with Neo4j and to eventually become the main support for a future https://github.com/elixir-lang/ecto[Ecto^] adapter.
 
 [cols="1,4"]
 |===
