@@ -14,7 +14,7 @@ This guide explains the example application we use to introduce the different Ne
 
 .Prerequisites
 [abstract]
-You should be familiar with link:/developer/get-started/graph-database[graph database concepts] and the property graph model. You should have link:/download[installed Neo4j] and made yourself familiar with our link:/developer/cypher[Cypher Query language].
+You should be familiar with link:/developer/get-started/graph-database[graph database concepts] and the property graph model. You should have link:/download[installed Neo4j^] and made yourself familiar with our link:/developer/cypher[Cypher query language].
 
 [role=expertise]
 {level}
@@ -23,7 +23,7 @@ You should be familiar with link:/developer/get-started/graph-database[graph dat
 == Example Project Description
 
 To demonstrate connection to and usage of Neo4j in different programming languages we've created an example application.
-It is a http://my-neo4j-movies-app.herokuapp.com/[simple, one-page webapp], that uses Neo4j's movie demo database (movie, actor, director) as data set.
+It is a http://my-neo4j-movies-app.herokuapp.com/[simple, one-page webapp^], that uses Neo4j's movie demo database (movie, actor, director) as data set.
 The same front-end web page in all applications consumes 3 REST endpoints provided by backend implemented in the different programming languages and drivers.
 
 * movie search by title
@@ -35,7 +35,7 @@ image::{img}movie_application.png[link="http://my-neo4j-movies-app.herokuapp.com
 [#app-project-source]
 == GitHub
 
-The source code for all the different language examples is available on https://github.com/neo4j-examples?query=movies[GitHub] as individual repositories that can be cloned and directly used as starting points.
+The source code for all the different language examples is available on https://github.com/neo4j-examples?query=movies[GitHub^] as individual repositories that can be cloned and directly used as starting points.
 
 [#app-project-model]
 == Domain Model
@@ -59,26 +59,26 @@ For the movie details it uses the `/movie/A%20Movie%20Title` endpoint and the re
 [#app-project-vis]
 == Graph Visualization
 
-For the Graph Visualization we use http://d3js.org[d3.js]. Our `/graph` endpoint already returns the data in the format of "nodes" and "links"-list that d3 can use directly.
+For the Graph Visualization we use http://d3js.org[d3.js^]. Our `/graph` endpoint already returns the data in the format of "nodes" and "links"-list that d3 can use directly.
 We then apply the force-layout algorithm to render nodes as circles and relationships as lines, and add some minimal styling to the visualization to provide the movie title/person name as title attribute to the node circles which is shown as a tooltip.
 
 [#app-project-data]
 == Data Setup
 
-- Start your local Neo4j Server (http://neo4j.com/download[Download & Install])
+- Start your local Neo4j Server (http://neo4j.com/download[Download & Install^])
 - Open the http://localhost:7474[Neo4j Browser].
 - Log in, remember the password
 - Install the Movies dataset with `:play movies`
 - Click the large `CREATE` statement and hit the triangular "Run" button to insert the data.
 
-You can also choose to use our link:/sandbox[Neo4j Sandbox] or a link:/developer/in-production/guide-cloud-deployment[cloud-hosted Neo4j database].
+You can also choose to use our link:/sandbox[Neo4j Sandbox^] or a link:/developer/in-production/guide-cloud-deployment[cloud-hosted Neo4j database].
 If you go this route, then you have to provide the URL to your Neo4j server in an environment variable `NEO4J_URL`.
 
 Alternatively you can run this Cypher `LOAD CSV` statement:
 
 [source,cypher]
 ----
-LOAD CSV WITH HEADERS FROM "https://dl.dropboxusercontent.com/u/14493611/movies_setup.csv" AS row
+LOAD CSV WITH HEADERS FROM "https://www.dropbox.com/s/ci3cjwy91dp3a7e/movies_setup.csv?dl=0" AS row
 MERGE (m:Movie {title:row.title}) ON CREATE SET m.released = toInt(row.released), m.tagline = row.tagline
 MERGE (p:Person  {name:row.name}) ON CREATE SET p.born     = toInt(row.born)
 WITH   m,p,row WHERE row.type = "ACTED_IN"
@@ -105,7 +105,7 @@ It matches the movie by title, then optionally finds all people working on that 
 
 [source,cypher]
 ----
-LOAD CSV WITH HEADERS FROM "https://dl.dropboxusercontent.com/u/14493611/movies_setup.csv" AS row
+LOAD CSV WITH HEADERS FROM "https://www.dropbox.com/s/ci3cjwy91dp3a7e/movies_setup.csv?dl=0" AS row
 MERGE (m:Movie {title:row.title}) ON CREATE SET m.tagline = row.tagline,m.released=row.released
 MERGE (p:Person {name:row.name}) ON CREATE SET p.born = row.born
 FOREACH (_ in CASE row.type WHEN "ACTED_IN" then [1] else [] end |
@@ -177,13 +177,13 @@ You can search for movies by title or click on any result entry to see the detai
 
 === Deploy to Heroku
 
-Many of the mentioned https://github.com/neo4j-examples?query=movies[GitHub example repositories] feature a "Deploy to Heroku" button.
+Many of the mentioned https://github.com/neo4j-examples?query=movies[GitHub example repositories^] feature a "Deploy to Heroku" button.
 You can either use that or follow the manual process outlined below.
 
-We want to install our application to the cloud, for instance the http://heroku.com[Heroku] PaaS.
-We will also use either the https://addons.heroku.com/graphenedb[GrapheneDB] or https://addons.heroku.com/graphstory[GraphStory] Neo4j Database Hosting Add-On or the free link:/sandbox/[Neo4j Sandbox]
+We want to install our application to the cloud, for instance the http://heroku.com[Heroku^] PaaS.
+We will also use either the https://addons.heroku.com/graphenedb[GrapheneDB^] or https://addons.heroku.com/graphstory[GraphStory^] Neo4j Database Hosting Add-On or the free link:/sandbox/[Neo4j Sandbox^].
 
-Install the https://toolbelt.heroku.com/[Heroku Toolbelt] and git.
+Install the https://toolbelt.heroku.com/[Heroku Toolbelt^] and git.
 
 Then run these commands:
 
