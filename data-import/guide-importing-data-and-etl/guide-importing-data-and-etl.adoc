@@ -1,4 +1,4 @@
-= Tutorial: Import Data Into Neo4j
+= Tutorial: Import Relational Data Into Neo4j
 :slug: guide-importing-data-and-etl
 :level: Beginner
 :section: Data Import
@@ -11,13 +11,13 @@
 
 .Goals
 [abstract]
-This guide explores how to export data from a PostgreSQL database (RDBMS) for import into Neo4j (GraphDB).
-You'll learn how to take a relational database schema and model it as a graph for import into Neo4j.
+This guide will teach you the process for exporting data from a relational database (PostgreSQL) and importing into a graph database (Neo4j).
+You will learn how to take data from the relational system and to the graph by translating the schema and using import tools.
 
 .Prerequisites
 [abstract]
-You should have a basic understanding of the link:/developer/get-started/graph-database#property-graph[property graph model] and have completed the link:/developer/data-modeling/guide-data-modeling[modeling guide].
-If you link:/download[download] and install the Neo4j server you'll be able to follow along with the examples.
+You should have a basic understanding of the link:/developer/graph-database/#property-graph[property graph model] and know how to link:/developer/guide-data-modeling[model data as a graph].
+If you haven't already, link:/download[download^] and install link:/developer/neo4j-desktop/[Neo4j Desktop], so you can follow along with the examples.
 
 [role=expertise]
 {level}
@@ -25,32 +25,45 @@ If you link:/download[download] and install the Neo4j server you'll be able to f
 [#about-northwind]
 == Northwind Introduction
 
-In this guide, we will be using the link:https://code.google.com/p/northwindextended/downloads/detail?name=northwind.postgre.sql&can=2&q=[NorthWind dataset], a commonly-used SQL dataset.
-Although the NorthWind dataset is often used to demonstrate SQL and relational databases, it is graphy enough to be interesting for us.
+In this guide, we will be using the https://code.google.com/p/northwindextended/downloads/detail?name=northwind.postgre.sql&can=2&q=[NorthWind dataset^], a commonly-used SQL dataset.
+This data depicts a typical product sale system, storing and tracking customers, products, customer orders, warehouse stock, shipping, suppliers, and even employees and their sales territories.
+Although the NorthWind dataset is often used to demonstrate SQL and relational databases, the data also can be structured as a graph.
 
-The following is an entity-relationship diagram of the Northwind dataset:
+An entity-relationship diagram (ERD) of the Northwind dataset is shown below.
 
 image::{img}Northwind_diagram.jpg[]
 
 [#northwind-graph-model]
 == Developing a Graph Model
 
-When deriving a graph model from a relational model, we should keep the following guidelines in mind:
+The first thing we will need to do to get data from a relational database into a graph is to translate the relational data model to a graph data model.
+Determining how we want to structure tables and rows as nodes and relationships will vary depending on what is most important to your business needs.
 
-* A _row_ is a _node_
-* A _table name_ is a _label name_
+[NOTE]
+--
+For more information on adapting your graph model to different scenarios, check out our link:/developer/modeling-designs/[modeling designs] guide.
+--
 
-In this dataset, the following graph model serves as a first iteration:
+When deriving a graph model from a relational model, we should keep a couple of general guidelines in mind.
+
+1. A _row_ is a _node_
+2. A _table name_ is a _label name_
+3. A _join or foreign key_ is a _relationship_
+
+In this dataset, the following graph model serves as a first iteration.
 
 image::{img}northwind_graph_simple.png[width=800]
+
+Notice that we have chosen not to model customers and demographics, shipping information, or employee territories in this model.
+You can, of course, create a data model to include these entities, but for now, we will keep to this straightforward graph model.
 
 === How does the Graph Model Differ from the Relational Model?
 
 * There are no nulls.
-** In the relational version, to track the employee hierarchy we have a null entry in the 'ReportsTo' column if they don't report to anybody. In the graph version we just don't define a relationship.
 ** Non existing value entries (properties) are just not present.
-* It describes the relationships in more detail. For example, we know that an employee SOLD an order rather than having a foreign key relationship between the Orders and Employees tables. We could also choose to add more metadata about that relationship should we wish.
-* It will often be more normalised. For example, addresses have been denormalised in several of the tables but in a future version of the graph model we might choose to make addresses nodes in their own rights.
+** In the relational version, to track the employee hierarchy we have a null entry in the 'ReportsTo' column if they don't report to anybody. In the graph version we just don't define a relationship.
+* It describes the relationships in more detail. For example, we know that an employee SOLD an order rather than having a foreign key relationship between the Orders and Employees tables. We could also choose to add more metadata about that relationship, should we wish.
+* Either model can be more normalized. For example, addresses have been denormalized in several of the tables, but could have been in a separate table. In a future version of our graph model, we might also choose to separate addresses from the `Customer` entities and create separate `Address` nodes.
 
 [#export-csv]
 == Exporting the Data to CSV
