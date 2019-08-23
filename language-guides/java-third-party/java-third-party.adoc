@@ -18,7 +18,7 @@ include::../_includes/community-driver-notice.adoc[]
 Being a Java developer you're probably familiar with JDBC as a way to work with relational databases, either directly or via abstractions like Spring's `JDBCTemplate` or MyBatis.
 Many tools for ETL, Report Generators, Business Intelligence, and data management also use JDBC drivers to interact with relational databases.
 
-As Cypher, like SQL, is a textual parametrizable query language that can return tabular results, it was possible for us to support the JDBC APIs and make a http://github.com/neo4j-contrib/neo4j-jdbc[Neo4j-JDBC^] driver available.
+As Cypher, like SQL, is a textual parameterizable query language that can return tabular results, it was possible for us to support the JDBC APIs and make a http://github.com/neo4j-contrib/neo4j-jdbc[Neo4j-JDBC^] driver available.
 
 The driver supports the new binary "Bolt" protocol of Neo4j 3.x, the transactional http endpoint and Neo4j embedded connections.
 
@@ -99,8 +99,7 @@ The goal of GORM for Neo4j is to provide a 'as-complete-as-possible' GORM implem
 * Support for GORM dynamic finders, criteria and named queries
 * Session-managed transactions
 * Access to Neo4j's traversal capabilities
-* Access the Neo4j graph database in all flavours (Embedded, REST and HA)
-
+* Access the Neo4j graph database via the Bolt driver
 [cols="1,4"]
 |===
 | icon:user[] Authors | Stefan Armbruster, Graeme Rocher
