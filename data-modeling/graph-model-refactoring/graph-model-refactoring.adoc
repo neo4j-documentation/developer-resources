@@ -25,18 +25,26 @@ You should be familiar with link:/developer/cypher/cypher-query-language[MATCH],
 [#airports-dataset]
 == Airports dataset
 
-In this guide we're going to use an airports dataset.
-This is the graph model that we're going to use:
+In this guide we're going to use an airports dataset that contains connections between US airports in January 2008.
+We have the data in a CSV file, and this is the graph model that we're going to import it into:
 
-image::{img}initial_model.svg[link="{img}initial_model.svg",role="popup-link"]
+image::{img}initial_model.png[link="{img}initial_model.png",role="popup-link"]
 
-The following query imports the data into this model:
+Before we import any data, we're going to create a unique constraint on the `Airport` label and `code` property to ensure that we don't accidentally import duplicate airports.
+The following query creates this constraint:
 
 [source,cypher]
 ----
 CREATE CONSTRAINT ON (airport:Airport)
 ASSERT airport.code IS UNIQUE
 ----
+
+.Results
+|===
+| 0 rows available after 86 ms, consumed after another 0 ms. Added 1 constraints
+|===
+
+And the following query loads the data from a CSV file using the `LOAD CSV` tool:
 
 [source,cypher]
 ----
@@ -53,21 +61,30 @@ ON CREATE SET connection.departure = localtime(apoc.text.lpad(row.CRSDepTime, 4,
               connection.arrival = localtime(apoc.text.lpad(row.CRSArrTime, 4, "0"))
 ----
 
+This query:
+
+* Creates a node with an `Airport` label with a `code` property that has a value from the `Origin` column in the CSV file
+* Creates a node with an `Airport` label with a `code` property that has a value from the `Dest` column in the CSV file
+* Creates a relationship of type `CONNECTED_TO` with several properties based on columns in the CSV file.
+
+If we run this query we'll see the following output:
+
 .Results
 |===
 | Added 62 labels, created 62 nodes, set 7062 properties, created 1000 relationships, completed after 376 ms.
 |===
 
+This model is a good starter one, but there are some improvements that we can make.
 
 [#property-to-boolean]
 == Convert property to boolean
 
-The `diverted` and `cancelled` properties were both imported as string values of `1` and `0`.
-We can use the https://neo4j.com/docs/labs/apoc/current/graph-updates/graph-refactoring/normalize-boolean/[`apoc.refactor.normalizeAsBoolean`^] procedure to convert these properties to boolean values.
+The `diverted` and `cancelled` properties on the `CONNECTED_TO` relationships contain string values of `1` and `0`.
+Since these values are representing booleans, we can use the https://neo4j.com/docs/labs/apoc/current/graph-updates/graph-refactoring/normalize-boolean/[`apoc.refactor.normalizeAsBoolean`^] procedure to convert the values from strings to booleans.
 
-image::{img}boolean_refactoring.svg[link="{img}boolean_refactoring.svg",role="popup-link"]
+image::{img}boolean_refactoring.png[link="{img}boolean_refactoring.png",role="popup-link"]
 
-The following query does this for the `diverted` property:
+The following query does the conversion for the `diverted` property:
 
 [source,cypher]
 ----
@@ -83,7 +100,7 @@ RETURN count(*)
 | 1000
 |===
 
-And the following query does this for the `cancelled` property:
+And the following query does the conversion for the `cancelled` property:
 
 
 [source,cypher]
@@ -101,7 +118,8 @@ RETURN count(*)
 |===
 
 If we have a lot of relationships to update, we may get an OutOfMemory exception if we try to refactor them all in one transaction.
-We can therefore process them in batches using the https://neo4j.com/docs/labs/apoc/current/graph-updates/periodic-execution/#commit-batching[`apoc.periodic.iterate`^] procedure:
+We can therefore process them in batches using the https://neo4j.com/docs/labs/apoc/current/graph-updates/periodic-execution/#commit-batching[`apoc.periodic.iterate`^] procedure. 
+The following query does this for the `cancelled` and `reverted` properties in the same query:
 
 [source,cypher]
 ----
@@ -110,10 +128,24 @@ CALL apoc.periodic.iterate(
   "MATCH (:Airport)-[connectedTo:CONNECTED_TO]->(:Airport) RETURN connectedTo",
   "CALL apoc.refactor.normalizeAsBoolean(connectedTo, $propertyToDelete, ['1'], ['0'])
    RETURN count(*)",
-  {params: {propertyToDelete: propertyToDelete}, batchSize: 100, iterateList: true})
+  {params: {propertyToDelete: propertyToDelete}, batchSize: 100})
 YIELD batches
 RETURN propertyToDelete, batches
 ----
+
+The `apoc.periodic.iterate` procedure in this query takes in 3 parameters:
+
+* An outer Cypher query that finds and returns a stream of `CONNECTED_TO` relationships to be processed.
+* An inner Cypher query that processes those `CONNECTED_TO` relationships, converting to boolean any values for the specified property on those relationships. It does this using the `apoc.refactor.normalizeAsBoolean` procedure, which itself takes in several parameters:
+  ** the entity on which the property exists
+  ** the name of the property to normalize
+  ** a list of values that should be considered `true`
+  ** a list of values that should be considered `false`
+* Configuration values for the procedure, including:
+  ** `params` - parameters passed into those Cypher queries
+  ** `batchSize`- controls the number of inner statements that are run within a single transaction
+
+When we run this query we'll see the following output:
 
 .Results
 [opts="header"]
@@ -157,9 +189,11 @@ RETURN origin.code AS origin,
 [#create-node-from-relationship]
 == Create node from relationship
 
-Now let's evolve our model to create a `Flight` node from the properties stored on the `CONNECTED_TO` relationship.
+Next, imagine that we want to write a query that finds a specific flight.
+This is quite difficult with our existing model because flights are represented as relationships.
+We can evolve our model to create a `Flight` node from the properties stored on the `CONNECTED_TO` relationship.
 
-image::{img}flight_node.svg[link="{img}flight_node.svg",role="popup-link"]
+image::{img}flight_node.png[link="{img}flight_node.png",role="popup-link"]
 
 The following query does this refactoring:
 
@@ -182,12 +216,12 @@ CALL apoc.periodic.iterate(
   {batchSize: 100})
 ----
 
-The query executes the following steps:
+As with our previous query, this query uses the `apoc.periodic.iterate` procedure so that we can do the refactoring in batches rather than within a single transaction.
+The procedure takes in 3 parameters:
 
-* Find all `CONNECTED_TO` relationships
-* Create a `Flight` node per relationship
-* Create `ORIGIN` and `DESTINATION` relationships from that `Flight` to the appropriate `Airport` nodes
-* Delete the `CONNECTED_TO` relationship
+* An outer Cypher query that finds and returns a stream of `CONNECTED_TO` relationships, and origin and destination airports that need to be processed.
+* An inner Cypher query that processes those entities, creating a node with the label `Flight` and creating relationships from that node to the origin and destination airports.
+*  `batchSize` configuration, which sets to `100` the number of inner statements that are run within a single transaction.
 
 If we execute the query we'll see the following output:
 
@@ -212,6 +246,9 @@ CALL apoc.periodic.iterate(
   {batchSize: 100});
 ----
 
+This does the same as the previous query, but the outer Cypher query uses the `apoc.refactor.extractNode` procedure to create the `Flight` node and create relationships to origin and destination airports.
+If we run this query we'll see the following output:
+
 .Results
 [opts="header"]
 |===
@@ -223,12 +260,14 @@ CALL apoc.periodic.iterate(
 [#create-node-from-property]
 == Create node from property
 
-At the moment the airline for our flights is stored as a property on the `Flight` nodes.
-Now we're going to create a node for each airline with an `Airline` label.
+At the moment the airline for our flights is stored in the `airline` property on `Flight` nodes.
+This means that if we wanted to return a stream of all airlines we'd need to scan through every flight and check the `airline` property on each of those flights.
 
-image::{img}airline.svg[link="{img}airline.svg",role="popup-link"]
+We can make it easier, and more efficient, to write this query by creating a node with an `Airline` label for each airline:
 
-Let's first create a constraint on the `Airline` label and `name` property so that we don't create duplicate nodes: 
+image::{img}airline.png[link="{img}airline.png",role="popup-link"]
+
+Let's first create a constraint on the `Airline` label and `name` property so that we don't create duplicate airline nodes: 
 
 [source,cypher]
 ----
@@ -254,12 +293,38 @@ CALL apoc.periodic.iterate(
 )
 ----
 
+Again we're using the `apoc.periodic.iterate` procedure, with the following parameters:
+
+* An outer Cypher statement that returns a stream of `Flight` nodes to be processed
+* An inner Cypher statementthat processes these flight nodes, creating `Airline` nodes based on flights' `airline` property and created an `AIRLINE` relationship from the `Flight` to the `Airline` node. We then remove the `airline` property from the `Flight` node.
+
+If we run this query we'll see the following output:
+
 .Results
 [opts="header"]
 |===
 | batches | total | timeTaken | committedOperations | failedOperations | failedBatches | retries | errorMessages | batch                                           | operations                                      | wasTerminated 
 | 1       | 1000  | 0         | 1000                | 0                | 0             | 0       | {}            | {total: 1, committed: 1, failed: 0, errors: {}} | {total: 1000, committed: 1000, failed: 0, errors: {}} | FALSE                                                                
 |===
+
+We can then write the following query to find the airlines and number of flights involving each:
+
+[source,cypher]
+----
+MATCH (airline:Airline)<-[:AIRLINE]-(:Flight)
+RETURN airline.name AS airline, count(*) AS numberOfFlights
+----
+
+This does the same as the previous query, but the outer Cypher query uses the `apoc.refactor.extractNode` procedure to create the `Flight` node and create relationships to origin and destination airports.
+If we run this query we'll see the following output:
+
+.Results
+[opts="header"]
+|===
+| airline | numberOfFlights
+| "WN" | 1000                                                                
+|===
+
 
 
 [#cypher-resources]
