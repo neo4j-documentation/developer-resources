@@ -10,7 +10,7 @@
 
 .Goals
 [abstract]
-In this page, we will learn how to connect to our Neo4j Aura database using the Cypher Shell command line tool.
+In this page, we will learn how to monitor our Neo4j Aura database.
 
 .Prerequisites
 [abstract]
@@ -38,56 +38,58 @@ Once we've clicked this button, we'll see the following screen, which gives us a
 
 image::{img}dbaas_database_overview.png[link="{img}dbaas_database_overview.png",role="popup-link"]
 
-
 These metrics are great for getting a high level overview, but if we want to take a closer look at our database, we'll need to use the Halin tool.
 
 == Halin
 
 Halin is Neo4j's monitoring and management tool.
 It can be https://install.graphapp.io[installed as a Neo4j Desktop Graph App^] and there is a https://halin.graphapp.io/[hosted version^] as well.
-We'll use the hosted version in this tutorial.
 
-If we navigate to https://halin.graphapp.io/[halin.graphapp.io^], we'll see the following screen requesting our database credentials:
+We can learn more about the Halin tool on its https://neo4j.com/labs/halin/[Neo4j Labs product page^].
 
-image::{img}dbaas_monitoring_halin_login.png[link="{img}dbaas_monitoring_halin_login.png",role="popup-link"]
+// We'll use the hosted version in this tutorial.
 
-The default username is `neo4j` and the default password is generated on database creation.
-In the host field we need to enter the host of our database, which is the Bolt URI minus the protocol information.
-
-image::{img}dbaas_database_created_highlight_browser.png[link="{img}dbaas_database_created_highlight_browser.png",role="popup-link"]
-
-In the example above, our Bolt URI is `bolt+routing://178c6768.databases.neo4j.io`, and our host would therefore be `178c6768.databases.neo4j.io`.
-
-Once we've filled in those details we'll see the following overview screen:
-
-image::{img}dbaas_monitoring_halin_overview.png[link="{img}dbaas_monitoring_halin_overview.png",role="popup-link"]
-
-This is the best screen for getting an overall summary of what's happening with your database.
-
-=== Power Users
-
-The overview screen only touches the surface of what Halin has to offer.
-For power users there are many other features, which are covered in detail in David Allen's online meetup talk:
-
-++++
-<iframe width="560" height="315" src="https://www.youtube.com/embed/hKndQ2qF5ts" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-++++
-
-Let's explore one of these power user features - viewing the queries running on cluster members.
-We can interrogate individual cluster members by clicking on the `Cluster members` tab, which is the 2nd one down:
-
-image::{img}dbaas_monitoring_halin_select_members.png[link="{img}dbaas_monitoring_halin_select_members.png",role="popup-link"]
-
-We can then click on the `Queries` tab to see which queries are currently running on that cluster member:
-
-image::{img}dbaas_monitoring_halin_queries.png[link="{img}dbaas_monitoring_halin_queries.png",role="popup-link"]
-
-In this screenshot we can see that we've got a long running query, on line 1, that we probably want to kill.
-We can do that by clicking on the `X` button:
-
-image::{img}dbaas_monitoring_halin_kill_query.png[link="{img}dbaas_monitoring_halin_kill_query.png",role="popup-link"]
-
-Once we've done this a request will be sent to the database to terminate that query, and it will be removed from the query view.
+// If we navigate to https://halin.graphapp.io/[halin.graphapp.io^], we'll see the following screen requesting our database credentials:
+//
+// image::{img}dbaas_monitoring_halin_login.png[link="{img}dbaas_monitoring_halin_login.png",role="popup-link"]
+//
+// The default username is `neo4j` and the default password is generated on database creation.
+// In the host field we need to enter the host of our database, which is the Bolt URI minus the protocol information.
+//
+// image::{img}dbaas_database_created_highlight_browser.png[link="{img}dbaas_database_created_highlight_browser.png",role="popup-link"]
+//
+// In the example above, our Bolt URI is `bolt+routing://178c6768.databases.neo4j.io`, and our host would therefore be `178c6768.databases.neo4j.io`.
+//
+// Once we've filled in those details we'll see the following overview screen:
+//
+// image::{img}dbaas_monitoring_halin_overview.png[link="{img}dbaas_monitoring_halin_overview.png",role="popup-link"]
+//
+// This is the best screen for getting an overall summary of what's happening with your database.
+//
+// === Power Users
+//
+// The overview screen only touches the surface of what Halin has to offer.
+// For power users there are many other features, which are covered in detail in David Allen's online meetup talk:
+//
+// ++++
+// <iframe width="560" height="315" src="https://www.youtube.com/embed/hKndQ2qF5ts" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+// ++++
+//
+// Let's explore one of these power user features - viewing the queries running on cluster members.
+// We can interrogate individual cluster members by clicking on the `Cluster members` tab, which is the 2nd one down:
+//
+// image::{img}dbaas_monitoring_halin_select_members.png[link="{img}dbaas_monitoring_halin_select_members.png",role="popup-link"]
+//
+// We can then click on the `Queries` tab to see which queries are currently running on that cluster member:
+//
+// image::{img}dbaas_monitoring_halin_queries.png[link="{img}dbaas_monitoring_halin_queries.png",role="popup-link"]
+//
+// In this screenshot we can see that we've got a long running query, on line 1, that we probably want to kill.
+// We can do that by clicking on the `X` button:
+//
+// image::{img}dbaas_monitoring_halin_kill_query.png[link="{img}dbaas_monitoring_halin_kill_query.png",role="popup-link"]
+//
+// Once we've done this a request will be sent to the database to terminate that query, and it will be removed from the query view.
 
 [monitoring-resources]
 === Resources
