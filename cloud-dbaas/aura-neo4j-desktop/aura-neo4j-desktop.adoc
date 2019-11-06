@@ -1,0 +1,56 @@
+= Connect to Neo4j Aura with Neo4j Desktop
+:slug: aura-connect-neo4j-desktop
+:level: Beginner
+:section: Neo4j Cloud DBaaS
+:section-link: cloud-dbaas
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
+
+.Goals
+[abstract]
+In this page, we will learn how to connect the Neo4j Desktop application to an instance in Neo4j Aura.
+This gives us the opportunity to have a single portal for interacting with all instances of Neo4j, whether local databases or databases located in various clouds.
+
+.Prerequisites
+[abstract]
+We should have created and started a Neo4j Aura database instance.
+If we have not already, we can follow the instructions in the link:https://aura.support.neo4j.com/hc/en-us/articles/360037562253-Working-with-Neo4j-Aura[getting started guide] to step through the process.
+We should also have downloaded and installed the Neo4j Desktop application.
+If you have not already, you can https://neo4j.com/download/[download it^] and follow the installation instructions that appear once you click to download.
+
+[role=expertise]
+{level}
+
+== Desktop Remote Instance
+
+When we create a new graph in Neo4j Desktop, we have the option to create a local graph or a remote graph. Because the Neo4j Cloud instance is hosted remotely, we will be connecting to a remote instance. We can do this with a few steps.
+
+. Navigate to the Neo4j Aura page and confirm your instance is running. Take note of the URL (can use the copy button next to it to put it in your clipboard), as we will need to use it later.
+
+
+. Choose the Projects tab in Neo4j Desktop, then choose or create a project, and click `Add Graph` in the right pane.
+
+
+. Choose the option to connect to a remote graph
+
+
+. Enter a name for the database (can match name in cloud or can be different) and copy/paste the URL from the Neo4j Cloud console (see Step 1) to the second input. Once complete, click `Next`.
+
+
+. Now we need to choose an authentication method. For this example, we will use the standard username and password method. Choose that option.
+
+
+. On this screen, we enter our credentials. We can use any username and password that is set up on the database. Enter both the username and password for an appropriate account, then ensure the box is checked for `Use encrypted connection` before clicking `Next`.
+
+
+. If the connection succeeds, we will see our database name and url details. To activate the connection, click the `Activate` button in lower right. Once activated, we can deactivate with the same button or connect to the instance through Neo4j Browser using the button on the left.
+
+
+Note: Deactivating in Neo4j Desktop will not shut down or stop the remote instance - only temporarily close the connection to it in Neo4j Desktop.
+Note: Neo4j Desktop only allows 1 connection at a time to a database (local or remote).
+
+== Interacting with the database
+
+Just as with other databases in Neo4j Desktop, you can https://install.graphapp.io[install graphapps^] for monitoring and other functionality. To do this, we can follow the same process to install the graph application that you need and open it from Neo4j Desktop or a web browser with the running and activated Neo4j Cloud instance.
