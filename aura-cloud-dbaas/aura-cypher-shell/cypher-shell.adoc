@@ -2,7 +2,7 @@
 :slug: aura-connect-cypher-shell
 :level: Intermediate
 :section: Neo4j Cloud DBaaS
-:section-link: cloud-dbaas
+:section-link: aura-cloud-dbaas
 :sectanchors:
 :toc:
 :toc-title: Contents
@@ -21,6 +21,7 @@ We should also have https://neo4j.com/docs/operations-manual/current/tools/cyphe
 [role=expertise]
 {level}
 
+[#aura-db-credentials]
 == Get database credentials
 
 If we open our https://console.neo4j.io/#databases[Neo4j Aura Console Dashboard^], we'll see a list of our databases.
@@ -33,6 +34,7 @@ image::{img}dbaas_database_created_highlight_browser.png[link="{img}dbaas_databa
 
 We're now ready to connect to the Cypher Shell.
 
+[#aura-cypher-shell]
 == Connecting to Cypher Shell
 
 If we have Neo4j installed locally we can find the Cypher Shell in the `bin` directory of the database.
@@ -114,6 +116,7 @@ neo4j> CALL dbms.showCurrentUser();
 |"neo4j"  | ["admin"] | []
 |===
 
+[#import-cypher-shell]
 == Importing data using the Cypher Shell
 
 We could also pipe a file containing Cypher commands to the Cypher Shell command.
@@ -191,8 +194,16 @@ If we execute this command, we'll see the following output:
 | (:Airport {code: "IND"})-[:CONNECTED_TO {date: 2008-01-03, diverted: "0", arrival: 17:25, cancelled: "0", departure: 15:10, airline: "WN", flightNumber: "1333"}]->(:Airport {code: "MCO"})
 |===
 
-[cypher-shell-resources]
+[#cypher-shell-resources]
 === Resources
 
 * link:https://neo4j.com/docs/operations-manual/current/tools/cypher-shell/[Cypher Shell Documentation^]
 * link:https://neo4j.com/download-center/#cyphershell[Cypher Shell in Download Center]
+
+[#aura-help]
+== Help and Questions
+
+Helpful guides and support are available on the link:https://aura.support.neo4j.com/hc/en-us[Aura support^] pages.
+
+You can also ask questions and connect with other people launching Neo4j Aura at the
+https://community.neo4j.com/c/neo4j-graph-platform/cloud[cloud topic on the Community Site^].
