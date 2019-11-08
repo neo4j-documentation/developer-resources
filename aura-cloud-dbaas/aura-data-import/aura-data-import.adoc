@@ -2,7 +2,7 @@
 :slug: aura-data-import
 :level: Beginner
 :section: Neo4j Cloud DBaaS
-:section-link: cloud-dbaas
+:section-link: aura-cloud-dbaas
 :sectanchors:
 :toc:
 :toc-title: Contents
@@ -15,6 +15,7 @@ In this guide, we will see how Neo4j Aura imports data differently from other Ne
 [role=expertise]
 {level}
 
+[#aura-import]
 == Why is it different?
 
 Because Neo4j Aura is a database instance that is located and maintained in the cloud, we must take care to ensure data integrity is maintained and access is carefully granted to avoid malicious tampering.
@@ -24,6 +25,7 @@ While this means that malicious users cannot harm the data or infiltrate the sys
 
 We will cover what those differences are, why they exist, and how to still get the data into the instance.
 
+[#import-differences-aura]
 == Import differences with Neo4j Aura
 
 Let's go through the differences, one at a time.
@@ -63,3 +65,11 @@ For more information, check out Andrew Jefferson's blog posts on link:https://me
 In other types of installations, users could place API credentials in the `neo4j.conf` file and reference them in Cypher statements like environment variables.
 With Neo4j Aura, however, those internal folders and files have been hidden, so this functionality must be handled in other ways.
 Whether we store these credentials in a secure file on the cloud or store them as parameters in Neo4j with Cypher, we must use these best practices to avoid non-authorized users accessing private credentials or information.
+
+[#aura-help]
+== Help and Questions
+
+Helpful guides and support are available on the link:https://aura.support.neo4j.com/hc/en-us[Aura support^] pages.
+
+You can also ask questions and connect with other people launching Neo4j Aura at the
+https://community.neo4j.com/c/neo4j-graph-platform/cloud[cloud topic on the Community Site^].
