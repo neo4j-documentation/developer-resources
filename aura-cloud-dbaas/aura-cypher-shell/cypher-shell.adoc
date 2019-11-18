@@ -1,0 +1,209 @@
+= Connecting to Neo4j Aura with Cypher Shell
+:slug: aura-connect-cypher-shell
+:level: Intermediate
+:section: Neo4j Cloud DBaaS
+:section-link: aura-cloud-dbaas
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
+
+.Goals
+[abstract]
+In this page, we will learn how to connect to our Neo4j Aura database using the Cypher Shell command line tool.
+
+.Prerequisites
+[abstract]
+We should have created and started a Neo4j Aura database instance.
+If we have not already, we can follow the instructions in the link:https://aura.support.neo4j.com/hc/en-us/articles/360037562253-Working-with-Neo4j-Aura[getting started guide] to step through the process.
+We should also have https://neo4j.com/docs/operations-manual/current/tools/cypher-shell/[installed the Cypher Shell^] command line tool.
+
+[role=expertise]
+{level}
+
+[#aura-db-credentials]
+== Get database credentials
+
+If we open our https://console.neo4j.io/#databases[Neo4j Aura Console Dashboard^], we'll see a list of our databases.
+
+image::{img}dbaas_database_created.png[link="{img}dbaas_database_created.png",role="popup-link"]
+
+We'll need to use the Bolt URL, so let's copy that onto our clipboard:
+
+image::{img}dbaas_database_created_highlight_browser.png[link="{img}dbaas_database_created_highlight_browser.png",role="popup-link"]
+
+We're now ready to connect to the Cypher Shell.
+
+[#aura-cypher-shell]
+== Connecting to Cypher Shell
+
+If we have Neo4j installed locally we can find the Cypher Shell in the `bin` directory of the database.
+
+In the following examples we'll use the standalone version of the tool, which we can download from the https://neo4j.com/download-center/#cyphershell[Neo4j Download Center^].
+Once we've downloaded the zip file, we'll run the following commands:
+
+[source,bash]
+----
+unzip cypher-shell.zip
+cd cypher-shell
+----
+
+Let's learn what arguments we need to pass to the tool to connect to our database.
+
+[source, bash]
+----
+./cypher-shell --help
+----
+
+If we run that command we'll see the following output, which has been edited for brevity:
+
+[source,text]
+----
+usage: cypher-shell [-h] [-a ADDRESS] [-u USERNAME] [-p PASSWORD] [--encryption {true,false}] [--format {auto,verbose,plain}] [--debug] [--non-interactive] [--sample-rows SAMPLE-ROWS] [--wrap {true,false}] [-v] [--driver-version] [--fail-fast | --fail-at-end] [cypher]
+
+A command line shell where you can execute Cypher against an instance of Neo4j. By default the shell is interactive but you can use it for scripting by passing cypher directly on the command line or by piping a file with cypher statements (requires Powershell on Windows).
+
+connection arguments:
+  -a ADDRESS, --address ADDRESS
+                         address and port to connect to (default: bolt://localhost:7687)
+  -u USERNAME, --username USERNAME
+                         username to connect as. Can also be specified using environment variable NEO4J_USERNAME (default: )
+  -p PASSWORD, --password PASSWORD
+                         password to connect with. Can also be specified using environment variable NEO4J_PASSWORD (default: )
+  --encryption {true,false}
+                         whether the connection to Neo4j should be encrypted; must be consistent with Neo4j's configuration (default: true)
+----
+
+We need to pass in our database URI to the `-a` argument.
+We can also optionally pass in user to the `-u` argument, and password to the `-p` argument, but we will be prompted for those values if we don't provide them.
+
+If we run the following command:
+
+[source,bash]
+----
+ ./cypher-shell -a bolt+routing://178c6768.databases.neo4j.io
+----
+
+We'll then receive the following prompt:
+
+[source,bash]
+----
+username: neo4j
+password: **********************************************
+----
+
+Once we've provided those details, we'll see the following message:
+
+[source,bash]
+----
+Connected to Neo4j 3.5.0 at bolt+routing://178c6768.databases.neo4j.io:7687 as user neo4j.
+Type :help for a list of available commands or :exit to exit the shell.
+Note that Cypher queries must end with a semicolon.
+neo4j>
+----
+
+We can now run queries against our Cloud database.
+For example, we can run the following procedure to return the logged in user:
+
+[source,cypher]
+----
+neo4j> CALL dbms.showCurrentUser();
+----
+
+[opts="header",cols="1,1,1"]
+|===
+| userName | roles | flags
+|"neo4j"  | ["admin"] | []
+|===
+
+[#import-cypher-shell]
+== Importing data using the Cypher Shell
+
+We could also pipe a file containing Cypher commands to the Cypher Shell command.
+This feature is useful for doing data import.
+
+We have a file `import.cypher` that contains some of the Cypher statements from the https://neo4j.com/developer/graph-model-refactoring/[Graph Model Refactoring^] developer guide.
+We can view the contents of that file by executing the following command from the terminal:
+
+[source,bash]
+----
+cat import.cypher
+CREATE CONSTRAINT ON (airport:Airport)
+ASSERT airport.code IS UNIQUE;
+
+LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/neo4j-contrib/training/master/modeling/data/flights_1k.csv" AS row
+MERGE (origin:Airport {code: row.Origin})
+MERGE (destination:Airport {code: row.Dest})
+MERGE (origin)-[connection:CONNECTED_TO {
+  airline: row.UniqueCarrier,
+  flightNumber: row.FlightNum,
+  date: date({year: toInteger(row.Year), month: toInteger(row.Month), day: toInteger(row.DayofMonth)}),
+  cancelled: row.Cancelled,
+  diverted: row.Diverted}]->(destination)
+ON CREATE SET connection.departure = localtime(apoc.text.lpad(row.CRSDepTime, 4, "0")),
+              connection.arrival = localtime(apoc.text.lpad(row.CRSArrTime, 4, "0"));
+
+MATCH (:Airport)-[connectedTo:CONNECTED_TO]->(:Airport)
+CALL apoc.refactor.normalizeAsBoolean(connectedTo, "diverted", ["1"], ["0"])
+RETURN count(*)
+----
+Now we're going to import this data into our Neo4j Cloud database, via the Cypher Shell command.
+We'll do this by executing the following:
+
+[source,bash]
+----
+export NEO4J_PASSWORD="your password"
+cat import.cypher | ./cypher-shell -a bolt+routing://178c6768.databases.neo4j.io -u neo4j --format verbose
+----
+
+[NOTE]
+====
+If we pipe a file into the Cypher Shell command, we won't be prompted for our username and password, it will use default values if they aren't provided.
+====
+
+If we run those commands, we'll see the following output:
+
+[source,bash]
+----
+0 rows available after 1 ms, consumed after another 0 ms
+0 rows available after 336 ms, consumed after another 0 ms
+Added 62 nodes, Created 1000 relationships, Set 7062 properties, Added 62 labels
+----
+
+We can now execute a read query to see what data we've imported into our database:
+
+[source, bash]
+----
+./cypher-shell -a bolt+routing://178c6768.databases.neo4j.io -u neo4j "MATCH path = ()-->() RETURN path LIMIT 10"
+----
+
+If we execute this command, we'll see the following output:
+
+[opts="header",cols="1"]
+|===
+| path
+| (:Airport {code: "IAD"})-[:CONNECTED_TO {date: 2008-01-03, diverted: "0", arrival: 10:00, cancelled: "0", departure: 07:35, airline: "WN", flightNumber: "3231"}]->(:Airport {code: "TPA"})
+| (:Airport {code: "IAD"})-[:CONNECTED_TO {date: 2008-01-03, diverted: "0", arrival: 22:25, cancelled: "0", departure: 19:55, airline: "WN", flightNumber: "335"}]->(:Airport {code: "TPA"})
+| (:Airport {code: "IND"})-[:CONNECTED_TO {date: 2008-01-03, diverted: "0", arrival: 15:10, cancelled: "0", departure: 12:55, airline: "WN", flightNumber: "4"}]->(:Airport {code: "TPA"})
+| (:Airport {code: "IND"})-[:CONNECTED_TO {date: 2008-01-03, diverted: "0", arrival: 09:55, cancelled: "0", departure: 07:45, airline: "WN", flightNumber: "1144"}]->(:Airport {code: "PHX"})
+| (:Airport {code: "IND"})-[:CONNECTED_TO {date: 2008-01-03, diverted: "0", arrival: 16:25, cancelled: "0", departure: 14:25, airline: "WN", flightNumber: "675"}]->(:Airport {code: "PHX"})
+| (:Airport {code: "IND"})-[:CONNECTED_TO {date: 2008-01-03, diverted: "0", arrival: 10:10, cancelled: "0", departure: 10:20, airline: "WN", flightNumber: "2272"}]->(:Airport {code: "MDW"})
+| (:Airport {code: "IND"})-[:CONNECTED_TO {date: 2008-01-03, diverted: "0", arrival: 16:55, cancelled: "0", departure: 17:00, airline: "WN", flightNumber: "1827"}]->(:Airport {code: "MDW"})
+| (:Airport {code: "IND"})-[:CONNECTED_TO {date: 2008-01-03, diverted: "0", arrival: 07:10, cancelled: "0", departure: 07:15, airline: "WN", flightNumber: "1016"}]->(:Airport {code: "MDW"})
+| (:Airport {code: "IND"})-[:CONNECTED_TO {date: 2008-01-03, diverted: "0", arrival: 14:25, cancelled: "0", departure: 14:30, airline: "WN", flightNumber: "829"}]->(:Airport {code: "MDW"})
+| (:Airport {code: "IND"})-[:CONNECTED_TO {date: 2008-01-03, diverted: "0", arrival: 17:25, cancelled: "0", departure: 15:10, airline: "WN", flightNumber: "1333"}]->(:Airport {code: "MCO"})
+|===
+
+[#cypher-shell-resources]
+=== Resources
+
+* link:https://neo4j.com/docs/operations-manual/current/tools/cypher-shell/[Cypher Shell Documentation^]
+* link:https://neo4j.com/download-center/#cyphershell[Cypher Shell in Download Center]
+
+[#aura-help]
+== Help and Questions
+
+Helpful guides and support are available on the link:https://aura.support.neo4j.com/hc/en-us[Aura support^] pages.
+
+You can also ask questions and connect with other people launching Neo4j Aura at the
+https://community.neo4j.com/c/neo4j-graph-platform/cloud[cloud topic on the Community Site^].
