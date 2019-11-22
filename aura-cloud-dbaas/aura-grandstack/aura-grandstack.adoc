@@ -21,11 +21,9 @@ We should also be familiar with the https://grandstack.io/[GRANDstack^].
 [role=expertise]
 {level}
 
-Now that we've created our Neo4j Aura database, we're going to learn how to build a GRANDstack application on top of it.
-We're going to
+Now that we've created our Neo4j Aura database, we're going to learn how to deploy a GRANDstack application that queries data stored in that database.
 
-
-== Connect to Neo4j Aura with Neo4j Desktop
+=== Connect to Neo4j Aura with Neo4j Desktop
 
 In Neo4j Desktop, we need to create a remote connection to our Aura database.
 See the link:/developer/aura-connect-neo4j-desktop/[Connect to Neo4j Aura with Neo4j Desktop^] guide for step by step instructions explaining how to do this.
@@ -47,14 +45,19 @@ Once we do that we'll see the following prompt:
 
 image::{img}grandstack-install-graphapp.png[link="{img}grandstack-install-graphapp.png",role="popup-link"]
 
-[#importing-database]
-== Importing the dataset
-
 We can now launch the Neo4j Cloud Tool, which will result in the following screen:
 
 image::{img}grandstack-neo4j-cloud-tool-launched.png[link="{img}grandstack-neo4j-cloud-tool-launched.png",role="popup-link"]
 
-Now click on the `Check existing database` button.
+
+[#importing-database]
+== Importing the dataset
+
+We're going to use the Neo4j Cloud tool to import the football transfers graph.
+See https://medium.com/neo4j/football-transfers-graph-e8ba7347169e[Football Transfers Graph^] to learn more about the dataset.
+
+Click on the `Check existing database` button.
+This will check whether our Aura database contains existing data.
 Assuming an empty database, we'll see the following screen:
 
 image::{img}grandstack-neo4j-cloud-tool-check-existing.png[link="{img}grandstack-neo4j-cloud-tool-check-existing.png",role="popup-link"]
@@ -63,7 +66,7 @@ Clicking on the `Next` button will take us to the following screen:
 
 image::{img}grandstack-neo4j-cloud-tool-select-database-dump.png[link="{img}grandstack-neo4j-cloud-tool-select-database-dump.png",role="popup-link"]
 
-From here we can import databases or dump file.
+From here we can import databases or a dump file.
 We'll be using the latter functionality to import a dump containing the football transfers database.
 
 The dump file can be downloaded from https://aura-datasets.s3.amazonaws.com/football-transfers.dump[aura-datasets.s3.amazonaws.com/football-transfers.dump].
@@ -78,10 +81,13 @@ The diagram below shows a sample of the imported graph:
 
 image::{img}grandstack-neo4j-browser.png[link="{img}grandstack-neo4j-browser.png",role="popup-link"]
 
-[#grandstack-application]
-== The GRANDstack application
+[#our-application]
+== Our Application
 
-We're now ready to look at our GRANDstack application.
+Let's have a look at the GRANDstack application that we're going to deploy.
+The application is a football transfers one based on data scraped from https://www.transfermarkt.co.uk/[transfermarkt.co.uk].
+See https://blog.grandstack.io/football-transfers-graph-app-with-the-grandstack-starter-kit-b8dfa62c322e[Football Transfers Graph App with the GRANDstack Starter Kit^] to learn more about the application itself.
+
 The following command will clone the football transfers project locally:
 
 [source,bash]
@@ -92,88 +98,8 @@ cd football-transfers-app
 
 The application has two parts:
 
-=== API
-
-This code powers a GraphQL API on top of our Neo4j database, and lives in the `api` directory.
-The most interesting part of the API is our GraphQL schema, which lives in https://github.com/mneedham/football-transfers-app/blob/master/api/src/schema.graphql[`api/src/schema.graphql`^].
-Below is a small part of the schema:
-
-[source,graphql]
-----
-type Club {
-   _id: Long!
-   id: String!
-   image: String
-   name: String!
-   in_league: League @relation(name: "IN_LEAGUE", direction: "OUT")
-   transfers_from_club: [Transfer] @relation(name: "FROM_CLUB", direction: "IN")
-   transfers_to_club: [Transfer] @relation(name: "TO_CLUB", direction: "IN")
-}
-----
-
-This fragment defines a `Club` type that will return nodes that have the `Club` label.
-It maps some basic properties: `id`, `image`, and `name`, and also allows us to navigate to some other types, including:
-
-
-* the `League` that a club plays in using the `in_league` property.
-This property traverses the `IN_LEAGUE` relationship type going `OUT` from the club.
-* the `Transfers` going from a club using the `transfers_from_club` property
-This property traverses the `FROM_CLUB` relationship type coming `IN` to the club.
-* the `Transfers` going to a club using the `transfers_to_club` property
-This property traverses the `TO_CLUB` relationship type coming `IN` to the club
-
-=== UI
-
-The `ui` directory contains a React application that renders data extracted from the GraphQL API.
-
-Let's take a look at https://github.com/mneedham/football-transfers-app/blob/master/ui/src/TopTransfers.js#L54[ui/src/TopTransfers.js^], which contains a component that renders the most expensive transfers:
-In the middle of the file we find the following code:
-
-[source,js]
-----
-const QUERY = gql`
-  query topTransfers(
-    $orderBy: [_TransferOrdering]
-    $first: Int
-    $offset: Int
-    $filter: _TransferFilter
-  ) {
-    Transfer(
-      first: $first
-      orderBy: $orderBy
-      offset: $offset
-      filter: $filter
-    ) {
-      date { formatted }
-      value
-      id
-      of_player { name image }
-      from_club { name image }
-      to_club { name image
-      }
-    }
-  }
-`;
-----
-
-This fragment defines a GraphQL query that returns various properties related to `Transfers`.
-We call that query in the `Query` component further down the file:
-
-[source,js]
-----
-<Query
-  query={QUERY}
-  variables={{
-    first: this.state.rowsPerPage,
-    offset: this.state.rowsPerPage * this.state.page,
-    filter: { AND: [this.getFromClubFilter(), this.getToClubFilter()] },
-    orderBy: this.state.orderBy + "_" + this.state.order
-  }}
->
-----
-
-This component executes the GraphQL query and returns a collection of results in the `data` variable.
-We then iterate over that collection, rendering one row per transfer.
+* API - this code powers a GraphQL API on top of our Neo4j database, and lives in the `api` directory.
+* UI - the `ui` directory contains a React application that renders data extracted from the GraphQL API.
 
 == Now CLI
 
@@ -301,3 +227,83 @@ Helpful guides and support are available on the link:https://aura.support.neo4j.
 
 You can also ask questions and connect with other people launching Neo4j Aura at the
 https://community.neo4j.com/c/neo4j-graph-platform/cloud[cloud topic on the Community Site^].
+
+// The most interesting part of the API is our GraphQL schema, which lives in https://github.com/mneedham/football-transfers-app/blob/master/api/src/schema.graphql[`api/src/schema.graphql`^].
+// Below is a small part of the schema:
+//
+// [source,graphql]
+// ----
+// type Club {
+//    _id: Long!
+//    id: String!
+//    image: String
+//    name: String!
+//    in_league: League @relation(name: "IN_LEAGUE", direction: "OUT")
+//    transfers_from_club: [Transfer] @relation(name: "FROM_CLUB", direction: "IN")
+//    transfers_to_club: [Transfer] @relation(name: "TO_CLUB", direction: "IN")
+// }
+// ----
+//
+// This fragment defines a `Club` type that will return nodes that have the `Club` label.
+// It maps some basic properties: `id`, `image`, and `name`, and also allows us to navigate to some other types, including:
+//
+//
+// * the `League` that a club plays in using the `in_league` property.
+// This property traverses the `IN_LEAGUE` relationship type going `OUT` from the club.
+// * the `Transfers` going from a club using the `transfers_from_club` property
+// This property traverses the `FROM_CLUB` relationship type coming `IN` to the club.
+// * the `Transfers` going to a club using the `transfers_to_club` property
+// This property traverses the `TO_CLUB` relationship type coming `IN` to the club
+//
+// === UI
+//
+// The `ui` directory contains a React application that renders data extracted from the GraphQL API.
+//
+// Let's take a look at https://github.com/mneedham/football-transfers-app/blob/master/ui/src/TopTransfers.js#L54[ui/src/TopTransfers.js^], which contains a component that renders the most expensive transfers:
+// In the middle of the file we find the following code:
+//
+// [source,js]
+// ----
+// const QUERY = gql`
+//   query topTransfers(
+//     $orderBy: [_TransferOrdering]
+//     $first: Int
+//     $offset: Int
+//     $filter: _TransferFilter
+//   ) {
+//     Transfer(
+//       first: $first
+//       orderBy: $orderBy
+//       offset: $offset
+//       filter: $filter
+//     ) {
+//       date { formatted }
+//       value
+//       id
+//       of_player { name image }
+//       from_club { name image }
+//       to_club { name image
+//       }
+//     }
+//   }
+// `;
+// ----
+//
+// This fragment defines a GraphQL query that returns various properties related to `Transfers`.
+// We call that query in the `Query` component further down the file:
+//
+// [source,js]
+// ----
+// <Query
+//   query={QUERY}
+//   variables={{
+//     first: this.state.rowsPerPage,
+//     offset: this.state.rowsPerPage * this.state.page,
+//     filter: { AND: [this.getFromClubFilter(), this.getToClubFilter()] },
+//     orderBy: this.state.orderBy + "_" + this.state.order
+//   }}
+// >
+// ----
+//
+// This component executes the GraphQL query and returns a collection of results in the `data` variable.
+// We then iterate over that collection, rendering one row per transfer.
