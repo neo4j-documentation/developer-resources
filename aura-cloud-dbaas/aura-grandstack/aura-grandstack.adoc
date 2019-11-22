@@ -49,11 +49,10 @@ We can now launch the Neo4j Cloud Tool, which will result in the following scree
 
 image::{img}grandstack-neo4j-cloud-tool-launched.png[link="{img}grandstack-neo4j-cloud-tool-launched.png",role="popup-link"]
 
-
 [#importing-database]
 == Importing the dataset
 
-We're going to use the Neo4j Cloud tool to import the football transfers graph.
+We're going to use the Neo4j Cloud tool to import a graph that contains football transfers scraped from https://www.transfermarkt.co.uk/[transfermarkt.co.uk].
 See https://medium.com/neo4j/football-transfers-graph-e8ba7347169e[Football Transfers Graph^] to learn more about the dataset.
 
 Click on the `Check existing database` button.
@@ -85,7 +84,7 @@ image::{img}grandstack-neo4j-browser.png[link="{img}grandstack-neo4j-browser.png
 == Our Application
 
 Let's have a look at the GRANDstack application that we're going to deploy.
-The application is a football transfers one based on data scraped from https://www.transfermarkt.co.uk/[transfermarkt.co.uk].
+The application is a football transfers one built on top of the graph that we imported in the previous step.
 See https://blog.grandstack.io/football-transfers-graph-app-with-the-grandstack-starter-kit-b8dfa62c322e[Football Transfers Graph App with the GRANDstack Starter Kit^] to learn more about the application itself.
 
 The following command will clone the football transfers project locally:
@@ -100,6 +99,10 @@ The application has two parts:
 
 * API - this code powers a GraphQL API on top of our Neo4j database, and lives in the `api` directory.
 * UI - the `ui` directory contains a React application that renders data extracted from the GraphQL API.
+
+The diagram below shows the architecture of our application and how it interacts with Neo4j:
+
+image::{img}grandstack-architecture.png[link="{img}grandstack-architecture.png",role="popup-link"]
 
 == Now CLI
 
