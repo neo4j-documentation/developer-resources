@@ -23,9 +23,15 @@ We should also be familiar with the https://grandstack.io/[GRANDstack^].
 
 Now that we've created our Neo4j Aura database, we're going to learn how to deploy a GRANDstack application that queries data stored in that database.
 
-=== Connect to Neo4j Aura with Neo4j Desktop
+[#our-dataset]
+== The Football Transfers Graph
 
-In Neo4j Desktop, we need to create a remote connection to our Aura database.
+We're going to deploy an application built on top of a graph containing football transfers scraped from https://www.transfermarkt.co.uk/[transfermarkt.co.uk].
+See https://medium.com/neo4j/football-transfers-graph-e8ba7347169e[Football Transfers Graph^] to learn more about the dataset.
+
+== Connect to Neo4j Aura with Neo4j Desktop
+
+The first thing we need to do, in link:/developer/neo4j-desktop/[Neo4j Desktop^], is create a remote connection to our Aura database.
 See the link:/developer/aura-connect-neo4j-desktop/[Connect to Neo4j Aura with Neo4j Desktop^] guide for step by step instructions explaining how to do this.
 
 [#neo4j-cloud-tool]
@@ -45,15 +51,15 @@ Once we do that we'll see the following prompt:
 
 image::{img}grandstack-install-graphapp.png[link="{img}grandstack-install-graphapp.png",role="popup-link"]
 
-We can now launch the Neo4j Cloud Tool, which will result in the following screen:
+We can now launch the Neo4j Cloud Tool, which will take us to the following screen:
 
 image::{img}grandstack-neo4j-cloud-tool-launched.png[link="{img}grandstack-neo4j-cloud-tool-launched.png",role="popup-link"]
+
 
 [#importing-database]
 == Importing the dataset
 
-We're going to use the Neo4j Cloud tool to import a graph that contains football transfers scraped from https://www.transfermarkt.co.uk/[transfermarkt.co.uk].
-See https://medium.com/neo4j/football-transfers-graph-e8ba7347169e[Football Transfers Graph^] to learn more about the dataset.
+We're going to use the Neo4j Cloud tool to import this dataset.
 
 Click on the `Check existing database` button.
 This will check whether our Aura database contains existing data.
@@ -223,13 +229,16 @@ My favourite one is `Country Money Flow`, so let's have a look at that:
 
 image::{img}grandstack-deployed-country-money-flow.png[link="{img}grandstack-deployed-country-money-flow.png",role="popup-link"]
 
+We've now deployed our first GRANDstack application.
+If any of the steps don't make sense or didn't work, please let us know in the https://community.neo4j.com/c/drivers-stacks/graphql-grandstack[GraphQL and GRANDstack topic^] on the https://community.neo4j.com/[community site^].
+
 [#aura-help]
 == Help and Questions
 
 Helpful guides and support are available on the link:https://aura.support.neo4j.com/hc/en-us[Aura support^] pages.
 
 You can also ask questions and connect with other people launching Neo4j Aura at the
-https://community.neo4j.com/c/neo4j-graph-platform/cloud[cloud topic on the Community Site^].
+https://community.neo4j.com/c/neo4j-graph-platform/cloud[cloud topic^] on the community site.
 
 // The most interesting part of the API is our GraphQL schema, which lives in https://github.com/mneedham/football-transfers-app/blob/master/api/src/schema.graphql[`api/src/schema.graphql`^].
 // Below is a small part of the schema:
