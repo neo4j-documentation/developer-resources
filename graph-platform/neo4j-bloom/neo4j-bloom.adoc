@@ -25,6 +25,12 @@ Neo4j Bloom is a data exploration tool that visualizes data in the graph and all
 Users can write patterns similar to natural language questions to retrieve data and traverse layers of the graph.
 Bloom also allows appropriate users to edit, update, or correct the graph when missing information or bad data is found.
 
+++++
+<div class="responsive-embed">
+<iframe width="680" height="425" src="https://www.youtube.com/embed/GV3WCEsHRYI" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+++++
+
 [#using-bloom]
 == Ways to use Neo4j Bloom
 
@@ -47,7 +53,7 @@ Detailed instructions for this are on the link:/developer/neo4j-desktop/[Neo4j D
 
 As noted above, we will be working with a local version of Bloom from Neo4j Desktop.
 Once you receive an activation key, we can follow the steps listed in the link:/docs/bloom-user-guide/current/installation/#_neo4j_desktop_hosted_bloom_client[documentation^] for adding Bloom to Desktop.
-If activated, Neo4j Desktop should show it in the list of graph applications like the image below.
+If activated, Neo4j Desktop should show Bloom in the list of graph applications like the image below.
 
 image::{img}desktop_bloom_license.jpg[link="{img}desktop_bloom_license.jpg",role="popup-link"]
 
@@ -55,11 +61,11 @@ image::{img}desktop_bloom_license.jpg[link="{img}desktop_bloom_license.jpg",role
 == Our example data set
 
 In this guide, we will walk through an example of exploring a retail data set to help us see what Bloom can provide and the functionality it supports.
-We will use the Northwind data, as this outlines a retail system with orders, products, and customers.
+We will use the Northwind data, which is a fictional retail system of orders, products, and customers.
 
 With Bloom, we will see how to navigate and explore the data to gather business value and insights.
 
-To load the data, we can start our instance in Neo4j Desktop and open Neo4j Browser by going to `localhost:7474` in a web browser.
+To load this data, we can start our instance in Neo4j Desktop and open Neo4j Browser by going to `localhost:7474` in a web browser.
 Then, in the Cypher command bar, type `:play northwind-graph` and run it for the Browser guide to appear in a pane below the command line. 
 Click on and run the Cypher queries in the slides to load all of the Northwind data into the graph.
 When finished, we can run `CALL db.schema()` in the command line, and the data model should match the one shown below.
@@ -88,7 +94,7 @@ Bloom can generate a default perspective based on the graph data model, or users
 The same graph can have multiple perspectives, depending on the different business views and functions.
 For instance, sales may view the data differently than marketing, and accounting will have more access to sensitive data than other functions of the business.
 All of these different functions can categorize and show/hide pieces of the graph to fit the needs of those using the data.
-More information on different perspectives and customizing is found in the link:/docs/bloom-user-guide/current/perspectives/[documentation^].
+More information on perspectives and customizing is in the link:/docs/bloom-user-guide/current/perspectives/[documentation^].
 
 In this guide, we will choose to let Bloom generate a perspective based on the data model in our graph.
 It creates categories based on labels and brings over the relationships and properties found from the data.
@@ -130,7 +136,7 @@ This will bring back all the products and show them on our screen.
 image::{img}bloom_products_scene.jpg[link="{img}bloom_products_scene.jpg",role="popup-link"]
 
 To display all of the products in the scene, Bloom has zoomed out quite a bit where we cannot see the details of each node.
-We can zoom in closer to a section of the results by using the trackpad on our laptop or mouse or by using the `+` and `-` buttons in the lower left of the scene.
+We can zoom in closer to a section of the results by using the trackpad on our laptop or mouse or by using the `+` and `-` buttons in the lower right of the scene.
 Once we zoom in a bit, we can see the property Bloom has assigned as the identifier for the node (in this case, the productID number).
 We can double-click on a node to see the rest of the properties we have for it.
 
@@ -148,12 +154,12 @@ This shows us the perspective we have defined with our categories listed.
 Since we want to change the property shown on the `Product` nodes, we can choose that category from the list.
 Another panel pops out to the right, and we can see all of the properties and whether to show or hide (exclude) them from the perspective.
 
-For our example, we will choose to show the `productName` property, so check the box next to that property for `Caption` and then uncheck the `Caption` checkbox for the `productID` property.
+For our example, we will choose to show the `productName` property, so check the box next to that property under the `Caption` column and uncheck the `Caption` checkbox for the `productID` property.
 If we leave both properties checked as captions, then both properties will be shown on the nodes.
 
 image::{img}bloom_alter_perspective.jpg[link="{img}bloom_alter_perspective.jpg",role="popup-link"]
 
-Finally, we can check that everything worked by closing the perspective panel and looking at our scene again.
+Finally, we can verify that everything worked by closing the perspective panel and looking at our scene again.
 The `Product` nodes should have adjusted to show the product name, rather than the id.
 
 image::{img}bloom_show_productName.jpg[link="{img}bloom_show_productName.jpg",role="popup-link"]
@@ -196,7 +202,7 @@ You also see the number of nodes it will add to the scene in that option, so we 
 image::{img}bloom_expand_node.jpg[link="{img}bloom_expand_node.jpg",role="popup-link"]
 
 We should now see a small graph around the product node of all of the relationships and nodes it is connected to.
-All of the nodes match the colors from the legend, so we have some red nodes that are orders (28 of those), an orange node that is a supplier (1 of those), and category node that is a product category (1 of those).
+All of the nodes match the colors from the legend, so we have some red nodes that are orders (28 of those), an orange node that is a supplier (1 of those), and a category node that is a product category (1 of those).
 
 image::{img}bloom_product_expanded.jpg[link="{img}bloom_product_expanded.jpg",role="popup-link"]
 
@@ -236,28 +242,82 @@ We can type in the terms below and press the `Enter` key to find results.
 image::{img}bloom_palindrome_search.jpg[link="{img}bloom_palindrome_search.jpg",role="popup-link"]
 
 Notice that we didn't need to specify relationships in our search.
-Bloom makes suggestions based on what it finds in the graph, so you don't have to type it out.
-When you pick from the search suggestions, you can choose which relationships are traversed.
+Bloom makes suggestions based on what it finds in the graph, so we don't have to type it out.
+When picking from the search suggestions, we can choose which relationships are traversed.
 
 We can zoom in a bit and pick out some interesting clusters.
 For instance, the supplier `Specialty Biscuits` supplies four different products, all with a teatime theme (longbreads, chocolate biscuits, scones, and marmalade).
 
 image::{img}bloom_supplier_products.jpg[link="{img}bloom_supplier_products.jpg",role="popup-link"]
 
-Feel free to explore others, as well, such as suppliers `Pavlova` and `New Orleans Cajun Delights`.
+Feel free to explore others, as well, such as the suppliers `Pavlova` and `New Orleans Cajun Delights`.
 
 [#bloom-order-search]
-=== Finding orders with two products
-Let us see if we can find one more complex pattern for finding customers who ordered two products together.
-We can choose anything, but let's start with the products `Ipoh Coffee` and `Teatime Chocalate Biscuits`.
-As we saw in our previous search, the supplier `Specialty Biscuits` makes the chocolate biscuits, but doesn't make the coffee, so it might be less likely to be ordered together.
+=== Finding customers who ordered two specific products
+Let us see if we can find one more complex pattern for finding customers who have ordered two different products.
+We can choose anything, but let's start with the products `Ipoh Coffee` and `Teatime Chocolate Biscuits`.
 
-For this type of query, we can use Bloom capability to search indexed properties to shorten our query.
-Instead of searching for a product with a particular name, as long as there is an index on the property in the database, we can just type in the property value, and Bloom will find the related node category.
+For this type of query, we can use Bloom's capability of searching indexed properties to shorten our syntax.
+Instead of searching for a product node with a particular property and value, we can type in the indexed property value, and Bloom will find the related node category.
 
-This is the search phrase we can use to answer our question.
+This is the search we can use to answer our question.
 
 .Search
-`Customer Order Teatime Chocolate Biscuits and Ipoh Coffee`
+`Teatime Chocolate Biscuits Order Customer Order Ipoh Coffee`
 
-//LEFT OFF HERE!
+.Results
+image::{img}bloom_customer_order_2products.jpg[link="{img}bloom_customer_order_2products.jpg",role="popup-link"]
+
+All of the customer nodes (in blue) are those who have ordered both the coffee and chocolate biscuits products.
+We can dig into the different customers to find out more information about who is purchasing them.
+For instance, only one customer is in North America (Tortuga Restaurante in Mexico) - all others are South America or Europe.
+
+[#bloom-shortest-path]
+=== Finding the shortest path between two products
+
+Let us continue searching for more information on our two products - `Ipoh Coffee` and `Teatime Chocolate Biscuits` - by finding the shortest path in the graph from one to the other.
+The shortest path will search the graph to find the fewest number of hops from the start node to the destination node.
+To do this, we need to search and retrieve the two nodes in our scene.
+
+image::{img}bloom_coffee_node.jpg[link="{img}bloom_coffee_node.jpg",role="popup-link"]
+
+image::{img}bloom_chocbiscuits_node.jpg[link="{img}bloom_chocbiscuits_node.jpg",role="popup-link"]
+
+****
+[NOTE]
+*Walkthrough Steps...*
+First, clear the scene.
+Then, search for one product and press `Enter` to add it to the scene.
+Next, search for the second product and press `Enter` to add it to the scene.
+****
+
+Once the coffee and chocolate biscuit products are in our scene, we can select both products (click on product1 + `ctrl/cmd` key + click on product2).
+This should highlight both products by placing a white border around each one of them.
+
+Now, we need to find the shortest path between them.
+We can right-mouse click (keyboard:`ctrl/cmd key + click`) on either of the selected nodes and choose the `Path` option that expands into a submenu.
+
+image::{img}bloom_shortest_path_option.jpg[link="{img}bloom_shortest_path_option.jpg",role="popup-link"]
+
+Click on `Shortest path` to choose and run it.
+This gives us the results for the fewest number of hops between the `Teatime Chocolate Biscuits` product and the `Ipoh Coffee` product.
+
+image::{img}bloom_2products_shortest_path.jpg[link="{img}bloom_2products_shortest_path.jpg",role="popup-link"]
+
+In this case, it looks like there is an `Order` node that includes both products.
+
+== Wrapping up
+
+In this guide, we walked through navigating and exploring graph data with Neo4j Bloom.
+We saw how to set up Neo4j Bloom for our environment and create (as well as alter) perspectives for viewing the data.
+To explore data and analyze results, we used the search bar to find nodes with a certain label, patterns for product suppliers, and specific patterns for particular products.
+Finally, we learned how to use the option menus and selection within the scene to dismiss miscellaneous nodes, clear the scene, and find shortest paths between nodes.
+
+There are many more things to learn and explore with this tool, so check out the resources listed below to continue the journey.
+
+== Resources
+
+* Documentation: Learn more about link:/docs/bloom-user-guide/current/[Neo4j Bloom^]
+* Video Series: See how to use capabilities in Bloom in the https://youtu.be/GV3WCEsHRYI[YouTube series^]
+* YouTube video: https://www.youtube.com/watch?v=tX2OiKcIOok&t=12s[Bloom Tips and Tricks^]
+* Community Site: Ask questions and assist others in the https://community.neo4j.com/c/neo4j-graph-platform/neo4j-bloom[Neo4j Bloom topic^]
