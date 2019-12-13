@@ -21,38 +21,51 @@ It helps if you have read the section on link:/developer/get-started/graph-datab
 [role=expertise]
 {level}
 
+++++
+<div class="responsive-embed">
+<iframe width="680" height="425" src="https://www.youtube.com/embed/pPhJi9twN9Q" frameborder="0" allowfullscreen></iframe>
+</div>
+++++
+
 [#install-neo4j-desktop]
 If you haven't already, link:/download/[download] Neo4j.
-Using the provided instructions (shown when downloading), follow Step 1 to install and start the Neo4j Desktop application.
+Instructions for setting up the application will be shown after you click the download.
+
+****
+[NOTE]
+Your activation key will be displayed at the top of the instruction page. 
+We recommend copying it to a safe place, just in case.
+If lost, another will need to be requested by contacting Neo4j.
+****
+
+Using the provided instructions, follow Step 1 to install and start the Neo4j Desktop application.
 Step 2 on the download page instructions shows you how to set up your first project and database and how to open the Neo4j in the browser, but we want to cover this step in more detail.
 
 [#desktop-activate]
 == Activation
 
-image::{img}desktop_login.jpg[link="{img}desktop_login.jpg",float="right"]
+image::{img}desktop_registration_dec2019.jpg[link="{img}desktop_registration_dec2019.jpg",float="right"]
 
-If you are opening Neo4j Desktop for the first time, it should ask you for a login.
-You can use a social account (Google, Github, or other) to acquire a long-term activation key that will auto-renew each year.
-
-If you have a computer that is restricted where accessing a social profile is not possible (such as devices locked down on network and security), you can mailto:devrel@neo4j.com[request an activation key^].
-This process usually takes a couple of days to complete and grants access for one year.
+If you are opening Neo4j Desktop for the first time, it should ask you to register the software with an activation key.
+When you downloaded Neo4j Desktop, your unique activation key was displayed at the top of the instructions page.
+While we can copy it to the clipboard and paste it into the provided input in Neo4j Desktop, we also recommend copying it to a safe place as a backup (local file, password vault, or another method).
 
 [#desktop-navigate]
 == Navigation
 
-The menu along the left side of Neo4j Desktop shows high-level icons for projects, settings, your profile, and Neo4j info.
+The menu along the left side of Neo4j Desktop shows high-level icons for projects, graph applications, settings, activation keys, and Neo4j info.
 At the top, the folder with a bookmark (image:{img}projects_icon.png[width=20]) shows the list of projects you have created.
 If this is the first time using Neo4j Desktop, the default `My Project` will be the only one.
 You can either create a new project to work with your use case or create your database within the default project, but this guide will use the default `My Project`.
 
-image::{img}desktop_mainscreen.png[link="{img}desktop_mainscreen.png",role="popup-link"]
+image::{img}desktop_mainscreen.jpg[link="{img}desktop_mainscreen.jpg",role="popup-link"]
 
 === Creating and Deleting a Project
 
 To create a new project, simply click `+ New` at the right of the `Projects` menu.
 The app will add a row in the menu for a project named `Project`.
 You can change the name by clicking on the pencil icon that appears when you hover on the project name in the right pane.
-To remove the project, hover over the `Project` row in the projects menu and click the recycle can icon that appears on the right side (image:{img}delete_project_icon.png[width=20]).
+To remove the project, hover over the `Project` row in the projects menu and click the trash bin icon that appears on the right side (image:{img}delete_project_icon.jpg[width=20]).
 
 === Settings
 
@@ -60,15 +73,22 @@ Application settings can be modified or viewed by clicking the gear towards the 
 You can modify any of these settings at any time.
 
 The first block is for privacy settings where you can adjust what data is sent back to Neo4j for assistance and future improvements.
-Under `Neo4j Distributions`, it shows which versions of the database are used in your projects (if any) and lists the currently set up projects and databases.
+The next two sections are where you can configure a proxy or run Neo4j Desktop in offline mode.
+
+****
+[NOTE]
+We do not recommend running Neo4j Desktop in offline mode unless required by your company.
+Offline mode restricts some usage capabilities.
+****
+
+Under `Neo4j Distributions` section of the settings, it shows which versions of the database are used in your projects (if any) and lists the currently set up projects and databases.
 
 The last section on `Developer Tools` is to add and integrate graph apps with Neo4j.
 You can also access the javascript console of an application for debugging and error reporting through the developer tools.
 
 === Profile and About
 
-The person icon (image:{img}profile_icon.png[width=20]) shows the profile you created when you signed into Desktop and allows you to sign out of the current account and into another one.
-It shows who is currently logged into Neo4j Desktop.
+The certificate icon (image:{img}activation_keys_icon.png[width=20]) shows the licenses that are attached to this installation in Neo4j Desktop, which includes activation of Desktop itself along with any graph app licenses.
 
 The bottom icon (image:{img}neo4j_icon.png[width=20]) is information about Neo4j itself and includes links to the main company website, as well as release and license information.
 
@@ -78,7 +98,7 @@ The bottom icon (image:{img}neo4j_icon.png[width=20]) is information about Neo4j
 From the Projects icon on the left-side menu, choose (or create) a project.
 A panel will display on the right to show the databases in your project and the plugins available or installed.
 
-To create a database, click in the dotted square that says `New Graph`.
+To create a database, click in the dotted square that says `Add Graph`.
 Then click the kbd:[Create a Local Graph] button.
 Next, you will type in a name for your database and set a password and choose a version (default is latest version).
 A small icon will show which versions have been downloaded already.
@@ -97,29 +117,26 @@ Now we will walk through some tools to interact with the database and data.
 At the bottom of your newly created database are two buttons.
 One is to manage the database and the other is to start the database (when the database is running, the button is to stop the database).
 
-image::{img}db_section.png[link="{img}db_section.png",role="popup-link"]
+image::{img}db_section.jpg[link="{img}db_section.jpg",role="popup-link"]
 
 [#desktop-manage-db]
 == Managing a database
 
 When you click the kbd:[Manage] button, the resulting pane opens up several functionalities.
 
-image::{img}manage_db.png[link="{img}manage_db.png",role="popup-link"]
+image::{img}manage_db.jpg[link="{img}manage_db.jpg",role="popup-link"]
 
 In the top section is your database name with buttons underneath it for Start, Stop, and Restart of the database.
 The buttons next to those allow you to open the folder location of the database and to open the Neo4j Browser to interact with data in the database.
 The kbd:[Open Folder] button can be used to modify data files and configuration, and the drop down next to the button can access the import folder to place csv files for loading.
 
-In the bottom section are several tabs for information and settings.
+The bottom section has several tabs for information and settings.
 The `Details` tab shows the version and the status of your database.
 When the database is running, it will also show port numbers and addresses needed to interact with the database (screenshot below).
 
-image::{img}db_details_tab.png[link="{img}db_details.png",role="popup-link"]
+image::{img}db_details_tab.jpg[link="{img}db_details.jpg",role="popup-link"]
 
 The `Logs` tab will show all of the streaming log output from the database.
-
-`Terminal` tab allows you to interact with the database at the command line and potentially retrieve/send data via any end points set up.
-You can also run cypher-shell and look at other logs from here.
 
 The `Settings` tab displays the configuration values for the database.
 These can be changed, if needed. Once changes are made, you can apply them, and Desktop will offer to restart the database (necessary for changes to take effect).
@@ -149,9 +166,9 @@ You can submit messages to us through Intercom and tag as related to `desktop`.
 [#desktop-next-steps]
 == Next Steps
 
-Now that we covered the basics of Neo4j Desktop, you can start working with data using our query language, link:/developer/cypher[Cypher].
+Now that we covered the basics of Neo4j Desktop, you can start working with data using our query language, link:/developer/cypher/[Cypher].
 You can also get a feel for interacting with Neo4j through link:/developer/guide-neo4j-browser/[Neo4j Browser].
-The https://neo4j.com/sandbox-v2/[Neo4j Sandbox] walks you through demos of popular use cases in Neo4j and helps you get more familiar with the interfaces and Cypher.
+The link:/sandbox/[Neo4j Sandbox^] walks you through demos of popular use cases in Neo4j and helps you get more familiar with the interfaces and Cypher.
 If you're ready to dive in, feel free to check out how to link:/developer/guide-importing-data-and-etl/[import your data] to Neo4j.
 Our link:/developer/language-guides/[Language Guides] section shows you how to create an application in your preferred programming language to interact with data in Neo4j.
 
