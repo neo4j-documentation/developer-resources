@@ -1,6 +1,6 @@
-= Neo4j in Production
+= Neo4j Administration
 :slug: in-production
-:section: Neo4j in Production
+:section: Neo4j Administration
 :section-link: in-production
 :section-level: 1
 :sectanchors:
@@ -9,46 +9,44 @@
 :toclevels: 1
 
 [#deploy-neo4j]
-Are you preparing to deploy Neo4j into production?
-This section features guides and tutorials to help you understand how best to deploy Neo4j.
+Are you preparing to deploy Neo4j into production and handle management and operation of the system?
+This section features guides and tutorials to help you understand how to deploy, maintain, and optimize Neo4j.
 
-Topics include:
+When running Neo4j in production, we want to maximize the processes and configuration for scalability, monitoring, and day-to-day operations.
+We will cover how to run Neo4j in various environments, tune performance, operate databases, configure security, set up an architecture, and more.
 
-* High Availability Clustering
-* Performance Tuning
-* Hardware Calculator
-* Cloud Deployment Options
+[#maximize-features]
+== Taking advantage of the latest features
 
-When running Neo4j in production, especially in business critical applications, it makes a lot of sense to work with the Enterprise Edition as it provides improved scalability, monitoring and operations features.
+Each new version of Neo4j offers new features and capabilities, as well as adjustments and improvements to existing functionality.
+Operating in the changing environment requires some knowledge and training of the features themselves, as well as how they apply to your particular environment.
 
-Make sure to check out our http://neo4j.com/business-subscription/?edition=enterprise[30 day Enterprise Edition Trial]!
+Various guides throughout this section will cover topics on key operational features and how they work.
 
-[#size-performance]
-== Sizing & Performance Tuning
+[#neo4j-architecture]
+== Neo4j System Architecture
 
-This guide explains Neo4j sizing and hardware calculation tips and best practices.
-You’ll learn how to calculate the recommended hardware configuration for your Neo4j deployment.
+There are a variety of ways to set up Neo4j, including deployment types and locations.
+But what about the reliability and stability concerns for graph databases specifically?
+What does Neo4j offer to organize regions, databases, and data for accessibility?
 
-* link:/developer/in-production/guide-sizing-and-hardware-calculator[Sizing and Hardware Calculator]
-* {opsmanual}/installation/requirements/[Manual: Deployment Requirements]
+Guides in this section will discuss common setups for clustering and instances to help you determine the best setup for different needs.
 
-This guide explains Configuration and Performance Tuning best practices and troubleshooting tips.
-It includes topics such as cache sizing, JVM configuration, Memory Mapped IO (MMIO) settings, and logical log configuration.
+[#performance-tuning]
+== Performance Tuning
 
-* link:/developer/in-production/guide-performance-tuning[Performance Tuning]
-* {opsmanual}/performance/[Manual: Configuration and Performance]
+Running business critical or even demanding applications in production requires a robust system.
+It probably also includes some optimizations to configurations, architecture, or queries in order to maximize speed and reliability benefits for the entire system.
+
+From learning tips and best practices calculating the recommended hardware configuration for your Neo4j deployment to troubleshooting performance issues and improving performance, there are guides in this section to tackle many of these common problems.
 
 [#deployment]
 == Deployment
 
-This guide describes how to configure clustering in an Enterprise Neo4J installation.
-This includes topics such as data synchronization, mending procedures, configuring an arbiter and slave-only mode configuration.
+Deployment options for databases are often flexible to handle varying environments and operating requirements, and Neo4j is no exception.
+The deployment chosen will depend on existing system architecture, scalability needs, access locations and regions, and integration needs with other systems.
 
-* link:/developer/in-production/guide-clustering-neo4j[Clustering Neo4j]
-* {opsmanual}/clustering/causal-clustering/[Manual: Causal Clustering]
-* {opsmanual}/clustering/high-availability/[Manual: High Availability]
+Some of these guides cover information on handling different types of deployments, including how to deal with Neo4j in database clusters and how to containerize Neo4j with Docker.
 
-Today, the Cloud is a default deployment options for many applications.
-Deploying Neo4j to IaaS and PaaS providers as well as offerings from hosting partners is documented and referenced in this guide.
-
-* link:/developer/guide-cloud-deployment[Cloud Deployment Options]
+Public and/or private cloud provider deployment options are also possible.
+Cloud-hosted offerings and how to deploy Neo4j to infrastructure or platform providers is documented and referenced in the link:/developer/guide-cloud-deployment[cloud] and link:/developer/aura-cloud-dbaas/[Neo4j Aura] sections.

@@ -1,0 +1,256 @@
+= Managing Multiple Databases in Neo4j
+:slug: manage-databases
+:level: Beginner
+:section: Neo4j Administration
+:section-link: in-production
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
+
+.Goals
+[abstract]
+In this guide, we will walk through how to manage multiple database within the Neo4j DBMS.
+
+.Prerequisites
+[abstract]
+Please have link:/download[Neo4j^] (version 4.0 or later) downloaded and installed.
+It helps to have read the section on link:/developer/get-started/graph-database/[graph databases].
+
+[role=expertise]
+{level}
+
+[#multi-db]
+In Neo4j (v4.0+), we can create and use more than one active database at the same time.
+This works in standalone and causal cluster scenarios and allows us to maintain multiple, separate graphs in one installation.
+
+When we create a database, Neo4j will initially create a system database and a default database.
+The system database is named `system` and contains the overall information that applies across databases - managing administration of individual databases (stopping and starting) and maintaining user privileges (security roles and privileges).
+The default database is named `neo4j` (can be changed) and is where we can store and query data in a graph and integrate with other applications and tools.
+We can also create additional databases, as needed, to store other graphs and different data that may be unrelated to any of our other databases.
+
+[#setup-db]
+== System setup
+
+If you haven't already, link:/download/[download^] Neo4j.
+
+We will need to have a database running and open link:/developer/neo4j-browser/[Neo4j Browser] to walk through this guide.
+If you are unsure how to create and start a database, step-by-step instructions for doing so in Neo4j Desktop are provided in link:/developer/neo4j-desktop[this guide].
+
+[#initial-db]
+== Reviewing the initial databases
+
+As mentioned earlier, when Neo4j is installed and an instance created, it will be initiated with two databases - a `system` database and a default (`neo4j`) database.
+Launching https://localhost:7474/[Neo4j Browser^] will automatically point us to the `neo4j` default database, shown by the `neo4j$` prompt in the command line.
+
+image::{img}4dot0_neo4j_db_prompt.jpg[link="{img}4dot0_neo4j_db_prompt.jpg",role="popup-link"]
+
+If we want to see the system information (view, create/delete, manage databases), we will need to switch to the `system` database.
+We can do that with the `:use` command then telling it which database we want.
+
+Command: `:use system`
+Results:
+
+image::{img}4dot0_use_db.jpg[link="{img}4dot0_use_db.jpg",role="popup-link"]
+
+Now we can run a command to see the databases created with the instance.
+The `SHOW DATABASES` command will display all databases in our instance (or databases across instances in a cluster) along with address, role, requested and current statuses, any errors, and which database is default.
+
+****
+[NOTE]
+Remember, at this point, we are only expecting the `system` database and the default (`neo4j`) database.
+****
+
+image::{img}4dot0_show_dbs.jpg[link="{img}4dot0_show_dbs.jpg",role="popup-link"]
+
+That looks as we expected.
+Now let's add another database to the list.
+
+[#create-new-db]
+== Creating a new database
+
+To add a database to our instance, we can use the `CREATE DATABASE` command.
+We are going to use an example called `movieGraph`, but you could choose any name for the database.
+
+image::{img}4dot0_create_new_db.jpg[link="{img}4dot0_create_new_db.jpg",role="popup-link"]
+
+****
+[NOTE]
+Database naming is not case-sensitive.
+Creating the database `movieGraph` will show `moviegraph` as the name in the system information, but you can change to the database using either `movieGraph` or `moviegraph`.
+Either will connect to the same database, and it will not allow you to create another database with any other combination of capitalized/lower-case letters (i.e. MovieGraph, moviegraph, mOvIeGrApH, etc).
+****
+
+While the result message does not seem convincing that our creation command worked, we can verify by running the `SHOW DATABASES` command again to see our new database show up in the list!
+
+image::{img}4dot0_show_created_db.jpg[link="{img}4dot0_show_created_db.jpg",role="popup-link"]
+
+That looks good.
+We can switch to our new database to start working with that one specifically (command is `:use movieGraph`).
+
+image::{img}4dot0_use_created_db.jpg[link="{img}4dot0_use_created_db.jpg",role="popup-link"]
+
+[#operate-movie-db]
+== Loading data and working with our movieGraph database
+
+Next, we will load some sample data into our `movieGraph` database and work with it.
+Before we do that, let us verify that our database is truly empty by viewing the schema using the `CALL db.schema.visualization()` procedure.
+
+image::{img}4dot0_check_schema.jpg[link="{img}4dot0_check_schema.jpg",role="popup-link"]
+
+****
+[NOTE]
+Previous versions of Neo4j used the `CALL db.schema()` procedure, which was converted to the newer procedure shown above.
+****
+
+No node or relationship data is shown in our results, so the database is empty.
+Once we add data in a bit, we will see a data model visualization in the results.
+We can do another quick test by writing a Cypher query to return any nodes and relationships.
+
+Command: `MATCH (node)-[rel]-(other) RETURN node, rel, other`
+Results:
+
+image::{img}4dot0_schema_test.jpg[link="{img}4dot0_schema_test.jpg",role="popup-link"]
+
+All clear.
+Now let us add some data.
+
+[#load-movie-data]
+=== Load movie data
+
+We will use the small data set for movies that Neo4j users may already be familiar with.
+To load, type the command `:play movies` into the command line and execute it.
+A guide will display in the result pane.
+
+image::{img}4dot0_play_movies.jpg[link="{img}4dot0_play_movies.jpg",role="popup-link"]
+
+We can navigate to the second slide by clicking the arrow on the right side of the pane, and a slide with a long Cypher query should appear.
+
+image::{img}4dot0_run_movie_query.jpg[link="{img}4dot0_run_movie_query.jpg",role="popup-link"]
+
+The Cypher query on the right will be outlined with a grey dotted line.
+We can click that query, and it will copy/paste into the command line.
+Click to execute the query, which will return some results confirming that data was loaded.
+
+image::{img}4dot0_movie_query_results.jpg[link="{img}4dot0_movie_query_results.jpg",role="popup-link"]
+
+****
+[NOTE]
+Colors and location of the graph within the result pane might vary.
+However, if the data is out-of-sync anytime throughout this guide, you can follow the steps to clean out the instance at the link:/developer/manage-databases/#multidb-cleanup[bottom of this guide] and try the data load again.
+****
+
+We can also check our schema procedure again to see how data is organized in the database (data model).
+Use the command `CALL db.schema.visualization()` again and execute it to see that we have `Person` nodes and `Movie` nodes that are connected by several different kinds of relationships.
+
+image::{img}4dot0_check_movie_schema_again.jpg[link="{img}4dot0_check_movie_schema_again.jpg",role="popup-link"]
+
+We can now run any queries against our movie data that we would like.
+For instance, using a generic query like the one below below will search for nodes that have any relationships to other nodes.
+
+[source,cypher]
+----
+MATCH (node)-[rel]->(other)
+RETURN node, rel, other
+----
+
+Though we can query and work with our movie data, we want to work with the multi-database feature and see that the data in one database is not accessible in the other database.
+To do that, we need to load some different data in another database.
+
+[#operate-neo4j-db]
+== Loading data and working with our neo4j database
+
+Let us go back to our default `neo4j` database and load the Northwind retail system data there.
+This way, when we look at our databases (`movieGraph` and `neo4j`), we will see two completely different sets of data.
+The `:use neo4j` command will switch us to that database and allow us to load there.
+
+image::{img}4dot0_use_neo4j_db.jpg[link="{img}4dot0_use_neo4j_db.jpg",role="popup-link"]
+
+To confirm there is no data in this database currently, we can run the `CALL db.schema.visualization()` procedure against `neo4j`.
+
+image::{img}4dot0_check_neo4j_db_schema.jpg[link="{img}4dot0_check_neo4j_db_schema.jpg",role="popup-link"]
+
+Everything looks clear.
+We can also run the test query from above, if we want to confirm that way.
+Now we are ready to add some data.
+
+[#load-northwind-data]
+=== Loading northwind data
+
+We will use the Browser guide `:play northwind` that has built-in Cypher queries we can run to load retail suppliers, products, and product categories.
+
+image::{img}4dot0_play_northwind.jpg[link="{img}4dot0_play_northwind.jpg",role="popup-link"]
+
+Click the arrow on the right side of the result pane to get to the next slide in the guide, and there will be 3 load statements and 3 indexing statements.
+
+image::{img}4dot0_northwind_data_load.jpg[link="{img}4dot0_northwind_data_load.jpg",role="popup-link"]
+
+Execute all 6 of those to populate the nodes, then click the right arrow on the guide once more to progress to the next slide.
+On this slide, we have 2 more statements to find nodes and create relationships between them.
+
+image::{img}4dot0_northwind_load_rels.jpg[link="{img}4dot0_northwind_load_rels.jpg",role="popup-link"]
+
+Click and run both statements, then we can check that our data loaded correctly by running the schema procedure again.
+We should expect `Supplier` nodes with a relationship to `Product` nodes with a relationship to `Category` nodes.
+
+image::{img}4dot0_check_neo4j_schema_again.jpg[link="{img}4dot0_check_neo4j_schema_again.jpg",role="popup-link"]
+
+****
+[NOTE]
+Colors and location of the graph within the result pane might vary.
+However, if the data is out-of-sync anytime throughout this guide, you can follow the steps to clean out the instance at the link:/developer/manage-databases/#multidb-cleanup[bottom of this guide] and try the data load again.
+****
+
+That is how we expected it!
+We can run our generic test query again to retrieve some of our Northwind data.
+
+[source,cypher]
+----
+MATCH (node)-[rel]->(other)
+RETURN node, rel, other
+----
+
+Notice that we do not see any of our movie database entities or relationships in the data model or in our test query.
+Those are in our `movieGraph` database and are completely separate.
+If those nodes and relationships existed in this graph, the test query would retrieve them because we do not specify any certain types of nodes and relationships in the search.
+
+We can do one more step to verify Northwind data is not in our `movieGraph` database either.
+
+[#navigate-multidb]
+== Navigating between datasets and databases
+
+Let us switch back to our `movieGraph` database one more time with the `:use movieGraph` command.
+Next, we run the familiar `CALL db.schema.visualization()` procedure to pull back our data model.
+
+image::{img}4dot0_check_movie_schema_again.jpg[link="{img}4dot0_check_movie_schema_again.jpg",role="popup-link"]
+
+We see that there is no Northwind data in this graph.
+That looks good.
+Our generic test query could be another verification method, as well.
+
+We can continue to operate each of these graphs separately and yet connect to the disparate data sets from the same Neo4j installation without separate instances.
+
+[#multidb-cleanup]
+== Cleaning out database within same instance
+
+One final administrative difference is how to completely clean out one database without impacting the entire instance with multiple databases.
+When dealing with a single instance and single database approach, users can delete the entire instance and start fresh.
+However, with multiple databases, we cannot do that unless we are comfortable losing everything from our other databases in that instance.
+
+The approach is similar to other DBMSs where we can drop and recreate the database, but retain everything else.
+Cypher's command for this is `CREATE OR REPLACE DATABASE <name>`.
+This will create the database (if it does not already exist) or replace an existing database with a clean one.
+
+For example, when working through these examples, we may alter a load query incorrectly or accidentally add or delete data that we need.
+In this case, deleting all the data will not completely wipe indexes or the ghost entities for the data model.
+Instead, we can use the `CREATE OR REPLACE DATABASE` command and start over.
+
+Command: `CREATE OR REPLACE DATABASE neo4j`
+Results:
+
+image::{img}4dot0_drop_recreate_db.jpg[link="{img}4dot0_drop_recreate_db.jpg",role="popup-link"]
+
+[#resources]
+== Resources
+
+* link:/docs/operations-manual/4.0-preview/manage-databases/[Documentation: Multi-database^]
