@@ -1,0 +1,75 @@
+= Data Import with Neo4j Aura
+:slug: aura-data-import
+:level: Beginner
+:section: Neo4j Cloud DBaaS
+:section-link: aura-cloud-dbaas
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
+
+.Goals
+[abstract]
+In this guide, we will see how Neo4j Aura imports data differently from other Neo4j instances and how to navigate those differences.
+
+[role=expertise]
+{level}
+
+[#aura-import]
+== Why is it different?
+
+Because Neo4j Aura is a database instance that is located and maintained in the cloud, we must take care to ensure data integrity is maintained and access is carefully granted to avoid malicious tampering.
+
+To mediate these risks, Neo4j Aura has increased security and access to database-as-a-service instances.
+While this means that malicious users cannot harm the data or infiltrate the system, it also means that certain tasks and processes may not work exactly the same as with other local or remote Neo4j databases.
+
+We will cover what those differences are, why they exist, and how to still get the data into the instance.
+
+[#import-differences-aura]
+== Import differences with Neo4j Aura
+
+Let's go through the differences, one at a time.
+
+=== Import directory is inaccessible.
+
+Why? Restricting access to internal Neo4j folders avoids non-authorized users from accessing and tampering with the folder and contents. This prevents any user from dropping malicious files into the folder and potentially corrupting the database.
+
+What does it mean? Users will only be able to use APOC load procedures or LOAD CSV on publicly accessible data. Andrew Jefferson has written a couple of helpful link:https://medium.com/@aejefferson/methods-for-loading-data-into-a-remote-neo4j-instance-part-1-abea3328dedf[blog posts^] in more detail on this subject, including a scenario to link:https://medium.com/@aejefferson/how-to-use-cloud-storage-to-securely-load-data-into-neo4j-d97b72b2ad8f[securely load data^] into a remote Neo4j instance.
+
+=== Cannot use neo4j-admin import tool for importing data.
+
+Why? Similar to the import folder accessibility above, disk access has been locked down to avoid malicious activity and data/instance corruption by unauthorized users.
+
+To use this tool, we can still run it locally to import onto a local instance, then push the imported data to cloud by link:https://console.neo4j.io/#import-instructions[uploading our database^].
+
+=== Importing data with a custom procedure is not possible at this time.
+
+Why? As with both of the above examples, disk and folder access for internal Neo4j folders has been restricted to avoid malicious activity. This means that the plugins folder is not visible where we cannot drop custom plugin files in as extensions.
+
+Instead, we can use all of the other supported and common import methods for Neo4j, including link:/docs/labs/apoc/current/import/[APOC^], link:https://aura.support.neo4j.com/hc/en-us/articles/360037063474-How-do-I-load-data-from-a-CSV-[LOAD CSV^], and link:https://console.neo4j.io/#import-instructions[push to cloud import^].
+
+=== Neo4j's ETL Tool works a bit differently
+
+The Neo4j ETL tool still operates in a cloud environment, but we will need to use the 1.4.1 release.
+This release changes the way the ETL tool imports the data.
+To find out more, check out the link:https://aura.support.neo4j.com/hc/en-us/articles/360037559973-Neo4j-ETL-now-ready-for-the-cloud[article^] on what changed and how to use it.
+
+=== APOC cannot import using local files
+
+As discussed in most of the points above, Neo4j Aura will not access local storage for protection reasons.
+We can still use APOC to access publicly accessible files or to load secure files.
+For more information, check out Andrew Jefferson's blog posts on link:https://medium.com/@aejefferson/methods-for-loading-data-into-a-remote-neo4j-instance-part-1-abea3328dedf[loading public data^] and link:https://medium.com/@aejefferson/how-to-use-cloud-storage-to-securely-load-data-into-neo4j-d97b72b2ad8f[loading secure files^] into remote instances.
+
+=== Storing API credentials in the config file not available
+
+In other types of installations, users could place API credentials in the `neo4j.conf` file and reference them in Cypher statements like environment variables.
+With Neo4j Aura, however, those internal folders and files have been hidden, so this functionality must be handled in other ways.
+Whether we store these credentials in a secure file on the cloud or store them as parameters in Neo4j with Cypher, we must use these best practices to avoid non-authorized users accessing private credentials or information.
+
+[#aura-help]
+== Help and Questions
+
+Helpful guides and support are available on the link:https://aura.support.neo4j.com/hc/en-us[Aura support^] pages.
+
+You can also ask questions and connect with other people launching Neo4j Aura at the
+https://community.neo4j.com/c/neo4j-graph-platform/cloud[cloud topic on the Community Site^].

@@ -1,0 +1,68 @@
+= Connect to Neo4j Aura with Neo4j Driver
+:slug: aura-connect-driver
+:level: Beginner
+:section: Neo4j Cloud DBaaS
+:section-link: aura-cloud-dbaas
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
+
+.Goals
+[abstract]
+In this page, we will learn how to connect to our Neo4j Aura database using the Neo4j Drivers.
+
+.Prerequisites
+[abstract]
+We should have created and started a Neo4j Aura database instance.
+If we have not already, we can follow the instructions in the link:https://aura.support.neo4j.com/hc/en-us/articles/360037562253-Working-with-Neo4j-Aura[getting started guide^] to step through the process.
+
+[role=expertise]
+{level}
+
+[#aura-db-credentials]
+== Get database credentials
+
+When using any of the language drivers, before we try to connect to our Neo4j Aura Database, we'll need three pieces of information:
+
+* Bolt URL
+* Username
+* Password
+
+If we open our https://console.neo4j.io/#databases[Neo4j Aura Console Dashboard^], we'll see a list of our databases.
+
+image::{img}dbaas_database_created.png[link="{img}dbaas_database_created.png",role="popup-link"]
+
+We'll need to use the Bolt URL, so let's copy that onto our clipboard:
+
+image::{img}dbaas_database_created_highlight_browser.png[link="{img}dbaas_database_created_highlight_browser.png",role="popup-link"]
+
+The default username is `neo4j` and the default password is generated on database creation.
+
+For the database described above we'd have the following credentials:
+
+* Bolt URL - `bolt+routing://178c6768.databases.neo4j.io`
+* Username - `neo4j`
+* Password - `our-super-secret-password`
+
+[#aura-connect-driver]
+== Connect with driver
+
+Now that we've got our credentials, we're ready to connect using a driver.
+
+The link:/developer/language-guides/[Drivers and Languages Guides^] page gives an overview of Neo4j drivers and explains the Bolt protocol used to interact with the database.
+There are also guides for individual language drivers, including officially supported ones for the following languages:
+
+* link:/developer/dotnet/[.NET]
+* link:/developer/java/[Java]
+* link:/developer/javascript/[JavaScript]
+* link:/developer/go/[Go]
+* link:/developer/python/[Python]
+
+[#aura-help]
+== Help and Questions
+
+Helpful guides and support are available on the link:https://aura.support.neo4j.com/hc/en-us[Aura support^] pages.
+
+You can also ask questions and connect with other people launching Neo4j Aura at the
+https://community.neo4j.com/c/neo4j-graph-platform/cloud[cloud topic on the Community Site^].

@@ -16,8 +16,8 @@ While it is not comprehensive, it aims to introduce the available drivers and li
 .Prerequisites
 [abstract]
 * You should be familiar with link:/developer/graph-database[graph database concepts] and the property graph model.
-* You should have link:/download[installed Neo4j] and made yourself familiar with our link:/developer/cypher-query-language[Cypher Query language].
-* We also recommend installing and becoming familiar with both https://pip.pypa.io/[pip] and https://virtualenv.pypa.io/[virtualenv] before working on a Python project.
+* You should have link:/download[installed Neo4j] and made yourself familiar with our link:/developer/cypher-query-language[Cypher query language].
+* We also recommend installing and becoming familiar with both https://pip.pypa.io/[pip^] and https://virtualenv.pypa.io/[virtualenv^] before working on a Python project.
 
 [role=expertise]
 {level}
@@ -40,17 +40,15 @@ include::../_includes/sample_project.adoc[]
 
 include::../_includes/community-driver-notice.adoc[]
 
-For anyone working with https://www.python.org/[Python], the Neo4j community have contributed a range of driver options.
-These range from lightweight to comprehensive driver packages as well as libraries designed for use with web frameworks such as https://www.djangoproject.com/[Django].
+For anyone working with https://www.python.org/[Python^], the Neo4j community have contributed a range of driver options.
+These range from lightweight to comprehensive driver packages as well as libraries designed for use with web frameworks such as https://www.djangoproject.com/[Django^].
 
 While Python 3 is preferred, some drivers still support Python 2, please check with the individual project if you need it.
 
-While we do not provide a specific web framework recommendation, both the lightweight http://flask.pocoo.org/[Flask] and the more comprehensive https://www.djangoproject.com/[Django] frameworks are known to work well.
-
-Many Pythonistas have invested a lot of time and love to develop these libraries, so if you use them, please provide feedback to the authors and help us improve.
+While we do not provide a specific web framework recommendation, both the lightweight http://flask.pocoo.org/[Flask^] and the more comprehensive https://www.djangoproject.com/[Django^] frameworks are known to work well.
 
 [#py2neo-lib]
-== Py2neo
+=== Py2neo
 
 image::{img}py2neo.200x200.png[float="right",width=100]
 
@@ -59,7 +57,7 @@ It has been carefully designed to be easy and intuitive to use.
 
 [cols="1,4"]
 |===
-| icon:user[] Author         | https://twitter.com/technige[Nigel Small]
+| icon:user[] Author         | https://twitter.com/technige[Nigel Small^]
 | icon:gift[] Package        | https://pypi.python.org/pypi/py2neo
 | icon:github[] Source       | https://github.com/nigelsmall/py2neo
 
@@ -88,13 +86,13 @@ alice, bob, carol = [result.one for result in tx.commit()]
 ----
 
 [#neomodel-lib]
-== Neomodel
+=== Neomodel
 
 image::{img}neomodel.200x80.png[float="right",width=100]
 
 An Object Graph Mapper built on top of the Neo4j python driver. 
 Familiar Django style node definitions with a powerful query API, thread safe and full transaction support. 
-A Django plugin https://github.com/neo4j-contrib/django-neomodel[django_nemodel] is also available.
+A Django plugin https://github.com/neo4j-contrib/django-neomodel[django_nemodel^] is also available.
 
 [cols="1,4"]
 |===

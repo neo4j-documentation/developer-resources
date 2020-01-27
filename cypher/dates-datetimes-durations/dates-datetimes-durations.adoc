@@ -1,0 +1,296 @@
+= Dates, datetimes, and durations
+:slug: dates-datetimes-durations
+:level: Intermediate
+:section: Cypher Query Language
+:section-link: cypher
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
+
+.Goals
+[abstract]
+Building on the Cypher Basics guides, this guide covers the temporal date types introduced in Neo4j 3.4.
+Upon finishing this guide, you should be able to create, compare, and format these values.
+
+.Prerequisites
+[abstract]
+You should be familiar with link:/developer/get-started/graph-database[graph database] concepts and the link:/developer/get-started/graph-database#property-graph[property graph model].
+This guide is a continuation of the concepts discussed in the previous Cypher sections.
+You should be familiar with link:/developer/cypher/cypher-query-language[MATCH], link:/developer/cypher/cypher-basics-ii/[Create/Update/Delete], and link:/developer/cypher/filtering-query-results/[Filtering] concepts before walking through this guide.
+
+[role=expertise]
+{level}
+
+[#creating-updating-values]
+== Creating and updating values
+
+Let's start by creating some nodes that have a Datetime property.
+We can do this by executing the following Cypher query:
+
+[source, cypher]
+----
+UNWIND [
+    { title: "Cypher Basics I", 
+      created: datetime("2019-06-01T18:40:32.142+0100"), 
+      datePublished: date("2019-06-01"), 
+      readingTime: {minutes: 2, seconds: 15} },
+    { title: "Cypher Basics II", 
+      created: datetime("2019-06-02T10:23:32.122+0100"), 
+      datePublished: date("2019-06-02"), 
+      readingTime: {minutes: 2, seconds: 30} },
+    { title: "Dates, Datetimes, and Durations in Neo4j", 
+      created: datetime(), 
+      datePublished: date(), 
+      readingTime: {minutes: 3, seconds: 30} }      
+] AS articleProperties
+
+CREATE (article:Article {title: articleProperties.title})
+SET article.created = articleProperties.created,
+    article.datePublished = articleProperties.datePublished,
+    article.readingTime = duration(articleProperties.readingTime)
+----
+
+In this query: 
+
+* the `created` property is a `DateTime` type equal to the datetime at the time the query is executed.
+* the `date` property is a `Date` type equal to the date at the time the query is executed.
+* the `readingTime` is a `Duration` type of 3 minutes 30 seconds.
+
+Maybe we want to make some changes to this article node to update the `datePublished` and `readingTime` properties.
+
+We've decided to publish the article next week rather than today, so we want to make that change. 
+If we want to create a new `Date` type using a https://neo4j.com/docs/cypher-manual/current/syntax/temporal/#cypher-temporal-specify-date[supported format^], we could do so using the following query:
+
+[source,cypher]
+----
+MATCH (article:Article {title: "Dates, Datetimes, and Durations in Neo4j"})
+SET article.datePublished = date("2019-09-30")
+----
+
+But what if we want to create a `Date` type https://neo4j.com/developer/kb/neo4j-string-to-date/[based on an unsupported format^]?
+To do this we'll use a function from the https://neo4j.com/developer/neo4j-apoc/[APOC library^] to parse the string.
+
+The following query parses an unsupported data format into a millisecond based timestamp, creates a `Datetime` from that timestamp, and then creates a `Date` from that `Datetime`:
+
+[source,cypher]
+----
+WITH apoc.date.parse("Sun, 29 September 2019", "ms", "EEE, dd MMMM yyyy") AS ms
+MATCH (article:Article {title: "Dates, Datetimes, and Durations in Neo4j"})
+SET article.datePublished = date(datetime({epochmillis: ms}))
+----
+
+We could use this same approach to update the `created` property.
+The only thing we need to change is that we don't need to convert the `Datetime` type to a `Date`:
+
+
+[source,cypher]
+----
+WITH apoc.date.parse("25 September 2019 06:29:39", "ms", "dd MMMM yyyy HH:mm:ss") AS ms
+MATCH (article:Article {title: "Dates, Datetimes, and Durations in Neo4j"})
+SET article.created = datetime({epochmillis: ms})
+----
+
+Perhaps we also decide that the reading time is actually going to be one minute more than what we originally thought.
+We can update the `readingTime` property with the following query:
+
+[source,cypher]
+----
+MATCH (article:Article {title: "Dates, Datetimes, and Durations in Neo4j"})
+SET article.readingTime =  article.readingTime + duration({minutes: 1})
+----
+
+
+[#formatting-values]
+== Formatting values
+
+Now we want to write a query to return our article. 
+We can do this by executing the following query:
+
+[source,cypher]
+----
+MATCH (article:Article)
+RETURN article.title AS title, 
+       article.created AS created,
+       article.datePublished AS datePublished,
+       article.readingTime AS readingTime
+----
+
+.Results
+[opts="header",cols="3,2,1,1"]
+|===
+| title | created | datePublished | readingTime
+| "Dates, Datetimes, and Durations in Neo4j" | 2019-09-25T06:29:39Z | 2019-09-29    | P0M0DT270S  
+|===
+
+If we want to format these values we can use https://neo4j.com/docs/labs/apoc/3.4/temporal/temporal-conversions/[temporal functions^] in the APOC library.
+The following query formats each of the temporal types into more friendly formats:
+
+[source,cypher]
+----
+MATCH (article:Article)
+RETURN article.title AS title, 
+       apoc.temporal.format(article.created, "dd MMMM yyyy HH:mm") AS created,
+       apoc.temporal.format(article.datePublished,"dd MMMM yyyy") AS datePublished,
+       apoc.temporal.format(article.readingTime, "mm:ss") AS readingTime
+----
+
+.Results
+[opts="header",cols="3,2,2,1"]
+|===
+| title | created | datePublished | readingTime
+| "Dates, Datetimes, and Durations in Neo4j" | "25 September 2019 06:29" | "29 September 2019" | "04:30"  
+|===
+
+[#comparing-filtering-values]
+== Comparing and filtering values
+
+What if we want to filter our articles based on these temporal values.
+
+Let's start by finding the articles that were published on 1st June 2019.
+The following query does this:
+
+[source,cypher]
+----
+MATCH (article:Article)
+WHERE article.datePublished = date({year: 2019, month: 6, day: 1})
+RETURN article.title AS title, 
+       article.created AS created,
+       article.datePublished AS datePublished,
+       article.readingTime AS readingTime
+----
+
+.Results
+[opts="header",cols="3,2,1,1"]
+|===
+| title | created | datePublished | readingTime
+| "Cypher Basics I" | 2019-06-01T18:40:32.142+01:00 | 2019-06-01    | P0M0DT135S
+|===
+
+What about if we want to find all the articles published in June 2019?
+We might write the following query to do this:
+
+[source,cypher]
+----
+MATCH (article:Article)
+WHERE article.datePublished = date({year: 2019, month: 6})
+RETURN article.title AS title, 
+       article.created AS created,
+       article.datePublished AS datePublished,
+       article.readingTime AS readingTime
+----
+
+If we run this query we'll get the following results:
+
+.Results
+[opts="header",cols="3,2,1,1"]
+|===
+| title | created | datePublished | readingTime
+| "Cypher Basics I" | 2019-06-01T18:40:32.142+01:00 | 2019-06-01    | P0M0DT135S
+|===
+
+This doesn't seem right - what about the `Cypher Basics II` article that was published on 2nd June 2019?
+The problem we have here is that `date({year: 2019, month:6})` returns `2019-06-01`, so we're only finding articles published on 1st June 2019.
+
+We need to tweak our query to find articles published between June 1st 2019 and July 1st 2019.
+The following query does this:
+
+[source,cypher]
+----
+MATCH (article:Article)
+WHERE date({year: 2019, month: 7}) > article.datePublished >= date({year: 2019, month: 6})
+RETURN article.title AS title, 
+       article.created AS created,
+       article.datePublished AS datePublished,
+       article.readingTime AS readingTime
+----
+
+.Results
+[opts="header",cols="3,2,1,1"]
+|===
+| title | created | datePublished | readingTime
+| "Cypher Basics I"  | 2019-06-01T18:40:32.142+01:00 | 2019-06-01    | P0M0DT135S  
+| "Cypher Basics II" | 2019-06-02T10:23:32.122+01:00 | 2019-06-02    | P0M0DT150S  
+|===
+
+What about if we want to filter based on the `created` property, which stores `Datetime` values?
+We need to take the same approach when filtering `Datetime` values as we did with `Date` values.
+The following query finds the articles created after July 2019:
+
+[source,cypher]
+----
+MATCH (article:Article)
+WHERE article.created > datetime({year: 2019, month: 7})
+RETURN article.title AS title, 
+       article.created AS created,
+       article.datePublished AS datePublished,
+       article.readingTime AS readingTime
+----
+
+.Results
+[opts="header",cols="3,2,1,1"]
+|===
+| title | created | datePublished | readingTime
+| "Dates, Datetimes, and Durations in Neo4j" | 2019-09-25T06:04:39.072Z | 2019-09-25    | P0M0DT210S  
+|===
+
+And finally filtering durations.
+We might be interested in finding articles that can be read in 3 minutes or less.
+
+We'll start with the following query:
+
+[source,cypher]
+----
+MATCH (article:Article)
+WHERE article.readingTime <= duration("PT3M")
+RETURN article.title AS title, 
+       article.created AS created,
+       article.datePublished AS datePublished,
+       article.readingTime AS readingTime
+----
+
+If we execute that query we'll see the following output:
+
+[source,text]
+----
+Neo.ClientError.Statement.SyntaxError: Type mismatch: expected Float, Integer, Point, String, Date, Time, LocalTime, LocalDateTime or DateTime but was Duration (line 2, column 29 (offset: 52))
+"WHERE article.readingTime < duration("PT3M")"
+                             ^
+----
+
+If we want to compare durations we need to do that comparison by adding those durations to dates. 
+We don’t really care about dates for our query so we’ll just use the current time to work around this issue. 
+We can get the current time by calling the datetime() function.
+
+Our updated query reads like this:
+
+[source,cypher]
+----
+MATCH (article:Article)
+WHERE datetime() + article.readingTime <= datetime() + duration("PT3M")
+RETURN article.title AS title, 
+       article.created AS created,
+       article.datePublished AS datePublished,
+       article.readingTime AS readingTime
+----
+
+.Results
+[opts="header",cols="3,2,2,1"]
+|===
+| title | created | datePublished | readingTime
+| "Cypher Basics I"  | "01 June 2019 18:40" | "01 June 2019" | "02:15"     
+| "Cypher Basics II" | "02 June 2019 10:23" | "02 June 2019" | "02:30"      
+|===
+
+
+[#cypher-resources]
+=== Resources
+
+This guide has shown how to work more effectively with temporal types using the APOC libary.
+Below are some resources for learning more about using Temporal types in Neo4j:
+
+* link:https://neo4j.com/docs/cypher-manual/current/syntax/temporal[Temporal Datatypes^]
+* link:https://neo4j.com/developer/kb/neo4j-string-to-date/[Knowledge Base: Converting strings to dates^]
+* link:https://neo4j.com/developer/neo4j-apoc/[APOC Library^]
+** link:https://neo4j.com/docs/labs/apoc/current/temporal/datetime-conversions/[Date parsing^]
+** link:https://neo4j.com/docs/labs/apoc/3.4/temporal/temporal-conversions/[Temporal Functions^]

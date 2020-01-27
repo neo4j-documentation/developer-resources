@@ -1,0 +1,321 @@
+= Deploying a GRANDstack application to Aura
+:slug: aura-grandstack
+:level: Intermediate
+:section: Neo4j Cloud DBaaS
+:section-link: aura-cloud-dbaas
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
+
+.Goals
+[abstract]
+In this page, we will learn how to build and deploy a GRANDstack application with Neo4j Aura.
+
+.Prerequisites
+[abstract]
+We should have created and started a Neo4j Aura database instance.
+If we have not already, we can follow the instructions in the link:https://aura.support.neo4j.com/hc/en-us/articles/360037562253-Working-with-Neo4j-Aura[getting started guide] to step through the process.
+We should also be familiar with the https://grandstack.io/[GRANDstack^].
+
+[role=expertise]
+{level}
+
+Now that we've created our Neo4j Aura database, we're going to learn how to deploy a GRANDstack application that queries data stored in that database.
+
+[#our-dataset]
+== The Football Transfers Graph
+
+We're going to deploy an application built on top of a graph containing football transfers scraped from https://www.transfermarkt.co.uk/[transfermarkt.co.uk].
+See https://medium.com/neo4j/football-transfers-graph-e8ba7347169e[Football Transfers Graph^] to learn more about the dataset.
+
+== Connect to Neo4j Aura with Neo4j Desktop
+
+The first thing we need to do, in link:/developer/neo4j-desktop/[Neo4j Desktop^], is create a remote connection to our Aura database.
+See the link:/developer/aura-connect-neo4j-desktop/[Connect to Neo4j Aura with Neo4j Desktop^] guide for step by step instructions explaining how to do this.
+
+[#neo4j-cloud-tool]
+== Neo4j Cloud Tool
+
+We're going to use the Neo4j Cloud Tool to import our data, so let's see how to set up that application.
+We can install that link:neo4j://graphapps/install?url=https://neo.jfrog.io/neo/api/npm/npm/neo4j-cloud-ui[directly via this link], or if that doesn't work we can paste the following URL into the `Graph App URL` field on the Graph Applications menu:
+
+[source, text]
+----
+https://neo.jfrog.io/neo/api/npm/npm/neo4j-cloud-ui
+----
+
+image::{img}grandstack-install-graphapp-manual.png[link="{img}grandstack-install-graphapp-manual.png",role="popup-link"]
+
+Once we do that we'll see the following prompt:
+
+image::{img}grandstack-install-graphapp.png[link="{img}grandstack-install-graphapp.png",role="popup-link"]
+
+We can now launch the Neo4j Cloud Tool, which will take us to the following screen:
+
+image::{img}grandstack-neo4j-cloud-tool-launched.png[link="{img}grandstack-neo4j-cloud-tool-launched.png",role="popup-link"]
+
+
+[#importing-database]
+== Importing the dataset
+
+We're going to use the Neo4j Cloud tool to import this dataset.
+
+Click on the `Check existing database` button.
+This will check whether our Aura database contains existing data.
+Assuming an empty database, we'll see the following screen:
+
+image::{img}grandstack-neo4j-cloud-tool-check-existing.png[link="{img}grandstack-neo4j-cloud-tool-check-existing.png",role="popup-link"]
+
+Clicking on the `Next` button will take us to the following screen:
+
+image::{img}grandstack-neo4j-cloud-tool-select-database-dump.png[link="{img}grandstack-neo4j-cloud-tool-select-database-dump.png",role="popup-link"]
+
+From here we can import databases or a dump file.
+We'll be using the latter functionality to import a dump containing the football transfers database.
+
+The dump file can be downloaded from https://aura-datasets.s3.amazonaws.com/football-transfers.dump[aura-datasets.s3.amazonaws.com/football-transfers.dump].
+Once we've downloaded that file we'll select it as the dump file to import.
+After that we'll click on the `Import Dump file` button.
+This will take a few minutes to run, but eventually we'll see output similar to the following:
+
+image::{img}grandstack-neo4j-cloud-tool-done.png[link="{img}grandstack-neo4j-cloud-tool-done.png",role="popup-link"]
+
+Click on the `View data in Neo4j Browser` button to see what we've imported.
+The diagram below shows a sample of the imported graph:
+
+image::{img}grandstack-neo4j-browser.png[link="{img}grandstack-neo4j-browser.png",role="popup-link"]
+
+[#our-application]
+== Our Application
+
+Let's have a look at the GRANDstack application that we're going to deploy.
+The application is a football transfers one built on top of the graph that we imported in the previous step.
+See https://blog.grandstack.io/football-transfers-graph-app-with-the-grandstack-starter-kit-b8dfa62c322e[Football Transfers Graph App with the GRANDstack Starter Kit^] to learn more about the application itself.
+
+The following command will clone the football transfers project locally:
+
+[source,bash]
+----
+git@github.com:mneedham/football-transfers-app.git
+cd football-transfers-app
+----
+
+The application has two parts:
+
+* API - this code powers a GraphQL API on top of our Neo4j database, and lives in the `api` directory.
+* UI - the `ui` directory contains a React application that renders data extracted from the GraphQL API.
+
+The diagram below shows the architecture of our application and how it interacts with Neo4j:
+
+image::{img}grandstack-architecture.png[link="{img}grandstack-architecture.png",role="popup-link"]
+
+== Now CLI
+
+We're going to deploy the application using ZEIT, a cloud platform for websites and serverless APIS.
+
+First we'll need to create an account on that platform via https://zeit.co/signup[zeit.co/signup^].
+
+image::{img}zeit_signup.png[link="{img}zeit_signup.png",role="popup-link"]
+
+Once we've done that we can install the Now CLI on our machine using instructions from https://zeit.co/download[zeit.co/download^]:
+
+[source,bash]
+----
+npm i -g now
+----
+
+Now let's login to ZEIT using the Now CLI tool:
+
+[source,bash]
+----
+now login
+----
+
+If we run that, we'll see the following output:
+
+[source,bash]
+----
+> Enter your email: xxx@xxx.com
+> We sent an email to xxx. Please follow the steps provided
+  inside it and make sure the security code matches xxx.
+----
+
+Once we've entered our credentials we'll receive an email which will contain a link that we need to click to verify that we want to login.
+The console will then be updated with the following message:
+
+[source,bash]
+----
+✔ Email confirmed
+> Congratulations! You are now logged in. In order to deploy something, run `now`.
+----
+
+== Define credentials
+
+Now we're ready to tell ZEIT about our database credentials.
+We'll need to provide the following details:
+
+* Bolt URL
+* Username
+* Password
+
+If we open our https://console.neo4j.io/#databases[Neo4j Aura Console Dashboard^], we'll see a list of our databases.
+
+image::{img}grandstack-database.png[link="{img}grandstack-database.png",role="popup-link"]
+
+We'll need to use the Bolt URL, so let's copy that onto our clipboard:
+
+image::{img}grandstack-database-highlight-bolt.png[link="{img}grandstack-database-highlight-bolt.png",role="popup-link"]
+
+The default username is `neo4j` and the default password is generated on database creation.
+
+image::{img}grandstack-database-password.png[link="{img}grandstack-database-password.png",role="popup-link"]
+
+For the database described above we'd have the following credentials:
+
+* Bolt URL - `bolt+routing://648d934e.databases.neo4j.io`
+* Username - `neo4j`
+* Password - `9UvUS6UnVAnr7_ziNaKg--e7ekd-5x4AEL7yseEFsl8`
+
+We can run the following commands to add these credentials as ZEIT secrets.
+
+[NOTE]
+====
+Don't forget to change the credentials below to match those of your own Aura database.
+Copy and pasting the credentials below won't work as that database has long since been destroyed!
+====
+
+[source,bash]
+----
+now secret add NEO4J_URI bolt+routing://648d934e.databases.neo4j.io
+now secret add NEO4J_USER neo4j
+now secret add NEO4J_PASSWORD 9UvUS6UnVAnr7_ziNaKg--e7ekd-5x4AEL7yseEFsl8
+----
+
+== Deploying GRANDstack application
+
+We're now ready to deploy our application, which we can do by executing the following command:
+
+[source,bash]
+----
+now
+----
+
+Running this command will result in the following output:
+
+[source,bash]
+----
+> Deploying ~/projects/football-transfers-app under mneedham
+> Using project grand-stack-starter
+> Synced 21 files [652ms]
+> Upload [====================] 99% 0.0s> NOTE: This is the first deployment in the grand-stack-starter project. It will be promoted to production.
+> NOTE: To deploy to production in the future, run `now --prod`.
+> https://grand-stack-starter-ou2l4008p.now.sh [4s]
+> Ready! Deployment complete [2m]
+- https://grand-stack-starter-seven-wheat.now.sh
+- https://grand-stack-starter.mneedham.now.sh [in clipboard]
+----
+
+We can then navigate to the provided URL, which in this case is `https://grand-stack-starter-seven-wheat.now.sh/`.
+Once this page has loaded, we'll see a list of the top transfers:
+
+image::{img}grandstack-deployed-transfers.png[link="{img}grandstack-deployed-transfers.png",role="popup-link"]
+
+We can navigate to other screens via the left menu:
+
+image::{img}grandstack-deployed-menu.png[link="{img}grandstack-deployed-menu.png",role="popup-link"]
+
+My favourite one is `Country Money Flow`, so let's have a look at that:
+
+image::{img}grandstack-deployed-country-money-flow.png[link="{img}grandstack-deployed-country-money-flow.png",role="popup-link"]
+
+We've now deployed our first GRANDstack application.
+If any of the steps don't make sense or didn't work, please let us know in the https://community.neo4j.com/c/drivers-stacks/graphql-grandstack[GraphQL and GRANDstack topic^] on the https://community.neo4j.com/[community site^].
+
+[#aura-help]
+== Help and Questions
+
+Helpful guides and support are available on the link:https://aura.support.neo4j.com/hc/en-us[Aura support^] pages.
+
+You can also ask questions and connect with other people launching Neo4j Aura at the
+https://community.neo4j.com/c/neo4j-graph-platform/cloud[cloud topic^] on the community site.
+
+// The most interesting part of the API is our GraphQL schema, which lives in https://github.com/mneedham/football-transfers-app/blob/master/api/src/schema.graphql[`api/src/schema.graphql`^].
+// Below is a small part of the schema:
+//
+// [source,graphql]
+// ----
+// type Club {
+//    _id: Long!
+//    id: String!
+//    image: String
+//    name: String!
+//    in_league: League @relation(name: "IN_LEAGUE", direction: "OUT")
+//    transfers_from_club: [Transfer] @relation(name: "FROM_CLUB", direction: "IN")
+//    transfers_to_club: [Transfer] @relation(name: "TO_CLUB", direction: "IN")
+// }
+// ----
+//
+// This fragment defines a `Club` type that will return nodes that have the `Club` label.
+// It maps some basic properties: `id`, `image`, and `name`, and also allows us to navigate to some other types, including:
+//
+//
+// * the `League` that a club plays in using the `in_league` property.
+// This property traverses the `IN_LEAGUE` relationship type going `OUT` from the club.
+// * the `Transfers` going from a club using the `transfers_from_club` property
+// This property traverses the `FROM_CLUB` relationship type coming `IN` to the club.
+// * the `Transfers` going to a club using the `transfers_to_club` property
+// This property traverses the `TO_CLUB` relationship type coming `IN` to the club
+//
+// === UI
+//
+// The `ui` directory contains a React application that renders data extracted from the GraphQL API.
+//
+// Let's take a look at https://github.com/mneedham/football-transfers-app/blob/master/ui/src/TopTransfers.js#L54[ui/src/TopTransfers.js^], which contains a component that renders the most expensive transfers:
+// In the middle of the file we find the following code:
+//
+// [source,js]
+// ----
+// const QUERY = gql`
+//   query topTransfers(
+//     $orderBy: [_TransferOrdering]
+//     $first: Int
+//     $offset: Int
+//     $filter: _TransferFilter
+//   ) {
+//     Transfer(
+//       first: $first
+//       orderBy: $orderBy
+//       offset: $offset
+//       filter: $filter
+//     ) {
+//       date { formatted }
+//       value
+//       id
+//       of_player { name image }
+//       from_club { name image }
+//       to_club { name image
+//       }
+//     }
+//   }
+// `;
+// ----
+//
+// This fragment defines a GraphQL query that returns various properties related to `Transfers`.
+// We call that query in the `Query` component further down the file:
+//
+// [source,js]
+// ----
+// <Query
+//   query={QUERY}
+//   variables={{
+//     first: this.state.rowsPerPage,
+//     offset: this.state.rowsPerPage * this.state.page,
+//     filter: { AND: [this.getFromClubFilter(), this.getToClubFilter()] },
+//     orderBy: this.state.orderBy + "_" + this.state.order
+//   }}
+// >
+// ----
+//
+// This component executes the GraphQL query and returns a collection of results in the `data` variable.
+// We then iterate over that collection, rendering one row per transfer.

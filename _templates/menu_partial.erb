@@ -20,7 +20,7 @@
                 <li><a href="/developer/graph-platform/">Graph Platform Overview</a></li>
                 <li><a href="/developer/neo4j-desktop/">Neo4j Desktop Intro</a></li>
                 <li><a href="/developer/neo4j-browser/">Neo4j Browser Intro</a></li>
-            <!--<li><a href="/developer/neo4j-bloom/">Neo4j Bloom Intro</a></li>-->
+                <li><a href="/developer/neo4j-bloom/">Neo4j Bloom Intro</a></li>
             <!--<li><a href="/developer/neo4j-morpheus/">Neo4j Morpheus Intro</a></li>-->
             <!--<li><a href="/developer/neo4j-cloud/">Neo4j Cloud Intro</a></li>-->
                 <li><a href="/developer/neo4j-etl/">How-To: Neo4j ETL Tool</a></li>
@@ -42,6 +42,7 @@
                 <li><a href="/developer/cypher-style-guide/">Cypher Style Guide</a></li>
                 <li><a href="/developer/guide-sql-to-cypher/">From SQL to Cypher</a></li>
                 <li><a href="/developer/procedures-functions/">User Defined Procedures & Functions</a></li>
+                <li><a href="/developer/dates-datetimes-durations/">Tutorial: Dates, Datetimes, and Durations</a></li>
                 <li><a href="/developer/guide-build-a-recommendation-engine/">Tutorial: Build a Recommendation Engine</a></li>
                 <li><a href="/developer/cypher-resources/">Cypher Resources</a></li>
             </ul>
@@ -56,6 +57,7 @@
                 <li><a href="/developer/relational-to-graph-modeling/">Modeling: RDBMS to Graph</a></li>
                 <li><a href="/developer/modeling-designs/">Modeling Designs</a></li>
                 <li><a href="/developer/modeling-tips/">Graph Modeling Tips</a></li>
+                <li><a href="/developer/graph-model-refactoring/">Tutorial: Refactoring a graph model</a></li>
                 <li><a href="/developer/graphgist/">Interactive Graph Models</a></li>
             </ul>
         </div>
@@ -90,13 +92,22 @@
             <ul>
                 <li><a href="/developer/language-guides/">Drivers Overview</a></li>
                 <li><a href="/developer/java/">Java</a></li>
-                <li><a href="/developer/spring-data-neo4j/">Spring Framework</a></li>
+                <ul>
+                    <li><a href="/developer/java-driver-spring-boot-starter/">Java Driver Spring Boot Starter</a></li>
+                    <li><a href="/developer/neo4j-ogm/">Neo4j Object Graph Mapper</a></li>
+                    <li><a href="/developer/spring-data-neo4j/">Spring Data Neo4j</a></li>
+                    <li><a href="/developer/spring-data-neo4j-rx/">Spring Data Neo4j RX</a></li>
+                    <li><a href="/developer/java-procedures/">Procedures and Functions</a></li>
+                    <li><a href="/developer/java-third-party/">Third-party libraries</a></li>
+                </ul>
                 <li><a href="/developer/dotnet/">.NET</a></li>
                 <li><a href="/developer/javascript/">JavaScript</a></li>
                 <li><a href="/developer/python/">Python</a></li>
                 <li><a href="/developer/go/">Go</a></li>
                 <li><a href="/developer/ruby/">Ruby</a></li>
                 <li><a href="/developer/php/">PHP</a></li>
+                <li><a href="/developer/erlang-elixir/">Erlang & Elixir</a></li>
+                <li><a href="/developer/perl/">Perl</a></li>
             </ul>
         </div>
     </dl>
@@ -113,12 +124,29 @@
         </div>
     </dl>
     <dl class="menu-list">
-        <dd onclick="expandMenu(this)" class="accordion-dev-nav">Neo4j in Production</dd>
+        <dd onclick="expandMenu(this)" class="accordion-dev-nav">Neo4j Aura DBaaS</dd>
         <div class="panel-dev-nav">
             <ul>
-                <li><a href="/developer/in-production/">Deployment Overview</a></li>
-                <li><a href="/developer/guide-performance-tuning/">Performance Tuning</a></li>
+                <li><a href="/developer/aura-cloud-dbaas/">Aura DBaaS Overview</a></li>
+                <li><a href="/developer/aura-connect-neo4j-desktop/">Connect from Neo4j Desktop</a></li>
+		        <li><a href="/developer/aura-connect-cypher-shell/">Connect from Cypher Shell</a></li>
+                <li><a href="/developer/aura-connect-driver/">Connect from your application</a></li>
+                <li><a href="/developer/aura-data-import/">Data Import with Neo4j Aura</a></li>
+                <li><a href="/developer/aura-grandstack/">Deploying a GRANDstack application to Aura</a></li>
+                <li><a href="/developer/aura-bloom/">Bloom Visualization with Aura</a></li>
+                <li><a href="/developer/aura-monitoring/">Monitoring</a></li>
+            </ul>
+        </div>
+    </dl>
+    <dl class="menu-list">
+        <dd onclick="expandMenu(this)" class="accordion-dev-nav">Neo4j Administration</dd>
+        <div class="panel-dev-nav">
+            <ul>
+                <li><a href="/developer/in-production/">Administration Overview</a></li>
+                <li><a href="/developer/manage-multiple-databases/">Tutorial: Managing Multiple Databases</a></li>
                 <li><a href="/developer/guide-clustering-neo4j/">Clustering Neo4j</a></li>
+                <li><a href="/developer/guide-performance-tuning/">Performance Tuning</a></li>
+                <li><a href="/developer/docker/">Docker &amp; Neo4j</a></li>
                 <li><a href="/developer/docker-run-neo4j/">How-To: Run Neo4j in Docker</a></li>
                 <li><a href="/startup-program/">Startups: Free Neo4j Enterprise</a></li>
                 <li><a href="/graphacademy/online-training/neo4j-administration/">Online Course: Neo4j Administration</a></li>
@@ -132,10 +160,10 @@
                 <li><a href="/developer/guide-cloud-deployment/">Cloud Overview</a></li>
                 <li><a href="/developer/neo4j-cloud-aws-ec2-ami/">Deploying to Amazon EC2</a></li>
                 <li><a href="/developer/neo4j-google-cloud-launcher/">Deploying to Google Compute Engine</a></li>
-                <li><a href="/developer/neo4j-cloud-azure-cluster">Deploying to Azure</a></li>
-                <li><a href="/developer/neo4j-cloud-vms">Neo4j Cloud VMs</a></li>
-                <li><a href="/developer/guide-orchestration">Orchestration Tools</a></li>
-                <li><a href="/developer/neo4j-cloud-hosting-providers">Cloud Hosting Providers</a></li>
+                <li><a href="/developer/neo4j-cloud-azure-cluster/">Deploying to Azure</a></li>
+                <li><a href="/developer/neo4j-cloud-vms/">Neo4j Cloud VMs</a></li>
+                <li><a href="/developer/guide-orchestration/">Orchestration Tools</a></li>
+            <!--<li><a href="/developer/neo4j-cloud-hosting-providers/">Cloud Hosting Providers</a></li>-->
             </ul>
         </div>
     </dl>
@@ -144,12 +172,12 @@
         <div class="panel-dev-nav">
             <ul>
                 <li><a href="/developer/resources/">Resource Overview</a></li>
-	            <li><a href="/graphacademy/online-course-getting-started/">Getting Started Course</a></li>
-	            <li><a href="/developer/ruby-course/">Ruby / Rails Course</a></li>
-	            <li><a href="/graphacademy/online-training/neo4j-administration/">Online Course: Neo4j Administration</a></li>
+                <li><a href="/developer/about-graphacademy/">Learn through GraphAcademy</a></li>
+                <li><a href="/developer/guide-create-neo4j-browser-guide/">Tutorial: Create Custom Browser Guide</a></li>
+                <li><a href="/developer/ruby-course/">How-To: Build with Ruby &amp; Neo4j</a></li>
+                <li><a href="/developer/browser-guide-list">Available Neo4j Browser Guides</a></li>
                 <li><a href="/docs/">Neo4j Documentation</a></li>
                 <ul>
-	                <li><a href="/docs/developer-manual/current/">Developer Manual</a></li>
 	                <li><a href="/docs/java-reference/current/">Java Developer Reference</a></li>
 	                <li><a href="/docs/operations-manual/current/">Operations Manual</a></li>
                     <li><a href="/docs/cypher-refcard/current/">Cypher Refcard</a></li>
