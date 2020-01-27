@@ -1,5 +1,5 @@
 = Managing Multiple Databases in Neo4j
-:slug: manage-databases
+:slug: manage-multiple-databases
 :level: Beginner
 :section: Neo4j Administration
 :section-link: in-production
@@ -49,9 +49,9 @@ If we want to see the system information (view, create/delete, manage databases)
 We can do that with the `:use` command then telling it which database we want.
 
 Command: `:use system`
-Results:
 
-image::{img}4dot0_use_db.jpg[link="{img}4dot0_use_db.jpg",role="popup-link"]
+.Results:
+image:{img}4dot0_use_db.jpg[link="{img}4dot0_use_db.jpg",role="popup-link"]
 
 Now we can run a command to see the databases created with the instance.
 The `SHOW DATABASES` command will display all databases in our instance (or databases across instances in a cluster) along with address, role, requested and current statuses, any errors, and which database is default.
@@ -108,9 +108,9 @@ Once we add data in a bit, we will see a data model visualization in the results
 We can do another quick test by writing a Cypher query to return any nodes and relationships.
 
 Command: `MATCH (node)-[rel]-(other) RETURN node, rel, other`
-Results:
 
-image::{img}4dot0_schema_test.jpg[link="{img}4dot0_schema_test.jpg",role="popup-link"]
+.Results:
+image:{img}4dot0_schema_test.jpg[link="{img}4dot0_schema_test.jpg",role="popup-link"]
 
 All clear.
 Now let us add some data.
@@ -246,9 +246,9 @@ In this case, deleting all the data will not completely wipe indexes or the ghos
 Instead, we can use the `CREATE OR REPLACE DATABASE` command and start over.
 
 Command: `CREATE OR REPLACE DATABASE neo4j`
-Results:
 
-image::{img}4dot0_drop_recreate_db.jpg[link="{img}4dot0_drop_recreate_db.jpg",role="popup-link"]
+.Results:
+image:{img}4dot0_drop_recreate_db.jpg[link="{img}4dot0_drop_recreate_db.jpg",role="popup-link"]
 
 [#resources]
 == Resources
