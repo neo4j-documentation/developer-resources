@@ -123,6 +123,11 @@ This can be done a few different ways, but we will use Cypher's `LOAD CSV` comma
 You can also use `LOAD CSV` without creating the graph to output samples, counts, or distributions.
 This helps us detect incorrect header column counts, delimiters, quotes, escapes, or spelling of header names before the data is written and stored.
 
+To enter and run Cypher statements, we can use a couple of methods.
+
+1. Open Neo4j Browser (from Desktop or web browser), type statements into input box at top, and execute with the `play` button on the right.
+2. Run cypher-shell from the command line by running `bin/cypher-shell`.
+
 In the previous step, we downloaded the .zip file, copied it to our Neo4j import folder, and unzipped the file into a directory containing 3 CSVs.
 Before we insert anything into our graph database, we should inspect the data in the files a bit.
 To do this, we can use the `LOAD CSV` command.
