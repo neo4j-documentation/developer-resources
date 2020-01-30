@@ -1,0 +1,213 @@
+= Multi Tenancy in Neo4j: A Worked Example
+:slug: multi-tenancy-worked-example
+:level: Beginner
+:section: Neo4j Administration
+:section-link: in-production
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
+
+.Goals
+[abstract]
+In this guide, we will learn how to do multi tenancy in Neo4j.
+
+.Prerequisites
+[abstract]
+Please have link:/download[Neo4j^] (version 4.0 or later) downloaded and installed.
+It helps to have read the section on link:/developer/in-production/manage-multiple-databases/[managing multiple databases].
+We'll also need to install https://neo4j.com/developer/neo4j-apoc/[APOC^], Neo4j's standard library.
+
+[role=expertise]
+{level}
+
+[#multi-tenancy]
+In Neo4j (v4.0+), we can create and use more than one active database at the same time.
+This works in standalone and causal cluster scenarios and allows us to maintain multiple, separate graphs in one installation.
+
+In this guide we're going to learn how to use this feature with a multi tenant dataset.
+
+[#setup-db]
+== System setup
+
+If you haven't already, link:/download/[download^] Neo4j.
+
+We will need to have a database running and open link:/developer/neo4j-browser/[Neo4j Browser] to walk through this guide.
+If you are unsure how to create and start a database, step-by-step instructions for doing so in Neo4j Desktop are provided in link:/developer/neo4j-desktop[this guide].
+
+[#carrefour-retail-dataset]
+== Carrefour Retail dataset
+
+We're going to use a dataset published by Carrefour, a French retailer, as part of their https://github.com/ging/carrefour_basket_data_challenge[Delighting Customers Challenge Basket Data^].
+Rik van Bruggen recently wrote a series of blog posts showing how to import and analyse this data in Neo4j 3.5.
+
+The data is available as https://drive.google.com/a/neotechnology.com/uc?id=1wDNAMFk_3-H1l44ID4P6fcE6K7cvG9iX&export=download[a JSON file^] curated by Rik.
+Once we've downloaded the file, we need to put it into the `import` folder of Neo4j.
+
+The dataset is accompanied by a data dictionary that describes each of the fields that we see in the file:
+
+.Data Dictionary
+[opts="header", cols="1,3"]
+|===
+| Field | Description
+| id |     Number id for that individual ticket.
+| mall |   Store where the ticket was printed. It has two values, 1 and 2.
+| data  |  Date and time the ticket was printed.
+| client | Some tickets will have a Customer ID. Many tickets will share a Customer ID.
+| items  | List of items contained in the printed ticket. The list contains a dictionary with a product description (desc), the amount charged (net_am), and the number of units bought (n_unit).
+|===
+
+From looking at these descriptions, `mall` seems like a good property to use to partition the data.
+We can store the tickets printed in mall 1 in one database, and the tickets printed in mall 2 in another database.
+
+
+[#exploring-data]
+== Exploring the data
+
+We're going to explore the content of this file using the APOC Library, but first we need to add the following entry to the `apoc.conf` file:
+
+.apoc.conf
+[source,properties]
+----
+apoc.import.file.enabled=true
+----
+
+We can now process this file using the `apoc.load.json` procedure.
+
+[source,cypher]
+----
+CALL apoc.load.json("file:///DelightingCustomersBDclean.json")
+YIELD value
+RETURN value
+LIMIT 5;
+----
+
+.Results
+[opts="header"]
+|===
+| value
+| {date: "2016-01-14T20:07:00.000+0000", client: 77021708271, _id: 1001, items: [{n_unit: 1, net_am: 1.0, desc: "CARAMELOS S/AZUCAR"}], mall: 2}
+| {date: "2016-01-14T15:25:00.000+0000", client: 77021708271, _id: 1002, items: [{n_unit: 1, net_am: 3.0, desc: "TOSTA VARIADA"}, {n_unit: 1, net_am: 1.0, desc: "BAGUETTE TORTILLA"}], mall: 1}
+| {date: "2016-01-14T20:07:00.000+0000", client: 77021708271, _id: 1003, items: [{n_unit: 1, net_am: 2.83, desc: "QUESO TIERNO MEZCL"}, {n_unit: 1, net_am: 1.65, desc: "GUISANTES MUY FINO"}, {n_unit: 1, net_am: 1.77, desc: "BIFIDUS CON FRUTAS"}, {n_unit: 1, net_am: 1.16, desc: "MAIZ DULCE PACK3X140"}, {n_unit: 1, net_am: 2.5, desc: "SANUS FRESA L. CASEI"}, {n_unit: 1, net_am: 1.0, desc: "FANTA LIMÓN S/BURB"}, {n_unit: 1, net_am: 1.85, desc: "CEREALES ESTRELLITAS"}, {n_unit: 1, net_am: 2.15, desc: "SALVASLIP EVAX"}, {n_unit: 1, net_am: 1.09, desc: "YOGUR NATURAL DANO"}, {n_unit: 1, net_am: 1.15, desc: "ARROZ LARGO SOS 1 KI"}, {n_unit: 1, net_am: 1.5, desc: "YORK SANDWICH ELPO"}, {n_unit: 1, net_am: 0.75, desc: "BARQUILLO NATA COVY"}, {n_unit: 1, net_am: 1.39, desc: "TRINA LIMON 1,5LITRO"}, {n_unit: 1, net_am: 1.85, desc: "CHORIZO DULCE CARR"}, {n_unit: 1, net_am: 1.0, desc: "PIMIENTO PIQUILLO"}, {n_unit: 24, net_am: 6.0, desc: "CERVEZA HOLANDESA"}, {n_unit: 1, net_am: 1.34, desc: "PECHUGA PAVO LONCH"}, {n_unit: 6, net_am: 1.52, desc: "AGUA CARREFOUR 2 L"}, {n_unit: 1, net_am: 1.69, desc: "FIAMBRE JAMON PAVO"}, {n_unit: 1, net_am: 0.66, desc: "BIFIDUS COCO 0%"}, {n_unit: 1, net_am: 2.74, desc: "DUPLO COLGATE TRIP"}], mall: 2}
+| {date: "2016-01-14T16:25:00.000+0000", client: 77021708271, _id: 1004, items: [{n_unit: 1, net_am: 0.64, desc: "AGUA SOLAN CABRAS"}], mall: 2}
+| {date: "2016-01-14T14:25:00.000+0000", client: 77021708271, _id: 1005, items: [{n_unit: 1, net_am: 3.9, desc: "PAQUETE 500 HOJAS A4"}, {n_unit: 1, net_am: 4.99, desc: "LEGGING NINA 3/14"}, {n_unit: 1, net_am: 9.99, desc: "JERSEY UNISEX 3/14"}, {n_unit: 3, net_am: 4.6, desc: "HUESITOS LECHE 12"}, {n_unit: 1, net_am: 2.65, desc: "MINI FUET CAMPOFRIO"}, {n_unit: 2, net_am: 2.78, desc: "REGAÑA ACEITE OLIV"}, {n_unit: 1, net_am: 15.95, desc: "MEGA MAKI"}], mall: 1}
+|===
+
+We can see that some items are from mall 1 and some from mall 2.
+Let's have a look how many tickets each mall printed:
+
+[source,cypher]
+----
+CALL apoc.load.json("file:///DelightingCustomersBDclean.json")
+YIELD value
+RETURN value.mall, count(*)
+----
+
+.Results
+[opts="header"]
+|===
+| value.mall | count(*)
+| 2 | 293586
+| 1 | 292893
+|===
+
+It looks like we'll have two quite evenly populated databases.
+Let's get those databases created!
+
+[#creating-databases]
+== Creating databases
+
+We're going to store the data for each mall in a different Neo4j database.
+We'll create these databases using the https://neo4j.com/docs/cypher-manual/4.0/administration/databases/#administration-databases-create-database[`CREATE DATABASE`^] command, which we need to run against the `system` database.
+Let's first switch to that database:
+
+[source,cypher]
+----
+:use system;
+----
+
+Once we've done that we can run the following statements to create the databases:
+
+[source,cypher]
+----
+CREATE DATABASE mall1;
+CREATE DATABASE mall2;
+----
+
+We can check that those databases have been created by running the following command:
+
+[source,cypher]
+----
+SHOW DATABASES;
+----
+
+.SHOW DATABASES
+[opts="header"]
+|===
+| name     | address        | role         | requestedStatus | currentStatus | error | default
+| "neo4j"  | "0.0.0.0:7687" | "standalone" | "online"        | "online"      | ""    | TRUE
+| "system" | "0.0.0.0:7687" | "standalone" | "online"        | "online"      | ""    | FALSE
+| "fabric" | "0.0.0.0:7687" | "standalone" | "online"        | "online"      | ""    | FALSE
+| "mall1"  | "0.0.0.0:7687" | "standalone" | "online"        | "online"      | ""    | FALSE
+| "mall2"  | "0.0.0.0:7687" | "standalone" | "online"        | "online"      | ""    | FALSE
+|===
+
+[#graph-model]
+== Graph Model
+
+We
+
+[#importing-data]
+== Importing the data
+
+We're going to use the `apoc.load.json` procedure to import the data into each of our databases.
+We'll filter the JSON file by the `mall` property so that we load the data appropriately.
+
+The script below loads data for mall 1:
+
+:mall: 1
+:url: "file:///DelightingCustomersBDclean.json"
+
+[source,cypher, subs="attributes"]
+----
+:use mall1;
+include::importTickets.cypher[tag=params]
+----
+
+[source,cypher]
+----
+include::createConstraints.cypher[]
+include::importTickets.cypher[tag=query]
+----
+
+:mall: 2
+
+And the script below loads data for mall 2:
+
+[source,cypher, subs="attributes"]
+----
+:use mall2;
+include::importTickets.cypher[tag=params]
+----
+
+[source,cypher]
+----
+include::createConstraints.cypher[]
+include::importTickets.cypher[tag=query]
+----
+
+[#querying-individual-databases]
+== Querying individual databases
+
+Now that we've imported the data, let's explore it by writing some queries.
+
+
+[#querying-across-databases]
+== Querying across databases
+
+We can also write queries across databases using Neo4j Fabric.
+
+
+[source,cypher]
+----
+----
