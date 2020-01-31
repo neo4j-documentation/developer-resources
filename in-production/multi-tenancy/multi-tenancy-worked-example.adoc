@@ -242,15 +242,264 @@ image::{img}4dot0_multi_tenancy_browser_viz.png[link="{img}4dot0_multi_tenancy_b
 == Querying individual databases
 
 Now that we've imported the data, let's explore it by writing some queries.
+We'll show the results of running some queries on both databases and some just on one of them.
+
+****
+[NOTE]
+We can switch between the databases by running the command `:use mall1` or `:use mall2`.
+****
+
+The following query returns the biggest spending clients in the mall:
+
+[source,cypher]
+----
+MATCH (client:Client)-[:PURCHASED]->(ticket)-[:HAS_TICKETITEM]->(item:TicketItem)
+WHERE client.id <> "Unknown"
+WITH client, count(DISTINCT ticket) AS tickets,
+     apoc.math.round(sum(item.netAmount), 2) AS totalSpend
+RETURN client.id AS clientId, totalSpend, tickets,
+       apoc.math.round(totalSpend / tickets, 2) AS spendPerTicket
+ORDER BY totalSpend DESC
+LIMIT 10;
+----
+
+.Mall 1 biggest spenders
+[opts="header"]
+|===
+| clientId    | totalSpend | tickets | spendPerTicket
+| 77038482725 | 4125.71    | 95      | 43.43
+| 77091111583 | 3111.06    | 29      | 107.28
+| 77042913479 | 2726.84    | 51      | 53.47
+| 77035560017 | 2664.49    | 69      | 38.62
+| 77081132118 | 2644.51    | 33      | 80.14
+| 77060098914 | 2433.68    | 24      | 101.4
+| 77071854908 | 2379.27    | 27      | 88.12
+| 77079395996 | 2272.06    | 27      | 84.15
+| 77042176706 | 2183.27    | 65      | 33.59
+| 77059085165 | 2162.1     | 44      | 49.14
+
+|===
 
 
+.Mall 2 biggest spenders
+[opts="header"]
+|===
+| clientId    | totalSpend | tickets | spendPerTicket
+| 77038482725 | 3314.19    | 87      | 38.09
+| 77074230047 | 3281.82    | 47      | 69.83
+| 77035560017 | 3120.69    | 67      | 46.58
+| 77042573786 | 2696.9     | 31      | 87.0
+| 77017054434 | 2572.42    | 45      | 57.16
+| 77091111583 | 2494.08    | 27      | 92.37
+| 77037711999 | 2369.63    | 36      | 65.82
+| 77053280208 | 2359.28    | 58      | 40.68
+| 77045642784 | 2337.03    | 44      | 53.11
+| 77049483454 | 2259.89    | 56      | 40.36
+|===
+
+Interestingly, the biggest spending client in both malls is the same person.
+
+The `spendPerTicket` also looks interesting.
+The following query shows the products bought by the client that has the highest `spendPerTicket` in mall 2 :
+
+[source,cypher]
+----
+MATCH path = (:Client {id: 77078849426})-[:PURCHASED]->()-->(:TicketItem)-->(:Product)
+RETURN path
+----
+
+image::{img}4dot0_multi_tenancy_big_spender.png[link="{img}4dot0_multi_tenancy_big_spender.png",role="popup-link",title="A big spender in Mall 2"]
+
+On the left hand side of the diagram we can see highlighted nodes that have skewed the average spend!
+My Spanish isn't great, but I can see an iPad Air among the items purchased.
+_ASP ROB LG HOMB S5_ is a https://www.carrefour.es/robot-aspirador-lg-lg-hombot-turbo-vr8602rr-smart-inverter-0-6-l-60-db-rojo/8806087897081[robot vacuum cleaner^] and I think _POR APP MB MJVE2YA_ is an Apple Macbook.
+The other items look more like the type of products you'd buy in a normal grocery shop.
+
+Let's go back to mall 1 and see which products are purchased most often.
+We can write the following query to compute this:
+
+[source,cypher]
+----
+MATCH (item:TicketItem)-->(product:Product)
+WITH product, apoc.math.round(sum(item.netAmount), 2) AS totalSpend,
+     count(*) AS purchases
+RETURN product.description, totalSpend, purchases,
+       apoc.math.round(totalSpend / purchases, 2) AS costPerItem
+ORDER BY totalSpend DESC
+LIMIT 10;
+----
+
+.Mall 1 popular products
+[opts="header"]
+|===
+| product.description    | totalSpend | purchases | costPerItem
+| "ROSCON NATA MEDIANO"  | 4596.64    | 450       | 10.21
+| "ACEITE OLIVA HOJIB"   | 3597.33    | 269       | 13.37
+| "CERVEZA MAHOU CLAS"   | 3328.62    | 363       | 9.17
+| "CERVEZA MAHOU 5 *"    | 2870.3     | 383       | 7.49
+| "ROSCON MEDIANO SIN R" | 2632.75    | 363       | 7.25
+| "ATÚN CLARO ACEITE"    | 2404.49    | 502       | 4.79
+| "ROSCON DE REYES"      | 2363.89    | 158       | 14.96
+| "ACEITE OLIVA CARBO"   | 2268.72    | 180       | 12.6
+| "CAMISA CRO M/LARGA"   | 2208.31    | 293       | 7.54
+| "PAÑAL DODOT"          | 2186.34    | 75        | 29.15
+|===
+
+All the top items are priced at less than 30 euros each.
+We can see a couple of beers (cerveza) in positions 3 and 4, and then Roscon seems to be a range of https://www.carrefour.es/supermercado/roscon-de-reyes-con-nata-1-3-kg-carrefour/R-577901507[tasty looking pastries^].
 
 [#querying-across-databases]
 == Querying across databases
 
-We can also write queries across databases using Neo4j Fabric.
+We can also write queries across databases using https://neo4j.com/docs/operations-manual/current/fabric/configuration/[Neo4j Fabric^].
+This functionality is useful for executing aggregate queries across multiple databases.
 
+Let's first change to the _fabric_ database by running the following command:
 
 [source,cypher]
 ----
+:use fabric
 ----
+
+Now we're going write a query that returns the total spend on products in each of our databases.
+
+We'll prefix our queries with the https://neo4j.com/docs/cypher-manual/4.0/clauses/use/[`USE`^] clause, which tells the Fabric engine which database to execute the query against.
+The syntax of this clause is as follows:
+
+`USE <fabric.database.name>.<fabric.graph.*.database>`
+
+Or in our case `USE fabric.mall1` and `USE fabric.mall2`.
+
+The following query finds the total spend and number of purchases in each mall, combines the results using the https://neo4j.com/docs/cypher-manual/4.0/clauses/union/#union-combine-queries-retain-duplicates[`UNION ALL`^] clause, and then orders the results by total spend:
+
+[source,cypher]
+----
+USE fabric.mall1
+MATCH (item:TicketItem)-->(product:Product)
+RETURN "Mall 1" as mall,
+       apoc.math.round(sum(item.netAmount), 2) AS totalSpend,
+       count(*) AS purchases
+
+UNION ALL
+
+USE fabric.mall2
+MATCH (item:TicketItem)-->(product:Product)
+RETURN "Mall 2" as mall,
+       apoc.math.round(sum(item.netAmount), 2) AS totalSpend,
+       count(*) AS purchases
+
+ORDER BY totalSpend DESC;
+----
+
+.Total spending in malls
+[opts="header"]
+|===
+| mall     | totalSpend | purchases
+| "Mall 1" | 953536.51  | 219561
+| "Mall 2" | 943463.47  | 219966
+|===
+
+The total spend and number of purchases are almost identical between the malls!
+We can also write a version of this query that reduces duplication by using the built-in https://neo4j.com/docs/operations-manual/current/fabric/queries/#fabric-built-in-functions[`<fabric-database-name>graphIds`^] function and the https://neo4j.com/docs/cypher-manual/4.0/clauses/call-subquery/[`CALL{}`^] clause, as shown below:
+
+[source,cypher]
+----
+WITH ["Mall 1", "Mall 2"] AS malls
+UNWIND fabric.graphIds() AS graphId
+CALL {
+  USE fabric.graph(graphId)
+  MATCH (item:TicketItem)-->(product:Product)
+  RETURN apoc.math.round(sum(item.netAmount), 2) AS totalSpend,
+         count(*) AS purchases
+}
+RETURN malls[graphId] AS mall, totalSpend, purchases
+ORDER BY totalSpend DESC;
+----
+
+We can also aggregate the results returned by the sub queries executed on each of the mall databases.
+The following query finds the highest selling products in each mall, and then shows the top 10 products across both malls:
+
+[source,cypher]
+----
+UNWIND fabric.graphIds() AS graphId
+CALL {
+  USE fabric.graph(graphId)
+  MATCH (item:TicketItem)-->(product:Product)
+  WITH product, apoc.math.round(sum(item.netAmount), 2) AS totalSpend,
+       count(*) AS purchases
+  RETURN product, totalSpend, purchases
+  ORDER BY totalSpend DESC
+}
+RETURN product.description, totalSpend, purchases
+ORDER BY totalSpend DESC
+LIMIT 10
+----
+
+.Top selling products across malls
+[opts="header"]
+|===
+| product.description    | totalSpend | purchases
+| "ROSCON NATA MEDIANO"  | 4596.64    | 450
+| "ROSCON NATA MEDIANO"  | 4462.64    | 451
+| "ACEITE OLIVA HOJIB"   | 3597.33    | 269
+| "LED SAM UE48J6200"    | 3546.08    | 6
+| "CERVEZA MAHOU CLAS"   | 3406.55    | 392
+| "CERVEZA MAHOU CLAS"   | 3328.62    | 363
+| "PAÑAL DODOT"          | 3078.55    | 99
+| "CERVEZA MAHOU 5 *"    | 2870.3     | 383
+| "ROSCON MEDIANO SIN R" | 2632.75    | 363
+| "ACEITE OLIVA HOJIB"   | 2478.99    | 222
+|===
+
+The top selling product in both malls is _ROSCON NATA MEDIANO_, but it'd be good if the sales for each product was aggregated so that we have only one row per product.
+We can do this using the https://neo4j.com/docs/cypher-manual/4.0/functions/aggregating/#functions-sum[`SUM`^] aggregation function:
+
+[source,cypher]
+----
+UNWIND fabric.graphIds() AS graphId
+CALL {
+  USE fabric.graph(graphId)
+  MATCH (item:TicketItem)-->(product:Product)
+  WITH product, apoc.math.round(sum(item.netAmount), 2) AS totalSpend,
+       count(*) AS purchases
+  RETURN product, totalSpend, purchases
+  ORDER BY totalSpend DESC
+}
+RETURN product.description, sum(totalSpend) AS totalSpend, sum(purchases) AS purchases
+ORDER BY totalSpend DESC
+LIMIT 10
+----
+
+****
+[NOTE]
+The implicit group by key for these aggregation functions is `product.description` and *not* `product`.
+The product node is completely different in each of the databases, so if we grouped by that we'd still end up with individual per product sold in each mall.
+****
+
+The table below shows the results of running the aggregation query:
+
+.Top aggregated selling products across malls
+[opts="header"]
+|===
+| product.description    | totalSpend         | purchases
+| "ROSCON NATA MEDIANO"  | 9059.28            | 901
+| "CERVEZA MAHOU CLAS"   | 6735.17            | 755
+| "ACEITE OLIVA HOJIB"   | 6076.32            | 491
+| "LED SAM UE48J6200"    | 5343.08            | 9
+| "PAÑAL DODOT"          | 5264.89            | 174
+| "CERVEZA MAHOU 5 *"    | 5236.620000000001  | 740
+| "ROSCON MEDIANO SIN R" | 4902.26            | 689
+| "ROSCON DE REYES"      | 4783.57            | 318
+| "ATÚN CLARO ACEITE"    | 4758.15            | 974
+| "CAMISA CRO M/LARGA"   | 4335.5599999999995 | 571
+
+|===
+
+
+[#resources]
+== Resources
+
+* link:/developer/manage-multiple-databases/[Managing Multiple Databases in Neo4j^]
+* link:/docs/operations-manual/current/manage-databases/[Documentation: Multi-database^]
+* link:https://adamcowley.co.uk/neo4j/multi-tenancy-neo4j-4.0/[Multi-Tenancy in Neo4j 4.0^]
+* link:https://adamcowley.co.uk/neo4j/sharding-neo4j-4.0/[When and how to implement Sharding in Neo4j 4.0^]

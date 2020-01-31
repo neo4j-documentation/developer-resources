@@ -9,7 +9,7 @@ CALL apoc.periodic.iterate(
    YIELD value
    WHERE value.mall = $mall
    RETURN value
-   LIMIT 10000",
+   LIMIT 20000",
   "CREATE (t:Ticket {id: value._id, datetime: datetime(value.date)})
    MERGE (c:Client {id: value.client})
    CREATE (c)-[:PURCHASED]->(t)
