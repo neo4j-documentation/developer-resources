@@ -1,0 +1,505 @@
+= Multi Tenancy in Neo4j: A Worked Example
+:slug: multi-tenancy-worked-example
+:level: Beginner
+:section: Neo4j Administration
+:section-link: in-production
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
+
+.Goals
+[abstract]
+In this guide, we will learn how to do multi tenancy in Neo4j.
+
+.Prerequisites
+[abstract]
+Please have link:/download[Neo4j^] (version 4.0 or later) downloaded and installed.
+It helps to have read the section on link:/developer/in-production/manage-multiple-databases/[managing multiple databases].
+We'll also need to install https://neo4j.com/developer/neo4j-apoc/[APOC^], Neo4j's standard library.
+
+[role=expertise]
+{level}
+
+[#multi-tenancy]
+In Neo4j (v4.0+), we can create and use more than one active database at the same time.
+This works in standalone and causal cluster scenarios and allows us to maintain multiple, separate graphs in one installation.
+
+In this guide we're going to learn how to use this feature with a multi tenant dataset.
+
+[#setup-db]
+== System setup
+
+If you haven't already, link:/download/[download^] Neo4j.
+
+We will need to have a database running and open link:/developer/neo4j-browser/[Neo4j Browser] to walk through this guide.
+If you are unsure how to create and start a database, step-by-step instructions for doing so in Neo4j Desktop are provided in link:/developer/neo4j-desktop[this guide].
+
+We're going to use the APOC Library in this guide, and in order to process local files, we'll need need to add the following entry to the `apoc.conf` file:
+
+.apoc.conf
+[source,properties]
+----
+apoc.import.file.enabled=true
+----
+
+We'll also be using https://neo4j.com/docs/operations-manual/current/fabric/introduction/[Neo4j Fabric^], which we can enable by adding the following properties in the `neo4j.conf` file:
+
+.neo4j.conf
+[source,properties]
+----
+fabric.database.name=fabric
+
+fabric.graph.0.name=mall1
+fabric_graph.0.uri=neo4j://localhost:7687
+fabric_graph.0.database=mall1
+
+fabric_graph.1.name=mall2
+fabric_graph.1.uri=neo4j://localhost:7687
+fabric_graph.1.database=mall2
+----
+
+[#carrefour-retail-dataset]
+== Carrefour Retail dataset
+
+We're going to use a dataset published by Carrefour, a French retailer, as part of their https://github.com/ging/carrefour_basket_data_challenge[Delighting Customers Challenge Basket Data^].
+Rik van Bruggen recently wrote a series of blog posts showing how to import and analyse this data in Neo4j 3.5.
+
+The data is available as https://drive.google.com/a/neotechnology.com/uc?id=1wDNAMFk_3-H1l44ID4P6fcE6K7cvG9iX&export=download[a JSON file^] curated by Rik.
+Once we've downloaded the file, we need to put it into the `import` folder of Neo4j.
+
+The dataset is accompanied by a data dictionary that describes each of the fields that we see in the file:
+
+.Data Dictionary
+[opts="header", cols="1,3"]
+|===
+| Field | Description
+| id |     Number id for that individual ticket.
+| mall |   Store where the ticket was printed. It has two values, 1 and 2.
+| data  |  Date and time the ticket was printed.
+| client | Some tickets will have a Customer ID. Many tickets will share a Customer ID.
+| items  | List of items contained in the printed ticket. The list contains a dictionary with a product description (desc), the amount charged (net_am), and the number of units bought (n_unit).
+|===
+
+From looking at these descriptions, `mall` seems like a good property to use to partition the data.
+We can store the tickets printed in mall 1 in one database, and the tickets printed in mall 2 in another database.
+
+
+[#exploring-data]
+== Exploring the data
+
+We can now process this file using the `apoc.load.json` procedure.
+
+[source,cypher]
+----
+CALL apoc.load.json("file:///DelightingCustomersBDclean.json")
+YIELD value
+RETURN value
+LIMIT 5;
+----
+
+.Results
+[opts="header"]
+|===
+| value
+| {date: "2016-01-14T20:07:00.000+0000", client: 77021708271, _id: 1001, items: [{n_unit: 1, net_am: 1.0, desc: "CARAMELOS S/AZUCAR"}], mall: 2}
+| {date: "2016-01-14T15:25:00.000+0000", client: 77021708271, _id: 1002, items: [{n_unit: 1, net_am: 3.0, desc: "TOSTA VARIADA"}, {n_unit: 1, net_am: 1.0, desc: "BAGUETTE TORTILLA"}], mall: 1}
+| {date: "2016-01-14T20:07:00.000+0000", client: 77021708271, _id: 1003, items: [{n_unit: 1, net_am: 2.83, desc: "QUESO TIERNO MEZCL"}, {n_unit: 1, net_am: 1.65, desc: "GUISANTES MUY FINO"}, {n_unit: 1, net_am: 1.77, desc: "BIFIDUS CON FRUTAS"}, {n_unit: 1, net_am: 1.16, desc: "MAIZ DULCE PACK3X140"}, {n_unit: 1, net_am: 2.5, desc: "SANUS FRESA L. CASEI"}, {n_unit: 1, net_am: 1.0, desc: "FANTA LIMÓN S/BURB"}, {n_unit: 1, net_am: 1.85, desc: "CEREALES ESTRELLITAS"}, {n_unit: 1, net_am: 2.15, desc: "SALVASLIP EVAX"}, {n_unit: 1, net_am: 1.09, desc: "YOGUR NATURAL DANO"}, {n_unit: 1, net_am: 1.15, desc: "ARROZ LARGO SOS 1 KI"}, {n_unit: 1, net_am: 1.5, desc: "YORK SANDWICH ELPO"}, {n_unit: 1, net_am: 0.75, desc: "BARQUILLO NATA COVY"}, {n_unit: 1, net_am: 1.39, desc: "TRINA LIMON 1,5LITRO"}, {n_unit: 1, net_am: 1.85, desc: "CHORIZO DULCE CARR"}, {n_unit: 1, net_am: 1.0, desc: "PIMIENTO PIQUILLO"}, {n_unit: 24, net_am: 6.0, desc: "CERVEZA HOLANDESA"}, {n_unit: 1, net_am: 1.34, desc: "PECHUGA PAVO LONCH"}, {n_unit: 6, net_am: 1.52, desc: "AGUA CARREFOUR 2 L"}, {n_unit: 1, net_am: 1.69, desc: "FIAMBRE JAMON PAVO"}, {n_unit: 1, net_am: 0.66, desc: "BIFIDUS COCO 0%"}, {n_unit: 1, net_am: 2.74, desc: "DUPLO COLGATE TRIP"}], mall: 2}
+| {date: "2016-01-14T16:25:00.000+0000", client: 77021708271, _id: 1004, items: [{n_unit: 1, net_am: 0.64, desc: "AGUA SOLAN CABRAS"}], mall: 2}
+| {date: "2016-01-14T14:25:00.000+0000", client: 77021708271, _id: 1005, items: [{n_unit: 1, net_am: 3.9, desc: "PAQUETE 500 HOJAS A4"}, {n_unit: 1, net_am: 4.99, desc: "LEGGING NINA 3/14"}, {n_unit: 1, net_am: 9.99, desc: "JERSEY UNISEX 3/14"}, {n_unit: 3, net_am: 4.6, desc: "HUESITOS LECHE 12"}, {n_unit: 1, net_am: 2.65, desc: "MINI FUET CAMPOFRIO"}, {n_unit: 2, net_am: 2.78, desc: "REGAÑA ACEITE OLIV"}, {n_unit: 1, net_am: 15.95, desc: "MEGA MAKI"}], mall: 1}
+|===
+
+We can see that some items are from mall 1 and some from mall 2.
+Let's have a look how many tickets each mall printed:
+
+[source,cypher]
+----
+CALL apoc.load.json("file:///DelightingCustomersBDclean.json")
+YIELD value
+RETURN value.mall, count(*)
+----
+
+.Results
+[opts="header"]
+|===
+| value.mall | count(*)
+| 2 | 293586
+| 1 | 292893
+|===
+
+It looks like we'll have two quite evenly populated databases.
+Let's get those databases created!
+
+[#creating-databases]
+== Creating databases
+
+We're going to store the data for each mall in a different Neo4j database.
+We'll create these databases using the https://neo4j.com/docs/cypher-manual/4.0/administration/databases/#administration-databases-create-database[`CREATE DATABASE`^] command, which we need to run against the `system` database.
+Let's first switch to that database:
+
+[source,cypher]
+----
+:use system;
+----
+
+Once we've done that we can run the following statements to create the databases:
+
+[source,cypher]
+----
+CREATE DATABASE mall1;
+CREATE DATABASE mall2;
+----
+
+We can check that those databases have been created by running the following command:
+
+[source,cypher]
+----
+SHOW DATABASES;
+----
+
+.SHOW DATABASES
+[opts="header"]
+|===
+| name     | address        | role         | requestedStatus | currentStatus | error | default
+| "neo4j"  | "0.0.0.0:7687" | "standalone" | "online"        | "online"      | ""    | TRUE
+| "system" | "0.0.0.0:7687" | "standalone" | "online"        | "online"      | ""    | FALSE
+| "fabric" | "0.0.0.0:7687" | "standalone" | "online"        | "online"      | ""    | FALSE
+| "mall1"  | "0.0.0.0:7687" | "standalone" | "online"        | "online"      | ""    | FALSE
+| "mall2"  | "0.0.0.0:7687" | "standalone" | "online"        | "online"      | ""    | FALSE
+|===
+
+[#graph-model]
+== Graph Model
+
+We're going to import the data into the following graph model:
+
+image::{img}4dot0_multi_tenancy_graph_model.png[link="{img}4dot0_multi_tenancy_graph_model.png",role="popup-link"]
+
+We'll have nodes representing products, clients, tickets, and ticket items, and relationships that indicate which client purchased a ticket, the items that comprise a ticket, and the product that each item was for.
+
+[#importing-data]
+== Importing the data
+
+We'll use the same `apoc.load.json` procedure to import the data into each of our databases.
+We'll filter the JSON file by the `mall` property so that we load the data appropriately.
+
+Let's switch to the `mall1` database and setup parameters that we'll use in our import query:
+
+:mall: 1
+:url: "file:///DelightingCustomersBDclean.json"
+
+[source,cypher, subs="attributes"]
+----
+:use mall1;
+include::importTickets.cypher[tag=params]
+----
+
+And now we'll create that indexes that we're going to need:
+
+[source,cypher]
+----
+include::createConstraints.cypher[]
+----
+
+Now we're ready to process the JSON file.
+We'll wrap our call to `apoc.load.json` inside a call to `apoc.periodic.iterate` so that our import is batched, which will avoid out of memory exceptions:
+
+[source,cypher]
+----
+include::importTickets.cypher[tag=query]
+----
+
+:mall: 2
+
+And now let's do the same thing for mall 2.
+We'll switch to that database and setup our parameters:
+
+[source,cypher, subs="attributes"]
+----
+:use mall2;
+include::importTickets.cypher[tag=params]
+----
+
+And now we'll create that indexes that we're going to need:
+
+[source,cypher]
+----
+include::createConstraints.cypher[]
+----
+
+And now let's import the tickets sold in this store:
+
+[source,cypher]
+----
+include::importTickets.cypher[tag=query]
+----
+
+We can see a sample of the imported graph in the Neo4j Browser visualization below:
+
+image::{img}4dot0_multi_tenancy_browser_viz.png[link="{img}4dot0_multi_tenancy_browser_viz.png",role="popup-link"]
+
+[#querying-individual-databases]
+== Querying individual databases
+
+Now that we've imported the data, let's explore it by writing some queries.
+We'll show the results of running some queries on both databases and some just on one of them.
+
+****
+[NOTE]
+We can switch between the databases by running the command `:use mall1` or `:use mall2`.
+****
+
+The following query returns the biggest spending clients in the mall:
+
+[source,cypher]
+----
+MATCH (client:Client)-[:PURCHASED]->(ticket)-[:HAS_TICKETITEM]->(item:TicketItem)
+WHERE client.id <> "Unknown"
+WITH client, count(DISTINCT ticket) AS tickets,
+     apoc.math.round(sum(item.netAmount), 2) AS totalSpend
+RETURN client.id AS clientId, totalSpend, tickets,
+       apoc.math.round(totalSpend / tickets, 2) AS spendPerTicket
+ORDER BY totalSpend DESC
+LIMIT 10;
+----
+
+.Mall 1 biggest spenders
+[opts="header"]
+|===
+| clientId    | totalSpend | tickets | spendPerTicket
+| 77038482725 | 4125.71    | 95      | 43.43
+| 77091111583 | 3111.06    | 29      | 107.28
+| 77042913479 | 2726.84    | 51      | 53.47
+| 77035560017 | 2664.49    | 69      | 38.62
+| 77081132118 | 2644.51    | 33      | 80.14
+| 77060098914 | 2433.68    | 24      | 101.4
+| 77071854908 | 2379.27    | 27      | 88.12
+| 77079395996 | 2272.06    | 27      | 84.15
+| 77042176706 | 2183.27    | 65      | 33.59
+| 77059085165 | 2162.1     | 44      | 49.14
+
+|===
+
+
+.Mall 2 biggest spenders
+[opts="header"]
+|===
+| clientId    | totalSpend | tickets | spendPerTicket
+| 77038482725 | 3314.19    | 87      | 38.09
+| 77074230047 | 3281.82    | 47      | 69.83
+| 77035560017 | 3120.69    | 67      | 46.58
+| 77042573786 | 2696.9     | 31      | 87.0
+| 77017054434 | 2572.42    | 45      | 57.16
+| 77091111583 | 2494.08    | 27      | 92.37
+| 77037711999 | 2369.63    | 36      | 65.82
+| 77053280208 | 2359.28    | 58      | 40.68
+| 77045642784 | 2337.03    | 44      | 53.11
+| 77049483454 | 2259.89    | 56      | 40.36
+|===
+
+Interestingly, the biggest spending client in both malls is the same person.
+
+The `spendPerTicket` also looks interesting.
+The following query shows the products bought by the client that has the highest `spendPerTicket` in mall 2 :
+
+[source,cypher]
+----
+MATCH path = (:Client {id: 77078849426})-[:PURCHASED]->()-->(:TicketItem)-->(:Product)
+RETURN path
+----
+
+image::{img}4dot0_multi_tenancy_big_spender.png[link="{img}4dot0_multi_tenancy_big_spender.png",role="popup-link",title="A big spender in Mall 2"]
+
+On the left hand side of the diagram we can see highlighted nodes that have skewed the average spend!
+My Spanish isn't great, but I can see an iPad Air among the items purchased.
+_ASP ROB LG HOMB S5_ is a https://www.carrefour.es/robot-aspirador-lg-lg-hombot-turbo-vr8602rr-smart-inverter-0-6-l-60-db-rojo/8806087897081[robot vacuum cleaner^] and I think _POR APP MB MJVE2YA_ is an Apple Macbook.
+The other items look more like the type of products you'd buy in a normal grocery shop.
+
+Let's go back to mall 1 and see which products are purchased most often.
+We can write the following query to compute this:
+
+[source,cypher]
+----
+MATCH (item:TicketItem)-->(product:Product)
+WITH product, apoc.math.round(sum(item.netAmount), 2) AS totalSpend,
+     count(*) AS purchases
+RETURN product.description, totalSpend, purchases,
+       apoc.math.round(totalSpend / purchases, 2) AS costPerItem
+ORDER BY totalSpend DESC
+LIMIT 10;
+----
+
+.Mall 1 popular products
+[opts="header"]
+|===
+| product.description    | totalSpend | purchases | costPerItem
+| "ROSCON NATA MEDIANO"  | 4596.64    | 450       | 10.21
+| "ACEITE OLIVA HOJIB"   | 3597.33    | 269       | 13.37
+| "CERVEZA MAHOU CLAS"   | 3328.62    | 363       | 9.17
+| "CERVEZA MAHOU 5 *"    | 2870.3     | 383       | 7.49
+| "ROSCON MEDIANO SIN R" | 2632.75    | 363       | 7.25
+| "ATÚN CLARO ACEITE"    | 2404.49    | 502       | 4.79
+| "ROSCON DE REYES"      | 2363.89    | 158       | 14.96
+| "ACEITE OLIVA CARBO"   | 2268.72    | 180       | 12.6
+| "CAMISA CRO M/LARGA"   | 2208.31    | 293       | 7.54
+| "PAÑAL DODOT"          | 2186.34    | 75        | 29.15
+|===
+
+All the top items are priced at less than 30 euros each.
+We can see a couple of beers (cerveza) in positions 3 and 4, and then Roscon seems to be a range of https://www.carrefour.es/supermercado/roscon-de-reyes-con-nata-1-3-kg-carrefour/R-577901507[tasty looking pastries^].
+
+[#querying-across-databases]
+== Querying across databases
+
+We can also write queries across databases using https://neo4j.com/docs/operations-manual/current/fabric/configuration/[Neo4j Fabric^].
+This functionality is useful for executing aggregate queries across multiple databases.
+
+Let's first change to the _fabric_ database by running the following command:
+
+[source,cypher]
+----
+:use fabric
+----
+
+Now we're going write a query that returns the total spend on products in each of our databases.
+
+We'll prefix our queries with the https://neo4j.com/docs/cypher-manual/4.0/clauses/use/[`USE`^] clause, which tells the Fabric engine which database to execute the query against.
+The syntax of this clause is as follows:
+
+`USE <fabric.database.name>.<fabric.graph.*.database>`
+
+Or in our case `USE fabric.mall1` and `USE fabric.mall2`.
+
+The following query finds the total spend and number of purchases in each mall, combines the results using the https://neo4j.com/docs/cypher-manual/4.0/clauses/union/#union-combine-queries-retain-duplicates[`UNION ALL`^] clause, and then orders the results by total spend:
+
+[source,cypher]
+----
+USE fabric.mall1
+MATCH (item:TicketItem)-->(product:Product)
+RETURN "Mall 1" as mall,
+       apoc.math.round(sum(item.netAmount), 2) AS totalSpend,
+       count(*) AS purchases
+
+UNION ALL
+
+USE fabric.mall2
+MATCH (item:TicketItem)-->(product:Product)
+RETURN "Mall 2" as mall,
+       apoc.math.round(sum(item.netAmount), 2) AS totalSpend,
+       count(*) AS purchases
+
+ORDER BY totalSpend DESC;
+----
+
+.Total spending in malls
+[opts="header"]
+|===
+| mall     | totalSpend | purchases
+| "Mall 1" | 953536.51  | 219561
+| "Mall 2" | 943463.47  | 219966
+|===
+
+The total spend and number of purchases are almost identical between the malls!
+We can also write a version of this query that reduces duplication by using the built-in https://neo4j.com/docs/operations-manual/current/fabric/queries/#fabric-built-in-functions[`<fabric-database-name>graphIds`^] function and the https://neo4j.com/docs/cypher-manual/4.0/clauses/call-subquery/[`CALL{}`^] clause, as shown below:
+
+[source,cypher]
+----
+WITH ["Mall 1", "Mall 2"] AS malls
+UNWIND fabric.graphIds() AS graphId
+CALL {
+  USE fabric.graph(graphId)
+  MATCH (item:TicketItem)-->(product:Product)
+  RETURN apoc.math.round(sum(item.netAmount), 2) AS totalSpend,
+         count(*) AS purchases
+}
+RETURN malls[graphId] AS mall, totalSpend, purchases
+ORDER BY totalSpend DESC;
+----
+
+We can also aggregate the results returned by the sub queries executed on each of the mall databases.
+The following query finds the highest selling products in each mall, and then shows the top 10 products across both malls:
+
+[source,cypher]
+----
+UNWIND fabric.graphIds() AS graphId
+CALL {
+  USE fabric.graph(graphId)
+  MATCH (item:TicketItem)-->(product:Product)
+  WITH product, apoc.math.round(sum(item.netAmount), 2) AS totalSpend,
+       count(*) AS purchases
+  RETURN product, totalSpend, purchases
+  ORDER BY totalSpend DESC
+}
+RETURN product.description, totalSpend, purchases
+ORDER BY totalSpend DESC
+LIMIT 10
+----
+
+.Top selling products across malls
+[opts="header"]
+|===
+| product.description    | totalSpend | purchases
+| "ROSCON NATA MEDIANO"  | 4596.64    | 450
+| "ROSCON NATA MEDIANO"  | 4462.64    | 451
+| "ACEITE OLIVA HOJIB"   | 3597.33    | 269
+| "LED SAM UE48J6200"    | 3546.08    | 6
+| "CERVEZA MAHOU CLAS"   | 3406.55    | 392
+| "CERVEZA MAHOU CLAS"   | 3328.62    | 363
+| "PAÑAL DODOT"          | 3078.55    | 99
+| "CERVEZA MAHOU 5 *"    | 2870.3     | 383
+| "ROSCON MEDIANO SIN R" | 2632.75    | 363
+| "ACEITE OLIVA HOJIB"   | 2478.99    | 222
+|===
+
+The top selling product in both malls is _ROSCON NATA MEDIANO_, but it'd be good if the sales for each product was aggregated so that we have only one row per product.
+We can do this using the https://neo4j.com/docs/cypher-manual/4.0/functions/aggregating/#functions-sum[`SUM`^] aggregation function:
+
+[source,cypher]
+----
+UNWIND fabric.graphIds() AS graphId
+CALL {
+  USE fabric.graph(graphId)
+  MATCH (item:TicketItem)-->(product:Product)
+  WITH product, apoc.math.round(sum(item.netAmount), 2) AS totalSpend,
+       count(*) AS purchases
+  RETURN product, totalSpend, purchases
+  ORDER BY totalSpend DESC
+}
+RETURN product.description, sum(totalSpend) AS totalSpend, sum(purchases) AS purchases
+ORDER BY totalSpend DESC
+LIMIT 10
+----
+
+****
+[NOTE]
+The implicit group by key for these aggregation functions is `product.description` and *not* `product`.
+The product node is completely different in each of the databases, so if we grouped by that we'd still end up with individual per product sold in each mall.
+****
+
+The table below shows the results of running the aggregation query:
+
+.Top aggregated selling products across malls
+[opts="header"]
+|===
+| product.description    | totalSpend         | purchases
+| "ROSCON NATA MEDIANO"  | 9059.28            | 901
+| "CERVEZA MAHOU CLAS"   | 6735.17            | 755
+| "ACEITE OLIVA HOJIB"   | 6076.32            | 491
+| "LED SAM UE48J6200"    | 5343.08            | 9
+| "PAÑAL DODOT"          | 5264.89            | 174
+| "CERVEZA MAHOU 5 *"    | 5236.620000000001  | 740
+| "ROSCON MEDIANO SIN R" | 4902.26            | 689
+| "ROSCON DE REYES"      | 4783.57            | 318
+| "ATÚN CLARO ACEITE"    | 4758.15            | 974
+| "CAMISA CRO M/LARGA"   | 4335.5599999999995 | 571
+
+|===
+
+
+[#resources]
+== Resources
+
+* link:/developer/manage-multiple-databases/[Managing Multiple Databases in Neo4j^]
+* link:/docs/operations-manual/current/manage-databases/[Documentation: Multi-database^]
+* link:https://adamcowley.co.uk/neo4j/multi-tenancy-neo4j-4.0/[Multi-Tenancy in Neo4j 4.0^]
+* link:https://adamcowley.co.uk/neo4j/sharding-neo4j-4.0/[When and how to implement Sharding in Neo4j 4.0^]
