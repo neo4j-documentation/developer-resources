@@ -35,6 +35,30 @@ If you haven't already, link:/download/[download^] Neo4j.
 We will need to have a database running and open link:/developer/neo4j-browser/[Neo4j Browser] to walk through this guide.
 If you are unsure how to create and start a database, step-by-step instructions for doing so in Neo4j Desktop are provided in link:/developer/neo4j-desktop[this guide].
 
+We're going to use the APOC Library in this guide, and in order to process local files, we'll need need to add the following entry to the `apoc.conf` file:
+
+.apoc.conf
+[source,properties]
+----
+apoc.import.file.enabled=true
+----
+
+We'll also be using https://neo4j.com/docs/operations-manual/current/fabric/introduction/[Neo4j Fabric^], which we can enable by adding the following properties in the `neo4j.conf` file:
+
+.neo4j.conf
+[source,properties]
+----
+fabric.database.name=fabric
+
+fabric.graph.0.name=mall1
+fabric_graph.0.uri=neo4j://localhost:7687
+fabric_graph.0.database=mall1
+
+fabric_graph.1.name=mall2
+fabric_graph.1.uri=neo4j://localhost:7687
+fabric_graph.1.database=mall2
+----
+
 [#carrefour-retail-dataset]
 == Carrefour Retail dataset
 
@@ -63,14 +87,6 @@ We can store the tickets printed in mall 1 in one database, and the tickets prin
 
 [#exploring-data]
 == Exploring the data
-
-We're going to explore the content of this file using the APOC Library, but first we need to add the following entry to the `apoc.conf` file:
-
-.apoc.conf
-[source,properties]
-----
-apoc.import.file.enabled=true
-----
 
 We can now process this file using the `apoc.load.json` procedure.
 
@@ -155,15 +171,19 @@ SHOW DATABASES;
 [#graph-model]
 == Graph Model
 
-We
+We're going to import the data into the following graph model:
+
+image::{img}4dot0_multi_tenancy_graph_model.png[link="{img}4dot0_multi_tenancy_graph_model.png",role="popup-link"]
+
+We'll have nodes representing products, clients, tickets, and ticket items, and relationships that indicate which client purchased a ticket, the items that comprise a ticket, and the product that each item was for.
 
 [#importing-data]
 == Importing the data
 
-We're going to use the `apoc.load.json` procedure to import the data into each of our databases.
+We'll use the same `apoc.load.json` procedure to import the data into each of our databases.
 We'll filter the JSON file by the `mall` property so that we load the data appropriately.
 
-The script below loads data for mall 1:
+Let's switch to the `mall1` database and setup parameters that we'll use in our import query:
 
 :mall: 1
 :url: "file:///DelightingCustomersBDclean.json"
@@ -174,15 +194,25 @@ The script below loads data for mall 1:
 include::importTickets.cypher[tag=params]
 ----
 
+And now we'll create that indexes that we're going to need:
+
 [source,cypher]
 ----
 include::createConstraints.cypher[]
+----
+
+Now we're ready to process the JSON file.
+We'll wrap our call to `apoc.load.json` inside a call to `apoc.periodic.iterate` so that our import is batched, which will avoid out of memory exceptions:
+
+[source,cypher]
+----
 include::importTickets.cypher[tag=query]
 ----
 
 :mall: 2
 
-And the script below loads data for mall 2:
+And now let's do the same thing for mall 2.
+We'll switch to that database and setup our parameters:
 
 [source,cypher, subs="attributes"]
 ----
@@ -190,16 +220,29 @@ And the script below loads data for mall 2:
 include::importTickets.cypher[tag=params]
 ----
 
+And now we'll create that indexes that we're going to need:
+
 [source,cypher]
 ----
 include::createConstraints.cypher[]
+----
+
+And now let's import the tickets sold in this store:
+
+[source,cypher]
+----
 include::importTickets.cypher[tag=query]
 ----
+
+We can see a sample of the imported graph in the Neo4j Browser visualization below:
+
+image::{img}4dot0_multi_tenancy_browser_viz.png[link="{img}4dot0_multi_tenancy_browser_viz.png",role="popup-link"]
 
 [#querying-individual-databases]
 == Querying individual databases
 
 Now that we've imported the data, let's explore it by writing some queries.
+
 
 
 [#querying-across-databases]
