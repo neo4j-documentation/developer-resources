@@ -56,7 +56,7 @@ We might have millions or billions of people in our system, and we want to divid
 Here is our data as rows and columns (typical relational database structure).
 However, we could format this data as individual documents, entities, or any other database structure.
 
-image::{img}concept_fabric_people_data.jpg[link="{img}concept_fabric_people_data.jpg",role="popup-link"]
+image::{img}concept_fabric_people_data.jpg[link="{img}concept_fabric_people_data.jpg",role="popup-link",width=450]
 
 This is a very small sample of the data in our system, but we can choose to shard it in a few different ways.
 
@@ -91,10 +91,10 @@ For graphs that are highly-connected, this means some level of data redundancy t
 As an example, `NodeA` and `NodeB` connected by `RELATIONSHIP_1` could be sharded this way.
 
 .Single graph
-image:{img}concept_fabric_single_graph.jpg[link="{img}concept_fabric_single_graph.jpg",role="popup-link"]
+image:{img}concept_fabric_single_graph.jpg[link="{img}concept_fabric_single_graph.jpg",role="popup-link",width=550]
 
 .Sharded graph
-image:{img}concept_fabric_sharded_graph.jpg[link="{img}concept_fabric_sharded_graph.jpg",role="popup-link"]
+image:{img}concept_fabric_sharded_graph.jpg[link="{img}concept_fabric_sharded_graph.jpg",role="popup-link",width=550]
 
 In the second diagram, we have decided that we will keep all of the `NodeA` nodes in one shard and then place the relationships from `NodeA` nodes to `NodeB` nodes in another shard.
 The `NodeA` node shown in Shard1 and Shard2 are the exact same entity but duplicated into the second shard to store the relationship to it.
@@ -116,13 +116,13 @@ Then, depending on how we shard the data, we can have as many fabric graphs as w
 For this example, we will shard the data by continent and create a separate database for each continent.
 Let us see what our system would look like with this model.
 
-image::{img}concept_fabric_example_system.jpg[link="{img}concept_fabric_example_system.jpg",role="popup-link"]
+image::{img}concept_fabric_example_system.jpg[link="{img}concept_fabric_example_system.jpg",role="popup-link",width=550]
 
 Queries coming from users or applications will hit the fabric database first, then get routed to the instance or instances required to answer the query.
 The answers from each involved graph are sent back to the fabric database, where they are aggregated or filtered into a unified result that is sent back to the requesting party.
 An example of this process is shown below.
 
-image::{img}concept_fabric_example_query.jpg[link="{img}concept_fabric_example_query.jpg",role="popup-link"]
+image::{img}concept_fabric_query_example.jpg[link="{img}concept_fabric_query_example.jpg",role="popup-link"]
 
 [#fabric-architectures]
 == Architecting a system with Fabric
@@ -138,7 +138,7 @@ In this example, we will place all of our data into a single Neo4j DBMS.
 This DBMS could be hosted locally or remotely and on in-house or cloud servers.
 No matter the location of the DBMS, we have sharded our data into 1 instance for the fabric database and 6 separate instances for each of continents containing their people data.
 
-image::{img}concept_fabric_example_1dbms.jpg[link="{img}concept_fabric_example_1dmbs.jpg",role="popup-link"]
+image::{img}concept_fabric_example_1dbms.jpg[link="{img}concept_fabric_example_1dmbs.jpg",role="popup-link",width=550]
 
 Reasons for architecting the system this way is that there is a manageable amount of traffic for a single DBMS to handle, that latency has little to no effect on requests (coming from a narrow region set or not critical), or that there are no regulatory or data privacy issues with storing the domain together.
 
@@ -149,7 +149,7 @@ Now, either our proxy (fabric db) or the data instances (people data) can be loc
 Those choices depend on the requirements and preferences of necessary parties.
 We still have our shards categorized into 1 for the fabric database and 6 separate instances for the people data by continent.
 
-image::{img}concept_fabric_example_2dbms.jpg[link="{img}concept_fabric_example_2dbms.jpg",role="popup-link"]
+image::{img}concept_fabric_example_2dbms.jpg[link="{img}concept_fabric_example_2dbms.jpg",role="popup-link",width=550]
 
 The reasons we might choose this architecture is that we need to load-balance the requests.
 To do that, we need to replicate the data across regions.
@@ -163,7 +163,7 @@ One step further puts us separating the data stores into shards, as well, and pl
 Any combination of local or remote, in-house or cloud can be used for each DBMS to fit business needs and requirements.
 The shards are still organized into 1 for the coordinator (fabric db) and 6 instances for the people data based on continent, but the change is that all of these instances are now bundled or separated into different systems.
 
-image::{img}concept_fabric_example_3dbms.jpg[link="{img}concept_fabric_example_3dbms.jpg",role="popup-link"]
+image::{img}concept_fabric_example_3dbms.jpg[link="{img}concept_fabric_example_3dbms.jpg",role="popup-link",width=550]
 
 This architecture might be chosen because certain data might be required to be hosted privately or separately from other data or because a bulk of requests are for a particular dataset.
 It could also be for reduced latency in requests to and from certain regions.
