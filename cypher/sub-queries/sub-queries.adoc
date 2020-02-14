@@ -23,15 +23,9 @@ You should be familiar with link:/developer/cypher/cypher-query-language[MATCH],
 [role=expertise]
 {level}
 
-[#cypher-filtering]
-== An introduction to Subqueries
 
-Neo4j 4.0 introduced support for two different types of subqueries:
-
-* Existential sub queries in a `WHERE clause`
-* Result returning subqueries using the `CALL {}` syntax
-
-In this guide we're going to learn how to write queries that use both these approaches.
+[#recap]
+== Recap: Our Example Graph
 
 All of our examples will continue with the graph example we have been using in the previous guides, but include some more data for some of our later queries.
 Below is an image of the new graph.
@@ -42,6 +36,16 @@ To recap, each person could also have multiple `IS_FRIENDS_WITH` relationships t
 This gives us a network of people, the companies they work for, and the technologies they like.
 
 image::{img}cypher_graph_v3.jpg[link="{img}cypher_graph_v3.jpg",role="popup-link"]
+
+[#cypher-filtering]
+== An introduction to Subqueries
+
+Neo4j 4.0 introduced support for two different types of subqueries:
+
+* Existential sub queries in a `WHERE clause`
+* Result returning subqueries using the `CALL {}` syntax
+
+In this guide we're going to learn how to write queries that use both these approaches.
 
 [#existential-subqueries]
 == Existential Subqueries
