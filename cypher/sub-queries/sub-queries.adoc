@@ -53,7 +53,6 @@ In this guide we're going to learn how to write queries that use both these appr
 In the filtering on patterns section of the filtering query results guide, we learnt how to filter based on patterns.
 For example, we wrote the following query to find the friends of someone who works for Neo4j:
 
-.The following finds the friends of someone who works for Neo4j
 [source,cypher]
 ----
 MATCH (p:Person)-[r:IS_FRIENDS_WITH]->(friend:Person)
@@ -69,7 +68,6 @@ https://neo4j.com/docs/cypher-manual/current/clauses/where/#existential-subqueri
 Instead of using the `exists` function in our `WHERE` clause, we use the `EXISTS {}` clause.
 We can reproduce the previous example with the following query:
 
-.The following finds the friends of someone who works for Neo4j using a simple existential subquery
 [source,cypher]
 ----
 MATCH (p:Person)-[r:IS_FRIENDS_WITH]->(friend:Person)
@@ -91,7 +89,6 @@ Imagine that we want to find the people who:
 We aren't interested in knowing what those technologies are.
 We might try to answer this question with the following query:
 
-.The following finds people who work for companies whose name starts with 'Company' and like technologies that are liked by 3 or more people
 [source,cypher]
 ----
 MATCH (person:Person)-[:WORKS_FOR]->(company)
@@ -114,7 +111,6 @@ Variable `t` not defined (line 4, column 25 (offset: 112))
 We can find people that like a technology, but we can't check that at least 3 people like that technology as well, because the variable `t` isn't in the scope of the `WHERE` clause.
 Let's instead move the two `AND` statements into an `EXISTS {}` block, resulting in the following query:
 
-.The following finds people who work for companies whose name starts with 'Company' and like technologies that are liked by 3 or more people
 [source,cypher]
 ----
 MATCH (person:Person)-[:WORKS_FOR]->(company)
@@ -148,7 +144,6 @@ Let's say we want to write a query that finds people who like Java or have more 
 And we want to return the results ordered by date of birth in descending order.
 We can get some of the way there using the `UNION` clause:
 
-.The following returns people who like Java or have more than one friend
 [source,cypher]
 ----
 MATCH (p:Person)-[:LIKES]->(:Technology {type: "Java"})
@@ -217,7 +212,6 @@ The https://neo4j.com/docs/cypher-manual/current/clauses/call-subquery/index.htm
 
 Our query using the `CALL {}` clause looks like this:
 
-.The following returns people who like Java or have more than one friend, ordered by inverse date of birth
 [source,cypher]
 ----
 CALL {
