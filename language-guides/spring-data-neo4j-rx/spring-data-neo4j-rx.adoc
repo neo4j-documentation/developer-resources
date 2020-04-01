@@ -67,10 +67,10 @@ It also provides full support for the newer reactive programming based on http:/
 Both functionalities are included in the same binary.
 
 [NOTE]
-----
+--
 The reactive programming model requires a 4.0+ Neo4j instance (previous versions do not support reactive drivers) and reactive Spring on the application side.
 Example project code for both imperative and reactive, as well as other features, is available in the https://github.com/neo4j/sdn-rx/tree/master/examples[examples directory^].
-----
+--
 
 One key difference of SDN-RX from the existing Spring Data Neo4j library is that the OGM (object-graph mapping) layer is no longer a separate library.
 Instead, the Spring infrastructure now handles OGM's functionality.
@@ -118,9 +118,9 @@ Next, we can choose our project dependencies.
 We can search for and add the `Spring Reactive Web` starter to get what we need to create a reactive, Spring-based web application.
 
 [NOTE]
-----
+--
 We do not choose Spring Data Neo4j here, as it will show the previous generation of Spring Data Neo4j that has only imperative support, OGM, and additional abstraction over the driver.
-----
+--
 
 Once those steps are complete, we can click the `Generate` button at the bottom to create the skeleton for our project and download it.
 The Spring Initializr will take care of creating the project structure for you,
@@ -227,9 +227,9 @@ spring.data.neo4j.repositories.type=reactive
 ----
 
 [NOTE]
-----
+--
 You will need to adjust the password to whatever you set when you created your instance of Neo4j.
-----
+--
 
 The first three lines are our Neo4j database URI and credentials.
 The username and password you enter here should match for your individual database.
@@ -259,10 +259,10 @@ Our data contains movie and person entities that show how people were involved i
 We will need to define a domain class for each of our entities - `Movie` and `Person`.
 
 [NOTE]
-----
+--
 SDN/RX supports all data types that the Neo4j Java Driver supports.
 To find out how to map Neo4j types to native language types, see link:/docs/driver-manual/current/cypher-values/#driver-neo4j-type-system[this section^] in the documentation.
-----
+--
 
 [#movie-entity]
 === Movie entity
@@ -342,10 +342,10 @@ In our use case, we only want to retrieve movies and the people involved in them
 Our application does not need us to pull information for person entities separately, so we do not need to define the relationships back in the other direction.
 
 [NOTE]
-----
+--
 If a domain needs to pull related entities on both sides, we would need to add the annotations and attributes from both sides.
 To see what this looks like, check out https://github.com/JMHReif/sdnrx-marvel-basic[this sample application^] from one user.
-----
+--
 
 [#define-repository]
 == Define a Spring Data repository
@@ -353,10 +353,10 @@ To see what this looks like, check out https://github.com/JMHReif/sdnrx-marvel-b
 Our repositories in the application will extend a repository provided out-of-the-box called the `ReactiveNeo4jRepository`.
 
 [NOTE]
-----
+--
 If building an imperative application, you can extend the `Neo4jRepository`.
 Also, while technically not prohibited, it is not recommended or supported to mix imperative and reactive database access in the same application.
-----
+--
 
 Because our repositories are implementing reactive capabilities, we have access to the https://projectreactor.io/docs/core/release/reference/#mono[Mono^] and https://projectreactor.io/docs/core/release/reference/#flux[Flux^] reactive types from https://projectreactor.io/[Project Reactor^] for method returns.
 The `Mono` type returns 0 or 1 results, while the `Flux` returns 0 or n results.
