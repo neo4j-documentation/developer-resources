@@ -1,0 +1,9 @@
+****
+[NOTE]
+From Neo4j version 4.0 and onwards, the default encryption setting is *off* by default and Neo4j will no longer generate self-signed certificates when none is provided.
+When connecting to a Neo4j server with encryption enabled, you must use the `neo4j+s` scheme in your connection string for a trusted certificate or `neo4j+ssc` for a self-signed certificate.
+
+- https://neo4j.com/docs/operations-manual/4.0/security/ssl-framework/[SSL Framework settings^]
+- https://neo4j.com/docs/migration-guide/4.0/upgrade-driver/#_configure_ssl_policy_for_bolt_server_and_https_server[More information on configuring an SSL policy^].
+- https://medium.com/neo4j/getting-certificates-for-neo4j-with-letsencrypt-a8d05c415bbd[How to generate certificates for Neo4j with Letsencrypt^]
+****
