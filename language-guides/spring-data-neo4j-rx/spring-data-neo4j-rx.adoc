@@ -92,16 +92,6 @@ For this example, we will use the Neo4j-standard link:/developer/movie-database/
 
 If you haven't already, link:/download/[download Neo4j Desktop^] and link:/developer/neo4j-desktop/#desktop-create-db[create/start a database].
 
-[NOTE]
---
-You can also spin up Neo4j with Docker using the following command:
-
-[source,console,subs="verbatim,attributes"]
-----
-docker run --publish=7474:7474 --publish=7687:7687 -e 'NEO4J_AUTH=neo4j/secret' neo4j:{neo4j-stable-version}
-----
---
-
 You can interact with the database and load the data in a web browser with the URL http://localhost:7474/browser/?cmd=play&arg=movies[http://localhost:7474^].
 Note the command ready to run in the prompt (`:play movies`).
 Execute that command, and an interactive slidedeck will appear just below the command line.
@@ -505,14 +495,17 @@ Here is the syntax for each of the endpoints from a command line:
 
 * `localhost:8080/movies` for getMovies() method
 ** Example:
-[source,java]
+
+[source,bash]
 ----
 curl http://localhost:8080/movies
 ----
+
 ** Results: retrieve all movies in our database
 * `localhost:8080/movies <movieToUpdateOrCreate>` for createOrUpdateMovie() method
 ** Example:
-[source,java]
+
+[source,bash]
 ----
 curl -X "PUT" "http://localhost:8080/movies" \
      -H 'Content-Type: application/json; charset=utf-8' \
@@ -521,20 +514,25 @@ curl -X "PUT" "http://localhost:8080/movies" \
   "description": "Reactive is the new cool"
 }'
 ----
+
 ** Results: create new movie `Aeon Flux` in our database
 * `localhost:8080/movies/by-title` for byTitle() method
 ** Example:
-[source,java]
+
+[source,bash]
 ----
 curl http://localhost:8080/movies/by-title\?title\=Aeon%20Flux
 ----
+
 ** Results: retrieve information about specific movie (in this query, `Aeon Flux`)
 * `localhost:8080/movies/{id}` for delete() method
 ** Example:
-[source,java]
+
+[source,bash]
 ----
 curl -X DELETE http://localhost:8080/movies/847
 ----
+
 ** Results: delete the movie using its id (in this case, the `Aeon Flux` movie)
 
 [#sdn-rx-resources]
