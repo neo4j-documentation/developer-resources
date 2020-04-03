@@ -8,6 +8,7 @@
 :toc:
 :toc-title: Contents
 :toclevels: 1
+:docker-hub-link: https://hub.docker.com/_/neo4j/
 
 image::{img}neo4j-docker-image-now-in-beta-235x300.jpg[float="right"]
 
@@ -22,9 +23,9 @@ This guide builds upon the basic concepts discussed in earlier guides and some k
 To better understand and utilize Neo4j with Docker, it helps to know the following:
 
 * link:/developer/get-started/graph-database/[What is a Graph Database?]
-* link:https://www.docker.com/resources/what-container[Docker: What is a Container?^]
+* https://www.docker.com/resources/what-container[Docker: What is a Container?^]
 
-You should also have downloaded link:https://www.docker.com/get-started[Docker^] for your appropriate operating system and be familiar with navigating it from the command line.
+You should also have downloaded https://www.docker.com/get-started[Docker^] for your appropriate operating system and be familiar with navigating it from the command line.
 
 [role=expertise]
 {level}
@@ -32,7 +33,7 @@ You should also have downloaded link:https://www.docker.com/get-started[Docker^]
 [#neo4j-docker]
 == Neo4j Docker Image
 
-There is an official https://hub.docker.com/_/neo4j[Neo4j image on DockerHub^] we can use to give us a standard, ready-to-run package of Neo4j.
+There is an official {docker-hub-link}[Neo4j image on DockerHub^] we can use to give us a standard, ready-to-run package of Neo4j.
 From the DockerHub repo, we can run Community Edition or Enterprise Edition with a variety of versions of the database.
 The list from Neo4j's options in dockerhub is shown below.
 
@@ -72,8 +73,8 @@ It is also possible to create a custom Docker image with Neo4j included, but we 
 [#docker-run]
 == Run Docker with Neo4j
 
-Retrieving and running Neo4j within a Docker container is very simple using one of the provided images.
-We will need to execute the basic `docker run` command with the `neo4j` image and specify any options or versions we want along with that.
+Retrieving and running Neo4j within a Docker container using one of the provided images requires a few steps.
+We will need to execute the `docker run` command with the `neo4j` image and specify any options or versions we want along with that.
 Let us take a look at a few options available with the `docker run` command.
 
 [cols="15%,20%,65%"]
@@ -110,7 +111,7 @@ docker run \
     neo4j:latest
 ----
 
-The `docker run` simply creates and starts a container.
+The `docker run` command creates and starts a container.
 On the next line, `--name testneo4j` defines the name we want to use for the container as `testneo4j`.
 This avoids us having to reference the container by its generic id, making our container easier to reference and to remember.
 
@@ -160,7 +161,7 @@ image:{img}neo4j_docker_ps.jpg[link="{img}neo4j_docker_ps.jpg",role="popup-link"
 The above image shows the results of the `docker ps` command, showing the container id, image:version, command, created duration, current status, exposed ports, and the container name.
 
 Since the container is currently running, we can stop the container (without destroying it) using the `docker stop testneo4j` command.
-To start it again, we can simply execute `docker start testneo4j`.
+To start it again, we can execute `docker start testneo4j`.
 Output of both those commands is shown in the image below.
 We have added `docker ps` commands in between the start and stop, so we can see the status of the container before and after each command.
 
@@ -183,14 +184,14 @@ image:{img}docker_rm_neo4j.jpg[link="{img}docker_rm_neo4j.jpg",role="popup-link"
 [#commands-exec]
 == Executing Other Functionality in Neo4j Containers
 Once you are comfortable with creating, starting, and stopping the Docker container, you can start exploring other Neo4j functionality.
-Much of the other typical Neo4j processes for importing data, adding plugins, and interacting via Neo4j Browser work the same way as with any other Neo4j installation with the proper directory volumes mounted.
+Much of the other Neo4j processes for importing data, adding plugins, and interacting via Neo4j Browser work the same way as with any other Neo4j installation with the proper directory volumes mounted.
 
 === Cypher and Cypher Shell
 To run any Cypher against our database within the container, we can use either Neo4j Browser or the Cypher shell tool.
 
 .Neo4j Browser
-Neo4j Browser works the same as it does with any other Neo4j instance.
-Simply ensure the database is running, then open a browser window and enter the url `localhost:7474`.
+If already familiar with Neo4j Browser, it works the same as with other Neo4j instances.
+First, ensure the database is running, then open a browser window and enter the url `localhost:7474`.
 
 .Cypher Shell
 If we want to run Cypher directly in our container, we need to first access our container.
@@ -224,7 +225,7 @@ We will review each in the next paragraphs.
 
 *1. Set environment variables* +
 Defaults are set for pagecache and memory (512M each default).
-To change these, we can use the `--env` parameter in our `docker run` command to set different values for these.
+To change these, we can use the `--env` parameter in our `docker run` command to set different values for them.
 [source,bash]
 --
 docker run \
@@ -235,7 +236,7 @@ docker run \
 
 *2. Mount a /conf volume* +
 We can mount the /conf directory to a local filesystem (like our other directories), so we can modify the `neo4j.conf` configuration file.
-To do this, we only need to add another `-v` option to our `docker run` command.
+To do this, we add another `-v` option to our `docker run` command.
 [source,bash]
 ----
 docker run \
@@ -251,7 +252,7 @@ While we will not go into detail on this approach, there is more information in 
 === Authentication
 As we have discussed and shown above, Neo4j (by default) requires authentication and requires us to login with `neo4j/neo4j` at the first connection and set a new password.
 
-Just as we did above, we can set the password for the Docker container directly by specifying `--env NEO4J_AUTH=neo4j/<password>` in your run directive.
+Just as we did above, we can set the password for the Docker container directly by specifying `--env NEO4J_AUTH=neo4j/<password>` in the run directive.
 We could also disable authentication entirely by specifying `--env NEO4J_AUTH=none` instead.
 
 Another way is to run Neo4j as a non-root user by altering the `docker run` command with a different option.
