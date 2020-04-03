@@ -7,11 +7,12 @@
 :toc:
 :toc-title: Contents
 :toclevels: 1
+:docker-hub-link: https://hub.docker.com/_/neo4j/
 
 image::{img}neo4j-docker-image-now-in-beta-235x300.jpg[float="right"]
 
 [#neo4j-docker]
-http://docker.com[Docker^] is a lightweight virtualization mechanism to run single applications or processes in a containerized environment on a Linux host system.
+https://docker.com[Docker^] is a lightweight virtualization mechanism to run single applications or processes in a containerized environment on a Linux host system.
 It is designed to handle a small piece of functionality in each container and scale according to needs.
 Docker containers can be used as infrastructure layers, data containers, or configuration providers.
 
@@ -22,23 +23,22 @@ The steps in the Dockerfile describe the operations for adding the necessary fil
 Because it is lightweight and small, a Docker image can be quickly downloaded and used to create and start containers in a matter of seconds.
 You can run as many Docker instances on your host as your resources allow because each container is isolated from any others.
 
-There are several ways to leverage https://hub.docker.com/_/neo4j/[Docker for your Neo4j deployment^].
+There are several ways to leverage {docker-hub-link}[Docker for your Neo4j deployment^].
 You can create throw-away Neo4j instances of many different versions for testing and running your applications.
 You can also pre-seed containers with datasets, extensions, and configurations for interaction and processing.
 
 [#docker-image]
 == The official Neo4j Docker Image
 
-Neo4j provides and maintains official https://hub.docker.com/_/neo4j/[Neo4j Docker images^] on DockerHub for both Neo4j Community and Enterprise link:/subscriptions/#editions[editions^].
+Neo4j provides and maintains official {docker-hub-link}[Neo4j Docker images^] on DockerHub for both Neo4j Community and Enterprise link:/subscriptions/#editions[editions^].
 Releases for current and previous versions of the image are also provided.
-A list of the previous versions is available under the https://hub.docker.com/_/neo4j/?tab=tags[tags section^] of the DockerHub page.
+A list of the previous versions is available under the {docker-hub-link}[tags section^] of the DockerHub page.
 
 [#run-neo4j-docker]
 == How to use the Neo4j Docker Image
 
-Running Neo4j on Docker is simple and easy to do.
 The step-by-step instructions on starting Docker containers for Neo4j are given in our link:/developer/docker-run-neo4j/[how-to guide].
-There is also excellent documentation in our link:/docs/operations-manual/current/docker/[operations manual^] on running Neo4j with Docker and how to configure it, run clusters, and handle security.
+There is also documentation in our link:/docs/operations-manual/current/docker/[operations manual^] on running Neo4j with Docker and how to configure it, run clusters, and handle security.
 
 [#neo4j-docker-eval]
 == Evaluating Neo4j on Docker
@@ -59,5 +59,5 @@ Note that we do have some configuration presets to restrict certain access and l
 
 * link:/developer/docker-run-neo4j/[How-To: Run Neo4j with Docker]
 * link:/docs/operations-manual/current/docker/[Manual: Neo4j on Docker reference^]
-* https://hub.docker.com/_/neo4j[DockerHub: Neo4j Docker images^]
+* {docker-hub-link}[DockerHub: Neo4j Docker images^]
 * https://github.com/neo4j-contrib/docker-neo4j[Github: Neo4j Docker repository^]
