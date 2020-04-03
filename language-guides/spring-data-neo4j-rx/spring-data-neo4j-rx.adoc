@@ -500,8 +500,8 @@ Here is the syntax for each of the endpoints from a command line:
 ----
 curl http://localhost:8080/movies
 ----
-
 ** Results: retrieve all movies in our database
+
 * `localhost:8080/movies <movieToUpdateOrCreate>` for createOrUpdateMovie() method
 ** Example:
 
@@ -514,8 +514,8 @@ curl -X "PUT" "http://localhost:8080/movies" \
   "description": "Reactive is the new cool"
 }'
 ----
-
 ** Results: create new movie `Aeon Flux` in our database
+
 * `localhost:8080/movies/by-title` for byTitle() method
 ** Example:
 
@@ -523,8 +523,8 @@ curl -X "PUT" "http://localhost:8080/movies" \
 ----
 curl http://localhost:8080/movies/by-title\?title\=Aeon%20Flux
 ----
-
 ** Results: retrieve information about specific movie (in this query, `Aeon Flux`)
+
 * `localhost:8080/movies/{id}` for delete() method
 ** Example:
 
@@ -532,7 +532,6 @@ curl http://localhost:8080/movies/by-title\?title\=Aeon%20Flux
 ----
 curl -X DELETE http://localhost:8080/movies/847
 ----
-
 ** Results: delete the movie using its id (in this case, the `Aeon Flux` movie)
 
 [#sdn-rx-resources]
