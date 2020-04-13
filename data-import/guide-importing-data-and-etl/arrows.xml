@@ -1,29 +1,35 @@
-<ul class="graph-diagram-markup" data-internal-scale="1" data-external-scale="1">
-  <li class="node" data-node-id="0" data-x="-39" data-y="-174">
-    <span class="caption">Product</span>
-  </li>
-  <li class="node" data-node-id="1" data-x="-820" data-y="-174">
-    <span class="caption">Order</span>
-  </li>
-  <li class="node" data-node-id="2" data-x="-820" data-y="261.5">
+<ul class="graph-diagram-markup" data-internal-scale="1.43" data-external-scale="1">
+  <li class="node" data-node-id="0" data-x="-863.4677032257299" data-y="-582.2422519497109">
     <span class="caption">Employee</span>
   </li>
-  <li class="node" data-node-id="3" data-x="-39" data-y="311.67254638671875">
-    <span class="caption">Supplier</span>
+  <li class="node" data-node-id="1" data-x="-654.1554919689687" data-y="-836.67844033408">
+    <span class="caption">Order</span>
   </li>
-  <li class="node" data-node-id="4" data-x="481.47412109375" data-y="-174">
+  <li class="node" data-node-id="2" data-x="-54.71851588962794" data-y="-733.3012319711545">
     <span class="caption">Category</span>
   </li>
-  <li class="relationship" data-from="1" data-to="0">
-    <span class="type">PRODUCT</span>
+  <li class="node" data-node-id="3" data-x="-383.11177671205604" data-y="-582.2422519497109">
+    <span class="caption">Product</span>
   </li>
-  <li class="relationship" data-from="2" data-to="1">
+  <li class="node" data-node-id="4" data-x="-32.836264950412" data-y="-529.4136335466288">
+    <span class="caption">Supplier</span>
+  </li>
+  <li class="node" data-node-id="5" data-x="-1219.7135240248042" data-y="-815.6527027050103">
+    <span class="caption">Employee</span>
+  </li>
+  <li class="relationship" data-from="0" data-to="1">
     <span class="type">SOLD</span>
   </li>
-  <li class="relationship" data-from="3" data-to="0">
+  <li class="relationship" data-from="1" data-to="3">
+    <span class="type">CONTAINS</span>
+  </li>
+  <li class="relationship" data-from="3" data-to="2">
+    <span class="type">PART_OF</span>
+  </li>
+  <li class="relationship" data-from="4" data-to="3">
     <span class="type">SUPPLIES</span>
   </li>
-  <li class="relationship" data-from="0" data-to="4">
-    <span class="type">PART_OF</span>
+  <li class="relationship" data-from="0" data-to="5">
+    <span class="type">REPORTS_TO</span>
   </li>
 </ul>
