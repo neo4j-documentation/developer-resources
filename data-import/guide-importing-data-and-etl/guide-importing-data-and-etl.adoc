@@ -3,7 +3,7 @@
 :level: Beginner
 :section: Data Import
 :section-link: data-import
-:northwind: {github}/data/northwind
+:northwind: ../../data/northwind
 :sectanchors:
 :toc:
 :toc-title: Contents
@@ -26,7 +26,7 @@ If you haven't already, link:/download[download^] and install link:/developer/ne
 [#about-domain]
 == About the Data Domain
 
-In this guide, we will be using the link:{github}[NorthWind dataset^], an often-used SQL dataset.
+In this guide, we will be using the link:{github}/data/northwind[NorthWind dataset^], an often-used SQL dataset.
 This data depicts a product sale system - storing and tracking customers, products, customer orders, warehouse stock, shipping, suppliers, and even employees and their sales territories.
 Although the NorthWind dataset is often used to demonstrate SQL and relational databases, the data also can be structured as a graph.
 
@@ -117,7 +117,7 @@ Since we are using Neo4j Desktop in this example, we will use the import folder 
 
 Now that we have our files where we can access them easily, we can use Cypher's `LOAD CSV` command to read each file and add Cypher statements after it to take the row/column data and transform it to the graph.
 
-The entire Cypher script is link:{northwind}/import_csv.cypher[available on Github^] for you to copy and run, but we will step through each section below to explain what each piece of the script is doing.
+The entire Cypher script is link:{github}/data/northwind/import_csv.cypher[available on Github^] for you to copy and run, but we will step through each section below to explain what each piece of the script is doing.
 
 [source, cypher]
 ----
