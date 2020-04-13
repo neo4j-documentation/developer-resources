@@ -39,6 +39,12 @@ The list from Neo4j's options in dockerhub is shown below.
 
 image::{img}neo4j_dockerhub_versions.jpg[link="{img}neo4j_dockerhub_versions.jpg"]
 
+[NOTE]
+--
+By default, the docker image does not have certificates installed. 
+This means that you will need to disable encryption when connecting with a driver.
+--
+
 To determine which image we want, we need to piece together a few options.
 First, the `neo4j` tag starts each image name.
 After that, the version is preceded with a colon like the `neo4j:3.5.0` image.

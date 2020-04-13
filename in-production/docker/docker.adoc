@@ -19,11 +19,9 @@ Docker containers can be used as infrastructure layers, data containers, or conf
 The containers are built from images that can be vendor-provided or user-defined.
 To build a Docker image, you create a specification file (`Dockerfile`) to define the minimum-required, dependent layers for the application or service to run.
 The steps in the Dockerfile describe the operations for adding the necessary filesystem content for each layer.
-
-Because it is lightweight and small, a Docker image can be quickly downloaded and used to create and start containers in a matter of seconds.
 You can run as many Docker instances on your host as your resources allow because each container is isolated from any others.
 
-There are several ways to leverage {docker-hub-link}[Docker for your Neo4j deployment^].
+There are several ways to leverage Docker for your Neo4j deployment.
 You can create throw-away Neo4j instances of many different versions for testing and running your applications.
 You can also pre-seed containers with datasets, extensions, and configurations for interaction and processing.
 
@@ -40,17 +38,23 @@ A list of the previous versions is available under the {docker-hub-link}[tags se
 The step-by-step instructions on starting Docker containers for Neo4j are given in our link:/developer/docker-run-neo4j/[how-to guide].
 There is also documentation in our link:/docs/operations-manual/current/docker/[operations manual^] on running Neo4j with Docker and how to configure it, run clusters, and handle security.
 
+[NOTE]
+--
+By default, the docker image does not have certificates installed. 
+This means that you will need to disable encryption when connecting with a driver.
+--
+
 [#neo4j-docker-eval]
 == Evaluating Neo4j on Docker
 
 We also use Neo4j on Docker internally for some of our tools and functionality.
 From building solutions to live demos, deploying Neo4j with Docker is a valuable capability.
-Probably our best-known examples of Neo4j deployed with Docker containers are the link:/sandbox/[Neo4j Sandboxes^].
+Probably our best-known examples of Neo4j deployed with Docker containers are the Neo4j Sandboxes.
 These sandboxes are Neo4j instances in Docker containers running on a shared cloud server.
 Each sandbox is independent and separated from the others, allowing users to spin up contained environments for trying out and testing Neo4j!
 
 In each sandbox use case, we specify certain configurations, data sets, and extensions/plugins to include, and each user's queries and exploration is specific to that assigned container.
-Once the life of a Neo4j Sandbox is complete (maximum of 10 days), the container is shut down and any saved changes or data corruption is destroyed.
+Once the life of a Neo4j Sandbox is complete (maximum of 10 days), the container is shut down.
 If you want to see how Neo4j works in a Docker container, go ahead and create a link:/sandbox/[Neo4j Sandbox^].
 Note that we do have some configuration presets to restrict certain access and limit functionality.
 
