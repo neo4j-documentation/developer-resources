@@ -3,7 +3,7 @@
 :level: Beginner
 :section: Data Import
 :section-link: data-import
-:northwind: ../../data/northwind
+:northwind: {github}/data/northwind
 :sectanchors:
 :toc:
 :toc-title: Contents
@@ -26,7 +26,7 @@ If you haven't already, link:/download[download^] and install link:/developer/ne
 [#about-domain]
 == About the Data Domain
 
-In this guide, we will be using the link:{github}/data/northwind[NorthWind dataset^], an often-used SQL dataset.
+In this guide, we will be using the link:{github}[NorthWind dataset^], an often-used SQL dataset.
 This data depicts a product sale system - storing and tracking customers, products, customer orders, warehouse stock, shipping, suppliers, and even employees and their sales territories.
 Although the NorthWind dataset is often used to demonstrate SQL and relational databases, the data also can be structured as a graph.
 
@@ -67,12 +67,13 @@ With these principles in mind, we can map our relational model to a graph with t
 3. Each row on our `Suppliers` table becomes a node with `Supplier` as the label.
 4. Each row on our `Categories` table becomes a node with `Category` as the label.
 5. Each row on our `Employees` table becomes a node with `Employee` as the label.
+
 .Joins to relationships
-6. Join between `Suppliers` and `Products` becomes a relationship named `SUPPLIES` (where supplier supplies product).
-7. Join between `Products` and `Categories` becomes a relationship named `PART_OF` (where product is part of a category).
-8. Join between `Employees` and `Orders` becomes a relationship named `SOLD` (where employee sold an order).
-9. Join between `Employees` and itself (unary relationship) becomes a relationship named `REPORTS_TO` (where employees have a manager).
-10. Join with join table (`Order Details`) between `Orders` and `Products` becomes a relationship named `CONTAINS` with properties of `unitPrice`, `quantity`, and `discount` (where order contains a product).
+1. Join between `Suppliers` and `Products` becomes a relationship named `SUPPLIES` (where supplier supplies product).
+2. Join between `Products` and `Categories` becomes a relationship named `PART_OF` (where product is part of a category).
+3. Join between `Employees` and `Orders` becomes a relationship named `SOLD` (where employee sold an order).
+4. Join between `Employees` and itself (unary relationship) becomes a relationship named `REPORTS_TO` (where employees have a manager).
+5. Join with join table (`Order Details`) between `Orders` and `Products` becomes a relationship named `CONTAINS` with properties of `unitPrice`, `quantity`, and `discount` (where order contains a product).
 
 If we draw our translation out on the whiteboard, we have this graph data model.
 
