@@ -23,7 +23,7 @@ If you are a developer you should be accustomed to the graph data model and have
 [#memory-config]
 == Memory Configuration guidelines
 
-An in-depth description on this topic is available in the link:{opsmanual}/performance/#memory-tuning[Neo4j Operations Manual].
+An in-depth description on this topic is available in the {opsmanual}/performance/#memory-tuning[Neo4j Operations Manual].
 
 There are three types of memory to consider: _OS Memory_, _Page Cache_ and _Heap Space_.
 
@@ -57,7 +57,7 @@ For many setups, a heap size between 8G and 16G is large enough to run Neo4j rel
 The heap memory size is determined by the parameters in `$NEO4J_HOME/conf/neo4j.conf`, namely `dbms.memory.heap.initial_size` and `dbms.memory.heap.max_size` providing the heap size as a number and a unit, for example `16G`.
 It is recommended to set these two parameters to the same size.
 
-For a more thorough discussion on this topic, refer to the link:{opsmanual}/performance/memory-configuration/#heap-sizing[heap memory configuration section in the Neo4j Operations Manual].
+For a more thorough discussion on this topic, refer to the {opsmanual}/performance/memory-configuration/#heap-sizing[heap memory configuration section in the Neo4j Operations Manual].
 That section also contains information about heap memory distribution and gabarge collection tuning.
 
 [#logical-logs]
@@ -78,7 +78,7 @@ The usual default of `1024` for the open file limit is often not enough, especia
 Users are therefore encouraged to increase that limit to a realistic value of `40000` or more, depending on usage patterns.
 Setting this value via the `ulimit` command is only possible for the current session.
 
-To set the value system wide you have to follow the link:{opsmanual}/installation/linux/tarball/#linux-open-files[instructions] for your platform.
+To set the value system wide you have to follow the {opsmanual}/installation/linux/tarball/#linux-open-files[instructions^] for your platform.
 
 [#tuning-resources]
 == Resources
