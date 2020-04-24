@@ -108,7 +108,7 @@ Then, we can run that script against our northwind database with the command `ps
 [#import-with-cypher]
 == Importing the Data using Cypher
 
-After we have exported our data from PostgreSQL, we will use Cypher's link:{cyphermanual}/clauses/load-csv/[LOAD CSV^] command to transform the contents of the CSV file into a graph structure.
+After we have exported our data from PostgreSQL, we will use Cypher's {cyphermanual}/clauses/load-csv/[LOAD CSV^] command to transform the contents of the CSV file into a graph structure.
 First, we will likely want to place our CSV files in an easily-accessed directory.
 With Neo4j Desktop, we can place them in the local database import directory (detailed instructions found in our link:/developer/desktop-csv-import/#csv-location[desktop import guide]).
 This way, we can use the `file:///` prefix in our Cypher statements to locate the files.
@@ -126,7 +126,7 @@ include::{northwind}/import_csv.cypher[tags=nodes]
 
 You might notice that we have not imported all of the field columns in our CSV file.
 With our statements, we can choose which properties are needed on a node, which can be left out, and which might need imported to another node type or relationship.
-You might also notice that we used the link:{cyphermanual}/clauses/merge/[`MERGE` keyword^], instead of link:{cyphermanual}/clauses/create/[`CREATE`^].
+You might also notice that we used the {cyphermanual}/clauses/merge/[`MERGE` keyword^], instead of {cyphermanual}/clauses/create/[`CREATE`^].
 Though we feel pretty confident there are no duplicates in our CSV files, we can use `MERGE` as good practice for ensuring unique entities in our database.
 
 [NOTE]
@@ -134,7 +134,7 @@ Though we feel pretty confident there are no duplicates in our CSV files, we can
 For very large commercial or enterprise datasets, you may find out-of-memory errors, especially on smaller machines.
 To avoid these situations, you can prefix the statement with the `USING PERIODIC COMMIT` query hint to commit data in batches.
 This practice is not standard recommendation for smaller datasets, but is only recommended when memory issues are threatened.
-More information on this query hint can be found in the link:{cyphermanual}/query-tuning/using/#query-using-periodic-commit-hint[manual^].
+More information on this query hint can be found in the {cyphermanual}/query-tuning/using/#query-using-periodic-commit-hint[manual^].
 --
 
 After the nodes are created, we need to create the relationships between them.
@@ -309,7 +309,7 @@ The application is designed with a point-and-click user interface with the goal 
 [#import-northwind-resources]
 == Resources
 * link:{github}/data/northwind[Northwind SQL, CSV and Cypher data files^], also as link:{github}/data/northwind/northwind.zip[zip^] file
-* link:{cyphermanual}/clauses/load-csv/[LOAD CSV^]: Cypher's command for importing CSV files
+* {cyphermanual}/clauses/load-csv/[LOAD CSV^]: Cypher's command for importing CSV files
 * link:/labs/apoc/[APOC library^]: Neo4j's utility library
 * link:/labs/etl-tool/[Neo4j ETL Tool^]: Loading relational data without code
 * link:/developer/data-import/[Importing Data with Neo4j]
