@@ -16,6 +16,7 @@ ASCIIDOC_TEMPLATES_DIR = ENV['ASCIIDOC_TEMPLATES_DIR'] || '_templates'
 IMAGE_BASE_URL = ENV['IMAGE_BASE_URL'] ||  '//s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/'
 EXAMPLES = ENV['EXAMPLES'] || 'https://github.com/neo4j-examples'
 MANUAL = ENV['MANUAL'] || 'http://neo4j.com/docs/developer-manual/current'
+CYPHERMANUAL = ENV['CYPHERMANUAL'] || 'https://neo4j.com/docs/cypher-manual/current'
 OPSMANUAL = ENV['OPSMANUAL'] || 'http://neo4j.com/docs/operations-manual/current'
 GITHUB = ENV['GITHUB'] || 'https://github.com/neo4j-contrib/developer-resources/tree/gh-pages'
 ASCIIDOC_ATTRIBUTES = %W(allow-uri-read
@@ -25,6 +26,7 @@ ASCIIDOC_ATTRIBUTES = %W(allow-uri-read
                          img=#{IMAGE_BASE_URL}
                          examples=#{EXAMPLES}
                          manual=#{MANUAL}
+                         cyphermanual=#{CYPHERMANUAL}
                          opsmanual=#{OPSMANUAL}
                          github=#{GITHUB})
 
