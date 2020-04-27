@@ -43,6 +43,24 @@ Whichever framework you choose to build your application, you will interact with
 There is plenty of content over on the https://neo4j.com/developer/javascript/[JavaScript Developer Pages^] so we will not cover this in too much detail, only the nuances around how the driver works with the Neo4j Desktop API.
 
 
+== Installing Driver Dependencies
+
+The official JavaScript driver is available via npm using the `npm install` or `yarn add` command.
+
+```sh
+npm install --save neo4j-driver
+```
+
+Alternatively, if your graph app will be used in a context where the always has an active internet connection, you can obtain the driver via a CDN.
+
+```html
+<!-- unpkg CDN non-minified -->
+<script src="https://unpkg.com/neo4j-driver"></script>
+
+<!-- jsDelivr CDN non-minified -->
+<script src="https://cdn.jsdelivr.net/npm/neo4j-driver"></script>
+```
+
 == Enabling Developer Tools
 
 Neo4j Desktop comes with a Development App that can be used while developing and debugging your Graph App.
