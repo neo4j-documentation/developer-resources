@@ -68,7 +68,7 @@ In order to import data into Neo4j the mapping from Cassandra schema to Neo4j pr
 __schema.yaml__ file for the sample database:
 
 [source,sql]
-```
+----
 CREATE TABLE playlist.artists_by_first_letter:
     first_letter text: {}
     artist text: {}
@@ -81,7 +81,7 @@ CREATE TABLE playlist.track_by_id:
     track text: {}
     track_length_in_seconds int: {}
 NEO4J CREDENTIALS (url {}, user {}, password {})
-```
+----
 
 [NOTE]
 * Every table will be translated as a Node in Neo4j.
@@ -96,7 +96,7 @@ Note the __{}__. It's possible to fill them up with the following options:
 For example:
 
 [source,sql]
-```
+----
 CREATE TABLE playlist.artists_by_first_letter:
     first_letter text: {p}
     artist text: {r}
@@ -108,23 +108,23 @@ CREATE TABLE playlist.track_by_id:
     music_file text: {p}
     track text: {p}
     track_length_in_seconds int: {p}
-```
+----
 
 This will create a propery graph with nodes for the artists and tracks, with a relationship connecting the artist to the track.
 
 There's also one last line at the end of the file, that requires Neo4j address and credentials:
 
 [source,sql]
-```
+----
 NEO4J CREDENTIALS (url {"http://localhost:7474/db/data"}, user {"neo4j"}, password {"neo4jpasswd"})
-```
+----
 
 If you have turned off authentication, you can leave __user__ and __password__ fields empty:
 
 [source,sql]
-```
+----
 NEO4J CREDENTIALS (url {"http://localhost:7474/db/data"}, user {}, password {})
-```
+----
 
 An example of filled YAML file can be found on __connector/schema.yaml.example__.
 
@@ -144,16 +144,16 @@ For this first version, we do not have a strong error handling. So please be awa
 After populating the empty brackets, save the file and run the script `connector.py`, now specifying the tables you wish to export from Cassandra:
 
 [source,shell]
-```
+----
 python connector.py export -k playlist -t track_by_id,artists_by_first_letter
-```
+----
 
 The schema YAML file name (if different than `schema.yaml`) can also be specifed as a command line argument. For example:
 
 [source,shell]
-```
+----
 python connector.py export -k playlist -t track_by_id,artists_by_first_letter -f my_schema_file.yaml
-```
+----
 
 image::{img}20160203161028/neo4j_cassandra.png[title='Neo4j Cassandra data import tool']
 

@@ -13,6 +13,7 @@
 [abstract]
 This guide will teach you the process for exporting data from a relational database (PostgreSQL) and importing into a graph database (Neo4j).
 You will learn how to take data from the relational system and to the graph by translating the schema and using import tools.
+This example uses a specific data set, but the principles in this guide can be applied and reused with any data domain.
 
 .Prerequisites
 [abstract]
@@ -22,22 +23,30 @@ If you haven't already, link:/download[download^] and install link:/developer/ne
 [role=expertise]
 {level}
 
-[#about-northwind]
-== Northwind Introduction
+[#about-domain]
+== About the Data Domain
 
-In this guide, we will be using the https://code.google.com/p/northwindextended/downloads/detail?name=northwind.postgre.sql&can=2&q=[NorthWind dataset^], a commonly-used SQL dataset.
-This data depicts a typical product sale system, storing and tracking customers, products, customer orders, warehouse stock, shipping, suppliers, and even employees and their sales territories.
+In this guide, we will be using the link:{github}/data/northwind[NorthWind dataset^], an often-used SQL dataset.
+This data depicts a product sale system - storing and tracking customers, products, customer orders, warehouse stock, shipping, suppliers, and even employees and their sales territories.
 Although the NorthWind dataset is often used to demonstrate SQL and relational databases, the data also can be structured as a graph.
 
 An entity-relationship diagram (ERD) of the Northwind dataset is shown below.
 
-image::{img}Northwind_diagram.jpg[]
+image::{img}Northwind_diagram.jpg[width=600]
+
+First, this is a rather large and detailed model.
+We can scale this down a bit for our example and choose the entities that are most critical for our graph - in other words, those that might benefit most from seeing the connections.
+For our use case, we really want to optimize the relationships with orders - what products were involved (with the categories and suppliers for those products), which employees worked on them and those employees' managers.
+
+Using these business requirements, we can narrow our model down to these essential entities.
+
+image::{img}Northwind_diagram_focus.jpg[width=600]
 
 [#northwind-graph-model]
 == Developing a Graph Model
 
 The first thing we will need to do to get data from a relational database into a graph is to translate the relational data model to a graph data model.
-Determining how we want to structure tables and rows as nodes and relationships will vary depending on what is most important to your business needs.
+Determining how we want to structure tables and rows as nodes and relationships may vary depending on what is most important to your business needs.
 
 [NOTE]
 --
@@ -50,27 +59,43 @@ When deriving a graph model from a relational model, we should keep a couple of 
 2. A _table name_ is a _label name_
 3. A _join or foreign key_ is a _relationship_
 
-In this dataset, the following graph model serves as a first iteration.
+With these principles in mind, we can map our relational model to a graph with the following steps:
 
-image::{img}northwind_graph_simple.png[width=800]
+.Rows to Nodes, Table names to labels
+1. Each row on our `Orders` table becomes a node in our graph with `Order` as the label.
+2. Each row on our `Products` table becomes a node with `Product` as the label.
+3. Each row on our `Suppliers` table becomes a node with `Supplier` as the label.
+4. Each row on our `Categories` table becomes a node with `Category` as the label.
+5. Each row on our `Employees` table becomes a node with `Employee` as the label.
 
-Notice that we have chosen not to model customers and demographics, shipping information, or employee territories in this model.
-You can, of course, create a data model to include these entities, but for now, we will keep to this straightforward graph model.
+.Joins to relationships
+1. Join between `Suppliers` and `Products` becomes a relationship named `SUPPLIES` (where supplier supplies product).
+2. Join between `Products` and `Categories` becomes a relationship named `PART_OF` (where product is part of a category).
+3. Join between `Employees` and `Orders` becomes a relationship named `SOLD` (where employee sold an order).
+4. Join between `Employees` and itself (unary relationship) becomes a relationship named `REPORTS_TO` (where employees have a manager).
+5. Join with join table (`Order Details`) between `Orders` and `Products` becomes a relationship named `CONTAINS` with properties of `unitPrice`, `quantity`, and `discount` (where order contains a product).
+
+If we draw our translation out on the whiteboard, we have this graph data model.
+
+image::{img}northwind_graph_simple.jpg[width=600]
+
+Now, we can, of course, decide that we want to include the rest of the entities from our relational model, but for now, we will keep to this smaller graph model.
 
 === How does the Graph Model Differ from the Relational Model?
 
-* There are no nulls.
-** Non existing value entries (properties) are just not present.
-** In the relational version, to track the employee hierarchy we have a null entry in the 'ReportsTo' column if they don't report to anybody. In the graph version we just don't define a relationship.
+* There are no nulls. Non-existing value entries (properties) are just not present.
 * It describes the relationships in more detail. For example, we know that an employee SOLD an order rather than having a foreign key relationship between the Orders and Employees tables. We could also choose to add more metadata about that relationship, should we wish.
-* Either model can be more normalized. For example, addresses have been denormalized in several of the tables, but could have been in a separate table. In a future version of our graph model, we might also choose to separate addresses from the `Customer` entities and create separate `Address` nodes.
+* Either model can be more normalized. For example, addresses have been denormalized in several of the tables, but could have been in a separate table. In a future version of our graph model, we might also choose to separate addresses from the `Order` (or `Supplier` or `Employee`) entities and create separate `Address` nodes.
 
 [#export-csv]
-== Exporting the Data to CSV
+== Exporting Relational Tables to CSV
 
-Now that we know what we'd like our graph to look like, we need to extract the data from PostgreSQL so we can create it as a graph.
-The easiest way to do that is to export the appropriate tables in CSV format.
-The PostgreSQL 'copy' command lets us execute a SQL query and write the result to a CSV file, e.g. with `psql -d northwind < export_csv.sql`:
+Thankfully, this step has already been done for us with the Northwind data.
+However, if you are working with another data domain, you will need to take the data from the relational tables and put it in another format for loading to the graph.
+A common format that many systems can handle a flat file of comma-separated values (CSV), so let's see how to export relational tables from a PostgreSQL database to CSV files for us to create our graph.
+
+The PostgreSQL 'copy' command lets us execute a SQL query and write the result to a CSV file.
+We can assemble a short .sql script of these copy commands, as shown below.
 
 .export_csv.sql
 [source, sql]
@@ -78,39 +103,55 @@ The PostgreSQL 'copy' command lets us execute a SQL query and write the result t
 include::{northwind}/export_csv.sql[]
 ----
 
+Then, we can run that script against our northwind database with the command `psql -d northwind < export_csv.sql`, and it will create the individual CSV files listed in our script.
+
 [#import-with-cypher]
 == Importing the Data using Cypher
 
-After we've exported our data from PostgreSQL, we'll use Cypher's link:{manual}/cypher/#query-load-csv[LOAD CSV] command to transform the contents of the CSV file into a graph structure.
+After we have exported our data from PostgreSQL, we will use Cypher's {cyphermanual}/clauses/load-csv/[LOAD CSV^] command to transform the contents of the CSV file into a graph structure.
+First, we will likely want to place our CSV files in an easily-accessed directory.
+With Neo4j Desktop, we can place them in the local database import directory (detailed instructions found in our link:/developer/desktop-csv-import/#csv-location[desktop import guide]).
+This way, we can use the `file:///` prefix in our Cypher statements to locate the files.
+We can also place the files in another local or remote directory (supports HTTPS, HTTP, and FTP) and specify the full path in our Cypher statements.
+Since we are using Neo4j Desktop in this example, we will use the import folder for the database and the path for our CSV files can start with the `file:///` prefix.
 
-First, create the nodes:
+Now that we have our files where we can access them easily, we can use Cypher's `LOAD CSV` command to read each file and add Cypher statements after it to take the row/column data and transform it to the graph.
 
-.import_csv.cypher
+The entire Cypher script is link:{github}/data/northwind/import_csv.cypher[available on Github^] for you to copy and run, but we will step through each section below to explain what each piece of the script is doing.
+
 [source, cypher]
 ----
 include::{northwind}/import_csv.cypher[tags=nodes]
 ----
 
-Next, we'll create indexes on the just-created nodes to ensure their quick lookup when creating relationships in the next step.
+You might notice that we have not imported all of the field columns in our CSV file.
+With our statements, we can choose which properties are needed on a node, which can be left out, and which might need imported to another node type or relationship.
+You might also notice that we used the {cyphermanual}/clauses/merge/[`MERGE` keyword^], instead of {cyphermanual}/clauses/create/[`CREATE`^].
+Though we feel pretty confident there are no duplicates in our CSV files, we can use `MERGE` as good practice for ensuring unique entities in our database.
+
+[NOTE]
+--
+For very large commercial or enterprise datasets, you may find out-of-memory errors, especially on smaller machines.
+To avoid these situations, you can prefix the statement with the `USING PERIODIC COMMIT` query hint to commit data in batches.
+This practice is not standard recommendation for smaller datasets, but is only recommended when memory issues are threatened.
+More information on this query hint can be found in the {cyphermanual}/query-tuning/using/#query-using-periodic-commit-hint[manual^].
+--
+
+After the nodes are created, we need to create the relationships between them.
+Importing the relationships will mean looking up the nodes we just created and adding a relationship between those existing entities.
+To ensure the lookup of nodes is optimized, we will want to create indexes for any node properties we want to use in the lookups (often the id or another unique value).
+
+We also want to create a constraint (also creates an index with it) that will disallow orders with the same id from getting created, preventing duplicates.
+Finally, as the indexes are created after the nodes are inserted, their population happens asynchronously, so we use the `schema await` (a shell command) to block until they are populated.
 
 [source, cypher]
 ----
 include::{northwind}/import_csv.cypher[tags=indexes]
-----
-
-[source, cypher]
-----
 include::{northwind}/import_csv.cypher[tags=constraints]
-----
-
-As the indexes are created after the nodes are inserted, their population happens asynchronously, so we use `schema await` (a shell command) to block until they are populated.
-
-[source, cypher]
-----
 schema await
 ----
 
-Initial nodes and indices in place, we can now create relationships of orders to products and employees.
+Initial nodes and indexes in place, we can now create the relationships for orders to products and orders to employees.
 
 [source, cypher]
 ----
@@ -124,7 +165,7 @@ Next, create relationships between products, suppliers, and categories:
 include::{northwind}/import_csv.cypher[tags=rels_products]
 ----
 
-Finally we'll create the 'REPORTS_TO' relationship between employees to represent the reporting structure:
+Lastly, we will create the 'REPORTS_TO' relationship between employees to represent the reporting structure:
 
 [source, cypher]
 ----
@@ -133,37 +174,48 @@ include::{northwind}/import_csv.cypher[tags=rels_employees]
 
 You can also run the whole script at once using `bin/neo4j-shell -path northwind.db -file import_csv.cypher`.
 
-The resulting graph should look like this:
-
-image::{img}northwind_graph_sample.png[]
-
-We can now query the resulting graph.
+We can now query the resulting graph to find out what it can tell us about our newly-imported data.
 
 [#query-northwind]
 == Querying the Graph
 
-One question we might be interested in is:
+We might start with a couple of general queries to verify that our data matches the model we designed earlier in the guide.
+Here are some example queries:
 
-.Which Employee had the Highest Cross-Selling Count of 'Chocolade' and Which Product?
+[source,cypher]
+----
+//find a sample of employees who sold orders with their ordered products
+MATCH (e:Employee)-[rel:SOLD]->(o:Order)-[rel2:CONTAINS]->(p:Product)
+RETURN e, rel, o, rel2, p LIMIT 25;
+
+//find the supplier and category for a specific product
+MATCH (s:Supplier)-[r1:SUPPLIES]->(p:Product {productName: 'Chocolade'})-[r2:PART_OF]->(c:Category)
+RETURN s, r1, p, r2, c;
+----
+
+Once we are comfortable that the data aligns with our data model and everything looks correct, we can start querying to gather information and insight for business decisions.
+One question we might be interested in is the following:
+
+.Which Employee had the Highest Cross-Selling Count of 'Chocolade' and Another Product?
 [source, cypher]
 ----
-MATCH (choc:Product {productName:'Chocolade'})<-[:PRODUCT]-(:Order)<-[:SOLD]-(employee),
-      (employee)-[:SOLD]->(o2)-[:PRODUCT]->(other:Product)
-RETURN employee.employeeID, other.productName, count(distinct o2) as count
+MATCH (choc:Product {productName:'Chocolade'})<-[:CONTAINS]-(:Order)<-[:SOLD]-(employee),
+      (employee)-[:SOLD]->(o2)-[:CONTAINS]->(other:Product)
+RETURN employee.employeeID as employee, other.productName as otherProduct, count(distinct o2) as count
 ORDER BY count DESC
 LIMIT 5;
 ----
 
-Looks like employee No. 1 was very busy!
+Looks like employee No. 4 was busy, though employee No. 1 also did well!
 
 [format="csv", options="header"]
 |===
-employee.employeeId,other.productName,count
-1,Pavlova,56
-1,Camembert Pierrot,56
-1,Ikura,55
-1,Chang,47
-1,Pâté chinois,45
+employee,otherProduct,count
+4,Gnocchi di nonna Alice,14
+4,Pâté chinois,12
+1,Flotemysost,12
+3,Gumbär Gummibärchen,12
+1,Pavlova,11
 |===
 
 We might also like to answer the following question:
@@ -171,21 +223,21 @@ We might also like to answer the following question:
 .How are Employees Organized? Who Reports to Whom?
 [source, cypher]
 ----
-MATCH path = (e:Employee)<-[:REPORTS_TO]-(sub)
+MATCH (e:Employee)<-[:REPORTS_TO]-(sub)
 RETURN e.employeeID AS manager, sub.employeeID AS employee;
 ----
 
 [format="csv", options="header"]
 |===
 manager,employee
-2,1
 2,3
 2,4
 2,5
+2,1
 2,8
-5,6
-5,7
 5,9
+5,7
+5,6
 |===
 
 Notice that employee No. 5 has people reporting to them but also reports to employee No. 2.
@@ -197,24 +249,24 @@ Let's investigate that a bit more:
 ----
 MATCH path = (e:Employee)<-[:REPORTS_TO*]-(sub)
 WITH e, sub, [person in NODES(path) | person.employeeID][1..-1] AS path
-RETURN e.employeeID AS manager, sub.employeeID AS employee, CASE WHEN LENGTH(path) = 0 THEN "Direct Report" ELSE path END AS via
-ORDER BY LENGTH(path);
+RETURN e.employeeID AS manager, path as middleManager, sub.employeeID AS employee
+ORDER BY size(path);
 ----
 
 [format="dsv", options="header"]
 |===
-e.EmployeeID:sub.EmployeeID:via
-2:1:Direct Report
-2:3:Direct Report
-2:4:Direct Report
-2:5:Direct Report
-2:8:Direct Report
-5:6:Direct Report
-5:7:Direct Report
-5:9:Direct Report
-2:6:[5]
-2:7:[5]
-2:9:[5]
+manager:middleManager:employee
+2:[]:3
+2:[]:4
+2:[]:5
+2:[]:1
+2:[]:8
+5:[]:9
+5:[]:7
+5:[]:6
+2:[5]:9
+2:[5]:7
+2:[5]:6
 |===
 
 .How Many Orders were Made by Each Part of the Hierarchy?
@@ -222,54 +274,43 @@ e.EmployeeID:sub.EmployeeID:via
 ----
 MATCH (e:Employee)
 OPTIONAL MATCH (e)<-[:REPORTS_TO*0..]-(sub)-[:SOLD]->(order)
-RETURN e.employeeID, [x IN COLLECT(DISTINCT sub.employeeID) WHERE x <> e.employeeID] AS reports, COUNT(distinct order) AS totalOrders
+RETURN e.employeeID as employee, [x IN COLLECT(DISTINCT sub.employeeID) WHERE x <> e.employeeID] AS reportsTo, COUNT(distinct order) AS totalOrders
 ORDER BY totalOrders DESC;
 ----
 
 [format="dsv", options="header"]
 |===
-e.EmployeeID:reports:totalOrders
-2:[1,3,4,5,6,7,9,8]:2155
-5:[6,7,9]:568
-4:[]:420
-1:[]:345
-3:[]:321
-8:[]:260
-7:[]:176
-6:[]:168
-9:[]:107
+employee:reportsTo:totalOrders
+2:[8,1,5,6,7,9,4,3]:830
+5:[6,7,9]:224
+4:[]:156
+3:[]:127
+1:[]:123
+8:[]:104
+7:[]:72
+6:[]:67
+9:[]:43
 |===
 
-[#update-northwind-graph]
-== Updating the Graph
+== What's Next?
 
-Now if we wanted to update our graph data, we have to first find the relevant information and then update or extend the graph structures.
+If you followed along with each step through this tutorial as a guide, then you might want to explore the data set with more queries and try to answer additional questions you came up with for the data.
+You may also want to apply these same principles to your own or another data set for analysis.
 
-// price update
-// add new product
+If you used this as a process flow to apply to a different data set or you would like to do that next, feel free to start at the top and work through this guide again with another domain.
+The steps and processes still apply (though, of course, the data model, queries, and business questions will need adjusted).
 
-.Janet is now reporting to Steven
-We need to find Steven first, and Janet and her `REPORTS_TO` relationship.
-Then we remove the existing relationship and create a new one to Steven.
+If you have data that needs additional cleansing and manipulation than what is covered in this guide, the link:/labs/apoc/[APOC library^] may be able to help.
+It contains hundreds of procedures and functions for handling large amounts of data, translating values, cleaning messy data sources, and more!
 
-[source, cypher]
-----
-MATCH (mgr:Employee {EmployeeID:5})
-MATCH (emp:Employee {EmployeeID:3})-[rel:REPORTS_TO]->()
-DELETE rel
-CREATE (emp)-[:REPORTS_TO]->(mgr)
-RETURN *;
-----
-
-//graph_result
-
-This single relationship change is all you need to update a part of the organizational hierarchy.
-All subsequent queries will immediately use the new structure.
+If you are interested in doing a one-time initial dump of relational data to Neo4j, then the link:/labs/etl-tool/[Neo4j ETL Tool^] might be what you are looking for.
+The application is designed with a point-and-click user interface with the goal of fast, simple relational-to-graph loads that help new and existing users gain faster value from seeing their data as a graph without Cypher, import procedures, or other code.
 
 [#import-northwind-resources]
 == Resources
-* link:{github}/data/northwind[Northwind SQL, CSV and Cypher data files] link:{github}/data/northwind/northwind.zip[(zip)]
-* link:/developer/cypher/guide-sql-to-cypher[From SQL to Cypher]
-* link:/developer/working-with-data/guide-import-csv[Import CSV Guide]
+* link:{github}/data/northwind[Northwind SQL, CSV and Cypher data files^], also as link:{github}/data/northwind/northwind.zip[zip^] file
+* {cyphermanual}/clauses/load-csv/[LOAD CSV^]: Cypher's command for importing CSV files
+* link:/labs/apoc/[APOC library^]: Neo4j's utility library
+* link:/labs/etl-tool/[Neo4j ETL Tool^]: Loading relational data without code
+* link:/developer/data-import/[Importing Data with Neo4j]
 * link:/developer/data-modeling/guide-data-modeling[Graph Data Modeling]
-* http://neo4j.com/blog/loading-sql-neo4j-like-magic/[Tool: SQL to Neo4j Import]

@@ -34,7 +34,7 @@ There are a variety of uses for the browser guides ranging from personal develop
 Companies can even use these as onboarding or training tools for employees.
 We use these guides ourselves in many areas, including those listed below.
 
-* link:/sandbox-v2/[Neo4j Sandbox^] - each sandbox comes with a built-in, default guide to help you get started with whichever sandbox you chose!
+* link:/sandbox/[Neo4j Sandbox^] - each sandbox comes with a built-in, default guide to help you get started with whichever sandbox you chose!
 * link:/graphacademy/[Online and classroom training^] - using these published guides in the classroom allows attendees to work through the material at their own pace and have access to the guide 24/7 after class ends.
 * Meetups and presentations - presenters can blend slides with code for a better live experience on stage.
 * Exploration of interesting datasets - publish all resources (data model, import, queries) in one place and refer back to that work whenever you need to.
@@ -154,10 +154,12 @@ git clone https://github.com/neo4j-contrib/neo4j-guides
 cd neo4j-guides
 ----
 
+[start=2]
 2. Find the `adoc` directory and create a file called `test.adoc` inside it.
 
 image::{img}custom_guide_test.jpg[link="{img}custom_guide_test.jpg",role="popup-link"]
 
+[start=3]
 3. Insert the contents below into the newly created `test.adoc` file and save the changes.
 
 [source,shell,.small]
@@ -212,6 +214,7 @@ image::{img}custom_guide_test.jpg[link="{img}custom_guide_test.jpg",role="popup-
  image::https://avatars3.githubusercontent.com/u/201120[width=100,link="https://example.com"]
 ----
 
+[start=4]
 4. Pass the `test.adoc` file to the `run.sh` script (as shown below) to convert to the HTML slides.
 
 [source,shell]
@@ -225,9 +228,11 @@ image::{img}custom_guide_test.jpg[link="{img}custom_guide_test.jpg",role="popup-
 python http-server.py
 ----
 
+[start=5]
 5. Test the test guide in your local browser: 
 {play}https://localhost:8001/html/test.html[`:play https://localhost:8001/html/test.html`^]
 
+[start=6]
 6. Upload the file to your target server.
 
 [source,shell]
@@ -236,6 +241,7 @@ python http-server.py
 s3cmd put -P html/test.html s3://guides.example.com/test
 ----
 
+[start=7]
 7. And test the guide one last time: `:play https://guides.example.com/test`
 
 image::{img}browser-guide-demo.gif[]

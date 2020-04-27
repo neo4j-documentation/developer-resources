@@ -1,4 +1,4 @@
-= Perl: Neo4j Community Driver
+= Perl: Neo4j Community Drivers
 :slug: perl
 :level: Intermediate
 :section: Drivers & Language Guides
@@ -11,7 +11,7 @@
 .Goals
 [abstract]
 This guide provides an overview of options for connecting to Neo4j using the Perl programming language. 
-While this guide is not comprehensive, it will introduce the different drivers and link to relevant resources.
+While this guide is not comprehensive, it will introduce some prominent drivers and link to the relevant resources.
 
 .Prerequisites
 [abstract]
@@ -28,15 +28,14 @@ include::../_includes/community-driver-notice.adoc[]
 
 image::{img}perl.png[float=right]
 
-Members of the Perl community have invested a lot of time and love to develop a driver for Neo4j, so if you use it, please provide feedback to the authors.
+Members of the Perl community have invested a lot of time and love to develop drivers for Neo4j, so if you use them, please provide feedback to the authors.
 
 include::../_includes/sample_project.adoc[]
 
 [#neo4p-rest]
 == REST::Neo4p
 
-The Perl driver from Mark Jensen is always up to date with the latest Neo4j API developments, and it's fun to use too.
-It works with the Neo4j’s REST API by using Perl5 objects in a consistent, idiomatic Perl-style.
+This Perl driver from Mark Jensen works with Neo4j’s REST API by using Perl5 objects in a consistent, idiomatic Perl-style.  There is also a related DBI-compliant wrapper (https://metacpan.org/pod/DBD::Neo4p[DBD::Neo4p])
 
 [cols="1,4"]
 |===
@@ -47,3 +46,28 @@ It works with the Neo4j’s REST API by using Perl5 objects in a consistent, idi
 | icon:book[] Docs | http://slideshare.net/majensen1/neo4p-dcbpw2015-46990541
 | icon:question-circle[] Community Site | https://community.neo4j.com/c/drivers-stacks/perl
 |===
+
+[#neo4j-driver]
+== Neo4j::Driver
+
+This is a Perl driver by Arne Johannessen. It enables interacting with a Neo4j server using the same classes and method calls as the official Neo4j drivers.  It also has (currently experimental) support for HTTPS and Bolt.
+
+[cols="1,4"]
+|===
+| icon:user[] Author | Arne Johannessen
+| icon:gift[] Package | https://metacpan.org/release/Neo4j-Driver
+| icon:github[] Source | https://github.com/johannessen/neo4j-driver-perl
+|===
+
+
+[#neo4j-bolt]
+== Neo4j::Bolt
+
+This is another driver from Mark Jensen. It's implemented as a Perl wrapper around the libneo4j-client C library, which implements the Bolt network protocol.
+
+[cols="1,4"]
+|===
+| icon:user[] Author | http://twitter.com/thinkinator[Mark A. Jensen]
+| icon:github[] Source | https://github.com/majensen/perlbolt
+|===
+
