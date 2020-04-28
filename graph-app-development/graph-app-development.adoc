@@ -447,35 +447,53 @@ The hosted version of Halin hosts a http://halin.graphapp.io/manifest.json[manif
 
 ==== Deep Links to your app
 
-You can provide a deep link to your app using the `neo4j://` scheme and the name of your app from package.json.
+You can provide a deep link to your app using the `neo4j-desktop://` scheme and the name of your app from package.json.
 For example, if the name of the app is `my-graph-app` the link would be the following:
 
 ```
-neo4j://my-graph-app
+neo4j-desktop://graphapps/my-graph-app?key=value
+```
+
+You can pass parameters through to the Graph App to help set the initial state of the app.
+For example, in the URL above, the `?key=value` will append a `key` property with a value of `value` to the Graph App's  url.
+
+The `neo4jDesktopApi` has an `onArgumentsChange` function that allows you to listen to changes in the applications arguments, for example when a new deep link has been clicked.
+On load, and for each subsequent change of parameters, the callback function is called with two arguments; the original string and an object containing the decoded keys and values.
+
+```js
+neo4jDesktopApi.onArgumentsChange((queryString, object) => {
+  console.log(object.key) // "value"
+})
+
 ```
 
 ==== Deep links to Neo4j Browser
 
-Your graph app can also link to Neo4j Browser using the  `neo4j://` scheme and the Graph App name `neo4j-browser`.
+Your graph app can also link to Neo4j Browser using the  `neo4j-desktop://` scheme and the Graph App name `neo4j-browser`.
 Additionally, you can specify a command and argument to automatically run as it loads.  For example, if you wanted to run the `:play movies` command to open the Movies https://neo4j.com/developer/guide-create-neo4j-browser-guide/[Browser Guide^], you could use the following link:
 
 ```
-neo4j://neo4j-browser?cmd=play&arg=movies
+neo4j-desktop://graphapps/neo4j-browser?cmd=play&arg=movies
+```
+
+You can also start Neo4j Browser with a pre-populated cypher query by setting `cmd` in the query string to edit and the `arg` to the Cypher query in a URL encoded form.
+```
+neo4j-desktop://graphapps/neo4j-browser?cmd=edit&arg=MATCH%20%28n%29%20RETURN%20count%28n%29%20AS%20count
 ```
 
 ==== Linking to Bloom
 
-You can link to Bloom by using the  `neo4j://` scheme, and the Graph App name `neo4j-bloom`.  You can also add a `search` parameter as a URL encoded string to auto-fill the search bar when bloom opens.
+You can link to Bloom by using the  `neo4j-desktop://` scheme, and the Graph App name `neo4j-bloom`.  You can also add a `search` parameter as a URL encoded string to auto-fill the search bar when bloom opens.
 
 ```
-neo4j://neo4j-bloom/?search=URL%20Encoded%20String
+neo4j-desktop://graphapps/neo4j-bloom?search=URL%20Encoded%20String
 ```
 
 
 === Plugin Dependencies
 
 You can specify any plugins that your Graph App depends on within `manifest.json` file.
-Any plguins with valid coordinates from https://search.maven.org/[Maven Central^] will be will be automatically installed to all local databases within the current active project in Neo4j Desktop.
+Any plugin with a valid coordinate from https://search.maven.org/[Maven Central^] will be will be automatically installed to all local databases within the current active project in Neo4j Desktop.
 
 For example, if your Graph App requires https://neo4j.com/developer/neo4j-apoc/[APOC^] then your `manifest.json` file may look something like this:
 
