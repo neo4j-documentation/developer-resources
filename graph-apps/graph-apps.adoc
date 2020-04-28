@@ -43,6 +43,24 @@ Whichever framework you choose to build your application, you will interact with
 There is plenty of content over on the https://neo4j.com/developer/javascript/[JavaScript Developer Pages^] so we will not cover this in too much detail, only the nuances around how the driver works with the Neo4j Desktop API.
 
 
+== Installing Driver Dependencies
+
+The official JavaScript driver is available via npm using the `npm install` or `yarn add` command.
+
+```sh
+npm install --save neo4j-driver
+```
+
+Alternatively, if your graph app will be used in a context where the always has an active internet connection, you can obtain the driver via a CDN.
+
+```html
+<!-- unpkg CDN non-minified -->
+<script src="https://unpkg.com/neo4j-driver"></script>
+
+<!-- jsDelivr CDN non-minified -->
+<script src="https://cdn.jsdelivr.net/npm/neo4j-driver"></script>
+```
+
 == Enabling Developer Tools
 
 Neo4j Desktop comes with a Development App that can be used while developing and debugging your Graph App.
@@ -254,6 +272,10 @@ Now that we have the credentials from the previous step, we can run a series of 
 There will be a maximum of one *Active* graph in Desktop (with the status `ACTIVE`), but you may also have remote graphs that could be displayed.
 To find any active graphs, you could run a reduce and filter on the current context.
 
+[NOTE]
+It is recommended that you use the latest version of the Driver, which is currently **4.0.2**.  You can find full installation instructions on the https://neo4j.com/developer/javascript/[JavaScript language guide].
+
+
 ```js
 const graphs = context.projects
   .map(project => ({
@@ -335,6 +357,10 @@ For Graph Apps hosted on the internet, the manifest.json file should be served i
   "homepage": "http://neo4j.com"
 }
 ```
+
+The folliwing image demonstrates how the values from manifest.json are used by Neo4j Desktop.
+
+image:{img}manifest.png[Manifest Mapping, title="How items from manifest.json are used in Neo4j Desktop"]
 
 .Table manifest.json Contents
 |===
