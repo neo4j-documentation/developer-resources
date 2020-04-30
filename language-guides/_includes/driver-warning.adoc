@@ -1,5 +1,6 @@
 
-==== Driver Configuration
+[#driver-configuration]
+=== Driver Configuration
 
 From Neo4j version **4.0** and onwards, the default encryption setting is *off* by default and Neo4j will no longer generate self-signed certificates.
 This applies to default installations, installations through Neo4j Desktop and Docker images.
@@ -9,23 +10,23 @@ You can https://neo4j.com/docs/migration-guide/4.0/upgrade-driver/#_configure_ss
 |===
 | Certificate Type | Neo4j Causal Cluster | Neo4j Standalone Server  | Direct Connection to Cluster Member
 
-| Unencrypted
+| *Unencrypted*
 | `neo4j`
 | `neo4j`
 | `bolt`
 
-| Encrypted with Full Certificate
+| *ncrypted with Full Certificate*
 | `neo4j+s`
 | `neo4j+s`
 | `bolt+s`
 
 
-| Encrypted with Self-Signed Certificate
+| *Encrypted with Self-Signed Certificate*
 | `neo4j+scc`
 | `neo4j+scc`
 | `bolt+scc`
 
-| https://neo4j.com/aura/[Neo4j Aura^]
+| *https://neo4j.com/aura/[Neo4j Aura^]*
 | `neo4j+s`
 | N/A
 | N/A
