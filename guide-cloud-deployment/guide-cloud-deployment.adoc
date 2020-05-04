@@ -14,11 +14,12 @@ This section features guides and tutorials to help you understand the available 
 
 Topics include:
 
-* Deploying Neo4j Aura
-* Deploying on Amazon EC2
+* Deploying with Neo4j Aura
 * Deploying on Google Cloud Platform (GCP)
+* Deploying on Amazon EC2
 * Deploying on Microsoft Azure
-* Deploying on other PaaS
+* Deploying with Docker, Kubernetes, and more (any cloud platform)
+* Deploying on other PaaS offerings
 
 [#neo4j-aura]
 == Neo4j Aura
@@ -26,10 +27,31 @@ Topics include:
 Aura is a database-as-a-service hosted by Neo4j that is designed to be flexible and highly reliable in providing graphs for any project.
 
 Whether dealing with critical business applications or 24/7 access needs, Neo4j Aura ensures it is always available.
-This means developers can build applications and solutions with Neo4j anytime, anywhere without the maitainance concerns of other databases or implementations.
+This means developers can build applications and solutions with Neo4j anytime, anywhere without the maintenance concerns of other databases or implementations.
 
 For more information, check out the link:/aura/[product page^] or get help on an existing instance with our link:/developer/aura-cloud-dbaas/[Aura guides].
-Helpful guides and support are available on the link:https://aura.support.neo4j.com/hc/en-us[Aura support^] pages.
+Helpful guides and support are available on the https://aura.support.neo4j.com/hc/en-us[Aura support^] pages.
+
+[#gcp-cloud]
+== Google Cloud Platform (GCP)
+
+Google Cloud Platform, offered by Google, is a suite of cloud computing services that runs on the same infrastructure that Google uses internally for its end-user products, such as Google Search and YouTube.
+Alongside a set of management tools, it provides a series of modular cloud services including computing, data storage, data analytics, and machine learning.
+
+Running on Google Cloud provides a few options, depending on what you want to do.
+
+* Test Drive - GCP and Neo4j offer a https://neo4j.orbitera.com/c2m/trials/signup?testDrive=1135[free test drive^] with hands-on walkthroughs and introduction materials on graphs and Neo4j.
+
+* Single instance - our {opsmanual}/cloud-deployments/neo4j-gcp/single-instance-vm/[Google cloud image documentation^] gives you the steps to launch a single instance from an image with a few commands and interact with the Neo4j instance.
+
+* Causal Cluster - the Enterprise edition of Neo4j is also https://console.cloud.google.com/launcher/details/neo4j-public/neo4j-enterprise-causal-cluster[available on GCP Marketplace^], and users can launch a causal cluster from there.
+The launch and interaction steps to deploy Neo4j causal clusters on GCP are shown in the {opsmanual}/cloud-deployments/neo4j-gcp/causal-cluster-vm/[Neo4j documentation^].
+
+* Google Kubernetes Marketplace (Docker container-based) - Neo4j Enterprise is also https://console.cloud.google.com/marketplace/details/neo4j-public/causal-cluster-k8s[available on Kubernetes Marketplace^], so users can launch Neo4j clusters into Google Kubernetes Engine (GKE) clusters.
+For a walkthrough, please consult the blog post showing how to https://medium.com/google-cloud/launching-neo4j-on-googles-kubernetes-marketplace-97c23c94e960[launch Neo4j on Google Kubernetes Marketplace^].
+Technical artifacts and templates that support GKE can be found on the https://github.com/neo-technology/neo4j-google-k8s-marketplace[GitHub repository^].
+
+The Neo4j documentation also contains a section on {opsmanual}/cloud-deployments/neo4j-gcp/automation-gcp/[automating your deployment^] using Google Cloud Deployment Manager.
 
 [#aws-cloud]
 == Amazon EC2
@@ -37,105 +59,60 @@ Helpful guides and support are available on the link:https://aura.support.neo4j.
 Amazon Elastic Compute Cloud (Amazon EC2) is a web service that provides secure, resizable compute capacity in the cloud.
 It is designed to make web-scale cloud computing easier for developers.
 
-There are several options for running on EC2, depending on what you want to do, detailed below.
+There are three options for running on EC2 detailed below, with each option depending on the needs of the user and environment.
 
-=== Enterprise Causal Cluster in AWS Marketplace
-
-link:https://aws.amazon.com/marketplace/pp/B07D441G55[Neo4j Enterprise Causal Clusters^] can be launched directly.
-
-This option launches a multi-VM clustered configuration, with the choice to configure a number of aspects of the cluster, including number of core nodes, read replicas, hardware sizing, encrypted EBS volumes, and other options.
-
-=== Launching Directly from an AMI
-
-Instructions for launching VMs directly using Amazon's command line tool are provided in the article on link:/developer/guide-cloud-deployment/neo4j-cloud-aws-ec2-ami[Deploying Neo4j on EC2 using a custom Neo4j AMI].
+* Single instance (VM-based) - instructions for launching VMs with Amazon's command line tool are provided in the developer guide to link:/developer/guide-cloud-deployment/neo4j-cloud-aws-ec2-ami/[deploy Neo4j on EC2 with a custom Amazon Machine Image (AMI)^].
 Using this method, both Community and Enterprise options are available.
 
-=== Community Edition in AWS Marketplace
+* Neo4j Community edition - https://aws.amazon.com/marketplace/pp/B071P26C9D[available from the AWS marketplace^].
 
-link:https://aws.amazon.com/marketplace/pp/B071P26C9D[Neo4j Community can be installed from the AWS marketplace^].
+[NOTE]
+--
+For this installation, we recommend you select the option in security group settings to "Create new security group based on seller settings".
+This will ensure that when the instance is launched, the default ports that are needed will be open.
+--
 
-We recommend that for security group settings, you select the option to "Create new security group based on seller settings".
-This will ensure that when the instance is launched, the default ports that need to be open will be.
+* Causal Cluster - https://aws.amazon.com/marketplace/pp/B07D441G55[launch directly from the AWS Marketplace^], as well.
+This option creates a multi-VM clustered configuration with the choice to configure a number of aspects of the cluster, including number of core nodes, read replicas, hardware sizing, encrypted EBS volumes, and other options.
 
-[#gcp-cloud]
-== Google Cloud Platform (GCP)
-
-Google Cloud Platform, offered by Google, is a suite of cloud computing services that runs on the same infrastructure that Google uses internally for its end-user products, such as Google Search and YouTube.
-Alongside a set of management tools, it provides a series of modular cloud services including computing, data storage, data analytics and machine learning.
-
-Running on Google Cloud is easy, and you have three options, depending on what you want to do.
-
-=== Test Drive
-
-A link:https://neo4j.orbitera.com/c2m/trials/signup?testDrive=1135[free test drive is available^], which takes you through the basics of how to run Neo4j, access data using Cypher.
-The test drive provides guided walk-throughs of use cases for graph databases. 
-
-Once you launch your test drive, you'll be provided with a user guide
-explaining key concepts, use cases, and features.
-The user guide will walk you through a series of labs to help you tour the product and learn key concepts.
-
-=== Single instances (VM based)
-
-link:/developer/guide-cloud-deployment/neo4j-cloud-google-image[Follow these instructions] to launch a single instance from an image in minutes, with just a few commands.
-
-=== Causal Clusters (VM Based)
-
-link:https://console.cloud.google.com/launcher/details/neo4j-public/neo4j-enterprise-causal-cluster[Neo4j Enterprise is registered in GCP Marketplace^], and users can launch a causal cluster in minutes.
-
-For a walkthrough on how to use the GCP Marketplace, please consult link:/developer/neo4j-cloud-google-cloud-launcher/[the guide to deploying Neo4j Causal Clusters on GCP].
-
-=== Google Kubernetes Marketplace (Docker Container Based)
-
-link:https://console.cloud.google.com/marketplace/details/neo4j-public/causal-cluster-k8s[Neo4j Enterprise is available on Kubernetes Marketplace^], so users may quickly launch Neo4j clusters into Google Kubernetes Engine (GKE) clusters.
-
-For a walk-through on how to use Neo4j with GKE, please consult the article link:https://medium.com/google-cloud/launching-neo4j-on-googles-kubernetes-marketplace-97c23c94e960[Launching Neo4j on Google Kubernetes Marketplace^].
-
-Technical artifacts and templates that support GKE link:https://github.com/neo-technology/neo4j-google-k8s-marketplace[can be found on GitHub^].
+The Neo4j documentation also contains a section on {opsmanual}/cloud-deployments/neo4j-aws/automation-aws/[automating your deployment^] using CloudFormation.
 
 [#azure-cloud]
 == Microsoft Azure
 
 Microsoft Azure is a cloud computing service created by Microsoft for building, deploying, and managing applications and services through a global network of Microsoft-managed data centers.
-
 It provides software as a service, platform as a service and infrastructure as a service and supports many different programming languages, tools and frameworks, including both Microsoft-specific and third-party software and systems.
 
 Neo4j can be deployed directly from https://azuremarketplace.microsoft.com/en-us/marketplace/apps?search=neo4j&page=1[Azure Marketplace^].
 
-=== Single Instances (VM Based)
+* Single Instance - for a walkthrough of how to create single instances, please consult the documentation to {opsmanual}/cloud-deployments/neo4j-azure/single-instance-azure/[deploy Neo4j on Azure^].
 
-For a walkthrough of how to create single instances, please consult link:/developer/neo4j-cloud-azure-image/[the guide to deploying Neo4j on Azure].
+* Causal Cluster - a walkthrough for creating clusters is in the documentation to {opsmanual}/cloud-deployments/neo4j-azure/causal-cluster-azure/[deploy a Neo4j causal cluster on Azure^].
 
-=== Causal Clusters (VM Based)
-
-For a walkthrough of how to create clusters, please consult link:/developer/neo4j-cloud-azure-cluster/[the guide to deploying Neo4j Causal Cluster on Azure].
+The Neo4j documentation also contains a section on {opsmanual}/cloud-deployments/neo4j-azure/automation-azure/[automating your deployment^] using Azure Resource Manager.
 
 [#kube-docker]
-== Kubernetes and Docker (On any cloud)
+== Kubernetes, Mesosphere, & Docker (on any cloud)
 
-For docker users, Neo4j provides link:/developer/docker/[complete instructions] on using provided Docker containers.
+For Docker users, Neo4j provides link:/developer/docker/[complete instructions] on using provided Docker containers.
 
-For users who wish to run Neo4j in kubernetes clusters, Neo4j provides a link:https://github.com/helm/charts/tree/master/stable/neo4j[public helm chart^] which permits easy installation using standard `kubectl` and `helm` tools. 
+For users who wish to run Neo4j in kubernetes clusters, Neo4j provides a https://github.com/helm/charts/tree/master/stable/neo4j[public helm chart^], which permits installation using standard `kubectl` and `helm` tools. 
 These kubernetes tools and approaches all take advantage of the standard Neo4j docker container mentioned above, but add clustering and coordination capabilities.
+Additional information is provided in the link:/developer/guide-orchestration/[orchestration developer guide], and a walkthrough of how to use the helm chart to get started is available on link:/blog/kubernetes-deploy-neo4j-clusters/[Neo4j blog^].
 
-For a walk-through of how to use the helm chart to get started quickly, please consult link:https://neo4j.com/blog/kubernetes-deploy-neo4j-clusters/[How to Use Kubernetes to Quickly Deploy Neo4j Clusters^].
+For those interested in running Neo4j with Mesosphere DC/OS, the link:/developer/guide-orchestration/[orchestration developer guide] provides more details and resources.
 
 [#paas-integ]
-== Other PaaS Integrations
+== Other PaaS Offerings
 
-* link:https://www.digitalocean.com/community/tutorials/how-to-install-neo4j-on-an-ubuntu-vps[Digital Ocean^]
-* link:https://github.com/jelastic-public-cartridges/openshift-origin-cartridge-neo4j-v21[Jelastic OpenShift Cartridge^]
+There are other hosting providers that can run Neo4j, as well.
 
-////
-[#hosting-providers]
-== Cloud Hosting Providers
-
-There are some additinoal options for hosting Neo4j instances in the cloud.
-This guide explains the available offerings.
-
-* link:/developer/guide-cloud-deployment/neo4j-cloud-hosting-providers[Neo4j Cloud Hosting Providers]
-////
+* link:/developer/neo4j-cloud-hosting-providers/[Hosting with Neo4j partners^]
+* https://www.digitalocean.com/community/tutorials/how-to-install-neo4j-on-an-ubuntu-vps[Digital Ocean^]
+* https://github.com/jelastic-public-cartridges/openshift-origin-cartridge-neo4j-v21[Jelastic OpenShift Cartridge^]
 
 [#cloud-resources]
 == Questions?
 
 You can ask questions and connect with other people launching Neo4j in the cloud through the https://community.neo4j.com/c/neo4j-graph-platform/cloud[cloud topic on the Community Site^].
+Official documentation for launching Neo4j on each of the cloud provider platforms is in the {opsmanual}/cloud-deployments/[Neo4j Operations Manual^].
