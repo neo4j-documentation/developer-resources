@@ -8,7 +8,6 @@
 :toc-title: Contents
 :toclevels: 1
 
-
 .Goals
 [abstract]
 This article shows how to use Neo4j Bloom for exploring graph data in Neo4j.
@@ -57,9 +56,8 @@ After installing, you will need to create a database instance.
 Detailed instructions for this are on the link:/developer/neo4j-desktop/[Neo4j Desktop guide].
 
 As noted above, we will be working with a local version of Bloom from Neo4j Desktop.
-Once you receive an activation key, we can follow the steps listed in the link:/docs/bloom-user-guide/current/bloom-installation/#_neo4j_desktop_hosted_bloom_client[documentation^] for adding Bloom to Desktop.
-
-
+The Neo4j Bloom application should show under the `Graph Apps` tab in Neo4j Desktop.
+More information about Bloom in Desktop is in the link:/docs/bloom-user-guide/current/bloom-installation/#_neo4j_desktop_hosted_bloom_client[documentation^].
 
 [#data-set]
 == Our example data set
@@ -84,7 +82,6 @@ Navigate to the Neo4j Desktop project where the database you wish to explore is 
 
 image::{img}bloom_launch_app.jpg[link="{img}bloom_launch_app.jpg",role="popup-link", width=50%]
 
-
 [#bloom-perspective]
 === Choosing a Perspective
 
@@ -108,7 +105,7 @@ You will be given the option to either work from a blank perspective, or to gene
 
 image::{img}bloom_perspective_gallery_2.jpg[link="{img}bloom_perspective_gallery_2.jpg",role="popup-link"]
 
-The newly-generated perspective will then show up in the list of potential perspectives to choose from. Click `Use Perspective` the newly created perspective.
+The newly-generated perspective will then show up in the list of potential perspectives to choose from. Click `Use Perspective` to apply the newly-created perspective.
 
 image::{img}bloom_perspective_gallery_3.jpg[link="{img}bloom_perspective_gallery_3.jpg",role="popup-link"]
 
@@ -187,7 +184,7 @@ To do that, we can right-mouse click (keyboard:`ctrl/cmd key + click`) on the se
 
 image::{img}bloom_node_options_1.jpg[link="{img}bloom_node_options_1.jpg",role="popup-link"]
 
-We choose the `Dismiss other nodes` option from the list, and the other nodes (except our `Perth Pasties`) node should disappear from our scene.
+We choose the `Dismiss other nodes` option from the list, and the other nodes (except our `Ipoh Coffee`) node should disappear from our scene.
 
 image::{img}bloom_dismiss_others_1.jpg[link="{img}bloom_dismiss_others_1.jpg",role="popup-link"]
 
@@ -200,7 +197,7 @@ image::{img}bloom_expand_node_1.jpg[link="{img}bloom_expand_node_1.jpg",role="po
 We should now see a small graph around the product node of all of the relationships and nodes it is connected to.
 All of the nodes match the colors from the legend, so we have some red nodes that are orders (28 of those), an orange node that is a supplier (1 of those), and a category node that is a product category (1 of those).
 
-image::{img}bloom_product_expanded.jpg[link="{img}bloom_product_expanded.jpg",role="popup-link"]
+image::{img}bloom_product_expanded_1.jpg[link="{img}bloom_product_expanded_1.jpg",role="popup-link"]
 
 The scene also shows ids for each one of these nodes, so we can refer to our earlier step for <<alter-perspective, altering the perspective>> to view other properties for the categories.
 
