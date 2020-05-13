@@ -33,7 +33,7 @@ Instructions for setting up the application will be shown after you click the do
 
 ****
 [NOTE]
-Your activation key will be displayed at the top of the instruction page. 
+Your activation key will be displayed at the top of the instruction page.
 We recommend copying it to a safe place, just in case.
 If lost, another will need to be requested by contacting Neo4j.
 ****
@@ -44,21 +44,28 @@ Step 2 on the download page instructions shows you how to set up your first proj
 [#desktop-activate]
 == Activation
 
-image::{img}desktop_registration_dec2019.jpg[link="{img}desktop_registration_dec2019.jpg",float="right"]
+[#desktop-first-time]
+== Opening Neo4j Desktop for the First Time
 
 If you are opening Neo4j Desktop for the first time, it should ask you to register the software with an activation key.
-When you downloaded Neo4j Desktop, your unique activation key was displayed at the top of the instructions page.
+This activation key is generated when you first download Neo4j Desktop and will be displayed on the download confimration page.
 While we can copy it to the clipboard and paste it into the provided input in Neo4j Desktop, we also recommend copying it to a safe place as a backup (local file, password vault, or another method).
+
+image::{img}desktop_registration_may2020.jpg[link="{img}desktop_registration_may2020.jpg",float="right"]
+
+Copy this activation key into the Software regisration form and click Activate to continue.
+
+As a new user to Neo4j Desktop, you will be greated with a new sample database containing https://sandbox.neo4j.com/?usecase=recommendations[Movies and Actors].
+
+image::{img}first_graph_experience.png[link="{img}first_graph_experience.png",float="right"]
+
+Clicking the Browser Guide link for the Sample database will open up the Neo4j Browser with a Browser Guide that will guide you through your first queries on this Neo4j database.
 
 [#desktop-navigate]
 == Navigation
 
 The menu along the left side of Neo4j Desktop shows high-level icons for projects, graph applications, settings, activation keys, and Neo4j info.
 At the top, the folder with a bookmark (image:{img}projects_icon.jpg[width=20]) shows the list of projects you have created.
-If this is the first time using Neo4j Desktop, the default `My Project` will be the only one.
-You can either create a new project to work with your use case or create your database within the default project, but this guide will use the default `My Project`.
-
-image::{img}desktop_main.jpg[link="{img}desktop_main.jpg",role="popup-link"]
 
 === Creating and Deleting a Project
 
@@ -66,6 +73,8 @@ To create a new project, simply click `+ New` at the right of the `Projects` men
 The app will add a row in the menu for a project named `Project`.
 You can change the name by clicking on the pencil icon that appears when you hover on the project name in the right pane.
 To remove the project, hover over the `Project` row in the projects menu and click the trash bin icon that appears on the right side (image:{img}desktop_delete_proj_icon.jpg[width=20]).
+
+image::{img}deleting_a_project.jpg[link="{img}deleting_a_project.jpg",float="right"]
 
 === Settings
 
@@ -100,38 +109,52 @@ A panel will display on the right to show the databases in your project and the 
 
 To create a database, click in the dotted square that says `Add Graph`.
 Then click the kbd:[Create a Local Graph] button.
-Next, you will type in a name for your database and set a password and choose a version (default is latest version).
-A small icon will show which versions have been downloaded already.
+Next, you will type in a name for your database set a password.  You can also choose a specific version of neo4j (the default is latest version).
+A small icon next to each version number in the dropdown menu will show which versions have been downloaded already.
 Once the info is filled in, then click kbd:[Create].
 It may take a few minutes to download the version and actually create the database.
 
 ****
 [NOTE]
-Please remember your database password. 
+Please remember your database password.
 If you forget it, you will have to remove the credentials file in `data/dbms/authorization`.
 ****
 
 You have now created your own graph database!
 Now we will walk through some tools to interact with the database and data.
 
-At the bottom of your newly created database are two buttons.
-One is to manage the database and the other is to start the database (when the database is running, the button is to stop the database).
-
 image::{img}db_section_instance.jpg[link="{img}db_section_instance.jpg",role="popup-link"]
+
+The kdb:[Start] button in the bottom right hand corner of each database card will Start the database.
+Once started, there will be a button in the bottom right hand corner to Stop the database.
+
+Once a database has been started, the Open button in the bottom left hand corner of the card will be enabled.
+Clicking Open will open link:/developer/neo4j-browser/[Neo4j Browser^] and connect to the active database.
+Next to the Open button is a dropdown menu which will allow you to open up a list of link:/developer/graph-app-development[Graph Apps^].
+
 
 [#desktop-manage-db]
 == Managing a database
 
-When you click the kbd:[Manage] button, the resulting pane opens up several functionalities.
+To manage a database, click the three-dots icon in the top right hand of the card and click kdb:[Manage].
 
 image::{img}manage_db_pane.jpg[link="{img}manage_db_pane.jpg",role="popup-link"]
 
-In the top section is your database name with buttons underneath it for Start, Stop, and Restart of the database.
-The buttons next to those allow you to open the folder location of the database and to open the Neo4j Browser to interact with data in the database.
-The kbd:[Open Folder] button can be used to modify data files and configuration, and the drop down next to the button can access the import folder to place csv files for loading.
+At the top of the screen you will see the database name and an icon to signify it's status.
+Directly underneath are three buttons to Start, Stop or Restart the database.
 
-The bottom section has several tabs for information and settings.
-The `Details` tab shows the version and the status of your database.
+image::{img}status_buttons.jpg[link="{img}status_buttons.jpg",role="popup-link"]
+
+The kdb:[Open Folder] button will open up the root folder for this database.
+The arrow icon to the right of this button will allow you to open up additional folders related to this database, for example the Plugins or Logs folders.
+
+image::{img}open_folder.jpg[link="{img}open_folder.jpg",role="popup-link"]
+
+The kdb:[Open Terminal] button will open up a new terminal window in the root folder of the database.
+
+Below these buttons are several tabs for information and settings.
+
+The `Details` tab shows the description, version and the status of your database along with some statistics for the database.
 When the database is running, it will also show port numbers and addresses needed to interact with the database (screenshot below).
 
 image::{img}db_details.jpg[link="{img}db_details.jpg",role="popup-link"]
