@@ -48,13 +48,15 @@ image::{img}3desktopConnect_remote_graph.jpg[link="{img}3desktopConnect_remote_g
 image::{img}4desktopConnect_name_url.jpg[link="{img}4desktopConnect_name_url.jpg",role="popup-link"]
 
 [start=5]
-5. Now we need to choose an authentication method. For Neo4j Aura, we need to choose `Username/password`.
+5. Now we need to choose an authentication method.
+Neo4j Aura instances require username and password authentication, so click the `Username/password` button.
 
 image::{img}5desktopConnect5_auth.jpg[link="{img}5desktopConnect5_auth.jpg",role="popup-link"]
 
 [start=6]
 6. On this screen, we enter our credentials.
-Unless you have created a new user, the username will be `neo4j` and unless you have changed it the password will be the one generated for you when you created your Aura database.
+By default, the username for your Neo4j Aura database will be `neo4j` and unless you have changed it, the password will be the one generated for you when you created your Aura database.
+If you have created another user for your Aura Database, you can use this instead.
 Aura databases require an encrypted connection, so ensure the box is checked for `Use encrypted connection` before clicking `Next`.
 
 image::{img}6desktopConnect_enter_user_pass.jpg[link="{img}6desktopConnect_enter_user_pass.jpg",role="popup-link"]
@@ -65,9 +67,13 @@ Once activated, we can disconnect with the same button, open Neo4j Browser with 
 
 image::{img}7desktopConnect_connected_remote.jpg[link="{img}7desktopConnect_connected_remote.jpg",role="popup-link"]
 
-**Note:** Deactivating in Neo4j Desktop will not shut down or stop the remote instance - only temporarily close the connection to it in Neo4j Desktop.
+Neo4j Desktop only allows 1 connection at a time to a database (local or remote).
 
-**Note:** Neo4j Desktop only allows 1 connection at a time to a database (local or remote).
+****
+[NOTE]
+**Note:** Deactivating in Neo4j Desktop will not shut down or stop the remote instance - only temporarily close the connection to it in Neo4j Desktop.
+****
+
 
 [#aura-desktop-interact]
 == Interacting with the database

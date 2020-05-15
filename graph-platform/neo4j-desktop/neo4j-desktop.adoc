@@ -44,7 +44,7 @@ Step 2 on the download page instructions shows you how to set up your first proj
 [#desktop-activate]
 == Activation
 
-[#desktop-first-time]
+[[desktop-first-time]]
 == Opening Neo4j Desktop for the First Time
 
 If you are opening Neo4j Desktop for the first time, it should ask you to register the software with an activation key.
@@ -55,11 +55,14 @@ image::{img}desktop_registration_may2020.jpg[link="{img}desktop_registration_may
 
 Copy this activation key into the Software regisration form and click Activate to continue.
 
-As a new user to Neo4j Desktop, you will be greated with a new sample database containing https://sandbox.neo4j.com/?usecase=recommendations[Movies and Actors].
+As a new user to Neo4j Desktop, you will be greated with a new sample database containing https://github.com/neo4j-graph-examples/movies[Movies and Actors^].
 
 image::{img}first_graph_experience.png[link="{img}first_graph_experience.png",float="right"]
 
 Clicking the Browser Guide link for the Sample database will open up the Neo4j Browser with a Browser Guide that will guide you through your first queries on this Neo4j database.
+
+The sample database is created using a randomly generated password which is stored within Neo4j Desktop and used by Neo4j Browser to authenticate against the database.
+You can reset this password in the Administration tab on the Manage screen.
 
 [#desktop-navigate]
 == Navigation
@@ -109,15 +112,15 @@ A panel will display on the right to show the databases in your project and the 
 
 To create a database, click in the dotted square that says `Add Graph`.
 Then click the kbd:[Create a Local Graph] button.
-Next, you will type in a name for your database set a password.  You can also choose a specific version of neo4j (the default is latest version).
+Next, you will type in a name for your database set a password.
+You can also choose a specific version of Neo4j (the default is latest version).
 A small icon next to each version number in the dropdown menu will show which versions have been downloaded already.
 Once the info is filled in, then click kbd:[Create].
 It may take a few minutes to download the version and actually create the database.
 
 ****
 [NOTE]
-Please remember your database password.
-If you forget it, you will have to remove the credentials file in `data/dbms/authorization`.
+If you forget your password, you can reset it by clicking the three dots to the top right of the Database card, clicking Manage and navigating to the Administration tab.
 ****
 
 You have now created your own graph database!
@@ -133,7 +136,7 @@ Clicking Open will open link:/developer/neo4j-browser/[Neo4j Browser^] and conne
 Next to the Open button is a dropdown menu which will allow you to open up a list of link:/developer/graph-app-development[Graph Apps^].
 
 
-[#desktop-manage-db]
+[[desktop-manage-db]]
 == Managing a database
 
 To manage a database, click the three-dots icon in the top right hand of the card and click kdb:[Manage].
@@ -162,7 +165,8 @@ image::{img}db_details.jpg[link="{img}db_details.jpg",role="popup-link"]
 The `Logs` tab will show all of the streaming log output from the database.
 
 The `Settings` tab displays the configuration values for the database.
-These can be changed, if needed. Once changes are made, you can apply them, and Desktop will offer to restart the database (necessary for changes to take effect).
+These can be changed, if needed.
+Once changes are made, you can apply them, and Desktop will offer to restart the database (necessary for changes to take effect).
 
 ****
 [NOTE]
