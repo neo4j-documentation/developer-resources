@@ -18,49 +18,44 @@ This article assumes that you already have a basic understanding of HTML and CSS
 It will also discuss some concepts of Single Page Applications.
 
 . Basic knowledge of HTML and JavaScript and an understanding of Single Page Applications (SPAs)
-. Knowledge of the https://neo4j.com/developer/javascript[offical JavaScript Drivers]
-. If you haven't already, http://neo4j.org/download[download and install Neo4j Desktop^].
+. Knowledge of the link:/developer/javascript[offical JavaScript Drivers]
+. If you haven't already, http://neo4j.org/download[download and install Neo4j Desktop^]
 
-
+[#graphapp-dev-intro]
 == Introduction
 
 So, you would like to build a Graph App?  You are in good company, many enterprises and community developers are building Graph Apps for a wide range of use cases.
-These range from utility tools like monitoring tool https://halin.graphapp.io/[Halin^] and educational Graph Apps like Neuler to visulisation apps including https://neo4j.com/blog/graphxr-graph-app-neo4j-desktop/[GraphXR by Kineviz^] and https://medium.com/neo4j/introducing-neomap-a-neo4j-desktop-application-for-spatial-data-3e14aad59db2[NeoMap^].
+These range from utility tools like monitoring tool https://halin.graphapp.io/[Halin^] and educational Graph Apps like Neuler to visulisation apps including link:/blog/graphxr-graph-app-neo4j-desktop/[GraphXR by Kineviz^] and https://medium.com/neo4j/introducing-neomap-a-neo4j-desktop-application-for-spatial-data-3e14aad59db2[NeoMap^].
 
-Graph Apps are a convenient way of trying out ideas or building useful tools to help manage Neo4j databases.
-You could take an existing SPA and package it into a graph App or start from scratch with a new idea.
+Graph apps can be built with vanilla HTML and JavaScript, but most commonly we see these built with modern front end frameworks like https://reactjs.org/[React^] or https://vuejs.org/[Vue.js^].
+Whichever framework you choose to build your application, you will interact with the Graph the same way; by running a Cypher Query through the https://github.com/neo4j/neo4j-javascript-driver[Official JavaScript drivers^].
+There is plenty of content over on the link:/developer/javascript/[JavaScript developer guides] so we will not cover this in too much detail, only the nuances around how the driver works with the Neo4j Desktop API.
 
-If you are looking for inspiration, https://install.graphapp.io/[head over to the Graph App Gallery^] to see what other developers have built.
+If you are looking for inspiration, head over to the https://install.graphapp.io/[Graph App Gallery^] to see what other developers have built.
 Otherwise, let's get started.
 
-
-== What are Graph Apps?
-
-A Graph App is a Single Page Application built with HTML and JavaScript which interact with Neo4j databases through https://neo4j.com/desktop/[Neo4j Desktop^].
-These can be built with vanilla HTML and JavaScript, but most commonly we see these built with modern front end frameworks like https://reactjs.org/[React^] or https://vuejs.org/[Vue.js^].
-
-Whichever framework you choose to build your application, you will interact with the Graph the same way; by running a Cypher Query through the https://github.com/neo4j/neo4j-javascript-driver[Official JavaScript drivers^].
-There is plenty of content over on the https://neo4j.com/developer/javascript/[JavaScript Developer Pages^] so we will not cover this in too much detail, only the nuances around how the driver works with the Neo4j Desktop API.
-
-
+[#driver-dependencies]
 == Installing Driver Dependencies
 
 The official JavaScript driver is available via npm using the `npm install` or `yarn add` command.
 
-```sh
+[source,bash]
+----
 npm install --save neo4j-driver
-```
+----
 
 Alternatively, if your graph app will be used in a context where the always has an active internet connection, you can obtain the driver via a CDN.
 
-```html
+[source,html]
+----
 <!-- unpkg CDN non-minified -->
 <script src="https://unpkg.com/neo4j-driver"></script>
 
 <!-- jsDelivr CDN non-minified -->
 <script src="https://cdn.jsdelivr.net/npm/neo4j-driver"></script>
-```
+----
 
+[#enable-dev-tools]
 == Enabling Developer Tools
 
 Neo4j Desktop comes with a Development App that can be used while developing and debugging your Graph App.
@@ -75,6 +70,7 @@ image::{img}developer-tools.png[Developer Tools window with Enable development m
 - *Root Path*: This is the path to the root of your development project.
  If you are running Background Processes, this should be the location of the files that contain your Java or Node.js processes  - if in doubt, you can just set it to `/`.
 
+[#get-context]
 == Getting the Context
 
 If you require access to the the list of projects and databases that the user has configured in Neo4j Desktop, you can access this via the Context API.
@@ -83,27 +79,27 @@ There are two ways of accessing Neo4j Desktop's context, either through the Inje
 Neo4j Desktop provides information about the current desktop environment via the `neo4jDesktopApi` object that is injected into the window.
 This will provide you with a list the Projects and Database that the user has created.
 
-
-==== Injected API
+=== Injected API
 
 The _Injected_ API is provided through the `neo4jDesktopApi` object.
 The `getContext()` method returns a Promise which in turn resolves to an object containing a `projects` key.
 Each Project contains a list of Neo4j Databases and a list of files.
 
-```js
+[source,javascript]
+----
 if ( window.neo4jDesktopApi ) {
   neo4jDesktopApi.getContext()
     .then(context => {
       // Access to the list of projects will be through context.projects
     })
 }
-```
+----
 
 If the context should change for any reason, for example if the active database changes or has been stopped, an event will be fired.
 You can listen for these changes using the `onContextUpdate` method on the API which provides an Event object which includes the type of event (for example), the new context and the previous context.
 
-
-```js
+[source,javascript]
+----
 let online = true
 let context = await neo4jDesktopApi.getContext()
 
@@ -116,7 +112,7 @@ neo4jDesktopApi.onContextUpdate((event, newContext, oldContext) => {
   // Keep the context
   context = newContext
 })
-```
+----
 
 ====
 [NOTE]
@@ -187,26 +183,24 @@ The following events will trigger a context update via the API:
 | REMOTE_CONNECTION_DEACTIVATED | A remote connection has been deactivated  | **id**: the UUID for the deactivated remote connection
 |===
 
-
-
-==== GraphQL API
+=== GraphQL API
 
 The GraphQL API contains the same information as the injected API, but instead is accessed via a GraphQL library.
 For this example we will use https://www.apollographql.com/docs/react/migrating/boost-migration/[Apollo Boost^].
 The Apollo Boost package is available via npm or yarn
 
-```sh
+[source,bash]
+----
 npm install apollo-boost graphql # or yarn add apollo-boost
-```
+----
 
 The information required to access the GraphQL API are provided as part of the URL.
 
 - *neo4jDesktopApiUrl*: The URL of the GraphQL service
 - *neo4jDesktopGraphAppClientId*: A token generated by Neo4j Desktop to verify any requests made by the Graph App
 
-
-
-```js
+[source,javascript]
+----
 const url = new URL(window.location.href)
 const apiEndpoint = url.searchParams.get("neo4jDesktopApiUrl")
 const clientId = url.searchParams.get("neo4jDesktopGraphAppClientId")
@@ -219,12 +213,13 @@ const client = new ApolloClient({
     clientId: clientId
   }
 });
-```
+----
 
 You can then use the Apollo Client to query the GraphQL API endpoint.
 For example, the following code will give you a list of all projects and their databases.
 
-```js
+[source,javascript]
+----
 import gql from 'graphql-tag'
 
 const GET_DATABASES = gql`
@@ -261,8 +256,7 @@ client.query({ query: GET_DATABASES })
   .then(({ data }) => {
     // Access the list of projects through data.workspace.projects
   })
-```
-
+----
 
 === Creating a Driver Instance
 
@@ -272,11 +266,13 @@ Now that we have the credentials from the previous step, we can run a series of 
 There will be a maximum of one *Active* graph in Desktop (with the status `ACTIVE`), but you may also have remote graphs that could be displayed.
 To find any active graphs, you could run a reduce and filter on the current context.
 
+====
 [NOTE]
-It is recommended that you use the latest version of the Driver, which is currently **4.0.2**.  You can find full installation instructions on the https://neo4j.com/developer/javascript/[JavaScript language guide].
+It is recommended that you use the latest version of the Driver, which is currently **4.0.2**.  You can find full installation instructions on the link:/developer/javascript/[JavaScript language guide].
+====
 
-
-```js
+[source,javascript]
+----
 const graphs = context.projects
   .map(project => ({
     graphs: project.graphs.filter(graph => graph.status === "ACTIVE" || graph.connection.type === "REMOTE")
@@ -284,10 +280,12 @@ const graphs = context.projects
   .reduce((acc, { graphs }) => acc.concat(graphs), [])
 
 const { url, username, password } = graphs[0].connection.configuration.protocols.bolt
-```
+----
 
 Once you have the correct credentials, you can create an instance of the Driver and run the session.
-```js
+
+[source,javascript]
+----
 const driver = new neo4j.driver(url, neo4j.auth.basic(username, password))
 
 const session = driver.session()
@@ -296,8 +294,9 @@ session.run('MATCH (n) RETURN n LIMIT 20')
   .then(res => {
     // Handle the Results
   })
-```
+----
 
+[#graphapp-prod-ready]
 == Getting ready for Production
 
 There are a few steps to follow in order to get your Graph App ready for Production.
@@ -309,7 +308,8 @@ This file sits in the root of your project and holds various metadata including 
 Adding a `neo4jDesktop` setting  to your package.json will allow you to tie your Graph App to a particular version of the Neo4j Desktop API or {#permissions}[request certain permissions].
 The `name` and `version` of the project are read from package.json and used when deciding whether to install a new Graph App or update an existing install.
 
-```json
+[source,bash]
+----
 {
   "name": "my-graph-app",
   "version": "1.0.0",
@@ -320,7 +320,7 @@ The `name` and `version` of the project are read from package.json and used when
     "permissions": [ "allGraphs" ]
   }
 }
-```
+----
 
 In this example, we are tying the Graph App to the Neo4j Desktop API version 1.4.0 or higher and requesting permission to access all Graphs created in Neo4j Desktop.
 
@@ -329,14 +329,14 @@ In this example, we are tying the Graph App to the Neo4j Desktop API version 1.4
 The current Neo4j Desktop API version is `1.4.0`.
 ====
 
-
-==== manifest.json
+=== manifest.json
 
 The `manifest.json` file is read during the installation process to gather additional information to Neo4j Desktop about your Graph App.
 In a packaged install of a Graph App (either .tar file or via npm), this file should be added to the `/dist` folder before packaging.
 For Graph Apps hosted on the internet, the manifest.json file should be served in the same directory as your `index.html` file.
 
-```json
+[source,bash]
+----
 {
   "name": "my-graph-app",
   "description": "(desktop)-[:LOVES]->(apps)",
@@ -356,9 +356,9 @@ For Graph Apps hosted on the internet, the manifest.json file should be served i
   ],
   "homepage": "http://neo4j.com"
 }
-```
+----
 
-The folliwing image demonstrates how the values from manifest.json are used by Neo4j Desktop.
+The following image demonstrates how the values from manifest.json are used by Neo4j Desktop.
 
 image:{img}manifest.png[Manifest Mapping, title="How items from manifest.json are used in Neo4j Desktop"]
 
@@ -381,13 +381,12 @@ This can either be a relative path to an image or an inline data URI. | ```"icon
 Any values provided in `manifest.json` will override a value provided in `package.json`.
 For example, if `package.json` lists version `1.0.0` but `manifest.json` specifies `1.2.3`, the value `1.2.3` will be used.
 
-
-===== Release Notes
+==== Release Notes
 
 If a `release-notes.md` file exists, the contents of the file will be displayed in Neo4j Desktop when the user is prompted to update the Graph App.
 This file should be in the same directory as the `package.json` file.
 
-
+[#deploy-graphapp]
 == Deploying your Graph App
 
 === File Structure
@@ -395,14 +394,15 @@ This file should be in the same directory as the `package.json` file.
 At the minimum, your project should consist of a `dist/` directory containing an index.html file plus any other JavaScript and CSS files that are required to run the Graph App.
 The root directory should also include a `package.json` file and optionally a set of latest release notes in `release-notes.md`.
 
-```
+[source,bash]
+----
 dist/
   app.js
   index.html
   manifest.json
 package.json
 release-notes.md
-```
+----
 
 === Deployment via .tar file
 
@@ -414,14 +414,14 @@ If not, you can create a build script in `package.json` to move the appropriate 
 
 Once the files are in the dist folder, you can run the npm pack to package the graph app into a `.tar` file.
 
-```sh
+[source,bash]
+----
 npm pack
-```
-For any files or directories that you do not want to include in the `.tar` file can be listed in a `.npmignore` file.
+----
 
+Any files or directories that you do not want to include in the `.tar` file can be listed in a `.npmignore` file.
 By default, the file will be named using the name and version properties from `package.json`.
 The resulting `.tar` file can be installed either by pasting a URL or dragging the tar file into the Install form at the bottom of the Graph Apps pane in Desktop.
-
 
 === Deployment via npm
 
@@ -429,8 +429,7 @@ Any https://docs.npmjs.com/cli/publish[published npm package^] can be installed 
 For example, the *Neo4j Cloud Tool* Graph App can be installed via Neo4j's npm registry with the URL https://neo.jfrog.io/neo/api/npm/npm/neo4j-cloud-ui.
 Neo4j Desktop will periodically check for updates to npm packages and install them automatically.
 
-For more information on the https://docs.npmjs.com/cli/publish[`npm package` command is available on docs.npmjs.com].
-
+More information on the `npm package` command is available on https://docs.npmjs.com/cli/publish[docs.npmjs.com].
 
 === Online Deployments
 
@@ -438,94 +437,99 @@ A good example of an Online Deployment is https://halin.graphapp.io[Halin^].
 You can install the hosted version of Halin by entering https://halin.graphapp.io into the *Install* form at the bottom of the Graph Apps pane and clicking the Install button.
 The hosted version of Halin hosts a http://halin.graphapp.io/manifest.json[manifest.json^] in the website's root directory.
 
-
+[#graphapp-other]
 == Additional Topics
 
-=== Deep Links
+//=== Deep Links
 
 // neo4j://remote/add?url=foo&username=bar&name=baz
 
-==== Deep Links to your app
+=== Deep Links to your app
 
 You can provide a deep link to your app using the `neo4j-desktop://` scheme and the name of your app from package.json.
 For example, if the name of the app is `my-graph-app` the link would be the following:
 
-```
+[source,bash]
+----
 neo4j-desktop://graphapps/my-graph-app?key=value
-```
+----
 
-You can pass parameters through to the Graph App to help set the initial state of the app.
-For example, in the URL above, the `?key=value` will append a `key` property with a value of `value` to the Graph App's  url.
+You can pass parameters through to the graph app to help set the initial state of the app.
+For example, in the URL above, the `?key=value` will append a `key` property with a value of `value` to the graph app's url.
 
 The `neo4jDesktopApi` has an `onArgumentsChange` function that allows you to listen to changes in the applications arguments, for example when a new deep link has been clicked.
 On load, and for each subsequent change of parameters, the callback function is called with two arguments; the original string and an object containing the decoded keys and values.
 
-```js
+[source,javascript]
+----
 neo4jDesktopApi.onArgumentsChange((queryString, object) => {
   console.log(object.key) // "value"
 })
+----
 
-```
-
-==== Deep links to Neo4j Browser
+=== Deep links to Neo4j Browser
 
 Your graph app can also link to Neo4j Browser using the  `neo4j-desktop://` scheme and the Graph App name `neo4j-browser`.
-Additionally, you can specify a command and argument to automatically run as it loads.  For example, if you wanted to run the `:play movies` command to open the Movies https://neo4j.com/developer/guide-create-neo4j-browser-guide/[Browser Guide^], you could use the following link:
+Additionally, you can specify a command and argument to automatically run as it loads.  For example, if you wanted to run the `:play movies` command to open the Movies link:/developer/guide-create-neo4j-browser-guide/[Browser Guide], you could use the following link:
 
-```
+[source,bash]
+----
 neo4j-desktop://graphapps/neo4j-browser?cmd=play&arg=movies
-```
+----
 
 You can also start Neo4j Browser with a pre-populated cypher query by setting `cmd` in the query string to edit and the `arg` to the Cypher query in a URL encoded form.
-```
-neo4j-desktop://graphapps/neo4j-browser?cmd=edit&arg=MATCH%20%28n%29%20RETURN%20count%28n%29%20AS%20count
-```
 
-==== Linking to Bloom
+[source,bash]
+----
+neo4j-desktop://graphapps/neo4j-browser?cmd=edit&arg=MATCH%20%28n%29%20RETURN%20count%28n%29%20AS%20count
+----
+
+=== Linking to Bloom
 
 You can link to Bloom by using the  `neo4j-desktop://` scheme, and the Graph App name `neo4j-bloom`.  You can also add a `search` parameter as a URL encoded string to auto-fill the search bar when bloom opens.
 
-```
+[source,bash]
+----
 neo4j-desktop://graphapps/neo4j-bloom?search=URL%20Encoded%20String
-```
-
+----
 
 === Plugin Dependencies
 
 You can specify any plugins that your Graph App depends on within `manifest.json` file.
 Any plugin with a valid coordinate from https://search.maven.org/[Maven Central^] will be will be automatically installed to all local databases within the current active project in Neo4j Desktop.
 
-For example, if your Graph App requires https://neo4j.com/developer/neo4j-apoc/[APOC^] then your `manifest.json` file may look something like this:
+For example, if your Graph App requires link:/developer/neo4j-apoc/[APOC] then your `manifest.json` file may look something like this:
 
-```json
+[source,bash]
+----
 {
   "name": "my-graph-app",
   "pluginDependencies": [
     "org.neo4j.procedure/apoc"
   ]
 }
-```
+----
 
 In order to specify your own plugins here, they must be https://maven.apache.org/repository/guide-central-repository-upload.html[published to Maven Central^].
 Once published, the coordinates of the Maven Artifact can be added to the array.
 
-
-
 === Permissions
 
-If a Graph App requires the use of a privileged API (for example executing Java or Node.js) these will need to be specified either in the `neo4jDesktop` section of package.json or in `manifest.json`.
+If a Graph App requires the use of a privileged API (for example executing Java or Node.js), these will need to be specified either in the `neo4jDesktop` section of package.json or in `manifest.json`.
 Permissions can be defined as an array:
 
-```json
+[source,bash]
+----
 {
   "name": "my-graph-app",
   "permissions": ["backgroundProcess", "allGraphs", "activeGraph"]
 }
-```
+----
 
 Or alternatively, a map-like object can be provided with a short description of how the permission will be used.
 
-```json
+[source,bash]
+----
 {
   "name": "my-graph-app",
   "permissions": [
@@ -536,7 +540,7 @@ Or alternatively, a map-like object can be provided with a short description of 
     }
   ]
 }
-```
+----
 
 ==== Permissions Available
 
@@ -554,39 +558,42 @@ This is a default permission granted on app install.
 
 ==== Checking for Permission
 
-When your Graph App is installed, the user will have the option to grant or deny a permission and these permissions can also be revoked at any time from the Graph Apps pane.
+When your graph app is installed, the user will have the option to grant or deny a permission and these permissions can also be revoked at any time from the Graph Apps pane.
 Therefore, it is good practice to to check that the permission has been granted.
 To do so, you can call the `checkPermission` method on the injected API.
 
-```js
+[source,javascript]
+----
 window.neo4jDesktopApi.checkPermission("backgroundProcess")
   .then(granted => {
     if ( granted === true ) {
       // Permission has been granted
     }
   });
-```
+----
 
 ==== Requesting Permission
 
-If your Graph App doesn't already have the permission it needs, then it can be requested by calling the `requestPermission` method on the injected API.
-In order to request a permission, it must be listed in the Graph App's `manifest.json` file.
+If your graph app doesn't already have the permission it needs, then it can be requested by calling the `requestPermission` method on the injected API.
+In order to request a permission, it must be listed in the graph app's `manifest.json` file.
 
-In the following example features the longform version of the permission declaration - describing how the `backgroundProcess` permission will be used within the app.
+The following example features the longform version of the permission declaration, describing how the `backgroundProcess` permission will be used within the app.
 
-```json
+[source,javascript]
+----
 {
   "name": "my-graph-app",
   "permissions": {
     "backgroundProcess": "Allow this Graph App to create a CSV file on your hard drive"
   }
 }
-```
+----
 
-The Graph App can then request the permission.
+The graph app can then request the permission.
 The user will be issued with a prompt which will allow them to Allow or Deny the permission to the Graph App.
 
-```js
+[source,javascript]
+----
 window.neo4jDesktopApi.requestPermission("backgroundProcess")
   .then(granted => {
     if (granted) {
@@ -595,14 +602,13 @@ window.neo4jDesktopApi.requestPermission("backgroundProcess")
       // The user has rejected the permission
     }
   });
-```
-
+----
 
 // [#background-processes]
 // === Background Processes
 
 // There may be occasions where a Graph App may need to run a Background Process.
-// For example, the https://install.graphapp.io[Neo4j Cloud Tools^] app built by https://neo4j.com/labs[Neo4j Labs] uses Java commands to run a backup of a local database and upload to the internet before running an install command on an https://neo4j.com/aura[Aura^] instance.
+// For example, the https://install.graphapp.io[Neo4j Cloud Tools^] app built by link:/labs[Neo4j Labs^] uses Java commands to run a backup of a local database and upload to the internet before running an install command on an link:/aura[Aura^] instance.
 // Background processes can be written in either Java or Node.js.
 
 // In order to run a background process, the appropriate `.jar` or `.js` file(s) must be
@@ -619,7 +625,6 @@ window.neo4jDesktopApi.requestPermission("backgroundProcess")
 // The command accepts one argument, either `backup` or `restore` and expects two options to specify the username and password.
 // We've already built the project and placed a jar file called `admin.jar` in our [TODO: `dist/` or root].
 
-
 // The `executeJava` accepts an object as it's only parameter.
 
 // .Table executeJava Parameter Object
@@ -634,7 +639,8 @@ window.neo4jDesktopApi.requestPermission("backgroundProcess")
 
 // To run our admin.jar file with the argument of backup and username and password options, we would first request te permission and if granted, call the `executeJava()` method.
 
-// ```js
+// [source,javascript]
+// ----
 // const parameters = {
 //   jar: './admin.jar',
 //   arguments: ['backup'],
@@ -649,20 +655,19 @@ window.neo4jDesktopApi.requestPermission("backgroundProcess")
 //           return Promise.reject('Execute permission denied.');
 //       }
 //   })
-
-// ```
+// ----
 
 // To add directories relative to the current graph app into the class path, you can use the value stored in `neo4jDesktopApi.graphApp.rootPath`.
 
-// ```js
+// [source,javascript]
+// ----
 // const parameters = {
 //   classpath: [ `${neo4jDesktopApi.graphApp.rootPath}/dist/admin.jar` ],
 //   class: 'Main'
 // }
-// ```
+// ----
 
 // https://github.com/neo4j-apps/graph-app-starter/blob/master/examples/basic-java-executor/index.html[A basic example can be viewed here].
-
 
 // ==== Node.js Processes
 
@@ -670,7 +675,8 @@ window.neo4jDesktopApi.requestPermission("backgroundProcess")
 
 // For example, say we have developed a Node.js script that calls a URL to get the latest version of Neo4j Desktop and then uses `fs` to write the response to the filesystem in the Graph App's root folder to be read the next time the Graph App opens.  This file will be stored at `[TODO: dist/ or root]/getVersion.js`.
 
-// ```js
+// [source,javascript]
+// ----
 // const fs = require('fs')
 // const https = require('https')
 
@@ -683,12 +689,13 @@ window.neo4jDesktopApi.requestPermission("backgroundProcess")
 //     // When finished, create the file
 //     res.on('end', () => fs.writeFileSync('latest.yml', yml))
 // })
-// ```
+// ----
 
 // The `executeNode()` method accepts three arguments, the path to the script that will be executed, an array of arguments and an optional object of options.
 // The options parameter should consist of `cwd`, the current working directory for the script to be executed in and `env`, an object of environment variables that can be accessed within the script via `process.env`.
 
-// ```js
+// [source,javascript]
+// ----
 // const filePath = './getVersion.js'
 // const args = []
 // const options = {
@@ -704,16 +711,15 @@ window.neo4jDesktopApi.requestPermission("backgroundProcess")
 //           return Promise.reject('Execute permission denied.');
 //       }
 //   })
-// ```
-
+// ----
 
 // ==== Checking the status of your process
-
 
 // Both the  `executeJava()` and `executeNode()` methods return a promise which resolve to a Process instance.
 // This can be used to check the status, attach event listeners or kill the process.
 
-// ```js
+// [source,javascript]
+// ----
 // const process = window.neo4jDesktopApi.executeJava(parameters)
 
 // // Attach a listener to stout
@@ -724,33 +730,36 @@ window.neo4jDesktopApi.requestPermission("backgroundProcess")
 
 // // Define code to execute when the process finishes
 // process.onExit(status => console.log('Process exited with status:', status))
-// ```
+// ----
 
 // The status of a process can be checked at any point using the `.status()` method.
 // This returns a promise that will resolve to either `RUNNING`, `STOPPED`  or `KILLED`.
 
-// ```js
+// [source,javascript]
+// ----
 // const status = await process.status()
-// ```
+// ----
 
 // A list of process ID's can be retrieved by calling the `getProcessTreeIds()` method.
 // This returns a promise that will resolve to an array of numbers.
-// ```js
+// [source,javascript]
+// ----
 // const processIds = await process.getProcessIds()
-// ```
+// ----
 
 // If for any reason you would like to stop the process tree gracefully, then you can call the `.stop()` method.
 // This will kill all of the process ID's within the process tree.
 
-// ```js
+// [source,javascript]
+// ----
 // const isKilled = await process.stop()
-// ```
+// ----
 
 === Activation Keys
 
 Activation Keys can be used to unlock functionality within your Graph App.
 An Activation Key is a JET token, similar to a https://www.jwt.io[JWT^] token but with specific fields that are used to grant access to protected resources and premium functionality.
-All users are required to enter an Activation Key when they first download desktop, and software like https://www.neo4j.com/bloom[Neo4j Bloom^] require an Activation Key before they are enabled in Neo4j Desktop.
+All users are required to enter an Activation Key when they first download desktop.
 
 All keys are currently issued by Neo4j and are tied to the name from your `package.json` file.
 They hold the following keys:
@@ -771,11 +780,12 @@ They hold the following keys:
 Activation Keys are held as part of the context.
 If you have requested the `activationKeys` setting then it may be appropriate to filter the activation keys by their feature name.
 
-```js
+[source,javascript]
+----
 const context = await neo4jDesktopApi.getContext()
 const activationKeys = context.activationKeys
   .filter(key => key.featureName == "my-graph-app")
-```
+----
 
 If you are interested in using Activation Keys to unlock features in your app, please https://community.neo4j.com/c/neo4j-graph-platform/graph-apps/95[get in touch^] and we will see what we can do.
 
@@ -784,11 +794,11 @@ If you are interested in using Activation Keys to unlock features in your app, p
 === Files
 
 Neo4j Desktop allows you to drag and drop files into a project for later use.
-For example, you could create a https://neo4j.com/developer/neo4j-browser/#browser-guides[Browser Guide^] to explain your project to your coworkers or create set of https://neo4j.com/developer/cypher-query-language/[Cypher scripts^] to seed a new database within the project or to hold commonly run queries.
+For example, you could create a link:/developer/neo4j-browser/#browser-guides[Browser Guide] to explain your project to your coworkers or create set of link:/developer/cypher-query-language/[Cypher scripts] to seed a new database within the project or to hold commonly run queries.
 The Neo4j Desktop UI displays a link to these files so they can be quickly opened in Neo4j Browser.
 
 You can also access these from your Graph App.
-For example, a visualisation app may take a set of cypher queries and display them in a https://neo4j.com/developer/tools-graph-visualization/[Forced Graph Layout^].
+For example, a visualisation app may take a set of cypher queries and display them in a link:/developer/tools-graph-visualization/[forced graph layout].
 Each file can be accessed via HTTP through Neo4j Desktop's API and therefore can be loaded through node's `http` module or a third party package like axios.
 
 .Table File
@@ -803,7 +813,8 @@ Each file can be accessed via HTTP through Neo4j Desktop's API and therefore can
 
 To get all cypher files from every, you could run a `.map` and `.reduce` on Neo4j Desktop's context:
 
-```js
+[source,javascript]
+----
 const axios = require('axios')
 
 const context = await neo4jDesktopApi.getContext()
@@ -814,12 +825,12 @@ const cypherFiles = context.projects.map(project =>
 
 axios.get(cypherFiles[0].url)
   .then(response => console.log(response.data)) // MATCH (n) ...
+----
 
-```
-
+[#framework-support]
 == Framework Support
 
-We do not recommend any specific Front-end frameworks for developing apps.
+We do not recommend any specific front-end frameworks for developing apps.
 However, community members have built packages that will speed up your workflow.
 
 // === React
@@ -830,10 +841,9 @@ However, community members have built packages that will speed up your workflow.
 
 The `vue-neo4j` plugin provides a wrapper for the JavaScript driver in all Vue.js components via `this.$neo4j` object.
 There is also a set of helper functions for developing Graph Apps.
+For more information, check out the Github repository for using https://github.com/adam-cowley/vue-neo4j[Vue.js with Neo4j^].
 
-https://github.com/adam-cowley/vue-neo4j
-
-
+[#neo4j-community]
 == Community Forum
 
-If you have any questions, comments, or would like to show off your own Graph App then there is a dedicated https://community.neo4j.com/c/neo4j-graph-platform/graph-apps/95[Graph Apps^] category on the https://community.neo4j.com/[Neo4j Community site^].
+If you have any questions, comments, or would like to show off your own graph app, then there is a dedicated https://community.neo4j.com/c/neo4j-graph-platform/graph-apps/95[Graph Apps^] category on the https://community.neo4j.com/[Neo4j Community site^].
