@@ -73,8 +73,22 @@ language-guides/php/neo4jphp/composer.phar
 language-guides/perl/neo4p/log/*
 language-guides/perl/neo4p/_build
 
-#For DotNet
+# For DotNet
 language-guides/dotnet/Neo4jDotNetDemo/Properties/PublishProfiles/neo4jmoviedemo.pubxml
 language-guides/dotnet/Neo4jDotNetDemo/Properties/PublishProfiles/neo4jmoviedemo.pubxml.user
 language-guides/dotnet/neo4jclient/Neo4jDotNetDemo.userprefs
 language-guides/dotnet/neo4jclient/packages/
+
+# Gradle
+.gradle
+**/build/
+!src/**/build/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Cache of project
+.gradletasknamecache

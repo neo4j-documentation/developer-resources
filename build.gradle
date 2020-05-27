@@ -1,0 +1,102 @@
+import com.neo4j.gradle.wordpress.WordPressPlugin
+import com.neo4j.gradle.wordpress.WordPressUploadTask
+import org.asciidoctor.gradle.jvm.AsciidoctorTask
+
+plugins {
+  id 'org.asciidoctor.jvm.gems' version '3.1.0' apply false
+  id 'org.asciidoctor.jvm.convert' version '3.1.0' apply false
+  id 'com.neo4j.gradle.wordpress.WordPressPlugin' version '0.0.4' apply false
+}
+
+subprojects {
+
+  apply plugin: 'org.asciidoctor.jvm.gems'
+  apply plugin: WordPressPlugin
+
+  dependencies {
+    asciidoctorGems 'rubygems:neo4j-asciidoctor-extensions:0.1.1'
+  }
+
+  repositories {
+    mavenCentral()
+    jcenter()
+    ruby {
+      gems()
+    }
+  }
+
+  def stage = project.findProperty('stage')
+
+  wordpress {
+    username = project.hasProperty('wordpress-username') ? project.property('wordpress-username') : 'neo'
+    password = project.hasProperty('wordpress-password') ? project.property('wordpress-password') : ''
+    host = project.hasProperty('wordpress-host') ? project.property('wordpress-host') : 'localhost'
+    scheme = 'https'
+  }
+
+  asciidoctorj {
+    requires "${rootProject.projectDir}/_resources/extensions.rb"
+    gemPaths "${rootProject.buildDir}/.asciidoctorGems"
+    attributes 'allow-uri-read': '',
+      'stage': stage != null ? stage : '',
+      'presenter': 'Neo Technology',
+      'twitter': 'neo4j',
+      'email': 'info@neotechnology.com',
+      'neo4j-version': '4.0',
+      'currentyear': '2020',
+      'experimental': '',
+      'document-metadata-attrs-include': 'author,slug',
+      'examples': 'https://github.com/neo4j-examples',
+      'cyphermanual': 'https://neo4j.com/docs/cypher-manual/current',
+      'drivermanual': 'https://neo4j.com/docs/driver-manual/current',
+      'opsmanual': 'http://neo4j.com/docs/operations-manual/current',
+      'github': 'https://github.com/neo4j-contrib/developer-resources/tree/gh-pages'
+  }
+
+  project.with {
+    buildDir = "${rootProject.buildDir}/${project.name}"
+  }
+
+  asciidoctorGemsPrepare.with {
+    outputDir = "${rootProject.buildDir}/.asciidoctorGems"
+  }
+
+  task convertOnlineHtml(type: AsciidoctorTask) {
+    dependsOn asciidoctorGemsPrepare
+
+    inputs.dir "${rootProject.projectDir}/_templates/wordpress"
+
+    //noinspection GroovyAccessibility,GroovyAssignabilityCheck
+    asciidoctorj {
+      def imagesdir = "https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/"
+      options template_dirs: ["${rootProject.projectDir}/_templates/wordpress"]
+      attributes 'imagesdir': imagesdir
+    }
+
+    if (stage != 'production' && stage != 'testing') {
+      resources {
+        from("${projectDir}/images") {
+          include '**'
+          into 'images'
+        }
+      }
+    }
+    baseDir file("${projectDir}")
+    sourceDir file("${projectDir}")
+    outputDir file("${rootProject.projectDir}/build/${project.name}/online")
+  }
+
+  task convert {
+    dependsOn convertOnlineHtml
+  }
+
+  if (stage == 'production' || stage == 'testing') {
+    task wordPressUploadCourse(type: WordPressUploadTask) {
+      dependsOn convertOnlineHtml
+      source = convertOnlineHtml.outputs.files
+      type = "course"
+      status = stage == 'production' ? "publish" : "private"
+    }
+  }
+}
+

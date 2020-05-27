@@ -6,9 +6,9 @@ active[(@document.attr "section-link", "get-started")]=:active;
 <html class="no-js ie9" lang="en">
    <![endif]-->
 <html class="no-js" lang="en">
-<%= File.new("_templates/head_partial.erb").read %>
+<%= File.new(File.dirname(__FILE__) + "/head_partial.erb").read %>
 <body>
-<%= File.new("_templates/top_bar_partial.erb").read %>
+<%= File.new(File.dirname(__FILE__) + "/top_bar_partial.erb").read %>
 <div class="marquee-neo">
     <div class="row text-center">
         <div class="columns">
@@ -31,14 +31,14 @@ active[(@document.attr "section-link", "get-started")]=:active;
                     </ul>
                 </div>
             </div>
-            <%= File.new("_templates/style_partial.erb").read %>
+            <%= File.new(File.dirname(__FILE__) + "/style_partial.erb").read %>
             <div>
                 <div class="row" style="padding-left: 0; padding-right: 0;">
                     <div class="large-9 large-push-3 columns guide-section-content">
                         <%= content %>
                     </div>
                     <div class="large-3 large-pull-9 columns">
-                        <%= File.new("_templates/menu_partial.erb").read.gsub("/developer/","/developer/").gsub(/[\w-]+-activate/) { |m| active[m.gsub(/-activate/,"")].to_s } %>
+                        <%= File.new(File.dirname(__FILE__) + "/menu_partial.erb").read.gsub("/developer/","/developer/").gsub(/[\w-]+-activate/) { |m| active[m.gsub(/-activate/,"")].to_s } %>
                     </div>
                 </div>
             </div>
@@ -69,6 +69,6 @@ active[(@document.attr "section-link", "get-started")]=:active;
         <div class="small-12 columns"></div>
     </section>
 </article>
-<%= File.new("_templates/footer_partial.erb").read %>
+<%= File.new(File.dirname(__FILE__) + "/footer_partial.erb").read %>
 </body>
 </html>
