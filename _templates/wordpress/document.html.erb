@@ -4,10 +4,10 @@
 "ecosystem"=>:inactive,"in-production"=>:inactive, "graph-apps"=>:inactive}
 active[(@document.attr "section-link", "get-started")]=:active;
 %>
-<%=  File.new("_templates/style_partial.erb").read %>
+<%= File.new(File.dirname(__FILE__) + "/../style_partial.erb").read %>
 <div class="content-wrapper">
   <div class="dev-menu-nav large-2 hide-for-medium-only hide-for-small-only columns">
-    <%= File.new("_templates/menu_partial.erb").read.gsub(/[\w-]+-activate/) { |m| active[m.gsub(/-activate/,"")].to_s } %>
+    <%= File.new(File.dirname(__FILE__) + "/../menu_partial.erb").read.gsub(/[\w-]+-activate/) { |m| active[m.gsub(/-activate/,"")].to_s } %>
   </div>
   <div class="guide-section-content large-8 columns">
     <h1 class="entry-title"><%= (doctitle(:sanitize => true) || (attr 'untitled-label')) %></h1>
@@ -32,7 +32,7 @@ active[(@document.attr "section-link", "get-started")]=:active;
                 <h3<%= toc_title_id && %(id="#{toc_title_id}") %>><%= toc_title %></h3><%
               end %>
               <div id="nav" class="toc content active">
-                <% toc = converter.convert_with_options @document, 'outline', :toclevels => toc_levels %>
+                <% toc = converter.convert @document, 'outline', :toclevels => toc_levels %>
                 <%= toc %>
                 <% end %>
               </div>
