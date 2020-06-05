@@ -50,7 +50,7 @@ Our link:/docs/cypher-manual/current/[Cypher manual^] contains a page devoted to
 It is simple to use and widely applicable.
 `LOAD CSV` is not just your basic data ingestion mechanism because it combines multiple aspects into a single operation.
 
-* Supports loading / ingesting CSV data from an URI
+* Supports loading / ingesting CSV data from a URI
 * Directly maps input data into complex graph/domain structure
 * Handles data conversion
 * Supports complex computations
@@ -71,7 +71,8 @@ This can be an easy thing to miss and end up with an access error, so we will tr
 Neo4j security has a default setting that local files can only be read from the Neo4j import directory, which is different based on your operating system.
 File locations for each OS are listed in our {opsmanual}/configuration/file-locations[Neo4j Operations Manual^].
 We recommend putting files in Neo4j's _import_ directory, as it keeps the environment secure.
-However, if you need to access files in other locations, you can find out which setting to alter in our link:/docs/cypher-manual/current/clauses/load-csv/#query-load-csv-introduction[manual^].
+However, if you need to access files in other locations, you can find out which setting to alter in our {cyphermanual}/clauses/load-csv/#query-load-csv-introduction[manual^].
+Default import folder paths shown in link:/developer/kb/import-csv-locations/[this article^].
 
 .Examples
 [source,cypher]
@@ -408,3 +409,5 @@ LIMIT 5;
 * {opsmanual}/tutorial/import-tool/[Manual: Import Tool Tutorial^]
 * link:/developer/kb/?tag=load-csv[Knowledgebase Articles: LOAD CSV^]
 * link:https://github.com/neo4j-contrib/northwind-neo4j[GitHub project: Northwind CSV files^]
+* {opsmanual}/configuration/file-locations[Manual: Neo4j File Locations^]
+* link:/developer/kb/import-csv-locations/[Knowledgebase: Default Import Folder Path^].
