@@ -1,4 +1,4 @@
-= Hosting Neo4j on Microsoft Azure
+= Deploy to Microsoft Azure: Host a Single Instance of Neo4j on Azure
 :slug: neo4j-cloud-azure-image
 :level: Intermediate
 :section: Neo4j in the Cloud
@@ -13,92 +13,91 @@
 
 .Goals
 [abstract]
-This guide explains how to deploy a single instance of Neo4j Enterprise on Microsoft Azure.
+This guide explains how to deploy a single instance of Neo4j on Microsoft Azure.
 
 .Prerequisites
 [abstract]
 You should know how to run and operate Neo4j locally.
-Knowledge of link:/developer/language-guides[remote drivers] to access Neo4j from your application helps you connect to your cloud-hosted database.
+Knowledge of link:/developer/language-guides/[remote drivers] to access Neo4j from your application helps you connect to your cloud-hosted database.
 
 [#azure-image]
-Before continuing with the guide make sure you've https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest[installed the Azure Command Line Interface^].
+Before continuing with the guide, make sure you have installed the https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest[Azure command line interface^].
+
+[NOTE]
+--
+For deploying a Neo4j cluster in Azure, see link:/developer/neo4j-cloud-azure-cluster/[this guide^].
+--
 
 Let's get started!
 
 [#marketplace-azure]
 == Neo4j in the Azure Marketplace
 
-In the https://azuremarketplace.microsoft.com/en-us/marketplace/[Azure Marketplace], Neo4j
-has multiple offerings.  For single-node instances, the correct one is called 
-https://azuremarketplace.microsoft.com/en-us/marketplace/apps/neo4j.neo4j-enterprise?tab=Overview[Neo4j Enterprise VM].
+In the https://azuremarketplace.microsoft.com/en-us/marketplace/[Azure Marketplace^], Neo4j has multiple offerings.
+For single-node instances, the correct one is called https://azuremarketplace.microsoft.com/en-us/marketplace/apps/neo4j.neo4j-enterprise?tab=Overview[Neo4j Enterprise VM^].
 
-Navigate to this Marketplace entry in the link above, and click "Get it Now".  The Marketplace
-will prompt you to click "Continue" after providing some basic version and publisher information. 
+Navigate to the Marketplace entry in the link above, and click "Get it Now".
+The marketplace will prompt you to click "Continue" after providing some basic version and publisher information. 
 Click "Continue".
 
 image::{img}azure-launch-page.png[]
 
-On the next screen, Azure will inform you that this offering is a "Bring Your Own License"
-offering. If you are an existing Neo4j customer, you already have a license.  If you need an
-evaluation license, you can https://neo4j.com/lp/enterprise-cloud/?utm_content=azure-marketplace[obtain one here].
-
+On the next screen, Azure will inform you that this offering is a "Bring Your Own License" offering.
+If you are an existing Neo4j customer, you already have a license.
+If you need an evaluation license, you can link:/lp/enterprise-cloud/?utm_content=azure-marketplace[obtain one here^].
 Click the "Create" button.
 
 [#config-instance]
 == Configuring Your Instance
 
-On the next page, fill out all of the details for the VM you want to create.  The most important
-settings to consider are Size, which controls the available CPU and memory, and optionally "Disks"
-where you can configure high speed SSDs and larger disk capacity sizes.
+On the next page, fill out all of the details for the VM you want to create.
+The most important settings to consider are `Size` (which controls the available CPU and memory) and `Disks` (where you can configure high speed SSDs and larger disk capacity sizes).
 
-In general, we recommend deploying an instance into a new Azure resource group.  The wizard will
-allow you to choose a new name, and the resource group will be created as part of the deploy process.
+In general, we recommend deploying an instance into a new Azure resource group.
+The wizard will allow you to choose a new name, and the resource group will be created as part of the deploy process.
 
 You will be required to configure administrator access, which you can do either with a password
 or an SSH public key.
 
 image::{img}configure-vm-details.png[]
 
-When your settings are just as you want them, click the "Review + Create" tab, and then
-finally the "Create" button at the bottom of the screen.
+When your settings are just as you want them, click the "Review + Create" tab and then the "Create" button at the bottom of the screen.
 
 image::{img}review-and-create.png[]
 
-After you click "Create", Azure will create a deployment for your new instance.  You can
-watch the progress of that deployment as it goes.  All firewall rules necessary will be created
-for you, so unless you have custom requirements, you won't need to change anything.
+After you click "Create", Azure will create a deployment for your new instance.
+You can watch the progress of the deployment as it goes.
+All necessary firewall rules will be created for you, so unless you have custom requirements, you will not need to change anything.
 
 After your deployment succeeds, it may take a minute or two for the Neo4j service to come up.
 
 [#access-instance]
 == Access Your New Instance
 
-Navigate to the resource group that you used, and locate the VM you created.  It will be named
-after the name you chose in the initial configuration step.  Locate the VM's IP address and
-then use your browser to connect to Neo4j via:
+Navigate to the resource group that you used and locate the VM you created.
+It will be named after the name you chose in the initial configuration step.
+Locate the VM's IP address and then use your browser to connect to Neo4j via:
 
 [source,shell]
 ----
 https://[MY_AZURE_IP]:7473/
 ----
 
-The default username/password for your instance is neo4j/neo4j, and Neo4j will force you to 
-change it on your first login.  Make sure to change this password right after deployment.
+The default username/password for your instance is `neo4j/neo4j`, and Neo4j will force you to change it on your first login.
+Make sure to change this password right after deployment.
 
-Because you don't have a hostname configured or a valid SSL certificate by default, your browser
-will warn you that the certificate isn't trusted.  This is expected, you can configure a certificate
-later if you choose.
+Because you do not have a hostname configured or a valid SSL certificate by default, your browser will warn you that the certificate is not trusted.
+This is expected, and you can configure a certificate later, if you choose.
 
-Bolt clients may connect to this same IP address on port 7687 as normal.
+Bolt clients may connect to this same IP address on port 7687.
 
 [#ssh-instance]
 == How do I SSH into the instance?
 
-You can use any SSH client as normal to connect to the public IP of your instance.  Use the
-administrative user credentials (password or SSH key) configured during the launch.  This user
-will have sudo access on the machine.
+You can use any SSH client to connect to the public IP of your instance with the administrative user credentials (password or SSH key) configured during the launch.
+This user will have sudo access on the machine.
 
-Inside of the VM, you can check the status of the neo4j service like this:
+Inside the VM, you can check the status of the Neo4j service like this:
 
 [source,shell]
 ----
@@ -118,19 +117,17 @@ $ sudo systemctl status neo4j
 [#vm-workings]
 == How your new virtual machine works
 
-Please consult link:/developer/guide-cloud-deployment/neo4j-cloud-vms[Neo4j Cloud VMs] for details on internals of 
-Azure VMs, including how to stop and start system services, configure Neo4j inside of the VM, and more.
+Please consult {opsmanual}/cloud-deployments/cloudVms/[Neo4j Cloud VMs^] for details on internals of virtual machines, including configure Neo4j inside of the VM and access various files.
 
 [#delete-instance]
 == Deleting the instance
 
-When you're finished with the instance, if you chose to deploy into a new resource group,
-simply delete the entire resource group and everything will be removed for you.   If you deployed
-into an existing resource group, you will need to delete the resources that are part of the
+When you are finished with the instance, and if you chose to deploy into a new resource group, delete the entire resource group.
+This will remove everything for you.
+If you deployed into an existing resource group, you will need to delete the resources that are part of the
 deployment individually.
 
 [#azure-resources]
 == Questions?
 
-You can ask questions and connect with other people launching Neo4j in the cloud at the 
-https://community.neo4j.com/c/neo4j-graph-platform/cloud[cloud topic on the Community Site^].
+You can ask questions and connect with other people launching Neo4j in the cloud through the https://community.neo4j.com/c/neo4j-graph-platform/cloud[cloud topic on the Community Site^].

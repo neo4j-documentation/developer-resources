@@ -19,9 +19,9 @@ This guide describes how Neo4j deployed in cloud virtual machines operate, and h
 == Basics and File Locations
 
 Neo4j cloud VMs are based off of the Ubuntu distribution of Linux.
-When Neo4j is installed on the VM, the method used to do this matches the link:https://neo4j.com/docs/operations-manual/current/installation/linux/debian/[Debian install instructions] provided in the Neo4j operations manual.
+When Neo4j is installed on the VM, the method used to do this matches the {opsmanual}/installation/linux/debian/[Debian install instructions^] provided in the Neo4j operations manual.
 
-Because cloud images are based on the standard Neo4j Debian package, file locations match the file locations described in the link:https://neo4j.com/docs/operations-manual/3.4/configuration/file-locations/[Neo4j Operations Manual], where `neo4j-home` is set to `/var/lib/neo4j`.
+Because cloud images are based on the standard Neo4j Debian package, file locations match the file locations described in the {opsmanual}/configuration/file-locations/[Neo4j Operations Manual^], where `neo4j-home` is set to `/var/lib/neo4j`.
 
 The remainder of this page deals only with topics that are different from a standard Linux install.
 If you have any other question not covered by this page, please consult the Operations Manual for Linux installs.
@@ -45,7 +45,7 @@ In this way, for example, you might set a tag on a VM of `dbms_backup_enabled` w
 Note that naming conventions for tags follow the same conventions as docker containers, and dots in a configuration parameter's name should be replaced by underscore characters.
 
 When changing VM tags, the configuration is not immediately applied to the Neo4j system service running inside of the VM.
-To affect these changes, please link:https://neo4j.com/docs/operations-manual/current/installation/linux/systemd/[restart the system service].
+To affect these changes, please {opsmanual}/installation/linux/systemd/[restart the system service].
 
 [#neo4j-interact]
 == Interacting with the Neo4j Service
@@ -57,7 +57,7 @@ You can get system status for neo4j within the VM by executing the following:
 systemctl status neo4j
 ----
 
-For more information or help, feel free to reach out to us on the the link:https://community.neo4j.com/[Neo4j Community Forum^]!
+For more information or help, feel free to reach out to us on the the https://community.neo4j.com/[Neo4j Community Forum^]!
 
 [#cloudvm-resources]
 == Questions?

@@ -126,7 +126,7 @@ neo4j> CALL dbms.showCurrentUser();
 We could also pipe a file containing Cypher commands to the Cypher Shell command.
 This feature is useful for doing data import.
 
-We have a file `import.cypher` that contains some of the Cypher statements from the https://neo4j.com/developer/graph-model-refactoring/[Graph Model Refactoring^] developer guide.
+We have a file `import.cypher` that contains some of the Cypher statements from the link:/developer/graph-model-refactoring/[Graph Model Refactoring^] developer guide.
 We can view the contents of that file by executing the following command from the terminal:
 
 [source,bash]
@@ -151,6 +151,7 @@ MATCH (:Airport)-[connectedTo:CONNECTED_TO]->(:Airport)
 CALL apoc.refactor.normalizeAsBoolean(connectedTo, "diverted", ["1"], ["0"])
 RETURN count(*)
 ----
+
 Now we're going to import this data into our Neo4j Cloud database, via the Cypher Shell command.
 We'll do this by executing the following:
 

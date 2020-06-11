@@ -26,12 +26,12 @@ You can follow the guides below to run Neo4j on some popular orchestration syste
 [#mesospehere]
 == Mesosphere DC/OS
 
-link:https://docs.mesosphere.com/[Mesosphere DC/OS^] is built around the long established link:http://mesos.apache.org/[Apache Mesos^] project.
+https://docs.mesosphere.com/[Mesosphere DC/OS^] is built around the long established link:http://mesos.apache.org/[Apache Mesos^] project.
 Mesos is used by companies such as Twitter, Apple, Netflix, or Airbnb to manage their production clusters.
 
-Neo4j is link:https://github.com/neo4j-contrib/neo4j-dcos[available as a Universe application^] and can be installed via the link:https://mesosphere.github.io/marathon/[Marathon container orchestration platform^].
+Neo4j is https://github.com/neo4j-contrib/neo4j-dcos[available as a Universe application^] and can be installed via the https://mesosphere.github.io/marathon/[Marathon container orchestration platform^].
 
-You can read more in the https://neo4j.com/blog/neo4j-mesosphere-dc-os/[release blog post^] or watch the presentation that Johannes Unterstein gave at the link:/developer/online-meetup/[Neo4j online meetup^].
+You can read more in the link:/blog/neo4j-mesosphere-dc-os/[release blog post^] or watch the presentation (below) that Johannes Unterstein gave at the link:/developer/online-meetup/[Neo4j online meetup^].
 
 ++++
 <div class="responsive-embed">
@@ -42,18 +42,17 @@ You can read more in the https://neo4j.com/blog/neo4j-mesosphere-dc-os/[release 
 [#kubernetes]
 == Kubernetes
 
-Kubernetes is an open-source system for automating deployment, scaling, and management of containerized applications that builds on 15 years of experience of running production workloads at Google.
+Kubernetes is an open source system for automating deployment, scaling, and management of containerized applications that builds on 15 years of experience of running production workloads at Google.
 
 Neo4j core servers can be installed using the StatefulSet abstraction, which was introduced as a beta feature in v1.5.0.
 Read replicas can be installed using the deployment abstraction.
 
-For users who wish to run Neo4j in kubernetes clusters, Neo4j provides a link:https://github.com/helm/charts/tree/master/stable/neo4j[public helm chart],
-which permits easy installation using standard `kubectl` and `helm` tools.
+For users who wish to run Neo4j in kubernetes clusters, Neo4j provides a https://github.com/neo4j-contrib/neo4j-helm[helm chart^], which permits easy installation using standard `kubectl` and `helm` tools.
 These kubernetes tools and approaches all take advantage of the standard Neo4j docker container mentioned above, but add clustering and coordination capabilities.
 
-For a walk-through of how to use the helm chart to get started quickly, please consult link:https://neo4j.com/blog/kubernetes-deploy-neo4j-clusters/[How to Use Kubernetes to Quickly Deploy Neo4j Clusters].
+For a walkthrough of how to use the helm chart to get started quickly, please consult our link:/blog/kubernetes-deploy-neo4j-clusters/[blog post^].
 
-You can also watch link:https://www.youtube.com/watch?v=GSfam8De7K0[Dippy Aggarawal's GraphConnect] talk on orchestration systems.
+You can also watch https://www.youtube.com/watch?v=GSfam8De7K0[Dippy Aggarawal's GraphConnect^] talk on orchestration systems.
 
 ++++
 <iframe width="560" height="315" src="https://www.youtube.com/embed/GSfam8De7K0" frameborder="0" allowfullscreen></iframe>
@@ -62,5 +61,4 @@ You can also watch link:https://www.youtube.com/watch?v=GSfam8De7K0[Dippy Aggara
 [#orchestration-resources]
 == Questions?
 
-You can ask questions and connect with other people launching Neo4j in the cloud at the 
-https://community.neo4j.com/c/neo4j-graph-platform/cloud[cloud topic on the Community Site^].
+You can ask questions and connect with other people launching Neo4j in the cloud through the https://community.neo4j.com/c/neo4j-graph-platform/cloud[cloud topic on the Community Site^].

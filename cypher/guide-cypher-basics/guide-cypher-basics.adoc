@@ -36,13 +36,6 @@ This guide will show you how to:
 3. Query: discover related actors and directors
 4. Solve: the Bacon Path
 
-////
-[role=side-nav]
-* http://neo4j.com/docs[The Neo4j Docs]
-* link:/blog[The Neo4j Blog]
-* link:/developer/guide-intro-to-graph-modeling[Intro to Graph Modeling]
-////
-
 [#cypher-movie-create]
 == Create
 
@@ -178,8 +171,8 @@ That is simply a shortest path query called the "Bacon Path".
 1. Variable length patterns
 2. Built-in shortestPath() algorithm
 
-{manual}/cypher/#_variable_length_relationships[variable length relationships]
-{manual}/cypher/#query-shortest-path[shortestPath]
+{cyphermanual}/syntax/patterns/#cypher-pattern-varlength[variable length relationships^]
+{cyphermanual}/execution-plans/shortestpath-planning/[shortestPath^]
 
 
 ==== Movies and Actors up to Three Hops Away from Kevin Bacon
@@ -244,10 +237,3 @@ RETURN count(*)
 ----
 
 //table
-
-////
-[role=side-nav]
-* link:/online-training[Cypher Online Training]
-* http://watch.neo4j.org[The Neo4j Video Library]
-* http://gist.neo4j.org/[GraphGists]
-////

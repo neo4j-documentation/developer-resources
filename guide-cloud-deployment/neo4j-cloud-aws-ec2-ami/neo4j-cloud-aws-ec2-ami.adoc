@@ -1,4 +1,4 @@
-= Hosting Neo4j on EC2 on AWS
+= Deploy to Amazon EC2: Host a Single Instance of Neo4j on AWS
 :slug: neo4j-cloud-aws-ec2-ami
 :level: Intermediate
 :section: Neo4j in the Cloud
@@ -13,16 +13,16 @@
 
 .Goals
 [abstract]
-This guide explains how to deploy Neo4j on Amazon's EC2 platform.
+This guide explains how to deploy a single instance of Neo4j on Amazon's EC2 platform.
 
 .Prerequisites
 [abstract]
 You should know how to run and operate Neo4j locally.
-Knowledge of link:/developer/language-guides[remote drivers] to access Neo4j from your application helps you connect to your cloud-hosted database.
+Knowledge of link:/developer/language-guides/[remote drivers] to access Neo4j from your application helps you connect to your cloud-hosted database.
 
 [#neo4j-aws]
-Before continuing with the guide make sure you've http://docs.aws.amazon.com/cli/latest/userguide/installing.html[installed the AWS Command Line Interface^].
-If you're not comfortable using the command line you can https://aws.amazon.com/marketplace/pp/B071P26C9D[install Neo4j using the AWS web console^].
+Before continuing with the guide, make sure you have http://docs.aws.amazon.com/cli/latest/userguide/installing.html[installed the AWS Command Line Interface^].
+If you are not comfortable using the command line, you can https://aws.amazon.com/marketplace/pp/B071P26C9D[install Neo4j using the AWS web console^] instead.
 
 Let's get started!
 
@@ -40,12 +40,12 @@ aws ec2 create-key-pair \
   --output text > $KEY_NAME.pem
 ----
 
-If you have an existing key that you'd like to use instead, you can set `KEY_NAME` to the name of that key pair and ignore the 2nd command.
+If you have an existing key that you would like to use instead, you can set `KEY_NAME` to the name of that key pair and ignore the 2nd line in the above command that creates one.
 
 [#security-group]
 == Create security group
 
-Now we'll create a http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html[security group^], which will allow us to control access to our instance.
+Now, we will create a http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html[security group^], which will allow us to control access to our instance.
 Run the following command to create a new security group:
 
 [source,shell]
@@ -56,8 +56,9 @@ aws ec2 create-security-group \
   --description "Neo4j security group"
 ----
 
-Next let's open Neo4j's HTTP, HTTPS, and Bolt ports so we can access the server from our application.
+Next, let us open Neo4j's HTTP, HTTPS, and Bolt ports so we can access the server from our application.
 We will also open the SSH port so we can remotely access the instance.
+All of these steps are completed in the below command.
 
 [source,shell]
 ----
@@ -66,31 +67,29 @@ for port in 22 7474 7473 7687; do
 done
 ----
 
-If you have an existing group that you'd like to use instead, set `GROUP` to the name of that group and ignore the rest of the commands.
-
+If you have an existing group that you would like to use instead, set `GROUP` to the name of that group and ignore the rest of the commands.
 
 [#ami-launch]
 == Locate the AMI ID you want to launch
 
 To start the instance, we'll need the ID of an Amazon Machine Image (AMI).
 
-Neo4j publishes many different versions, and the AMI ID depends on which region you want to launch in.  AMI IDs are specific
-to regions, so you need to locate the right ID for your version and region needs.  For that reason, in the instructions below
-we will provide just a placeholder AMI Here "ami-XYZ".  
+Neo4j publishes many different versions, and the AMI ID depends on which region you want to launch in.
+AMI IDs are specific to regions, so you need to locate the right ID for your version and region needs.
+For that reason, in the instructions below we will provide just a placeholder AMI of `ami-XYZ`.  
 
 To get the right AMI ID, you can follow these instructions:
 
-* Open the AWS EC2 console, and select Images &gt; AMIs on the left-hand nav bar.
-* In the filter, select "Public images" and search for either "neo4j-enterprise" or "neo4j-community" depending on which
-version you'd like to use.
-* You'll know you're using the right one when you see the "Owner" field showing this number: 385155106615
+* Open the AWS EC2 console, and select `Images` &gt; `AMIs` on the left-hand nav bar.
+* In the filter, select `Public images` and search for either "neo4j-enterprise" or "neo4j-community" depending on which version you would like to use.
+* You will know you are using the right one when you see the "Owner" field showing this number: `385155106615`
 * Locate the version you want, and use the AMI ID in the script below.
-* As an example: Neo4j Enterprise 3.5.1 is AMI ID ami-009272c7ac939919d in region us-west-2.  As new versions are published,
-they will be mentioned in the https://community.neo4j.com/c/neo4j-graph-platform/cloud[the Cloud topic on the Neo4j community site^].
+* As an example: Neo4j Enterprise 3.5.1 is AMI ID `ami-009272c7ac939919d` in `region us-west-2`.
+As new versions are published, they will be mentioned in the https://community.neo4j.com/c/neo4j-graph-platform/cloud[Cloud topic^] on the Neo4j community site.
 
 If you would like to use the CLI to do this same step, the following command locates all image 
-IDs and names for the images Neo4j publishes in us-east-1.  By changing the region, you can find 
-AMI IDs near you.
+IDs and names for the images Neo4j publishes in `us-east-1` region.
+By changing the region, you can find AMI IDs near you.
 
 [source,shell]
 ----
@@ -105,7 +104,7 @@ aws ec2 describe-images \
 
 We are now ready to start up a Neo4j instance.
 
-Make sure to substitute ami-XYZ with your chosen AMI ID from the directions above!
+Make sure to substitute `ami-XYZ` with your chosen AMI ID from the directions above!
 
 [source,shell]
 ----
@@ -119,7 +118,7 @@ aws ec2 run-instances \
   --region us-east-1
 ----
 
-We don't yet have a Public DNS Name but it should be available in a few seconds.
+We do not yet have a public DNS name but it should be available after a few seconds.
 
 We can run the following command to find out what it is:
 
@@ -132,15 +131,18 @@ aws ec2 describe-instances \
 ----
 
 Please note that your security group settings may affect whether or not a public DNS name is
-associated with your instance.  If this command does not work for you, check to make sure your
-security group is properly configured, and is not associated with a VPC.
+associated with your instance.
+If this command does not work for you, check to make sure your security group is properly configured and that it is not associated with a VPC.
 
-Now let's navigate to `https://[PublicDnsName]:7473` and login with the user name `neo4j` and password `neo4j`.
+Now, let's navigate to `https://[PublicDnsName]:7473` and login with the user name `neo4j` and password `neo4j`.
 
-Note that in some methods of launching neo4j on AWS, such as via the AWS marketplace, the password of
-an instance will be automatically set to the instance ID you launched.  In other cases, such as when
-launching enteprise AMIs directly, the password is left as the default "neo4j".  In either case, we
-recommend changing the password immediately after you launch.
+[NOTE]
+--
+Some methods of launching Neo4j on AWS (such as via the AWS marketplace) automatically set the password of
+an instance to the instance ID you launched.
+Other methods (such as when launching enteprise AMIs directly) leave the password as the default `neo4j`.
+In either case, we recommend changing the password immediately after you launch.
+--
 
 [#ssh-instance]
 == How do I SSH into the instance?
@@ -152,7 +154,8 @@ You can run the following command to SSH into the instance:
 ssh -i $KEY_NAME.pem ubuntu@[PublicDnsName]
 ----
 
-You might get an error about the permissions on the pem file so don't forget to make sure it isn't accessible by any other users.
+You might get an error about the permissions on the pem file, so don't forget to make sure it isn't accessible by any other users.
+Permissions for the pem can be locked down similar to those shown below (owner = read+write, group = none, users = none).
 
 [source,shell]
 ----
@@ -162,12 +165,12 @@ chmod 600 $KEY_NAME.pem
 [#vm-workings]
 == How the AWS Virtual Machine Works
 
-Please consult link:/developer/guide-cloud-deployment/neo4j-cloud-vms[Neo4j Cloud VMs] for details on internals of AWS VMs, including how to stop and start system services, configure Neo4j inside of the VM, and more.
+Please consult {opsmanual}/cloud-deployments/cloudVms/[Neo4j Cloud VMs^] for details on internals of virtual machines, including configure Neo4j inside of the VM and access various files.
 
 [#terminate-instance]
 == Terminating the instance
 
-Once we've finished using the instance we can run the following command to terminate it:
+Once we have finished using the instance, we can run the following command to terminate it:
 
 [source,shell]
 ----
@@ -179,5 +182,5 @@ aws ec2 terminate-instances \
 [#aws-questions]
 == Questions?
 
-You can ask questions and connect with other people launching Neo4j in the cloud at the 
+You can ask questions and connect with other people launching Neo4j in the cloud through the
 https://community.neo4j.com/c/neo4j-graph-platform/cloud[cloud topic on the Community Site^].

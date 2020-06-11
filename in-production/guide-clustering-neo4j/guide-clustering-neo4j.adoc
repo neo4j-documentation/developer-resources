@@ -34,9 +34,9 @@ Any data (graph or index) created on the master is propagated to the slaves depe
 [#cluster-config]
 == Configuring a Two-Slave Cluster with an Arbiter
 
-There's a link:{opsmanual}/tutorial/highly-available-cluster/[step-by-step tutorial for setting up a HA cluster].
+There's a {opsmanual}/tutorial/highly-available-cluster/[step-by-step tutorial for setting up a HA cluster].
 For a two-node cluster, you'll actually want to run three separate machines, and use the Neo4j arbiter on the third.
-Details on the arbiter are available in the link:{opsmanual}/clustering/high-availability/arbiter-instances/[Neo4j Operations Manual].
+Details on the arbiter are available in the {opsmanual}/clustering/high-availability/arbiter-instances/[Neo4j Operations Manual].
 The configuration for the arbiter is identical to that of a regular instance, with the exception of anything relating to the actual graph database itself (since an arbiter doesn't hold any data).
 
 The `ha.initial_hosts` property should be the same on all the instances, including the arbiter.
@@ -46,7 +46,7 @@ The arbiter should have a unique `ha.server_id` (`3` is fine).
 === Setting a Server in Slave-Only Mode
 
 // what is the new link?
-See the link:{opsmanual}/clustering/high-availability/configuration/[documentation] on `ha.slave_only`.
+See the {opsmanual}/clustering/high-availability/configuration/[documentation] on `ha.slave_only`.
 
 You might want to configure a machine with that setting if it’s acting as a reporting instance but you need to make sure that two members don’t have that setting, or you won’t have any failover in the cluster.
 
@@ -62,7 +62,7 @@ It can also be configured to listen on all interfaces by setting `online_backup_
 It is best to use the back tool with the command line `./bin/neo4j-backup -host 192.168.1.34 -to /mnt/backup/neo4j-backup`, which will backup the store from that specific host even if that host is running in a cluster.
 
 // what is the new link?
-Additional details can be found link:{opsmanual}/backup/#backup-introduction[in the manual].
+Additional details can be found {opsmanual}/backup/#backup-introduction[in the manual].
 
 image::{img}neo4j-logo.png[]
 
@@ -103,6 +103,6 @@ MATCH (n) WHERE id(n) = <your node id> DELETE n
 
 [#cluster-resources]
 == Resources
-* link:{opsmanual}/clustering/high-availability/[Neo4j High Availability,role=docs]
-* link:{opsmanual}/tutorial/highly-available-cluster/[Tutorial Cluster Setup,role=docs]
+* {opsmanual}/clustering/high-availability/[Neo4j High Availability,role=docs]
+* {opsmanual}/tutorial/highly-available-cluster/[Tutorial Cluster Setup,role=docs]
 * link:http://jimwebber.org/2011/03/strategies-for-scaling-neo4j/[Strategies for Scaling Neo4j,role=blog^]
