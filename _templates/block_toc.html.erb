@@ -15,7 +15,7 @@ if @document.attr? :toc
       <dl class="accordion">
         <dd class="accordion-navigation active"><%
   if toc_title %>
-  <h5 <%= toc_title_id && %( id="#{toc_title_id}") %>><%= toc_title %></h3><%
+  <h5 <%= toc_title_id && %( id="#{toc_title_id}") %>><%= toc_title %></h5><%
   end %>
   <div id="nav" class="toc content active">
 <% toc = converter.convert_with_options @document, 'outline', :toclevels => toc_levels %>
