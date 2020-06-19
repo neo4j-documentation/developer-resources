@@ -1,0 +1,102 @@
+= Neo4j Graph Database
+:section: Graph Platform
+:section-link: graph-platform
+:section-level: 1
+:slug: neo4j-database
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
+:author: Jennifer Reif
+:category: documentation
+:tags: graph-platform, graph, database, features, versions
+
+[#database]
+Neo4j's primary product and focus is our graph database that stores data in the form of nodes and relationships.
+It handles both transactional and/or analytics workloads and is optimized for traversing paths through the data using the relationships in the graph to find connections between entities.
+
+[#neo4j-features]
+== Features of the graph database
+
+With each update of Neo4j, the database improves performance and features (plus bug fixes, too!).
+It can be difficult to locate which features and improvements belong to which releases, as well as the best resources for learning and using them.
+This guide will provide some insight into the highlights and where to go for more information.
+
+=== Multi-database
+
+This capability allows you to operate and manage multiple databases within a single installation of the Neo4j DBMS.
+The data can be segmented by use case, sensitivity, or business applications into different databases.
+
+link:/developer/manage-databases/[Developer Guide: Multiple Databases] +
+link:{cyphermanual}/administration/databases/[Docs: Cypher commands to manage databases^] +
+link:{opsmanual}/manage-databases/introduction/[Docs: Multi-database concepts^]
+
+=== Neo4j Fabric
+
+Neo4j Fabric provides the ability to shard graph data by allowing users to break a larger graph down into individual, smaller graphs and store them in separate databases.
+These shards can be accessed individually or aggregated to see all of the data, when required.
+
+link:/developer/neo4j-fabric-sharding/[Developer Guide: Neo4j Fabric] +
+https://markhneedham.com/blog/2020/02/03/neo4j-cross-database-querying-fabric/[Blog post: Querying across Databases with Neo4j Fabric] +
+link:{opsmanual}/fabric/introduction/[Docs: Neo4j Fabric^]
+
+=== Cypher
+
+Cypher is a graph query language that allows you to read and write data to the graph.
+It is a very visual, yet powerful, way to interact with nodes and relationships.
+Consistent improvements for built-in functions, syntax, and performance are announced nearly every release.
+
+link:/developer/sub-queries/[Developer Guide: Cypher Subqueries]
+
+=== Data access controls
+
+Securing data is important and complex, especially when dealing with sensitive data and regulations surrounding it.
+There are many ways to of securing the data - access, user roles, protected environments, system architecture, and more.
+Neo4j provides these capabilities and regularly improves or adds to them.
+
+https://youtu.be/jQIqXVVYPE0[Video: Schema-based security^] +
+link:{opsmanual}/authentication-authorization/[Docs: Neo4j authentication/authorization^] +
+link:{cyphermanual}/administration/security/[Docs: Cypher commands for managing user access^]
+
+=== Reactive drivers
+
+Neo4j reactive drivers incorporate the principles of the reactive manifesto in passing data between the database and clients using the drivers.
+Developers can take advantage of the reactive approach to process queries and return results.
+This means that communication between the driver and the database can be managed and adjusted dynamically according to data needs of the client.
+
+https://medium.com/neo4j/spring-data-neo4j-rx-released-into-the-wild-f1473951f91d[Blog post: Spring Data Neo4j Reactive^] +
+https://medium.com/neo4j/having-another-go-e50823b6fc79[Blog post: Go Driver 1.8^]
+
+[#neo4j-versions]
+== Neo4j Versions
+
+Though there are many versions of Neo4j still in use and available for download, we will focus on the few latest releases here and leave you with some resources for accessing information about each.
+
+////
+=== Neo4j 4.1 (June 2020)
+
+Documentation link +
+Release notes? +
+YouTube playlist +
+Blog post from Ivan? +
+Blog post from Adam (Medium) +
+Other resources
+////
+
+=== Neo4j 4.0 (January 2020)
+
+link:/docs/operations-manual/4.0/[Neo4j 4.0 Docs^] +
+link:/release-notes/neo4j-4-0-0/[Initial Release Notes^] +
+https://dzone.com/articles/see-whats-new-in-neo4j-40[DZone article: What's new in 4.0^] +
+https://medium.com/neo4j/neo4j-treasure-map-where-to-find-all-of-the-4-0-resources-you-need-948cf71004f9[Blog post: 4.0 Resource Treasure Map^] +
+https://medium.com/neo4j/new-neo4j-4-0-features-copy-a-database-and-more-c51d1744a7e3[Blog post: Copy a database^]
+
+=== Neo4j 3.5 (November 2018)
+
+link:/docs/operations-manual/3.5/[Neo4j 3.5 Docs^] +
+link:/release-notes/neo4j-3-5-0/[Initial Release Notes^]
+
+[#db-other-resources]
+== Other Resources
+
+link:/release-notes/[All Neo4j Release Notes^]

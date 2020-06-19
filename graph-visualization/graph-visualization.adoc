@@ -52,15 +52,14 @@ The connections could easily be lost in a non-visual presentation.
 == Neo4j Visualization Tools and Products
 
 Neo4j has two main visualization tools that are built and designed to work specifically with data in Neo4j’s graph database: link:/developer/neo4j-browser/[Neo4j Browser] and https://neo4j.com/bloom/[Neo4j Bloom^].
-Neo4j Browser, a developer-focused tool that allows developers to execute Cypher queries and visualize the results, is the default developer interface for both Enterprise and Community editions of Neo4j database.
-Neo4j Bloom is a commercially-licensed product that allows users to explore their graph data using natural language.
 We will briefly discuss the key details of each here.
 
 === Neo4j Browser
 
 image:{img}browser_vis_yelp.jpg[link="{img}browser_vis_yelp.jpg",role="popup-link"]
 
-As mentioned above, the Neo4j Browser comes out-of-the-box with all of Neo4j’s graph database offerings, including Neo4j Server (community and enterprise editions) and Neo4j Desktop (all OS versions).
+Neo4j Browser, a developer-focused tool that allows developers to execute Cypher queries and visualize the results, is the default developer interface for both Enterprise and Community editions of Neo4j database.
+It comes out-of-the-box with all of Neo4j’s graph database offerings, including Neo4j Server (community and enterprise editions) and Neo4j Desktop (all OS versions).
 
 Its visualization functionality is designed to display a node-graph representation of the underlying data stored in the database in response to a given Cypher query, showing circles for nodes and lines for relationships.
 Neo4j Browser also provides some functionality for styling with color and size based on node labels and relationship types, or you can customize your own styles by importing a GRASS (graph-stylesheet) file for Neo4j Browser to reference.
@@ -70,14 +69,31 @@ You can also use the built-in drop-down buttons on query result panes to easily 
 
 image:{img}bloom_vis_yelp.jpg[link="{img}bloom_vis_yelp.jpg",role="popup-link"]
 
-Bloom is Neo4j’s standalone product for visualization that is accessible with a commercial license.
+Bloom is Neo4j’s standalone product for visualization that is accessible with a commercial license or for free with Neo4j Desktop (single user).
 This tool was designed for business analysts and other non-developers to interact with data stored in the graph database without writing any code.
 
 Users can use natural language to query the database and explore patterns, clusters, and traversals in their graph data.
 It is also possible to create different dissections of the graph (called perspectives) that allow users to view different aspects and slices of graph data for further analysis.
 
+[#vis-tools]
+== More Graph Visualization Tools
+
+Outside of Neo4j's offerings, partners and community members have built tools and integrations to connect graph data in Neo4j with more graph visualizations.
+Learn more about options and functionality of these tools in the guide linked below.
+
+link:/developer/tools-graph-visualization/[Graph Visualization Tools]
+
+[#other-vis]
+== Other Types of Visualization
+
+Perhaps you are not looking for standard graph (node and relationship) visualizations, but want to look at graph data in other ways.
+Organizing the data as charts, heatmaps, 3D, and more is also possible with Neo4j.
+Find out what is available and where to find them on the next guide.
+
+link:/developer/other-graph-visualizations/[Other Graph Visualizations]
+
 [#graph-vis-resources]
 == Resources
 * https://neo4j.com/developer/neo4j-browser/[Neo4j Browser]
-* https://neo4j.com/blog/introducing-neo4j-bloom-graph-data-visualization-for-everyone/[Blog post: Neo4j Bloom^]
+* https://neo4j.com/blog/neo4j-bloom-everywhere-this-spring/[Blog post: Neo4j Bloom^]
 * https://medium.com/neo4j/hands-on-graph-data-visualization-bd1f055a492d[Blog post: Hands-on Graph Visualization^]
