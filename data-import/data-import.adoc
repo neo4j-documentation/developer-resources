@@ -26,6 +26,9 @@ The `LOAD CSV` command in Cypher allows us to specify a filepath, headers or not
 
 We will walk through the details of how to take any CSV file and import the data into Neo4j easily and quickly.
 
+link:/developer/guide-import-csv/[Import CSV Files] +
+link:/developer/desktop-csv-import/[Neo4j Desktop: Import CSV Files]
+
 [#import-api]
 == Importing API data
 
@@ -36,12 +39,27 @@ The `apoc.load.json` command allows us to specify a URL path and any necessary p
 
 This guide shows us how to retrieve data from a JSON-based REST API and import it into Neo4j.
 
+link:/developer/guide-import-json-rest-api/[Importing API Data]
+
+[#import-relational-graph]
+== Import: RDBMS to Graph
+
+Many existing systems store data in relational or tabular types of formats.
+Knowing how to translate and migrate this data into graph data for analyzing the relationships can seem complex.
+
+There are a variety of tools for migrating data from relational formats into graphs.
+In this guide, we want to discuss all of the options and why you can or should choose some over others for your use case.
+
+link:/developer/relational-to-graph-import/[Importing Relational Data to a Graph]
+
 [#import-northwind]
-== Importing Example Data - Northwind
+== Tutorial: Importing Data - Northwind
 
 This guide will use a common relational data set (Northwind) and walk us through how to transform and import data from a relational database to Neo4j graph database.
 
 You will learn what steps are needed to retrieve the data from the relational data store and import the same data as a graph in Neo4j, as well as how to take the relational data model and convert it to graph in the process.
+
+link:/developer/guide-importing-data-and-etl/[Tutorial: Import Northwind Data]
 
 [#import-examples]
 == Example Data Sets
@@ -49,3 +67,5 @@ You will learn what steps are needed to retrieve the data from the relational da
 We want to provide some of our favorite data sets for you to practice your skills and learn more about importing and querying data in Neo4j!
 This guide shows a variety of open-source data sets that you can access and easily import.
 Happy learning!
+
+link:/developer/example-data/[Example Data Sets]
