@@ -21,7 +21,7 @@ Familiarity with the link:/developer/cypher-query-language/[Cypher query languag
 {level}
 
 In Neo4j (v4.1+), we can measure and restrict the amount of memory used by transactions running on the server.
-This feature can be used to ensure that we don't encounter `OutOfMemory` exceptions when running our workloads.
+This feature can be used to avoid `OutOfMemory` exceptions when running our workloads and ensure fairness across databases and transactions.
 
 [#movies-dataset]
 == Movie dataset
@@ -131,6 +131,10 @@ We can restrict the amount of heap memory available to transactions by specifyin
 |`dbms.memory.transaction.database_max_size` | limits the transaction memory usage per database
 |`dbms.memory.transaction.max_size` | limits the memory usage per transaction
 |===
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jGfgAdhRFzs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
 
 If we want to restrict the amount of memory used by an individual transaction to 10MB, we can set the following config:
 
