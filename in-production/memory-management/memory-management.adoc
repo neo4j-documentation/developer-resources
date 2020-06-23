@@ -7,6 +7,9 @@
 :toc:
 :toc-title: Contents
 :toclevels: 1
+:author: Mark Needham
+:category: performance
+:tags: memory, configuration, transaction, limit, queries
 
 .Goals
 [abstract]
@@ -14,8 +17,8 @@ In this guide, we will learn how to both measure and restrict memory usage in Ne
 
 .Prerequisites
 [abstract]
-Please have link:/download[Neo4j^] (version 4.1 or later) downloaded and installed.
-Familiarity with the link:/developer/cypher-query-language/[Cypher query language^] is required to understand the examples used in this guide.
+Please have link:/download/[Neo4j^] (version 4.1 or later) downloaded and installed.
+Familiarity with the link:/developer/cypher-query-language/[Cypher query language] is required to understand the examples used in this guide.
 
 [role=expertise]
 {level}
@@ -35,7 +38,7 @@ image::{img}memory-management-movies-graph.svg[link="{img}movies-graph.svg",role
 [#measure-memory-usage-tx]
 == Measuring memory usage of one transaction
 
-We can measure the memory usage of individual Cypher queries when https://neo4j.com/docs/cypher-manual/current/query-tuning/how-do-i-profile-a-query/[profiling them^] using the `PROFILE` clause.
+We can measure the memory usage of individual Cypher queries when link:{cyphermanual}/query-tuning/how-do-i-profile-a-query/[profiling them^] using the `PROFILE` clause.
 
 The following query takes all pairs of people and returns the longest path between the pair of nodes up to a maximum distance of 5 hops.
 
@@ -51,7 +54,7 @@ WITH p1, p2, collect(path)[0] AS path
 RETURN p1.name, p2.name, [rel in relationships(path) | type(rel)];
 ----
 
-We can run this query in the https://neo4j.com/developer/neo4j-browser/[Neo4j Browser^], which returns a visual representation of the query plan that contains memory usage information.
+We can run this query in the link:/developer/neo4j-browser/[Neo4j Browser], which returns a visual representation of the query plan that contains memory usage information.
 We can see the output from running this query in the image below:
 
 image::{img}query-plan-with-memory.svg[link="{img}query-plan-with-memory",role="popup-link"]
@@ -63,7 +66,7 @@ That memory usage is broken down across the following operators:
 * `Sort` - 16,687,456 bytes
 * `NodeByLabelScan` - 64 bytes
 
-Alternatively, we can run the query in the https://neo4j.com/docs/operations-manual/current/tools/cypher-shell/[Cypher Shell^], which returns the following output (results excluded for brevity):
+Alternatively, we can run the query in the link:{opsmanual}/tools/cypher-shell/[Cypher Shell^], which returns the following output (results excluded for brevity):
 
 [options="header"]
 |===
@@ -122,7 +125,7 @@ At the time that we ran this query, our all pairs of people query was only using
 [#restrict-memory-usage]
 == Restricting memory usage
 
-We can restrict the amount of heap memory available to transactions by specifying the https://neo4j.com/docs/operations-manual/4.1/performance/memory-configuration/#memory-configuration-limit-transaction-memory[following config settings^] in `$NEO4J_HOME/neo4j.conf`.
+We can restrict the amount of heap memory available to transactions by specifying the link:/docs/operations-manual/4.1/performance/memory-configuration/#memory-configuration-limit-transaction-memory[following config settings^] in `$NEO4J_HOME/neo4j.conf`.
 
 [options="header"]
 |===
@@ -144,7 +147,7 @@ If we want to restrict the amount of memory used by an individual transaction to
 dbms.memory.transaction.max_size=10m
 ----
 
-Our query from the link:#measure-memory-usage-tx[measuring memory usage of one transaction^] section uses more memory than this, so if we re-run that query we'll see the following error message:
+Our query from the <<measure-memory-usage-tx, measuring memory usage of one transaction>> section uses more memory than this, so if we re-run that query, we'll see the following error message:
 
 [source,text]
 ----
