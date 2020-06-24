@@ -66,7 +66,7 @@ That memory usage is broken down across the following operators:
 * `Sort` - 16,687,456 bytes
 * `NodeByLabelScan` - 64 bytes
 
-Alternatively, we can run the query in the link:{opsmanual}/tools/cypher-shell/[Cypher Shell^], which returns the following output (results excluded for brevity):
+Alternatively, we can run the query in the link:{opsmanual}/tools/cypher-shell/[Cypher Shell^], which returns the following output (truncated for brevity):
 
 [options="header"]
 |===
@@ -76,16 +76,16 @@ Alternatively, we can run the query in the link:{opsmanual}/tools/cypher-shell/[
 
 [options="header", separator=¦]
 |===
-¦ Operator                               ¦ Details                                                                                             ¦ Estimated Rows ¦ Rows   ¦ DB Hits ¦ Time (ms) ¦ Memory (Bytes) ¦ Ordered by                                                                                                                                               ¦ Other
-¦ +ProduceResults@memorymanagement       ¦ `p1.name`, `p2.name`, `[rel in relationships(path) | type(rel)]`                                     ¦              2 ¦   7890 ¦       0 ¦    16.498 ¦                ¦ p1 ASC, p2 ASC                                                                                                                                           ¦ 16498332; In Pipeline 2
-¦ +Projection@memorymanagement           ¦ p1.name AS `p1.name`, p2.name AS `p2.name`, [rel IN relationships(path) | type(rel)] AS `[rel in relationships(path) | type(rel)]` ¦              2 ¦   7890 ¦   46424 ¦    48.497 ¦                ¦ p1 ASC, p2 ASC                                                                                                                                           ¦ In Pipeline 2; 48497263
-¦ +Projection@memorymanagement           ¦ anon_134 AS p1, anon_138 AS p2, anon_142[$autoint_0] AS path                                         ¦              2 ¦   7890 ¦       0 ¦     5.987 ¦                ¦ p1 ASC, p2 ASC                                                                                                                                           ¦ In Pipeline 2; 5986820
-¦ +OrderedAggregation@memorymanagement   ¦ p1 AS anon_134, p2 AS anon_138, collect(path) AS anon_142                                            ¦              2 ¦   7890 ¦       0 ¦    26.009 ¦         376272 ¦ anon_134 ASC, anon_138 ASC                                                                                                                               ¦ In Pipeline 2; 26009135
-¦ +Projection@memorymanagement           ¦ (p1)-[anon_64*]-(p2) AS path                                                                         ¦              5 ¦  33440 ¦       0 ¦    54.526 ¦                ¦ p1 ASC, p2 ASC, length(PathExpression(NodePathStep(Variable(p1),MultiRelationshipPathStep(Variable(anon_64),BOTH,Some(Variable(p2)),NilPathStep)))) DESC ¦ In Pipeline 1; 54526010
-¦ +Sort@memorymanagement                 ¦ p1 ASC, p2 ASC, `length(PathExpression(NodePathStep(Variable(p1),MultiRelationshipPathStep(Variable(anon_64),BOTH,Some(Variable(p2)),NilPathStep))))` DESC ¦              5 ¦  33440 ¦       0 ¦    96.382 ¦       16687456 ¦ p1 ASC, p2 ASC, length(PathExpression(NodePathStep(Variable(p1),MultiRelationshipPathStep(Variable(anon_64),BOTH,Some(Variable(p2)),NilPathStep)))) DESC ¦ In Pipeline 1; 96381994
-¦ +Projection@memorymanagement           ¦ length((p1)-[anon_64*]-(p2)) AS `length(PathExpression(NodePathStep(Variable(p1),MultiRelationshipPathStep(Variable(anon_64),BOTH,Some(Variable(p2)),NilPathStep))))`  ¦              5 ¦  33440 ¦  134704 ¦           ¦                ¦                                                                                                                                                          ¦ Fused in Pipeline 0
-¦ +Filter@memorymanagement               ¦ not p1 = p2 AND p1:Person                                                                            ¦              5 ¦  33440 ¦  114163 ¦           ¦                ¦                                                                                                                                                          ¦ Fused in Pipeline 0
-¦ +VarLengthExpand(All)@memorymanagement ¦ (p2)-[anon_64*..5]-(p1)                                                                              ¦            256 ¦ 115305 ¦  188936 ¦           ¦                ¦                                                                                                                                                          ¦ Fused in Pipeline 0
+¦ Operator                               ¦ Estimated Rows ¦ Rows   ¦ DB Hits ¦ Time (ms) ¦ Memory (Bytes)
+¦ +ProduceResults@memorymanagement       ¦              2 ¦   7890 ¦       0 ¦    16.498 ¦
+¦ +Projection@memorymanagement           ¦            2 ¦   7890 ¦   46424 ¦    48.497 ¦
+¦ +Projection@memorymanagement           ¦              2 ¦   7890 ¦       0 ¦     5.987 ¦
+¦ +OrderedAggregation@memorymanagement   ¦           2 ¦   7890 ¦       0 ¦    26.009 ¦         376272
+¦ +Projection@memorymanagement           ¦           5 ¦  33440 ¦       0 ¦    54.526 ¦
+¦ +Sort@memorymanagement                 ¦              5 ¦  33440 ¦       0 ¦    96.382 ¦       16687456
+¦ +Projection@memorymanagement           ¦               5 ¦  33440 ¦  134704 ¦           ¦
+¦ +Filter@memorymanagement               ¦           5 ¦  33440 ¦  114163 ¦           ¦
+¦ +VarLengthExpand(All)@memorymanagement ¦         256 ¦ 115305 ¦  188936 ¦           ¦
 |===
 
 The output from Cypher Shell contains the total memory usage information in a separate summary table, rather than including it as part of the final operator.
