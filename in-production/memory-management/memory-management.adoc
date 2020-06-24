@@ -33,7 +33,7 @@ The examples in this guide are based on the built-in movies dataset.
 This can be loaded by running the `:play movies` command in the Neo4j Browser and following the instructions to import the dataset.
 We can see a sample of the graph in the Neo4j Browser visualization below:
 
-image::{img}memory-management-movies-graph.png[link="{img}memory-management-movies-graph.png",role="popup-link"]
+image::{img}memory-management-movies-graph.jpg[link="{img}memory-management-movies-graph.jpg",role="popup-link"]
 
 [#measure-memory-usage-tx]
 == Measuring memory usage of one transaction
@@ -57,7 +57,7 @@ RETURN p1.name, p2.name, [rel in relationships(path) | type(rel)];
 We can run this query in the link:/developer/neo4j-browser/[Neo4j Browser], which returns a visual representation of the query plan that contains memory usage information.
 We can see the output from running this query in the image below:
 
-image::{img}query-plan-with-memory.jpg[link="{img}query-plan-with-memory.jpg",role="popup-link",width=200]
+image::{img}query-plan-with-memory.png[link="{img}query-plan-with-memory.png",role="popup-link",width=200]
 
 The total memory usage of 17,062,912 bytes is included on the `ProduceResults` operator.
 That memory usage is broken down across the following operators:
