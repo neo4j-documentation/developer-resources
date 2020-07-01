@@ -49,6 +49,7 @@ Running on Google Cloud provides a few options, depending on what you want to do
 
 * Causal Cluster - the Enterprise edition of Neo4j is also https://console.cloud.google.com/launcher/details/neo4j-public/neo4j-enterprise-causal-cluster[available on GCP Marketplace^], and users can launch a causal cluster from there.
 The launch and interaction steps to deploy Neo4j causal clusters on GCP are shown in the {opsmanual}/cloud-deployments/neo4j-gcp/causal-cluster-vm/[Neo4j documentation^].
+We also have a link:/developer/neo4j-google-cloud-launcher/[step-by-step tutorial] for deploying a Neo4j cluster with GCP.
 
 * Google Kubernetes Marketplace (Docker container-based) - Neo4j Enterprise is also https://console.cloud.google.com/marketplace/details/neo4j-public/causal-cluster-k8s[available on Kubernetes Marketplace^], so users can launch Neo4j clusters into Google Kubernetes Engine (GKE) clusters.
 For a walkthrough, please consult the blog post showing how to https://medium.com/google-cloud/launching-neo4j-on-googles-kubernetes-marketplace-97c23c94e960[launch Neo4j on Google Kubernetes Marketplace^].
@@ -70,10 +71,10 @@ Using this method, both Community and Enterprise options are available.
 * Neo4j Community edition - https://aws.amazon.com/marketplace/pp/B071P26C9D[available from the AWS marketplace^].
 
 [NOTE]
---
+====
 For this installation, we recommend you select the option in security group settings to "Create new security group based on seller settings".
 This will ensure that when the instance is launched, the default ports that are needed will be open.
---
+====
 
 * Causal Cluster - https://aws.amazon.com/marketplace/pp/B07D441G55[launch directly from the AWS Marketplace^], as well.
 This option creates a multi-VM clustered configuration with the choice to configure a number of aspects of the cluster, including number of core nodes, read replicas, hardware sizing, encrypted EBS volumes, and other options.
@@ -117,4 +118,4 @@ There are other hosting providers that can run Neo4j, as well.
 == Questions?
 
 You can ask questions and connect with other people launching Neo4j in the cloud through the https://community.neo4j.com/c/neo4j-graph-platform/cloud[cloud topic on the Community Site^].
-Official documentation for launching Neo4j on each of the cloud provider platforms is in the {opsmanual}/cloud-deployments/[Neo4j Operations Manual^].
+Official documentation for launching Neo4j on each of the cloud provider platforms is in the link:{opsmanual}/cloud-deployments/[Neo4j Operations Manual^].

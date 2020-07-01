@@ -7,12 +7,19 @@
 :toc:
 :toc-title: Contents
 :toclevels: 1
+:icons: font
 :author: Jennifer Reif
 :programming-language: java
 :category: drivers
 :tags: spring, spring-data, sdn, app-development, applications
 
 include::../_includes/versions.txt[]
+
+[NOTE]
+====
+The Spring Data Neo4j project is currently for existing support and maintenance only.
+All new and future projects should use the link:/developer/spring-data-neo4j-rx/[Spring Data Neo4j RX] project instead.
+====
 
 .Goals
 [abstract]
@@ -71,7 +78,6 @@ Then, you can annotate your entities and define your Spring Data repositories as
 Spring Boot takes on much of the responsibility of application configuration and bootstrap, so we have chosen to take advantage of that assistance in our project for this guide.
 The example project code for https://github.com/neo4j-examples/spring-data-neo4j-intro-app[Spring Data Neo4j^] is in GitHub.
 You can clone the repository and run the code along with this guide, or you can build the project from the ground up from the http://start.spring.io[Spring Initializr^] page.
-//For this approach, you can follow along with a https://medium.com/neo4j/spring-into-neo4j-with-spring-data-5-spring-boot-2-and-neo4j-3962fb1ea067[blog post^] for step-by-step instructions.
 
 We will be using the movie domain that you may already be familiar with - people (actors, directors, etc) and the movies those people are involved in.
 
@@ -304,7 +310,7 @@ As with our `PersonRepository` above, these methods in our `MovieRepository` wil
 == Resources
 
 For a more thorough walkthrough of the code, see the resources linked below.
-We also provide reactive development through the link:/developer/spring-data-neo4j-rx/[Spring Data Neo4j RX] project.
+We also provide both imperative and reactive development through the link:/developer/spring-data-neo4j-rx/[Spring Data Neo4j RX] project.
 
 [cols="1,4"]
 |===
