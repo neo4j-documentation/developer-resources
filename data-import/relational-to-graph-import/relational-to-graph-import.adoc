@@ -42,7 +42,7 @@ In this guide, we want to discuss all of the options and why you can or should c
 There are 3 main approaches to moving relational data to a graph.
 We will briefly cover how each operates on this page, but more detailed walkthroughs are in the linked pages.
 
-*1)* link:/developer/guide-import-csv/[LOAD CSV^]: possibly the simplest way to import data from your relational database. 
+*1)* link:/developer/guide-import-csv/[LOAD CSV^]: possibly the simplest way to import data from your relational database.
 Requires a dump of individual entity-tables and join-tables formatted as CSV files.
 
 *2)* https://neo4j-contrib.github.io/neo4j-apoc-procedures/[APOC^]: Awesome Procedures on Cypher.
@@ -77,7 +77,7 @@ Because this functionality is provided in Cypher out-of-the-box, you do not need
 However, certain difficult or complex transformations may not be easily achievable or provided in Cypher.
 For those cases, you might need to add an `APOC` procedure to the `LOAD CSV` statements or use another import tool.
 
-===== +++<u>LOAD CSV Resources</u>+++
+=== LOAD CSV Resources
 * Cypher Manual: link:/docs/cypher-manual/current/clauses/load-csv/[LOAD CSV^]
 * Guide: link:/developer/guide-import-csv/[CSV Import]
 * Docs Tutorial: link:/docs/getting-started/current/cypher-intro/load-csv/[LOAD CSV for import^]
@@ -97,7 +97,7 @@ The transformation procedures in this library are nearly endless, allowing the d
 If you are in need of a way for flexible and custom data handling, `APOC` could be the way to go.
 The downside to using this library for complicated scenarios is that it may result in many lines of code to handle multiple data transformations.
 
-===== +++<u>APOC Resources</u>+++
+=== APOC Resources
 * Documentation: https://neo4j-contrib.github.io/neo4j-apoc-procedures/index35.html[APOC^]
 * Videos: https://youtu.be/e8UfOHJngQA[APOC Video Series^]
 * Source code: https://github.com/neo4j-contrib/neo4j-apoc-procedures[Github project^]
@@ -113,7 +113,7 @@ This tool provides a simple, straightforward process for an initial import from 
 However, it does not provide the ability at this point in time to handle incremental loads or updates to existing data.
 It is a community-driven tool, so updates are made as needed and not on a scheduled timeline.
 
-===== +++<u>ETL Tool Resources</u>+++
+=== ETL Tool Resources
 * Developer guide: https://neo4j.com/developer/neo4j-etl/[Neo4j ETL Tool^]
 * Blog post: https://medium.com/neo4j/tap-into-hidden-connections-translating-your-relational-data-to-graph-d3a2591d4026[Translating Relational Data to Graph^]
 * Source code: https://github.com/neo4j-contrib/neo4j-etl[Github project^]
@@ -132,7 +132,7 @@ Processes that need to log information to Neo4j or flexibility for embedding in 
 All of this functionality is bundled out-of-the-box through a simple, yet powerful GUI for your ETL developers.
 Cooperation with Neo4j simply requires the plugins for our graph data integration.
 
-===== +++<u>Kettle Resoures</u>+++
+=== Kettle Resoures
 * Kettle Download: https://sourceforge.net/projects/pentaho/files/[Open-source project on SourceForge^]
 * Neo4j Plugins: https://github.com/knowbi/knowbi-pentaho-pdi-neo4j-output/releases/[Integrate Kettle with Neo4j^]
 * Blog post: https://medium.com/neo4j/getting-started-with-kettle-and-neo4j-32ff15b991f9[Getting Started with Kettle and Neo4j^]
@@ -143,7 +143,7 @@ Cooperation with Neo4j simply requires the plugins for our graph data integratio
 There are a few other data integration tools provided by other individuals or companies that work well with Neo4j.
 Open-source options such as Talend or Nifi offer simple processes for simple processes with already-familiar tools.
 
-===== +++<u>Other Resources</u>+++
+=== Other Resources
 * Talend: https://help.talend.com/reader/mjoDghHoMPI0yuyZ83a13Q/x2QYS1x3sfOsjGD3s5RtkQ[Writing data to Neo4j^]
 * Documentation: http://sim51.github.io/neo4j-talend-component/index.html[Talend Neo4j Connector^]
 * Blog post: https://neo4j.com/blog/fun-with-music-neo4j-and-talend/[Fun with music, Talend, and Neo4j^]
@@ -158,6 +158,6 @@ This process is also helpful if you do not have access to the Cypher shell or if
 You can set up the driver connection to Neo4j, and then execute Cypher statements that pass from the application-level through the driver and to the database for various operations - including large amounts of inserts and updates.
 Using the driver and programming language can be very useful for incremental updates to data passed from other systems into Neo4j.
 
-===== +++<u>Driver Import Resources</u>+++
+=== Driver Import Resources
 * Blog post: https://medium.com/neo4j/5-tips-tricks-for-fast-batched-updates-of-graph-structures-with-neo4j-and-cypher-73c7f693c8cc[Tips and Tricks for Fast-Batched Import with Neo4j^]
 * Documentation: https://neo4j.com/docs/driver-manual/current/[Neo4j Driver Manual^]
