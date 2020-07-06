@@ -1,0 +1,91 @@
+= Graph Embeddings
+:section: Graph Embeddings
+:section-link: graph-data-science
+:section-level: 1
+:slug: graph-embeddings
+:level: Intermediate
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
+:author: Mark Needham
+:category: graph-data-science
+:tags: graph-data-science, graph-algorithms, graph-embeddings, machine-learning
+
+.Goals
+[abstract]
+In this guide, we will learn about graph embeddings.
+
+.Prerequisites
+[abstract]
+Please have link:/download[Neo4j^] (version 4.0 or later) and link:/download-center/#algorithms[Graph Data Science Library^] (version 1.3 or later) downloaded and installed to use graph embeddings.
+
+[role=expertise]
+{level}
+
+[#graph-embeddings]
+== What are graph embeddings?
+
+
+A graph embedding determines a fixed length vector representation for each entity (usually nodes) in our graph.
+These embeddings are a lower dimensional representation of the graph and preserve the graph's topology.
+
+Node embedding techniques usually consist of the following functions:
+
+image:https://dist.neo4j.com/wp-content/uploads/20200703083748/node-embeddings-how-they-work.png[Graph Embeddings, width="500px", float="right"]
+
+Similarity function :: measures the similarity between nodes
+Encoder function ::  generates the node embedding
+Decoder function ::  reconstructs pairwise similarity
+Loss function :: checks the quality of the reconstruction
+
+[#graph-embeddings-usage]
+== Use cases for graph embeddings
+
+There are several use cases that are well suited for graph embeddings:
+
+* We can visually explore the data by reducing the embeddings to 2 or 3 dimensions with the help of algorithms like https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding[t-distributed stochastic neighbor embedding^] (t-SNE) and https://en.wikipedia.org/wiki/Principal_component_analysis[Principle Component Analysis^] (PCA).
+
+* We could build a kNN similarity graph from the embeddings.
+The similarity graph could then be used to make recommendations as part of a k-Nearest Neighbors query.
+
+* We can use the embeddings as the features to feed into a machine learning model, rather than generating those features by hand.
+In this use case, embeddings can be considered an implementation of https://en.wikipedia.org/wiki/Feature_learning[Representational Learning^].
+
+[#supported-graph-embeddings]
+== Neo4j's graph embeddings
+
+The Neo4j link:/graph-data-science-library[Graph Data Science Library^] supports several graph embedding algorithms.
+
+[opts=header]
+|===
+| Name | Speed | Input graph | Supports node properties? | Implementation details
+| link:#random-projection[Random Projection^] | Fast | Undirected, unlabeled |  No | Linear Algebra
+| link:#node2vec[node2Vec^] |  Intermediate | Undirected, unlabeled, monopartite | No | Neural Network
+| link:#graph-sage[GraphSAGE^] | Slow | Undirected |  Yes | Neural Network
+|===
+
+
+[#random-projection]
+Random Projection ::
+The Random Projection embedding uses sparse random projections to generate embeddings.
+It is an implementation of the https://arxiv.org/pdf/1908.11512.pdf[FastRP algorithm^].
+It is the fastest of the embedding algorithms and can therefore be useful for obtaining baseline embeddings.
+The embeddings it generates are often equally performant as more complex algorithms that take longer to run.
+
+link:/docs/graph-data-science/1.3-preview/algorithms/alpha/fastrp/fastrp/[Read Random Projection reference documentation^, role="medium button"]
+
+[#node2Vec]
+node2Vec ::
+https://arxiv.org/pdf/1607.00653.pdf[node2Vec^] computes embeddings based on biased random walks of a node's neighborhood.
+The algorithm trains a single-layer feedforward neural network, which is used to predict the likelihood that a node will occur in a walk based on the occurrence of another node.
+
+link:/docs/graph-data-science/1.3-preview/algorithms/node-embeddings/node2vec/[Read node2Vec reference documentation^, role="medium button"]
+
+[#graph-sage]
+GraphSAGE ::
+This https://arxiv.org/pdf/1706.02216.pdf[algorithm^] is the only one that supports node properties.
+Training embeddings that include node properties can be useful for including information beyond the topology of the graph, like meta data, attributes, or the results of other graph algorithms.
+GraphSAGE differs from the other algorithms in that it learns a function to calculate an embedding rather than training individual embeddings for each node.
+
+link:/docs/graph-data-science/1.3-preview/algorithms/alpha/graph-sage/[Read GraphSAGE reference documentation^, role="medium button"]
