@@ -68,19 +68,24 @@ The Neo4j link:/graph-data-science-library[Graph Data Science Library^] supports
 
 [#random-projection]
 Random Projection ::
-abc
+The Random Projection embedding uses sparse random projections to generate embeddings.
+It is an implementation of the https://arxiv.org/pdf/1908.11512.pdf[FastRP algorithm^].
+It is the fastest of the embedding algorithms and can therefore be useful for obtaining baseline embeddings.
+The embeddings it generates are often equally performant as more complex algorithms that take longer to run.
 
 link:/docs/graph-data-science/1.3-preview/algorithms/alpha/fastrp/fastrp/[Read Random Projection reference documentation^, role="medium button"]
 
 [#node2Vec]
 node2Vec ::
-some text
+https://arxiv.org/pdf/1607.00653.pdf[node2Vec^] computes embeddings based on biased random walks of a node's neighborhood.
+The algorithm trains a single-layer feedforward neural network, which is used to predict the likelihood that a node will occur in a walk based on the occurrence of another node.
 
 link:/docs/graph-data-science/1.3-preview/algorithms/node-embeddings/node2vec/[Read node2Vec reference documentation^, role="medium button"]
 
 [#graph-sage]
 GraphSAGE ::
-abstract
-def
+This https://arxiv.org/pdf/1706.02216.pdf[algorithm^] is the only one that supports node properties.
+Training embeddings that include node properties can be useful for including information beyond the topology of the graph, like meta data, attributes, or the results of other graph algorithms.
+GraphSAGE differs from the other algorithms in that it learns a function to calculate an embedding rather than training individual embeddings for each node.
 
 link:/docs/graph-data-science/1.3-preview/algorithms/alpha/graph-sage/[Read GraphSAGE reference documentation^, role="medium button"]
