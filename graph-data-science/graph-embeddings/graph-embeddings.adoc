@@ -59,12 +59,13 @@ The Neo4j link:/graph-data-science-library[Graph Data Science Library^] supports
 
 [opts=header]
 |===
-| Name | Speed | Input graph | Supports node properties? | Implementation details
-| link:#random-projection[Random Projection^] | Fast | Undirected, unlabeled |  No | Linear Algebra
-| link:#node2vec[node2Vec^] |  Intermediate | Undirected, unlabeled, monopartite | No | Neural Network
-| link:#graph-sage[GraphSAGE^] | Slow | Undirected |  Yes | Neural Network
+| Name | Speed | Supports node properties? | Implementation details
+| link:#random-projection[Random Projection^] | Fast |   No | Linear Algebra
+| link:#node2vec[node2Vec^] |  Intermediate |  No | Neural Network
+| link:#graph-sage[GraphSAGE^] | Slow |   Yes | Neural Network
 |===
 
+All the embedding algorithms work on a monopartite undirected input graph.
 
 [#random-projection]
 Random Projection ::
@@ -79,6 +80,8 @@ link:/docs/graph-data-science/1.3-preview/algorithms/alpha/fastrp/fastrp/[Read R
 node2Vec ::
 https://arxiv.org/pdf/1607.00653.pdf[node2Vec^] computes embeddings based on biased random walks of a node's neighborhood.
 The algorithm trains a single-layer feedforward neural network, which is used to predict the likelihood that a node will occur in a walk based on the occurrence of another node.
+node2Vec has parameters that can be tuned to control whether the random walks behave more like breadth first or depth first searches.
+This tuning allows the embedding to either capture homophily (similar embeddings capture network communities) or structural equivalence (similar embeddings capture similar structural roles of nodes).
 
 link:/docs/graph-data-science/1.3-preview/algorithms/node-embeddings/node2vec/[Read node2Vec reference documentation^, role="medium button"]
 
