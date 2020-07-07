@@ -37,3 +37,27 @@ WITH c, other, closestNode2vec, closestFastRP, gds.alpha.similarity.cosine(c.gra
 ORDER BY graphSage DESC
 WITH c, closestNode2vec, closestFastRP, collect([other.id, graphSage])[0] AS closestGraphSage
 RETURN c.id, closestFastRP, closestNode2vec, closestGraphSage;
+
+
+CALL gds.alpha.randomProjection.write({
+  nodeProjection: "*",
+  relationshipProjection: "*",
+  embeddingSize: 10,
+  maxIterations: 1,
+  writeProperty: "fastrp"
+});
+
+CALL gds.alpha.node2vec.write({
+  nodeProjection: "*",
+  relationshipProjection: "*",
+  embeddingSize: 10,
+  iterations: 1,
+  writeProperty: "node2vec"
+});
+
+match (r:Recipe {id: "101233"})
+match (other:Recipe)
+WHERE r <> other
+RETURN r.fastrp, other.fastrp, other.name, gds.alpha.similarity.cosine(r.fastrp, other.fastrp) AS similarity
+ORDER BY similarity DESC
+LIMIT 10;
