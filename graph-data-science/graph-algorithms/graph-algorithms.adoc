@@ -9,7 +9,7 @@
 :toclevels: 1
 :icons: font
 :author: Mark Needham
-:category: graph-algorithms
+:category: graph-data-science
 :tags: graph-platform, graph-data-science, labs, book, resources, path-finding, centrality, community-detection, similarity, link-prediction
 
 [#graph-algorithms]
@@ -32,62 +32,6 @@ Amy Hodler and Alicia Frame explain more about the library and share hands on ex
 
 The library contains implementations for the following types of algorithms:
 
-[subs=attributes]
-++++
-<div class="row-card">
-    <div class="column-card-4">
-        <div class="card">
-            <div class="card-inner">
-                <a href="https://neo4j.com/docs/graph-data-science/current/algorithms/pathfinding/" target="_blank">
-                    <img src="{img}Pathfinding-Algo-Icon.png" />
-                </a>
-            </div>
-
-            <div class="card-below"><a href="https://neo4j.com/docs/graph-data-science/current/algorithms/pathfinding/"
-                    target="_blank">Path Finding</a></div>
-        </div>
-    </div>
-    <div class="column-card-4">
-        <div class="card">
-            <div class="card-inner">
-                <a href="https://neo4j.com/docs/graph-data-science/current/algorithms/community/" target="_blank">
-                    <img src="{img}Community-Algo-Icon.png" />
-                </a>
-            </div>
-            <div class="card-below"><a href="https://neo4j.com/docs/graph-data-science/current/algorithms/community/"
-                    target="_blank">Community Detection</a></div>
-        </div>
-    </div>
-    <div class="column-card-4">
-        <div class="card">
-            <div class="card-inner">
-                <a href="https://neo4j.com/docs/graph-data-science/current/algorithms/centrality/" target="_blank">
-                    <img src="{img}Centrality-Algo-Icon.png" />
-                </a>
-            </div>
-
-            <div class="card-below"><a href="https://neo4j.com/docs/graph-data-science/current/algorithms/centrality/"
-                    target="_blank">Centrality</a></div>
-        </div>
-    </div>
-    <div class="column-card-4">
-        <div class="card">
-            <div class="card-inner">
-                <a href="https://neo4j.com/docs/graph-data-science/current/algorithms/similarity/" target="_blank">
-                    <img src="{img}Similarity-Algo-Icon.png" />
-                </a>
-            </div>
-
-            <div class="card-below">
-                <a href="https://neo4j.com/docs/graph-data-science/current/algorithms/similarity/"
-                    target="_blank">Similarity</a>
-            </div>
-        </div>
-    </div>
-</div>
-<br />
-++++
-
 * link:/docs/graph-data-science/current/algorithms/pathfinding/[Path Finding^] - these algorithms help find the shortest path or evaluate the availability and quality of routes
 
 * link:/docs/graph-data-science/current/algorithms/centrality/[Centrality^] - these algorithms determine the importance of distinct nodes in a network
@@ -96,65 +40,14 @@ The library contains implementations for the following types of algorithms:
 
 * link:/docs/graph-data-science/current/algorithms/similarity/[Similarity^] - these algorithms help calculate the similarity of nodes
 
+* link:/docs/graph-data-science/current/algorithms/linkprediction/[Link Prediction^] - these algorithms determine the closeness of pairs of nodes
+
+* link:/docs/graph-data-science/1.3-preview/algorithms/node-embeddings/[Node Embeddings^] - these algorithms compute vector representations of nodes in a graph.
+
 [#start-graph-algorithms]
 == Getting Started
 
 There are several ways to get started with graph algorithms:
-
-[subs=attributes]
-++++
-<div class="row-card">
-    <div class="column-card-4">
-        <div class="card">
-            <div class="card-inner">
-                <a href="https://sandbox.neo4j.com/?usecase=graph-data-science&ref=developer-gds" target="_blank">
-                    <img src="{img}np_sandbox-toys_1207953_3A8BBC.png" />
-                </a>
-            </div>
-            <div class="card-below">
-                <a href="https://sandbox.neo4j.com/?usecase=graph-data-science&ref=developer-gds" target="_blank">Sandbox</a>
-            </div>
-        </div>
-    </div>
-    <div class="column-card-4">
-        <div class="card">
-            <div class="card-inner">
-                <a href="https://medium.com/neo4j/introducing-neuler-the-graph-algorithms-playground-d81042cfcd56" target="_blank">
-                    <img src="{img}np_swing_206_C595E4.png" />
-                </a>
-            </div>
-            <div class="card-below">
-                <a href="https://medium.com/neo4j/introducing-neuler-the-graph-algorithms-playground-d81042cfcd56" target="_blank">Algorithms Playground</a>
-            </div>
-        </div>
-    </div>
-    <div class="column-card-4">
-        <div class="card">
-            <div class="card-inner">
-                <a href="https://neo4j.com/graphacademy/online-training/" target="_blank">
-                    <img src="{img}online_training_ff9c34.png" />
-                </a>
-            </div>
-            <div class="card-below">
-                <a href="https://neo4j.com/graphacademy/online-training/" target="_blank">Online Training</a>
-            </div>
-        </div>
-    </div>
-    <div class="column-card-4">
-        <div class="card">
-            <div class="card-inner">
-                <a href="https://neo4j.com/docs/graph-data-science/current/" target="_blank">
-                    <img src="{img}np_documentation_365797_77AE53.png" />
-                </a>
-            </div>
-            <div class="card-below">
-                <a href="https://neo4j.com/docs/graph-data-science/current/" target="_blank">Docs</a>
-            </div>
-        </div>
-    </div>
-</div>
-<br />
-++++
 
 * link:/sandbox/?ref=developer-graph-algo[Sandbox^] - No download required. Start using Neo4j Graph Algorithms within seconds through a built-in guide and dataset.
 
@@ -162,7 +55,15 @@ There are several ways to get started with graph algorithms:
 
 * link:/graphacademy/online-training/[Free online training^] - learn how to use graph algorithms hands-on in the Data Science and Applied Graph Algorithms courses
 
-* link:/docs/graph-data-science/current/[Docs^] - dive straight in with the Neo4j Graph Algorithms Use Guide.
+* link:/docs/graph-data-science/current/[Docs^] - dive straight in with the Neo4j Graph Data Science User Guide.
+
+[#explanation]
+== Explanation
+
+The following guides provide more details and background for various parts of the Graph Data Science Library.
+
+* link:/developer/graph-embeddings[Graph Embeddings]
+
 
 [#graph-algorithms-resources]
 == Additional Resources
