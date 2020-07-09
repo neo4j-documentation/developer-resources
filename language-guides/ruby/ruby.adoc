@@ -38,18 +38,23 @@ Neo4j has been accessible from Ruby long before version 1.0, first using JRuby o
 
 The link:http://neo4jrb.io/[Neo4j.rb project^] is made up of the following Ruby gems:
 
-activegraph:: 
-A Object-Graph-Mapper (OGM) for the Neo4j graph database. It tries to follow API conventions established by ActiveRecord but with a Neo4j flavor.
 neo4j-ruby-driver::
-This gem contains 2 implementation of a neo4j driver for ruby. One, neo4j-java-driver based on official java implementation. It provides a thin wrapper over java driver (only in jruby) and neo4j-ruby-driver based on seabolt and ffi. Available on all rubies (including jruby) and all platforms supported by seabolt.
-neo4j-rake_tasks:: 
+A neo4j driver for ruby with an api consistent with the official drivers. It is based on seabolt and ffi. Available on all rubies
+(including jruby) and all platforms supported by seabolt.
+neo4j-java-driver::
+A neo4j driver for ruby based on the official java implementation. It provides a thin wrapper over the java driver (only
+in jruby).
+activegraph::
+A Object-Graph-Mapper (OGM) for the Neo4j graph database. It tries to follow API conventions established by ActiveRecord
+but with a Neo4j flavor. It requires one of the above drivers.
+neo4j-rake_tasks::
 A set of rake tasks for installing and managing a Neo4j database within your project.
 
 [cols="1,4"]
 |===
 | icon:browser[] Website                     | http://neo4jrb.io/
-| icon:users[] Authors         | https://twitter.com/klobuczek[Heinrich^], http://twitter.com/cheerfulstoic[Brian^], http://twitter.com/subvertallchris[Chris^], http://twitter.com/ronge[Andreas^]
-| icon:gift[] Package        | https://rubygems.org/search?utf8=%E2%9C%93&query=activegraph
+| icon:users[] Authors         | https://twitter.com/klobuczek[Heinrich^], https://twitter.com/klobuczek[Amit^], http://twitter.com/cheerfulstoic[Brian^], http://twitter.com/subvertallchris[Chris^], http://twitter.com/ronge[Andreas^]
+| icon:gift[] Package        | https://rubygems.org/gems/neo4j-ruby-driver[neo4j-ruby-driver^], https://rubygems.org/gems/neo4j-java-driver[neo4j-java-driver^], https://rubygems.org/gems/activegraph[activegraph^]
 | icon:github[] Source       | https://github.com/neo4jrb
 
 | icon:play-circle[] Example | https://github.com/neo4j-examples?q=movies-ruby
@@ -121,7 +126,7 @@ person.friends.books.to_a
 Very often, your gem choice may come down to how you want to deploy:
 
 server::
-  Using Ruby with a separate Neo4j Server over the HTTP API
+  Using Ruby with a separate Neo4j Server over the http or bolt
 
 embedded::
   Connecting directly to the Neo4j database files from within your Ruby process (this requires JRuby)
@@ -134,7 +139,7 @@ If this sounds good to you, any of the popular gems are solid choices and you ar
 Neo4j Embedded and JRuby is less common but offers blazing fast performance and access to our core Java API.
 The downside is that JRuby has its own configuration and compatibility demands and hosting a Java app can be difficult.
 Thankfully, modern app servers such as Torquebox and a strong community provide far more options and resources now than ever before.
-If this is right for you, the Neo4j-core and Neo4j gems will offer what you need.
+If this is right for you, the neo4j-ruby and activegraph will equally offer support via the bolt protocol.
 
 [#gem-integrations]
 == ActiveGraph gem integrations
@@ -146,9 +151,42 @@ Authentication
 
  * link:https://github.com/neo4jrb/devise-activegraph[devise-activegraph^]
 
-Autharization
+Authorization
 
  * link:https://github.com/CanCanCommunity/cancancan-activegraph[cancancan-activegraph^]
+
+File Attachment
+
+ * link:https://github.com/neo4jrb/neo4jrb-paperclip[neo4jrb-paperclip^] (*)
+ * link:https://github.com/neo4jrb/carrierwave-neo4j[carrierwave-neo4j^] (*)
+
+Pagination
+
+ * link:https://github.com/neo4jrb/neo4j-will_paginate_redux[neo4j-will_paginate_redux^] (*)
+ * link:https://github.com/megorei/kaminari-neo4j[kaminari-neo4j^] (*)
+
+ElasticSearch Integration
+
+ * link:https://github.com/neo4jrb/neo4j-searchkick[neo4j-searchkick^] (*)
+
+
+Admin User Interface
+
+ * link:https://github.com/cheerfulstoic/rails_admin[rails_admin^] (*)
+
+Integration With the link:https://github.com/neo4j-contrib/spatial[Neo4j Spatial Plugin^]
+
+ * link:https://github.com/neo4jrb/neo4jrb_spatial[neo4jrb_spatial^] (*)
+
+Ruby Object Manager
+
+ * link:https://github.com/rom-rb/rom-neo4j[rom-neo4j^]
+
+Misc.
+
+ * link:https://github.com/subvertallchris/neo4j-even_easier_id[neo4j-even_easier_id^] (BSON UUIDs)
+
+Note: (*) not (yet) compatible with activegraph
 
 [#ruby-example]
 include::../_includes/sample_project.adoc[]
