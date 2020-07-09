@@ -7,6 +7,10 @@
 :toc:
 :toc-title: Contents
 :toclevels: 1
+:author: Jennifer Reif
+:neo4j-version: 4.0
+:category: cluster
+:tags: administration, fabric, sharding, graph-sharding, architecture, examples
 
 .Goals
 [abstract]
@@ -85,7 +89,7 @@ As you might imagine, this is a tricky thing to do for a graph database, which p
 [#neo4j-fabric]
 == What is Neo4j Fabric?
 
-Neo4j Fabric is Neo4j's solution to graph sharding by allowing users to break a larger graph down into individual, smaller graphs and storing them in separate databases.
+Neo4j Fabric is Neo4j's solution to graph sharding by allowing users to break a larger graph down into individual, smaller graphs and store them in separate databases.
 For graphs that are highly-connected, this means some level of data redundancy to maintain the relationships between entities.
 
 As an example, `NodeA` and `NodeB` connected by `RELATIONSHIP_1` could be sharded this way.

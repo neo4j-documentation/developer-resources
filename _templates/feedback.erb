@@ -1,0 +1,81 @@
+
+<script>
+$(document).ready(function() {
+    $(".guide-section-content").append(`
+            <div align="center" style="background:#428bca; color: white; clear: both; padding: 12px 0; border-radius:6px; margin: 24px 0 12px">
+
+                <div id="feedback-form">
+                    <p style="margin-bottom: 0"><strong style="color:white">Was the information on this page helpful?</strong></p>
+                    <div style="font-size: 3em;">
+                        <span><img data-helpful="yes" class="feedback" style="padding-bottom:0; cursor:pointer;" src="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/2020/feedback_happy.png" width="64px" /></span>
+                        <span><img data-helpful="no" class="feedback"  style="padding-bottom:0;cursor:pointer;" src="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/2020/feedback_sad.png" width="64px" /></span>
+                    </div>
+
+                </div>
+            </div>`)
+
+    $("img.feedback").click(function (event) {
+        const documentHelpful = event.target.attributes["data-helpful"].value
+
+        if ("yes" === documentHelpful) {
+            $.post("https://uglfznxroe.execute-api.us-east-1.amazonaws.com/dev/Feedback", { project: 'developer', helpful: true, url: window.location.href });
+            $("div#feedback-form").html(`<p style="color:white; margin-bottom: 0">Thanks for your feedback. We're happy to hear that the information on this page was helpful <img style="padding-bottom:0;" src="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/2020/feedback_happy.png" width="30px" />  </p>`)
+        } else {
+            const specificFeedback = `
+                    <div id="specific-feedback" style="display: inline-block; text-align: left; color:white;">
+                        <h4 style="color:white">Thanks for your feedback. How can we improve this page?</h4>
+                        <div>
+                            <input type="radio" data-reason="missing" name="specific" id="missing" value="missing" checked="true" />
+                            <label for="missing" style="color:white">It has missing information</label>
+                        </div>
+
+                        <div>
+                            <input type="radio" data-reason="hard-to-follow" name="specific" id="hard-to-follow" value="hard-to-follow" />
+                            <label for="hard-to-follow" style="color:white">It's hard to follow or confusing</label>
+                        </div>
+
+                        <div>
+                            <input type="radio" data-reason="inaccurate" name="specific" id="inaccurate" value="inaccurate" />
+                            <label for="inaccurate" style="color:white">It's inaccurate, out of date, or doesn't work</label>
+                        </div>
+
+
+                        <div>
+                            <input type="radio" data-reason="other" name="specific" id="other" value="other" />
+                            <label for="other" style="color:white">It has another problem not covered by the above</label>
+                        </div>
+
+
+                        <div style="padding-top:12px">
+                            <label for="more-information" style="color:white; font-weight: bold">More information</label>
+                            <textarea id="more-information" type="text" rows="3" cols="50" name="more-information" style="resize:none"></textarea>
+                        </div>
+
+                        <div style="padding:10px 0 10px 0;" class="submit-extra-feedback">
+
+                            <input type="button" data-submit="submit" value="Submit feedback" style="background:white; border: 1px solid white; color: #428bca; padding: 10px 18px" />
+                            <input type="button" data-submit="skip" value="Skip" style="background:#428bca; color:white; border: 1px solid white; padding: 10px 18px" />
+                        </div>
+                    </div>
+                `
+            $("div#feedback-form").html(specificFeedback)
+        }
+    });
+
+    $(document).on("click", "div.submit-extra-feedback input", function(event) {
+        const submitType = event.target.attributes["data-submit"].value
+
+        if("skip" === submitType) {
+            $.post("https://uglfznxroe.execute-api.us-east-1.amazonaws.com/dev/Feedback", { project: 'developer', helpful: false, url: window.location.href });
+            $("div#feedback-form").html("<p style='font-weight: bold; color:white'>Thanks for your feedback. We'll take it account when we're updating our documentation</p>")
+        } else {
+
+            const reason = $("input[name='specific']:checked")[0].attributes["data-reason"].value
+            const moreInformation = $("textarea[name='more-information']")[0].value
+
+            $.post("https://uglfznxroe.execute-api.us-east-1.amazonaws.com/dev/Feedback", { project: 'developer', helpful: false, url: window.location.href, reason: reason, moreInformation: moreInformation });
+            $("div#feedback-form").html("<p style='font-weight: bold; color:white'>Thanks for your feedback. We'll take it account when we're updating our documentation</p>")
+        }
+    });
+} );
+</script>

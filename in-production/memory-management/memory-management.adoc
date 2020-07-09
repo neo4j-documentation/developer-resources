@@ -1,0 +1,160 @@
+= How To: Manage Memory in Neo4j
+:slug: memory-management
+:level: Intermediate
+:section: Neo4j Administration
+:section-link: in-production
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
+:author: Mark Needham
+:category: performance
+:tags: memory, configuration, transaction, limit, queries
+
+.Goals
+[abstract]
+In this guide, we will learn how to both measure and restrict memory usage in Neo4j.
+
+.Prerequisites
+[abstract]
+Please have link:/download/[Neo4j^] (version 4.1 or later) downloaded and installed.
+Familiarity with the link:/developer/cypher-query-language/[Cypher query language] is required to understand the examples used in this guide.
+
+[role=expertise]
+{level}
+
+In Neo4j (v4.1+), we can measure and restrict the amount of memory used by transactions running on the server.
+This feature can be used to avoid `OutOfMemory` exceptions when running our workloads and ensure fairness across databases and transactions.
+
+[#movies-dataset]
+== Movie dataset
+
+The examples in this guide are based on the built-in movies dataset.
+This can be loaded by running the `:play movies` command in the Neo4j Browser and following the instructions to import the dataset.
+We can see a sample of the graph in the Neo4j Browser visualization below:
+
+image::{img}memory-management-movies-graph.jpg[link="{img}memory-management-movies-graph.jpg",role="popup-link"]
+
+[#measure-memory-usage-tx]
+== Measuring memory usage of one transaction
+
+We can measure the memory usage of individual Cypher queries when link:{cyphermanual}/query-tuning/how-do-i-profile-a-query/[profiling them^] using the `PROFILE` clause.
+
+The following query takes all pairs of people and returns the longest path between the pair of nodes up to a maximum distance of 5 hops.
+
+[source,cypher]
+----
+PROFILE
+MATCH (p1:Person), (p2:Person)
+WHERE p1 <> p2
+MATCH path = (p1)-[*..5]-(p2)
+WITH p1, p2, path
+ORDER BY p1, p2, length(path) DESC
+WITH p1, p2, collect(path)[0] AS path
+RETURN p1.name, p2.name, [rel in relationships(path) | type(rel)];
+----
+
+We can run this query in the link:/developer/neo4j-browser/[Neo4j Browser], which returns a visual representation of the query plan that contains memory usage information.
+We can see the output from running this query in the image below:
+
+image::{img}query-plan-with-memory.png[link="{img}query-plan-with-memory.png",role="popup-link",width=200]
+
+The total memory usage of 17,062,912 bytes is included on the `ProduceResults` operator.
+That memory usage is broken down across the following operators:
+
+* `OrderedAggregation` - 376,272 bytes
+* `Sort` - 16,687,456 bytes
+* `NodeByLabelScan` - 64 bytes
+
+Alternatively, we can run the query in the link:{opsmanual}/tools/cypher-shell/[Cypher Shell^], which returns the following output (truncated for brevity):
+
+[options="header"]
+|===
+| Plan      | Statement   | Version      | Planner | Runtime     | Time | DbHits | Rows | Memory (Bytes)
+| "PROFILE" | "READ_ONLY" | "CYPHER 4.1" | "COST"  | "PIPELINED" | 68   | 484361 | 7890 | 17062912
+|===
+
+[options="header", separator=¦]
+|===
+¦ Operator                               ¦ Estimated Rows ¦ Rows   ¦ DB Hits ¦ Time (ms) ¦ Memory (Bytes)
+¦ +ProduceResults@memorymanagement       ¦              2 ¦   7890 ¦       0 ¦    16.498 ¦
+¦ +Projection@memorymanagement           ¦            2 ¦   7890 ¦   46424 ¦    48.497 ¦
+¦ +Projection@memorymanagement           ¦              2 ¦   7890 ¦       0 ¦     5.987 ¦
+¦ +OrderedAggregation@memorymanagement   ¦           2 ¦   7890 ¦       0 ¦    26.009 ¦         376272
+¦ +Projection@memorymanagement           ¦           5 ¦  33440 ¦       0 ¦    54.526 ¦
+¦ +Sort@memorymanagement                 ¦              5 ¦  33440 ¦       0 ¦    96.382 ¦       16687456
+¦ +Projection@memorymanagement           ¦               5 ¦  33440 ¦  134704 ¦           ¦
+¦ +Filter@memorymanagement               ¦           5 ¦  33440 ¦  114163 ¦           ¦
+¦ +VarLengthExpand(All)@memorymanagement ¦         256 ¦ 115305 ¦  188936 ¦           ¦
+|===
+
+The output from Cypher Shell contains the total memory usage information in a separate summary table, rather than including it as part of the final operator.
+The summary table contains a column indicating the memory usage of 17062184 bytes or 17MB.
+
+[#measure-memory-usage-server]
+== Measuring memory usage on server
+
+We can also measure the memory usage on the Neo4j server using the following procedures:
+
+|===
+| Procedure | Description
+|`CALL dbms.listPools()` | describes thread pool memory usage
+|`CALL dbms.listTransactions()` | describes memory usage by running transactions
+|`CALL dbms.listQueries()` | describes memory usage by running queries
+|===
+
+For example, we can see the memory usage when our all pairs of people query is running, by executing the following query:
+
+[source,cypher]
+----
+CALL dbms.listQueries()
+YIELD queryId, username, database, query, allocatedBytes
+RETURN queryId, username, database, query, allocatedBytes;
+----
+
+[options="header"]
+|===
+| queryId |	username |	database |	query |	allocatedBytes
+| "query-32" |	"neo4j"	| "memorymanagement" |	" PROFILE MATCH (p1:Person), (p2:Person) WHERE p1 <> p2 MATCH path = (p1)-[*..5]-(p2) WITH p1, p2, path ORDER BY p1, p2, length(path) DESC WITH p1, p2, collect(path)[0] AS path RETURN p1.name, p2.name, [rel in relationships(path) \| type(rel)];" |	3234176
+| "query-34" |	"neo4j" |	"neo4j" |	"CALL dbms.listQueries() YIELD queryId, username, database, query, allocatedBytes RETURN queryId, username, database, query, allocatedBytes" |	64
+|===
+
+At the time that we ran this query, our all pairs of people query was only using 3,234,176 bytes of memory out of the 17,062,912 that we know it uses in total.
+
+
+[#restrict-memory-usage]
+== Restricting memory usage
+
+We can restrict the amount of heap memory available to transactions by specifying the link:/docs/operations-manual/4.1/performance/memory-configuration/#memory-configuration-limit-transaction-memory[following config settings^] in `$NEO4J_HOME/neo4j.conf`.
+
+[options="header"]
+|===
+| Setting | Description
+|`dbms.memory.transaction.global_max_size` | configures the global maximum memory usage for all of the transactions running on the server.
+|`dbms.memory.transaction.database_max_size` | limits the transaction memory usage per database
+|`dbms.memory.transaction.max_size` | limits the memory usage per transaction
+|===
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jGfgAdhRFzs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
+
+If we want to restrict the amount of memory used by an individual transaction to 10MB, we can set the following config:
+
+.neo4j.conf
+[source,properties]
+----
+dbms.memory.transaction.max_size=10m
+----
+
+Our query from the <<measure-memory-usage-tx, measuring memory usage of one transaction>> section uses more memory than this, so if we re-run that query, we'll see the following error message:
+
+[source,text]
+----
+The allocation of 64.3 KiB would use more than the limit 10.0 MiB. Currently using 9.9 MiB. dbms.memory.transaction.max_size threshold reached
+----
+
+[#resources]
+== Resources
+
+* link:/docs/operations-manual/4.1/performance/memory-configuration/[Documentation: Memory configuration^]

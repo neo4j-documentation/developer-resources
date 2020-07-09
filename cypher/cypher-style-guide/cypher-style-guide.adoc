@@ -7,6 +7,9 @@
 :toc:
 :toc-title: Contents
 :toclevels: 1
+:author: Jennifer Reif
+:category: cypher
+:tags: cypher, queries, graph-queries, syntax-style, model-style, write-cypher, syntax
 
 .Goals
 [abstract]
@@ -107,7 +110,7 @@ MATCH (a:Airport)
 RETURN a.airportIdentifier as AirportCode;
 
 MATCH (c:Company)
-WHERE c.name CONTAINS 'Inc.'' AND c.startYear IN [1990, 1998, 2007, 2010]
+WHERE c.name CONTAINS 'Inc.' AND c.startYear IN [1990, 1998, 2007, 2010]
 RETURN c;
 ----
 

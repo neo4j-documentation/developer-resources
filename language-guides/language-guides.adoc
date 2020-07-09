@@ -8,6 +8,9 @@
 :toc:
 :toc-title: Contents
 :toclevels: 1
+:author: Jennifer Reif
+:category: drivers
+:tags: programming-languages, applications, bolt, app-development
 
 [#neo4j-app-dev]
 These guides and tutorials are designed to provide detailed examples of how to integrate Neo4j with your preferred programming language.
@@ -18,7 +21,7 @@ In this section, we provide an introduction and a consistent example application
 [#connect-neo4j]
 == How to connect to Neo4j?
 
-If you've link:/download[installed] and started Neo4j as a server on your system,
+If you've link:/download/[installed] and started Neo4j as a server on your system,
 you can already work interactively with the database via the built-in Neo4j Browser application on http://localhost:7474[localhost:7474].
 
 To build an application, you want to connect to Neo4j from your technology stack.
@@ -33,11 +36,11 @@ For Neo4j Clusters, Bolt provides smart client routing with load balancing and f
 
 The binary protocol is enabled in Neo4j by default, so you can use any language driver that supports it.
 
-Neo4j officially provides drivers for link:dotnet[.Net], link:java[Java], link:javascript[JavaScript], link:go[Go], and link:python[Python].
+Neo4j officially provides drivers for link:dotnet[.Net], link:java[Java], link:spring-data-neo4j-rx[Spring], link:javascript[JavaScript], link:go[Go], and link:python[Python].
 
 You can find detailed information about the official drivers in the {drivermanual}[Neo4j Driver Manual^].
 
-_For more details on the protocol implementation, see the https://github.com/neo4j-contrib/boltkit[implementers documentation]._
+_For more details on the protocol implementation, see the https://github.com/neo4j-contrib/boltkit[implementers documentation^]._
 
 [#neo4j-drivers]
 == All Neo4j Drivers
@@ -48,24 +51,24 @@ Get started with your stack now, see the dedicated page for more detail.
 
 [cols="5*",width=100]
 |===
-| link:dotnet[icon:check-circle-o[] .NET]
-| link:java[icon:check-circle-o[] Java]
-| link:spring-data-neo4j[icon:check-circle-o[] Spring]
-| link:neo4j-ogm[icon:check-circle-o[] Neo4j-OGM]
-| link:javascript[icon:check-circle-o[] JavaScript]
-| link:python[icon:check-circle-o[] Python]
-| link:go/[icon:check-circle-o[] Go]
-| link:ruby[Ruby]
-| link:php[PHP]
-| link:r/[R]
-| link:erlang_elixir[Erlang / Elixir]
-| link:c/[C/C++]
-| link:clojure[Clojure]
-| link:perl[Perl]
-| link:haskell[Haskell]
+| link:/developer/java/[icon:check-circle-o[] Java]
+| link:/developer/spring-data-neo4j-rx/[icon:check-circle-o[] Spring]
+| link:/developer/neo4j-ogm/[icon:check-circle-o[] Neo4j-OGM]
+| link:/developer/dotnet/[icon:check-circle-o[] .NET]
+| link:/developer/javascript/[icon:check-circle-o[] JavaScript]
+| link:/developer/python/[icon:check-circle-o[] Python]
+| link:/developer/go/[icon:check-circle-o[] Go]
+| link:/developer/ruby/[Ruby]
+| link:/developer/php/[PHP]
+| link:/developer/erlang-elixir/[Erlang/Elixir]
+| link:/developer/perl/[Perl]
+| link:/developer/c/[C/C++]
+| link:/developer/clojure/[Clojure]
+| link:/developer/haskell/[Haskell]
+| link:/developer/r/[R]
 |===
 
-If you are new to development, we recommend to you the https://www.jetbrains.com/products.html[Jetbrains IDE] for your language for a good developer experience, which also come with a https://neo4j.com/blog/jetbrains-ide-plugin-graph-database/[Neo4j Database plugin].
+If you are new to development, we recommend the https://www.jetbrains.com/products.html[Jetbrains IDE^] for a good developer experience, which also comes with a link:/blog/jetbrains-ide-plugin-graph-database/[Neo4j Database plugin^].
 
 include::example-project/example-project.adoc[tags=intro-app-project,lines=21..35]
 

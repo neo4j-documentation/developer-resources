@@ -1,5 +1,5 @@
-<% active= {"get-started"=>:inactive, "graph-platform"=>:inactive, "cypher"=>:inactive, "data-modeling"=>:inactive,"data-import"=>:inactive,"graph-visualization"=>:inactive,"language-guides"=>:inactive,
-"ecosystem"=>:inactive,"in-production"=>:inactive, "guide-cloud-deployment"=>:inactive, "graph-apps"=>:inactive}
+<% active= {"get-started"=>:inactive, "graph-platform"=>:inactive, "cypher"=>:inactive, "data-modeling"=>:inactive, "data-import"=>:inactive, "graph-data-science"=>:inactive, 
+"graph-visualization"=>:inactive, "language-guides"=>:inactive, "ecosystem"=>:inactive,"in-production"=>:inactive, "guide-cloud-deployment"=>:inactive, "graph-apps"=>:inactive}
 active[(@document.attr "section-link", "get-started")]=:active;
 %>
 <!doctype html> <!--[if IE 9]>
@@ -7,68 +7,54 @@ active[(@document.attr "section-link", "get-started")]=:active;
    <![endif]-->
 <html class="no-js" lang="en">
 <%= File.new("_templates/head_partial.erb").read %>
-<body>
+<body class="developer-template-default single single-developer postid-38241 mega-menu-menu-2 mega-menu-menu-1 mega-menu-menu-3">
 <%= File.new("_templates/top_bar_partial.erb").read %>
-<div class="marquee-neo">
-    <div class="row text-center">
-        <div class="columns">
-            <h1 class="entry-title"><%= (doctitle(:sanitize => true) || (attr 'untitled-label')) %></h1>
-        </div>
-    </div>
-</div>
+
 <article id="content" role="main">
-    <p class="lead">lead text</p>
-    <section class="row">
-        <div style="padding-left: 1em; padding-right: 1em;">
-            <div class="row" style="padding-top: 10px;">
-                <div class="columns large-12" style="padding-top:10px;">
-                    <ul class="breadcrumbs">
-                        <li><a href="/developer">Developer</a></li>
-                        <% if ((@document.attr :section, 3) == 3) %>
-                        <li><a href="../"><%= (@document.attr :section, "Guide") %></a></li>
-                        <% end %>
-                        <li class="current"><a href="#"><%= (doctitle(:sanitize => true) || (attr 'untitled-label')) %></a></li>
-                    </ul>
-                </div>
-            </div>
-            <%= File.new("_templates/style_partial.erb").read %>
-            <div>
-                <div class="row" style="padding-left: 0; padding-right: 0;">
-                    <div class="large-9 large-push-3 columns guide-section-content">
-                        <%= content %>
-                    </div>
-                    <div class="large-3 large-pull-9 columns">
-                        <%= File.new("_templates/menu_partial.erb").read.gsub("/developer/","/developer/").gsub(/[\w-]+-activate/) { |m| active[m.gsub(/-activate/,"")].to_s } %>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <div class="row text-center hide-for-small hr-style">
-        <div class="medium-5 columns">
-            <hr>
-        </div>
-        <div class="medium-2 columns">
-            <object style="height:100%; width:100%;"
-                    data="http://neo4j.com/wp-content/themes/neo4jweb/assets/images/hr-image.svg"
-                    type="image/svg+xml"></object>
-        </div>
-        <div class="medium-5 columns">
-            <hr>
-        </div>
-    </div>
-    <div class="row text-center show-for-small">
-        <div class="medium-12 columns">
-            <hr>
-        </div>
-    </div>
-    <section class="row">
-        <div class="medium-4 columns"></div>
-    </section>
-    <section class="row">
-        <div class="small-12 columns"></div>
-    </section>
+<div class="content-wrapper">
+  <div class="dev-menu-nav large-2 hide-for-medium-only hide-for-small-only columns">
+<%= File.new("_templates/menu_partial.erb").read.gsub("/developer/","/developer/").gsub(/[\w-]+-activate/) { |m| active[m.gsub(/-activate/,"")].to_s } %>
+
+<div class="c2a-icons">
+    <div><a href="http://community.neo4j.com" target="_blank" alt="Neo4j Community Site and Forum" rel="noopener noreferrer"><i class="fa fa-comments" aria-hidden="true"></i><br></a></div>
+    <div><a href="http://twitter.com/neo4j" target="_blank" alt="Neo4j on Twitter" rel="noopener noreferrer"> <i class="fa fa-twitter" aria-hidden="true"></i><br></a></div>
+    <div><a href="http://youtube.com/neo4j" target="_blank" alt="Neo4j on YouTube" rel="noopener noreferrer"><i class="fa fa-youtube-play" aria-hidden="true"></i><br></a></div>
+    <div><a href="https://meetup.com/Neo4j-Online-Meetup/" target="_blank" alt="Neo4j on Meetup" rel="noopener noreferrer"><i class="fa fa-meetup" aria-hidden="true"></i><br></a></div>
+    <div><a href="https://github.com/neo4j/neo4j" target="_blank" alt="Neo4j on GitHub" rel="noopener noreferrer"><i class="fa fa-github" aria-hidden="true"></i><br></a></div>
+    <div><a href="http://stackoverflow.com/questions/tagged/neo4j" target="_blank" alt="Neo4j on Stackoverflow" rel="noopener noreferrer"><i class="fa fa-stack-overflow" aria-hidden="true"></i><br></a></div>
+</div>
+<div class="promote-speaker-program">
+  Want to Speak? <a href="/speaker-program/" target="_blank" rel="noopener noreferrer">Get $ back.</a>
+</div>
+
+  </div>
+  <div class="guide-section-content large-8 columns">
+  <h1 class="entry-title"><%= (doctitle(:sanitize => true)) %></h1>
+    <%= content %>
+</div><div class="guide-toc large-2 hide-for-medium-only hide-for-small-only columns">
+        <ul class="side-nav">
+          <dl class="accordion">
+            <dd class="accordion-navigation active">
+                <h3>Contents</h3>
+              <div id="nav" class="toc content active">
+
+                <ul class="sectlevel1">
+
+</ul>
+
+              </div>
+            </dd>
+          </dl>
+        </ul>
+      </div>
+    <div class="clearfix"></div>
+</div>
 </article>
+
+
+<%= File.new("_templates/feedback.erb").read %>
+
 <%= File.new("_templates/footer_partial.erb").read %>
+
 </body>
 </html>

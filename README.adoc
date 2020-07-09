@@ -9,7 +9,9 @@ The content is written as textual format in http://asciidoctor.org[AsciiDoc] ren
 Install asciidoctor (1.5.6.1) ruby gems with `rbenv exec bundle install` in the main directory. 
 You also need `ruby 2.5.0` installed on your system, e.g. via `rbenv install 2.5.0`. 
 
-You can render a single document to its `index.html` by calling `rbenv exec ruby ./render.rb path/to/doc.adoc` +
+You can render a single document to its `index.html` by calling `
+
+` +
 (e.g. `rbenv exec ruby ./render.rb in-production/guide-cloud-deployment/guide-cloud-deployment.adoc`) or render all pages at once with just `rbenv exec ruby ./render.rb all`
 
 You can open the generated `index.html` file locally to check the rendering/preview, or start the `http` script in the main directory (`./http`, for example), and then open: http://localhost:8000/developer/
@@ -19,7 +21,7 @@ Please edit and preview on the `gh-pages` branch, only if you are satisfied or s
 
 After commiting changes to head, you can push them to the publish branch: `git push origin HEAD:publish`.
 This will cause https://circleci.com/gh/neo4j-contrib/developer-resources[Circle CI] to push the changes to the web server.
-
+ 
 === Guides
 
 Most of the documents in this developer resources section are organized as a *guide*.
