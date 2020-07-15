@@ -157,7 +157,7 @@ You saw one example of this when we were checking for null values or empty strin
 ----
 //set businessType property based on shortened value in CSV
 LOAD CSV WITH HEADERS FROM 'file:///data.csv' AS row
-WITH row, 
+WITH row,
 (CASE row.BusinessType
  WHEN 'P' THEN 'Public'
  WHEN 'R' THEN 'Private'
@@ -215,7 +215,7 @@ When the amount of data being loaded is too much to fit into memory, there are a
 1. Batch the import into sections with `PERIODIC COMMIT`.
 This clause can be added before the `LOAD CSV` clause to tell Cypher to only process so many rows of the file before clearing memory and transaction state.
 For more information, see the link:/docs/cypher-manual/current/query-tuning/using/#query-using-periodic-commit-hint[manual page^] on `PERIODIC COMMIT`.
-
++
 .Example
 [source,cypher]
 ----
@@ -227,19 +227,17 @@ MERGE (owner:Owner {ownerId: row.OwnerId})
 MERGE (pet)-[r:OWNED_BY]->(owner)
 ----
 
-[start=2]
 2. Avoid the EAGER operator.
 Some statements pull in more rows than what is necessary, adding extra processing up front.
 To avoid this, you can run `PROFILE` on your queries to see if they use EAGER loading and either modify queries or run multiple passes on the same file, so it does not do this.
 More information about EAGER loading and how to avoid can be found in https://markhneedham.com/blog/2014/10/23/neo4j-cypher-avoiding-the-eager/[Mark's blog post^].
 
-[start=3]
 3. Adjust configuration for the database on heap and memory to avoid page-faults.
 To help handle larger volumes of transactions, you can increase some configuration settings for the database and restart the instance for them to take effect. Usually, you can create or update 1M records in a single transaction per 2 GB of heap. In `neo4j.conf`:
 * `dbms.memory.heap.initial_size` and `dbms.memory.heap.max_size`: set to at least 4G.
 * `dbms.memory.pagecache.size`: ideally, value large enough to keep the whole database in memory.
 
-===== +++<u>LOAD CSV Resources</u>+++
+==== LOAD CSV Resources
 * link:/developer/desktop-csv-import/[HowTo: Import CSV in Neo4j Desktop]
 * link:/docs/cypher-manual/current/clauses/load-csv/[Cypher Manual: LOAD CSV^]
 * link:/developer/guide-importing-data-and-etl/[Example: Import Northwind Data Set]
