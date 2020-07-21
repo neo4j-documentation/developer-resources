@@ -1,0 +1,141 @@
+= Centrality Algorithms
+:section: Centrality Algorithms
+:section-link: graph-data-science
+:section-level: 1
+:slug: centrality-graph-algorithms
+:level: Intermediate
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
+:author: Mark Needham
+:category: graph-data-science
+:tags: graph-data-science, graph-algorithms, centrality
+
+.Goals
+[abstract]
+In this guide, we will learn about centrality graph algorithms.
+
+.Prerequisites
+[abstract]
+Please have link:/download[Neo4j^] (version 4.0 or later) and the link:/download-center/#algorithms[Graph Data Science Library^] downloaded and installed to use centrality algorithms.
+
+[role=expertise]
+{level}
+
+[#overview-centrality-algorithms]
+== What are centrality algorithms?
+
+image:{img}Centrality-Algo-Icon.png[float="right"]
+
+Centrality algorithms are one of the traditional categories of graph algorithms.
+They find the important nodes in a graph, where importance can mean that a node:
+
+* has a lot of direct connections
+* is transitively connected to other important nodes
+* can reach other nodes with few hops
+* sits on the shortest path of lots of pairs of nodes.
+
+The Neo4j https://neo4j.com/graph-data-science-library[Graph Data Science Library^] supports many different centrality algorithms.
+
+[#degree-centrality]
+== Degree Centrality
+
+The Degree Centrality algorithm counts the number of incoming and outgoing relationships from a node.
+It is used to find popular nodes in a graph, and has the following use cases:
+
+* Degree centrality is an important component of any attempt to determine the most important people on a social network.
+For example, in BrandWatch's https://www.brandwatch.com/blog/react-influential-men-and-women-2017/[most influential men and women on Twitter 2017^] the top 5 people in each category have over 40m followers each.
+
+* Weighted degree centrality has been used to help separate fraudsters from legitimate users of an online auction.
+The weighted centrality for fraudsters is significantly higher because they tend to collude with each other to artificially increase the price of items.
+Read more in https://link.springer.com/chapter/10.1007/978-3-319-23461-8_11[Two Step graph-based semi-supervised Learning for Online Auction Fraud Detection^]
+
+link:/docs/graph-data-science/current/algorithms/degree-centrality/[Read Degree Centrality reference documentation^, role="medium button"]
+
+[#closeness-centrality]
+== Closeness Centrality
+
+The Closeness Centrality algorithm is a way of detecting nodes that are able to spread information efficiently through a subgraph.
+It measures the average farness (inverse distance) from a node to all other nodes.
+Nodes with a high closeness score have, on average, the shortest distances to all other nodes.
+
+Closeness Centrality has the following use cases:
+
+* Closeness centrality is used to research organizational networks, where individuals with high closeness centrality are in a favourable position to control and acquire vital information and resources within the organization.
+One such study is http://www.orgnet.com/MappingTerroristNetworks.pdf["Mapping Networks of Terrorist Cells"^] by Valdis E. Krebs.
+
+* Closeness centrality can be interpreted as an estimated time of arrival of information flowing through telecommunications or package delivery networks where information flows through shortest paths to a predefined target.
+It can also be used in networks where information spreads through all shortest paths simultaneously, such as infection spreading through a social network.
+Find more details in http://www.analytictech.com/borgatti/papers/centflow.pdf["Centrality and network flow"] by Stephen P. Borgatti.
+
+* Closeness centrality has been used to estimate the importance of words in a document, based on a graph-based keyphrase extraction process.
+This process is described by Florian Boudin in https://www.aclweb.org/anthology/I/I13/I13-1102.pdf["A Comparison of Centrality Measures for Graph-Based Keyphrase Extraction"].
+
+link:/docs/graph-data-science/current/algorithms/closeness-centrality/[Read Closeness Centrality reference documentation^, role="medium button"]
+
+[#harmonic-centrality]
+== Harmonic Centrality
+
+The Harmonic Centrality algorithm is a variant of Closeness Centrality that gives a more accurate measure of closeness when run on graphs where not all nodes are reachable from each other.
+
+link:/docs/graph-data-science/current/algorithms/harmonic-centrality/[Read Harmonic Centrality reference documentation^, role="medium button"]
+
+[#betweenness-centrality]
+== Betweenness Centrality
+
+Betweenness Centrality is a way of detecting the amount of influence a node has over the flow of information or resources in a graph.
+It can be used to find nodes that serve as bridges from one part of a graph to another.
+
+Betweenness Centrality has the following use cases:
+
+* Betweenness centrality is used to research the network flow in a package delivery process, or telecommunications network.
+These networks are characterized by traffic that has a known target and takes the shortest path possible.
+This, and other scenarios, are described by Stephen P. Borgatti in http://www.analytictech.com/borgatti/papers/centflow.pdf["Centrality and network flow"].
+
+* Betweenness centrality is used to identify influencers in legitimate, or criminal, organizations.
+Studies show that influencers in organizations are not necessarily in management positions, but instead can be found in brokerage positions of the organizational network.
+The removal of these influencers could seriously destabilize the organization.
+More detail can be found in http://archives.cerium.ca/IMG/pdf/Morselli_and_Roy_2008_.pdf["Brokerage qualifications in ringing operations"], by Carlo Morselli and Julie Roy.
+
+* Betweenness centrality can be used to help microbloggers spread their reach on Twitter, with a recommendation engine that targets influencers that they should interact with in future.
+This approach is described in ftp://ftp.umiacs.umd.edu/incoming/louiqa/PUB2012/RecMB.pdf["Making Recommendations in a Microblog to Improve the Impact of a Focal User"].
+
+link:/docs/graph-data-science/current/algorithms/betweenness-centrality/[Read Betweenness Centrality reference documentation^, role="medium button"]
+
+[#eigenvector-centrality]
+== Eigenvector Centrality
+The Eigenvector Centrality algorithm measures the transitive (or directional) influence of nodes.
+Relationships to high-scoring nodes contribute more to the score of a node than connections to low-scoring nodes.
+A high score means that a node is connected to other nodes that have high scores.
+
+link:/docs/graph-data-science/current/algorithms/eigenvector-centrality/[Read Eigenvector Centrality reference documentation^, role="medium button"]
+
+[#pagerank]
+== PageRank
+
+PageRank measures the transitive (or directional) influence of nodes and is a variant of the Eigenvector Centrality algorithm.
+Eigenvector Centrality can be used on undirected graphs, whereas the PageRank algorithm is more suited to directed graphs.
+
+It has the following use cases:
+
+* Personalized PageRank is used by Twitter to present users with recommendations of other accounts that they may wish to follow.
+The algorithm is run over a graph which contains shared interests and common connections.
+Their approach is described in more detail in https://web.stanford.edu/~rezab/papers/wtf_overview.pdf["WTF: The Who to Follow Service at Twitter"^].
+
+* PageRank has been used to rank public spaces or streets, predicting traffic flow and human movement in these areas.
+The algorithm is run over a graph which contains intersections connected by roads, where the PageRank score reflects the tendency of people to park, or end their journey, on each street.
+This is described in more detail in https://arxiv.org/pdf/0804.1630.pdf["Self-organized Natural Roads for Predicting Traffic Flow: A Sensitivity Study"^].
+
+* PageRank can be used as part of an anomaly or fraud detection system in the healthcare and insurance industries.
+It can help find doctors or providers that are behaving in an unusual manner, and then feed the score into a machine learning algorithm.
+
+link:/docs/graph-data-science/current/algorithms/page-rank/[Read PageRank reference documentation^, role="medium button"]
+
+[#articlerank]
+== ArticleRank
+
+ArticleRank measures the transitive (or directional) influence of nodes and is a variant of the PageRank algorithm.
+ArticleRank weakens Page Rank's assumption that relationships from nodes that have a low out-degree are more important than relationships from nodes with a higher out-degree.
+
+link:/docs/graph-data-science/current/algorithms/article-rank/[Read ArticleRank reference documentation^, role="medium button"]
