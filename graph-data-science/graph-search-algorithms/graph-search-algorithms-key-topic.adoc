@@ -1,0 +1,57 @@
+= Graph Search Algorithms
+:section: Graph Search Algorithms
+:section-link: graph-data-science
+:section-level: 1
+:slug: graph-search-algorithms
+:level: Beginner
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
+:author: Mark Needham
+:category: graph-data-science
+:tags: graph-data-science, graph-algorithms, graph-search, bfs, dfs
+
+.Goals
+[abstract]
+In this guide, we will learn about graph search algorithms.
+
+.Prerequisites
+[abstract]
+Please have link:/download[Neo4j^] (version 4.0 or later) and the link:/download-center/#algorithms[Graph Data Science Library^] downloaded and installed to use graph search algorithms.
+
+[role=expertise]
+{level}
+
+[#overview-graph-search-algorithms]
+== What are graph search algorithms?
+
+image:https://dist.neo4j.com/wp-content/uploads/20200723030840/noun_Search-graph_528032.png[float="right", width="200px"]
+
+Graph search (or graph traversal) algorithms explore a graph for general discovery or explicit search.
+They will try to visit as much of the graph as they can reach, but there is no expectation that the paths they explore are computationally optimal.
+Graph search algorithms are usually used as a core component of other algorithms.
+
+The Neo4j https://neo4j.com/graph-data-science-library[Graph Data Science Library^] supports both of the graph search algorithms.
+
+[#breadth-first-search]
+== Breadth First Search
+
+Breadth First Search (BFS) is a graph traversal algorithm that starts from a chosen node and explores all of its neighbors at one hop away before visiting all the neighbors at two hops away, and so on.
+
+While it can be used on its own, it is most commonly used as the basis for other more goal-oriented algorithms.
+For example, Shortest Path, Connected Components, and Closeness Centrality all use the BFS algorithm.
+It can also be used to find the shortest path between nodes or for computing the maximum flow in a flow network.
+
+link:/docs/graph-data-science/current/algorithms/bfs/[Read Breadth First Search reference documentation^, role="medium button"]
+
+[#depth-first-search]
+== Depth First Search
+
+Depth First Search (DFS) is a graph traversal algorithm that starts from a chosen node, picks one of its neighbors, and then traverses as far as it can along that path before backtracking.
+
+Like BFS, DFS can be used on its own, but is more commonly used as a component of other algorithms.
+For example, Connected Components and Strongly Connected Components use the DFS algorithm.
+It was originally invented as a strategy for solving mazes and can also be used to generate those mazes.
+
+link:/docs/graph-data-science/current/algorithms/dfs/[Read Depth First Search reference documentation^, role="medium button"]
