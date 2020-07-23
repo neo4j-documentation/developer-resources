@@ -1,0 +1,142 @@
+= Path Finding Algorithms
+:section: Path Finding Algorithms
+:section-link: graph-data-science
+:section-level: 1
+:slug: path-finding-graph-algorithms
+:level: Beginner
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
+:author: Mark Needham
+:category: graph-data-science
+:tags: graph-data-science, graph-algorithms, graph-search, path-finding, shortest-path
+
+.Goals
+[abstract]
+In this guide, we will learn about path finding graph algorithms.
+
+.Prerequisites
+[abstract]
+Please have link:/download[Neo4j^] (version 4.0 or later) and the link:/download-center/#algorithms[Graph Data Science Library^] downloaded and installed to use path finding algorithms.
+
+[role=expertise]
+{level}
+
+[#overview-path-finding-algorithms]
+== What are path finding algorithms?
+
+image:{img}Pathfinding-Algo-Icon.png[float="right", width="200px"]
+
+Path finding algorithms build on top of link:/developer/graph-search-algorithms[graph search algorithms] and explore routes between nodes, starting at one node and traversing through relationships until the destination has been reached.
+These algorithms find the cheapest path in terms of the number of hops or weight.
+Weights can be anything measured, such as time, distance, capacity, or cost.
+
+// ++++
+// <iframe width="560" height="315" src="https://www.youtube.com/embed/Hyd2KcQRXaM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+// ++++
+
+The Neo4j https://neo4j.com/graph-data-science-library[Graph Data Science Library^] supports many different link:/docs/graph-data-science/current/algorithms/pathfinding/[path finding algorithms^].
+
+[#shortest-path]
+== Shortest Path
+
+The Shortest Path algorithm calculates the shortest (weighted) path between a pair of nodes.
+Shortest path is considered to be one of the classical graph problems and has been researched as far back as the 19th century.
+It has the following use cases:
+
+* Finding directions between physical locations.
+This is the most common usage, and web mapping tools such as Google Maps use the shortest path algorithm, or a variant of it, to provide driving directions.
+
+* Social networks can use the algorithm to find the degrees of separation between people.
+For example, when you view someone’s profile on LinkedIn, it will indicate how many people separate you in the connections graph, as well as listing your mutual connections.
+
+link:/docs/graph-data-science/current/alpha-algorithms/shortest-path/[Read Shortest Path reference documentation^, role="medium button"]
+
+[#astar]
+== A*
+
+The A* algorithm improves on the Dijkstra shortest path algorithm, by including extra information by way of a heuristic function that determines which paths to explore next.
+This optimization results in shortest paths being found more quickly.
+The A* algorithm can be used to find shortest paths between single pairs of locations, where GPS coordinates are known.
+
+link:/docs/graph-data-science/current/alpha-algorithms/a_star/[Read A* reference documentation^, role="medium button"]
+
+[#yens]
+== Yen's k-Shortest Paths
+
+The Yen's algorithm uses the shortest path algorithm to find the shortest path, 2nd shortest path, 3rd shortest path, and so on up to k-1 deviations of shortest path.
+It has the following use cases:
+
+* Optimizing multiple object tracking by formalizing the motions of targets as flows along the relationships of the spatial graph.
+  Find more in https://cvlab.epfl.ch/files/content/sites/cvlab2/files/publications/publications/2011/BerclazFTF11.pdf[Multiple Object Tracking using K-Shortest Paths Optimization]
+
+* Studying alternative routing on road networks and to recommend top k-paths to the user.
+  Find this study in https://www.informatik.hu-berlin.de/de/forschung/gebiete/wbi/research/publications/2015/sigspatial_kshortest.pdf[Alternative Routing: k-Shortest Paths with Limited Overlap]
+
+* Part of the https://pdfs.semanticscholar.org/51e7/8aa2041d595b3871a49f4b92be725199e73d.pdf[Finding Diverse High-Quality Plans for Hypothesis Generation] process.
+
+link:docs/graph-data-science/current/alpha-algorithms/yen-s-k-shortest-path/[Read Yen's k-Shortest Paths reference documentation^, role="medium button"]
+
+[#all-pairs-shortest-path]
+== All-Pairs Shortest Path
+
+The All Pairs Shortest Path calculates the shortest (weighted) path between all pairs of nodes.
+This algorithm has optimizations that make it quicker than calling the Single Source Shortest Path algorithm for every pair of nodes in the graph.
+It has the following use cases:
+
+* Itis used in urban service system problems, such as the location of urban facilities or the distribution or delivery of goods.
+One example of this is determining the traffic load expected on different segments of a transportation grid.
+For more information, see http://web.mit.edu/urban_or_book/www/book/[Urban Operations Research^].
+
+* It is used as part of the REWIRE data center design algorithm that finds a network with maximum bandwidth and minimal latency.
+There are more details about this approach in https://cs.uwaterloo.ca/research/tr/2011/CS-2011-21.pdf["REWIRE: An Optimization-based Framework for Data Center Network Design"^]
+
+link:/docs/graph-data-science/current/alpha-algorithms/all-pairs-shortest-path/[Read All-Pairs Shortest Path reference documentation^, role="medium button"]
+
+[#single-source-shortest-path]
+== Single Source Shortest Path
+
+The Single Source Shortest Path algorithm calculates the shortest (weighted) path from a node to all other nodes in the graph.
+https://en.wikipedia.org/wiki/Open_Shortest_Path_First[Open Shortest Path First^] is a routing protocol for IP networks.
+It uses Single Source Shortest Path to detect changes in topology, such as link failures, and https://routing-bits.com/2009/08/06/ospf-convergence/[come up with a new routing structure in seconds^].
+
+
+link:/docs/graph-data-science/current/alpha-algorithms/single-source-shortest-path/[Read Single Source Shortest Path reference documentation^, role="medium button"]
+
+[#minimum-spanning-tree]
+== Minimum Spanning Tree
+
+The Minimum Weight Spanning Tree starts from a given node, and finds all its reachable nodes and the set of relationships that connect the nodes together with the minimum possible weight.
+It has the following use cases:
+
+* It was applied to analyze airline and sea connections of Papua New Guinea, and minimize the travel cost of exploring the country.
+ It could be used to help design low-cost tours that visit many destinations across the country.
+ More details can be found in https://www.dwu.ac.pg/en/images/All_Attachements/Research%20Journals/vol_12/2010-V12-1_Fitina_et_al_spanning_trees_for_travel_planning.pdf["An Application of Minimum Spanning Trees to Travel Planning"].
+* Analyzing and visualizing correlations in a network of currencies, based on the correlation between currency returns.
+  This is described in https://www.nbs.sk/_img/Documents/_PUBLIK_NBS_FSR/Biatec/Rok2013/07-2013/05_biatec13-7_resovsky_EN.pdf["Minimum Spanning Tree Application in the Currency Market"].
+* Tracing the history of transmission of infection in an outbreak supported by exhaustive clinical research.
+  For more information, see https://www.ncbi.nlm.nih.gov/pmc/articles/PMC516344/[Use of the Minimum Spanning Tree Model for Molecular Epidemiological Investigation of a Nosocomial Outbreak of Hepatitis C Virus Infection].
+
+
+link:/docs/graph-data-science/current/alpha-algorithms/minimum-weight-spanning-tree/[Read Minimum Spanning Tree reference documentation^, role="medium button"]
+
+[#Random Walk]
+== Random Walk
+
+Random Walk is an algorithm that provides random paths in a graph.
+A random walk means that we start at one node, choose a neighbor to navigate to at random or based on a provided probability distribution, and then do the same from that node, keeping the resulting path in a list.
+It’s similar to how a drunk person traverses a city.
+It has the following use cases:
+
+* It has be shown to relate to Brownian motion and also to the movement and dispersal of animals in the study of https://www.researchgate.net/publication/5425681_Random_walks_in_biology[Random walk models in biology].
+
+* It has been used to analyse ALSI index of the JSE stock exchange and show that the index followed the random walk hypothesis between years 2000 and 2011.
+This means the movement of stock prices was random and the ability of investors to perform relied more on luck than anything else.
+Find this study in https://www.researchgate.net/publication/297750180_The_Random_Walk_Theory_And_Stock_Prices_Evidence_From_Johannesburg_Stock_Exchange[The Random Walk Theory And Stock Prices: Evidence From Johannesburg Stock Exchange]
+
+* It is part of the *node2vec* and *graph2vec* algorithms, that create node embeddings, as well as the  *Walktrap* and *Infomap community detection* algorithms.
+
+* It can be used as part of the training process of machine learning model, as described in David Mack's article https://medium.com/octavian-ai/review-prediction-with-neo4j-and-tensorflow-1cd33996632a[Review prediction with Neo4j and TensorFlow^].
+
+link:/graph-data-science/current/alpha-algorithms/random-walk/[Read Random Walk reference documentation^, role="medium button"]
