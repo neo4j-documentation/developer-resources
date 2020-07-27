@@ -42,6 +42,7 @@ The Neo4j https://neo4j.com/graph-data-science-library[Graph Data Science Librar
 The Louvain method for community detection is an algorithm for detecting communities in networks.
 It maximizes a modularity score for each community, where the modularity quantifies the quality of an assignment of nodes to communities.
 This means that the algorithm evaluates how much more densely connected the nodes within a community are, compared to how connected they would be in a random network.
+On each iteration the Louvain algorithm recursively merges communities into a single node and executes the modularity clustering on the condensed graphs.
 It has the following use cases:
 
 * Providing recommendations for Reddit users to find similar subreddits, based on the general user behavior.
@@ -54,6 +55,15 @@ This process is described in http://www.lbd.dcc.ufmg.br/colecoes/sbsi/2016/047.p
 The study mentioned is https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2784301/["Hierarchical Modularity in Human Brain Functional Networks"^].
 
 link:/docs/graph-data-science/current/algorithms/louvain/[Read Louvain reference documentation^, role="medium button"]
+
+[#modularity-optimization]
+== Modularity Optimization
+
+Similar to the Louvain algorithm, the Modularity Optimization algorithm tries to detect communities in the graph based on their modularity.
+Modularity is a measure of the structure of a graph, measuring the density of connections within a module or community.
+The algorithm explores for every node if its modularity score might increase if it changes its community to one of its neighboring nodes.
+
+link:/docs/graph-data-science/current/algorithms/modularity-optimization/[Read Modularity Optimization reference documentation, role="medium button"]
 
 [#label-propagation]
 == Label Propagation
@@ -72,6 +82,8 @@ The study can be found in https://www.nature.com/articles/srep12339[Label Propag
  For more information, see https://www.uni-ulm.de/fileadmin/website_uni_ulm/iui.iwsds2017/papers/IWSDS2017_paper_12.pdf["Feature Inference Based on Label Propagation on Wikidata Graph for DST"^].
 
 link:/docs/graph-data-science/current/algorithms/label-propagation/[Read Label Propagation reference documentation^, role="medium button"]
+
+
 
 [#weakly-connected-components]
 == Weakly Connected Components
@@ -137,3 +149,12 @@ For more information, see http://www.pnas.org/content/99/9/5825[Curvature of co-
 
 
 link:/docs/graph-data-science/current/algorithms/local-clustering-coefficient/[Read Local Clustering Coefficient reference documentation, role="medium button"]
+
+[#k1-coloring]
+== K-1 Coloring
+
+The K-1 Coloring algorithm assigns colors to each node in the graph, while trying to use as few colors as possible and make sure that neighbors have different colors.
+K-1 Coloring is one of the graph coloring algorithms, which are often used to solve scheduling and assignment problems.
+See more in https://citeseerx.ist.psu.edu/viewdoc/download;jsessionid=A1BAC400BD09918971D7EB198B46DA8C?doi=10.1.1.95.4268&rep=rep1&type=pdf[Graph colouring problems and their applications in scheduling^] by Daniel Marx.
+
+link:/docs/graph-data-science/current/algorithms/k1coloring/[Read K-1 Coloring reference documentation, role="medium button"]
