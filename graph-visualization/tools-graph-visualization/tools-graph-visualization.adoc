@@ -16,11 +16,12 @@ image::{img}graph_cluster_distant_wide.jpg[link="{img}graph_cluster_distant_wide
 
 [role=expertise]
 {level}
-
 [#bloom]
-=== _Neo4j Bloom_
-
+[TIP]
+====
 _Neo4j Bloom is now available for free and is readily available in https://neo4j.com/download/[Neo4j Desktop^]. https://neo4j.com/developer/neo4j-bloom/[This guide^] will provide more information on getting started._
+====
+
 
 [#graph-vis-types]
 == Types of Graph Visualization
@@ -30,7 +31,7 @@ We will discuss how each of these categories handles the exported data and provi
 Depending on the visualization needs, one of these categories may define the set of tools you can choose to implement as a solution to your business needs.
 
 [#embed-graph-vis]
-== *1. Embeddable tools with built-in Neo4j connections*
+=== 1. Embeddable tools with built-in Neo4j connections
 
 These kinds of tools can be included as a dependency within an application and can easily be configured and styled for your application and Neo4j.
 Each is easily connected to an instance of the graph database using configuration properties and allows you to style the visualization based on nodes, relationships, or specific properties.
@@ -44,14 +45,14 @@ Also, this typically means that our client application is connecting directly to
 
 Let us look at some of the tools in this category.
 
-.icon:flask[] *Neovis.js*
+==== icon:flask[] *Neovis.js*
 This library was designed to combine JavaScript visualization and Neo4j in a seamless integration.
 Connection to Neo4j is simple and straightforward, and because it is built with Neo4j’s property graph model in mind, the data format Neovis expects aligns with the database.
 Customizing and coloring styles based on labels, properties, nodes, and relationships is defined in a single configuration object.
 Neovis.js can be used without writing Cypher and with minimal JavaScript for integrating into your project.
 
 ====
-[NOTE]
+[TIP]
 icon:flask[size=2x] The Neovis library is one of our Neo4j Labs projects.
 To learn more about Neo4j Labs, visit our https://neo4j.com/labs/[Labs page^].
 ====
@@ -63,11 +64,11 @@ image:{img}example-viz.png[link="{img}example-viz.png",role="popup-link"]
 
 An advantage of enhancing graph visualization with these algorithms is that we can visually interpret the results of these algorithms.
 
-===== +++<u>Neovis.js Resources</u>+++
+===== Neovis.js Resources
 * Blog post: https://medium.com/neo4j/graph-visualization-with-neo4j-using-neovis-js-a2ecaaa7c379[Neovis.js^]
 * Download neovis.js: https://www.npmjs.com/package/neovis.js[npm package^]
 
-.*Popoto.js*
+==== Popoto.js
 Popoto.js is a JavaScript library that is built upon D3.js.
 Popoto.js will help users build queries in a visual way to execute against Neo4j.
 Users can also customize the results and the visual display.
@@ -76,12 +77,12 @@ Along with the visualization, you can include auto-complete searches for potenti
 To use Popoto.js in your application, you simply need to include each component independently bound to a container id in an HTML page.
 The rest of the content will be generated from that.
 
-===== +++<u>Popoto.js Resources</u>+++
+===== Popoto.js Resources
 * Documentation: https://github.com/Nhogs/popoto/wiki[Popoto.js^]
 * Website: http://www.popotojs.com/[popoto.js^]
 
 [#embed-lib-vis]
-== *2. Embeddable libraries without direct Neo4j connection*
+=== 2. Embeddable libraries without direct Neo4j connection
 
 These libraries offer the ability to embed graph visualization in an application, but without connecting directly to Neo4j.
 An advantage here is that we can populate our visualization with data sent from an API application that connects to the database, ensuring the client application is not querying the database directly.
@@ -89,7 +90,7 @@ The downside, however, is that we often must transform the results to export fro
 
 We can get a closer look at these tools in the next paragraphs.
 
-.*D3.js*
+==== D3.js
 As the first line on D3’s website states "D3.js is a JavaScript library for manipulating documents based on data."
 You can bind different kinds of data to a DOM and then execute different kinds of functions on it.
 One of those functions includes generating an SVG, canvas, or HTML visualization from the data in the DOM.
@@ -102,12 +103,12 @@ D3 expects two different collections of graph data - one for nodes[] and one for
 Each of these maps includes arrays of properties for each node and relationship that d3 then converts into circles and lines.
 Version 4 and 5 of d3.js also support force-directed graphs, where the visualization adjusts to the user’s view pane.
 
-===== +++<u>D3.js Resources</u>+++
+===== D3.js Resources
 * Website: https://d3js.org/[D3.js^]
 * D3 and graphs example: http://thinkingonthinking.com/Getting-Started-With-D3/[D3 Examples^]
 * Neo4j Github examples with d3: https://github.com/neo4j-examples?utf8=%E2%9C%93&q=movie&type=&language=[Examples with Neo4j^]
 
-.*Vis.js*
+==== *Vis.js*
 This library offers a variety of visualizations designed to handle large, dynamic data sets.
 There are a variety of formats to style your data, including timeline, dataset, graph2d, graph3d, and network.
 The most common format seen with Neo4j is the network visualization.
@@ -115,12 +116,12 @@ The most common format seen with Neo4j is the network visualization.
 Even with the network format, there are numerous customizations available for styling nodes, labels, animations, coloring, grouping, and others.
 For additional information and to see everything that is available, check out their docs and examples linked in the resources below.
 
-===== +++<u>Vis.js Resources</u>+++
+===== Vis.js Resources
 * Vis.js website: http://visjs.org/[Vis.js^]
 * Network format examples: http://visjs.org/network_examples.html[Format Examples^]
 * Source code project: https://github.com/almende/vis[Vis.js Github^]
 
-.*Sigma.js*
+==== Sigma.js
 While some libraries are meant to include all the capabilities in one bundle, Sigma.js touts a highly-extensible environment where users can add extension libraries or plugins to provide additional capability.
 This library takes exported data in either https://github.com/jacomyal/sigma.js/tree/master/plugins/sigma.parsers.json[JSON^] or https://github.com/jacomyal/sigma.js/tree/master/plugins/sigma.parsers.gexf[GEXF^] formats.
 
@@ -130,32 +131,32 @@ Users can start from a very basic visualization right out of the box, and then b
 Once the requirements surpass what is possible there, users can write and use their own custom plugins for specific functionality.
 Be sure to check out the repository, though, for any existing extensions!
 
-===== +++<u>Sigma.js Resources</u>+++
+===== Sigma.js Resources
 * Website: http://sigmajs.org/[Sigma.js^]
 * Source code: https://github.com/jacomyal/sigma.js/[Sigma.js Github^]
 * Blog post: https://medium.com/neo4j/how-to-use-sigmajs-to-display-your-graph-3eedd75275bb[Sigma.js+Neo4j^]
 
-.*Vivagraph.js*
+==== Vivagraph.js
 Vivagraph.js was built to handle different types of layout algorithms for arranging nodes and edges.
 It manages data set sizes from very small to very large and also renders in WebGL, SVG, and CSS-based formats.
 Customizations and styling are available through CSS modifications and extension libraries.
 It also can track changes in the graph that update the visualization accordingly.
 
-===== +++<u>Vivagraph.js Resources</u>+++
+===== Vivagraph.js Resources
 * Source code: https://github.com/anvaka/VivaGraphJS[Vivagraph.js Github^]
 * Blog post: https://maxdemarzi.com/2013/05/29/visualizing-the-news-with-vivagraph-js/[Viavgraph.js+Neo4j^]
 
-.*Cytoscape.js*
+==== Cytoscape.js
 This library is also meant to visualize and render network node graphs and offers customization and extensibility for additional features.
 Cytoscape.js responds to user interaction and works on touch screen interfaces, allowing users to zoom, tap, and explore in the method that is relevant to them.
 You can customize styling and web page view with a variety of style components.
 
-===== +++<u>Cytoscape.js Resources</u>+++
+===== Cytoscape.js Resources
 * Website: http://js.cytoscape.org/[Cytoscape.js^]
 * Source code: https://github.com/cytoscape/cytoscape.js[Cytoscape.js Github^]
 
 [#neo4j-vis-vendors]
-== *3. Standalone product tools*
+=== 3. Standalone product tools
 
 Certain tools and products are designed as standalone applications that can connect to Neo4j and interact with the stored data without involving any code.
 These applications are built with non-developers in mind - for business analysts, data scientists, managers, and other users to interact with Neo4j in a node-graph format.
@@ -165,7 +166,7 @@ They also require little or no developer integration hours and setup.
 
 The next paragraphs will help us get a feel for the types of products in this area.
 
-.*Bloom* by
+==== *Bloom* by
 image:{img}neo4j_logo.png[link="{img}neo4j_logo.png",width=200]
 
 image::{img}bloom_screen.jpg[link="{img}bloom_screen.jpg",role="popup-link",float="right",width=350]
@@ -182,36 +183,36 @@ Bloom is available in the following formats:
 * Neo4j Bloom through Neo4j Database as a Service, link:/aura/[Aura^]
 * Included in link:/startup-program/[Neo4j Startup Program^]
 
-===== +++<u>Bloom Resources</u>+++
+===== Bloom Resources
 * Developer Guide: https://neo4j.com/blog/graphxr-graph-app-neo4j-desktop/[Neo4j Bloom User Interface Guide^]
 * Blog post: https://medium.com/neo4j/bloom-ing-marvellous-a2be0c3702bb[Bloom-ing marvellous! Introducing Bloom 1.3^]
 * Product information: https://neo4j.com/bloom/[Neo4j Bloom landing page^]
 
-.*GraphXR* by
+==== *GraphXR* by
 image:{img}kineviz-logo.png[link="{img}kineviz-logo.png",width=200]
 
 image::{img}kineviz_visualization.jpg[link="{img}kineviz_visualization.jpg",role="popup-link",float="right",width=350]
 
 GraphXR is a start-to-finish web-based visualization platform for interactive analytics.
 For technical users, it's a highly flexible and extensible environment for conducting ad hoc analysis.
-For business users, it's an intuitive tool for code-free investigation and insight. 
+For business users, it's an intuitive tool for code-free investigation and insight.
 
-* Collect data from Neo4j, SQL dbs, CSVs, and Json. 
-* Cleanse and enrich with built-in tools as well as API calls. 
-* Analyze links, properties, time series, and spatial data within a unified, animated context. 
-* Save back to Neo4j, output as a report, or embed in your webpage. 
+* Collect data from Neo4j, SQL dbs, CSVs, and Json.
+* Cleanse and enrich with built-in tools as well as API calls.
+* Analyze links, properties, time series, and spatial data within a unified, animated context.
+* Save back to Neo4j, output as a report, or embed in your webpage.
 
-GraphXR supports a wide range of applications including law enforcement, medical research, and knowledge management. 
+GraphXR supports a wide range of applications including law enforcement, medical research, and knowledge management.
 
 Kineviz also has a graph app version of this tool that can be installed in Neo4j Desktop.
 The blog post about the graph app is included in the resources below.
 
-===== +++<u>GraphXR Resources</u>+++
+===== GraphXR Resources
 * Blog post: https://neo4j.com/blog/graphxr-graph-app-neo4j-desktop/[Adding GraphXR as a Graph App in Neo4j Desktop^]
 * Blog post: https://neo4j.com/blog/evaluating-investor-performance-using-neo4j-graphxr-and-ml/[Evaluating Investor Performance Using Neo4j, GraphXR and MLl^]
 * Product information: https://static1.squarespace.com/static/5c58b86e8dfc8c2d0d700050/t/5c6f46559140b7665401785b/1550796373803/GraphXR%2BDatasheet.pdf[GraphXR Datasheet^]
 
-.*yFiles* by
+==== *yFiles* by
 image:{img}yWorks.png[link="{img}yWorks.png",width=200]
 
 image::{img}yfiles-neo.jpg[link="{img}yfiles-neo.jpg",role="popup-link",float="right",width=350]
@@ -224,13 +225,13 @@ With the wide-ranging extensibility and large feature set, all your visualizatio
 yWorks also provides a free graph explorer app that is based on the yFiles technology.
 It can be installed in Neo4j Desktop.
 
-===== +++<u>yFiles Resources</u>+++
+===== yFiles Resources
 * Blog post: https://www.yworks.com/blog/neo4j-Custom-Visualization-Solutions[Custom Visualization Solutions with yFiles and Neo4j^]
 * Blog post: https://www.yworks.com/blog/neo4j-visualization-like-a-pro[Visualizing Neo4j Database Content Like a Pro^]
 * Webinar: https://www.youtube.com/watch?v=uDZD3tOTrFc[Technical intro to yFiles with Neo4j^]
 * Product information: https://www.yworks.com/products/yfiles[yFiles Visualization Libraries^]
 
-.*Linkurious Enterprise* by
+==== *Linkurious Enterprise* by
 image:{img}Linkurious_logo_large.png[link="{img}graph-visualization-linkurious-enterprise.png",width=200]
 
 image::{img}linkurious_vis_Apr2019.png[link="{img}linkurious_vis_monitor.png",role="popup-link",float="right",width=350]
@@ -239,7 +240,7 @@ Linkurious Enterprise is an on-premises and browser-based platform that works on
 It brings graph visualization and analysis capabilities to analysts tasked to detect and analyze threats in large volumes of connected data.
 Organizations such as the French Ministry of Economy and Finance, Zurich Insurance or Bank of Montreal use Linkurious Enterprise to fight financial crime, terror networks or cyber threats.
 
-===== +++<u>Linkurious Resources</u>+++
+===== Linkurious Resources
 * Blog post: https://linkurio.us/blog/panama-papers-how-linkurious-enables-icij-to-investigate-the-massive-mossack-fonseca-leaks/[Panama Papers Discovery with Neo4j and Linkurious^]
 * Blog post: https://linkurio.us/blog/stolen-credit-cards-and-fraud-detection-with-neo4j/[Fraud detection with Neo4j and Linkurious^]
 * Blog post: https://neo4j.com/blog/detect-investigate-financial-crime-patterns-linkurious/[Detect and Investigate Financial Crime with Neo4j and Linkurious^]
@@ -247,7 +248,7 @@ Organizations such as the French Ministry of Economy and Finance, Zurich Insuran
 * Solution: https://linkurio.us/solution/neo4j/[Linkurious Enterprise + Neo4j^]
 * Product datasheet https://linkurio.us/wp-content/uploads/2019/04/Linkurious_Enterprise_Technical_Datasheet.pdf[Linkurious Enterprise^]
 
-.*Graphistry* by
+==== *Graphistry* by
 image:{img}graphistry-logo-rough.png[link="{img}graphistry-logo-rough.png",width=200]
 
 image::{img}graphistry_vis.jpg[link="{img}graphistry_vis.jpg",role="popup-link",float="right",width=350]
@@ -259,11 +260,11 @@ Harness all of your data without worrying about scale, and pivot on the fly to f
 
 Ideal for everything from security, fraud, and IT investigations to 3600 views of customers and supply chains, Graphistry turns the potential of your data into human insight and value.
 
-===== +++<u>Graphistry Resources</u>+++
+===== Graphistry Resources
 * Source code: https://github.com/graphistry[Graphistry on Github^]
 * Product information: https://www.graphistry.com/[Graphistry graph visualization^]
 
-.*Perspectives* by
+==== *Perspectives* by
 image:{img}tom-sawyer-logo.png[link="{img}tom-sawyer-logo.png",width=200]
 
 Tom Sawyer Perspectives is a robust platform for building enterprise-class graph and data visualization and analysis applications.
@@ -271,10 +272,10 @@ It is a complete graph visualization software development kit (SDK) with a graph
 The platform integrates enterprise data sources with the powerful graph visualization, layout, and analysis technology to solve big data problems.
 Enterprises, system integrators, technology companies, and government agencies use Tom Sawyer Perspectives to build a wide range of applications.
 
-===== +++<u>Perspectives Resources</u>+++
+===== Perspectives Resources
 * Product information: https://www.tomsawyer.com/perspectives/[Perspectives graph visualization^]
 
-.*Keylines* by
+==== *Keylines* by
 image:{img}Cambridge-Intelligence-logo.jpg[link="{img}Cambridge-Intelligence-logo.jpg",width=200]
 
 KeyLines makes it easy to build and deploy high-performance network visualization tools quickly.
@@ -283,7 +284,7 @@ KeyLines applications work on any device and in all common browsers, to reach ev
 It is also compatible with any IT environment, letting you deploy your network visualization application to an unlimited number of diverse users.
 You can build a custom application that is scalable and easy to use.
 
-===== +++<u>Keylines Resources</u>+++
+===== Keylines Resources
 * Product information: https://cambridge-intelligence.com/keylines/[Keylines graph visualization^]
 
 == Visualization Resources
