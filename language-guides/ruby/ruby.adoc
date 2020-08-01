@@ -14,12 +14,12 @@
 
 .Goals
 [abstract]
-This guide provides an overview of options for connecting to Neo4j using Ruby. 
+This guide provides an overview of options for connecting to Neo4j using Ruby.
 It will introduce the different drivers and link to relevant resources.
 
 .Prerequisites
 [abstract]
-You should be familiar with link:/developer/get-started/graph-database[graph database concepts] and the property graph model. 
+You should be familiar with link:/developer/get-started/graph-database[graph database concepts] and the property graph model.
 You should have link:/download[installed Neo4j^] and made yourself familiar with our link:/developer/cypher[Cypher Query language].
 
 [role=expertise]
@@ -32,7 +32,7 @@ include::../_includes/community-driver-notice.adoc[]
 
 Neo4j has been accessible from Ruby long before version 1.0, first using JRuby on the JVM and then on MRI via the HTTP and now Bolt protocols.
 
-// tag::neo4jrb-lib[]
+tag::neo4.rb-lib[]
 [#neo4jrb-lib]
 === Neo4j.rb
 
@@ -49,6 +49,7 @@ A Object-Graph-Mapper (OGM) for the Neo4j graph database. It tries to follow API
 but with a Neo4j flavor. It requires one of the above drivers.
 neo4j-rake_tasks::
 A set of rake tasks for installing and managing a Neo4j database within your project.
+end::neo4.rb-lib[]
 
 [cols="1,4"]
 |===
@@ -74,7 +75,7 @@ History:
 
 === Gem: neo4j-ruby-driver
 
-A ruby driver for neo4j based on seabolt protocol. It provides database connection, manages sessions and transactions.  
+A ruby driver for neo4j based on seabolt protocol. It provides database connection, manages sessions and transactions.
 
 [source,ruby]
 ----

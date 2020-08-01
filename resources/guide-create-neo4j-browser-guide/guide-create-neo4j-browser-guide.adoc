@@ -3,7 +3,7 @@
 :section: Documentation and Resources
 :section-link: resources
 :section-level: 1
-:level: intermediate
+:level: Intermediate
 :play: https://localhost:7474/browser?cmd=play&arg=
 :sectanchors:
 :toc:
@@ -60,7 +60,7 @@ Here are a few of our favorite examples using Neo4j browser guides:
 
 The browser guides are simple HTML pages with one section per slide.
 Each section of the slideshow is encompassed in `<slide/>` tags, which users can interactively page to view content.
-We can include statements for users to execute for importing or querying the data by putting them inside `<pre/>` tag areas. 
+We can include statements for users to execute for importing or querying the data by putting them inside `<pre/>` tag areas.
 Pictures and other media for detailed explanations are enclosed in `<img/>` and other media tags.
 You can use other standard HTML elements to include tables, bullets, links, etc.
 There are some special CSS classes that interact actions within Neo4j Browser, e.g. for `:play` or `:help` commands.
@@ -137,7 +137,7 @@ We use the https://asciidoctor.org[AsciiDoctor^] toolchain and a variant of its 
 
 Our process is straightforward.
 
-1. Find or create a simple AsciiDoc file (see below) and convert it to the slide-html. 
+1. Find or create a simple AsciiDoc file (see below) and convert it to the slide-html.
 2. Turn each second-level header into a new slide and turn `[source,cypher]` blocks into clickable statements.
 3. Follow any other regular HTML transformations for other content.
 4. For deeper details on the AsciiDoc syntax, please see the https://asciidoctor.org/docs/user-manual/[AsciiDoctor User Manual^].
@@ -149,7 +149,7 @@ We will briefly step through an test guide as an example.
 You can later create your own custom guides for your material using these same steps.
 
 1. Clone and open the guide repository.
-
++
 [source,shell]
 ----
 git clone https://github.com/neo4j-contrib/neo4j-guides
@@ -157,20 +157,18 @@ git clone https://github.com/neo4j-contrib/neo4j-guides
 cd neo4j-guides
 ----
 
-[start=2]
 2. Find the `adoc` directory and create a file called `test.adoc` inside it.
-
++
 image::{img}custom_guide_test.jpg[link="{img}custom_guide_test.jpg",role="popup-link"]
 
-[start=3]
 3. Insert the contents below into the newly created `test.adoc` file and save the changes.
-
++
 [source,shell,.small]
 ----
  = A Test Guide
- 
+
  == First Slide: Media
- 
+
  image::https://avatars3.githubusercontent.com/u/201120[width=200,float=right]
 
  This is just a test guide.
@@ -178,48 +176,49 @@ image::{img}custom_guide_test.jpg[link="{img}custom_guide_test.jpg",role="popup-
  But it comes with a picture and a video:
 
  ++++
+ <div class="responsive-embed">
  <iframe width="560" height="315" src="https://www.youtube.com/embed/V7f2tGsNSck?showinfo=0&controls=2&autohide=1" frameborder="0" allowfullscreen></iframe>
+ </div>
  ++++
- 
+
  == Second Slide: Statements
 
  === Creating Data
- 
+
  The area below becomes a clickable statement.
- 
+
  [source,shell]
  ----
  CREATE (db:Database {name:"Neo4j"})
  RETURN db
  ----
- 
+
  === Querying Data
  :name: pass:a['<span value-key="name">Neo4j</span>']
- 
- We use a form field here: 
- 
+
+ We use a form field here:
+
  ++++
  <input style="display:inline;width:30%;" value-for="name" class="form-control" value="Neo4j" size="40">
  ++++
- 
+
  [source,cypher,subs=attributes]
  ----
  MATCH (db:Database {name:{name}})
  RETURN db
  ----
- 
+
  == Third Slide: Links
- 
+
  * https://neo4j.com/developer/cypher[Learn more about Cypher]
  * pass:a[<a help-topic='keys'>Help Keys</a>]
  * pass:a[<a play-topic='https://guides.neo4j.com/'>Another Guide</a>]
- 
+
  image::https://avatars3.githubusercontent.com/u/201120[width=100,link="https://example.com"]
 ----
 
-[start=4]
 4. Pass the `test.adoc` file to the `run.sh` script (as shown below) to convert to the HTML slides.
-
++
 [source,shell]
 ----
 ./run.sh adoc/test.adoc html/test.html
@@ -231,22 +230,19 @@ image::{img}custom_guide_test.jpg[link="{img}custom_guide_test.jpg",role="popup-
 python http-server.py
 ----
 
-[start=5]
-5. Test the test guide in your local browser: 
+5. Test the test guide in your local browser:
 {play}https://localhost:8001/html/test.html[`:play https://localhost:8001/html/test.html`^]
 
-[start=6]
 6. Upload the file to your target server.
-
++
 [source,shell]
 ----
 #Example target server
 s3cmd put -P html/test.html s3://guides.example.com/test
 ----
 
-[start=7]
 7. And test the guide one last time: `:play https://guides.example.com/test`
-
++
 image::{img}browser-guide-demo.gif[]
 
 Congratulations!
@@ -283,8 +279,8 @@ name=${2-network}
 #use your full plain-text download link format here
 url="https://docs.google.com/a/neotechnology.com/document/export?format=txt&id=${id}"
 
-curl -sL "$url" -o adoc/$name.adoc 
-./run.sh adoc/$name.adoc html/$name.html 
+curl -sL "$url" -o adoc/$name.adoc
+./run.sh adoc/$name.adoc html/$name.html
 s3cmd put -P html/$name.html s3://guides.neo4j.com/$name
 ----
 

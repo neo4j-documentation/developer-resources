@@ -1,0 +1,163 @@
+= Community Detection Algorithms
+:section: Community Detection Algorithms
+:section-link: graph-data-science
+:section-level: 1
+:slug: community-detection-graph-algorithms
+:level: Beginner
+:sectanchors:
+:toc:
+:toc-title: Contents
+:toclevels: 1
+:author: Mark Needham
+:category: graph-data-science
+:tags: graph-data-science, graph-algorithms, community-detection, clustering
+:description: This guide covers community detection algorithms in the Neo4j Data Science Library, like Louvain, Label Propagation, Weakly Connected Components, and more.
+
+.Goals
+[abstract]
+In this guide, we will learn about community detection graph algorithms.
+
+.Prerequisites
+[abstract]
+Please have link:/download[Neo4j^] (version 4.0 or later) and the link:/download-center/#algorithms[Graph Data Science Library^] downloaded and installed to use centrality algorithms.
+
+[role=expertise]
+{level}
+
+[#overview-community-detection-algorithms]
+== What are community detection algorithms?
+
+image:{img}Community-Algo-Icon.png[float="right", width="200px"]
+
+Community detection algorithms are used to evaluate how groups of nodes are clustered or partitioned, as well as their tendency to strengthen or break apart.
+
+// ++++
+// <iframe width="560" height="315" src="https://www.youtube.com/embed/j3MTkvLS1PU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+// ++++
+
+The Neo4j https://neo4j.com/graph-data-science-library[Graph Data Science Library^] supports many different link:/docs/graph-data-science/current/algorithms/community/[centrality algorithms^].
+
+[#louvain]
+== Louvain
+
+The Louvain method for community detection is an algorithm for detecting communities in networks.
+It maximizes a modularity score for each community, where the modularity quantifies the quality of an assignment of nodes to communities.
+This means that the algorithm evaluates how much more densely connected the nodes within a community are, compared to how connected they would be in a random network.
+On each iteration the Louvain algorithm recursively merges communities into a single node and executes the modularity clustering on the condensed graphs.
+It has the following use cases:
+
+* Providing recommendations for Reddit users to find similar subreddits, based on the general user behavior.
+For more details, see http://snap.stanford.edu/class/cs224w-2014/projects2014/cs224w-16-final.pdf["Subreddit Recommendations within Reddit Communities"^].
+
+* Extracting topics from online social platforms, such as Twitter and Youtube, based on the co-occurence graph of terms in documents, as a part of Topic Modeling process.
+This process is described in http://www.lbd.dcc.ufmg.br/colecoes/sbsi/2016/047.pdf["Topic Modeling based on Louvain method in Online Social Networks"^].
+
+* Investigating the human brain and finding hierarchical community structures within the brain’s functional network.
+The study mentioned is https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2784301/["Hierarchical Modularity in Human Brain Functional Networks"^].
+
+link:/docs/graph-data-science/current/algorithms/louvain/[Read Louvain reference documentation^, role="medium button"]
+
+[#modularity-optimization]
+== Modularity Optimization
+
+Similar to the link:#louvain[Louvain algorithm^], the Modularity Optimization algorithm tries to detect communities in the graph based on their modularity.
+Modularity is a measure of the structure of a graph, measuring the density of connections within a module or community.
+The algorithm explores for every node if its modularity score might increase if it changes its community to one of its neighboring nodes.
+
+link:/docs/graph-data-science/current/algorithms/modularity-optimization/[Read Modularity Optimization reference documentation, role="medium button"]
+
+[#label-propagation]
+== Label Propagation
+
+The Label Propagation algorithm (LPA) detects communities in a graph using network structure alone as its guide, and doesn't require a pre-defined objective function or prior information about the communities.
+LPA propagates labels throughout the network and forms communities based on this process of label propagation.
+It has the following use cases:
+
+* Assigning polarity of tweets, as a part of semantic analysis which uses seed labels from a classifier trained to detect positive and negative emoticons in combination with Twitter follower graph.
+For more information, see https://dl.acm.org/citation.cfm?id=2140465[Twitter polarity classification with label propagation over lexical links and the follower graph^].
+
+* Estimating potentially dangerous combinations of drugs to co-prescribe to a patient, based on the chemical similarity and side effect profiles.
+The study can be found in https://www.nature.com/articles/srep12339[Label Propagation Prediction of Drug-Drug Interactions Based on Clinical Side Effects^].
+
+* Inferring features of utterances in a dialogue, for a machine learning model to track user intention with the help of Wikidata knowledge graph of concepts and their relations.
+ For more information, see https://www.uni-ulm.de/fileadmin/website_uni_ulm/iui.iwsds2017/papers/IWSDS2017_paper_12.pdf["Feature Inference Based on Label Propagation on Wikidata Graph for DST"^].
+
+link:/docs/graph-data-science/current/algorithms/label-propagation/[Read Label Propagation reference documentation^, role="medium button"]
+
+
+
+[#weakly-connected-components]
+== Weakly Connected Components
+
+The Weakly Connected Components algorithm finds sets of connected nodes in an _undirected graph_ where each node is reachable from any other node in the same set.
+It is often used early in an analysis to understand a graph’s structure, and also has the following use cases:
+
+* Testing whether a graph is connected is an essential pre-processing step for every graph algorithm.
+Such tests can be performed so quickly, and easily, that you should always verify that your input graph is connected, even when you know it has to be.
+Subtle, difficult-to-detect, bugs often result when your algorithm is run only on one component of a disconnected graph.
+
+* Keeping track of clusters of database records, as part of the de-duplication process - an important task in master data management applications.
+Read more in http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.28.8405["An efficient domain-independent algorithm for detecting approximately duplicate database records"^].
+
+* Analysing citation networks.
+One study uses WCC to work out how well connected the network is, and then to see whether the connectivity remains if 'hub' or 'authority' nodes are moved from the graph.
+Read more in https://pdfs.semanticscholar.org/a8e0/5f803312032569688005acadaa4d4abf0136.pdf["Characterizing and Mining Citation Graph of Computer Science Literature"^].
+
+link:/docs/graph-data-science/current/algorithms/wcc/[Read Weakly Connected Components reference documentation^, role="medium button"]
+
+[#strongly-connected-components]
+== Strongly Connected Components
+
+The Strongly Connected Components (SCC) algorithm finds sets of connected nodes in a _directed graph_ where each node is reachable in both directions from any other node in the same set.
+It has the following use cases:
+
+* In the analysis of powerful transnational corporations, finding the set of firms in which every member owns directly and/or indirectly owns shares in every other member.
+Although it has benefits, such as reducing transaction costs and increasing trust, this type of structure can weaken market competition.
+Read more in http://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0025995&type=printable["The Network of Global Corporate Control"^].
+
+* Computing the connectivity of different network configurations when measuring routing performance in multihop wireless networks.
+Read more in https://dl.acm.org/citation.cfm?id=513803["Routing performance in the presence of unidirectional links in multihop wireless networks"^].
+
+* As the first step in many graph algorithms that work only on strongly connected graph.
+In social networks, a group of people are generally strongly connected (For example, students of a class or any other common place).
+Many people in these groups generally like some common pages, or play common games.
+The SCC algorithms can be used to find such groups, and suggest the commonly liked pages or games to the people in the group who have not yet liked those pages or games.
+
+link:/docs/graph-data-science/current/algorithms/strongly-connected-components/[Read Strongly Connected Components reference documentation, role="medium button"]
+
+[#triangle-counting]
+== Triangle Counting
+
+Triangle counting is a community detection graph algorithm that is used to determine the number of triangles passing through each node in the graph.
+A triangle is a set of three nodes, where each node has a relationship to all other nodes.
+
+The triangle count of a node is useful as a features for classifying a given website as spam, or non-spam, content.
+This is described in http://chato.cl/papers/becchetti_2007_approximate_count_triangles.pdf["Efficient Semi-streaming Algorithms for Local Triangle Counting in Massive Graphs"^].
+
+link:/docs/graph-data-science/current/algorithms/triangle-count/[Read Triangle Counting reference documentation, role="medium button"]
+
+[#local-clustering-coefficient]
+== Local Clustering Coefficient
+
+The Local Clustering Coefficient algorithm computes the local clustering coefficient for each node in the graph.
+The local clustering coefficient of a node describes the likelihood that the neighbors of that node are also connected.
+It has the following use cases:
+
+* Investigating the community structure of Facebook’s social graph, where they found dense neighbourhoods of users in an otherwise sparse global graph.
+Find this study in https://arxiv.org/pdf/1111.4503.pdf["The Anatomy of the Facebook Social Graph"^].
+
+* Clustering coefficient has been proposed to help explore thematic structure of the web, and detect communities of pages with a common topic based on the reciprocal links between them.
+For more information, see http://www.pnas.org/content/99/9/5825[Curvature of co-links uncovers hidden thematic layers in the World Wide Web^].
+
+
+link:/docs/graph-data-science/current/algorithms/local-clustering-coefficient/[Read Local Clustering Coefficient reference documentation, role="medium button"]
+
+[#k1-coloring]
+== K-1 Coloring
+
+The K-1 Coloring algorithm assigns colors to each node in the graph, while trying to use as few colors as possible and make sure that neighbors have different colors.
+
+K-1 Coloring is one of the graph coloring algorithms, which are often used to solve scheduling and assignment problems.
+See more in https://citeseerx.ist.psu.edu/viewdoc/download;jsessionid=A1BAC400BD09918971D7EB198B46DA8C?doi=10.1.1.95.4268&rep=rep1&type=pdf[Graph colouring problems and their applications in scheduling^] by Daniel Marx.
+
+link:/docs/graph-data-science/current/algorithms/k1coloring/[Read K-1 Coloring reference documentation, role="medium button"]
