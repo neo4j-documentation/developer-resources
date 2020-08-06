@@ -38,26 +38,31 @@ tag::neo4.rb-lib[]
 
 The link:http://neo4jrb.io/[Neo4j.rb project^] is made up of the following Ruby gems:
 
-neo4j::
-A Object-Graph-Mapper (OGM) for the Neo4j graph database. It tries to follow API conventions established by ActiveRecord but with a Neo4j flavor.
-neo4j-core::
-A low level driver for connecting to Neo4j. Used by the neo4j gem.
+neo4j-ruby-driver::
+A neo4j driver for ruby with an api consistent with the official drivers. It is based on seabolt and ffi. Available on all rubies
+(including jruby) and all platforms supported by seabolt.
+neo4j-java-driver::
+A neo4j driver for ruby based on the official java implementation. It provides a thin wrapper over the java driver (only
+in jruby).
+activegraph::
+A Object-Graph-Mapper (OGM) for the Neo4j graph database. It tries to follow API conventions established by ActiveRecord
+but with a Neo4j flavor. It requires one of the above drivers.
 neo4j-rake_tasks::
-A set of rake tasks for installing and managing a Neo4j database within your project. Used by the neo4j-core gem.
+A set of rake tasks for installing and managing a Neo4j database within your project.
 end::neo4.rb-lib[]
 
 [cols="1,4"]
 |===
 | icon:browser[] Website                     | http://neo4jrb.io/
-| icon:users[] Authors         | https://twitter.com/klobuczek[Heinrich^], http://twitter.com/cheerfulstoic[Brian^], http://twitter.com/subvertallchris[Chris^], http://twitter.com/ronge[Andreas^]
-| icon:gift[] Package        | https://rubygems.org/search?utf8=%E2%9C%93&query=neo4j
+| icon:users[] Authors         | https://twitter.com/klobuczek[Heinrich^], https://twitter.com/klobuczek[Amit^], http://twitter.com/cheerfulstoic[Brian^], http://twitter.com/subvertallchris[Chris^], http://twitter.com/ronge[Andreas^]
+| icon:gift[] Package        | https://rubygems.org/gems/neo4j-ruby-driver[neo4j-ruby-driver^], https://rubygems.org/gems/neo4j-java-driver[neo4j-java-driver^], https://rubygems.org/gems/activegraph[activegraph^]
 | icon:github[] Source       | https://github.com/neo4jrb
 
 | icon:play-circle[] Example | https://github.com/neo4j-examples?q=movies-ruby
 | icon:book[] Docs           | http://neo4jrb.readthedocs.org/en/latest/
 | icon:route[] Tutorial      | link:/developer/ruby-course/[Ruby Tutorial]
 | icon:rss[] Blog            | http://blog.brian-underwood.codes/
-| Protocols | Bolt, Http
+| Protocols | bolt
 |===
 
 History:
@@ -68,29 +73,32 @@ History:
 
 3. Starting in 2017, the team around https://github.com/klobuczek[Heinrich Klobuczek] contributed to the project and from *fall 2018 Heinrich took over the Neo4j.rb project as the primary maintainer*.
 
-=== Gem: Neo4j-core
+=== Gem: neo4j-ruby-driver
 
-Neo4j-core is a gem that provides low-level communication to a Neo4j server. In addition to basic database communicaton and node/relationship CRUD, Neo4j-core provides strong support for Neo4j's schema indexes, constraints, labels, and a strong Cypher DSL.
-
-How to get running:
+A ruby driver for neo4j based on seabolt protocol. It provides database connection, manages sessions and transactions.
 
 [source,ruby]
 ----
-session = Neo4j::Session.open(:server_db,
-                              "http://neo4j:pass@localhost:7474")
-
-session.query("MATCH (person:Person) RETURN person LIMIT 10")
-
-
-# alternatively you can use the query chaining API:
-session.query.match(person: :Person).return(:person).limit(10).to_a
+Neo4j::Driver::GraphDatabase.driver('bolt://localhost:7687',
+                                    Neo4j::Driver::AuthTokens.basic('neo4j', 'password')) do |driver|
+  driver.session do |session|
+    greeting = session.write_transaction do |tx|
+      result = tx.run("CREATE (a:Greeting) SET a.message = $message RETURN a.message + ', from node ' + id(a)",
+                      message: 'hello, world')
+      result.single.first
+    end # session auto closed at the end of the block if one given
+    puts greeting
+  end
+end # driver auto closed at the end of the block if one given
 ----
 
-=== Gem: Neo4j
+Check https://github.com/neo4jrb/neo4j-ruby-driver/blob/master/docs/dev_manual_examples.rb[Examples^] for more usage.
 
-The neo4j gem uses neo4j-core as an API to connect to the server and provides an ActiveRecord-like experience for use in frameworks.
+=== Gem: activegraph
+
+The activegraph gem uses  as an API to connect to the server and provides an ActiveRecord-like experience for use in frameworks.
 It adds modules allowing the creation of models that look and feel very similar to those found in vanilla Ruby on Rails.
-The gem builds on Neo4j-core's foundation to streamline all aspects of node and relationship CRUD and provides an extremely advanced, intuitive, flexible DSL for generating Cypher.
+The gem builds on neo4j-ruby-driver's foundation to streamline all aspects of node and relationship CRUD and provides an extremely advanced, intuitive, flexible DSL for generating Cypher.
 
 How to get running:
 
@@ -99,7 +107,7 @@ How to get running:
 # See the documentation for setup instructions
 
 class Person
-  include Neo4j::ActiveNode
+  include ActiveGraph::Node
 
   property :name
 
@@ -119,7 +127,7 @@ person.friends.books.to_a
 Very often, your gem choice may come down to how you want to deploy:
 
 server::
-  Using Ruby with a separate Neo4j Server over the HTTP API
+  Using Ruby with a separate Neo4j Server over the http or bolt
 
 embedded::
   Connecting directly to the Neo4j database files from within your Ruby process (this requires JRuby)
@@ -132,40 +140,44 @@ If this sounds good to you, any of the popular gems are solid choices and you ar
 Neo4j Embedded and JRuby is less common but offers blazing fast performance and access to our core Java API.
 The downside is that JRuby has its own configuration and compatibility demands and hosting a Java app can be difficult.
 Thankfully, modern app servers such as Torquebox and a strong community provide far more options and resources now than ever before.
-If this is right for you, the Neo4j-core and Neo4j gems will offer what you need.
+If this is right for you, the neo4j-ruby and activegraph will equally offer support via the bolt protocol.
 
 [#gem-integrations]
-== Neo4j gem integrations
+== ActiveGraph gem integrations
 
 There are many common gems that you'll want to use with your Neo4j database.
 Many are supported for the Neo4j.rb project:
 
 Authentication
 
- * link:https://github.com/neo4jrb/devise-neo4j[devise-neo4j^]
+ * link:https://github.com/neo4jrb/devise-activegraph[devise-activegraph^]
+
+Authorization
+
+ * link:https://github.com/CanCanCommunity/cancancan-activegraph[cancancan-activegraph^]
 
 File Attachment
 
- * link:https://github.com/neo4jrb/neo4jrb-paperclip[neo4jrb-paperclip^]
- * link:https://github.com/neo4jrb/carrierwave-neo4j[carrierwave-neo4j^]
+ * link:https://github.com/neo4jrb/neo4jrb-paperclip[neo4jrb-paperclip^] (*)
+ * link:https://github.com/neo4jrb/carrierwave-neo4j[carrierwave-neo4j^] (*)
 
 Pagination
 
- * link:https://github.com/neo4jrb/neo4j-will_paginate_redux[neo4j-will_paginate_redux^]
- * link:https://github.com/megorei/kaminari-neo4j[kaminari-neo4j^]
+ * link:https://github.com/neo4jrb/neo4j-will_paginate_redux[neo4j-will_paginate_redux^] (*)
+ * link:https://github.com/megorei/kaminari-neo4j[kaminari-neo4j^] (*)
 
 ElasticSearch Integration
 
- * link:https://github.com/neo4jrb/neo4j-searchkick[neo4j-searchkick^]
+ * link:https://github.com/neo4jrb/neo4j-searchkick[neo4j-searchkick^] (*)
 
 
 Admin User Interface
 
- * link:https://github.com/cheerfulstoic/rails_admin[rails_admin^]
+ * link:https://github.com/cheerfulstoic/rails_admin[rails_admin^] (*)
 
 Integration With the link:https://github.com/neo4j-contrib/spatial[Neo4j Spatial Plugin^]
 
- * link:https://github.com/neo4jrb/neo4jrb_spatial[neo4jrb_spatial^]
+ * link:https://github.com/neo4jrb/neo4jrb_spatial[neo4jrb_spatial^] (*)
 
 Ruby Object Manager
 
@@ -174,6 +186,8 @@ Ruby Object Manager
 Misc.
 
  * link:https://github.com/subvertallchris/neo4j-even_easier_id[neo4j-even_easier_id^] (BSON UUIDs)
+
+Note: (*) not (yet) compatible with activegraph
 
 [#ruby-example]
 include::../_includes/sample_project.adoc[]
